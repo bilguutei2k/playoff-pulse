@@ -1,0 +1,631 @@
+/* ============================================================
+   548 / PLAYOFF PULSE — refined pixel-broadcast system v0.4
+   Sleek + restrained. Pixel DNA kept as accent, not as armor.
+   ============================================================ */
+
+:root {
+  /* ---- surfaces · warm broadcast paper ---- */
+  --bg:         #f3efe6;   /* warm off-white base */
+  --bg-2:       #ebe6da;   /* slightly recessed */
+  --panel:      #fbf8f1;   /* lifted panel */
+  --panel-2:    #f0ebde;
+  --panel-3:    #e5dfce;
+  --hairline:   #d6cfbd;
+  --hairline-2: #b8ad94;
+  --shadow-ink: rgba(40, 30, 12, 0.06);
+
+  /* ---- ink ---- */
+  --ink:        #1a1814;
+  --ink-2:      #3a3630;
+  --ink-dim:    #6f6a5e;
+  --ink-mute:   #9a9484;
+
+  /* ---- accents · tuned for light surfaces ---- */
+  --accent:     #c9961f;   /* deeper honey for AA contrast */
+  --accent-2:   #e0ab2d;
+  --cool:       #2e6f9d;
+  --cool-2:     #4f8cb8;
+  --good:       #3a8c54;
+  --good-2:     #5aa872;
+  --bad:        #b8412f;
+  --bad-2:      #d06554;
+  --warn:       #b8821a;
+  --on-accent:  #1a1208;   /* text on yellow/accent fills */
+
+  /* ---- legacy aliases ---- */
+  --yellow:    var(--accent);
+  --yellow-2:  var(--accent-2);
+  --red:       var(--bad);
+  --red-2:     var(--bad-2);
+  --green:     var(--good);
+  --green-2:   var(--good-2);
+  --stat:      #e8e2d2;
+  --stat-2:    #c9d3df;
+  --stat-3:    var(--cool);
+  --court:     #b08a52;
+  --court-2:   #c9a36a;
+  --gray-sep:  var(--hairline);
+  --gray-mid:  var(--hairline-2);
+  --gray-lite: var(--ink-mute);
+
+  /* ---- type ---- */
+  --f-pixel: "Press Start 2P", "Courier New", monospace;
+  --f-term:  "JetBrains Mono", ui-monospace, "SF Mono", "Courier New", monospace;
+  --f-mono:  "JetBrains Mono", ui-monospace, monospace;
+
+  --t-9:  9px;
+  --t-10: 10px;
+  --t-11: 11px;
+  --t-12: 12px;
+  --t-13: 13px;
+  --t-14: 14px;
+  --t-16: 16px;
+  --t-18: 18px;
+  --t-20: 20px;
+  --t-24: 24px;
+  --t-28: 28px;
+  --t-32: 32px;
+  --t-44: 44px;
+}
+
+/* ===== reset ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); font-family: var(--f-term); }
+body { font-feature-settings: "tnum" 1, "zero" 1; }
+
+/* ===== artboard scaffold ===== */
+.pp-frame {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-term);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* whisper-thin scanlines only when explicitly opted in */
+.pp-scan::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(255,255,255,0.018) 3px,
+    rgba(255,255,255,0.018) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+.pp-scan-lite::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 4px,
+    rgba(255,255,255,0.012) 4px,
+    rgba(255,255,255,0.012) 5px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+.pp-vignette::after {
+  content:"";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   Pixel font is now small-caps style label only.
+   JetBrains Mono carries headlines & body.
+   ============================================================ */
+.f-pix  { font-family: var(--f-pixel); letter-spacing: 0.5px; }
+.f-term { font-family: var(--f-term); letter-spacing: 0; }
+.f-mono { font-family: var(--f-mono); letter-spacing: 0; }
+
+.t-9  { font-size: var(--t-9);  line-height: 1.4; }
+.t-10 { font-size: var(--t-10); line-height: 1.4; }
+.t-11 { font-size: var(--t-11); line-height: 1.4; }
+.t-12 { font-size: var(--t-12); line-height: 1.4; }
+.t-13 { font-size: var(--t-13); line-height: 1.4; }
+.t-14 { font-size: var(--t-14); line-height: 1.4; }
+.t-16 { font-size: var(--t-16); line-height: 1.4; }
+.t-18 { font-size: var(--t-18); line-height: 1.3; }
+.t-20 { font-size: var(--t-20); line-height: 1.25; }
+.t-24 { font-size: var(--t-24); line-height: 1.2; }
+.t-28 { font-size: var(--t-28); line-height: 1.15; }
+.t-32 { font-size: var(--t-32); line-height: 1.1; }
+.t-44 { font-size: var(--t-44); line-height: 1.0; }
+
+.uc { text-transform: uppercase; }
+
+/* ============================================================
+   BORDERS — chunky-but-clean. 2px default, soft round corners.
+   ============================================================ */
+:root {
+  --radius:   10px;
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+}
+.bd-hard   { border: 3px solid var(--ink); border-radius: var(--radius); }
+.bd-hard-d { border: 3px solid var(--ink); outline: 2px solid var(--bg); outline-offset: -5px; border-radius: var(--radius); }
+.bd-2      { border: 2px solid var(--hairline-2); border-radius: var(--radius); box-shadow: 0 1px 0 var(--shadow-ink); }
+.bd-2-dim  { border: 2px solid var(--hairline); border-radius: var(--radius); }
+.bd-2-sep  { border: 2px solid var(--hairline); border-radius: var(--radius-sm); }
+.bd-double {
+  border: 2px solid var(--hairline-2);
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px var(--hairline-2);
+}
+.bd-dither-top { background: var(--accent); border-radius: var(--radius-sm) var(--radius-sm) 0 0; }
+
+/* Panel clipping so children honor the rounded corner */
+.bd-2, .bd-2-dim, .bd-hard, .bd-hard-d, .bd-double { overflow: hidden; }
+
+/* Panels */
+.panel-dark      { background: var(--panel);   color: var(--ink); }
+.panel-turf      { background: var(--panel-2); color: var(--ink); }
+.panel-turf-lit  { background: var(--panel-3); color: var(--ink); }
+.panel-stat      { background: var(--stat);    color: var(--ink); }
+.panel-court     { background: var(--court);   color: var(--ink); }
+.panel-ink       { background: var(--ink);     color: var(--bg); }
+.panel-yellow    { background: var(--accent);  color: var(--on-accent); }
+.panel-red       { background: var(--bad);     color: #fff; }
+.panel-black     { background: var(--bg);      color: var(--ink); }
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.row  { display: flex; }
+.col  { display: flex; flex-direction: column; }
+.grow { flex: 1 1 auto; min-width: 0; }
+.ac   { align-items: center; }
+.as   { align-items: stretch; }
+.jc   { justify-content: center; }
+.jb   { justify-content: space-between; }
+.je   { justify-content: flex-end; }
+.gap-2  { gap: 2px; }
+.gap-4  { gap: 4px; }
+.gap-6  { gap: 6px; }
+.gap-8  { gap: 8px; }
+.gap-10 { gap: 10px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.gap-20 { gap: 20px; }
+.gap-24 { gap: 24px; }
+.p-4 { padding: 4px; } .p-6 { padding: 6px; } .p-8 { padding: 8px; }
+.p-10 { padding: 10px; } .p-12 { padding: 12px; } .p-16 { padding: 16px; }
+.p-20 { padding: 20px; } .p-24 { padding: 24px; }
+
+/* ============================================================
+   SCOREBOARD HEADER — calmer, single hairline divider
+   ============================================================ */
+.scoreboard {
+  background: var(--bg);
+  color: var(--ink);
+  border-bottom: 2px solid var(--hairline-2);
+  position: relative;
+  font-family: var(--f-term);
+}
+.scoreboard-strip {
+  display: flex;
+  align-items: stretch;
+  height: 60px;
+}
+.sb-cell {
+  padding: 0 18px;
+  display: flex; align-items: center; gap: 12px;
+  border-right: 1px solid var(--hairline);
+}
+.sb-cell:last-child { border-right: none; }
+.sb-logo {
+  background: var(--ink); color: var(--bg);
+  padding: 7px 10px;
+  font-family: var(--f-pixel);
+  font-size: 14px;
+  letter-spacing: 1px;
+  border-radius: var(--radius-sm);
+}
+.sb-tag {
+  color: var(--ink-2);
+  font-family: var(--f-term);
+  font-size: var(--t-12);
+  letter-spacing: 0.5px;
+}
+.sb-tag b { color: var(--accent); font-weight: 500; }
+.sb-blink {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--good);
+  margin-right: 8px;
+  border-radius: 50%;
+  animation: ppblink 1.6s ease-in-out infinite;
+}
+@keyframes ppblink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* ============================================================
+   STAT BLOCK
+   ============================================================ */
+.stat-block {
+  background: var(--panel);
+  border: 2px solid var(--hairline);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+  min-width: 0;
+}
+.stat-block .lbl {
+  font-family: var(--f-pixel);
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+.stat-block .val {
+  font-family: var(--f-term);
+  font-size: 22px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.stat-block .sub {
+  font-family: var(--f-term);
+  font-size: 13px;
+  color: var(--ink-dim);
+}
+
+/* ============================================================
+   BUTTON — quieter; no chunky shadow
+   ============================================================ */
+.pp-btn {
+  font-family: var(--f-term);
+  font-size: var(--t-12);
+  letter-spacing: 1px;
+  color: var(--on-accent);
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.pp-btn:hover  { background: var(--accent-2); border-color: var(--accent-2); }
+.pp-btn:active { transform: translateY(1px); }
+.pp-btn.ghost  {
+  background: transparent; color: var(--ink-2);
+  border: 2px solid var(--hairline-2);
+}
+.pp-btn.ghost:hover { color: var(--ink); border-color: var(--ink-mute); }
+.pp-btn.red    { background: var(--bad); border-color: var(--bad); color: #fff; }
+.pp-btn.green  { background: var(--good); border-color: var(--good); color: #fff; }
+.pp-btn.cyan   { background: transparent; color: var(--cool); border: 2px solid var(--cool); }
+.pp-btn.cyan:hover { background: rgba(46,111,157,0.08); }
+
+/* ============================================================
+   TEAM BADGE — thinner border, more refined
+   ============================================================ */
+.team-badge {
+  font-family: var(--f-pixel);
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 7px 9px;
+  min-width: 44px;
+  text-align: center;
+  border: 2px solid currentColor;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  background: var(--panel);
+  color: var(--ink);
+  line-height: 1;
+}
+.team-badge.lg { font-size: 14px; padding: 9px 11px; min-width: 56px; }
+.team-badge.xl { font-size: 22px; padding: 12px 14px; min-width: 84px; letter-spacing: 2px; }
+.team-badge.sm { font-size: 9px; padding: 4px 6px; min-width: 32px; }
+
+/* ============================================================
+   PROBABILITY BAR — full bar, thick ink border, yellow fill
+   ============================================================ */
+.probfill {
+  display: block;
+  width: 100%;
+  height: 12px;
+  background: var(--bg-2);
+  border: 2px solid var(--ink);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--bg);
+  position: relative;
+}
+.probfill > i {
+  display: block;
+  height: 100%;
+  background: var(--yellow);
+  box-sizing: border-box;
+}
+.probfill > i.has-edge { border-right: 2px solid var(--ink); }
+.probfill.lg { height: 14px; }
+.probfill.sm { height: 9px; border-width: 2px; }
+.probfill.xs { height: 7px; border-width: 2px; border-radius: 2px; }
+
+/* ---- legacy probbar (10-cell strength rating, kept distinct) ---- */
+.probbar {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+  height: 10px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.probbar .cell {
+  flex: 1 1 0;
+  background: var(--hairline);
+  border-radius: 2px;
+}
+.probbar .cell.on { background: var(--ink-2); }
+.probbar .cell.on.warn   { background: var(--accent); }
+.probbar .cell.on.danger { background: var(--bad); }
+.probbar.lg { height: 12px; }
+.probbar.sm { height: 7px; }
+
+/* ============================================================
+   HEAT CELL — table heat scale, restrained
+   ============================================================ */
+.heat {
+  display: inline-block;
+  font-family: var(--f-term);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  padding: 6px 10px;
+  min-width: 56px;
+  text-align: right;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+.heat.h0 { background: transparent;      color: var(--ink-mute); }
+.heat.h1 { background: rgba(26,24,20,0.025); color: var(--ink-dim); }
+.heat.h2 { background: rgba(26,24,20,0.05);  color: var(--ink-2); }
+.heat.h3 { background: rgba(201,150,31,0.10); color: var(--ink-2); }
+.heat.h4 { background: rgba(201,150,31,0.22); color: var(--ink); }
+.heat.h5 { background: rgba(201,150,31,0.45); color: var(--ink); }
+.heat.h6 { background: var(--accent);    color: var(--on-accent); font-weight: 700; }
+
+/* ============================================================
+   TABLE — calmer header, hairlines
+   ============================================================ */
+.pp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--f-term);
+  font-size: var(--t-13);
+  background: transparent;
+}
+.pp-table th {
+  background: transparent;
+  color: var(--ink-dim);
+  text-align: left;
+  padding: 12px 12px 10px;
+  border-bottom: 2px solid var(--hairline-2);
+  font-family: var(--f-pixel);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  font-weight: 400;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.pp-table th.num { text-align: right; }
+.pp-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+.pp-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.pp-table tr:hover td { background: rgba(26,24,20,0.03); }
+.pp-table tr.elim td { color: var(--ink-mute); }
+.pp-table tr.elim td:first-child::before {
+  content: "·";
+  margin-right: 4px;
+  color: var(--ink-mute);
+}
+
+/* ============================================================
+   WARNING STRIP — single hairline, no dither tape by default
+   ============================================================ */
+.warn-strip {
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  padding: 10px 16px;
+  letter-spacing: 1.2px;
+  border-top: 2px solid var(--hairline-2);
+  border-bottom: 2px solid var(--hairline-2);
+  display: flex; align-items: center; gap: 12px;
+  text-transform: uppercase;
+  position: relative;
+}
+.warn-strip::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.warn-strip.red {
+  color: var(--bad);
+  background: rgba(184,65,47,0.06);
+}
+.warn-strip.red::before { background: var(--bad); }
+
+/* ============================================================
+   SECTION HEAD — sleek; small-cap label + thin underline
+   ============================================================ */
+.sec-head {
+  background: transparent;
+  color: var(--ink-dim);
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  padding: 13px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 2px solid var(--hairline);
+  text-transform: uppercase;
+}
+.sec-head.dark   { background: transparent; color: var(--ink-dim); border-bottom: 2px solid var(--hairline); }
+.sec-head.cyan   { color: var(--cool); }
+.sec-head.green  { color: var(--good); }
+.sec-head.red    { color: var(--bad); }
+.sec-head .ix {
+  font-family: var(--f-pixel);
+  font-size: 8px;
+  background: transparent;
+  color: var(--ink-mute);
+  padding: 0;
+  border: none;
+  letter-spacing: 1.5px;
+}
+.sec-head .ix::before { content: "—  "; color: var(--ink-mute); }
+
+/* ============================================================
+   DOTS / SIGNALS / COVERAGE — slimmer
+   ============================================================ */
+.dotmark {
+  display: inline-block;
+  width: 12px; height: 12px;
+  background: var(--hairline);
+  border: 2px solid var(--hairline-2);
+  border-radius: 50%;
+}
+.dotmark.w { background: var(--good); border-color: var(--good-2); }
+.dotmark.l { background: var(--bad);  border-color: var(--bad-2);   }
+.dotmark.sm { width: 6px; height: 6px; }
+.dotmark.lg { width: 14px; height: 14px; }
+
+.sigbar { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.sigbar span { width: 3px; background: var(--hairline-2); }
+.sigbar span.on { background: var(--ink-2); }
+.sigbar span:nth-child(1){ height: 4px; }
+.sigbar span:nth-child(2){ height: 8px; }
+.sigbar span:nth-child(3){ height: 11px; }
+.sigbar span:nth-child(4){ height: 14px; }
+
+.br-line-h { height: 1px; background: var(--hairline); }
+.br-line-v { width: 1px; background: var(--hairline); }
+
+/* ============================================================
+   KBD / META
+   ============================================================ */
+.kbd {
+  font-family: var(--f-pixel); font-size: 9px;
+  background: transparent; color: var(--ink-dim);
+  border: 2px solid var(--hairline-2);
+  border-radius: var(--radius-sm);
+  padding: 4px 7px;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   PROBABILITY NUMBER TREATMENT — JB Mono, refined
+   ============================================================ */
+.prob-num {
+  font-family: var(--f-term);
+  font-variant-numeric: tabular-nums;
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  font-weight: 500;
+}
+.prob-num.lg { font-size: 28px; }
+.prob-num.xl { font-size: 44px; font-weight: 400; letter-spacing: -1.5px; }
+.prob-num.sm { font-size: 13px; }
+.prob-num .pct {
+  color: var(--ink-mute);
+  font-size: 0.5em;
+  margin-left: 3px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+.prob-num.muted { color: var(--ink-dim); }
+.prob-num.good  { color: var(--good); }
+.prob-num.warn  { color: var(--accent); }
+.prob-num.bad   { color: var(--bad); }
+
+/* ============================================================
+   PILL — quiet by default; tone-scoped color
+   ============================================================ */
+.pill {
+  font-family: var(--f-pixel);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  padding: 5px 9px;
+  background: transparent;
+  color: var(--ink-dim);
+  border: 2px solid var(--hairline-2);
+  border-radius: 999px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+.pill.good { background: transparent; color: var(--good); border-color: rgba(58,140,84,0.40); }
+.pill.warn { background: transparent; color: var(--accent); border-color: rgba(201,150,31,0.45); }
+.pill.bad  { background: transparent; color: var(--bad);  border-color: rgba(184,65,47,0.40); }
+.pill.cyan { background: transparent; color: var(--cool); border-color: rgba(46,111,157,0.40); }
+.pill.solid-good { background: var(--good); color: #fff; border-color: var(--good); }
+.pill.solid-warn { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+/* coverage strip */
+.cov {
+  display: inline-flex;
+  gap: 2px;
+}
+.cov span {
+  width: 16px; height: 12px;
+  background: transparent;
+  border: 2px solid var(--hairline);
+  border-radius: 3px;
+  font-family: var(--f-pixel); font-size: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-mute);
+  letter-spacing: 0;
+}
+.cov span.done { background: var(--ink-2); color: var(--bg); border-color: var(--ink-2); }
+.cov span.live { background: var(--accent); color: var(--on-accent); border-color: var(--accent); animation: ppblink 1.6s ease-in-out infinite; }
+.cov span.poss { background: transparent;   color: var(--ink-dim); border-color: var(--hairline-2); }
+.cov span.elim { background: transparent;   color: var(--ink-mute); border-color: var(--hairline); }
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.divider { height: 2px; background: var(--hairline); border-radius: 1px; }
+.divider.ink { background: var(--hairline-2); }
+
+.pp-scroll { overflow: auto; }
+.pp-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.pp-scroll::-webkit-scrollbar-track { background: var(--bg-2); }
+.pp-scroll::-webkit-scrollbar-thumb { background: var(--hairline-2); }
+
+/* ============================================================
+   GRID DISCIPLINE · alignment & rhythm
+   ============================================================ */
+.pp-table td.num, .pp-table th.num { padding-right: 14px; }
+.pp-table tbody tr:last-child td { border-bottom: none; }
+.sec-head { min-height: 44px; }
+.stat-block .val, .prob-num { font-variant-numeric: tabular-nums; }
+.team-badge { vertical-align: middle; }
+
+/* Selection */
+::selection { background: rgba(201, 150, 31, 0.30); color: var(--ink); }
