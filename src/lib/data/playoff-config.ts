@@ -1,7 +1,7 @@
-// MANUAL DATA — Last updated 2026-05-11
+// MANUAL DATA — Last updated 2026-05-11 11:00 PM PT
 // All ratings, player impacts, and injury statuses are manual estimates based on
-// public reporting. This is not official NBA data. Series states reflect Games 1-3
-// of DET-CLE and OKC-LAL (Game 4s are tonight, May 11).
+// public reporting. This is not official NBA data. Series states reflect games
+// completed through DET-CLE Game 4 and OKC-LAL Game 4 on May 11.
 // Injury sources: ESPN, Yahoo Sports, NBA.com — verified May 11, 2026.
 // Do NOT present these ratings as official statistics.
 
@@ -209,9 +209,12 @@ const sas = team(
 export const playoffConfig: PlayoffConfig = {
   notes: [
     "Manual data only. Ratings, player impacts, injury statuses, and availability are estimates, not official NBA data.",
-    "Series state is locked to 2026-05-11 before DET-CLE Game 4 and OKC-LAL Game 4.",
+    "Series state is locked to 2026-05-11 11:00 PM PT after DET-CLE Game 4 and OKC-LAL Game 4.",
+    "DET-CLE Game 4: CLE 112, DET 103. Series tied 2-2 with Game 5 in Detroit.",
+    "OKC-LAL Game 4: OKC 115, LAL 110. OKC swept the series 4-0 and advanced to the West Conference Finals.",
     "NYK-PHI is completed and inactive; NYK is represented as already advanced to the East Conference Finals.",
     "PHI is retained only as an inactive completed-series placeholder because the existing Series type requires both team IDs to resolve.",
+    "LAL is retained only as an inactive completed-series participant because the existing Series type requires both team IDs to resolve.",
     "Self-advance first-round placeholders preserve the existing bracket simulator shape without changing the active current playoff series.",
     "Market odds records are not active in this configuration.",
   ],
@@ -280,7 +283,7 @@ export const playoffConfig: PlayoffConfig = {
       teamA: "det",
       teamB: "cle",
       winsA: 2,
-      winsB: 1,
+      winsB: 2,
       homePattern: ["det", "det", "cle", "cle", "det", "cle", "det"],
     },
     {
@@ -334,7 +337,7 @@ export const playoffConfig: PlayoffConfig = {
       bracketOrder: 1,
       teamA: "okc",
       teamB: "lal",
-      winsA: 3,
+      winsA: 4,
       winsB: 0,
       homePattern: ["okc", "okc", "lal", "lal", "okc", "lal", "okc"],
     },
