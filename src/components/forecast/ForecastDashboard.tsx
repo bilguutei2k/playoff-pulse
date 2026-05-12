@@ -86,7 +86,9 @@ export function ForecastDashboard() {
                 className="border border-[var(--color-border-subtle)] bg-[var(--color-bg-secondary)] p-3"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="pp-team-badge">{team.abbreviation}</span>
+                  <span className="pp-team-badge" data-team={team.abbreviation}>
+                    {team.abbreviation}
+                  </span>
                   <span className="pp-kicker">{team.conference.slice(0, 1)}{team.seed}</span>
                 </div>
                 <div className="pp-number mt-3 text-2xl font-bold">

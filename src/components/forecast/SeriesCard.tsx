@@ -52,7 +52,9 @@ function ProbabilityRow({
 }) {
   return (
     <div className="grid grid-cols-[44px_1fr_68px] items-center gap-3">
-      <span className="pp-team-badge">{label}</span>
+      <span className="pp-team-badge" data-team={label}>
+        {label}
+      </span>
       <span className="pp-probbar">
         <span
           className="pp-probbar-fill"
@@ -103,7 +105,9 @@ export function SeriesCard({ series, forecast, teamsById }: SeriesCardProps) {
 
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b-2 border-[var(--color-border-subtle)] bg-gradient-to-b from-[var(--color-panel-secondary)] to-[var(--color-panel-primary)] px-4 py-4">
         <div className="grid justify-items-center gap-2 text-center">
-          <span className="pp-team-badge">{teamA.abbreviation}</span>
+          <span className="pp-team-badge" data-team={teamA.abbreviation}>
+            {teamA.abbreviation}
+          </span>
           <span className="pp-kicker">{teamA.conference.slice(0, 1)}{teamA.seed}</span>
         </div>
         <div className="grid justify-items-center gap-2">
@@ -134,7 +138,9 @@ export function SeriesCard({ series, forecast, teamsById }: SeriesCardProps) {
           </div>
         </div>
         <div className="grid justify-items-center gap-2 text-center">
-          <span className="pp-team-badge">{teamB.abbreviation}</span>
+          <span className="pp-team-badge" data-team={teamB.abbreviation}>
+            {teamB.abbreviation}
+          </span>
           <span className="pp-kicker">{teamB.conference.slice(0, 1)}{teamB.seed}</span>
         </div>
       </div>

@@ -239,6 +239,60 @@ select {
   text-align: center;
 }
 
+.pp-team-badge[data-team] {
+  background: var(--team-bg, var(--color-panel-secondary));
+  border-color: var(--team-border, var(--color-border-strong));
+  color: var(--team-ink, var(--color-text-primary));
+}
+
+.pp-team-badge[data-team="NYK"] {
+  --team-bg: #f58426;
+  --team-border: #006bb6;
+  --team-ink: #10213f;
+}
+
+.pp-team-badge[data-team="DET"] {
+  --team-bg: #1d42ba;
+  --team-border: #c8102e;
+  --team-ink: #ffffff;
+}
+
+.pp-team-badge[data-team="CLE"] {
+  --team-bg: #6f263d;
+  --team-border: #ffb81c;
+  --team-ink: #ffdf80;
+}
+
+.pp-team-badge[data-team="PHI"] {
+  --team-bg: #006bb6;
+  --team-border: #ed174c;
+  --team-ink: #ffffff;
+}
+
+.pp-team-badge[data-team="OKC"] {
+  --team-bg: #007ac1;
+  --team-border: #ef3b24;
+  --team-ink: #ffffff;
+}
+
+.pp-team-badge[data-team="LAL"] {
+  --team-bg: #552583;
+  --team-border: #fdb927;
+  --team-ink: #ffffff;
+}
+
+.pp-team-badge[data-team="MIN"] {
+  --team-bg: #0c2340;
+  --team-border: #78be20;
+  --team-ink: #ffffff;
+}
+
+.pp-team-badge[data-team="SAS"] {
+  --team-bg: #c4ced4;
+  --team-border: #111111;
+  --team-ink: #111111;
+}
+
 .pp-scan-lite::before {
   background-image: repeating-linear-gradient(
     0deg,

@@ -92,7 +92,9 @@ export function ModelControls({
                 className="block rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-subtle)] bg-[var(--color-bg-secondary)] p-3"
               >
                 <span className="flex items-center justify-between gap-3 text-sm">
-                  <span className="pp-team-badge">{team.abbreviation}</span>
+                  <span className="pp-team-badge" data-team={team.abbreviation}>
+                    {team.abbreviation}
+                  </span>
                   <span
                     className={`pp-number font-bold ${
                       (manualAdjustments[team.id] ?? team.manualAdjustment) < 0

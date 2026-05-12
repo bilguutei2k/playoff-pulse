@@ -50,7 +50,9 @@ export function TeamStrengthTable({ teamsById, forecasts }: TeamStrengthTablePro
               <tr key={forecast.teamId}>
                 <td>
                   <div className="flex items-center gap-2">
-                    <span className="pp-team-badge">{team.abbreviation}</span>
+                    <span className="pp-team-badge" data-team={team.abbreviation}>
+                      {team.abbreviation}
+                    </span>
                     <span className="font-bold text-[var(--color-text-primary)]">
                       {team.name}
                     </span>

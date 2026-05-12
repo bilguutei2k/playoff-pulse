@@ -84,7 +84,9 @@ export function ProbabilityTable({
                   <td>{seriesRow?.series ?? "Future path"}</td>
                   <td>
                     <div className="flex items-center gap-2">
-                      <span className="pp-team-badge">{team.abbreviation}</span>
+                      <span className="pp-team-badge" data-team={team.abbreviation}>
+                        {team.abbreviation}
+                      </span>
                       <span className="font-bold text-[var(--color-text-primary)]">
                         {team.name}
                       </span>
