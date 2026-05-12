@@ -239,36 +239,6 @@ select {
   text-align: center;
 }
 
-.pp-team-logo-tile {
-  align-items: center;
-  background: var(--color-panel-secondary);
-  border: 1px solid var(--color-border-subtle);
-  display: flex;
-  gap: 10px;
-  min-width: 0;
-  padding: 9px;
-}
-
-.pp-team-logo-tile-muted {
-  opacity: 0.52;
-}
-
-.pp-team-logo-mark {
-  align-items: center;
-  border: 3px solid var(--color-border-strong);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 2px rgba(251, 248, 241, 0.42);
-  display: inline-flex;
-  flex: 0 0 auto;
-  font-family: var(--font-pixel);
-  font-size: 9px;
-  height: 42px;
-  justify-content: center;
-  letter-spacing: 0.7px;
-  line-height: 1;
-  width: 42px;
-}
-
 .pp-scan-lite::before {
   background-image: repeating-linear-gradient(
     0deg,
