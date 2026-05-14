@@ -1,0 +1,792 @@
+[
+  {
+    "seriesId": "2017-finals-finals-gsw-cle",
+    "gameNumber": 1,
+    "date": "2017-06-01",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 113,
+    "awayScore": 91,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-finals-finals-gsw-cle",
+    "gameNumber": 2,
+    "date": "2017-06-04",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 132,
+    "awayScore": 113,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-finals-finals-gsw-cle",
+    "gameNumber": 3,
+    "date": "2017-06-07",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 113,
+    "awayScore": 118,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-finals-finals-gsw-cle",
+    "gameNumber": 4,
+    "date": "2017-06-09",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 137,
+    "awayScore": 116,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-finals-finals-gsw-cle",
+    "gameNumber": 5,
+    "date": "2017-06-12",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 129,
+    "awayScore": 120,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-east-cf-bos-cle",
+    "gameNumber": 1,
+    "date": "2017-05-17",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 117,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-cf-bos-cle",
+    "gameNumber": 2,
+    "date": "2017-05-19",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 86,
+    "awayScore": 130,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-cf-bos-cle",
+    "gameNumber": 3,
+    "date": "2017-05-21",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 108,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-cf-bos-cle",
+    "gameNumber": 4,
+    "date": "2017-05-23",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 112,
+    "awayScore": 99,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-cf-bos-cle",
+    "gameNumber": 5,
+    "date": "2017-05-25",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 102,
+    "awayScore": 135,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-west-cf-gsw-sas",
+    "gameNumber": 1,
+    "date": "2017-05-14",
+    "homeTeam": "GSW",
+    "awayTeam": "SAS",
+    "homeScore": 113,
+    "awayScore": 111,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-cf-gsw-sas",
+    "gameNumber": 2,
+    "date": "2017-05-16",
+    "homeTeam": "GSW",
+    "awayTeam": "SAS",
+    "homeScore": 136,
+    "awayScore": 100,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-cf-gsw-sas",
+    "gameNumber": 3,
+    "date": "2017-05-20",
+    "homeTeam": "SAS",
+    "awayTeam": "GSW",
+    "homeScore": 108,
+    "awayScore": 120,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-cf-gsw-sas",
+    "gameNumber": 4,
+    "date": "2017-05-22",
+    "homeTeam": "SAS",
+    "awayTeam": "GSW",
+    "homeScore": 115,
+    "awayScore": 129,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 1,
+    "date": "2017-04-30",
+    "homeTeam": "BOS",
+    "awayTeam": "WAS",
+    "homeScore": 123,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 2,
+    "date": "2017-05-02",
+    "homeTeam": "BOS",
+    "awayTeam": "WAS",
+    "homeScore": 129,
+    "awayScore": 119,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 3,
+    "date": "2017-05-04",
+    "homeTeam": "WAS",
+    "awayTeam": "BOS",
+    "homeScore": 116,
+    "awayScore": 89,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 4,
+    "date": "2017-05-07",
+    "homeTeam": "WAS",
+    "awayTeam": "BOS",
+    "homeScore": 121,
+    "awayScore": 102,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 5,
+    "date": "2017-05-10",
+    "homeTeam": "BOS",
+    "awayTeam": "WAS",
+    "homeScore": 123,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 6,
+    "date": "2017-05-12",
+    "homeTeam": "WAS",
+    "awayTeam": "BOS",
+    "homeScore": 92,
+    "awayScore": 91,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-east-csf-bos-was",
+    "gameNumber": 7,
+    "date": "2017-05-15",
+    "homeTeam": "BOS",
+    "awayTeam": "WAS",
+    "homeScore": 115,
+    "awayScore": 105,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-csf-tor-cle",
+    "gameNumber": 1,
+    "date": "2017-05-01",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 116,
+    "awayScore": 105,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-csf-tor-cle",
+    "gameNumber": 2,
+    "date": "2017-05-03",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 125,
+    "awayScore": 103,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-csf-tor-cle",
+    "gameNumber": 3,
+    "date": "2017-05-05",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 94,
+    "awayScore": 115,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-csf-tor-cle",
+    "gameNumber": 4,
+    "date": "2017-05-07",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 102,
+    "awayScore": 109,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-west-csf-gsw-uta",
+    "gameNumber": 1,
+    "date": "2017-05-02",
+    "homeTeam": "GSW",
+    "awayTeam": "UTA",
+    "homeScore": 106,
+    "awayScore": 94,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-csf-gsw-uta",
+    "gameNumber": 2,
+    "date": "2017-05-04",
+    "homeTeam": "GSW",
+    "awayTeam": "UTA",
+    "homeScore": 115,
+    "awayScore": 104,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-csf-gsw-uta",
+    "gameNumber": 3,
+    "date": "2017-05-06",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 91,
+    "awayScore": 102,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-csf-gsw-uta",
+    "gameNumber": 4,
+    "date": "2017-05-08",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 95,
+    "awayScore": 121,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-csf-sas-hou",
+    "gameNumber": 1,
+    "date": "2017-05-01",
+    "homeTeam": "SAS",
+    "awayTeam": "HOU",
+    "homeScore": 99,
+    "awayScore": 126,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2017-west-csf-sas-hou",
+    "gameNumber": 2,
+    "date": "2017-05-03",
+    "homeTeam": "SAS",
+    "awayTeam": "HOU",
+    "homeScore": 121,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-csf-sas-hou",
+    "gameNumber": 3,
+    "date": "2017-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "SAS",
+    "homeScore": 92,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-csf-sas-hou",
+    "gameNumber": 4,
+    "date": "2017-05-07",
+    "homeTeam": "HOU",
+    "awayTeam": "SAS",
+    "homeScore": 125,
+    "awayScore": 104,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2017-west-csf-sas-hou",
+    "gameNumber": 5,
+    "date": "2017-05-09",
+    "homeTeam": "SAS",
+    "awayTeam": "HOU",
+    "homeScore": 110,
+    "awayScore": 107,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-csf-sas-hou",
+    "gameNumber": 6,
+    "date": "2017-05-11",
+    "homeTeam": "HOU",
+    "awayTeam": "SAS",
+    "homeScore": 75,
+    "awayScore": 114,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-east-r1-bos-chi",
+    "gameNumber": 1,
+    "date": "2017-04-16",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 102,
+    "awayScore": 106,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2017-east-r1-bos-chi",
+    "gameNumber": 2,
+    "date": "2017-04-18",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 97,
+    "awayScore": 111,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2017-east-r1-bos-chi",
+    "gameNumber": 3,
+    "date": "2017-04-21",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 87,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-r1-bos-chi",
+    "gameNumber": 4,
+    "date": "2017-04-23",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 95,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-r1-bos-chi",
+    "gameNumber": 5,
+    "date": "2017-04-26",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 108,
+    "awayScore": 97,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-r1-bos-chi",
+    "gameNumber": 6,
+    "date": "2017-04-28",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 83,
+    "awayScore": 105,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2017-east-r1-cle-ind",
+    "gameNumber": 1,
+    "date": "2017-04-15",
+    "homeTeam": "CLE",
+    "awayTeam": "IND",
+    "homeScore": 109,
+    "awayScore": 108,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-r1-cle-ind",
+    "gameNumber": 2,
+    "date": "2017-04-17",
+    "homeTeam": "CLE",
+    "awayTeam": "IND",
+    "homeScore": 117,
+    "awayScore": 111,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-r1-cle-ind",
+    "gameNumber": 3,
+    "date": "2017-04-20",
+    "homeTeam": "IND",
+    "awayTeam": "CLE",
+    "homeScore": 114,
+    "awayScore": 119,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-r1-cle-ind",
+    "gameNumber": 4,
+    "date": "2017-04-23",
+    "homeTeam": "IND",
+    "awayTeam": "CLE",
+    "homeScore": 102,
+    "awayScore": 106,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2017-east-r1-tor-mil",
+    "gameNumber": 1,
+    "date": "2017-04-15",
+    "homeTeam": "TOR",
+    "awayTeam": "MIL",
+    "homeScore": 83,
+    "awayScore": 97,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2017-east-r1-tor-mil",
+    "gameNumber": 2,
+    "date": "2017-04-18",
+    "homeTeam": "TOR",
+    "awayTeam": "MIL",
+    "homeScore": 106,
+    "awayScore": 100,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2017-east-r1-tor-mil",
+    "gameNumber": 3,
+    "date": "2017-04-20",
+    "homeTeam": "MIL",
+    "awayTeam": "TOR",
+    "homeScore": 104,
+    "awayScore": 77,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2017-east-r1-tor-mil",
+    "gameNumber": 4,
+    "date": "2017-04-22",
+    "homeTeam": "MIL",
+    "awayTeam": "TOR",
+    "homeScore": 76,
+    "awayScore": 87,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2017-east-r1-tor-mil",
+    "gameNumber": 5,
+    "date": "2017-04-24",
+    "homeTeam": "TOR",
+    "awayTeam": "MIL",
+    "homeScore": 118,
+    "awayScore": 93,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2017-east-r1-tor-mil",
+    "gameNumber": 6,
+    "date": "2017-04-27",
+    "homeTeam": "MIL",
+    "awayTeam": "TOR",
+    "homeScore": 89,
+    "awayScore": 92,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2017-east-r1-was-atl",
+    "gameNumber": 1,
+    "date": "2017-04-16",
+    "homeTeam": "WAS",
+    "awayTeam": "ATL",
+    "homeScore": 114,
+    "awayScore": 107,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-east-r1-was-atl",
+    "gameNumber": 2,
+    "date": "2017-04-19",
+    "homeTeam": "WAS",
+    "awayTeam": "ATL",
+    "homeScore": 109,
+    "awayScore": 101,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-east-r1-was-atl",
+    "gameNumber": 3,
+    "date": "2017-04-22",
+    "homeTeam": "ATL",
+    "awayTeam": "WAS",
+    "homeScore": 116,
+    "awayScore": 98,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2017-east-r1-was-atl",
+    "gameNumber": 4,
+    "date": "2017-04-24",
+    "homeTeam": "ATL",
+    "awayTeam": "WAS",
+    "homeScore": 111,
+    "awayScore": 101,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2017-east-r1-was-atl",
+    "gameNumber": 5,
+    "date": "2017-04-26",
+    "homeTeam": "WAS",
+    "awayTeam": "ATL",
+    "homeScore": 103,
+    "awayScore": 99,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-east-r1-was-atl",
+    "gameNumber": 6,
+    "date": "2017-04-28",
+    "homeTeam": "ATL",
+    "awayTeam": "WAS",
+    "homeScore": 99,
+    "awayScore": 115,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2017-west-r1-gsw-por",
+    "gameNumber": 1,
+    "date": "2017-04-16",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 121,
+    "awayScore": 109,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-r1-gsw-por",
+    "gameNumber": 2,
+    "date": "2017-04-19",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 110,
+    "awayScore": 81,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-r1-gsw-por",
+    "gameNumber": 3,
+    "date": "2017-04-22",
+    "homeTeam": "POR",
+    "awayTeam": "GSW",
+    "homeScore": 113,
+    "awayScore": 119,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-r1-gsw-por",
+    "gameNumber": 4,
+    "date": "2017-04-24",
+    "homeTeam": "POR",
+    "awayTeam": "GSW",
+    "homeScore": 103,
+    "awayScore": 128,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2017-west-r1-hou-okc",
+    "gameNumber": 1,
+    "date": "2017-04-16",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 118,
+    "awayScore": 87,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2017-west-r1-hou-okc",
+    "gameNumber": 2,
+    "date": "2017-04-19",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 115,
+    "awayScore": 111,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2017-west-r1-hou-okc",
+    "gameNumber": 3,
+    "date": "2017-04-21",
+    "homeTeam": "OKC",
+    "awayTeam": "HOU",
+    "homeScore": 115,
+    "awayScore": 113,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2017-west-r1-hou-okc",
+    "gameNumber": 4,
+    "date": "2017-04-23",
+    "homeTeam": "OKC",
+    "awayTeam": "HOU",
+    "homeScore": 109,
+    "awayScore": 113,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2017-west-r1-hou-okc",
+    "gameNumber": 5,
+    "date": "2017-04-25",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 105,
+    "awayScore": 99,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2017-west-r1-sas-mem",
+    "gameNumber": 1,
+    "date": "2017-04-15",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 111,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-r1-sas-mem",
+    "gameNumber": 2,
+    "date": "2017-04-17",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 96,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-r1-sas-mem",
+    "gameNumber": 3,
+    "date": "2017-04-20",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 94,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2017-west-r1-sas-mem",
+    "gameNumber": 4,
+    "date": "2017-04-22",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 110,
+    "awayScore": 108,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2017-west-r1-sas-mem",
+    "gameNumber": 5,
+    "date": "2017-04-25",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 116,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-r1-sas-mem",
+    "gameNumber": 6,
+    "date": "2017-04-27",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 96,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 1,
+    "date": "2017-04-15",
+    "homeTeam": "LAC",
+    "awayTeam": "UTA",
+    "homeScore": 95,
+    "awayScore": 97,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 2,
+    "date": "2017-04-18",
+    "homeTeam": "LAC",
+    "awayTeam": "UTA",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 3,
+    "date": "2017-04-21",
+    "homeTeam": "UTA",
+    "awayTeam": "LAC",
+    "homeScore": 106,
+    "awayScore": 111,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 4,
+    "date": "2017-04-23",
+    "homeTeam": "UTA",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 98,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 5,
+    "date": "2017-04-25",
+    "homeTeam": "LAC",
+    "awayTeam": "UTA",
+    "homeScore": 92,
+    "awayScore": 96,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 6,
+    "date": "2017-04-28",
+    "homeTeam": "UTA",
+    "awayTeam": "LAC",
+    "homeScore": 93,
+    "awayScore": 98,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2017-west-r1-lac-uta",
+    "gameNumber": 7,
+    "date": "2017-04-30",
+    "homeTeam": "LAC",
+    "awayTeam": "UTA",
+    "homeScore": 91,
+    "awayScore": 104,
+    "winner": "UTA"
+  }
+]

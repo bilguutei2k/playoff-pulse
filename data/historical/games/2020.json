@@ -1,0 +1,832 @@
+[
+  {
+    "seriesId": "2020-finals-finals-lal-mia",
+    "gameNumber": 1,
+    "date": "2020-09-30",
+    "homeTeam": "LAL",
+    "awayTeam": "MIA",
+    "homeScore": 116,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-finals-finals-lal-mia",
+    "gameNumber": 2,
+    "date": "2020-10-02",
+    "homeTeam": "LAL",
+    "awayTeam": "MIA",
+    "homeScore": 124,
+    "awayScore": 114,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-finals-finals-lal-mia",
+    "gameNumber": 3,
+    "date": "2020-10-04",
+    "homeTeam": "MIA",
+    "awayTeam": "LAL",
+    "homeScore": 115,
+    "awayScore": 104,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-finals-finals-lal-mia",
+    "gameNumber": 4,
+    "date": "2020-10-06",
+    "homeTeam": "MIA",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 102,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-finals-finals-lal-mia",
+    "gameNumber": 5,
+    "date": "2020-10-09",
+    "homeTeam": "LAL",
+    "awayTeam": "MIA",
+    "homeScore": 108,
+    "awayScore": 111,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-finals-finals-lal-mia",
+    "gameNumber": 6,
+    "date": "2020-10-11",
+    "homeTeam": "MIA",
+    "awayTeam": "LAL",
+    "homeScore": 93,
+    "awayScore": 106,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-east-cf-bos-mia",
+    "gameNumber": 1,
+    "date": "2020-09-15",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 114,
+    "awayScore": 117,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-cf-bos-mia",
+    "gameNumber": 2,
+    "date": "2020-09-17",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 101,
+    "awayScore": 106,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-cf-bos-mia",
+    "gameNumber": 3,
+    "date": "2020-09-19",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 117,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-cf-bos-mia",
+    "gameNumber": 4,
+    "date": "2020-09-23",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 112,
+    "awayScore": 109,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-cf-bos-mia",
+    "gameNumber": 5,
+    "date": "2020-09-25",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 121,
+    "awayScore": 108,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-cf-bos-mia",
+    "gameNumber": 6,
+    "date": "2020-09-27",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 125,
+    "awayScore": 113,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-west-cf-lal-den",
+    "gameNumber": 1,
+    "date": "2020-09-18",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 126,
+    "awayScore": 114,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-cf-lal-den",
+    "gameNumber": 2,
+    "date": "2020-09-20",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 103,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-cf-lal-den",
+    "gameNumber": 3,
+    "date": "2020-09-22",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 114,
+    "awayScore": 106,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-cf-lal-den",
+    "gameNumber": 4,
+    "date": "2020-09-24",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 114,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-cf-lal-den",
+    "gameNumber": 5,
+    "date": "2020-09-26",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 117,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 1,
+    "date": "2020-08-30",
+    "homeTeam": "TOR",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 112,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 2,
+    "date": "2020-09-01",
+    "homeTeam": "TOR",
+    "awayTeam": "BOS",
+    "homeScore": 99,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 3,
+    "date": "2020-09-03",
+    "homeTeam": "BOS",
+    "awayTeam": "TOR",
+    "homeScore": 103,
+    "awayScore": 104,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 4,
+    "date": "2020-09-05",
+    "homeTeam": "BOS",
+    "awayTeam": "TOR",
+    "homeScore": 93,
+    "awayScore": 100,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 5,
+    "date": "2020-09-07",
+    "homeTeam": "TOR",
+    "awayTeam": "BOS",
+    "homeScore": 89,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 6,
+    "date": "2020-09-09",
+    "homeTeam": "BOS",
+    "awayTeam": "TOR",
+    "homeScore": 122,
+    "awayScore": 125,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-east-csf-tor-bos",
+    "gameNumber": 7,
+    "date": "2020-09-11",
+    "homeTeam": "TOR",
+    "awayTeam": "BOS",
+    "homeScore": 87,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-csf-mil-mia",
+    "gameNumber": 1,
+    "date": "2020-08-31",
+    "homeTeam": "MIL",
+    "awayTeam": "MIA",
+    "homeScore": 104,
+    "awayScore": 115,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-csf-mil-mia",
+    "gameNumber": 2,
+    "date": "2020-09-02",
+    "homeTeam": "MIL",
+    "awayTeam": "MIA",
+    "homeScore": 114,
+    "awayScore": 116,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-csf-mil-mia",
+    "gameNumber": 3,
+    "date": "2020-09-04",
+    "homeTeam": "MIA",
+    "awayTeam": "MIL",
+    "homeScore": 115,
+    "awayScore": 100,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-csf-mil-mia",
+    "gameNumber": 4,
+    "date": "2020-09-06",
+    "homeTeam": "MIA",
+    "awayTeam": "MIL",
+    "homeScore": 115,
+    "awayScore": 118,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2020-east-csf-mil-mia",
+    "gameNumber": 5,
+    "date": "2020-09-08",
+    "homeTeam": "MIL",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 103,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 1,
+    "date": "2020-09-03",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 120,
+    "awayScore": 97,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 2,
+    "date": "2020-09-05",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 101,
+    "awayScore": 110,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 3,
+    "date": "2020-09-07",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 107,
+    "awayScore": 113,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 4,
+    "date": "2020-09-09",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 85,
+    "awayScore": 96,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 5,
+    "date": "2020-09-11",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 111,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 6,
+    "date": "2020-09-13",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 111,
+    "awayScore": 98,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-csf-lac-den",
+    "gameNumber": 7,
+    "date": "2020-09-15",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 89,
+    "awayScore": 104,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-csf-lal-hou",
+    "gameNumber": 1,
+    "date": "2020-09-04",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 97,
+    "awayScore": 112,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2020-west-csf-lal-hou",
+    "gameNumber": 2,
+    "date": "2020-09-06",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 117,
+    "awayScore": 109,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-csf-lal-hou",
+    "gameNumber": 3,
+    "date": "2020-09-08",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 102,
+    "awayScore": 112,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-csf-lal-hou",
+    "gameNumber": 4,
+    "date": "2020-09-10",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 100,
+    "awayScore": 110,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-csf-lal-hou",
+    "gameNumber": 5,
+    "date": "2020-09-12",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 119,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-east-r1-bos-phi",
+    "gameNumber": 1,
+    "date": "2020-08-17",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 109,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-r1-bos-phi",
+    "gameNumber": 2,
+    "date": "2020-08-19",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 128,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-r1-bos-phi",
+    "gameNumber": 3,
+    "date": "2020-08-21",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-r1-bos-phi",
+    "gameNumber": 4,
+    "date": "2020-08-23",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 110,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2020-east-r1-ind-mia",
+    "gameNumber": 1,
+    "date": "2020-08-18",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 101,
+    "awayScore": 113,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-r1-ind-mia",
+    "gameNumber": 2,
+    "date": "2020-08-20",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 100,
+    "awayScore": 109,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-r1-ind-mia",
+    "gameNumber": 3,
+    "date": "2020-08-22",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 124,
+    "awayScore": 115,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-r1-ind-mia",
+    "gameNumber": 4,
+    "date": "2020-08-24",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 99,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2020-east-r1-mil-orl",
+    "gameNumber": 1,
+    "date": "2020-08-18",
+    "homeTeam": "MIL",
+    "awayTeam": "ORL",
+    "homeScore": 110,
+    "awayScore": 122,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2020-east-r1-mil-orl",
+    "gameNumber": 2,
+    "date": "2020-08-20",
+    "homeTeam": "MIL",
+    "awayTeam": "ORL",
+    "homeScore": 111,
+    "awayScore": 96,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2020-east-r1-mil-orl",
+    "gameNumber": 3,
+    "date": "2020-08-22",
+    "homeTeam": "ORL",
+    "awayTeam": "MIL",
+    "homeScore": 107,
+    "awayScore": 121,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2020-east-r1-mil-orl",
+    "gameNumber": 4,
+    "date": "2020-08-24",
+    "homeTeam": "ORL",
+    "awayTeam": "MIL",
+    "homeScore": 106,
+    "awayScore": 121,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2020-east-r1-mil-orl",
+    "gameNumber": 5,
+    "date": "2020-08-29",
+    "homeTeam": "MIL",
+    "awayTeam": "ORL",
+    "homeScore": 118,
+    "awayScore": 104,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2020-east-r1-tor-brk",
+    "gameNumber": 1,
+    "date": "2020-08-17",
+    "homeTeam": "TOR",
+    "awayTeam": "BRK",
+    "homeScore": 134,
+    "awayScore": 110,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-east-r1-tor-brk",
+    "gameNumber": 2,
+    "date": "2020-08-19",
+    "homeTeam": "TOR",
+    "awayTeam": "BRK",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-east-r1-tor-brk",
+    "gameNumber": 3,
+    "date": "2020-08-21",
+    "homeTeam": "BRK",
+    "awayTeam": "TOR",
+    "homeScore": 92,
+    "awayScore": 117,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-east-r1-tor-brk",
+    "gameNumber": 4,
+    "date": "2020-08-23",
+    "homeTeam": "BRK",
+    "awayTeam": "TOR",
+    "homeScore": 122,
+    "awayScore": 150,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 1,
+    "date": "2020-08-17",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 135,
+    "awayScore": 125,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 2,
+    "date": "2020-08-19",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 105,
+    "awayScore": 124,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 3,
+    "date": "2020-08-21",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 124,
+    "awayScore": 87,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 4,
+    "date": "2020-08-23",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 129,
+    "awayScore": 127,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 5,
+    "date": "2020-08-25",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 117,
+    "awayScore": 107,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 6,
+    "date": "2020-08-30",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 107,
+    "awayScore": 119,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-r1-den-uta",
+    "gameNumber": 7,
+    "date": "2020-09-01",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 80,
+    "awayScore": 78,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 1,
+    "date": "2020-08-18",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 123,
+    "awayScore": 108,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 2,
+    "date": "2020-08-20",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 111,
+    "awayScore": 98,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 3,
+    "date": "2020-08-22",
+    "homeTeam": "OKC",
+    "awayTeam": "HOU",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 4,
+    "date": "2020-08-24",
+    "homeTeam": "OKC",
+    "awayTeam": "HOU",
+    "homeScore": 117,
+    "awayScore": 114,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 5,
+    "date": "2020-08-29",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 114,
+    "awayScore": 80,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 6,
+    "date": "2020-08-31",
+    "homeTeam": "OKC",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 100,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2020-west-r1-hou-okc",
+    "gameNumber": 7,
+    "date": "2020-09-02",
+    "homeTeam": "HOU",
+    "awayTeam": "OKC",
+    "homeScore": 104,
+    "awayScore": 102,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2020-west-r1-lac-dal",
+    "gameNumber": 1,
+    "date": "2020-08-17",
+    "homeTeam": "LAC",
+    "awayTeam": "DAL",
+    "homeScore": 118,
+    "awayScore": 110,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-r1-lac-dal",
+    "gameNumber": 2,
+    "date": "2020-08-19",
+    "homeTeam": "LAC",
+    "awayTeam": "DAL",
+    "homeScore": 114,
+    "awayScore": 127,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2020-west-r1-lac-dal",
+    "gameNumber": 3,
+    "date": "2020-08-21",
+    "homeTeam": "DAL",
+    "awayTeam": "LAC",
+    "homeScore": 122,
+    "awayScore": 130,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-r1-lac-dal",
+    "gameNumber": 4,
+    "date": "2020-08-23",
+    "homeTeam": "DAL",
+    "awayTeam": "LAC",
+    "homeScore": 135,
+    "awayScore": 133,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2020-west-r1-lac-dal",
+    "gameNumber": 5,
+    "date": "2020-08-25",
+    "homeTeam": "LAC",
+    "awayTeam": "DAL",
+    "homeScore": 154,
+    "awayScore": 111,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-r1-lac-dal",
+    "gameNumber": 6,
+    "date": "2020-08-30",
+    "homeTeam": "DAL",
+    "awayTeam": "LAC",
+    "homeScore": 97,
+    "awayScore": 111,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2020-west-r1-lal-por",
+    "gameNumber": 1,
+    "date": "2020-08-18",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 93,
+    "awayScore": 100,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2020-west-r1-lal-por",
+    "gameNumber": 2,
+    "date": "2020-08-20",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 111,
+    "awayScore": 88,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-r1-lal-por",
+    "gameNumber": 3,
+    "date": "2020-08-22",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 116,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-r1-lal-por",
+    "gameNumber": 4,
+    "date": "2020-08-24",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 115,
+    "awayScore": 135,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2020-west-r1-lal-por",
+    "gameNumber": 5,
+    "date": "2020-08-29",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 131,
+    "awayScore": 122,
+    "winner": "LAL"
+  }
+]

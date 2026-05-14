@@ -1,0 +1,822 @@
+[
+  {
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "gameNumber": 1,
+    "date": "2019-05-30",
+    "homeTeam": "TOR",
+    "awayTeam": "GSW",
+    "homeScore": 118,
+    "awayScore": 109,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "gameNumber": 2,
+    "date": "2019-06-02",
+    "homeTeam": "TOR",
+    "awayTeam": "GSW",
+    "homeScore": 104,
+    "awayScore": 109,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "gameNumber": 3,
+    "date": "2019-06-05",
+    "homeTeam": "GSW",
+    "awayTeam": "TOR",
+    "homeScore": 109,
+    "awayScore": 123,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "gameNumber": 4,
+    "date": "2019-06-07",
+    "homeTeam": "GSW",
+    "awayTeam": "TOR",
+    "homeScore": 92,
+    "awayScore": 105,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "gameNumber": 5,
+    "date": "2019-06-10",
+    "homeTeam": "TOR",
+    "awayTeam": "GSW",
+    "homeScore": 105,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "gameNumber": 6,
+    "date": "2019-06-13",
+    "homeTeam": "GSW",
+    "awayTeam": "TOR",
+    "homeScore": 110,
+    "awayScore": 114,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-cf-mil-tor",
+    "gameNumber": 1,
+    "date": "2019-05-15",
+    "homeTeam": "MIL",
+    "awayTeam": "TOR",
+    "homeScore": 108,
+    "awayScore": 100,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-cf-mil-tor",
+    "gameNumber": 2,
+    "date": "2019-05-17",
+    "homeTeam": "MIL",
+    "awayTeam": "TOR",
+    "homeScore": 125,
+    "awayScore": 103,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-cf-mil-tor",
+    "gameNumber": 3,
+    "date": "2019-05-19",
+    "homeTeam": "TOR",
+    "awayTeam": "MIL",
+    "homeScore": 118,
+    "awayScore": 112,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-cf-mil-tor",
+    "gameNumber": 4,
+    "date": "2019-05-21",
+    "homeTeam": "TOR",
+    "awayTeam": "MIL",
+    "homeScore": 120,
+    "awayScore": 102,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-cf-mil-tor",
+    "gameNumber": 5,
+    "date": "2019-05-23",
+    "homeTeam": "MIL",
+    "awayTeam": "TOR",
+    "homeScore": 99,
+    "awayScore": 105,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-cf-mil-tor",
+    "gameNumber": 6,
+    "date": "2019-05-25",
+    "homeTeam": "TOR",
+    "awayTeam": "MIL",
+    "homeScore": 100,
+    "awayScore": 94,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-west-cf-gsw-por",
+    "gameNumber": 1,
+    "date": "2019-05-14",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 116,
+    "awayScore": 94,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-cf-gsw-por",
+    "gameNumber": 2,
+    "date": "2019-05-16",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 114,
+    "awayScore": 111,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-cf-gsw-por",
+    "gameNumber": 3,
+    "date": "2019-05-18",
+    "homeTeam": "POR",
+    "awayTeam": "GSW",
+    "homeScore": 99,
+    "awayScore": 110,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-cf-gsw-por",
+    "gameNumber": 4,
+    "date": "2019-05-20",
+    "homeTeam": "POR",
+    "awayTeam": "GSW",
+    "homeScore": 117,
+    "awayScore": 119,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-east-csf-mil-bos",
+    "gameNumber": 1,
+    "date": "2019-04-28",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 90,
+    "awayScore": 112,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2019-east-csf-mil-bos",
+    "gameNumber": 2,
+    "date": "2019-04-30",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 123,
+    "awayScore": 102,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-csf-mil-bos",
+    "gameNumber": 3,
+    "date": "2019-05-03",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 116,
+    "awayScore": 123,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-csf-mil-bos",
+    "gameNumber": 4,
+    "date": "2019-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 101,
+    "awayScore": 113,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-csf-mil-bos",
+    "gameNumber": 5,
+    "date": "2019-05-08",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 116,
+    "awayScore": 91,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 1,
+    "date": "2019-04-27",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 108,
+    "awayScore": 95,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 2,
+    "date": "2019-04-29",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 89,
+    "awayScore": 94,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 3,
+    "date": "2019-05-02",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 116,
+    "awayScore": 95,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 4,
+    "date": "2019-05-05",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 96,
+    "awayScore": 101,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 5,
+    "date": "2019-05-07",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 125,
+    "awayScore": 89,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 6,
+    "date": "2019-05-09",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 112,
+    "awayScore": 101,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-csf-tor-phi",
+    "gameNumber": 7,
+    "date": "2019-05-12",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 92,
+    "awayScore": 90,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-west-csf-gsw-hou",
+    "gameNumber": 1,
+    "date": "2019-04-28",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 100,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-csf-gsw-hou",
+    "gameNumber": 2,
+    "date": "2019-04-30",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 115,
+    "awayScore": 109,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-csf-gsw-hou",
+    "gameNumber": 3,
+    "date": "2019-05-04",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 126,
+    "awayScore": 121,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2019-west-csf-gsw-hou",
+    "gameNumber": 4,
+    "date": "2019-05-06",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 112,
+    "awayScore": 108,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2019-west-csf-gsw-hou",
+    "gameNumber": 5,
+    "date": "2019-05-08",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-csf-gsw-hou",
+    "gameNumber": 6,
+    "date": "2019-05-10",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 113,
+    "awayScore": 118,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 1,
+    "date": "2019-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "POR",
+    "homeScore": 121,
+    "awayScore": 113,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 2,
+    "date": "2019-05-01",
+    "homeTeam": "DEN",
+    "awayTeam": "POR",
+    "homeScore": 90,
+    "awayScore": 97,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 3,
+    "date": "2019-05-03",
+    "homeTeam": "POR",
+    "awayTeam": "DEN",
+    "homeScore": 140,
+    "awayScore": 137,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 4,
+    "date": "2019-05-05",
+    "homeTeam": "POR",
+    "awayTeam": "DEN",
+    "homeScore": 112,
+    "awayScore": 116,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 5,
+    "date": "2019-05-07",
+    "homeTeam": "DEN",
+    "awayTeam": "POR",
+    "homeScore": 124,
+    "awayScore": 98,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 6,
+    "date": "2019-05-09",
+    "homeTeam": "POR",
+    "awayTeam": "DEN",
+    "homeScore": 119,
+    "awayScore": 108,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-west-csf-den-por",
+    "gameNumber": 7,
+    "date": "2019-05-12",
+    "homeTeam": "DEN",
+    "awayTeam": "POR",
+    "homeScore": 96,
+    "awayScore": 100,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-east-r1-bos-ind",
+    "gameNumber": 1,
+    "date": "2019-04-14",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 84,
+    "awayScore": 74,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2019-east-r1-bos-ind",
+    "gameNumber": 2,
+    "date": "2019-04-17",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2019-east-r1-bos-ind",
+    "gameNumber": 3,
+    "date": "2019-04-19",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 96,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2019-east-r1-bos-ind",
+    "gameNumber": 4,
+    "date": "2019-04-21",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 110,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2019-east-r1-mil-det",
+    "gameNumber": 1,
+    "date": "2019-04-14",
+    "homeTeam": "MIL",
+    "awayTeam": "DET",
+    "homeScore": 121,
+    "awayScore": 86,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-r1-mil-det",
+    "gameNumber": 2,
+    "date": "2019-04-17",
+    "homeTeam": "MIL",
+    "awayTeam": "DET",
+    "homeScore": 120,
+    "awayScore": 99,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-r1-mil-det",
+    "gameNumber": 3,
+    "date": "2019-04-20",
+    "homeTeam": "DET",
+    "awayTeam": "MIL",
+    "homeScore": 103,
+    "awayScore": 119,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-r1-mil-det",
+    "gameNumber": 4,
+    "date": "2019-04-22",
+    "homeTeam": "DET",
+    "awayTeam": "MIL",
+    "homeScore": 104,
+    "awayScore": 127,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2019-east-r1-phi-brk",
+    "gameNumber": 1,
+    "date": "2019-04-13",
+    "homeTeam": "PHI",
+    "awayTeam": "BRK",
+    "homeScore": 102,
+    "awayScore": 111,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2019-east-r1-phi-brk",
+    "gameNumber": 2,
+    "date": "2019-04-15",
+    "homeTeam": "PHI",
+    "awayTeam": "BRK",
+    "homeScore": 145,
+    "awayScore": 123,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-r1-phi-brk",
+    "gameNumber": 3,
+    "date": "2019-04-18",
+    "homeTeam": "BRK",
+    "awayTeam": "PHI",
+    "homeScore": 115,
+    "awayScore": 131,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-r1-phi-brk",
+    "gameNumber": 4,
+    "date": "2019-04-20",
+    "homeTeam": "BRK",
+    "awayTeam": "PHI",
+    "homeScore": 108,
+    "awayScore": 112,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-r1-phi-brk",
+    "gameNumber": 5,
+    "date": "2019-04-23",
+    "homeTeam": "PHI",
+    "awayTeam": "BRK",
+    "homeScore": 122,
+    "awayScore": 100,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2019-east-r1-tor-orl",
+    "gameNumber": 1,
+    "date": "2019-04-13",
+    "homeTeam": "TOR",
+    "awayTeam": "ORL",
+    "homeScore": 101,
+    "awayScore": 104,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2019-east-r1-tor-orl",
+    "gameNumber": 2,
+    "date": "2019-04-16",
+    "homeTeam": "TOR",
+    "awayTeam": "ORL",
+    "homeScore": 111,
+    "awayScore": 82,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-r1-tor-orl",
+    "gameNumber": 3,
+    "date": "2019-04-19",
+    "homeTeam": "ORL",
+    "awayTeam": "TOR",
+    "homeScore": 93,
+    "awayScore": 98,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-r1-tor-orl",
+    "gameNumber": 4,
+    "date": "2019-04-21",
+    "homeTeam": "ORL",
+    "awayTeam": "TOR",
+    "homeScore": 85,
+    "awayScore": 107,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-east-r1-tor-orl",
+    "gameNumber": 5,
+    "date": "2019-04-23",
+    "homeTeam": "TOR",
+    "awayTeam": "ORL",
+    "homeScore": 115,
+    "awayScore": 96,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 1,
+    "date": "2019-04-13",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 96,
+    "awayScore": 101,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 2,
+    "date": "2019-04-16",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 114,
+    "awayScore": 105,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 3,
+    "date": "2019-04-18",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 118,
+    "awayScore": 108,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 4,
+    "date": "2019-04-20",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 103,
+    "awayScore": 117,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 5,
+    "date": "2019-04-23",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 108,
+    "awayScore": 90,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 6,
+    "date": "2019-04-25",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 120,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2019-west-r1-den-sas",
+    "gameNumber": 7,
+    "date": "2019-04-27",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 90,
+    "awayScore": 86,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2019-west-r1-gsw-lac",
+    "gameNumber": 1,
+    "date": "2019-04-13",
+    "homeTeam": "GSW",
+    "awayTeam": "LAC",
+    "homeScore": 121,
+    "awayScore": 104,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-r1-gsw-lac",
+    "gameNumber": 2,
+    "date": "2019-04-15",
+    "homeTeam": "GSW",
+    "awayTeam": "LAC",
+    "homeScore": 131,
+    "awayScore": 135,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2019-west-r1-gsw-lac",
+    "gameNumber": 3,
+    "date": "2019-04-18",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 105,
+    "awayScore": 132,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-r1-gsw-lac",
+    "gameNumber": 4,
+    "date": "2019-04-21",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 105,
+    "awayScore": 113,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-r1-gsw-lac",
+    "gameNumber": 5,
+    "date": "2019-04-24",
+    "homeTeam": "GSW",
+    "awayTeam": "LAC",
+    "homeScore": 121,
+    "awayScore": 129,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2019-west-r1-gsw-lac",
+    "gameNumber": 6,
+    "date": "2019-04-26",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 110,
+    "awayScore": 129,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2019-west-r1-hou-uta",
+    "gameNumber": 1,
+    "date": "2019-04-14",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 122,
+    "awayScore": 90,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2019-west-r1-hou-uta",
+    "gameNumber": 2,
+    "date": "2019-04-17",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 118,
+    "awayScore": 98,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2019-west-r1-hou-uta",
+    "gameNumber": 3,
+    "date": "2019-04-20",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 101,
+    "awayScore": 104,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2019-west-r1-hou-uta",
+    "gameNumber": 4,
+    "date": "2019-04-22",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 107,
+    "awayScore": 91,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2019-west-r1-hou-uta",
+    "gameNumber": 5,
+    "date": "2019-04-24",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 100,
+    "awayScore": 93,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2019-west-r1-por-okc",
+    "gameNumber": 1,
+    "date": "2019-04-14",
+    "homeTeam": "POR",
+    "awayTeam": "OKC",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-west-r1-por-okc",
+    "gameNumber": 2,
+    "date": "2019-04-16",
+    "homeTeam": "POR",
+    "awayTeam": "OKC",
+    "homeScore": 114,
+    "awayScore": 94,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-west-r1-por-okc",
+    "gameNumber": 3,
+    "date": "2019-04-19",
+    "homeTeam": "OKC",
+    "awayTeam": "POR",
+    "homeScore": 120,
+    "awayScore": 108,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2019-west-r1-por-okc",
+    "gameNumber": 4,
+    "date": "2019-04-21",
+    "homeTeam": "OKC",
+    "awayTeam": "POR",
+    "homeScore": 98,
+    "awayScore": 111,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2019-west-r1-por-okc",
+    "gameNumber": 5,
+    "date": "2019-04-23",
+    "homeTeam": "POR",
+    "awayTeam": "OKC",
+    "homeScore": 118,
+    "awayScore": 115,
+    "winner": "POR"
+  }
+]

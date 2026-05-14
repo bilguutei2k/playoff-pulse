@@ -1,0 +1,872 @@
+[
+  {
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "gameNumber": 1,
+    "date": "2022-06-02",
+    "homeTeam": "GSW",
+    "awayTeam": "BOS",
+    "homeScore": 108,
+    "awayScore": 120,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "gameNumber": 2,
+    "date": "2022-06-05",
+    "homeTeam": "GSW",
+    "awayTeam": "BOS",
+    "homeScore": 107,
+    "awayScore": 88,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "gameNumber": 3,
+    "date": "2022-06-08",
+    "homeTeam": "BOS",
+    "awayTeam": "GSW",
+    "homeScore": 116,
+    "awayScore": 100,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "gameNumber": 4,
+    "date": "2022-06-10",
+    "homeTeam": "BOS",
+    "awayTeam": "GSW",
+    "homeScore": 97,
+    "awayScore": 107,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "gameNumber": 5,
+    "date": "2022-06-13",
+    "homeTeam": "GSW",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 94,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "gameNumber": 6,
+    "date": "2022-06-16",
+    "homeTeam": "BOS",
+    "awayTeam": "GSW",
+    "homeScore": 90,
+    "awayScore": 103,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 1,
+    "date": "2022-05-17",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 118,
+    "awayScore": 107,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 2,
+    "date": "2022-05-19",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 127,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 3,
+    "date": "2022-05-21",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 103,
+    "awayScore": 109,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 4,
+    "date": "2022-05-23",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 102,
+    "awayScore": 82,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 5,
+    "date": "2022-05-25",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 80,
+    "awayScore": 93,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 6,
+    "date": "2022-05-27",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 103,
+    "awayScore": 111,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-cf-mia-bos",
+    "gameNumber": 7,
+    "date": "2022-05-29",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 96,
+    "awayScore": 100,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-west-cf-gsw-dal",
+    "gameNumber": 1,
+    "date": "2022-05-18",
+    "homeTeam": "GSW",
+    "awayTeam": "DAL",
+    "homeScore": 112,
+    "awayScore": 87,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-cf-gsw-dal",
+    "gameNumber": 2,
+    "date": "2022-05-20",
+    "homeTeam": "GSW",
+    "awayTeam": "DAL",
+    "homeScore": 126,
+    "awayScore": 117,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-cf-gsw-dal",
+    "gameNumber": 3,
+    "date": "2022-05-22",
+    "homeTeam": "DAL",
+    "awayTeam": "GSW",
+    "homeScore": 100,
+    "awayScore": 109,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-cf-gsw-dal",
+    "gameNumber": 4,
+    "date": "2022-05-24",
+    "homeTeam": "DAL",
+    "awayTeam": "GSW",
+    "homeScore": 119,
+    "awayScore": 109,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-cf-gsw-dal",
+    "gameNumber": 5,
+    "date": "2022-05-26",
+    "homeTeam": "GSW",
+    "awayTeam": "DAL",
+    "homeScore": 120,
+    "awayScore": 110,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 1,
+    "date": "2022-05-01",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 89,
+    "awayScore": 101,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 2,
+    "date": "2022-05-03",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 109,
+    "awayScore": 86,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 3,
+    "date": "2022-05-07",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 101,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 4,
+    "date": "2022-05-09",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 108,
+    "awayScore": 116,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 5,
+    "date": "2022-05-11",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 107,
+    "awayScore": 110,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 6,
+    "date": "2022-05-13",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 95,
+    "awayScore": 108,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-csf-bos-mil",
+    "gameNumber": 7,
+    "date": "2022-05-15",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 109,
+    "awayScore": 81,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-csf-mia-phi",
+    "gameNumber": 1,
+    "date": "2022-05-02",
+    "homeTeam": "MIA",
+    "awayTeam": "PHI",
+    "homeScore": 106,
+    "awayScore": 92,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-csf-mia-phi",
+    "gameNumber": 2,
+    "date": "2022-05-04",
+    "homeTeam": "MIA",
+    "awayTeam": "PHI",
+    "homeScore": 119,
+    "awayScore": 103,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-csf-mia-phi",
+    "gameNumber": 3,
+    "date": "2022-05-06",
+    "homeTeam": "PHI",
+    "awayTeam": "MIA",
+    "homeScore": 99,
+    "awayScore": 79,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2022-east-csf-mia-phi",
+    "gameNumber": 4,
+    "date": "2022-05-08",
+    "homeTeam": "PHI",
+    "awayTeam": "MIA",
+    "homeScore": 116,
+    "awayScore": 108,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2022-east-csf-mia-phi",
+    "gameNumber": 5,
+    "date": "2022-05-10",
+    "homeTeam": "MIA",
+    "awayTeam": "PHI",
+    "homeScore": 120,
+    "awayScore": 85,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-csf-mia-phi",
+    "gameNumber": 6,
+    "date": "2022-05-12",
+    "homeTeam": "PHI",
+    "awayTeam": "MIA",
+    "homeScore": 90,
+    "awayScore": 99,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 1,
+    "date": "2022-05-02",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 121,
+    "awayScore": 114,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 2,
+    "date": "2022-05-04",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 129,
+    "awayScore": 109,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 3,
+    "date": "2022-05-06",
+    "homeTeam": "DAL",
+    "awayTeam": "PHO",
+    "homeScore": 103,
+    "awayScore": 94,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 4,
+    "date": "2022-05-08",
+    "homeTeam": "DAL",
+    "awayTeam": "PHO",
+    "homeScore": 111,
+    "awayScore": 101,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 5,
+    "date": "2022-05-10",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 110,
+    "awayScore": 80,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 6,
+    "date": "2022-05-12",
+    "homeTeam": "DAL",
+    "awayTeam": "PHO",
+    "homeScore": 113,
+    "awayScore": 86,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-csf-pho-dal",
+    "gameNumber": 7,
+    "date": "2022-05-15",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 90,
+    "awayScore": 123,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-csf-mem-gsw",
+    "gameNumber": 1,
+    "date": "2022-05-01",
+    "homeTeam": "MEM",
+    "awayTeam": "GSW",
+    "homeScore": 116,
+    "awayScore": 117,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-csf-mem-gsw",
+    "gameNumber": 2,
+    "date": "2022-05-03",
+    "homeTeam": "MEM",
+    "awayTeam": "GSW",
+    "homeScore": 106,
+    "awayScore": 101,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2022-west-csf-mem-gsw",
+    "gameNumber": 3,
+    "date": "2022-05-07",
+    "homeTeam": "GSW",
+    "awayTeam": "MEM",
+    "homeScore": 142,
+    "awayScore": 112,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-csf-mem-gsw",
+    "gameNumber": 4,
+    "date": "2022-05-09",
+    "homeTeam": "GSW",
+    "awayTeam": "MEM",
+    "homeScore": 101,
+    "awayScore": 98,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-csf-mem-gsw",
+    "gameNumber": 5,
+    "date": "2022-05-11",
+    "homeTeam": "MEM",
+    "awayTeam": "GSW",
+    "homeScore": 134,
+    "awayScore": 95,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2022-west-csf-mem-gsw",
+    "gameNumber": 6,
+    "date": "2022-05-13",
+    "homeTeam": "GSW",
+    "awayTeam": "MEM",
+    "homeScore": 110,
+    "awayScore": 96,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-east-r1-bos-brk",
+    "gameNumber": 1,
+    "date": "2022-04-17",
+    "homeTeam": "BOS",
+    "awayTeam": "BRK",
+    "homeScore": 115,
+    "awayScore": 114,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-r1-bos-brk",
+    "gameNumber": 2,
+    "date": "2022-04-20",
+    "homeTeam": "BOS",
+    "awayTeam": "BRK",
+    "homeScore": 114,
+    "awayScore": 107,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-r1-bos-brk",
+    "gameNumber": 3,
+    "date": "2022-04-23",
+    "homeTeam": "BRK",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 109,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-r1-bos-brk",
+    "gameNumber": 4,
+    "date": "2022-04-25",
+    "homeTeam": "BRK",
+    "awayTeam": "BOS",
+    "homeScore": 112,
+    "awayScore": 116,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2022-east-r1-mia-atl",
+    "gameNumber": 1,
+    "date": "2022-04-17",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 115,
+    "awayScore": 91,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-r1-mia-atl",
+    "gameNumber": 2,
+    "date": "2022-04-19",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 115,
+    "awayScore": 105,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-r1-mia-atl",
+    "gameNumber": 3,
+    "date": "2022-04-22",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 111,
+    "awayScore": 110,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2022-east-r1-mia-atl",
+    "gameNumber": 4,
+    "date": "2022-04-24",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 86,
+    "awayScore": 110,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-r1-mia-atl",
+    "gameNumber": 5,
+    "date": "2022-04-26",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 97,
+    "awayScore": 94,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2022-east-r1-mil-chi",
+    "gameNumber": 1,
+    "date": "2022-04-17",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 93,
+    "awayScore": 86,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-r1-mil-chi",
+    "gameNumber": 2,
+    "date": "2022-04-20",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 110,
+    "awayScore": 114,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2022-east-r1-mil-chi",
+    "gameNumber": 3,
+    "date": "2022-04-22",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 81,
+    "awayScore": 111,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-r1-mil-chi",
+    "gameNumber": 4,
+    "date": "2022-04-24",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 95,
+    "awayScore": 119,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-r1-mil-chi",
+    "gameNumber": 5,
+    "date": "2022-04-27",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 116,
+    "awayScore": 100,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2022-east-r1-phi-tor",
+    "gameNumber": 1,
+    "date": "2022-04-16",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 131,
+    "awayScore": 111,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2022-east-r1-phi-tor",
+    "gameNumber": 2,
+    "date": "2022-04-18",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 112,
+    "awayScore": 97,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2022-east-r1-phi-tor",
+    "gameNumber": 3,
+    "date": "2022-04-20",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 101,
+    "awayScore": 104,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2022-east-r1-phi-tor",
+    "gameNumber": 4,
+    "date": "2022-04-23",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 110,
+    "awayScore": 102,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2022-east-r1-phi-tor",
+    "gameNumber": 5,
+    "date": "2022-04-25",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 88,
+    "awayScore": 103,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2022-east-r1-phi-tor",
+    "gameNumber": 6,
+    "date": "2022-04-28",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 97,
+    "awayScore": 132,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2022-west-r1-dal-uta",
+    "gameNumber": 1,
+    "date": "2022-04-16",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 93,
+    "awayScore": 99,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2022-west-r1-dal-uta",
+    "gameNumber": 2,
+    "date": "2022-04-18",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 110,
+    "awayScore": 104,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-r1-dal-uta",
+    "gameNumber": 3,
+    "date": "2022-04-21",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 118,
+    "awayScore": 126,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-r1-dal-uta",
+    "gameNumber": 4,
+    "date": "2022-04-23",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 100,
+    "awayScore": 99,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2022-west-r1-dal-uta",
+    "gameNumber": 5,
+    "date": "2022-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 102,
+    "awayScore": 77,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-r1-dal-uta",
+    "gameNumber": 6,
+    "date": "2022-04-28",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 96,
+    "awayScore": 98,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2022-west-r1-gsw-den",
+    "gameNumber": 1,
+    "date": "2022-04-16",
+    "homeTeam": "GSW",
+    "awayTeam": "DEN",
+    "homeScore": 123,
+    "awayScore": 107,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-r1-gsw-den",
+    "gameNumber": 2,
+    "date": "2022-04-18",
+    "homeTeam": "GSW",
+    "awayTeam": "DEN",
+    "homeScore": 126,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-r1-gsw-den",
+    "gameNumber": 3,
+    "date": "2022-04-21",
+    "homeTeam": "DEN",
+    "awayTeam": "GSW",
+    "homeScore": 113,
+    "awayScore": 118,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-r1-gsw-den",
+    "gameNumber": 4,
+    "date": "2022-04-24",
+    "homeTeam": "DEN",
+    "awayTeam": "GSW",
+    "homeScore": 126,
+    "awayScore": 121,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2022-west-r1-gsw-den",
+    "gameNumber": 5,
+    "date": "2022-04-27",
+    "homeTeam": "GSW",
+    "awayTeam": "DEN",
+    "homeScore": 102,
+    "awayScore": 98,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2022-west-r1-mem-min",
+    "gameNumber": 1,
+    "date": "2022-04-16",
+    "homeTeam": "MEM",
+    "awayTeam": "MIN",
+    "homeScore": 117,
+    "awayScore": 130,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2022-west-r1-mem-min",
+    "gameNumber": 2,
+    "date": "2022-04-19",
+    "homeTeam": "MEM",
+    "awayTeam": "MIN",
+    "homeScore": 124,
+    "awayScore": 96,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2022-west-r1-mem-min",
+    "gameNumber": 3,
+    "date": "2022-04-21",
+    "homeTeam": "MIN",
+    "awayTeam": "MEM",
+    "homeScore": 95,
+    "awayScore": 104,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2022-west-r1-mem-min",
+    "gameNumber": 4,
+    "date": "2022-04-23",
+    "homeTeam": "MIN",
+    "awayTeam": "MEM",
+    "homeScore": 119,
+    "awayScore": 118,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2022-west-r1-mem-min",
+    "gameNumber": 5,
+    "date": "2022-04-26",
+    "homeTeam": "MEM",
+    "awayTeam": "MIN",
+    "homeScore": 111,
+    "awayScore": 109,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2022-west-r1-mem-min",
+    "gameNumber": 6,
+    "date": "2022-04-29",
+    "homeTeam": "MIN",
+    "awayTeam": "MEM",
+    "homeScore": 106,
+    "awayScore": 114,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2022-west-r1-pho-nop",
+    "gameNumber": 1,
+    "date": "2022-04-17",
+    "homeTeam": "PHO",
+    "awayTeam": "NOP",
+    "homeScore": 110,
+    "awayScore": 99,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2022-west-r1-pho-nop",
+    "gameNumber": 2,
+    "date": "2022-04-19",
+    "homeTeam": "PHO",
+    "awayTeam": "NOP",
+    "homeScore": 114,
+    "awayScore": 125,
+    "winner": "NOP"
+  },
+  {
+    "seriesId": "2022-west-r1-pho-nop",
+    "gameNumber": 3,
+    "date": "2022-04-22",
+    "homeTeam": "NOP",
+    "awayTeam": "PHO",
+    "homeScore": 111,
+    "awayScore": 114,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2022-west-r1-pho-nop",
+    "gameNumber": 4,
+    "date": "2022-04-24",
+    "homeTeam": "NOP",
+    "awayTeam": "PHO",
+    "homeScore": 118,
+    "awayScore": 103,
+    "winner": "NOP"
+  },
+  {
+    "seriesId": "2022-west-r1-pho-nop",
+    "gameNumber": 5,
+    "date": "2022-04-26",
+    "homeTeam": "PHO",
+    "awayTeam": "NOP",
+    "homeScore": 112,
+    "awayScore": 97,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2022-west-r1-pho-nop",
+    "gameNumber": 6,
+    "date": "2022-04-28",
+    "homeTeam": "NOP",
+    "awayTeam": "PHO",
+    "homeScore": 109,
+    "awayScore": 115,
+    "winner": "PHO"
+  }
+]

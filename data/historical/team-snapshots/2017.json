@@ -1,0 +1,1602 @@
+[
+  {
+    "teamId": "ATL",
+    "teamName": "Atlanta Hawks",
+    "season": 2017,
+    "conference": "East",
+    "seed": 5,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1456.95,
+    "netRating": -0.99,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Paul Millsap",
+        "bpm": 2.1,
+        "mpg": 33.95652173913044,
+        "gamesPlayed": 69,
+        "impact": 2.1,
+        "projectedMinutes": 33.95652173913044
+      },
+      {
+        "name": "Dennis Schröder",
+        "bpm": 0,
+        "mpg": 31.455696202531644,
+        "gamesPlayed": 79,
+        "impact": 0,
+        "projectedMinutes": 31.455696202531644
+      },
+      {
+        "name": "Dwight Howard",
+        "bpm": 1.4,
+        "mpg": 29.716216216216218,
+        "gamesPlayed": 74,
+        "impact": 1.4,
+        "projectedMinutes": 29.716216216216218
+      },
+      {
+        "name": "Tim Hardaway Jr.",
+        "bpm": 0.5,
+        "mpg": 27.265822784810126,
+        "gamesPlayed": 79,
+        "impact": 0.5,
+        "projectedMinutes": 27.265822784810126
+      },
+      {
+        "name": "Kent Bazemore",
+        "bpm": -1,
+        "mpg": 26.89041095890411,
+        "gamesPlayed": 73,
+        "impact": -1,
+        "projectedMinutes": 26.89041095890411
+      },
+      {
+        "name": "Thabo Sefolosha",
+        "bpm": 0.4,
+        "mpg": 25.741935483870968,
+        "gamesPlayed": 62,
+        "impact": 0.4,
+        "projectedMinutes": 25.741935483870968
+      },
+      {
+        "name": "Ersan İlyasova",
+        "bpm": -0.4,
+        "mpg": 24.346153846153847,
+        "gamesPlayed": 26,
+        "impact": -0.4,
+        "projectedMinutes": 24.346153846153847
+      },
+      {
+        "name": "Mike Muscala",
+        "bpm": 1.1,
+        "mpg": 17.67142857142857,
+        "gamesPlayed": 70,
+        "impact": 1.1,
+        "projectedMinutes": 17.67142857142857
+      },
+      {
+        "name": "Malcolm Delaney",
+        "bpm": -5.6,
+        "mpg": 17.095890410958905,
+        "gamesPlayed": 73,
+        "impact": -5.6,
+        "projectedMinutes": 17.095890410958905
+      },
+      {
+        "name": "Taurean Prince",
+        "bpm": -1.8,
+        "mpg": 16.627118644067796,
+        "gamesPlayed": 59,
+        "impact": -1.8,
+        "projectedMinutes": 16.627118644067796
+      }
+    ],
+    "srs": -1.23,
+    "ortg": 105.55,
+    "drtg": 106.54,
+    "wins": 43,
+    "losses": 39,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "season": 2017,
+    "conference": "East",
+    "seed": 1,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1578.75,
+    "netRating": 2.72,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Isaiah Thomas",
+        "bpm": 6.7,
+        "mpg": 33.80263157894737,
+        "gamesPlayed": 76,
+        "impact": 6.7,
+        "projectedMinutes": 33.80263157894737
+      },
+      {
+        "name": "Avery Bradley",
+        "bpm": -0.6,
+        "mpg": 33.36363636363637,
+        "gamesPlayed": 55,
+        "impact": -0.6,
+        "projectedMinutes": 33.36363636363637
+      },
+      {
+        "name": "Jae Crowder",
+        "bpm": 0.9,
+        "mpg": 32.43055555555556,
+        "gamesPlayed": 72,
+        "impact": 0.9,
+        "projectedMinutes": 32.43055555555556
+      },
+      {
+        "name": "Al Horford",
+        "bpm": 3.4,
+        "mpg": 32.25,
+        "gamesPlayed": 68,
+        "impact": 3.4,
+        "projectedMinutes": 32.25
+      },
+      {
+        "name": "Marcus Smart",
+        "bpm": -1.3,
+        "mpg": 30.367088607594937,
+        "gamesPlayed": 79,
+        "impact": -1.3,
+        "projectedMinutes": 30.367088607594937
+      },
+      {
+        "name": "Kelly Olynyk",
+        "bpm": 0.3,
+        "mpg": 20.506666666666668,
+        "gamesPlayed": 75,
+        "impact": 0.3,
+        "projectedMinutes": 20.506666666666668
+      },
+      {
+        "name": "Amir Johnson",
+        "bpm": 0.6,
+        "mpg": 20.1,
+        "gamesPlayed": 80,
+        "impact": 0.6,
+        "projectedMinutes": 20.1
+      },
+      {
+        "name": "Jaylen Brown",
+        "bpm": -3.7,
+        "mpg": 17.192307692307693,
+        "gamesPlayed": 78,
+        "impact": -3.7,
+        "projectedMinutes": 17.192307692307693
+      },
+      {
+        "name": "Terry Rozier",
+        "bpm": -1.4,
+        "mpg": 17.06756756756757,
+        "gamesPlayed": 74,
+        "impact": -1.4,
+        "projectedMinutes": 17.06756756756757
+      },
+      {
+        "name": "Jonas Jerebko",
+        "bpm": -2.4,
+        "mpg": 15.794871794871796,
+        "gamesPlayed": 78,
+        "impact": -2.4,
+        "projectedMinutes": 15.794871794871796
+      }
+    ],
+    "srs": 2.25,
+    "ortg": 111.88,
+    "drtg": 109.16,
+    "wins": 53,
+    "losses": 29,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "CHI",
+    "teamName": "Chicago Bulls",
+    "season": 2017,
+    "conference": "East",
+    "seed": 8,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1501.05,
+    "netRating": 0.32,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jimmy Butler",
+        "bpm": 7.3,
+        "mpg": 36.96052631578947,
+        "gamesPlayed": 76,
+        "impact": 7.3,
+        "projectedMinutes": 36.96052631578947
+      },
+      {
+        "name": "Dwyane Wade",
+        "bpm": 2.5,
+        "mpg": 29.866666666666667,
+        "gamesPlayed": 60,
+        "impact": 2.5,
+        "projectedMinutes": 29.866666666666667
+      },
+      {
+        "name": "Robin Lopez",
+        "bpm": -2.2,
+        "mpg": 28.037037037037038,
+        "gamesPlayed": 81,
+        "impact": -2.2,
+        "projectedMinutes": 28.037037037037038
+      },
+      {
+        "name": "Rajon Rondo",
+        "bpm": -0.5,
+        "mpg": 26.71014492753623,
+        "gamesPlayed": 69,
+        "impact": -0.5,
+        "projectedMinutes": 26.71014492753623
+      },
+      {
+        "name": "Nikola Mirotić",
+        "bpm": 0.7,
+        "mpg": 23.985714285714284,
+        "gamesPlayed": 70,
+        "impact": 0.7,
+        "projectedMinutes": 23.985714285714284
+      },
+      {
+        "name": "Paul Zipser",
+        "bpm": -4.4,
+        "mpg": 19.15909090909091,
+        "gamesPlayed": 44,
+        "impact": -4.4,
+        "projectedMinutes": 19.15909090909091
+      },
+      {
+        "name": "Michael Carter-Williams",
+        "bpm": -3.2,
+        "mpg": 18.8,
+        "gamesPlayed": 45,
+        "impact": -3.2,
+        "projectedMinutes": 18.8
+      },
+      {
+        "name": "Denzel Valentine",
+        "bpm": -3.3,
+        "mpg": 17.12280701754386,
+        "gamesPlayed": 57,
+        "impact": -3.3,
+        "projectedMinutes": 17.12280701754386
+      },
+      {
+        "name": "Jerian Grant",
+        "bpm": 0.1,
+        "mpg": 16.317460317460316,
+        "gamesPlayed": 63,
+        "impact": 0.1,
+        "projectedMinutes": 16.317460317460316
+      },
+      {
+        "name": "Cristiano Felício",
+        "bpm": -0.7,
+        "mpg": 15.757575757575758,
+        "gamesPlayed": 66,
+        "impact": -0.7,
+        "projectedMinutes": 15.757575757575758
+      }
+    ],
+    "srs": 0.03,
+    "ortg": 108.04,
+    "drtg": 107.72,
+    "wins": 41,
+    "losses": 41,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "CLE",
+    "teamName": "Cleveland Cavaliers",
+    "season": 2017,
+    "conference": "East",
+    "seed": 3,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1600.8,
+    "netRating": 3.26,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "LeBron James",
+        "bpm": 7.6,
+        "mpg": 37.75675675675676,
+        "gamesPlayed": 74,
+        "impact": 7.6,
+        "projectedMinutes": 37.75675675675676
+      },
+      {
+        "name": "Kyrie Irving",
+        "bpm": 3.4,
+        "mpg": 35.06944444444444,
+        "gamesPlayed": 72,
+        "impact": 3.4,
+        "projectedMinutes": 35.06944444444444
+      },
+      {
+        "name": "Kevin Love",
+        "bpm": 2.1,
+        "mpg": 31.416666666666668,
+        "gamesPlayed": 60,
+        "impact": 2.1,
+        "projectedMinutes": 31.416666666666668
+      },
+      {
+        "name": "Tristan Thompson",
+        "bpm": -0.7,
+        "mpg": 29.94871794871795,
+        "gamesPlayed": 78,
+        "impact": -0.7,
+        "projectedMinutes": 29.94871794871795
+      },
+      {
+        "name": "J.R. Smith",
+        "bpm": -2.1,
+        "mpg": 28.951219512195124,
+        "gamesPlayed": 41,
+        "impact": -2.1,
+        "projectedMinutes": 28.951219512195124
+      },
+      {
+        "name": "Iman Shumpert",
+        "bpm": -2.3,
+        "mpg": 25.486842105263158,
+        "gamesPlayed": 76,
+        "impact": -2.3,
+        "projectedMinutes": 25.486842105263158
+      },
+      {
+        "name": "Kyle Korver",
+        "bpm": 0.3,
+        "mpg": 24.542857142857144,
+        "gamesPlayed": 35,
+        "impact": 0.3,
+        "projectedMinutes": 24.542857142857144
+      },
+      {
+        "name": "Richard Jefferson",
+        "bpm": -3.1,
+        "mpg": 20.430379746835442,
+        "gamesPlayed": 79,
+        "impact": -3.1,
+        "projectedMinutes": 20.430379746835442
+      },
+      {
+        "name": "Deron Williams",
+        "bpm": -3,
+        "mpg": 20.25,
+        "gamesPlayed": 24,
+        "impact": -3,
+        "projectedMinutes": 20.25
+      },
+      {
+        "name": "Channing Frye",
+        "bpm": 1,
+        "mpg": 18.89189189189189,
+        "gamesPlayed": 74,
+        "impact": 1,
+        "projectedMinutes": 18.89189189189189
+      }
+    ],
+    "srs": 2.88,
+    "ortg": 114.25,
+    "drtg": 110.99,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "season": 2017,
+    "conference": "West",
+    "seed": 1,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1897.25,
+    "netRating": 11.69,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Klay Thompson",
+        "bpm": 0.8,
+        "mpg": 33.96153846153846,
+        "gamesPlayed": 78,
+        "impact": 0.8,
+        "projectedMinutes": 33.96153846153846
+      },
+      {
+        "name": "Stephen Curry",
+        "bpm": 6.9,
+        "mpg": 33.392405063291136,
+        "gamesPlayed": 79,
+        "impact": 6.9,
+        "projectedMinutes": 33.392405063291136
+      },
+      {
+        "name": "Kevin Durant",
+        "bpm": 8.9,
+        "mpg": 33.38709677419355,
+        "gamesPlayed": 62,
+        "impact": 8.9,
+        "projectedMinutes": 33.38709677419355
+      },
+      {
+        "name": "Draymond Green",
+        "bpm": 4.9,
+        "mpg": 32.51315789473684,
+        "gamesPlayed": 76,
+        "impact": 4.9,
+        "projectedMinutes": 32.51315789473684
+      },
+      {
+        "name": "Andre Iguodala",
+        "bpm": 2.5,
+        "mpg": 26.289473684210527,
+        "gamesPlayed": 76,
+        "impact": 2.5,
+        "projectedMinutes": 26.289473684210527
+      },
+      {
+        "name": "Matt Barnes",
+        "bpm": -0.7,
+        "mpg": 20.5,
+        "gamesPlayed": 20,
+        "impact": -0.7,
+        "projectedMinutes": 20.5
+      },
+      {
+        "name": "Zaza Pachulia",
+        "bpm": 0.6,
+        "mpg": 18.114285714285714,
+        "gamesPlayed": 70,
+        "impact": 0.6,
+        "projectedMinutes": 18.114285714285714
+      },
+      {
+        "name": "Shaun Livingston",
+        "bpm": -2.5,
+        "mpg": 17.69736842105263,
+        "gamesPlayed": 76,
+        "impact": -2.5,
+        "projectedMinutes": 17.69736842105263
+      },
+      {
+        "name": "Patrick McCaw",
+        "bpm": -2.4,
+        "mpg": 15.126760563380282,
+        "gamesPlayed": 71,
+        "impact": -2.4,
+        "projectedMinutes": 15.126760563380282
+      },
+      {
+        "name": "Ian Clark",
+        "bpm": -1.5,
+        "mpg": 14.766233766233766,
+        "gamesPlayed": 77,
+        "impact": -1.5,
+        "projectedMinutes": 14.766233766233766
+      }
+    ],
+    "srs": 11.35,
+    "ortg": 116.26,
+    "drtg": 104.57,
+    "wins": 67,
+    "losses": 15,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "HOU",
+    "teamName": "Houston Rockets",
+    "season": 2017,
+    "conference": "West",
+    "seed": 3,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1704.4,
+    "netRating": 5.63,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Kyle Wiltjer",
+        "bpm": -5.4,
+        "mpg": 44,
+        "gamesPlayed": 14,
+        "impact": -5.4,
+        "projectedMinutes": 40
+      },
+      {
+        "name": "James Harden",
+        "bpm": 8.7,
+        "mpg": 36.382716049382715,
+        "gamesPlayed": 81,
+        "impact": 8.7,
+        "projectedMinutes": 36.382716049382715
+      },
+      {
+        "name": "Trevor Ariza",
+        "bpm": 1,
+        "mpg": 34.6625,
+        "gamesPlayed": 80,
+        "impact": 1,
+        "projectedMinutes": 34.6625
+      },
+      {
+        "name": "Eric Gordon",
+        "bpm": -0.1,
+        "mpg": 30.973333333333333,
+        "gamesPlayed": 75,
+        "impact": -0.1,
+        "projectedMinutes": 30.973333333333333
+      },
+      {
+        "name": "Patrick Beverley",
+        "bpm": 1.1,
+        "mpg": 30.71641791044776,
+        "gamesPlayed": 67,
+        "impact": 1.1,
+        "projectedMinutes": 30.71641791044776
+      },
+      {
+        "name": "Ryan Anderson",
+        "bpm": -0.4,
+        "mpg": 29.38888888888889,
+        "gamesPlayed": 72,
+        "impact": -0.4,
+        "projectedMinutes": 29.38888888888889
+      },
+      {
+        "name": "Lou Williams",
+        "bpm": -0.5,
+        "mpg": 25.695652173913043,
+        "gamesPlayed": 23,
+        "impact": -0.5,
+        "projectedMinutes": 25.695652173913043
+      },
+      {
+        "name": "Clint Capela",
+        "bpm": 1.2,
+        "mpg": 23.861538461538462,
+        "gamesPlayed": 65,
+        "impact": 1.2,
+        "projectedMinutes": 23.861538461538462
+      },
+      {
+        "name": "Sam Dekker",
+        "bpm": -0.2,
+        "mpg": 18.428571428571427,
+        "gamesPlayed": 77,
+        "impact": -0.2,
+        "projectedMinutes": 18.428571428571427
+      },
+      {
+        "name": "Montrezl Harrell",
+        "bpm": 1,
+        "mpg": 18.344827586206897,
+        "gamesPlayed": 58,
+        "impact": 1,
+        "projectedMinutes": 18.344827586206897
+      }
+    ],
+    "srs": 5.84,
+    "ortg": 115.59,
+    "drtg": 109.96,
+    "wins": 55,
+    "losses": 27,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "IND",
+    "teamName": "Indiana Pacers",
+    "season": 2017,
+    "conference": "East",
+    "seed": 6,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1477.6,
+    "netRating": -0.16,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Paul George",
+        "bpm": 3.1,
+        "mpg": 35.85333333333333,
+        "gamesPlayed": 75,
+        "impact": 3.1,
+        "projectedMinutes": 35.85333333333333
+      },
+      {
+        "name": "Jeff Teague",
+        "bpm": 2.2,
+        "mpg": 32.40243902439025,
+        "gamesPlayed": 82,
+        "impact": 2.2,
+        "projectedMinutes": 32.40243902439025
+      },
+      {
+        "name": "Myles Turner",
+        "bpm": 1.1,
+        "mpg": 31.37037037037037,
+        "gamesPlayed": 81,
+        "impact": 1.1,
+        "projectedMinutes": 31.37037037037037
+      },
+      {
+        "name": "Thaddeus Young",
+        "bpm": 0.5,
+        "mpg": 30.22972972972973,
+        "gamesPlayed": 74,
+        "impact": 0.5,
+        "projectedMinutes": 30.22972972972973
+      },
+      {
+        "name": "Monta Ellis",
+        "bpm": -2.9,
+        "mpg": 27,
+        "gamesPlayed": 74,
+        "impact": -2.9,
+        "projectedMinutes": 27
+      },
+      {
+        "name": "C.J. Miles",
+        "bpm": 0.5,
+        "mpg": 23.36842105263158,
+        "gamesPlayed": 76,
+        "impact": 0.5,
+        "projectedMinutes": 23.36842105263158
+      },
+      {
+        "name": "Glenn Robinson III",
+        "bpm": -0.3,
+        "mpg": 20.681159420289855,
+        "gamesPlayed": 69,
+        "impact": -0.3,
+        "projectedMinutes": 20.681159420289855
+      },
+      {
+        "name": "Rodney Stuckey",
+        "bpm": -4.4,
+        "mpg": 17.846153846153847,
+        "gamesPlayed": 39,
+        "impact": -4.4,
+        "projectedMinutes": 17.846153846153847
+      },
+      {
+        "name": "Lavoy Allen",
+        "bpm": -1.7,
+        "mpg": 14.278688524590164,
+        "gamesPlayed": 61,
+        "impact": -1.7,
+        "projectedMinutes": 14.278688524590164
+      },
+      {
+        "name": "Al Jefferson",
+        "bpm": -1.4,
+        "mpg": 14.106060606060606,
+        "gamesPlayed": 66,
+        "impact": -1.4,
+        "projectedMinutes": 14.106060606060606
+      }
+    ],
+    "srs": -0.64,
+    "ortg": 109.33,
+    "drtg": 109.49,
+    "wins": 42,
+    "losses": 40,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "LAC",
+    "teamName": "Los Angeles Clippers",
+    "season": 2017,
+    "conference": "West",
+    "seed": 4,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1654.7,
+    "netRating": 4.5,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Blake Griffin",
+        "bpm": 4.7,
+        "mpg": 34.032786885245905,
+        "gamesPlayed": 61,
+        "impact": 4.7,
+        "projectedMinutes": 34.032786885245905
+      },
+      {
+        "name": "DeAndre Jordan",
+        "bpm": 3.3,
+        "mpg": 31.728395061728396,
+        "gamesPlayed": 81,
+        "impact": 3.3,
+        "projectedMinutes": 31.728395061728396
+      },
+      {
+        "name": "Chris Paul",
+        "bpm": 8.7,
+        "mpg": 31.491803278688526,
+        "gamesPlayed": 61,
+        "impact": 8.7,
+        "projectedMinutes": 31.491803278688526
+      },
+      {
+        "name": "JJ Redick",
+        "bpm": 0.4,
+        "mpg": 28.17948717948718,
+        "gamesPlayed": 78,
+        "impact": 0.4,
+        "projectedMinutes": 28.17948717948718
+      },
+      {
+        "name": "Austin Rivers",
+        "bpm": -2.2,
+        "mpg": 27.756756756756758,
+        "gamesPlayed": 74,
+        "impact": -2.2,
+        "projectedMinutes": 27.756756756756758
+      },
+      {
+        "name": "Jamal Crawford",
+        "bpm": -2.1,
+        "mpg": 26.304878048780488,
+        "gamesPlayed": 82,
+        "impact": -2.1,
+        "projectedMinutes": 26.304878048780488
+      },
+      {
+        "name": "Luc Mbah a Moute",
+        "bpm": -0.2,
+        "mpg": 22.3375,
+        "gamesPlayed": 80,
+        "impact": -0.2,
+        "projectedMinutes": 22.3375
+      },
+      {
+        "name": "Raymond Felton",
+        "bpm": -1.3,
+        "mpg": 21.25,
+        "gamesPlayed": 80,
+        "impact": -1.3,
+        "projectedMinutes": 21.25
+      },
+      {
+        "name": "Marreese Speights",
+        "bpm": 0.6,
+        "mpg": 15.682926829268293,
+        "gamesPlayed": 82,
+        "impact": 0.6,
+        "projectedMinutes": 15.682926829268293
+      },
+      {
+        "name": "Wesley Johnson",
+        "bpm": -2,
+        "mpg": 11.911764705882353,
+        "gamesPlayed": 68,
+        "impact": -2,
+        "projectedMinutes": 11.911764705882353
+      }
+    ],
+    "srs": 4.42,
+    "ortg": 113.38,
+    "drtg": 108.88,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MEM",
+    "teamName": "Memphis Grizzlies",
+    "season": 2017,
+    "conference": "West",
+    "seed": 7,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1533.6,
+    "netRating": 0.7,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Marc Gasol",
+        "bpm": 5.2,
+        "mpg": 34.2027027027027,
+        "gamesPlayed": 74,
+        "impact": 5.2,
+        "projectedMinutes": 34.2027027027027
+      },
+      {
+        "name": "Mike Conley",
+        "bpm": 6.8,
+        "mpg": 33.21739130434783,
+        "gamesPlayed": 69,
+        "impact": 6.8,
+        "projectedMinutes": 33.21739130434783
+      },
+      {
+        "name": "JaMychal Green",
+        "bpm": -0.8,
+        "mpg": 27.285714285714285,
+        "gamesPlayed": 77,
+        "impact": -0.8,
+        "projectedMinutes": 27.285714285714285
+      },
+      {
+        "name": "Tony Allen",
+        "bpm": -1,
+        "mpg": 26.95774647887324,
+        "gamesPlayed": 71,
+        "impact": -1,
+        "projectedMinutes": 26.95774647887324
+      },
+      {
+        "name": "Vince Carter",
+        "bpm": 0.8,
+        "mpg": 24.643835616438356,
+        "gamesPlayed": 73,
+        "impact": 0.8,
+        "projectedMinutes": 24.643835616438356
+      },
+      {
+        "name": "Zach Randolph",
+        "bpm": -0.5,
+        "mpg": 24.465753424657535,
+        "gamesPlayed": 73,
+        "impact": -0.5,
+        "projectedMinutes": 24.465753424657535
+      },
+      {
+        "name": "James Ennis III",
+        "bpm": -1.2,
+        "mpg": 23.453125,
+        "gamesPlayed": 64,
+        "impact": -1.2,
+        "projectedMinutes": 23.453125
+      },
+      {
+        "name": "Andrew Harrison",
+        "bpm": -3.4,
+        "mpg": 20.47222222222222,
+        "gamesPlayed": 72,
+        "impact": -3.4,
+        "projectedMinutes": 20.47222222222222
+      },
+      {
+        "name": "Chandler Parsons",
+        "bpm": -3.8,
+        "mpg": 19.852941176470587,
+        "gamesPlayed": 34,
+        "impact": -3.8,
+        "projectedMinutes": 19.852941176470587
+      },
+      {
+        "name": "Troy Daniels",
+        "bpm": -1.8,
+        "mpg": 17.65671641791045,
+        "gamesPlayed": 67,
+        "impact": -1.8,
+        "projectedMinutes": 17.65671641791045
+      }
+    ],
+    "srs": 0.96,
+    "ortg": 108.59,
+    "drtg": 107.89,
+    "wins": 43,
+    "losses": 39,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "season": 2017,
+    "conference": "East",
+    "seed": 7,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1484.6,
+    "netRating": -0.24,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Giannis Antetokounmpo",
+        "bpm": 7.3,
+        "mpg": 35.5625,
+        "gamesPlayed": 80,
+        "impact": 7.3,
+        "projectedMinutes": 35.5625
+      },
+      {
+        "name": "Jabari Parker",
+        "bpm": 0.7,
+        "mpg": 33.88235294117647,
+        "gamesPlayed": 51,
+        "impact": 0.7,
+        "projectedMinutes": 33.88235294117647
+      },
+      {
+        "name": "Khris Middleton",
+        "bpm": -0.3,
+        "mpg": 30.655172413793103,
+        "gamesPlayed": 29,
+        "impact": -0.3,
+        "projectedMinutes": 30.655172413793103
+      },
+      {
+        "name": "Tony Snell",
+        "bpm": -1.7,
+        "mpg": 29.2,
+        "gamesPlayed": 80,
+        "impact": -1.7,
+        "projectedMinutes": 29.2
+      },
+      {
+        "name": "Malcolm Brogdon",
+        "bpm": -0.4,
+        "mpg": 26.426666666666666,
+        "gamesPlayed": 75,
+        "impact": -0.4,
+        "projectedMinutes": 26.426666666666666
+      },
+      {
+        "name": "Matthew Dellavedova",
+        "bpm": -4.2,
+        "mpg": 26.13157894736842,
+        "gamesPlayed": 76,
+        "impact": -4.2,
+        "projectedMinutes": 26.13157894736842
+      },
+      {
+        "name": "Greg Monroe",
+        "bpm": 1.8,
+        "mpg": 22.506172839506174,
+        "gamesPlayed": 81,
+        "impact": 1.8,
+        "projectedMinutes": 22.506172839506174
+      },
+      {
+        "name": "John Henson",
+        "bpm": -1.6,
+        "mpg": 19.362068965517242,
+        "gamesPlayed": 58,
+        "impact": -1.6,
+        "projectedMinutes": 19.362068965517242
+      },
+      {
+        "name": "Jason Terry",
+        "bpm": -0.9,
+        "mpg": 18.445945945945947,
+        "gamesPlayed": 74,
+        "impact": -0.9,
+        "projectedMinutes": 18.445945945945947
+      },
+      {
+        "name": "Michael Beasley",
+        "bpm": -0.8,
+        "mpg": 16.696428571428573,
+        "gamesPlayed": 56,
+        "impact": -0.8,
+        "projectedMinutes": 16.696428571428573
+      }
+    ],
+    "srs": -0.44,
+    "ortg": 109.92,
+    "drtg": 110.16,
+    "wins": 42,
+    "losses": 40,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "OKC",
+    "teamName": "Oklahoma City Thunder",
+    "season": 2017,
+    "conference": "West",
+    "seed": 6,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1540.25,
+    "netRating": 0.78,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Russell Westbrook",
+        "bpm": 11.1,
+        "mpg": 34.592592592592595,
+        "gamesPlayed": 81,
+        "impact": 11.1,
+        "projectedMinutes": 34.592592592592595
+      },
+      {
+        "name": "Victor Oladipo",
+        "bpm": -0.5,
+        "mpg": 33.16417910447761,
+        "gamesPlayed": 67,
+        "impact": -0.5,
+        "projectedMinutes": 33.16417910447761
+      },
+      {
+        "name": "Andre Roberson",
+        "bpm": -1,
+        "mpg": 30.075949367088608,
+        "gamesPlayed": 79,
+        "impact": -1,
+        "projectedMinutes": 30.075949367088608
+      },
+      {
+        "name": "Steven Adams",
+        "bpm": -0.2,
+        "mpg": 29.8625,
+        "gamesPlayed": 80,
+        "impact": -0.2,
+        "projectedMinutes": 29.8625
+      },
+      {
+        "name": "Enes Freedom",
+        "bpm": 1.7,
+        "mpg": 21.291666666666668,
+        "gamesPlayed": 72,
+        "impact": 1.7,
+        "projectedMinutes": 21.291666666666668
+      },
+      {
+        "name": "Taj Gibson",
+        "bpm": -2.5,
+        "mpg": 21.17391304347826,
+        "gamesPlayed": 23,
+        "impact": -2.5,
+        "projectedMinutes": 21.17391304347826
+      },
+      {
+        "name": "Domantas Sabonis",
+        "bpm": -4.5,
+        "mpg": 20.14814814814815,
+        "gamesPlayed": 81,
+        "impact": -4.5,
+        "projectedMinutes": 20.14814814814815
+      },
+      {
+        "name": "Doug McDermott",
+        "bpm": -2.7,
+        "mpg": 19.545454545454547,
+        "gamesPlayed": 22,
+        "impact": -2.7,
+        "projectedMinutes": 19.545454545454547
+      },
+      {
+        "name": "Jerami Grant",
+        "bpm": -1.1,
+        "mpg": 19.102564102564102,
+        "gamesPlayed": 78,
+        "impact": -1.1,
+        "projectedMinutes": 19.102564102564102
+      },
+      {
+        "name": "Álex Abrines",
+        "bpm": -1.6,
+        "mpg": 15.514705882352942,
+        "gamesPlayed": 68,
+        "impact": -1.6,
+        "projectedMinutes": 15.514705882352942
+      }
+    ],
+    "srs": 1.15,
+    "ortg": 108.95,
+    "drtg": 108.17,
+    "wins": 47,
+    "losses": 35,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "POR",
+    "teamName": "Portland Trail Blazers",
+    "season": 2017,
+    "conference": "West",
+    "seed": 8,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1491.95,
+    "netRating": -0.53,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Damian Lillard",
+        "bpm": 5,
+        "mpg": 35.92,
+        "gamesPlayed": 75,
+        "impact": 5,
+        "projectedMinutes": 35.92
+      },
+      {
+        "name": "CJ McCollum",
+        "bpm": 2,
+        "mpg": 34.95,
+        "gamesPlayed": 80,
+        "impact": 2,
+        "projectedMinutes": 34.95
+      },
+      {
+        "name": "Jusuf Nurkić",
+        "bpm": 0.9,
+        "mpg": 29.2,
+        "gamesPlayed": 20,
+        "impact": 0.9,
+        "projectedMinutes": 29.2
+      },
+      {
+        "name": "Al-Farouq Aminu",
+        "bpm": -1.1,
+        "mpg": 29.065573770491802,
+        "gamesPlayed": 61,
+        "impact": -1.1,
+        "projectedMinutes": 29.065573770491802
+      },
+      {
+        "name": "Maurice Harkless",
+        "bpm": -0.6,
+        "mpg": 28.87012987012987,
+        "gamesPlayed": 77,
+        "impact": -0.6,
+        "projectedMinutes": 28.87012987012987
+      },
+      {
+        "name": "Allen Crabbe",
+        "bpm": -1.3,
+        "mpg": 28.531645569620252,
+        "gamesPlayed": 79,
+        "impact": -1.3,
+        "projectedMinutes": 28.531645569620252
+      },
+      {
+        "name": "Evan Turner",
+        "bpm": -2.5,
+        "mpg": 25.50769230769231,
+        "gamesPlayed": 65,
+        "impact": -2.5,
+        "projectedMinutes": 25.50769230769231
+      },
+      {
+        "name": "Ed Davis",
+        "bpm": -4.1,
+        "mpg": 17.152173913043477,
+        "gamesPlayed": 46,
+        "impact": -4.1,
+        "projectedMinutes": 17.152173913043477
+      },
+      {
+        "name": "Noah Vonleh",
+        "bpm": -3.9,
+        "mpg": 17.094594594594593,
+        "gamesPlayed": 74,
+        "impact": -3.9,
+        "projectedMinutes": 17.094594594594593
+      },
+      {
+        "name": "Meyers Leonard",
+        "bpm": -3.3,
+        "mpg": 16.513513513513512,
+        "gamesPlayed": 74,
+        "impact": -3.3,
+        "projectedMinutes": 16.513513513513512
+      }
+    ],
+    "srs": -0.23,
+    "ortg": 110.93,
+    "drtg": 111.46,
+    "wins": 41,
+    "losses": 41,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "SAS",
+    "teamName": "San Antonio Spurs",
+    "season": 2017,
+    "conference": "West",
+    "seed": 2,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1749.55,
+    "netRating": 7.56,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Kawhi Leonard",
+        "bpm": 9.4,
+        "mpg": 33.432432432432435,
+        "gamesPlayed": 74,
+        "impact": 9.4,
+        "projectedMinutes": 33.432432432432435
+      },
+      {
+        "name": "LaMarcus Aldridge",
+        "bpm": 0.8,
+        "mpg": 32.43055555555556,
+        "gamesPlayed": 72,
+        "impact": 0.8,
+        "projectedMinutes": 32.43055555555556
+      },
+      {
+        "name": "Danny Green",
+        "bpm": 0.8,
+        "mpg": 26.573529411764707,
+        "gamesPlayed": 68,
+        "impact": 0.8,
+        "projectedMinutes": 26.573529411764707
+      },
+      {
+        "name": "Pau Gasol",
+        "bpm": 4,
+        "mpg": 25.421875,
+        "gamesPlayed": 64,
+        "impact": 4,
+        "projectedMinutes": 25.421875
+      },
+      {
+        "name": "Tony Parker",
+        "bpm": -2.6,
+        "mpg": 25.19047619047619,
+        "gamesPlayed": 63,
+        "impact": -2.6,
+        "projectedMinutes": 25.19047619047619
+      },
+      {
+        "name": "Patty Mills",
+        "bpm": 1.6,
+        "mpg": 21.925,
+        "gamesPlayed": 80,
+        "impact": 1.6,
+        "projectedMinutes": 21.925
+      },
+      {
+        "name": "Manu Ginóbili",
+        "bpm": 1.4,
+        "mpg": 18.71014492753623,
+        "gamesPlayed": 69,
+        "impact": 1.4,
+        "projectedMinutes": 18.71014492753623
+      },
+      {
+        "name": "David Lee",
+        "bpm": 1.8,
+        "mpg": 18.696202531645568,
+        "gamesPlayed": 79,
+        "impact": 1.8,
+        "projectedMinutes": 18.696202531645568
+      },
+      {
+        "name": "Jonathon Simmons",
+        "bpm": -2.6,
+        "mpg": 17.846153846153847,
+        "gamesPlayed": 78,
+        "impact": -2.6,
+        "projectedMinutes": 17.846153846153847
+      },
+      {
+        "name": "Dewayne Dedmon",
+        "bpm": 0.6,
+        "mpg": 17.5,
+        "gamesPlayed": 76,
+        "impact": 0.6,
+        "projectedMinutes": 17.5
+      }
+    ],
+    "srs": 7.13,
+    "ortg": 111.81,
+    "drtg": 104.25,
+    "wins": 61,
+    "losses": 21,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "TOR",
+    "teamName": "Toronto Raptors",
+    "season": 2017,
+    "conference": "East",
+    "seed": 2,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1627.75,
+    "netRating": 4.52,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Kyle Lowry",
+        "bpm": 6.1,
+        "mpg": 37.4,
+        "gamesPlayed": 60,
+        "impact": 6.1,
+        "projectedMinutes": 37.4
+      },
+      {
+        "name": "DeMar DeRozan",
+        "bpm": 3,
+        "mpg": 35.4054054054054,
+        "gamesPlayed": 74,
+        "impact": 3,
+        "projectedMinutes": 35.4054054054054
+      },
+      {
+        "name": "Serge Ibaka",
+        "bpm": -1.5,
+        "mpg": 30.956521739130434,
+        "gamesPlayed": 23,
+        "impact": -1.5,
+        "projectedMinutes": 30.956521739130434
+      },
+      {
+        "name": "DeMarre Carroll",
+        "bpm": 0,
+        "mpg": 26.13888888888889,
+        "gamesPlayed": 72,
+        "impact": 0,
+        "projectedMinutes": 26.13888888888889
+      },
+      {
+        "name": "Jonas Valančiūnas",
+        "bpm": 0.3,
+        "mpg": 25.825,
+        "gamesPlayed": 80,
+        "impact": 0.3,
+        "projectedMinutes": 25.825
+      },
+      {
+        "name": "P.J. Tucker",
+        "bpm": 0.5,
+        "mpg": 25.375,
+        "gamesPlayed": 24,
+        "impact": 0.5,
+        "projectedMinutes": 25.375
+      },
+      {
+        "name": "Cory Joseph",
+        "bpm": -1.3,
+        "mpg": 25.0375,
+        "gamesPlayed": 80,
+        "impact": -1.3,
+        "projectedMinutes": 25.0375
+      },
+      {
+        "name": "Patrick Patterson",
+        "bpm": 0.1,
+        "mpg": 24.6,
+        "gamesPlayed": 65,
+        "impact": 0.1,
+        "projectedMinutes": 24.6
+      },
+      {
+        "name": "Lucas Nogueira",
+        "bpm": 2,
+        "mpg": 19.087719298245613,
+        "gamesPlayed": 57,
+        "impact": 2,
+        "projectedMinutes": 19.087719298245613
+      },
+      {
+        "name": "Norman Powell",
+        "bpm": -0.5,
+        "mpg": 18,
+        "gamesPlayed": 76,
+        "impact": -0.5,
+        "projectedMinutes": 18
+      }
+    ],
+    "srs": 3.65,
+    "ortg": 113.2,
+    "drtg": 108.68,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "UTA",
+    "teamName": "Utah Jazz",
+    "season": 2017,
+    "conference": "West",
+    "seed": 5,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1640,
+    "netRating": 4.27,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Gordon Hayward",
+        "bpm": 5,
+        "mpg": 34.465753424657535,
+        "gamesPlayed": 73,
+        "impact": 5,
+        "projectedMinutes": 34.465753424657535
+      },
+      {
+        "name": "Rudy Gobert",
+        "bpm": 4.4,
+        "mpg": 33.876543209876544,
+        "gamesPlayed": 81,
+        "impact": 4.4,
+        "projectedMinutes": 33.876543209876544
+      },
+      {
+        "name": "George Hill",
+        "bpm": 3.8,
+        "mpg": 31.510204081632654,
+        "gamesPlayed": 49,
+        "impact": 3.8,
+        "projectedMinutes": 31.510204081632654
+      },
+      {
+        "name": "Rodney Hood",
+        "bpm": -0.9,
+        "mpg": 27,
+        "gamesPlayed": 59,
+        "impact": -0.9,
+        "projectedMinutes": 27
+      },
+      {
+        "name": "Joe Ingles",
+        "bpm": 1.6,
+        "mpg": 24.048780487804876,
+        "gamesPlayed": 82,
+        "impact": 1.6,
+        "projectedMinutes": 24.048780487804876
+      },
+      {
+        "name": "Derrick Favors",
+        "bpm": -0.1,
+        "mpg": 23.72,
+        "gamesPlayed": 50,
+        "impact": -0.1,
+        "projectedMinutes": 23.72
+      },
+      {
+        "name": "Joe Johnson",
+        "bpm": 0.4,
+        "mpg": 23.628205128205128,
+        "gamesPlayed": 78,
+        "impact": 0.4,
+        "projectedMinutes": 23.628205128205128
+      },
+      {
+        "name": "Shelvin Mack",
+        "bpm": -2.3,
+        "mpg": 21.90909090909091,
+        "gamesPlayed": 55,
+        "impact": -2.3,
+        "projectedMinutes": 21.90909090909091
+      },
+      {
+        "name": "Danté Exum",
+        "bpm": -3.3,
+        "mpg": 18.606060606060606,
+        "gamesPlayed": 66,
+        "impact": -3.3,
+        "projectedMinutes": 18.606060606060606
+      },
+      {
+        "name": "Boris Diaw",
+        "bpm": -2.5,
+        "mpg": 17.575342465753426,
+        "gamesPlayed": 73,
+        "impact": -2.5,
+        "projectedMinutes": 17.575342465753426
+      }
+    ],
+    "srs": 4,
+    "ortg": 110.46,
+    "drtg": 106.19,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "WAS",
+    "teamName": "Washington Wizards",
+    "season": 2017,
+    "conference": "East",
+    "seed": 4,
+    "snapshot_as_of": "2017-04-12",
+    "eloRating": 1547.6,
+    "netRating": 1.92,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "John Wall",
+        "bpm": 4.7,
+        "mpg": 36.35897435897436,
+        "gamesPlayed": 78,
+        "impact": 4.7,
+        "projectedMinutes": 36.35897435897436
+      },
+      {
+        "name": "Bradley Beal",
+        "bpm": 3.3,
+        "mpg": 34.857142857142854,
+        "gamesPlayed": 77,
+        "impact": 3.3,
+        "projectedMinutes": 34.857142857142854
+      },
+      {
+        "name": "Otto Porter Jr.",
+        "bpm": 3.3,
+        "mpg": 32.5625,
+        "gamesPlayed": 80,
+        "impact": 3.3,
+        "projectedMinutes": 32.5625
+      },
+      {
+        "name": "Markieff Morris",
+        "bpm": -1.5,
+        "mpg": 31.236842105263158,
+        "gamesPlayed": 76,
+        "impact": -1.5,
+        "projectedMinutes": 31.236842105263158
+      },
+      {
+        "name": "Marcin Gortat",
+        "bpm": -0.8,
+        "mpg": 31.170731707317074,
+        "gamesPlayed": 82,
+        "impact": -0.8,
+        "projectedMinutes": 31.170731707317074
+      },
+      {
+        "name": "Bojan Bogdanović",
+        "bpm": -1.2,
+        "mpg": 23.115384615384617,
+        "gamesPlayed": 26,
+        "impact": -1.2,
+        "projectedMinutes": 23.115384615384617
+      },
+      {
+        "name": "Kelly Oubre Jr.",
+        "bpm": -3.2,
+        "mpg": 20.31645569620253,
+        "gamesPlayed": 79,
+        "impact": -3.2,
+        "projectedMinutes": 20.31645569620253
+      },
+      {
+        "name": "Ian Mahinmi",
+        "bpm": -1.4,
+        "mpg": 17.903225806451612,
+        "gamesPlayed": 31,
+        "impact": -1.4,
+        "projectedMinutes": 17.903225806451612
+      },
+      {
+        "name": "Marcus Thornton",
+        "bpm": -2.4,
+        "mpg": 17.424242424242426,
+        "gamesPlayed": 33,
+        "impact": -2.4,
+        "projectedMinutes": 17.424242424242426
+      },
+      {
+        "name": "Brandon Jennings",
+        "bpm": -4,
+        "mpg": 16.26086956521739,
+        "gamesPlayed": 23,
+        "impact": -4,
+        "projectedMinutes": 16.26086956521739
+      }
+    ],
+    "srs": 1.36,
+    "ortg": 111.98,
+    "drtg": 110.06,
+    "wins": 49,
+    "losses": 33,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  }
+]

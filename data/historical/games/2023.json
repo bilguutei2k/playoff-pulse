@@ -1,0 +1,842 @@
+[
+  {
+    "seriesId": "2023-finals-finals-den-mia",
+    "gameNumber": 1,
+    "date": "2023-06-01",
+    "homeTeam": "DEN",
+    "awayTeam": "MIA",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-finals-finals-den-mia",
+    "gameNumber": 2,
+    "date": "2023-06-04",
+    "homeTeam": "DEN",
+    "awayTeam": "MIA",
+    "homeScore": 108,
+    "awayScore": 111,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-finals-finals-den-mia",
+    "gameNumber": 3,
+    "date": "2023-06-07",
+    "homeTeam": "MIA",
+    "awayTeam": "DEN",
+    "homeScore": 94,
+    "awayScore": 109,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-finals-finals-den-mia",
+    "gameNumber": 4,
+    "date": "2023-06-09",
+    "homeTeam": "MIA",
+    "awayTeam": "DEN",
+    "homeScore": 95,
+    "awayScore": 108,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-finals-finals-den-mia",
+    "gameNumber": 5,
+    "date": "2023-06-12",
+    "homeTeam": "DEN",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 89,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 1,
+    "date": "2023-05-17",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 116,
+    "awayScore": 123,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 2,
+    "date": "2023-05-19",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 105,
+    "awayScore": 111,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 3,
+    "date": "2023-05-21",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 128,
+    "awayScore": 102,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 4,
+    "date": "2023-05-23",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 99,
+    "awayScore": 116,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 5,
+    "date": "2023-05-25",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 110,
+    "awayScore": 97,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 6,
+    "date": "2023-05-27",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-cf-bos-mia",
+    "gameNumber": 7,
+    "date": "2023-05-29",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 84,
+    "awayScore": 103,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-west-cf-den-lal",
+    "gameNumber": 1,
+    "date": "2023-05-16",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 132,
+    "awayScore": 126,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-cf-den-lal",
+    "gameNumber": 2,
+    "date": "2023-05-18",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 103,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-cf-den-lal",
+    "gameNumber": 3,
+    "date": "2023-05-20",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 108,
+    "awayScore": 119,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-cf-den-lal",
+    "gameNumber": 4,
+    "date": "2023-05-22",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 111,
+    "awayScore": 113,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 1,
+    "date": "2023-05-01",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 115,
+    "awayScore": 119,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 2,
+    "date": "2023-05-03",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 121,
+    "awayScore": 87,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 3,
+    "date": "2023-05-05",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 114,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 4,
+    "date": "2023-05-07",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 116,
+    "awayScore": 115,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 5,
+    "date": "2023-05-09",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 103,
+    "awayScore": 115,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 6,
+    "date": "2023-05-11",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 86,
+    "awayScore": 95,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-csf-bos-phi",
+    "gameNumber": 7,
+    "date": "2023-05-14",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 112,
+    "awayScore": 88,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-csf-nyk-mia",
+    "gameNumber": 1,
+    "date": "2023-04-30",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 101,
+    "awayScore": 108,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-csf-nyk-mia",
+    "gameNumber": 2,
+    "date": "2023-05-02",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 111,
+    "awayScore": 105,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2023-east-csf-nyk-mia",
+    "gameNumber": 3,
+    "date": "2023-05-06",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 105,
+    "awayScore": 86,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-csf-nyk-mia",
+    "gameNumber": 4,
+    "date": "2023-05-08",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 109,
+    "awayScore": 101,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-csf-nyk-mia",
+    "gameNumber": 5,
+    "date": "2023-05-10",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 112,
+    "awayScore": 103,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2023-east-csf-nyk-mia",
+    "gameNumber": 6,
+    "date": "2023-05-12",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 96,
+    "awayScore": 92,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-west-csf-den-pho",
+    "gameNumber": 1,
+    "date": "2023-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "PHO",
+    "homeScore": 125,
+    "awayScore": 107,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-csf-den-pho",
+    "gameNumber": 2,
+    "date": "2023-05-01",
+    "homeTeam": "DEN",
+    "awayTeam": "PHO",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-csf-den-pho",
+    "gameNumber": 3,
+    "date": "2023-05-05",
+    "homeTeam": "PHO",
+    "awayTeam": "DEN",
+    "homeScore": 121,
+    "awayScore": 114,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2023-west-csf-den-pho",
+    "gameNumber": 4,
+    "date": "2023-05-07",
+    "homeTeam": "PHO",
+    "awayTeam": "DEN",
+    "homeScore": 129,
+    "awayScore": 124,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2023-west-csf-den-pho",
+    "gameNumber": 5,
+    "date": "2023-05-09",
+    "homeTeam": "DEN",
+    "awayTeam": "PHO",
+    "homeScore": 118,
+    "awayScore": 102,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-csf-den-pho",
+    "gameNumber": 6,
+    "date": "2023-05-11",
+    "homeTeam": "PHO",
+    "awayTeam": "DEN",
+    "homeScore": 100,
+    "awayScore": 125,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-csf-gsw-lal",
+    "gameNumber": 1,
+    "date": "2023-05-02",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 112,
+    "awayScore": 117,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-csf-gsw-lal",
+    "gameNumber": 2,
+    "date": "2023-05-04",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 127,
+    "awayScore": 100,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2023-west-csf-gsw-lal",
+    "gameNumber": 3,
+    "date": "2023-05-06",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 127,
+    "awayScore": 97,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-csf-gsw-lal",
+    "gameNumber": 4,
+    "date": "2023-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 104,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-csf-gsw-lal",
+    "gameNumber": 5,
+    "date": "2023-05-10",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 121,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2023-west-csf-gsw-lal",
+    "gameNumber": 6,
+    "date": "2023-05-12",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 122,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-east-r1-bos-atl",
+    "gameNumber": 1,
+    "date": "2023-04-15",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 112,
+    "awayScore": 99,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-r1-bos-atl",
+    "gameNumber": 2,
+    "date": "2023-04-18",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 119,
+    "awayScore": 106,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-r1-bos-atl",
+    "gameNumber": 3,
+    "date": "2023-04-21",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 130,
+    "awayScore": 122,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2023-east-r1-bos-atl",
+    "gameNumber": 4,
+    "date": "2023-04-23",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 121,
+    "awayScore": 129,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-r1-bos-atl",
+    "gameNumber": 5,
+    "date": "2023-04-25",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 117,
+    "awayScore": 119,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2023-east-r1-bos-atl",
+    "gameNumber": 6,
+    "date": "2023-04-27",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 120,
+    "awayScore": 128,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2023-east-r1-mil-mia",
+    "gameNumber": 1,
+    "date": "2023-04-16",
+    "homeTeam": "MIL",
+    "awayTeam": "MIA",
+    "homeScore": 117,
+    "awayScore": 130,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-r1-mil-mia",
+    "gameNumber": 2,
+    "date": "2023-04-19",
+    "homeTeam": "MIL",
+    "awayTeam": "MIA",
+    "homeScore": 138,
+    "awayScore": 122,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2023-east-r1-mil-mia",
+    "gameNumber": 3,
+    "date": "2023-04-22",
+    "homeTeam": "MIA",
+    "awayTeam": "MIL",
+    "homeScore": 121,
+    "awayScore": 99,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-r1-mil-mia",
+    "gameNumber": 4,
+    "date": "2023-04-24",
+    "homeTeam": "MIA",
+    "awayTeam": "MIL",
+    "homeScore": 119,
+    "awayScore": 114,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-r1-mil-mia",
+    "gameNumber": 5,
+    "date": "2023-04-26",
+    "homeTeam": "MIL",
+    "awayTeam": "MIA",
+    "homeScore": 126,
+    "awayScore": 128,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2023-east-r1-cle-nyk",
+    "gameNumber": 1,
+    "date": "2023-04-15",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 97,
+    "awayScore": 101,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2023-east-r1-cle-nyk",
+    "gameNumber": 2,
+    "date": "2023-04-18",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 107,
+    "awayScore": 90,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2023-east-r1-cle-nyk",
+    "gameNumber": 3,
+    "date": "2023-04-21",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 99,
+    "awayScore": 79,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2023-east-r1-cle-nyk",
+    "gameNumber": 4,
+    "date": "2023-04-23",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 102,
+    "awayScore": 93,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2023-east-r1-cle-nyk",
+    "gameNumber": 5,
+    "date": "2023-04-26",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 95,
+    "awayScore": 106,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2023-east-r1-phi-brk",
+    "gameNumber": 1,
+    "date": "2023-04-15",
+    "homeTeam": "PHI",
+    "awayTeam": "BRK",
+    "homeScore": 121,
+    "awayScore": 101,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-east-r1-phi-brk",
+    "gameNumber": 2,
+    "date": "2023-04-17",
+    "homeTeam": "PHI",
+    "awayTeam": "BRK",
+    "homeScore": 96,
+    "awayScore": 84,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-east-r1-phi-brk",
+    "gameNumber": 3,
+    "date": "2023-04-20",
+    "homeTeam": "BRK",
+    "awayTeam": "PHI",
+    "homeScore": 97,
+    "awayScore": 102,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-east-r1-phi-brk",
+    "gameNumber": 4,
+    "date": "2023-04-22",
+    "homeTeam": "BRK",
+    "awayTeam": "PHI",
+    "homeScore": 88,
+    "awayScore": 96,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2023-west-r1-den-min",
+    "gameNumber": 1,
+    "date": "2023-04-16",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 109,
+    "awayScore": 80,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-r1-den-min",
+    "gameNumber": 2,
+    "date": "2023-04-19",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 122,
+    "awayScore": 113,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-r1-den-min",
+    "gameNumber": 3,
+    "date": "2023-04-21",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 111,
+    "awayScore": 120,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-r1-den-min",
+    "gameNumber": 4,
+    "date": "2023-04-23",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 114,
+    "awayScore": 108,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2023-west-r1-den-min",
+    "gameNumber": 5,
+    "date": "2023-04-25",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 112,
+    "awayScore": 109,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 1,
+    "date": "2023-04-15",
+    "homeTeam": "SAC",
+    "awayTeam": "GSW",
+    "homeScore": 126,
+    "awayScore": 123,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 2,
+    "date": "2023-04-17",
+    "homeTeam": "SAC",
+    "awayTeam": "GSW",
+    "homeScore": 114,
+    "awayScore": 106,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 3,
+    "date": "2023-04-20",
+    "homeTeam": "GSW",
+    "awayTeam": "SAC",
+    "homeScore": 114,
+    "awayScore": 97,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 4,
+    "date": "2023-04-23",
+    "homeTeam": "GSW",
+    "awayTeam": "SAC",
+    "homeScore": 126,
+    "awayScore": 125,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 5,
+    "date": "2023-04-26",
+    "homeTeam": "SAC",
+    "awayTeam": "GSW",
+    "homeScore": 116,
+    "awayScore": 123,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 6,
+    "date": "2023-04-28",
+    "homeTeam": "GSW",
+    "awayTeam": "SAC",
+    "homeScore": 99,
+    "awayScore": 118,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2023-west-r1-sac-gsw",
+    "gameNumber": 7,
+    "date": "2023-04-30",
+    "homeTeam": "SAC",
+    "awayTeam": "GSW",
+    "homeScore": 100,
+    "awayScore": 120,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2023-west-r1-mem-lal",
+    "gameNumber": 1,
+    "date": "2023-04-16",
+    "homeTeam": "MEM",
+    "awayTeam": "LAL",
+    "homeScore": 112,
+    "awayScore": 128,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-r1-mem-lal",
+    "gameNumber": 2,
+    "date": "2023-04-19",
+    "homeTeam": "MEM",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 93,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2023-west-r1-mem-lal",
+    "gameNumber": 3,
+    "date": "2023-04-22",
+    "homeTeam": "LAL",
+    "awayTeam": "MEM",
+    "homeScore": 111,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-r1-mem-lal",
+    "gameNumber": 4,
+    "date": "2023-04-24",
+    "homeTeam": "LAL",
+    "awayTeam": "MEM",
+    "homeScore": 117,
+    "awayScore": 111,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-r1-mem-lal",
+    "gameNumber": 5,
+    "date": "2023-04-26",
+    "homeTeam": "MEM",
+    "awayTeam": "LAL",
+    "homeScore": 116,
+    "awayScore": 99,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2023-west-r1-mem-lal",
+    "gameNumber": 6,
+    "date": "2023-04-28",
+    "homeTeam": "LAL",
+    "awayTeam": "MEM",
+    "homeScore": 125,
+    "awayScore": 85,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2023-west-r1-pho-lac",
+    "gameNumber": 1,
+    "date": "2023-04-16",
+    "homeTeam": "PHO",
+    "awayTeam": "LAC",
+    "homeScore": 110,
+    "awayScore": 115,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2023-west-r1-pho-lac",
+    "gameNumber": 2,
+    "date": "2023-04-18",
+    "homeTeam": "PHO",
+    "awayTeam": "LAC",
+    "homeScore": 123,
+    "awayScore": 109,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2023-west-r1-pho-lac",
+    "gameNumber": 3,
+    "date": "2023-04-20",
+    "homeTeam": "LAC",
+    "awayTeam": "PHO",
+    "homeScore": 124,
+    "awayScore": 129,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2023-west-r1-pho-lac",
+    "gameNumber": 4,
+    "date": "2023-04-22",
+    "homeTeam": "LAC",
+    "awayTeam": "PHO",
+    "homeScore": 100,
+    "awayScore": 112,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2023-west-r1-pho-lac",
+    "gameNumber": 5,
+    "date": "2023-04-25",
+    "homeTeam": "PHO",
+    "awayTeam": "LAC",
+    "homeScore": 136,
+    "awayScore": 130,
+    "winner": "PHO"
+  }
+]

@@ -1,0 +1,862 @@
+[
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 1,
+    "date": "2016-06-02",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 89,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 2,
+    "date": "2016-06-05",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 110,
+    "awayScore": 77,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 3,
+    "date": "2016-06-08",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 120,
+    "awayScore": 90,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 4,
+    "date": "2016-06-10",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 97,
+    "awayScore": 108,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 5,
+    "date": "2016-06-13",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 97,
+    "awayScore": 112,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 6,
+    "date": "2016-06-16",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 115,
+    "awayScore": 101,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "gameNumber": 7,
+    "date": "2016-06-19",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 89,
+    "awayScore": 93,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-cf-cle-tor",
+    "gameNumber": 1,
+    "date": "2016-05-17",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 115,
+    "awayScore": 84,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-cf-cle-tor",
+    "gameNumber": 2,
+    "date": "2016-05-19",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 108,
+    "awayScore": 89,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-cf-cle-tor",
+    "gameNumber": 3,
+    "date": "2016-05-21",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 99,
+    "awayScore": 84,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-cf-cle-tor",
+    "gameNumber": 4,
+    "date": "2016-05-23",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 105,
+    "awayScore": 99,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-cf-cle-tor",
+    "gameNumber": 5,
+    "date": "2016-05-25",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 116,
+    "awayScore": 78,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-cf-cle-tor",
+    "gameNumber": 6,
+    "date": "2016-05-27",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 87,
+    "awayScore": 113,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 1,
+    "date": "2016-05-16",
+    "homeTeam": "GSW",
+    "awayTeam": "OKC",
+    "homeScore": 102,
+    "awayScore": 108,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 2,
+    "date": "2016-05-18",
+    "homeTeam": "GSW",
+    "awayTeam": "OKC",
+    "homeScore": 118,
+    "awayScore": 91,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 3,
+    "date": "2016-05-22",
+    "homeTeam": "OKC",
+    "awayTeam": "GSW",
+    "homeScore": 133,
+    "awayScore": 105,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 4,
+    "date": "2016-05-24",
+    "homeTeam": "OKC",
+    "awayTeam": "GSW",
+    "homeScore": 118,
+    "awayScore": 94,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 5,
+    "date": "2016-05-26",
+    "homeTeam": "GSW",
+    "awayTeam": "OKC",
+    "homeScore": 120,
+    "awayScore": 111,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 6,
+    "date": "2016-05-28",
+    "homeTeam": "OKC",
+    "awayTeam": "GSW",
+    "homeScore": 101,
+    "awayScore": 108,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-cf-gsw-okc",
+    "gameNumber": 7,
+    "date": "2016-05-30",
+    "homeTeam": "GSW",
+    "awayTeam": "OKC",
+    "homeScore": 96,
+    "awayScore": 88,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-east-csf-cle-atl",
+    "gameNumber": 1,
+    "date": "2016-05-02",
+    "homeTeam": "CLE",
+    "awayTeam": "ATL",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-csf-cle-atl",
+    "gameNumber": 2,
+    "date": "2016-05-04",
+    "homeTeam": "CLE",
+    "awayTeam": "ATL",
+    "homeScore": 123,
+    "awayScore": 98,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-csf-cle-atl",
+    "gameNumber": 3,
+    "date": "2016-05-06",
+    "homeTeam": "ATL",
+    "awayTeam": "CLE",
+    "homeScore": 108,
+    "awayScore": 121,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-csf-cle-atl",
+    "gameNumber": 4,
+    "date": "2016-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "CLE",
+    "homeScore": 99,
+    "awayScore": 100,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 1,
+    "date": "2016-05-03",
+    "homeTeam": "TOR",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 102,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 2,
+    "date": "2016-05-05",
+    "homeTeam": "TOR",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 92,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 3,
+    "date": "2016-05-07",
+    "homeTeam": "MIA",
+    "awayTeam": "TOR",
+    "homeScore": 91,
+    "awayScore": 95,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 4,
+    "date": "2016-05-09",
+    "homeTeam": "MIA",
+    "awayTeam": "TOR",
+    "homeScore": 94,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 5,
+    "date": "2016-05-11",
+    "homeTeam": "TOR",
+    "awayTeam": "MIA",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 6,
+    "date": "2016-05-13",
+    "homeTeam": "MIA",
+    "awayTeam": "TOR",
+    "homeScore": 103,
+    "awayScore": 91,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-csf-tor-mia",
+    "gameNumber": 7,
+    "date": "2016-05-15",
+    "homeTeam": "TOR",
+    "awayTeam": "MIA",
+    "homeScore": 116,
+    "awayScore": 89,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-west-csf-gsw-por",
+    "gameNumber": 1,
+    "date": "2016-05-01",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 118,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-csf-gsw-por",
+    "gameNumber": 2,
+    "date": "2016-05-03",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 110,
+    "awayScore": 99,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-csf-gsw-por",
+    "gameNumber": 3,
+    "date": "2016-05-07",
+    "homeTeam": "POR",
+    "awayTeam": "GSW",
+    "homeScore": 120,
+    "awayScore": 108,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2016-west-csf-gsw-por",
+    "gameNumber": 4,
+    "date": "2016-05-09",
+    "homeTeam": "POR",
+    "awayTeam": "GSW",
+    "homeScore": 125,
+    "awayScore": 132,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-csf-gsw-por",
+    "gameNumber": 5,
+    "date": "2016-05-11",
+    "homeTeam": "GSW",
+    "awayTeam": "POR",
+    "homeScore": 125,
+    "awayScore": 121,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-csf-sas-okc",
+    "gameNumber": 1,
+    "date": "2016-04-30",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 124,
+    "awayScore": 92,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2016-west-csf-sas-okc",
+    "gameNumber": 2,
+    "date": "2016-05-02",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 97,
+    "awayScore": 98,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-csf-sas-okc",
+    "gameNumber": 3,
+    "date": "2016-05-06",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 96,
+    "awayScore": 100,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2016-west-csf-sas-okc",
+    "gameNumber": 4,
+    "date": "2016-05-08",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 111,
+    "awayScore": 97,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-csf-sas-okc",
+    "gameNumber": 5,
+    "date": "2016-05-10",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 91,
+    "awayScore": 95,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-csf-sas-okc",
+    "gameNumber": 6,
+    "date": "2016-05-12",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 113,
+    "awayScore": 99,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-east-r1-atl-bos",
+    "gameNumber": 1,
+    "date": "2016-04-16",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 101,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2016-east-r1-atl-bos",
+    "gameNumber": 2,
+    "date": "2016-04-19",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 89,
+    "awayScore": 72,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2016-east-r1-atl-bos",
+    "gameNumber": 3,
+    "date": "2016-04-22",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 111,
+    "awayScore": 103,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2016-east-r1-atl-bos",
+    "gameNumber": 4,
+    "date": "2016-04-24",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 104,
+    "awayScore": 95,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2016-east-r1-atl-bos",
+    "gameNumber": 5,
+    "date": "2016-04-26",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 110,
+    "awayScore": 83,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2016-east-r1-atl-bos",
+    "gameNumber": 6,
+    "date": "2016-04-28",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 92,
+    "awayScore": 104,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2016-east-r1-cle-det",
+    "gameNumber": 1,
+    "date": "2016-04-17",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 106,
+    "awayScore": 101,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-r1-cle-det",
+    "gameNumber": 2,
+    "date": "2016-04-20",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 107,
+    "awayScore": 90,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-r1-cle-det",
+    "gameNumber": 3,
+    "date": "2016-04-22",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 91,
+    "awayScore": 101,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-r1-cle-det",
+    "gameNumber": 4,
+    "date": "2016-04-24",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 98,
+    "awayScore": 100,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 1,
+    "date": "2016-04-17",
+    "homeTeam": "MIA",
+    "awayTeam": "CHO",
+    "homeScore": 123,
+    "awayScore": 91,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 2,
+    "date": "2016-04-20",
+    "homeTeam": "MIA",
+    "awayTeam": "CHO",
+    "homeScore": 115,
+    "awayScore": 103,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 3,
+    "date": "2016-04-23",
+    "homeTeam": "CHO",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 80,
+    "winner": "CHO"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 4,
+    "date": "2016-04-25",
+    "homeTeam": "CHO",
+    "awayTeam": "MIA",
+    "homeScore": 89,
+    "awayScore": 85,
+    "winner": "CHO"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 5,
+    "date": "2016-04-27",
+    "homeTeam": "MIA",
+    "awayTeam": "CHO",
+    "homeScore": 88,
+    "awayScore": 90,
+    "winner": "CHO"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 6,
+    "date": "2016-04-29",
+    "homeTeam": "CHO",
+    "awayTeam": "MIA",
+    "homeScore": 90,
+    "awayScore": 97,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-r1-mia-cho",
+    "gameNumber": 7,
+    "date": "2016-05-01",
+    "homeTeam": "MIA",
+    "awayTeam": "CHO",
+    "homeScore": 106,
+    "awayScore": 73,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 1,
+    "date": "2016-04-16",
+    "homeTeam": "TOR",
+    "awayTeam": "IND",
+    "homeScore": 90,
+    "awayScore": 100,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 2,
+    "date": "2016-04-18",
+    "homeTeam": "TOR",
+    "awayTeam": "IND",
+    "homeScore": 98,
+    "awayScore": 87,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 3,
+    "date": "2016-04-21",
+    "homeTeam": "IND",
+    "awayTeam": "TOR",
+    "homeScore": 85,
+    "awayScore": 101,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 4,
+    "date": "2016-04-23",
+    "homeTeam": "IND",
+    "awayTeam": "TOR",
+    "homeScore": 100,
+    "awayScore": 83,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 5,
+    "date": "2016-04-26",
+    "homeTeam": "TOR",
+    "awayTeam": "IND",
+    "homeScore": 102,
+    "awayScore": 99,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 6,
+    "date": "2016-04-29",
+    "homeTeam": "IND",
+    "awayTeam": "TOR",
+    "homeScore": 101,
+    "awayScore": 83,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2016-east-r1-tor-ind",
+    "gameNumber": 7,
+    "date": "2016-05-01",
+    "homeTeam": "TOR",
+    "awayTeam": "IND",
+    "homeScore": 89,
+    "awayScore": 84,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2016-west-r1-gsw-hou",
+    "gameNumber": 1,
+    "date": "2016-04-16",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 78,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-r1-gsw-hou",
+    "gameNumber": 2,
+    "date": "2016-04-18",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 115,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-r1-gsw-hou",
+    "gameNumber": 3,
+    "date": "2016-04-21",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 97,
+    "awayScore": 96,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2016-west-r1-gsw-hou",
+    "gameNumber": 4,
+    "date": "2016-04-24",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 94,
+    "awayScore": 121,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-r1-gsw-hou",
+    "gameNumber": 5,
+    "date": "2016-04-27",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 114,
+    "awayScore": 81,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2016-west-r1-okc-dal",
+    "gameNumber": 1,
+    "date": "2016-04-16",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 108,
+    "awayScore": 70,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-r1-okc-dal",
+    "gameNumber": 2,
+    "date": "2016-04-18",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 84,
+    "awayScore": 85,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2016-west-r1-okc-dal",
+    "gameNumber": 3,
+    "date": "2016-04-21",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 102,
+    "awayScore": 131,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-r1-okc-dal",
+    "gameNumber": 4,
+    "date": "2016-04-23",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 108,
+    "awayScore": 119,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-r1-okc-dal",
+    "gameNumber": 5,
+    "date": "2016-04-25",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 118,
+    "awayScore": 104,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2016-west-r1-lac-por",
+    "gameNumber": 1,
+    "date": "2016-04-17",
+    "homeTeam": "LAC",
+    "awayTeam": "POR",
+    "homeScore": 115,
+    "awayScore": 95,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2016-west-r1-lac-por",
+    "gameNumber": 2,
+    "date": "2016-04-20",
+    "homeTeam": "LAC",
+    "awayTeam": "POR",
+    "homeScore": 102,
+    "awayScore": 81,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2016-west-r1-lac-por",
+    "gameNumber": 3,
+    "date": "2016-04-23",
+    "homeTeam": "POR",
+    "awayTeam": "LAC",
+    "homeScore": 96,
+    "awayScore": 88,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2016-west-r1-lac-por",
+    "gameNumber": 4,
+    "date": "2016-04-25",
+    "homeTeam": "POR",
+    "awayTeam": "LAC",
+    "homeScore": 98,
+    "awayScore": 84,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2016-west-r1-lac-por",
+    "gameNumber": 5,
+    "date": "2016-04-27",
+    "homeTeam": "LAC",
+    "awayTeam": "POR",
+    "homeScore": 98,
+    "awayScore": 108,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2016-west-r1-lac-por",
+    "gameNumber": 6,
+    "date": "2016-04-29",
+    "homeTeam": "POR",
+    "awayTeam": "LAC",
+    "homeScore": 106,
+    "awayScore": 103,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2016-west-r1-sas-mem",
+    "gameNumber": 1,
+    "date": "2016-04-17",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 106,
+    "awayScore": 74,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2016-west-r1-sas-mem",
+    "gameNumber": 2,
+    "date": "2016-04-19",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 94,
+    "awayScore": 68,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2016-west-r1-sas-mem",
+    "gameNumber": 3,
+    "date": "2016-04-22",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 87,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2016-west-r1-sas-mem",
+    "gameNumber": 4,
+    "date": "2016-04-24",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 95,
+    "awayScore": 116,
+    "winner": "SAS"
+  }
+]

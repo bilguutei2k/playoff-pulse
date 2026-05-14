@@ -1,0 +1,1602 @@
+[
+  {
+    "teamId": "ATL",
+    "teamName": "Atlanta Hawks",
+    "season": 2022,
+    "conference": "East",
+    "seed": 8,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1554.25,
+    "netRating": 1.58,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Sharife Cooper",
+        "bpm": -16.3,
+        "mpg": 39,
+        "gamesPlayed": 13,
+        "impact": -16.3,
+        "projectedMinutes": 39
+      },
+      {
+        "name": "Trae Young",
+        "bpm": 5.2,
+        "mpg": 34.89473684210526,
+        "gamesPlayed": 76,
+        "impact": 5.2,
+        "projectedMinutes": 34.89473684210526
+      },
+      {
+        "name": "John Collins",
+        "bpm": 1.5,
+        "mpg": 30.796296296296298,
+        "gamesPlayed": 54,
+        "impact": 1.5,
+        "projectedMinutes": 30.796296296296298
+      },
+      {
+        "name": "De'Andre Hunter",
+        "bpm": -3.9,
+        "mpg": 29.754716981132077,
+        "gamesPlayed": 53,
+        "impact": -3.9,
+        "projectedMinutes": 29.754716981132077
+      },
+      {
+        "name": "Kevin Huerter",
+        "bpm": -1.2,
+        "mpg": 29.56756756756757,
+        "gamesPlayed": 74,
+        "impact": -1.2,
+        "projectedMinutes": 29.56756756756757
+      },
+      {
+        "name": "Bogdan Bogdanović",
+        "bpm": 1.3,
+        "mpg": 29.333333333333332,
+        "gamesPlayed": 63,
+        "impact": 1.3,
+        "projectedMinutes": 29.333333333333332
+      },
+      {
+        "name": "Clint Capela",
+        "bpm": 2,
+        "mpg": 27.594594594594593,
+        "gamesPlayed": 74,
+        "impact": 2,
+        "projectedMinutes": 27.594594594594593
+      },
+      {
+        "name": "Danilo Gallinari",
+        "bpm": -0.2,
+        "mpg": 25.333333333333332,
+        "gamesPlayed": 66,
+        "impact": -0.2,
+        "projectedMinutes": 25.333333333333332
+      },
+      {
+        "name": "Onyeka Okongwu",
+        "bpm": 0.8,
+        "mpg": 20.666666666666668,
+        "gamesPlayed": 48,
+        "impact": 0.8,
+        "projectedMinutes": 20.666666666666668
+      },
+      {
+        "name": "Delon Wright",
+        "bpm": 2.2,
+        "mpg": 18.857142857142858,
+        "gamesPlayed": 77,
+        "impact": 2.2,
+        "projectedMinutes": 18.857142857142858
+      }
+    ],
+    "srs": 1.55,
+    "ortg": 117.29,
+    "drtg": 115.71,
+    "wins": 43,
+    "losses": 39,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "season": 2022,
+    "conference": "East",
+    "seed": 2,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1745.7,
+    "netRating": 7.66,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jayson Tatum",
+        "bpm": 5,
+        "mpg": 35.93421052631579,
+        "gamesPlayed": 76,
+        "impact": 5,
+        "projectedMinutes": 35.93421052631579
+      },
+      {
+        "name": "Jaylen Brown",
+        "bpm": 2.1,
+        "mpg": 33.63636363636363,
+        "gamesPlayed": 66,
+        "impact": 2.1,
+        "projectedMinutes": 33.63636363636363
+      },
+      {
+        "name": "Marcus Smart",
+        "bpm": 0.5,
+        "mpg": 32.33802816901409,
+        "gamesPlayed": 71,
+        "impact": 0.5,
+        "projectedMinutes": 32.33802816901409
+      },
+      {
+        "name": "Robert Williams",
+        "bpm": 5.5,
+        "mpg": 29.57377049180328,
+        "gamesPlayed": 61,
+        "impact": 5.5,
+        "projectedMinutes": 29.57377049180328
+      },
+      {
+        "name": "Al Horford",
+        "bpm": 4.3,
+        "mpg": 29.057971014492754,
+        "gamesPlayed": 69,
+        "impact": 4.3,
+        "projectedMinutes": 29.057971014492754
+      },
+      {
+        "name": "Derrick White",
+        "bpm": -0.9,
+        "mpg": 27.423076923076923,
+        "gamesPlayed": 26,
+        "impact": -0.9,
+        "projectedMinutes": 27.423076923076923
+      },
+      {
+        "name": "Grant Williams",
+        "bpm": -0.4,
+        "mpg": 24.350649350649352,
+        "gamesPlayed": 77,
+        "impact": -0.4,
+        "projectedMinutes": 24.350649350649352
+      },
+      {
+        "name": "Daniel Theis",
+        "bpm": -0.1,
+        "mpg": 18.714285714285715,
+        "gamesPlayed": 21,
+        "impact": -0.1,
+        "projectedMinutes": 18.714285714285715
+      },
+      {
+        "name": "Payton Pritchard",
+        "bpm": 1.8,
+        "mpg": 14.098591549295774,
+        "gamesPlayed": 71,
+        "impact": 1.8,
+        "projectedMinutes": 14.098591549295774
+      },
+      {
+        "name": "Enes Freedom",
+        "bpm": -1.4,
+        "mpg": 11.742857142857142,
+        "gamesPlayed": 35,
+        "impact": -1.4,
+        "projectedMinutes": 11.742857142857142
+      }
+    ],
+    "srs": 7.02,
+    "ortg": 115.37,
+    "drtg": 107.71,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "BRK",
+    "teamName": "Brooklyn Nets",
+    "season": 2022,
+    "conference": "East",
+    "seed": 7,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1528.7,
+    "netRating": 0.76,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Kyrie Irving",
+        "bpm": 3,
+        "mpg": 37.62068965517241,
+        "gamesPlayed": 29,
+        "impact": 3,
+        "projectedMinutes": 37.62068965517241
+      },
+      {
+        "name": "Kevin Durant",
+        "bpm": 7.2,
+        "mpg": 37.21818181818182,
+        "gamesPlayed": 55,
+        "impact": 7.2,
+        "projectedMinutes": 37.21818181818182
+      },
+      {
+        "name": "Joe Harris",
+        "bpm": -1.4,
+        "mpg": 30.214285714285715,
+        "gamesPlayed": 14,
+        "impact": -1.4,
+        "projectedMinutes": 30.214285714285715
+      },
+      {
+        "name": "Seth Curry",
+        "bpm": 0.7,
+        "mpg": 29.94736842105263,
+        "gamesPlayed": 19,
+        "impact": 0.7,
+        "projectedMinutes": 29.94736842105263
+      },
+      {
+        "name": "Patty Mills",
+        "bpm": -1.7,
+        "mpg": 28.962962962962962,
+        "gamesPlayed": 81,
+        "impact": -1.7,
+        "projectedMinutes": 28.962962962962962
+      },
+      {
+        "name": "Goran Dragić",
+        "bpm": -4.4,
+        "mpg": 25.5,
+        "gamesPlayed": 16,
+        "impact": -4.4,
+        "projectedMinutes": 25.5
+      },
+      {
+        "name": "Bruce Brown",
+        "bpm": 0.7,
+        "mpg": 24.63888888888889,
+        "gamesPlayed": 72,
+        "impact": 0.7,
+        "projectedMinutes": 24.63888888888889
+      },
+      {
+        "name": "LaMarcus Aldridge",
+        "bpm": 0.7,
+        "mpg": 22.340425531914892,
+        "gamesPlayed": 47,
+        "impact": 0.7,
+        "projectedMinutes": 22.340425531914892
+      },
+      {
+        "name": "Andre Drummond",
+        "bpm": 1.2,
+        "mpg": 22.291666666666668,
+        "gamesPlayed": 24,
+        "impact": 1.2,
+        "projectedMinutes": 22.291666666666668
+      },
+      {
+        "name": "Nic Claxton",
+        "bpm": 0.5,
+        "mpg": 20.72340425531915,
+        "gamesPlayed": 47,
+        "impact": 0.5,
+        "projectedMinutes": 20.72340425531915
+      }
+    ],
+    "srs": 0.82,
+    "ortg": 114.69,
+    "drtg": 113.93,
+    "wins": 44,
+    "losses": 38,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "CHI",
+    "teamName": "Chicago Bulls",
+    "season": 2022,
+    "conference": "East",
+    "seed": 6,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1487.05,
+    "netRating": -0.48,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "DeMar DeRozan",
+        "bpm": 2.5,
+        "mpg": 36.0921052631579,
+        "gamesPlayed": 76,
+        "impact": 2.5,
+        "projectedMinutes": 36.0921052631579
+      },
+      {
+        "name": "Zach LaVine",
+        "bpm": 2.4,
+        "mpg": 34.74626865671642,
+        "gamesPlayed": 67,
+        "impact": 2.4,
+        "projectedMinutes": 34.74626865671642
+      },
+      {
+        "name": "Lonzo Ball",
+        "bpm": 2.5,
+        "mpg": 34.628571428571426,
+        "gamesPlayed": 35,
+        "impact": 2.5,
+        "projectedMinutes": 34.628571428571426
+      },
+      {
+        "name": "Nikola Vučević",
+        "bpm": 0.9,
+        "mpg": 33.12328767123287,
+        "gamesPlayed": 73,
+        "impact": 0.9,
+        "projectedMinutes": 33.12328767123287
+      },
+      {
+        "name": "Alex Caruso",
+        "bpm": 0.2,
+        "mpg": 27.975609756097562,
+        "gamesPlayed": 41,
+        "impact": 0.2,
+        "projectedMinutes": 27.975609756097562
+      },
+      {
+        "name": "Coby White",
+        "bpm": -2.1,
+        "mpg": 27.459016393442624,
+        "gamesPlayed": 61,
+        "impact": -2.1,
+        "projectedMinutes": 27.459016393442624
+      },
+      {
+        "name": "Ayo Dosunmu",
+        "bpm": -2,
+        "mpg": 27.4025974025974,
+        "gamesPlayed": 77,
+        "impact": -2,
+        "projectedMinutes": 27.4025974025974
+      },
+      {
+        "name": "Patrick Williams",
+        "bpm": -1.5,
+        "mpg": 24.823529411764707,
+        "gamesPlayed": 17,
+        "impact": -1.5,
+        "projectedMinutes": 24.823529411764707
+      },
+      {
+        "name": "Javonte Green",
+        "bpm": 0.1,
+        "mpg": 23.369230769230768,
+        "gamesPlayed": 65,
+        "impact": 0.1,
+        "projectedMinutes": 23.369230769230768
+      },
+      {
+        "name": "Derrick Jones Jr.",
+        "bpm": -0.9,
+        "mpg": 17.627450980392158,
+        "gamesPlayed": 51,
+        "impact": -0.9,
+        "projectedMinutes": 17.627450980392158
+      }
+    ],
+    "srs": -0.37,
+    "ortg": 114.07,
+    "drtg": 114.55,
+    "wins": 46,
+    "losses": 36,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "DAL",
+    "teamName": "Dallas Mavericks",
+    "season": 2022,
+    "conference": "West",
+    "seed": 4,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1609.2,
+    "netRating": 3.55,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Luka Dončić",
+        "bpm": 8.2,
+        "mpg": 35.4,
+        "gamesPlayed": 65,
+        "impact": 8.2,
+        "projectedMinutes": 35.4
+      },
+      {
+        "name": "Dorian Finney-Smith",
+        "bpm": 0.8,
+        "mpg": 33.05,
+        "gamesPlayed": 80,
+        "impact": 0.8,
+        "projectedMinutes": 33.05
+      },
+      {
+        "name": "Jalen Brunson",
+        "bpm": 0.9,
+        "mpg": 31.949367088607595,
+        "gamesPlayed": 79,
+        "impact": 0.9,
+        "projectedMinutes": 31.949367088607595
+      },
+      {
+        "name": "Tim Hardaway Jr.",
+        "bpm": -0.2,
+        "mpg": 29.642857142857142,
+        "gamesPlayed": 42,
+        "impact": -0.2,
+        "projectedMinutes": 29.642857142857142
+      },
+      {
+        "name": "Spencer Dinwiddie",
+        "bpm": 2.9,
+        "mpg": 28.26086956521739,
+        "gamesPlayed": 23,
+        "impact": 2.9,
+        "projectedMinutes": 28.26086956521739
+      },
+      {
+        "name": "Reggie Bullock",
+        "bpm": -1.4,
+        "mpg": 27.970588235294116,
+        "gamesPlayed": 68,
+        "impact": -1.4,
+        "projectedMinutes": 27.970588235294116
+      },
+      {
+        "name": "Maxi Kleber",
+        "bpm": -0.4,
+        "mpg": 24.576271186440678,
+        "gamesPlayed": 59,
+        "impact": -0.4,
+        "projectedMinutes": 24.576271186440678
+      },
+      {
+        "name": "Dwight Powell",
+        "bpm": 0.9,
+        "mpg": 21.926829268292682,
+        "gamesPlayed": 82,
+        "impact": 0.9,
+        "projectedMinutes": 21.926829268292682
+      },
+      {
+        "name": "Josh Green",
+        "bpm": -1,
+        "mpg": 15.507462686567164,
+        "gamesPlayed": 67,
+        "impact": -1,
+        "projectedMinutes": 15.507462686567164
+      },
+      {
+        "name": "Dāvis Bertāns",
+        "bpm": -0.6,
+        "mpg": 13.909090909090908,
+        "gamesPlayed": 22,
+        "impact": -0.6,
+        "projectedMinutes": 13.909090909090908
+      }
+    ],
+    "srs": 3.12,
+    "ortg": 113.82,
+    "drtg": 110.27,
+    "wins": 52,
+    "losses": 30,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "DEN",
+    "teamName": "Denver Nuggets",
+    "season": 2022,
+    "conference": "West",
+    "seed": 6,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1575.6,
+    "netRating": 2.33,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Petr Cornelie",
+        "bpm": -8.8,
+        "mpg": 38,
+        "gamesPlayed": 13,
+        "impact": -8.8,
+        "projectedMinutes": 38
+      },
+      {
+        "name": "Nikola Jokić",
+        "bpm": 13.7,
+        "mpg": 33.45945945945946,
+        "gamesPlayed": 74,
+        "impact": 13.7,
+        "projectedMinutes": 33.45945945945946
+      },
+      {
+        "name": "Will Barton",
+        "bpm": -0.5,
+        "mpg": 32.070422535211264,
+        "gamesPlayed": 71,
+        "impact": -0.5,
+        "projectedMinutes": 32.070422535211264
+      },
+      {
+        "name": "Aaron Gordon",
+        "bpm": -0.6,
+        "mpg": 31.68,
+        "gamesPlayed": 75,
+        "impact": -0.6,
+        "projectedMinutes": 31.68
+      },
+      {
+        "name": "Monte Morris",
+        "bpm": 0,
+        "mpg": 29.85333333333333,
+        "gamesPlayed": 75,
+        "impact": 0,
+        "projectedMinutes": 29.85333333333333
+      },
+      {
+        "name": "Jeff Green",
+        "bpm": -2.5,
+        "mpg": 24.653333333333332,
+        "gamesPlayed": 75,
+        "impact": -2.5,
+        "projectedMinutes": 24.653333333333332
+      },
+      {
+        "name": "Austin Rivers",
+        "bpm": -3.8,
+        "mpg": 22.08955223880597,
+        "gamesPlayed": 67,
+        "impact": -3.8,
+        "projectedMinutes": 22.08955223880597
+      },
+      {
+        "name": "Bones Hyland",
+        "bpm": -0.4,
+        "mpg": 18.985507246376812,
+        "gamesPlayed": 69,
+        "impact": -0.4,
+        "projectedMinutes": 18.985507246376812
+      },
+      {
+        "name": "PJ Dozier",
+        "bpm": -2,
+        "mpg": 18.88888888888889,
+        "gamesPlayed": 18,
+        "impact": -2,
+        "projectedMinutes": 18.88888888888889
+      },
+      {
+        "name": "Facundo Campazzo",
+        "bpm": -0.8,
+        "mpg": 18.215384615384615,
+        "gamesPlayed": 65,
+        "impact": -0.8,
+        "projectedMinutes": 18.215384615384615
+      }
+    ],
+    "srs": 2.16,
+    "ortg": 115.21,
+    "drtg": 112.88,
+    "wins": 48,
+    "losses": 34,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "season": 2022,
+    "conference": "West",
+    "seed": 3,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1693.2,
+    "netRating": 5.65,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Stephen Curry",
+        "bpm": 5.8,
+        "mpg": 34.546875,
+        "gamesPlayed": 64,
+        "impact": 5.8,
+        "projectedMinutes": 34.546875
+      },
+      {
+        "name": "Andrew Wiggins",
+        "bpm": 0.4,
+        "mpg": 31.91780821917808,
+        "gamesPlayed": 73,
+        "impact": 0.4,
+        "projectedMinutes": 31.91780821917808
+      },
+      {
+        "name": "Jordan Poole",
+        "bpm": 1,
+        "mpg": 30.039473684210527,
+        "gamesPlayed": 76,
+        "impact": 1,
+        "projectedMinutes": 30.039473684210527
+      },
+      {
+        "name": "Klay Thompson",
+        "bpm": 1.1,
+        "mpg": 29.40625,
+        "gamesPlayed": 32,
+        "impact": 1.1,
+        "projectedMinutes": 29.40625
+      },
+      {
+        "name": "Draymond Green",
+        "bpm": 3.2,
+        "mpg": 28.891304347826086,
+        "gamesPlayed": 46,
+        "impact": 3.2,
+        "projectedMinutes": 28.891304347826086
+      },
+      {
+        "name": "Otto Porter Jr.",
+        "bpm": 3.1,
+        "mpg": 22.158730158730158,
+        "gamesPlayed": 63,
+        "impact": 3.1,
+        "projectedMinutes": 22.158730158730158
+      },
+      {
+        "name": "Kevon Looney",
+        "bpm": 0.9,
+        "mpg": 21.121951219512194,
+        "gamesPlayed": 82,
+        "impact": 0.9,
+        "projectedMinutes": 21.121951219512194
+      },
+      {
+        "name": "Damion Lee",
+        "bpm": -2,
+        "mpg": 19.936507936507937,
+        "gamesPlayed": 63,
+        "impact": -2,
+        "projectedMinutes": 19.936507936507937
+      },
+      {
+        "name": "Andre Iguodala",
+        "bpm": 2.7,
+        "mpg": 19.451612903225808,
+        "gamesPlayed": 31,
+        "impact": 2.7,
+        "projectedMinutes": 19.451612903225808
+      },
+      {
+        "name": "Gary Payton II",
+        "bpm": 3.7,
+        "mpg": 17.577464788732396,
+        "gamesPlayed": 71,
+        "impact": 3.7,
+        "projectedMinutes": 17.577464788732396
+      }
+    ],
+    "srs": 5.52,
+    "ortg": 113.33,
+    "drtg": 107.68,
+    "wins": 53,
+    "losses": 29,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MEM",
+    "teamName": "Memphis Grizzlies",
+    "season": 2022,
+    "conference": "West",
+    "seed": 2,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1687.95,
+    "netRating": 5.56,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Ja Morant",
+        "bpm": 6.1,
+        "mpg": 33.14035087719298,
+        "gamesPlayed": 57,
+        "impact": 6.1,
+        "projectedMinutes": 33.14035087719298
+      },
+      {
+        "name": "Desmond Bane",
+        "bpm": 2.7,
+        "mpg": 29.81578947368421,
+        "gamesPlayed": 76,
+        "impact": 2.7,
+        "projectedMinutes": 29.81578947368421
+      },
+      {
+        "name": "Dillon Brooks",
+        "bpm": -1.8,
+        "mpg": 27.65625,
+        "gamesPlayed": 32,
+        "impact": -1.8,
+        "projectedMinutes": 27.65625
+      },
+      {
+        "name": "Jaren Jackson Jr.",
+        "bpm": -0.1,
+        "mpg": 27.256410256410255,
+        "gamesPlayed": 78,
+        "impact": -0.1,
+        "projectedMinutes": 27.256410256410255
+      },
+      {
+        "name": "Steven Adams",
+        "bpm": 2,
+        "mpg": 26.30263157894737,
+        "gamesPlayed": 76,
+        "impact": 2,
+        "projectedMinutes": 26.30263157894737
+      },
+      {
+        "name": "De'Anthony Melton",
+        "bpm": 1.9,
+        "mpg": 22.698630136986303,
+        "gamesPlayed": 73,
+        "impact": 1.9,
+        "projectedMinutes": 22.698630136986303
+      },
+      {
+        "name": "Ziaire Williams",
+        "bpm": -3,
+        "mpg": 21.70967741935484,
+        "gamesPlayed": 62,
+        "impact": -3,
+        "projectedMinutes": 21.70967741935484
+      },
+      {
+        "name": "Kyle Anderson",
+        "bpm": 1.2,
+        "mpg": 21.507246376811594,
+        "gamesPlayed": 69,
+        "impact": 1.2,
+        "projectedMinutes": 21.507246376811594
+      },
+      {
+        "name": "Tyus Jones",
+        "bpm": 1.7,
+        "mpg": 21.21917808219178,
+        "gamesPlayed": 73,
+        "impact": 1.7,
+        "projectedMinutes": 21.21917808219178
+      },
+      {
+        "name": "Brandon Clarke",
+        "bpm": 4.2,
+        "mpg": 19.46875,
+        "gamesPlayed": 64,
+        "impact": 4.2,
+        "projectedMinutes": 19.46875
+      }
+    ],
+    "srs": 5.37,
+    "ortg": 115.5,
+    "drtg": 109.94,
+    "wins": 56,
+    "losses": 26,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "season": 2022,
+    "conference": "East",
+    "seed": 1,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1648.05,
+    "netRating": 4.62,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jimmy Butler",
+        "bpm": 6.3,
+        "mpg": 33.87719298245614,
+        "gamesPlayed": 57,
+        "impact": 6.3,
+        "projectedMinutes": 33.87719298245614
+      },
+      {
+        "name": "Kyle Lowry",
+        "bpm": 2,
+        "mpg": 33.857142857142854,
+        "gamesPlayed": 63,
+        "impact": 2,
+        "projectedMinutes": 33.857142857142854
+      },
+      {
+        "name": "Tyler Herro",
+        "bpm": 0.7,
+        "mpg": 32.59090909090909,
+        "gamesPlayed": 66,
+        "impact": 0.7,
+        "projectedMinutes": 32.59090909090909
+      },
+      {
+        "name": "Bam Adebayo",
+        "bpm": 3.8,
+        "mpg": 32.589285714285715,
+        "gamesPlayed": 56,
+        "impact": 3.8,
+        "projectedMinutes": 32.589285714285715
+      },
+      {
+        "name": "P.J. Tucker",
+        "bpm": 0.6,
+        "mpg": 27.901408450704224,
+        "gamesPlayed": 71,
+        "impact": 0.6,
+        "projectedMinutes": 27.901408450704224
+      },
+      {
+        "name": "Duncan Robinson",
+        "bpm": -0.6,
+        "mpg": 25.860759493670887,
+        "gamesPlayed": 79,
+        "impact": -0.6,
+        "projectedMinutes": 25.860759493670887
+      },
+      {
+        "name": "Gabe Vincent",
+        "bpm": -1.4,
+        "mpg": 23.36764705882353,
+        "gamesPlayed": 68,
+        "impact": -1.4,
+        "projectedMinutes": 23.36764705882353
+      },
+      {
+        "name": "Max Strus",
+        "bpm": 0.9,
+        "mpg": 23.33823529411765,
+        "gamesPlayed": 68,
+        "impact": 0.9,
+        "projectedMinutes": 23.33823529411765
+      },
+      {
+        "name": "Caleb Martin",
+        "bpm": 1.1,
+        "mpg": 22.866666666666667,
+        "gamesPlayed": 60,
+        "impact": 1.1,
+        "projectedMinutes": 22.866666666666667
+      },
+      {
+        "name": "Markieff Morris",
+        "bpm": -1.9,
+        "mpg": 17.529411764705884,
+        "gamesPlayed": 17,
+        "impact": -1.9,
+        "projectedMinutes": 17.529411764705884
+      }
+    ],
+    "srs": 4.23,
+    "ortg": 114.83,
+    "drtg": 110.21,
+    "wins": 53,
+    "losses": 29,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "season": 2022,
+    "conference": "East",
+    "seed": 3,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1612.7,
+    "netRating": 3.3,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jrue Holiday",
+        "bpm": 3.2,
+        "mpg": 32.95522388059702,
+        "gamesPlayed": 67,
+        "impact": 3.2,
+        "projectedMinutes": 32.95522388059702
+      },
+      {
+        "name": "Giannis Antetokounmpo",
+        "bpm": 11.2,
+        "mpg": 32.8955223880597,
+        "gamesPlayed": 67,
+        "impact": 11.2,
+        "projectedMinutes": 32.8955223880597
+      },
+      {
+        "name": "Khris Middleton",
+        "bpm": 1.6,
+        "mpg": 32.43939393939394,
+        "gamesPlayed": 66,
+        "impact": 1.6,
+        "projectedMinutes": 32.43939393939394
+      },
+      {
+        "name": "Bobby Portis",
+        "bpm": 0.2,
+        "mpg": 28.166666666666668,
+        "gamesPlayed": 72,
+        "impact": 0.2,
+        "projectedMinutes": 28.166666666666668
+      },
+      {
+        "name": "Grayson Allen",
+        "bpm": 0.4,
+        "mpg": 27.348484848484848,
+        "gamesPlayed": 66,
+        "impact": 0.4,
+        "projectedMinutes": 27.348484848484848
+      },
+      {
+        "name": "Pat Connaughton",
+        "bpm": 1.2,
+        "mpg": 26.015384615384615,
+        "gamesPlayed": 65,
+        "impact": 1.2,
+        "projectedMinutes": 26.015384615384615
+      },
+      {
+        "name": "George Hill",
+        "bpm": -1.6,
+        "mpg": 23.203703703703702,
+        "gamesPlayed": 54,
+        "impact": -1.6,
+        "projectedMinutes": 23.203703703703702
+      },
+      {
+        "name": "Brook Lopez",
+        "bpm": -1.3,
+        "mpg": 22.923076923076923,
+        "gamesPlayed": 13,
+        "impact": -1.3,
+        "projectedMinutes": 22.923076923076923
+      },
+      {
+        "name": "Wesley Matthews",
+        "bpm": -3.3,
+        "mpg": 20.448979591836736,
+        "gamesPlayed": 49,
+        "impact": -3.3,
+        "projectedMinutes": 20.448979591836736
+      },
+      {
+        "name": "Jordan Nwora",
+        "bpm": -4.1,
+        "mpg": 19.112903225806452,
+        "gamesPlayed": 62,
+        "impact": -4.1,
+        "projectedMinutes": 19.112903225806452
+      }
+    ],
+    "srs": 3.22,
+    "ortg": 115.86,
+    "drtg": 112.56,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MIN",
+    "teamName": "Minnesota Timberwolves",
+    "season": 2022,
+    "conference": "West",
+    "seed": 7,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1588.55,
+    "netRating": 2.55,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Anthony Edwards",
+        "bpm": 1.2,
+        "mpg": 34.25,
+        "gamesPlayed": 72,
+        "impact": 1.2,
+        "projectedMinutes": 34.25
+      },
+      {
+        "name": "Karl-Anthony Towns",
+        "bpm": 5,
+        "mpg": 33.45945945945946,
+        "gamesPlayed": 74,
+        "impact": 5,
+        "projectedMinutes": 33.45945945945946
+      },
+      {
+        "name": "D'Angelo Russell",
+        "bpm": 0.8,
+        "mpg": 31.953846153846154,
+        "gamesPlayed": 65,
+        "impact": 0.8,
+        "projectedMinutes": 31.953846153846154
+      },
+      {
+        "name": "Jaden McDaniels",
+        "bpm": -2.9,
+        "mpg": 25.757142857142856,
+        "gamesPlayed": 70,
+        "impact": -2.9,
+        "projectedMinutes": 25.757142857142856
+      },
+      {
+        "name": "Patrick Beverley",
+        "bpm": 2.7,
+        "mpg": 25.448275862068964,
+        "gamesPlayed": 58,
+        "impact": 2.7,
+        "projectedMinutes": 25.448275862068964
+      },
+      {
+        "name": "Jarred Vanderbilt",
+        "bpm": 0.2,
+        "mpg": 25.405405405405407,
+        "gamesPlayed": 74,
+        "impact": 0.2,
+        "projectedMinutes": 25.405405405405407
+      },
+      {
+        "name": "Malik Beasley",
+        "bpm": -0.7,
+        "mpg": 25.0126582278481,
+        "gamesPlayed": 79,
+        "impact": -0.7,
+        "projectedMinutes": 25.0126582278481
+      },
+      {
+        "name": "Taurean Prince",
+        "bpm": -0.9,
+        "mpg": 17.057971014492754,
+        "gamesPlayed": 69,
+        "impact": -0.9,
+        "projectedMinutes": 17.057971014492754
+      },
+      {
+        "name": "Naz Reid",
+        "bpm": 0,
+        "mpg": 15.779220779220779,
+        "gamesPlayed": 77,
+        "impact": 0,
+        "projectedMinutes": 15.779220779220779
+      },
+      {
+        "name": "Jaylen Nowell",
+        "bpm": 0.8,
+        "mpg": 15.725806451612904,
+        "gamesPlayed": 62,
+        "impact": 0.8,
+        "projectedMinutes": 15.725806451612904
+      }
+    ],
+    "srs": 2.53,
+    "ortg": 115.15,
+    "drtg": 112.6,
+    "wins": 46,
+    "losses": 36,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "NOP",
+    "teamName": "New Orleans Pelicans",
+    "season": 2022,
+    "conference": "West",
+    "seed": 8,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1470.6,
+    "netRating": -0.98,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Brandon Ingram",
+        "bpm": 2,
+        "mpg": 33.981818181818184,
+        "gamesPlayed": 55,
+        "impact": 2,
+        "projectedMinutes": 33.981818181818184
+      },
+      {
+        "name": "CJ McCollum",
+        "bpm": 4.5,
+        "mpg": 33.76923076923077,
+        "gamesPlayed": 26,
+        "impact": 4.5,
+        "projectedMinutes": 33.76923076923077
+      },
+      {
+        "name": "Jonas Valančiūnas",
+        "bpm": 1.9,
+        "mpg": 30.27027027027027,
+        "gamesPlayed": 74,
+        "impact": 1.9,
+        "projectedMinutes": 30.27027027027027
+      },
+      {
+        "name": "Herbert Jones",
+        "bpm": -0.5,
+        "mpg": 29.935897435897434,
+        "gamesPlayed": 78,
+        "impact": -0.5,
+        "projectedMinutes": 29.935897435897434
+      },
+      {
+        "name": "Devonte' Graham",
+        "bpm": -1,
+        "mpg": 28.44736842105263,
+        "gamesPlayed": 76,
+        "impact": -1,
+        "projectedMinutes": 28.44736842105263
+      },
+      {
+        "name": "Jaxson Hayes",
+        "bpm": 0.2,
+        "mpg": 19.97142857142857,
+        "gamesPlayed": 70,
+        "impact": 0.2,
+        "projectedMinutes": 19.97142857142857
+      },
+      {
+        "name": "Garrett Temple",
+        "bpm": -2.5,
+        "mpg": 18.610169491525422,
+        "gamesPlayed": 59,
+        "impact": -2.5,
+        "projectedMinutes": 18.610169491525422
+      },
+      {
+        "name": "Tony Snell",
+        "bpm": -2.6,
+        "mpg": 18.466666666666665,
+        "gamesPlayed": 15,
+        "impact": -2.6,
+        "projectedMinutes": 18.466666666666665
+      },
+      {
+        "name": "Willy Hernangómez",
+        "bpm": 0.2,
+        "mpg": 16.78,
+        "gamesPlayed": 50,
+        "impact": 0.2,
+        "projectedMinutes": 16.78
+      },
+      {
+        "name": "Jose Alvarado",
+        "bpm": 1.9,
+        "mpg": 15.444444444444445,
+        "gamesPlayed": 54,
+        "impact": 1.9,
+        "projectedMinutes": 15.444444444444445
+      }
+    ],
+    "srs": -0.84,
+    "ortg": 112.84,
+    "drtg": 113.82,
+    "wins": 36,
+    "losses": 46,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "PHI",
+    "teamName": "Philadelphia 76ers",
+    "season": 2022,
+    "conference": "East",
+    "seed": 4,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1589.95,
+    "netRating": 2.59,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "James Harden",
+        "bpm": 3.8,
+        "mpg": 37.714285714285715,
+        "gamesPlayed": 21,
+        "impact": 3.8,
+        "projectedMinutes": 37.714285714285715
+      },
+      {
+        "name": "Tyrese Maxey",
+        "bpm": 0.6,
+        "mpg": 35.333333333333336,
+        "gamesPlayed": 75,
+        "impact": 0.6,
+        "projectedMinutes": 35.333333333333336
+      },
+      {
+        "name": "Tobias Harris",
+        "bpm": 0,
+        "mpg": 34.83561643835616,
+        "gamesPlayed": 73,
+        "impact": 0,
+        "projectedMinutes": 34.83561643835616
+      },
+      {
+        "name": "Joel Embiid",
+        "bpm": 9.2,
+        "mpg": 33.779411764705884,
+        "gamesPlayed": 68,
+        "impact": 9.2,
+        "projectedMinutes": 33.779411764705884
+      },
+      {
+        "name": "Matisse Thybulle",
+        "bpm": 1.1,
+        "mpg": 25.53030303030303,
+        "gamesPlayed": 66,
+        "impact": 1.1,
+        "projectedMinutes": 25.53030303030303
+      },
+      {
+        "name": "Georges Niang",
+        "bpm": -1.9,
+        "mpg": 22.842105263157894,
+        "gamesPlayed": 76,
+        "impact": -1.9,
+        "projectedMinutes": 22.842105263157894
+      },
+      {
+        "name": "Danny Green",
+        "bpm": -0.5,
+        "mpg": 21.822580645161292,
+        "gamesPlayed": 62,
+        "impact": -0.5,
+        "projectedMinutes": 21.822580645161292
+      },
+      {
+        "name": "Shake Milton",
+        "bpm": -2.2,
+        "mpg": 21.436363636363637,
+        "gamesPlayed": 55,
+        "impact": -2.2,
+        "projectedMinutes": 21.436363636363637
+      },
+      {
+        "name": "Furkan Korkmaz",
+        "bpm": -3.1,
+        "mpg": 21.104477611940297,
+        "gamesPlayed": 67,
+        "impact": -3.1,
+        "projectedMinutes": 21.104477611940297
+      },
+      {
+        "name": "DeAndre Jordan",
+        "bpm": -2.9,
+        "mpg": 13.375,
+        "gamesPlayed": 16,
+        "impact": -2.9,
+        "projectedMinutes": 13.375
+      }
+    ],
+    "srs": 2.57,
+    "ortg": 114.39,
+    "drtg": 111.8,
+    "wins": 51,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "PHO",
+    "teamName": "Phoenix Suns",
+    "season": 2022,
+    "conference": "West",
+    "seed": 1,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1742.9,
+    "netRating": 7.48,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Mikal Bridges",
+        "bpm": 1.6,
+        "mpg": 34.80487804878049,
+        "gamesPlayed": 82,
+        "impact": 1.6,
+        "projectedMinutes": 34.80487804878049
+      },
+      {
+        "name": "Devin Booker",
+        "bpm": 4.1,
+        "mpg": 34.48529411764706,
+        "gamesPlayed": 68,
+        "impact": 4.1,
+        "projectedMinutes": 34.48529411764706
+      },
+      {
+        "name": "Chris Paul",
+        "bpm": 5.4,
+        "mpg": 32.90769230769231,
+        "gamesPlayed": 65,
+        "impact": 5.4,
+        "projectedMinutes": 32.90769230769231
+      },
+      {
+        "name": "Deandre Ayton",
+        "bpm": 2.8,
+        "mpg": 29.53448275862069,
+        "gamesPlayed": 58,
+        "impact": 2.8,
+        "projectedMinutes": 29.53448275862069
+      },
+      {
+        "name": "Jae Crowder",
+        "bpm": 1.1,
+        "mpg": 28.149253731343283,
+        "gamesPlayed": 67,
+        "impact": 1.1,
+        "projectedMinutes": 28.149253731343283
+      },
+      {
+        "name": "Cameron Johnson",
+        "bpm": 2.7,
+        "mpg": 26.21212121212121,
+        "gamesPlayed": 66,
+        "impact": 2.7,
+        "projectedMinutes": 26.21212121212121
+      },
+      {
+        "name": "Cameron Payne",
+        "bpm": 0,
+        "mpg": 22.03448275862069,
+        "gamesPlayed": 58,
+        "impact": 0,
+        "projectedMinutes": 22.03448275862069
+      },
+      {
+        "name": "Landry Shamet",
+        "bpm": -1.2,
+        "mpg": 20.82608695652174,
+        "gamesPlayed": 69,
+        "impact": -1.2,
+        "projectedMinutes": 20.82608695652174
+      },
+      {
+        "name": "Torrey Craig",
+        "bpm": -1.1,
+        "mpg": 20.814814814814813,
+        "gamesPlayed": 27,
+        "impact": -1.1,
+        "projectedMinutes": 20.814814814814813
+      },
+      {
+        "name": "Aaron Holiday",
+        "bpm": -0.8,
+        "mpg": 16.272727272727273,
+        "gamesPlayed": 22,
+        "impact": -0.8,
+        "projectedMinutes": 16.272727272727273
+      }
+    ],
+    "srs": 6.94,
+    "ortg": 115.65,
+    "drtg": 108.17,
+    "wins": 64,
+    "losses": 18,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "TOR",
+    "teamName": "Toronto Raptors",
+    "season": 2022,
+    "conference": "East",
+    "seed": 5,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1582.95,
+    "netRating": 2.38,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Pascal Siakam",
+        "bpm": 3.5,
+        "mpg": 37.911764705882355,
+        "gamesPlayed": 68,
+        "impact": 3.5,
+        "projectedMinutes": 37.911764705882355
+      },
+      {
+        "name": "Fred VanVleet",
+        "bpm": 3.6,
+        "mpg": 37.87692307692308,
+        "gamesPlayed": 65,
+        "impact": 3.6,
+        "projectedMinutes": 37.87692307692308
+      },
+      {
+        "name": "OG Anunoby",
+        "bpm": 0.5,
+        "mpg": 36,
+        "gamesPlayed": 48,
+        "impact": 0.5,
+        "projectedMinutes": 36
+      },
+      {
+        "name": "Scottie Barnes",
+        "bpm": 0.9,
+        "mpg": 35.36486486486486,
+        "gamesPlayed": 74,
+        "impact": 0.9,
+        "projectedMinutes": 35.36486486486486
+      },
+      {
+        "name": "Gary Trent Jr.",
+        "bpm": 0.2,
+        "mpg": 34.97142857142857,
+        "gamesPlayed": 70,
+        "impact": 0.2,
+        "projectedMinutes": 34.97142857142857
+      },
+      {
+        "name": "Precious Achiuwa",
+        "bpm": -2.6,
+        "mpg": 23.63013698630137,
+        "gamesPlayed": 73,
+        "impact": -2.6,
+        "projectedMinutes": 23.63013698630137
+      },
+      {
+        "name": "Chris Boucher",
+        "bpm": 0.1,
+        "mpg": 21.125,
+        "gamesPlayed": 80,
+        "impact": 0.1,
+        "projectedMinutes": 21.125
+      },
+      {
+        "name": "Thaddeus Young",
+        "bpm": 2,
+        "mpg": 18.26923076923077,
+        "gamesPlayed": 26,
+        "impact": 2,
+        "projectedMinutes": 18.26923076923077
+      },
+      {
+        "name": "Khem Birch",
+        "bpm": -1.3,
+        "mpg": 18.01818181818182,
+        "gamesPlayed": 55,
+        "impact": -1.3,
+        "projectedMinutes": 18.01818181818182
+      },
+      {
+        "name": "Svi Mykhailiuk",
+        "bpm": -2.9,
+        "mpg": 12.785714285714286,
+        "gamesPlayed": 56,
+        "impact": -2.9,
+        "projectedMinutes": 12.785714285714286
+      }
+    ],
+    "srs": 2.37,
+    "ortg": 113.93,
+    "drtg": 111.55,
+    "wins": 48,
+    "losses": 34,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "UTA",
+    "teamName": "Utah Jazz",
+    "season": 2022,
+    "conference": "West",
+    "seed": 5,
+    "snapshot_as_of": "2022-04-10",
+    "eloRating": 1698.45,
+    "netRating": 6.16,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Miye Oni",
+        "bpm": -7.9,
+        "mpg": 44,
+        "gamesPlayed": 16,
+        "impact": -7.9,
+        "projectedMinutes": 40
+      },
+      {
+        "name": "Donovan Mitchell",
+        "bpm": 4.3,
+        "mpg": 33.82089552238806,
+        "gamesPlayed": 67,
+        "impact": 4.3,
+        "projectedMinutes": 33.82089552238806
+      },
+      {
+        "name": "Rudy Gobert",
+        "bpm": 4.6,
+        "mpg": 32.121212121212125,
+        "gamesPlayed": 66,
+        "impact": 4.6,
+        "projectedMinutes": 32.121212121212125
+      },
+      {
+        "name": "Royce O'Neale",
+        "bpm": 0.8,
+        "mpg": 31.246753246753247,
+        "gamesPlayed": 77,
+        "impact": 0.8,
+        "projectedMinutes": 31.246753246753247
+      },
+      {
+        "name": "Bojan Bogdanović",
+        "bpm": 0,
+        "mpg": 30.884057971014492,
+        "gamesPlayed": 69,
+        "impact": 0,
+        "projectedMinutes": 30.884057971014492
+      },
+      {
+        "name": "Mike Conley",
+        "bpm": 3.1,
+        "mpg": 28.583333333333332,
+        "gamesPlayed": 72,
+        "impact": 3.1,
+        "projectedMinutes": 28.583333333333332
+      },
+      {
+        "name": "Jordan Clarkson",
+        "bpm": -0.6,
+        "mpg": 27.10126582278481,
+        "gamesPlayed": 79,
+        "impact": -0.6,
+        "projectedMinutes": 27.10126582278481
+      },
+      {
+        "name": "Joe Ingles",
+        "bpm": -0.3,
+        "mpg": 24.933333333333334,
+        "gamesPlayed": 45,
+        "impact": -0.3,
+        "projectedMinutes": 24.933333333333334
+      },
+      {
+        "name": "Danuel House Jr.",
+        "bpm": 1.2,
+        "mpg": 19.64,
+        "gamesPlayed": 25,
+        "impact": 1.2,
+        "projectedMinutes": 19.64
+      },
+      {
+        "name": "Rudy Gay",
+        "bpm": -1,
+        "mpg": 18.87272727272727,
+        "gamesPlayed": 55,
+        "impact": -1,
+        "projectedMinutes": 18.87272727272727
+      }
+    ],
+    "srs": 5.67,
+    "ortg": 117.68,
+    "drtg": 111.52,
+    "wins": 49,
+    "losses": 33,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  }
+]

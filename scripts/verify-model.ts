@@ -5,6 +5,7 @@ import {
   assessBracketCoverage,
   estimateBracketForecast,
 } from "../src/lib/model/bracket-simulator";
+import { normalizeEspnScoreboard } from "../src/lib/live-data/espn-scoreboard";
 import {
   gameWinProbability,
   marginToWinProbability,
@@ -276,6 +277,70 @@ assert(
 assert(
   !incompleteForecast.structurallyComplete,
   "Missing bracket paths should be surfaced in bracket forecast output.",
+);
+
+const normalizedLiveScoreboard = normalizeEspnScoreboard(
+  {
+    season: { year: "2026" },
+    day: { date: "2026-05-12" },
+    events: [
+      {
+        id: "fixture-game",
+        name: "Detroit Pistons at Cleveland Cavaliers",
+        shortName: "DET @ CLE",
+        date: "2026-05-12T00:00Z",
+        competitions: [
+          {
+            id: "fixture-game",
+            venue: { fullName: "Rocket Arena" },
+            status: {
+              type: {
+                state: "post",
+                completed: true,
+                shortDetail: "Final",
+              },
+            },
+            competitors: [
+              {
+                homeAway: "home",
+                winner: true,
+                score: "112",
+                team: {
+                  abbreviation: "CLE",
+                  displayName: "Cleveland Cavaliers",
+                },
+              },
+              {
+                homeAway: "away",
+                winner: false,
+                score: "103",
+                team: {
+                  abbreviation: "DET",
+                  displayName: "Detroit Pistons",
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    endpoint: "fixture",
+    fetchedAt: "2026-05-12T08:00:00.000Z",
+    manualTeamAbbreviations: ["DET", "CLE", "NYK"],
+  },
+);
+
+assert(
+  normalizedLiveScoreboard.status === "connected" &&
+    normalizedLiveScoreboard.games[0]?.homeTeam?.abbreviation === "CLE" &&
+    normalizedLiveScoreboard.games[0]?.awayTeam?.score === "103",
+  "Live scoreboard normalization should map game status, teams, and scores.",
+);
+assert(
+  normalizedLiveScoreboard.manualTeamMatches === 2,
+  "Live scoreboard normalization should count manual-team abbreviation matches.",
 );
 
 console.log("Model verification passed.");

@@ -1,0 +1,1602 @@
+[
+  {
+    "teamId": "ATL",
+    "teamName": "Atlanta Hawks",
+    "season": 2021,
+    "conference": "East",
+    "seed": 5,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1574.9,
+    "netRating": 2.39,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Trae Young",
+        "bpm": 3.7,
+        "mpg": 33.73015873015873,
+        "gamesPlayed": 63,
+        "impact": 3.7,
+        "projectedMinutes": 33.73015873015873
+      },
+      {
+        "name": "Kevin Huerter",
+        "bpm": -0.3,
+        "mpg": 30.81159420289855,
+        "gamesPlayed": 69,
+        "impact": -0.3,
+        "projectedMinutes": 30.81159420289855
+      },
+      {
+        "name": "Clint Capela",
+        "bpm": 2.7,
+        "mpg": 30.126984126984127,
+        "gamesPlayed": 63,
+        "impact": 2.7,
+        "projectedMinutes": 30.126984126984127
+      },
+      {
+        "name": "Bogdan Bogdanović",
+        "bpm": 3.6,
+        "mpg": 29.65909090909091,
+        "gamesPlayed": 44,
+        "impact": 3.6,
+        "projectedMinutes": 29.65909090909091
+      },
+      {
+        "name": "De'Andre Hunter",
+        "bpm": 1.2,
+        "mpg": 29.47826086956522,
+        "gamesPlayed": 23,
+        "impact": 1.2,
+        "projectedMinutes": 29.47826086956522
+      },
+      {
+        "name": "John Collins",
+        "bpm": 2.3,
+        "mpg": 29.333333333333332,
+        "gamesPlayed": 63,
+        "impact": 2.3,
+        "projectedMinutes": 29.333333333333332
+      },
+      {
+        "name": "Cam Reddish",
+        "bpm": -3.2,
+        "mpg": 28.846153846153847,
+        "gamesPlayed": 26,
+        "impact": -3.2,
+        "projectedMinutes": 28.846153846153847
+      },
+      {
+        "name": "Danilo Gallinari",
+        "bpm": 1.1,
+        "mpg": 23.96078431372549,
+        "gamesPlayed": 51,
+        "impact": 1.1,
+        "projectedMinutes": 23.96078431372549
+      },
+      {
+        "name": "Solomon Hill",
+        "bpm": -2.5,
+        "mpg": 21.309859154929576,
+        "gamesPlayed": 71,
+        "impact": -2.5,
+        "projectedMinutes": 21.309859154929576
+      },
+      {
+        "name": "Tony Snell",
+        "bpm": -0.5,
+        "mpg": 21.106382978723403,
+        "gamesPlayed": 47,
+        "impact": -0.5,
+        "projectedMinutes": 21.106382978723403
+      }
+    ],
+    "srs": 2.14,
+    "ortg": 116.28,
+    "drtg": 113.89,
+    "wins": 41,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "season": 2021,
+    "conference": "East",
+    "seed": 7,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1546.2,
+    "netRating": 1.37,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jayson Tatum",
+        "bpm": 3.9,
+        "mpg": 35.78125,
+        "gamesPlayed": 64,
+        "impact": 3.9,
+        "projectedMinutes": 35.78125
+      },
+      {
+        "name": "Jaylen Brown",
+        "bpm": 2.5,
+        "mpg": 34.46551724137931,
+        "gamesPlayed": 58,
+        "impact": 2.5,
+        "projectedMinutes": 34.46551724137931
+      },
+      {
+        "name": "Marcus Smart",
+        "bpm": -0.3,
+        "mpg": 32.9375,
+        "gamesPlayed": 48,
+        "impact": -0.3,
+        "projectedMinutes": 32.9375
+      },
+      {
+        "name": "Kemba Walker",
+        "bpm": 2.1,
+        "mpg": 31.837209302325583,
+        "gamesPlayed": 43,
+        "impact": 2.1,
+        "projectedMinutes": 31.837209302325583
+      },
+      {
+        "name": "Evan Fournier",
+        "bpm": 0.3,
+        "mpg": 29.5,
+        "gamesPlayed": 16,
+        "impact": 0.3,
+        "projectedMinutes": 29.5
+      },
+      {
+        "name": "Tristan Thompson",
+        "bpm": -2.5,
+        "mpg": 23.833333333333332,
+        "gamesPlayed": 54,
+        "impact": -2.5,
+        "projectedMinutes": 23.833333333333332
+      },
+      {
+        "name": "Payton Pritchard",
+        "bpm": -0.7,
+        "mpg": 19.21212121212121,
+        "gamesPlayed": 66,
+        "impact": -0.7,
+        "projectedMinutes": 19.21212121212121
+      },
+      {
+        "name": "Robert Williams",
+        "bpm": 6,
+        "mpg": 18.942307692307693,
+        "gamesPlayed": 52,
+        "impact": 6,
+        "projectedMinutes": 18.942307692307693
+      },
+      {
+        "name": "Grant Williams",
+        "bpm": -3.7,
+        "mpg": 18.063492063492063,
+        "gamesPlayed": 63,
+        "impact": -3.7,
+        "projectedMinutes": 18.063492063492063
+      },
+      {
+        "name": "Semi Ojeleye",
+        "bpm": -2.4,
+        "mpg": 16.964285714285715,
+        "gamesPlayed": 56,
+        "impact": -2.4,
+        "projectedMinutes": 16.964285714285715
+      }
+    ],
+    "srs": 1.32,
+    "ortg": 114.66,
+    "drtg": 113.29,
+    "wins": 36,
+    "losses": 36,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "BRK",
+    "teamName": "Brooklyn Nets",
+    "season": 2021,
+    "conference": "East",
+    "seed": 2,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1648.4,
+    "netRating": 4.51,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "James Harden",
+        "bpm": 7.7,
+        "mpg": 36.638888888888886,
+        "gamesPlayed": 36,
+        "impact": 7.7,
+        "projectedMinutes": 36.638888888888886
+      },
+      {
+        "name": "Kyrie Irving",
+        "bpm": 5.5,
+        "mpg": 34.925925925925924,
+        "gamesPlayed": 54,
+        "impact": 5.5,
+        "projectedMinutes": 34.925925925925924
+      },
+      {
+        "name": "Kevin Durant",
+        "bpm": 7.2,
+        "mpg": 33.05714285714286,
+        "gamesPlayed": 35,
+        "impact": 7.2,
+        "projectedMinutes": 33.05714285714286
+      },
+      {
+        "name": "Joe Harris",
+        "bpm": 0.4,
+        "mpg": 31.028985507246375,
+        "gamesPlayed": 69,
+        "impact": 0.4,
+        "projectedMinutes": 31.028985507246375
+      },
+      {
+        "name": "Jeff Green",
+        "bpm": -0.8,
+        "mpg": 26.985294117647058,
+        "gamesPlayed": 68,
+        "impact": -0.8,
+        "projectedMinutes": 26.985294117647058
+      },
+      {
+        "name": "Landry Shamet",
+        "bpm": -2.4,
+        "mpg": 23,
+        "gamesPlayed": 61,
+        "impact": -2.4,
+        "projectedMinutes": 23
+      },
+      {
+        "name": "Bruce Brown",
+        "bpm": -0.1,
+        "mpg": 22.323076923076922,
+        "gamesPlayed": 65,
+        "impact": -0.1,
+        "projectedMinutes": 22.323076923076922
+      },
+      {
+        "name": "DeAndre Jordan",
+        "bpm": 1,
+        "mpg": 21.859649122807017,
+        "gamesPlayed": 57,
+        "impact": 1,
+        "projectedMinutes": 21.859649122807017
+      },
+      {
+        "name": "Blake Griffin",
+        "bpm": 0.8,
+        "mpg": 21.53846153846154,
+        "gamesPlayed": 26,
+        "impact": 0.8,
+        "projectedMinutes": 21.53846153846154
+      },
+      {
+        "name": "Nic Claxton",
+        "bpm": 0.4,
+        "mpg": 18.5625,
+        "gamesPlayed": 32,
+        "impact": 0.4,
+        "projectedMinutes": 18.5625
+      }
+    ],
+    "srs": 4.24,
+    "ortg": 118.91,
+    "drtg": 114.4,
+    "wins": 48,
+    "losses": 24,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "DAL",
+    "teamName": "Dallas Mavericks",
+    "season": 2021,
+    "conference": "West",
+    "seed": 6,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1579.1,
+    "netRating": 2.37,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Luka Dončić",
+        "bpm": 6.8,
+        "mpg": 34.27272727272727,
+        "gamesPlayed": 66,
+        "impact": 6.8,
+        "projectedMinutes": 34.27272727272727
+      },
+      {
+        "name": "Dorian Finney-Smith",
+        "bpm": 0.1,
+        "mpg": 32.016666666666666,
+        "gamesPlayed": 60,
+        "impact": 0.1,
+        "projectedMinutes": 32.016666666666666
+      },
+      {
+        "name": "Kristaps Porziņģis",
+        "bpm": 2.2,
+        "mpg": 30.86046511627907,
+        "gamesPlayed": 43,
+        "impact": 2.2,
+        "projectedMinutes": 30.86046511627907
+      },
+      {
+        "name": "Josh Richardson",
+        "bpm": -1.7,
+        "mpg": 30.338983050847457,
+        "gamesPlayed": 59,
+        "impact": -1.7,
+        "projectedMinutes": 30.338983050847457
+      },
+      {
+        "name": "Tim Hardaway Jr.",
+        "bpm": 0.4,
+        "mpg": 28.357142857142858,
+        "gamesPlayed": 70,
+        "impact": 0.4,
+        "projectedMinutes": 28.357142857142858
+      },
+      {
+        "name": "Maxi Kleber",
+        "bpm": 0,
+        "mpg": 26.82,
+        "gamesPlayed": 50,
+        "impact": 0,
+        "projectedMinutes": 26.82
+      },
+      {
+        "name": "Jalen Brunson",
+        "bpm": 0.9,
+        "mpg": 24.955882352941178,
+        "gamesPlayed": 68,
+        "impact": 0.9,
+        "projectedMinutes": 24.955882352941178
+      },
+      {
+        "name": "Willie Cauley-Stein",
+        "bpm": -1.3,
+        "mpg": 17.09433962264151,
+        "gamesPlayed": 53,
+        "impact": -1.3,
+        "projectedMinutes": 17.09433962264151
+      },
+      {
+        "name": "Dwight Powell",
+        "bpm": 0.6,
+        "mpg": 16.655172413793103,
+        "gamesPlayed": 58,
+        "impact": 0.6,
+        "projectedMinutes": 16.655172413793103
+      },
+      {
+        "name": "Trey Burke",
+        "bpm": -1.8,
+        "mpg": 14.693548387096774,
+        "gamesPlayed": 62,
+        "impact": -1.8,
+        "projectedMinutes": 14.693548387096774
+      }
+    ],
+    "srs": 2.26,
+    "ortg": 116.16,
+    "drtg": 113.79,
+    "wins": 42,
+    "losses": 30,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "DEN",
+    "teamName": "Denver Nuggets",
+    "season": 2021,
+    "conference": "West",
+    "seed": 4,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1668.7,
+    "netRating": 5.03,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jamal Murray",
+        "bpm": 2,
+        "mpg": 35.5,
+        "gamesPlayed": 48,
+        "impact": 2,
+        "projectedMinutes": 35.5
+      },
+      {
+        "name": "Nikola Jokić",
+        "bpm": 12.1,
+        "mpg": 34.55555555555556,
+        "gamesPlayed": 72,
+        "impact": 12.1,
+        "projectedMinutes": 34.55555555555556
+      },
+      {
+        "name": "Michael Porter Jr.",
+        "bpm": 3.1,
+        "mpg": 31.34426229508197,
+        "gamesPlayed": 61,
+        "impact": 3.1,
+        "projectedMinutes": 31.34426229508197
+      },
+      {
+        "name": "Will Barton",
+        "bpm": -1.9,
+        "mpg": 31,
+        "gamesPlayed": 56,
+        "impact": -1.9,
+        "projectedMinutes": 31
+      },
+      {
+        "name": "Austin Rivers",
+        "bpm": -1.7,
+        "mpg": 26.866666666666667,
+        "gamesPlayed": 15,
+        "impact": -1.7,
+        "projectedMinutes": 26.866666666666667
+      },
+      {
+        "name": "Aaron Gordon",
+        "bpm": -0.4,
+        "mpg": 25.92,
+        "gamesPlayed": 25,
+        "impact": -0.4,
+        "projectedMinutes": 25.92
+      },
+      {
+        "name": "Monte Morris",
+        "bpm": -0.3,
+        "mpg": 25.4468085106383,
+        "gamesPlayed": 47,
+        "impact": -0.3,
+        "projectedMinutes": 25.4468085106383
+      },
+      {
+        "name": "Facundo Campazzo",
+        "bpm": -0.6,
+        "mpg": 21.923076923076923,
+        "gamesPlayed": 65,
+        "impact": -0.6,
+        "projectedMinutes": 21.923076923076923
+      },
+      {
+        "name": "PJ Dozier",
+        "bpm": -2.6,
+        "mpg": 21.76,
+        "gamesPlayed": 50,
+        "impact": -2.6,
+        "projectedMinutes": 21.76
+      },
+      {
+        "name": "Paul Millsap",
+        "bpm": 1,
+        "mpg": 20.75,
+        "gamesPlayed": 56,
+        "impact": 1,
+        "projectedMinutes": 20.75
+      }
+    ],
+    "srs": 4.82,
+    "ortg": 118.04,
+    "drtg": 113.01,
+    "wins": 47,
+    "losses": 25,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "LAC",
+    "teamName": "Los Angeles Clippers",
+    "season": 2021,
+    "conference": "West",
+    "seed": 3,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1710.7,
+    "netRating": 6.26,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Kawhi Leonard",
+        "bpm": 7.3,
+        "mpg": 34.09615384615385,
+        "gamesPlayed": 52,
+        "impact": 7.3,
+        "projectedMinutes": 34.09615384615385
+      },
+      {
+        "name": "Paul George",
+        "bpm": 4.2,
+        "mpg": 33.72222222222222,
+        "gamesPlayed": 54,
+        "impact": 4.2,
+        "projectedMinutes": 33.72222222222222
+      },
+      {
+        "name": "Nicolas Batum",
+        "bpm": 2.1,
+        "mpg": 27.388059701492537,
+        "gamesPlayed": 67,
+        "impact": 2.1,
+        "projectedMinutes": 27.388059701492537
+      },
+      {
+        "name": "Marcus Morris",
+        "bpm": 0,
+        "mpg": 26.350877192982455,
+        "gamesPlayed": 57,
+        "impact": 0,
+        "projectedMinutes": 26.350877192982455
+      },
+      {
+        "name": "Serge Ibaka",
+        "bpm": 1.4,
+        "mpg": 23.29268292682927,
+        "gamesPlayed": 41,
+        "impact": 1.4,
+        "projectedMinutes": 23.29268292682927
+      },
+      {
+        "name": "Reggie Jackson",
+        "bpm": 0.4,
+        "mpg": 23.044776119402986,
+        "gamesPlayed": 67,
+        "impact": 0.4,
+        "projectedMinutes": 23.044776119402986
+      },
+      {
+        "name": "Patrick Beverley",
+        "bpm": 0.7,
+        "mpg": 22.486486486486488,
+        "gamesPlayed": 37,
+        "impact": 0.7,
+        "projectedMinutes": 22.486486486486488
+      },
+      {
+        "name": "Ivica Zubac",
+        "bpm": 1,
+        "mpg": 22.34722222222222,
+        "gamesPlayed": 72,
+        "impact": 1,
+        "projectedMinutes": 22.34722222222222
+      },
+      {
+        "name": "Rajon Rondo",
+        "bpm": 2.3,
+        "mpg": 20.444444444444443,
+        "gamesPlayed": 18,
+        "impact": 2.3,
+        "projectedMinutes": 20.444444444444443
+      },
+      {
+        "name": "Luke Kennard",
+        "bpm": -0.2,
+        "mpg": 19.555555555555557,
+        "gamesPlayed": 63,
+        "impact": -0.2,
+        "projectedMinutes": 19.555555555555557
+      }
+    ],
+    "srs": 6.02,
+    "ortg": 118.39,
+    "drtg": 112.13,
+    "wins": 47,
+    "losses": 25,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "season": 2021,
+    "conference": "West",
+    "seed": 7,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1596.6,
+    "netRating": 2.68,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "LeBron James",
+        "bpm": 8.1,
+        "mpg": 33.422222222222224,
+        "gamesPlayed": 45,
+        "impact": 8.1,
+        "projectedMinutes": 33.422222222222224
+      },
+      {
+        "name": "Anthony Davis",
+        "bpm": 4.8,
+        "mpg": 32.27777777777778,
+        "gamesPlayed": 36,
+        "impact": 4.8,
+        "projectedMinutes": 32.27777777777778
+      },
+      {
+        "name": "Dennis Schröder",
+        "bpm": -1.1,
+        "mpg": 32.0655737704918,
+        "gamesPlayed": 61,
+        "impact": -1.1,
+        "projectedMinutes": 32.0655737704918
+      },
+      {
+        "name": "Kyle Kuzma",
+        "bpm": -0.4,
+        "mpg": 28.735294117647058,
+        "gamesPlayed": 68,
+        "impact": -0.4,
+        "projectedMinutes": 28.735294117647058
+      },
+      {
+        "name": "Kentavious Caldwell-Pope",
+        "bpm": -0.5,
+        "mpg": 28.388059701492537,
+        "gamesPlayed": 67,
+        "impact": -0.5,
+        "projectedMinutes": 28.388059701492537
+      },
+      {
+        "name": "Andre Drummond",
+        "bpm": -1.7,
+        "mpg": 24.761904761904763,
+        "gamesPlayed": 21,
+        "impact": -1.7,
+        "projectedMinutes": 24.761904761904763
+      },
+      {
+        "name": "Montrezl Harrell",
+        "bpm": 3,
+        "mpg": 22.89855072463768,
+        "gamesPlayed": 69,
+        "impact": 3,
+        "projectedMinutes": 22.89855072463768
+      },
+      {
+        "name": "Alex Caruso",
+        "bpm": 0,
+        "mpg": 20.96551724137931,
+        "gamesPlayed": 58,
+        "impact": 0,
+        "projectedMinutes": 20.96551724137931
+      },
+      {
+        "name": "Talen Horton-Tucker",
+        "bpm": -1.2,
+        "mpg": 20.06153846153846,
+        "gamesPlayed": 65,
+        "impact": -1.2,
+        "projectedMinutes": 20.06153846153846
+      },
+      {
+        "name": "Markieff Morris",
+        "bpm": -2.6,
+        "mpg": 19.672131147540984,
+        "gamesPlayed": 61,
+        "impact": -2.6,
+        "projectedMinutes": 19.672131147540984
+      }
+    ],
+    "srs": 2.76,
+    "ortg": 110.52,
+    "drtg": 107.84,
+    "wins": 42,
+    "losses": 30,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MEM",
+    "teamName": "Memphis Grizzlies",
+    "season": 2021,
+    "conference": "West",
+    "seed": 8,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1537.45,
+    "netRating": 1,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Ja Morant",
+        "bpm": -0.4,
+        "mpg": 32.58730158730159,
+        "gamesPlayed": 63,
+        "impact": -0.4,
+        "projectedMinutes": 32.58730158730159
+      },
+      {
+        "name": "Dillon Brooks",
+        "bpm": -3.7,
+        "mpg": 29.80597014925373,
+        "gamesPlayed": 67,
+        "impact": -3.7,
+        "projectedMinutes": 29.80597014925373
+      },
+      {
+        "name": "Jonas Valančiūnas",
+        "bpm": 3,
+        "mpg": 28.306451612903224,
+        "gamesPlayed": 62,
+        "impact": 3,
+        "projectedMinutes": 28.306451612903224
+      },
+      {
+        "name": "Kyle Anderson",
+        "bpm": 3.3,
+        "mpg": 27.347826086956523,
+        "gamesPlayed": 69,
+        "impact": 3.3,
+        "projectedMinutes": 27.347826086956523
+      },
+      {
+        "name": "Grayson Allen",
+        "bpm": -0.2,
+        "mpg": 25.18,
+        "gamesPlayed": 50,
+        "impact": -0.2,
+        "projectedMinutes": 25.18
+      },
+      {
+        "name": "Brandon Clarke",
+        "bpm": 1.5,
+        "mpg": 23.983050847457626,
+        "gamesPlayed": 59,
+        "impact": 1.5,
+        "projectedMinutes": 23.983050847457626
+      },
+      {
+        "name": "Jaren Jackson Jr.",
+        "bpm": 0.1,
+        "mpg": 23.454545454545453,
+        "gamesPlayed": 11,
+        "impact": 0.1,
+        "projectedMinutes": 23.454545454545453
+      },
+      {
+        "name": "Desmond Bane",
+        "bpm": -0.8,
+        "mpg": 22.33823529411765,
+        "gamesPlayed": 68,
+        "impact": -0.8,
+        "projectedMinutes": 22.33823529411765
+      },
+      {
+        "name": "De'Anthony Melton",
+        "bpm": 2.3,
+        "mpg": 20.096153846153847,
+        "gamesPlayed": 52,
+        "impact": 2.3,
+        "projectedMinutes": 20.096153846153847
+      },
+      {
+        "name": "Justise Winslow",
+        "bpm": -6,
+        "mpg": 19.5,
+        "gamesPlayed": 26,
+        "impact": -6,
+        "projectedMinutes": 19.5
+      }
+    ],
+    "srs": 1.07,
+    "ortg": 112.77,
+    "drtg": 111.77,
+    "wins": 38,
+    "losses": 34,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "season": 2021,
+    "conference": "East",
+    "seed": 6,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1497.9,
+    "netRating": 0.14,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Jimmy Butler",
+        "bpm": 7.7,
+        "mpg": 33.55769230769231,
+        "gamesPlayed": 52,
+        "impact": 7.7,
+        "projectedMinutes": 33.55769230769231
+      },
+      {
+        "name": "Bam Adebayo",
+        "bpm": 4.9,
+        "mpg": 33.484375,
+        "gamesPlayed": 64,
+        "impact": 4.9,
+        "projectedMinutes": 33.484375
+      },
+      {
+        "name": "Duncan Robinson",
+        "bpm": -1,
+        "mpg": 31.416666666666668,
+        "gamesPlayed": 72,
+        "impact": -1,
+        "projectedMinutes": 31.416666666666668
+      },
+      {
+        "name": "Tyler Herro",
+        "bpm": -1.3,
+        "mpg": 30.27777777777778,
+        "gamesPlayed": 54,
+        "impact": -1.3,
+        "projectedMinutes": 30.27777777777778
+      },
+      {
+        "name": "Kendrick Nunn",
+        "bpm": -0.5,
+        "mpg": 29.464285714285715,
+        "gamesPlayed": 56,
+        "impact": -0.5,
+        "projectedMinutes": 29.464285714285715
+      },
+      {
+        "name": "Trevor Ariza",
+        "bpm": -1.1,
+        "mpg": 28.033333333333335,
+        "gamesPlayed": 30,
+        "impact": -1.1,
+        "projectedMinutes": 28.033333333333335
+      },
+      {
+        "name": "Goran Dragić",
+        "bpm": -2.3,
+        "mpg": 26.74,
+        "gamesPlayed": 50,
+        "impact": -2.3,
+        "projectedMinutes": 26.74
+      },
+      {
+        "name": "Andre Iguodala",
+        "bpm": -0.4,
+        "mpg": 21.253968253968253,
+        "gamesPlayed": 63,
+        "impact": -0.4,
+        "projectedMinutes": 21.253968253968253
+      },
+      {
+        "name": "Nemanja Bjelica",
+        "bpm": -1.3,
+        "mpg": 14.181818181818182,
+        "gamesPlayed": 11,
+        "impact": -1.3,
+        "projectedMinutes": 14.181818181818182
+      },
+      {
+        "name": "Dewayne Dedmon",
+        "bpm": 1.7,
+        "mpg": 13.125,
+        "gamesPlayed": 16,
+        "impact": 1.7,
+        "projectedMinutes": 13.125
+      }
+    ],
+    "srs": -0.06,
+    "ortg": 112.12,
+    "drtg": 111.98,
+    "wins": 40,
+    "losses": 32,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "season": 2021,
+    "conference": "East",
+    "seed": 3,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1694.95,
+    "netRating": 5.65,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Khris Middleton",
+        "bpm": 1.3,
+        "mpg": 33.36764705882353,
+        "gamesPlayed": 68,
+        "impact": 1.3,
+        "projectedMinutes": 33.36764705882353
+      },
+      {
+        "name": "Giannis Antetokounmpo",
+        "bpm": 9,
+        "mpg": 33,
+        "gamesPlayed": 61,
+        "impact": 9,
+        "projectedMinutes": 33
+      },
+      {
+        "name": "Jrue Holiday",
+        "bpm": 3.4,
+        "mpg": 32.32203389830509,
+        "gamesPlayed": 59,
+        "impact": 3.4,
+        "projectedMinutes": 32.32203389830509
+      },
+      {
+        "name": "Donte DiVincenzo",
+        "bpm": 0.2,
+        "mpg": 27.484848484848484,
+        "gamesPlayed": 66,
+        "impact": 0.2,
+        "projectedMinutes": 27.484848484848484
+      },
+      {
+        "name": "Brook Lopez",
+        "bpm": 0,
+        "mpg": 27.17142857142857,
+        "gamesPlayed": 70,
+        "impact": 0,
+        "projectedMinutes": 27.17142857142857
+      },
+      {
+        "name": "Pat Connaughton",
+        "bpm": 0,
+        "mpg": 22.82608695652174,
+        "gamesPlayed": 69,
+        "impact": 0,
+        "projectedMinutes": 22.82608695652174
+      },
+      {
+        "name": "Bobby Portis",
+        "bpm": 1.5,
+        "mpg": 20.78787878787879,
+        "gamesPlayed": 66,
+        "impact": 1.5,
+        "projectedMinutes": 20.78787878787879
+      },
+      {
+        "name": "P.J. Tucker",
+        "bpm": -2.9,
+        "mpg": 19.85,
+        "gamesPlayed": 20,
+        "impact": -2.9,
+        "projectedMinutes": 19.85
+      },
+      {
+        "name": "Bryn Forbes",
+        "bpm": -1.3,
+        "mpg": 19.34285714285714,
+        "gamesPlayed": 70,
+        "impact": -1.3,
+        "projectedMinutes": 19.34285714285714
+      },
+      {
+        "name": "Jeff Teague",
+        "bpm": -1.4,
+        "mpg": 15.904761904761905,
+        "gamesPlayed": 21,
+        "impact": -1.4,
+        "projectedMinutes": 15.904761904761905
+      }
+    ],
+    "srs": 5.57,
+    "ortg": 117.68,
+    "drtg": 112.03,
+    "wins": 46,
+    "losses": 26,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "NYK",
+    "teamName": "New York Knicks",
+    "season": 2021,
+    "conference": "East",
+    "seed": 4,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1574.55,
+    "netRating": 2.41,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Julius Randle",
+        "bpm": 3.8,
+        "mpg": 37.563380281690144,
+        "gamesPlayed": 71,
+        "impact": 3.8,
+        "projectedMinutes": 37.563380281690144
+      },
+      {
+        "name": "RJ Barrett",
+        "bpm": -1.2,
+        "mpg": 34.875,
+        "gamesPlayed": 72,
+        "impact": -1.2,
+        "projectedMinutes": 34.875
+      },
+      {
+        "name": "Theo Pinson",
+        "bpm": -15.7,
+        "mpg": 34,
+        "gamesPlayed": 17,
+        "impact": -15.7,
+        "projectedMinutes": 34
+      },
+      {
+        "name": "Reggie Bullock",
+        "bpm": -0.1,
+        "mpg": 29.984615384615385,
+        "gamesPlayed": 65,
+        "impact": -0.1,
+        "projectedMinutes": 29.984615384615385
+      },
+      {
+        "name": "Mitchell Robinson",
+        "bpm": 1.2,
+        "mpg": 27.516129032258064,
+        "gamesPlayed": 31,
+        "impact": 1.2,
+        "projectedMinutes": 27.516129032258064
+      },
+      {
+        "name": "Derrick Rose",
+        "bpm": 2.4,
+        "mpg": 26.771428571428572,
+        "gamesPlayed": 35,
+        "impact": 2.4,
+        "projectedMinutes": 26.771428571428572
+      },
+      {
+        "name": "Alec Burks",
+        "bpm": 1.5,
+        "mpg": 25.612244897959183,
+        "gamesPlayed": 49,
+        "impact": 1.5,
+        "projectedMinutes": 25.612244897959183
+      },
+      {
+        "name": "Nerlens Noel",
+        "bpm": 1.4,
+        "mpg": 24.171875,
+        "gamesPlayed": 64,
+        "impact": 1.4,
+        "projectedMinutes": 24.171875
+      },
+      {
+        "name": "Elfrid Payton",
+        "bpm": -3,
+        "mpg": 23.555555555555557,
+        "gamesPlayed": 63,
+        "impact": -3,
+        "projectedMinutes": 23.555555555555557
+      },
+      {
+        "name": "Taj Gibson",
+        "bpm": 1.3,
+        "mpg": 20.8,
+        "gamesPlayed": 45,
+        "impact": 1.3,
+        "projectedMinutes": 20.8
+      }
+    ],
+    "srs": 2.13,
+    "ortg": 111.38,
+    "drtg": 108.97,
+    "wins": 41,
+    "losses": 31,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "PHI",
+    "teamName": "Philadelphia 76ers",
+    "season": 2021,
+    "conference": "East",
+    "seed": 1,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1684.8,
+    "netRating": 5.62,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Vincent Poirier",
+        "bpm": -14.8,
+        "mpg": 39,
+        "gamesPlayed": 10,
+        "impact": -14.8,
+        "projectedMinutes": 39
+      },
+      {
+        "name": "Tobias Harris",
+        "bpm": 3.7,
+        "mpg": 32.483870967741936,
+        "gamesPlayed": 62,
+        "impact": 3.7,
+        "projectedMinutes": 32.483870967741936
+      },
+      {
+        "name": "Ben Simmons",
+        "bpm": 2.9,
+        "mpg": 32.36206896551724,
+        "gamesPlayed": 58,
+        "impact": 2.9,
+        "projectedMinutes": 32.36206896551724
+      },
+      {
+        "name": "Joel Embiid",
+        "bpm": 7.5,
+        "mpg": 31.07843137254902,
+        "gamesPlayed": 51,
+        "impact": 7.5,
+        "projectedMinutes": 31.07843137254902
+      },
+      {
+        "name": "Seth Curry",
+        "bpm": -0.3,
+        "mpg": 28.736842105263158,
+        "gamesPlayed": 57,
+        "impact": -0.3,
+        "projectedMinutes": 28.736842105263158
+      },
+      {
+        "name": "Danny Green",
+        "bpm": 1.9,
+        "mpg": 28.028985507246375,
+        "gamesPlayed": 69,
+        "impact": 1.9,
+        "projectedMinutes": 28.028985507246375
+      },
+      {
+        "name": "Shake Milton",
+        "bpm": -1.6,
+        "mpg": 23.19047619047619,
+        "gamesPlayed": 63,
+        "impact": -1.6,
+        "projectedMinutes": 23.19047619047619
+      },
+      {
+        "name": "Matisse Thybulle",
+        "bpm": 1.9,
+        "mpg": 19.96923076923077,
+        "gamesPlayed": 65,
+        "impact": 1.9,
+        "projectedMinutes": 19.96923076923077
+      },
+      {
+        "name": "Furkan Korkmaz",
+        "bpm": -0.1,
+        "mpg": 19.30909090909091,
+        "gamesPlayed": 55,
+        "impact": -0.1,
+        "projectedMinutes": 19.30909090909091
+      },
+      {
+        "name": "George Hill",
+        "bpm": -3.9,
+        "mpg": 18.9375,
+        "gamesPlayed": 16,
+        "impact": -3.9,
+        "projectedMinutes": 18.9375
+      }
+    ],
+    "srs": 5.28,
+    "ortg": 114.13,
+    "drtg": 108.51,
+    "wins": 49,
+    "losses": 23,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "PHO",
+    "teamName": "Phoenix Suns",
+    "season": 2021,
+    "conference": "West",
+    "seed": 2,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1698.45,
+    "netRating": 5.87,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Ty-Shon Alexander",
+        "bpm": -6.5,
+        "mpg": 47,
+        "gamesPlayed": 15,
+        "impact": -6.5,
+        "projectedMinutes": 40
+      },
+      {
+        "name": "Devin Booker",
+        "bpm": 0.3,
+        "mpg": 33.88059701492537,
+        "gamesPlayed": 67,
+        "impact": 0.3,
+        "projectedMinutes": 33.88059701492537
+      },
+      {
+        "name": "Mikal Bridges",
+        "bpm": 3.3,
+        "mpg": 32.611111111111114,
+        "gamesPlayed": 72,
+        "impact": 3.3,
+        "projectedMinutes": 32.611111111111114
+      },
+      {
+        "name": "Chris Paul",
+        "bpm": 4.6,
+        "mpg": 31.414285714285715,
+        "gamesPlayed": 70,
+        "impact": 4.6,
+        "projectedMinutes": 31.414285714285715
+      },
+      {
+        "name": "Deandre Ayton",
+        "bpm": 1.2,
+        "mpg": 30.652173913043477,
+        "gamesPlayed": 69,
+        "impact": 1.2,
+        "projectedMinutes": 30.652173913043477
+      },
+      {
+        "name": "Jae Crowder",
+        "bpm": 1.1,
+        "mpg": 27.466666666666665,
+        "gamesPlayed": 60,
+        "impact": 1.1,
+        "projectedMinutes": 27.466666666666665
+      },
+      {
+        "name": "Cameron Johnson",
+        "bpm": -0.2,
+        "mpg": 23.95,
+        "gamesPlayed": 60,
+        "impact": -0.2,
+        "projectedMinutes": 23.95
+      },
+      {
+        "name": "Torrey Craig",
+        "bpm": 0.8,
+        "mpg": 18.8125,
+        "gamesPlayed": 32,
+        "impact": 0.8,
+        "projectedMinutes": 18.8125
+      },
+      {
+        "name": "Cameron Payne",
+        "bpm": 3.1,
+        "mpg": 17.983333333333334,
+        "gamesPlayed": 60,
+        "impact": 3.1,
+        "projectedMinutes": 17.983333333333334
+      },
+      {
+        "name": "Dario Šarić",
+        "bpm": -2,
+        "mpg": 17.42,
+        "gamesPlayed": 50,
+        "impact": -2,
+        "projectedMinutes": 17.42
+      }
+    ],
+    "srs": 5.67,
+    "ortg": 118.01,
+    "drtg": 112.14,
+    "wins": 51,
+    "losses": 21,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "POR",
+    "teamName": "Portland Trail Blazers",
+    "season": 2021,
+    "conference": "West",
+    "seed": 5,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1563,
+    "netRating": 1.7,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Damian Lillard",
+        "bpm": 6.3,
+        "mpg": 35.791044776119406,
+        "gamesPlayed": 67,
+        "impact": 6.3,
+        "projectedMinutes": 35.791044776119406
+      },
+      {
+        "name": "Norman Powell",
+        "bpm": -1.2,
+        "mpg": 34.370370370370374,
+        "gamesPlayed": 27,
+        "impact": -1.2,
+        "projectedMinutes": 34.370370370370374
+      },
+      {
+        "name": "CJ McCollum",
+        "bpm": 3.9,
+        "mpg": 34.04255319148936,
+        "gamesPlayed": 47,
+        "impact": 3.9,
+        "projectedMinutes": 34.04255319148936
+      },
+      {
+        "name": "Robert Covington",
+        "bpm": 0.2,
+        "mpg": 32.042857142857144,
+        "gamesPlayed": 70,
+        "impact": 0.2,
+        "projectedMinutes": 32.042857142857144
+      },
+      {
+        "name": "Carmelo Anthony",
+        "bpm": -1.1,
+        "mpg": 24.492753623188406,
+        "gamesPlayed": 69,
+        "impact": -1.1,
+        "projectedMinutes": 24.492753623188406
+      },
+      {
+        "name": "Enes Freedom",
+        "bpm": 0.6,
+        "mpg": 24.416666666666668,
+        "gamesPlayed": 72,
+        "impact": 0.6,
+        "projectedMinutes": 24.416666666666668
+      },
+      {
+        "name": "Jusuf Nurkić",
+        "bpm": 2.5,
+        "mpg": 23.783783783783782,
+        "gamesPlayed": 37,
+        "impact": 2.5,
+        "projectedMinutes": 23.783783783783782
+      },
+      {
+        "name": "Derrick Jones Jr.",
+        "bpm": -1.4,
+        "mpg": 22.724137931034484,
+        "gamesPlayed": 58,
+        "impact": -1.4,
+        "projectedMinutes": 22.724137931034484
+      },
+      {
+        "name": "Anfernee Simons",
+        "bpm": -1,
+        "mpg": 17.25,
+        "gamesPlayed": 64,
+        "impact": -1,
+        "projectedMinutes": 17.25
+      },
+      {
+        "name": "Nassir Little",
+        "bpm": -2.7,
+        "mpg": 13.333333333333334,
+        "gamesPlayed": 48,
+        "impact": -2.7,
+        "projectedMinutes": 13.333333333333334
+      }
+    ],
+    "srs": 1.8,
+    "ortg": 118.28,
+    "drtg": 116.58,
+    "wins": 42,
+    "losses": 30,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "UTA",
+    "teamName": "Utah Jazz",
+    "season": 2021,
+    "conference": "West",
+    "seed": 1,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1813.6,
+    "netRating": 9.48,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Donovan Mitchell",
+        "bpm": 4.3,
+        "mpg": 33.41509433962264,
+        "gamesPlayed": 53,
+        "impact": 4.3,
+        "projectedMinutes": 33.41509433962264
+      },
+      {
+        "name": "Royce O'Neale",
+        "bpm": 1,
+        "mpg": 31.56338028169014,
+        "gamesPlayed": 71,
+        "impact": 1,
+        "projectedMinutes": 31.56338028169014
+      },
+      {
+        "name": "Rudy Gobert",
+        "bpm": 4.9,
+        "mpg": 30.802816901408452,
+        "gamesPlayed": 71,
+        "impact": 4.9,
+        "projectedMinutes": 30.802816901408452
+      },
+      {
+        "name": "Bojan Bogdanović",
+        "bpm": -0.4,
+        "mpg": 30.77777777777778,
+        "gamesPlayed": 72,
+        "impact": -0.4,
+        "projectedMinutes": 30.77777777777778
+      },
+      {
+        "name": "Mike Conley",
+        "bpm": 4.9,
+        "mpg": 29.372549019607842,
+        "gamesPlayed": 51,
+        "impact": 4.9,
+        "projectedMinutes": 29.372549019607842
+      },
+      {
+        "name": "Joe Ingles",
+        "bpm": 3.5,
+        "mpg": 27.865671641791046,
+        "gamesPlayed": 67,
+        "impact": 3.5,
+        "projectedMinutes": 27.865671641791046
+      },
+      {
+        "name": "Jordan Clarkson",
+        "bpm": 1.4,
+        "mpg": 26.735294117647058,
+        "gamesPlayed": 68,
+        "impact": 1.4,
+        "projectedMinutes": 26.735294117647058
+      },
+      {
+        "name": "Georges Niang",
+        "bpm": -0.3,
+        "mpg": 16.02777777777778,
+        "gamesPlayed": 72,
+        "impact": -0.3,
+        "projectedMinutes": 16.02777777777778
+      },
+      {
+        "name": "Derrick Favors",
+        "bpm": 2.6,
+        "mpg": 15.279411764705882,
+        "gamesPlayed": 68,
+        "impact": 2.6,
+        "projectedMinutes": 15.279411764705882
+      },
+      {
+        "name": "Trent Forrest",
+        "bpm": -1.3,
+        "mpg": 10.066666666666666,
+        "gamesPlayed": 30,
+        "impact": -1.3,
+        "projectedMinutes": 10.066666666666666
+      }
+    ],
+    "srs": 8.96,
+    "ortg": 118.42,
+    "drtg": 108.94,
+    "wins": 52,
+    "losses": 20,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  },
+  {
+    "teamId": "WAS",
+    "teamName": "Washington Wizards",
+    "season": 2021,
+    "conference": "East",
+    "seed": 8,
+    "snapshot_as_of": "2021-05-16",
+    "eloRating": 1435.6,
+    "netRating": -1.88,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Russell Westbrook",
+        "bpm": 3.7,
+        "mpg": 36.44615384615385,
+        "gamesPlayed": 65,
+        "impact": 3.7,
+        "projectedMinutes": 36.44615384615385
+      },
+      {
+        "name": "Bradley Beal",
+        "bpm": 3.4,
+        "mpg": 35.78333333333333,
+        "gamesPlayed": 60,
+        "impact": 3.4,
+        "projectedMinutes": 35.78333333333333
+      },
+      {
+        "name": "Rui Hachimura",
+        "bpm": -3.1,
+        "mpg": 31.526315789473685,
+        "gamesPlayed": 57,
+        "impact": -3.1,
+        "projectedMinutes": 31.526315789473685
+      },
+      {
+        "name": "Thomas Bryant",
+        "bpm": 0.9,
+        "mpg": 27.1,
+        "gamesPlayed": 10,
+        "impact": 0.9,
+        "projectedMinutes": 27.1
+      },
+      {
+        "name": "Dāvis Bertāns",
+        "bpm": -0.8,
+        "mpg": 25.68421052631579,
+        "gamesPlayed": 57,
+        "impact": -0.8,
+        "projectedMinutes": 25.68421052631579
+      },
+      {
+        "name": "Deni Avdija",
+        "bpm": -3.1,
+        "mpg": 23.27777777777778,
+        "gamesPlayed": 54,
+        "impact": -3.1,
+        "projectedMinutes": 23.27777777777778
+      },
+      {
+        "name": "Raul Neto",
+        "bpm": -0.6,
+        "mpg": 21.921875,
+        "gamesPlayed": 64,
+        "impact": -0.6,
+        "projectedMinutes": 21.921875
+      },
+      {
+        "name": "Ish Smith",
+        "bpm": -1.5,
+        "mpg": 21,
+        "gamesPlayed": 44,
+        "impact": -1.5,
+        "projectedMinutes": 21
+      },
+      {
+        "name": "Robin Lopez",
+        "bpm": -1,
+        "mpg": 19.070422535211268,
+        "gamesPlayed": 71,
+        "impact": -1,
+        "projectedMinutes": 19.070422535211268
+      },
+      {
+        "name": "Jerome Robinson",
+        "bpm": -7,
+        "mpg": 17.941176470588236,
+        "gamesPlayed": 17,
+        "impact": -7,
+        "projectedMinutes": 17.941176470588236
+      }
+    ],
+    "srs": -1.84,
+    "ortg": 111.75,
+    "drtg": 113.63,
+    "wins": 34,
+    "losses": 38,
+    "eloSource": "srs_proxy",
+    "playerImpactSource": "bpm_proxy"
+  }
+]

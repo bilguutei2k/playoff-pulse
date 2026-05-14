@@ -1,0 +1,842 @@
+[
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 1,
+    "date": "2025-06-05",
+    "homeTeam": "OKC",
+    "awayTeam": "IND",
+    "homeScore": 110,
+    "awayScore": 111,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 2,
+    "date": "2025-06-08",
+    "homeTeam": "OKC",
+    "awayTeam": "IND",
+    "homeScore": 123,
+    "awayScore": 107,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 3,
+    "date": "2025-06-11",
+    "homeTeam": "IND",
+    "awayTeam": "OKC",
+    "homeScore": 116,
+    "awayScore": 107,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 4,
+    "date": "2025-06-13",
+    "homeTeam": "IND",
+    "awayTeam": "OKC",
+    "homeScore": 104,
+    "awayScore": 111,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 5,
+    "date": "2025-06-16",
+    "homeTeam": "OKC",
+    "awayTeam": "IND",
+    "homeScore": 120,
+    "awayScore": 109,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 6,
+    "date": "2025-06-19",
+    "homeTeam": "IND",
+    "awayTeam": "OKC",
+    "homeScore": 108,
+    "awayScore": 91,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-finals-finals-okc-ind",
+    "gameNumber": 7,
+    "date": "2025-06-22",
+    "homeTeam": "OKC",
+    "awayTeam": "IND",
+    "homeScore": 103,
+    "awayScore": 91,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-east-cf-nyk-ind",
+    "gameNumber": 1,
+    "date": "2025-05-21",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 135,
+    "awayScore": 138,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-cf-nyk-ind",
+    "gameNumber": 2,
+    "date": "2025-05-23",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 109,
+    "awayScore": 114,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-cf-nyk-ind",
+    "gameNumber": 3,
+    "date": "2025-05-25",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 100,
+    "awayScore": 106,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-cf-nyk-ind",
+    "gameNumber": 4,
+    "date": "2025-05-27",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 130,
+    "awayScore": 121,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-cf-nyk-ind",
+    "gameNumber": 5,
+    "date": "2025-05-29",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 111,
+    "awayScore": 94,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-cf-nyk-ind",
+    "gameNumber": 6,
+    "date": "2025-05-31",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 125,
+    "awayScore": 108,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-west-cf-okc-min",
+    "gameNumber": 1,
+    "date": "2025-05-20",
+    "homeTeam": "OKC",
+    "awayTeam": "MIN",
+    "homeScore": 114,
+    "awayScore": 88,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-cf-okc-min",
+    "gameNumber": 2,
+    "date": "2025-05-22",
+    "homeTeam": "OKC",
+    "awayTeam": "MIN",
+    "homeScore": 118,
+    "awayScore": 103,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-cf-okc-min",
+    "gameNumber": 3,
+    "date": "2025-05-24",
+    "homeTeam": "MIN",
+    "awayTeam": "OKC",
+    "homeScore": 143,
+    "awayScore": 101,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-cf-okc-min",
+    "gameNumber": 4,
+    "date": "2025-05-26",
+    "homeTeam": "MIN",
+    "awayTeam": "OKC",
+    "homeScore": 126,
+    "awayScore": 128,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-cf-okc-min",
+    "gameNumber": 5,
+    "date": "2025-05-28",
+    "homeTeam": "OKC",
+    "awayTeam": "MIN",
+    "homeScore": 124,
+    "awayScore": 94,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-east-csf-cle-ind",
+    "gameNumber": 1,
+    "date": "2025-05-04",
+    "homeTeam": "CLE",
+    "awayTeam": "IND",
+    "homeScore": 112,
+    "awayScore": 121,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-csf-cle-ind",
+    "gameNumber": 2,
+    "date": "2025-05-06",
+    "homeTeam": "CLE",
+    "awayTeam": "IND",
+    "homeScore": 119,
+    "awayScore": 120,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-csf-cle-ind",
+    "gameNumber": 3,
+    "date": "2025-05-09",
+    "homeTeam": "IND",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 126,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2025-east-csf-cle-ind",
+    "gameNumber": 4,
+    "date": "2025-05-11",
+    "homeTeam": "IND",
+    "awayTeam": "CLE",
+    "homeScore": 129,
+    "awayScore": 109,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-csf-cle-ind",
+    "gameNumber": 5,
+    "date": "2025-05-13",
+    "homeTeam": "CLE",
+    "awayTeam": "IND",
+    "homeScore": 105,
+    "awayScore": 114,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-csf-bos-nyk",
+    "gameNumber": 1,
+    "date": "2025-05-05",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 105,
+    "awayScore": 108,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-csf-bos-nyk",
+    "gameNumber": 2,
+    "date": "2025-05-07",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 90,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-csf-bos-nyk",
+    "gameNumber": 3,
+    "date": "2025-05-10",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 93,
+    "awayScore": 115,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2025-east-csf-bos-nyk",
+    "gameNumber": 4,
+    "date": "2025-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 121,
+    "awayScore": 113,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-csf-bos-nyk",
+    "gameNumber": 5,
+    "date": "2025-05-14",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 127,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2025-east-csf-bos-nyk",
+    "gameNumber": 6,
+    "date": "2025-05-16",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 119,
+    "awayScore": 81,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-west-csf-min-gsw",
+    "gameNumber": 1,
+    "date": "2025-05-06",
+    "homeTeam": "MIN",
+    "awayTeam": "GSW",
+    "homeScore": 88,
+    "awayScore": 99,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2025-west-csf-min-gsw",
+    "gameNumber": 2,
+    "date": "2025-05-08",
+    "homeTeam": "MIN",
+    "awayTeam": "GSW",
+    "homeScore": 117,
+    "awayScore": 93,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-csf-min-gsw",
+    "gameNumber": 3,
+    "date": "2025-05-10",
+    "homeTeam": "GSW",
+    "awayTeam": "MIN",
+    "homeScore": 97,
+    "awayScore": 102,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-csf-min-gsw",
+    "gameNumber": 4,
+    "date": "2025-05-12",
+    "homeTeam": "GSW",
+    "awayTeam": "MIN",
+    "homeScore": 110,
+    "awayScore": 117,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-csf-min-gsw",
+    "gameNumber": 5,
+    "date": "2025-05-14",
+    "homeTeam": "MIN",
+    "awayTeam": "GSW",
+    "homeScore": 121,
+    "awayScore": 110,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 1,
+    "date": "2025-05-05",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 119,
+    "awayScore": 121,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 2,
+    "date": "2025-05-07",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 149,
+    "awayScore": 106,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 3,
+    "date": "2025-05-09",
+    "homeTeam": "DEN",
+    "awayTeam": "OKC",
+    "homeScore": 113,
+    "awayScore": 104,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 4,
+    "date": "2025-05-11",
+    "homeTeam": "DEN",
+    "awayTeam": "OKC",
+    "homeScore": 87,
+    "awayScore": 92,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 5,
+    "date": "2025-05-13",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 112,
+    "awayScore": 105,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 6,
+    "date": "2025-05-15",
+    "homeTeam": "DEN",
+    "awayTeam": "OKC",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-csf-okc-den",
+    "gameNumber": 7,
+    "date": "2025-05-18",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 125,
+    "awayScore": 93,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-east-r1-bos-orl",
+    "gameNumber": 1,
+    "date": "2025-04-20",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 103,
+    "awayScore": 86,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2025-east-r1-bos-orl",
+    "gameNumber": 2,
+    "date": "2025-04-23",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 109,
+    "awayScore": 100,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2025-east-r1-bos-orl",
+    "gameNumber": 3,
+    "date": "2025-04-25",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 95,
+    "awayScore": 93,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2025-east-r1-bos-orl",
+    "gameNumber": 4,
+    "date": "2025-04-27",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 98,
+    "awayScore": 107,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2025-east-r1-bos-orl",
+    "gameNumber": 5,
+    "date": "2025-04-29",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 120,
+    "awayScore": 89,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2025-east-r1-cle-mia",
+    "gameNumber": 1,
+    "date": "2025-04-20",
+    "homeTeam": "CLE",
+    "awayTeam": "MIA",
+    "homeScore": 121,
+    "awayScore": 100,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2025-east-r1-cle-mia",
+    "gameNumber": 2,
+    "date": "2025-04-23",
+    "homeTeam": "CLE",
+    "awayTeam": "MIA",
+    "homeScore": 121,
+    "awayScore": 112,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2025-east-r1-cle-mia",
+    "gameNumber": 3,
+    "date": "2025-04-26",
+    "homeTeam": "MIA",
+    "awayTeam": "CLE",
+    "homeScore": 87,
+    "awayScore": 124,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2025-east-r1-cle-mia",
+    "gameNumber": 4,
+    "date": "2025-04-28",
+    "homeTeam": "MIA",
+    "awayTeam": "CLE",
+    "homeScore": 83,
+    "awayScore": 138,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2025-east-r1-ind-mil",
+    "gameNumber": 1,
+    "date": "2025-04-19",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 117,
+    "awayScore": 98,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-r1-ind-mil",
+    "gameNumber": 2,
+    "date": "2025-04-22",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 123,
+    "awayScore": 115,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-r1-ind-mil",
+    "gameNumber": 3,
+    "date": "2025-04-25",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 117,
+    "awayScore": 101,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2025-east-r1-ind-mil",
+    "gameNumber": 4,
+    "date": "2025-04-27",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 103,
+    "awayScore": 129,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-r1-ind-mil",
+    "gameNumber": 5,
+    "date": "2025-04-29",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 119,
+    "awayScore": 118,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2025-east-r1-nyk-det",
+    "gameNumber": 1,
+    "date": "2025-04-19",
+    "homeTeam": "NYK",
+    "awayTeam": "DET",
+    "homeScore": 123,
+    "awayScore": 112,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-r1-nyk-det",
+    "gameNumber": 2,
+    "date": "2025-04-21",
+    "homeTeam": "NYK",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 100,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2025-east-r1-nyk-det",
+    "gameNumber": 3,
+    "date": "2025-04-24",
+    "homeTeam": "DET",
+    "awayTeam": "NYK",
+    "homeScore": 116,
+    "awayScore": 118,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-r1-nyk-det",
+    "gameNumber": 4,
+    "date": "2025-04-27",
+    "homeTeam": "DET",
+    "awayTeam": "NYK",
+    "homeScore": 93,
+    "awayScore": 94,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-east-r1-nyk-det",
+    "gameNumber": 5,
+    "date": "2025-04-29",
+    "homeTeam": "NYK",
+    "awayTeam": "DET",
+    "homeScore": 103,
+    "awayScore": 106,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2025-east-r1-nyk-det",
+    "gameNumber": 6,
+    "date": "2025-05-01",
+    "homeTeam": "DET",
+    "awayTeam": "NYK",
+    "homeScore": 113,
+    "awayScore": 116,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 1,
+    "date": "2025-04-19",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 112,
+    "awayScore": 110,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 2,
+    "date": "2025-04-21",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 102,
+    "awayScore": 105,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 3,
+    "date": "2025-04-24",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 117,
+    "awayScore": 83,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 4,
+    "date": "2025-04-26",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 99,
+    "awayScore": 101,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 5,
+    "date": "2025-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 131,
+    "awayScore": 115,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 6,
+    "date": "2025-05-01",
+    "homeTeam": "LAC",
+    "awayTeam": "DEN",
+    "homeScore": 111,
+    "awayScore": 105,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2025-west-r1-den-lac",
+    "gameNumber": 7,
+    "date": "2025-05-03",
+    "homeTeam": "DEN",
+    "awayTeam": "LAC",
+    "homeScore": 120,
+    "awayScore": 101,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 1,
+    "date": "2025-04-20",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 85,
+    "awayScore": 95,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 2,
+    "date": "2025-04-23",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 109,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 3,
+    "date": "2025-04-26",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 4,
+    "date": "2025-04-28",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 109,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 5,
+    "date": "2025-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 131,
+    "awayScore": 116,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 6,
+    "date": "2025-05-02",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 107,
+    "awayScore": 115,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2025-west-r1-hou-gsw",
+    "gameNumber": 7,
+    "date": "2025-05-04",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 89,
+    "awayScore": 103,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2025-west-r1-lal-min",
+    "gameNumber": 1,
+    "date": "2025-04-19",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 95,
+    "awayScore": 117,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-r1-lal-min",
+    "gameNumber": 2,
+    "date": "2025-04-22",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 94,
+    "awayScore": 85,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2025-west-r1-lal-min",
+    "gameNumber": 3,
+    "date": "2025-04-25",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 116,
+    "awayScore": 104,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-r1-lal-min",
+    "gameNumber": 4,
+    "date": "2025-04-27",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 116,
+    "awayScore": 113,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-r1-lal-min",
+    "gameNumber": 5,
+    "date": "2025-04-30",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 96,
+    "awayScore": 103,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2025-west-r1-okc-mem",
+    "gameNumber": 1,
+    "date": "2025-04-20",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 131,
+    "awayScore": 80,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-r1-okc-mem",
+    "gameNumber": 2,
+    "date": "2025-04-22",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 118,
+    "awayScore": 99,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-r1-okc-mem",
+    "gameNumber": 3,
+    "date": "2025-04-24",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 108,
+    "awayScore": 114,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2025-west-r1-okc-mem",
+    "gameNumber": 4,
+    "date": "2025-04-26",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 115,
+    "awayScore": 117,
+    "winner": "OKC"
+  }
+]

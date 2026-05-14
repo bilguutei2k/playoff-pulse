@@ -1,0 +1,822 @@
+[
+  {
+    "seriesId": "2024-finals-finals-bos-dal",
+    "gameNumber": 1,
+    "date": "2024-06-06",
+    "homeTeam": "BOS",
+    "awayTeam": "DAL",
+    "homeScore": 107,
+    "awayScore": 89,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-finals-finals-bos-dal",
+    "gameNumber": 2,
+    "date": "2024-06-09",
+    "homeTeam": "BOS",
+    "awayTeam": "DAL",
+    "homeScore": 105,
+    "awayScore": 98,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-finals-finals-bos-dal",
+    "gameNumber": 3,
+    "date": "2024-06-12",
+    "homeTeam": "DAL",
+    "awayTeam": "BOS",
+    "homeScore": 99,
+    "awayScore": 106,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-finals-finals-bos-dal",
+    "gameNumber": 4,
+    "date": "2024-06-14",
+    "homeTeam": "DAL",
+    "awayTeam": "BOS",
+    "homeScore": 122,
+    "awayScore": 84,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-finals-finals-bos-dal",
+    "gameNumber": 5,
+    "date": "2024-06-17",
+    "homeTeam": "BOS",
+    "awayTeam": "DAL",
+    "homeScore": 106,
+    "awayScore": 88,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-cf-bos-ind",
+    "gameNumber": 1,
+    "date": "2024-05-21",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 133,
+    "awayScore": 128,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-cf-bos-ind",
+    "gameNumber": 2,
+    "date": "2024-05-23",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 126,
+    "awayScore": 110,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-cf-bos-ind",
+    "gameNumber": 3,
+    "date": "2024-05-25",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 111,
+    "awayScore": 114,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-cf-bos-ind",
+    "gameNumber": 4,
+    "date": "2024-05-27",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 105,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-west-cf-min-dal",
+    "gameNumber": 1,
+    "date": "2024-05-22",
+    "homeTeam": "MIN",
+    "awayTeam": "DAL",
+    "homeScore": 105,
+    "awayScore": 108,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-cf-min-dal",
+    "gameNumber": 2,
+    "date": "2024-05-24",
+    "homeTeam": "MIN",
+    "awayTeam": "DAL",
+    "homeScore": 108,
+    "awayScore": 109,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-cf-min-dal",
+    "gameNumber": 3,
+    "date": "2024-05-26",
+    "homeTeam": "DAL",
+    "awayTeam": "MIN",
+    "homeScore": 116,
+    "awayScore": 107,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-cf-min-dal",
+    "gameNumber": 4,
+    "date": "2024-05-28",
+    "homeTeam": "DAL",
+    "awayTeam": "MIN",
+    "homeScore": 100,
+    "awayScore": 105,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-cf-min-dal",
+    "gameNumber": 5,
+    "date": "2024-05-30",
+    "homeTeam": "MIN",
+    "awayTeam": "DAL",
+    "homeScore": 103,
+    "awayScore": 124,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-east-csf-bos-cle",
+    "gameNumber": 1,
+    "date": "2024-05-07",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 120,
+    "awayScore": 95,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-csf-bos-cle",
+    "gameNumber": 2,
+    "date": "2024-05-09",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 94,
+    "awayScore": 118,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2024-east-csf-bos-cle",
+    "gameNumber": 3,
+    "date": "2024-05-11",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 93,
+    "awayScore": 106,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-csf-bos-cle",
+    "gameNumber": 4,
+    "date": "2024-05-13",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 109,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-csf-bos-cle",
+    "gameNumber": 5,
+    "date": "2024-05-15",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 113,
+    "awayScore": 98,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 1,
+    "date": "2024-05-06",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 121,
+    "awayScore": 117,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 2,
+    "date": "2024-05-08",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 130,
+    "awayScore": 121,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 3,
+    "date": "2024-05-10",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 111,
+    "awayScore": 106,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 4,
+    "date": "2024-05-12",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 121,
+    "awayScore": 89,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 5,
+    "date": "2024-05-14",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 121,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 6,
+    "date": "2024-05-17",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 116,
+    "awayScore": 103,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-csf-nyk-ind",
+    "gameNumber": 7,
+    "date": "2024-05-19",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 109,
+    "awayScore": 130,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-west-csf-okc-dal",
+    "gameNumber": 1,
+    "date": "2024-05-07",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 117,
+    "awayScore": 95,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2024-west-csf-okc-dal",
+    "gameNumber": 2,
+    "date": "2024-05-09",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 110,
+    "awayScore": 119,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-csf-okc-dal",
+    "gameNumber": 3,
+    "date": "2024-05-11",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 105,
+    "awayScore": 101,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-csf-okc-dal",
+    "gameNumber": 4,
+    "date": "2024-05-13",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 96,
+    "awayScore": 100,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2024-west-csf-okc-dal",
+    "gameNumber": 5,
+    "date": "2024-05-15",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 92,
+    "awayScore": 104,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-csf-okc-dal",
+    "gameNumber": 6,
+    "date": "2024-05-18",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 117,
+    "awayScore": 116,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 1,
+    "date": "2024-05-04",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 99,
+    "awayScore": 106,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 2,
+    "date": "2024-05-06",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 80,
+    "awayScore": 106,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 3,
+    "date": "2024-05-10",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 90,
+    "awayScore": 117,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 4,
+    "date": "2024-05-12",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 107,
+    "awayScore": 115,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 5,
+    "date": "2024-05-14",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 112,
+    "awayScore": 97,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 6,
+    "date": "2024-05-16",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 115,
+    "awayScore": 70,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-csf-den-min",
+    "gameNumber": 7,
+    "date": "2024-05-19",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 90,
+    "awayScore": 98,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-east-r1-bos-mia",
+    "gameNumber": 1,
+    "date": "2024-04-21",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 114,
+    "awayScore": 94,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-r1-bos-mia",
+    "gameNumber": 2,
+    "date": "2024-04-24",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 101,
+    "awayScore": 111,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2024-east-r1-bos-mia",
+    "gameNumber": 3,
+    "date": "2024-04-27",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 84,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-r1-bos-mia",
+    "gameNumber": 4,
+    "date": "2024-04-29",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 88,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-r1-bos-mia",
+    "gameNumber": 5,
+    "date": "2024-05-01",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 118,
+    "awayScore": 84,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 1,
+    "date": "2024-04-20",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 97,
+    "awayScore": 83,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 2,
+    "date": "2024-04-22",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 96,
+    "awayScore": 86,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 3,
+    "date": "2024-04-25",
+    "homeTeam": "ORL",
+    "awayTeam": "CLE",
+    "homeScore": 121,
+    "awayScore": 83,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 4,
+    "date": "2024-04-27",
+    "homeTeam": "ORL",
+    "awayTeam": "CLE",
+    "homeScore": 112,
+    "awayScore": 89,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 5,
+    "date": "2024-04-30",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 104,
+    "awayScore": 103,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 6,
+    "date": "2024-05-03",
+    "homeTeam": "ORL",
+    "awayTeam": "CLE",
+    "homeScore": 103,
+    "awayScore": 96,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2024-east-r1-cle-orl",
+    "gameNumber": 7,
+    "date": "2024-05-05",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 106,
+    "awayScore": 94,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2024-east-r1-mil-ind",
+    "gameNumber": 1,
+    "date": "2024-04-21",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 109,
+    "awayScore": 94,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2024-east-r1-mil-ind",
+    "gameNumber": 2,
+    "date": "2024-04-23",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 108,
+    "awayScore": 125,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-r1-mil-ind",
+    "gameNumber": 3,
+    "date": "2024-04-26",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 121,
+    "awayScore": 118,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-r1-mil-ind",
+    "gameNumber": 4,
+    "date": "2024-04-28",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 126,
+    "awayScore": 113,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-r1-mil-ind",
+    "gameNumber": 5,
+    "date": "2024-04-30",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 115,
+    "awayScore": 92,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2024-east-r1-mil-ind",
+    "gameNumber": 6,
+    "date": "2024-05-02",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 120,
+    "awayScore": 98,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2024-east-r1-nyk-phi",
+    "gameNumber": 1,
+    "date": "2024-04-20",
+    "homeTeam": "NYK",
+    "awayTeam": "PHI",
+    "homeScore": 111,
+    "awayScore": 104,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-east-r1-nyk-phi",
+    "gameNumber": 2,
+    "date": "2024-04-22",
+    "homeTeam": "NYK",
+    "awayTeam": "PHI",
+    "homeScore": 104,
+    "awayScore": 101,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-east-r1-nyk-phi",
+    "gameNumber": 3,
+    "date": "2024-04-25",
+    "homeTeam": "PHI",
+    "awayTeam": "NYK",
+    "homeScore": 125,
+    "awayScore": 114,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2024-east-r1-nyk-phi",
+    "gameNumber": 4,
+    "date": "2024-04-28",
+    "homeTeam": "PHI",
+    "awayTeam": "NYK",
+    "homeScore": 92,
+    "awayScore": 97,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-east-r1-nyk-phi",
+    "gameNumber": 5,
+    "date": "2024-04-30",
+    "homeTeam": "NYK",
+    "awayTeam": "PHI",
+    "homeScore": 106,
+    "awayScore": 112,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2024-east-r1-nyk-phi",
+    "gameNumber": 6,
+    "date": "2024-05-02",
+    "homeTeam": "PHI",
+    "awayTeam": "NYK",
+    "homeScore": 115,
+    "awayScore": 118,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2024-west-r1-lac-dal",
+    "gameNumber": 1,
+    "date": "2024-04-21",
+    "homeTeam": "LAC",
+    "awayTeam": "DAL",
+    "homeScore": 109,
+    "awayScore": 97,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2024-west-r1-lac-dal",
+    "gameNumber": 2,
+    "date": "2024-04-23",
+    "homeTeam": "LAC",
+    "awayTeam": "DAL",
+    "homeScore": 93,
+    "awayScore": 96,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-r1-lac-dal",
+    "gameNumber": 3,
+    "date": "2024-04-26",
+    "homeTeam": "DAL",
+    "awayTeam": "LAC",
+    "homeScore": 101,
+    "awayScore": 90,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-r1-lac-dal",
+    "gameNumber": 4,
+    "date": "2024-04-28",
+    "homeTeam": "DAL",
+    "awayTeam": "LAC",
+    "homeScore": 111,
+    "awayScore": 116,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2024-west-r1-lac-dal",
+    "gameNumber": 5,
+    "date": "2024-05-01",
+    "homeTeam": "LAC",
+    "awayTeam": "DAL",
+    "homeScore": 93,
+    "awayScore": 123,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-r1-lac-dal",
+    "gameNumber": 6,
+    "date": "2024-05-03",
+    "homeTeam": "DAL",
+    "awayTeam": "LAC",
+    "homeScore": 114,
+    "awayScore": 101,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2024-west-r1-den-lal",
+    "gameNumber": 1,
+    "date": "2024-04-20",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 114,
+    "awayScore": 103,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-r1-den-lal",
+    "gameNumber": 2,
+    "date": "2024-04-22",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 101,
+    "awayScore": 99,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-r1-den-lal",
+    "gameNumber": 3,
+    "date": "2024-04-25",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 112,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-r1-den-lal",
+    "gameNumber": 4,
+    "date": "2024-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 119,
+    "awayScore": 108,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2024-west-r1-den-lal",
+    "gameNumber": 5,
+    "date": "2024-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 106,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2024-west-r1-min-pho",
+    "gameNumber": 1,
+    "date": "2024-04-20",
+    "homeTeam": "MIN",
+    "awayTeam": "PHO",
+    "homeScore": 120,
+    "awayScore": 95,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-r1-min-pho",
+    "gameNumber": 2,
+    "date": "2024-04-23",
+    "homeTeam": "MIN",
+    "awayTeam": "PHO",
+    "homeScore": 105,
+    "awayScore": 93,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-r1-min-pho",
+    "gameNumber": 3,
+    "date": "2024-04-26",
+    "homeTeam": "PHO",
+    "awayTeam": "MIN",
+    "homeScore": 109,
+    "awayScore": 126,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-r1-min-pho",
+    "gameNumber": 4,
+    "date": "2024-04-28",
+    "homeTeam": "PHO",
+    "awayTeam": "MIN",
+    "homeScore": 116,
+    "awayScore": 122,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2024-west-r1-okc-nop",
+    "gameNumber": 1,
+    "date": "2024-04-21",
+    "homeTeam": "OKC",
+    "awayTeam": "NOP",
+    "homeScore": 94,
+    "awayScore": 92,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2024-west-r1-okc-nop",
+    "gameNumber": 2,
+    "date": "2024-04-24",
+    "homeTeam": "OKC",
+    "awayTeam": "NOP",
+    "homeScore": 124,
+    "awayScore": 92,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2024-west-r1-okc-nop",
+    "gameNumber": 3,
+    "date": "2024-04-27",
+    "homeTeam": "NOP",
+    "awayTeam": "OKC",
+    "homeScore": 85,
+    "awayScore": 106,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2024-west-r1-okc-nop",
+    "gameNumber": 4,
+    "date": "2024-04-29",
+    "homeTeam": "NOP",
+    "awayTeam": "OKC",
+    "homeScore": 89,
+    "awayScore": 97,
+    "winner": "OKC"
+  }
+]
