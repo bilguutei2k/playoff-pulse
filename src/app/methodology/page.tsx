@@ -89,7 +89,7 @@ const sections: MethodologySection[] = [
       {
         type: "subsection",
         label: "Bubble",
-        text: "Every model degrades on 2020 bubble series by similar margins, about a 0.03 Brier increase across non-coinflip baselines. Playoff Pulse's bubble degradation (+0.030) is similar to Elo-only (+0.029), indicating the home-court-zeroing logic in bubble works as intended. The home-team baseline collapses to 0.250 on bubble series, which is expected behavior and confirms the bubble flag is propagating correctly.",
+        text: "Across the rating-based baselines (Elo-only, net-rating-only, and Playoff Pulse), bubble degradation clusters around +0.03 Brier -- the rating-based models suffer comparably. The structural baselines behave differently: higher-seed is the most robust (+0.011), and home-team is the most affected (+0.039), since fixed home-court priors collapse to coinflip-equivalent when home court goes to zero.",
       },
       {
         type: "subsection",
