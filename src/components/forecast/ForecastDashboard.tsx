@@ -13,6 +13,7 @@ import {
 } from "@/lib/model/forecast";
 import { validateConfig } from "@/lib/model/validation";
 import { Section } from "@/components/layout/Section";
+import { BacktestSummaryCard } from "@/components/forecast/BacktestSummaryCard";
 import { MethodologyNote } from "@/components/forecast/MethodologyNote";
 import { LiveDataPanel } from "@/components/forecast/LiveDataPanel";
 import { ModelControls } from "@/components/forecast/ModelControls";
@@ -182,6 +183,9 @@ export function ForecastDashboard() {
         </div>
       </Section>
 
+      <Section title="Model Validation">
+        <BacktestSummaryCard />
+      </Section>
 
       <div className="grid gap-[18px] xl:grid-cols-[1.4fr_1fr]">
         <Section
