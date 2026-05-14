@@ -3,7 +3,7 @@
 ## Project Identity
 - Playoff Pulse is a transparent, manually configured NBA playoff forecasting dashboard.
 - It is a polished MVP with a working model, deployed at https://548-sable.vercel.app.
-- It is not a betting product, not a live-data-driven forecasting product, and not yet calibrated or backtested.
+- It is not a betting product and not a live-data-driven forecasting product. As of May 13, 2026, the model has been backtested against 150 playoff series (2016–2025); see docs/backtest/methodology.md for results and known limitations. It is not yet calibrated against external benchmarks or production-grade for unsupervised public use.
 - Forecasts run on manual model configuration, not live data or API-backed model inputs.
 - The repo includes a read-only live scoreboard probe for display only: `src/app/api/live-scoreboard/route.ts`, `src/lib/live-data/espn-scoreboard.ts`.
 - The scoreboard MUST NOT feed model inputs. Team ratings, player impact, projected minutes, and injuries remain manual in `src/lib/data/`.
