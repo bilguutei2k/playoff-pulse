@@ -14,10 +14,12 @@ import {
 import { validateConfig } from "@/lib/model/validation";
 import { Section } from "@/components/layout/Section";
 import { MethodologyNote } from "@/components/forecast/MethodologyNote";
+import { LiveDataPanel } from "@/components/forecast/LiveDataPanel";
 import { ModelControls } from "@/components/forecast/ModelControls";
 import { ProbabilityTable } from "@/components/forecast/ProbabilityTable";
 import { SeriesCard } from "@/components/forecast/SeriesCard";
 import { SimulationSummary } from "@/components/forecast/SimulationSummary";
+import { TeamDetailDrawer } from "@/components/forecast/TeamDetailDrawer";
 import { TeamStrengthTable } from "@/components/forecast/TeamStrengthTable";
 import { formatPercent } from "@/lib/utils/format";
 
@@ -29,6 +31,7 @@ export function ForecastDashboard() {
   const [settings, setSettings] = useState<ModelSettings>(defaultModelSettings);
   const [manualAdjustments, setManualAdjustments] =
     useState<Record<string, number>>(initialAdjustments);
+  const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);
 
   const adjustedTeams = useMemo(
     () => applyManualAdjustments(playoffConfig.teams, manualAdjustments),
@@ -54,6 +57,26 @@ export function ForecastDashboard() {
   const championshipRows = snapshot.bracketForecast.rows.slice(0, 6);
   const topChampionshipProbability =
     championshipRows[0]?.championshipProbability ?? 1;
+  const selectedTeam = selectedTeamId ? snapshot.teamsById[selectedTeamId] : null;
+  const selectedTeamForecast =
+    snapshot.teamForecasts.find((forecast) => forecast.teamId === selectedTeamId) ??
+    null;
+  const selectedBracketRow =
+    snapshot.bracketForecast.rows.find((row) => row.teamId === selectedTeamId) ??
+    null;
+  const selectedCurrentSeries =
+    snapshot.seriesForecasts.find(
+      (forecast) =>
+        forecast.winsA < 4 &&
+        forecast.winsB < 4 &&
+        (forecast.teamAId === selectedTeamId || forecast.teamBId === selectedTeamId),
+    ) ?? null;
+  const selectedCurrentSeriesProbability =
+    selectedCurrentSeries && selectedTeamId
+      ? selectedCurrentSeries.teamAId === selectedTeamId
+        ? selectedCurrentSeries.teamASeriesWinProbability
+        : selectedCurrentSeries.teamBSeriesWinProbability
+      : null;
   const validationStatus = validation.errors.length
     ? "Validation: errors"
     : validation.warnings.length
@@ -86,6 +109,13 @@ export function ForecastDashboard() {
       </div>
 
       <Section
+        title="Live Data Probe"
+        description="Read-only NBA scoreboard feed for data-ingestion validation. It does not overwrite manual ratings, injuries, rotations, or series state yet."
+      >
+        <LiveDataPanel />
+      </Section>
+
+      <Section
         title="Championship Estimate"
         description="Top title probabilities from the current manual input set and bracket simulation."
       >
@@ -98,9 +128,11 @@ export function ForecastDashboard() {
                 : 0;
 
             return (
-              <div
+              <button
+                type="button"
                 key={row.teamId}
-                className="border border-[var(--color-border-subtle)] bg-[var(--color-bg-secondary)] p-3"
+                className="border border-[var(--color-border-subtle)] bg-[var(--color-bg-secondary)] p-3 text-left transition hover:border-[var(--color-accent)] hover:bg-[var(--overlay-row-hover)]"
+                onClick={() => setSelectedTeamId(row.teamId)}
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="pp-team-badge" data-team={team.abbreviation}>
@@ -117,7 +149,7 @@ export function ForecastDashboard() {
                     style={{ width: `${Math.max(0, Math.min(1, scale)) * 100}%` }}
                   />
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -143,11 +175,13 @@ export function ForecastDashboard() {
                 series={series}
                 forecast={forecast}
                 teamsById={snapshot.teamsById}
+                onTeamSelect={setSelectedTeamId}
               />
             );
           })}
         </div>
       </Section>
+
 
       <div className="grid gap-[18px] xl:grid-cols-[1.4fr_1fr]">
         <Section
@@ -158,6 +192,7 @@ export function ForecastDashboard() {
             seriesForecasts={snapshot.seriesForecasts}
             bracketForecast={snapshot.bracketForecast}
             teamsById={snapshot.teamsById}
+            onTeamSelect={setSelectedTeamId}
           />
         </Section>
 
@@ -168,6 +203,7 @@ export function ForecastDashboard() {
           <TeamStrengthTable
             teamsById={snapshot.teamsById}
             forecasts={snapshot.teamForecasts}
+            onTeamSelect={setSelectedTeamId}
           />
         </Section>
       </div>
@@ -196,6 +232,16 @@ export function ForecastDashboard() {
           <MethodologyNote />
         </Section>
       </div>
+
+      <TeamDetailDrawer
+        team={selectedTeam}
+        forecast={selectedTeamForecast}
+        bracketRow={selectedBracketRow}
+        currentSeriesProbability={selectedCurrentSeriesProbability}
+        dataLastUpdatedTimestamp={dataLastUpdatedTimestamp}
+        validationStatus={validationStatus}
+        onClose={() => setSelectedTeamId(null)}
+      />
     </div>
   );
 }
