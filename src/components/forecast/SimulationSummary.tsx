@@ -1,38 +1,64 @@
-import { AlertTriangle, Database, LineChart, ShieldCheck } from "lucide-react";
+import {
+  AlertTriangle,
+  Database,
+  FileWarning,
+  LineChart,
+  RadioTower,
+  ShieldCheck,
+} from "lucide-react";
 
 type SimulationSummaryProps = {
   validationErrors: string[];
   validationWarnings: string[];
+  dataLastUpdatedTimestamp: string;
 };
 
 export function SimulationSummary({
   validationErrors,
   validationWarnings,
+  dataLastUpdatedTimestamp,
 }: SimulationSummaryProps) {
+  const validationLabel = validationErrors.length
+    ? "Errors"
+    : validationWarnings.length
+      ? "Warnings"
+      : "Passed";
   const statusItems = [
     {
       icon: Database,
-      label: "Data",
+      label: "Manual data snapshot",
       value: "Manual",
       subtext: "Static team, rotation, injury, rating, and score inputs.",
     },
     {
-      icon: ShieldCheck,
-      label: "Model",
-      value: "Estimate",
-      subtext: "Simulation probabilities, not certainties or recommendations.",
+      icon: FileWarning,
+      label: "Last updated timestamp",
+      value: dataLastUpdatedTimestamp,
+      subtext: "Timestamp for the current static configuration file.",
+    },
+    {
+      icon: RadioTower,
+      label: "Live APIs",
+      value: "Scoreboard probe",
+      subtext: "Read-only game status feed. Forecast inputs remain manual.",
     },
     {
       icon: LineChart,
-      label: "Odds",
-      value: "Planned",
-      subtext: "Market comparison exists in types only, not active here.",
+      label: "Probabilities",
+      value: "Model estimates",
+      subtext: "Simulation probabilities, not certainties or recommendations.",
+    },
+    {
+      icon: ShieldCheck,
+      label: "Validation status",
+      value: validationLabel,
+      subtext: "Local configuration and probability checks run through the verify script.",
     },
   ];
 
   return (
     <>
-      <div className="grid gap-0 divide-y divide-[var(--color-border-subtle)] md:grid-cols-3 md:divide-x md:divide-y-0">
+      <div className="grid gap-0 divide-y divide-[var(--color-border-subtle)] md:grid-cols-2 md:divide-x md:divide-y-0 xl:grid-cols-5">
         {statusItems.map((item) => {
           const Icon = item.icon;
           return (

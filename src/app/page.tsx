@@ -1,4 +1,10 @@
-import { dataLastUpdated, playoffConfig } from "@/lib/data/playoff-config";
+import {
+  dataLastUpdated,
+  dataLastUpdatedTimestamp,
+  dataSnapshotLabel,
+  liveApiStatus,
+  playoffConfig,
+} from "@/lib/data/playoff-config";
 import { ForecastDashboard } from "@/components/forecast/ForecastDashboard";
 
 function formatDataLastUpdated(value: string): string {
@@ -36,22 +42,27 @@ export default function Home() {
 
             <div className="grid gap-0 divide-y divide-[var(--color-border-subtle)] sm:grid-cols-3 sm:divide-x sm:divide-y-0 xl:grid-cols-1 xl:divide-x-0 xl:divide-y">
               <div className="p-4">
-                <div className="pp-kicker">Last update</div>
+                <div className="pp-kicker">{dataSnapshotLabel}</div>
                 <div className="pp-number mt-2 text-sm font-bold">
-                  Data last updated: {formatDataLastUpdated(dataLastUpdated)}
+                  Last updated: {dataLastUpdatedTimestamp}
                 </div>
                 <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
                   Injury statuses and ratings are manually maintained estimates.
+                  Snapshot date: {formatDataLastUpdated(dataLastUpdated)}.
                 </p>
               </div>
               <div className="p-4">
-                <div className="pp-kicker">Manual input set</div>
+                <div className="pp-kicker">{liveApiStatus}</div>
                 <div className="pp-number mt-2 text-xl font-bold">
                   {playoffConfig.teams.length} teams / {activeSeriesCount} active
                 </div>
+                <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+                  Forecast inputs stay manual; live scores are displayed as a
+                  separate read-only feed.
+                </p>
               </div>
               <div className="p-4">
-                <div className="pp-kicker">Market status</div>
+                <div className="pp-kicker">Probabilities are model estimates</div>
                 <div className="pp-number mt-2 text-sm font-bold text-[var(--color-warning)]">
                   Calibration planned
                 </div>

@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { playoffConfig } from "@/lib/data/playoff-config";
+import {
+  dataLastUpdatedTimestamp,
+  playoffConfig,
+} from "@/lib/data/playoff-config";
 import { defaultModelSettings } from "@/lib/data/model-settings";
 import type { ModelSettings } from "@/lib/model/types";
 import {
@@ -51,6 +54,11 @@ export function ForecastDashboard() {
   const championshipRows = snapshot.bracketForecast.rows.slice(0, 6);
   const topChampionshipProbability =
     championshipRows[0]?.championshipProbability ?? 1;
+  const validationStatus = validation.errors.length
+    ? "Validation: errors"
+    : validation.warnings.length
+      ? "Validation: warnings"
+      : "Validation: passed";
 
   return (
     <div className="flex flex-col gap-[18px]">
@@ -58,14 +66,23 @@ export function ForecastDashboard() {
         <SimulationSummary
           validationErrors={validation.errors}
           validationWarnings={validation.warnings}
+          dataLastUpdatedTimestamp={dataLastUpdatedTimestamp}
         />
       </Section>
 
-      <div className="flex items-center gap-3 border-y-2 border-[var(--color-border-strong)] bg-[var(--overlay-accent-soft)] px-4 py-3">
+      <div className="flex flex-wrap items-center gap-2 border-y-2 border-[var(--color-border-strong)] bg-[var(--overlay-accent-soft)] px-4 py-3">
         <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
-        <span className="pp-kicker text-[var(--color-accent)]">
-          Manual data / model estimate / not betting advice
-        </span>
+        {[
+          "Manual data snapshot",
+          `Last updated ${dataLastUpdatedTimestamp}`,
+          "Read-only live scoreboard probe",
+          "Probabilities are model estimates",
+          validationStatus,
+        ].map((label) => (
+          <span key={label} className="pp-pill border-[rgba(201,150,31,0.45)] text-[var(--color-accent)]">
+            {label}
+          </span>
+        ))}
       </div>
 
       <Section
@@ -158,7 +175,7 @@ export function ForecastDashboard() {
       <div className="grid gap-[18px] xl:grid-cols-2">
         <Section
           title="Controls"
-          description="Changes are local to this browser session. No account, API, or database is used in this MVP."
+          description="Changes are local to this browser session. No account, database, or write-back API is used in this MVP."
         >
           <ModelControls
             settings={settings}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { BriefcaseBusiness, FileText } from "lucide-react";
 
 export function Header() {
   return (
@@ -31,6 +31,13 @@ export function Header() {
           <span className="pp-pill border-[rgba(201,150,31,0.45)] text-[var(--color-accent)]">
             Static refresh
           </span>
+          <Link
+            href="/case-study"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+          >
+            <BriefcaseBusiness className="h-4 w-4" aria-hidden />
+            Case Study
+          </Link>
           <Link
             href="/methodology"
             className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"

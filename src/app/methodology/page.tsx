@@ -32,7 +32,7 @@ const sections = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "This first version uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. No live NBA feed, odds API, account system, database, or authentication is active.",
+    body: "The forecast model still uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. A read-only scoreboard probe can display external game status, but it does not update model inputs yet. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Future Versions",

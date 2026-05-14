@@ -6,6 +6,7 @@ type SeriesCardProps = {
   series: Series;
   forecast: SeriesForecast;
   teamsById: Record<string, Team>;
+  onTeamSelect?: (teamId: string) => void;
 };
 
 function injurySummary(team: Team): string[] {
@@ -68,7 +69,12 @@ function ProbabilityRow({
   );
 }
 
-export function SeriesCard({ series, forecast, teamsById }: SeriesCardProps) {
+export function SeriesCard({
+  series,
+  forecast,
+  teamsById,
+  onTeamSelect,
+}: SeriesCardProps) {
   const teamA = teamsById[forecast.teamAId];
   const teamB = teamsById[forecast.teamBId];
   const nextGame = forecast.nextGame;
@@ -104,12 +110,16 @@ export function SeriesCard({ series, forecast, teamsById }: SeriesCardProps) {
       </div>
 
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b-2 border-[var(--color-border-subtle)] bg-gradient-to-b from-[var(--color-panel-secondary)] to-[var(--color-panel-primary)] px-4 py-4">
-        <div className="grid justify-items-center gap-2 text-center">
+        <button
+          type="button"
+          className="grid justify-items-center gap-2 text-center transition hover:opacity-80"
+          onClick={() => onTeamSelect?.(teamA.id)}
+        >
           <span className="pp-team-badge" data-team={teamA.abbreviation}>
             {teamA.abbreviation}
           </span>
           <span className="pp-kicker">{teamA.conference.slice(0, 1)}{teamA.seed}</span>
-        </div>
+        </button>
         <div className="grid justify-items-center gap-2">
           <div className="flex items-center gap-4">
             <span
@@ -137,12 +147,16 @@ export function SeriesCard({ series, forecast, teamsById }: SeriesCardProps) {
             <DotSeries wins={forecast.winsB} />
           </div>
         </div>
-        <div className="grid justify-items-center gap-2 text-center">
+        <button
+          type="button"
+          className="grid justify-items-center gap-2 text-center transition hover:opacity-80"
+          onClick={() => onTeamSelect?.(teamB.id)}
+        >
           <span className="pp-team-badge" data-team={teamB.abbreviation}>
             {teamB.abbreviation}
           </span>
           <span className="pp-kicker">{teamB.conference.slice(0, 1)}{teamB.seed}</span>
-        </div>
+        </button>
       </div>
 
       {nextGame ? (

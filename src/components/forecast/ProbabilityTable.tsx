@@ -9,6 +9,7 @@ type ProbabilityTableProps = {
   seriesForecasts: SeriesForecast[];
   bracketForecast: BracketForecast;
   teamsById: Record<string, Team>;
+  onTeamSelect?: (teamId: string) => void;
 };
 
 function heatClass(value: number): string {
@@ -31,6 +32,7 @@ export function ProbabilityTable({
   seriesForecasts,
   bracketForecast,
   teamsById,
+  onTeamSelect,
 }: ProbabilityTableProps) {
   const currentSeriesRows = seriesForecasts
     .filter((forecast) => forecast.winsA < 4 && forecast.winsB < 4)
@@ -80,17 +82,37 @@ export function ProbabilityTable({
                 bracketRow.reachFinalsProbability === 0;
 
               return (
-                <tr key={bracketRow.teamId} className={muted ? "opacity-60" : ""}>
+                <tr
+                  key={bracketRow.teamId}
+                  className={`${muted ? "opacity-60" : ""} ${
+                    onTeamSelect ? "cursor-pointer" : ""
+                  }`}
+                  tabIndex={onTeamSelect ? 0 : undefined}
+                  onClick={() => onTeamSelect?.(bracketRow.teamId)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      onTeamSelect?.(bracketRow.teamId);
+                    }
+                  }}
+                >
                   <td>{seriesRow?.series ?? "Future path"}</td>
                   <td>
-                    <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 text-left"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onTeamSelect?.(bracketRow.teamId);
+                      }}
+                    >
                       <span className="pp-team-badge" data-team={team.abbreviation}>
                         {team.abbreviation}
                       </span>
                       <span className="font-bold text-[var(--color-text-primary)]">
                         {team.name}
                       </span>
-                    </div>
+                    </button>
                   </td>
                   <td className="num pp-number font-bold">
                     {seriesRow ? (

@@ -4,6 +4,7 @@ import { formatNumber, formatSigned } from "@/lib/utils/format";
 type TeamStrengthTableProps = {
   teamsById: Record<string, Team>;
   forecasts: TeamForecast[];
+  onTeamSelect?: (teamId: string) => void;
 };
 
 function heatClass(value: number): string {
@@ -24,7 +25,11 @@ function heatClass(value: number): string {
   return "pp-heat-zero";
 }
 
-export function TeamStrengthTable({ teamsById, forecasts }: TeamStrengthTableProps) {
+export function TeamStrengthTable({
+  teamsById,
+  forecasts,
+  onTeamSelect,
+}: TeamStrengthTableProps) {
   const maxStrength = Math.max(...forecasts.map((forecast) => forecast.finalStrength), 1);
 
   return (
@@ -47,7 +52,18 @@ export function TeamStrengthTable({ teamsById, forecasts }: TeamStrengthTablePro
             const scale = Math.max(0, Math.min(1, forecast.finalStrength / maxStrength));
 
             return (
-              <tr key={forecast.teamId}>
+              <tr
+                key={forecast.teamId}
+                className={onTeamSelect ? "cursor-pointer" : ""}
+                tabIndex={onTeamSelect ? 0 : undefined}
+                onClick={() => onTeamSelect?.(forecast.teamId)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    onTeamSelect?.(forecast.teamId);
+                  }
+                }}
+              >
                 <td>
                   <div className="flex items-center gap-2">
                     <span className="pp-team-badge" data-team={team.abbreviation}>

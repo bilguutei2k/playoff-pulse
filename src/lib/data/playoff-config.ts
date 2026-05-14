@@ -8,6 +8,9 @@
 import type { InjuryStatus, PlayoffConfig, Team } from "@/lib/model/types";
 
 export const dataLastUpdated = "2026-05-11";
+export const dataLastUpdatedTimestamp = "2026-05-11 11:00 PM PT";
+export const dataSnapshotLabel = "Manual data snapshot";
+export const liveApiStatus = "Read-only live scoreboard probe";
 
 type PlayerInput = {
   name: string;

@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 export function MethodologyNote() {
   const limits = [
     ["Live injuries", "Manual entry"],
+    ["Live scores", "Read-only"],
     ["Rest / travel", "Not modeled"],
     ["Market odds", "Planned"],
     ["Calibration", "Future work"],
@@ -13,7 +14,7 @@ export function MethodologyNote() {
     <div className="grid gap-4 p-4">
       <div>
         <h3 className="pp-kicker text-[var(--color-text-primary)]">
-          What the model can't see
+          What the model can&apos;t see
         </h3>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
           Playoff Pulse converts assumed player availability, projected minutes,
