@@ -1,14 +1,15 @@
-// MANUAL DATA — Last updated 2026-05-11 11:00 PM PT
+// MANUAL DATA — Last updated 2026-05-14 11:00 PM PT
 // All ratings, player impacts, and injury statuses are manual estimates based on
 // public reporting. This is not official NBA data. Series states reflect games
-// completed through DET-CLE Game 4 and OKC-LAL Game 4 on May 11.
-// Injury sources: ESPN, Yahoo Sports, NBA.com — verified May 11, 2026.
+// completed through DET-CLE Game 5 (May 14) and MIN-SAS Game 5 (May 13).
+// Injury sources: ESPN, Yahoo Sports, NBA.com — last verified May 11, 2026.
+// This 3-day refresh updates series scores only; injuries are not re-verified.
 // Do NOT present these ratings as official statistics.
 
 import type { InjuryStatus, PlayoffConfig, Team } from "@/lib/model/types";
 
-export const dataLastUpdated = "2026-05-11";
-export const dataLastUpdatedTimestamp = "2026-05-11 11:00 PM PT";
+export const dataLastUpdated = "2026-05-14";
+export const dataLastUpdatedTimestamp = "2026-05-14 11:00 PM PT";
 export const dataSnapshotLabel = "Manual data snapshot";
 export const liveApiStatus = "Read-only live scoreboard probe";
 
@@ -212,9 +213,10 @@ const sas = team(
 export const playoffConfig: PlayoffConfig = {
   notes: [
     "Manual data only. Ratings, player impacts, injury statuses, and availability are estimates, not official NBA data.",
-    "Series state is locked to 2026-05-11 11:00 PM PT after DET-CLE Game 4 and OKC-LAL Game 4.",
-    "DET-CLE Game 4: CLE 112, DET 103. Series tied 2-2 with Game 5 in Detroit.",
-    "OKC-LAL Game 4: OKC 115, LAL 110. OKC swept the series 4-0 and advanced to the West Conference Finals.",
+    "Series state is locked to 2026-05-14 11:00 PM PT after DET-CLE Game 5 and MIN-SAS Game 5.",
+    "DET-CLE Game 5: CLE 117, DET 113 (OT). CLE leads 3-2 with Game 6 in Cleveland.",
+    "MIN-SAS Game 5: SAS 126, MIN 97. SAS leads 3-2 with Game 6 in Minnesota.",
+    "OKC-LAL completed 4-0; OKC has advanced to the West Conference Finals.",
     "NYK-PHI is completed and inactive; NYK is represented as already advanced to the East Conference Finals.",
     "PHI is retained only as an inactive completed-series placeholder because the existing Series type requires both team IDs to resolve.",
     "LAL is retained only as an inactive completed-series participant because the existing Series type requires both team IDs to resolve.",
@@ -286,7 +288,7 @@ export const playoffConfig: PlayoffConfig = {
       teamA: "det",
       teamB: "cle",
       winsA: 2,
-      winsB: 2,
+      winsB: 3,
       homePattern: ["det", "det", "cle", "cle", "det", "cle", "det"],
     },
     {
@@ -352,7 +354,7 @@ export const playoffConfig: PlayoffConfig = {
       teamA: "min",
       teamB: "sas",
       winsA: 2,
-      winsB: 2,
+      winsB: 3,
       homePattern: ["sas", "sas", "min", "min", "sas", "min", "sas"],
     },
   ],
