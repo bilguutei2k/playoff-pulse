@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "verify": "tsx scripts/verify-model.ts"
+    "verify": "tsx scripts/verify-model.ts",
+    "refresh-data": "tsx scripts/refresh-data.ts"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

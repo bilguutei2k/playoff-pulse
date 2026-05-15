@@ -1,0 +1,61 @@
+name: Daily playoff data refresh
+
+# Runs daily at 10:00 AM US Pacific (17:00 UTC during PDT) to catch
+# games played the previous evening. Also triggerable manually.
+#
+# The job:
+#   1. Runs scripts/refresh-data.ts which checks ESPN for completed games
+#      between active-series teams since the last manual snapshot.
+#   2. If anything changed, opens a PR with the updated playoff-config.ts.
+#   3. If nothing changed, exits cleanly with no PR.
+#
+# Merging the PR is a human action. Production deploy still requires
+# `vercel --prod` (or, if Vercel Git integration is connected, the merge
+# itself triggers the deploy).
+
+on:
+  schedule:
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Run refresh script
+        env:
+          REFRESH_SUMMARY_PATH: ${{ runner.temp }}/refresh-summary.md
+        run: corepack pnpm refresh-data
+
+      - name: Run model verifier
+        run: corepack pnpm verify
+
+      - name: Create or update pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: data-refresh/auto
+          title: "chore(data): daily playoff refresh"
+          body-path: ${{ runner.temp }}/refresh-summary.md
+          commit-message: "chore(data): daily playoff refresh"
+          add-paths: src/lib/data/playoff-config.ts
+          delete-branch: true
+          labels: data-refresh

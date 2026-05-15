@@ -3,3 +3,10 @@ node_modules
 .vercel
 .pnpm-store
 data/historical/raw/
+
+# Local agent permissions (machine-specific, never share)
+.claude/settings.local.json
+
+# Transient output from scripts/refresh-data.ts when run locally
+# (CI run writes to $RUNNER_TEMP outside the repo)
+refresh-summary.md
