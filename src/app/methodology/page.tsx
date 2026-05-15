@@ -51,7 +51,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "The forecast model still uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. A read-only scoreboard probe can display external game status, but it does not update model inputs yet. No odds API, account system, database, or authentication is active.",
+    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. Series scores and the snapshot timestamp are the only model inputs that are no longer fully manual: a daily GitHub Actions cron consumes the same ESPN public scoreboard the read-only probe uses, detects finalized games between teams in active series, and opens a pull request proposing win-count updates that a human reviews and merges before anything reaches the live site. The automation is bookkeeping only — it does not adjust ratings, minutes, or injuries. It is new: it has not yet been observed across a full playoff round, and known limitations in the refresh script are being addressed. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Backtest Results",
