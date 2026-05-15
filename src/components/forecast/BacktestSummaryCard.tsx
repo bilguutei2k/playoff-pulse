@@ -5,9 +5,6 @@ export function BacktestSummaryCard() {
   return (
     <div className="grid gap-4 p-4">
       <div>
-        <h3 className="pp-kicker text-[var(--color-text-primary)]">
-          Model Validation
-        </h3>
         <div className="pp-number mt-3 text-3xl font-bold text-[var(--color-text-primary)]">
           Brier 0.193
         </div>
