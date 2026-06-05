@@ -166,6 +166,115 @@ const currentBracketForecast = estimateBracketForecast(
 const currentTeamsById = Object.fromEntries(
   playoffConfig.teams.map((team) => [team.id, team]),
 );
+const finalsRosterChecks = [
+  {
+    teamId: "nyk",
+    requiredPlayers: [
+      "Jalen Brunson",
+      "Karl-Anthony Towns",
+      "OG Anunoby",
+      "Mikal Bridges",
+      "Josh Hart",
+      "Jordan Clarkson",
+      "Miles McBride",
+      "Pacome Dadiet",
+      "Jose Alvarado",
+      "Tyler Kolek",
+      "Jeremy Sochan",
+      "Mitchell Robinson",
+      "Landry Shamet",
+      "Mohamed Diawara",
+      "Ariel Hukporti",
+    ],
+    activePlayers: [
+      "Jalen Brunson",
+      "Karl-Anthony Towns",
+      "OG Anunoby",
+      "Mikal Bridges",
+      "Josh Hart",
+      "Landry Shamet",
+      "Miles McBride",
+      "Mitchell Robinson",
+      "Jose Alvarado",
+      "Jordan Clarkson",
+    ],
+    stalePlayers: ["Precious Achiuwa"],
+  },
+  {
+    teamId: "sas",
+    requiredPlayers: [
+      "Victor Wembanyama",
+      "De'Aaron Fox",
+      "Dylan Harper",
+      "Keldon Johnson",
+      "Luke Kornet",
+      "Kelly Olynyk",
+      "Bismack Biyombo",
+      "Mason Plumlee",
+      "Jordan McLaughlin",
+      "Lindy Waters III",
+      "Harrison Barnes",
+      "Carter Bryant",
+      "Stephon Castle",
+      "Julian Champagnie",
+      "Devin Vassell",
+    ],
+    activePlayers: [
+      "Victor Wembanyama",
+      "De'Aaron Fox",
+      "Devin Vassell",
+      "Stephon Castle",
+      "Julian Champagnie",
+      "Dylan Harper",
+      "Harrison Barnes",
+      "Luke Kornet",
+      "Keldon Johnson",
+      "Carter Bryant",
+    ],
+    stalePlayers: ["Zach Collins", "Malaki Branham"],
+  },
+];
+
+for (const rosterCheck of finalsRosterChecks) {
+  const team = currentTeamsById[rosterCheck.teamId];
+  assert(team, `Current Finals roster check requires team ${rosterCheck.teamId}.`);
+  const playersByName = new Map(
+    team.players.map((player) => [player.name, player]),
+  );
+
+  for (const playerName of rosterCheck.requiredPlayers) {
+    assert(
+      playersByName.has(playerName),
+      `${team.name} Finals roster should include ${playerName}.`,
+    );
+  }
+
+  for (const playerName of rosterCheck.activePlayers) {
+    const player = playersByName.get(playerName);
+    assert(
+      player && player.projectedMinutes > 0 && player.injuryStatus !== "out",
+      `${team.name} Finals rotation should keep ${playerName} active with projected minutes.`,
+    );
+  }
+
+  for (const playerName of rosterCheck.stalePlayers) {
+    assert(
+      !playersByName.has(playerName),
+      `${team.name} Finals roster should not include stale player ${playerName}.`,
+    );
+  }
+
+  const activeMinutes = team.players.reduce(
+    (sum, player) =>
+      player.injuryStatus === "out" ? sum : sum + player.projectedMinutes,
+    0,
+  );
+  assert(
+    activeMinutes >= 235 && activeMinutes <= 245,
+    `${team.name} active Finals rotation minutes should stay near 240; found ${activeMinutes}.`,
+  );
+}
+
 const configuredFinals = playoffConfig.series.find(
   (series) => series.round === "NBA Finals",
 );

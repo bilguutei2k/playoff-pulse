@@ -51,7 +51,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "The forecast model still uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. A read-only scoreboard probe can display external game status, but it does not update model inputs yet. No odds API, account system, database, or authentication is active.",
+    body: "The forecast model still uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but impacts remain subjective estimates. A read-only scoreboard probe can display external game status, but it does not update ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Backtest Results",
@@ -106,7 +106,7 @@ const sections: MethodologySection[] = [
     title: "Limitations",
     body: [
       "The current numbers should be read as model estimates from assumed inputs. They are not official data, not calibrated against historical outcomes, and not certainties. The bracket is structurally complete, but team ratings, player impacts, injury statuses, and series scores are still manual assumptions.",
-      "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale.",
+      "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale. Roster recency checks reduce a data-staleness risk; they do not validate the subjective impact ratings.",
     ],
   },
 ];
