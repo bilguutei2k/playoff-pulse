@@ -30,6 +30,14 @@ export function validateConfig(
   }
 
   for (const series of config.series) {
+    if (series.round === "NBA Finals" && series.conference !== "Finals") {
+      errors.push(`${series.id} must use conference "Finals" for NBA Finals.`);
+    }
+
+    if (series.round !== "NBA Finals" && series.conference === "Finals") {
+      errors.push(`${series.id} cannot use conference "Finals" outside NBA Finals.`);
+    }
+
     if (!Number.isInteger(series.bracketOrder) || series.bracketOrder <= 0) {
       errors.push(`${series.id} must include a positive integer bracketOrder.`);
     }
@@ -73,6 +81,13 @@ export function validateConfig(
     }
 
     if (teamIds.has(series.teamA) && teamIds.has(series.teamB)) {
+      if (
+        series.round === "NBA Finals" &&
+        teamsById[series.teamA].conference === teamsById[series.teamB].conference
+      ) {
+        errors.push(`${series.id} should contain one team from each conference.`);
+      }
+
       const completedGames = series.winsA + series.winsB;
       const probability = gameWinProbability(
         teamsById[series.teamA],
@@ -85,6 +100,12 @@ export function validateConfig(
         errors.push(`${series.id} generated an invalid probability.`);
       }
     }
+  }
+
+  const finalsSeries = config.series.filter((series) => series.round === "NBA Finals");
+
+  if (finalsSeries.length > 1) {
+    errors.push(`Only one NBA Finals series should be configured; found ${finalsSeries.length}.`);
   }
 
   for (const conference of ["East", "West"] as const) {

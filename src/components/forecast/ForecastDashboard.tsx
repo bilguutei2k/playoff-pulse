@@ -55,7 +55,19 @@ export function ForecastDashboard() {
   const activeSeries = playoffConfig.series.filter(
     (series) => series.winsA < 4 && series.winsB < 4,
   );
-  const championshipRows = snapshot.bracketForecast.rows.slice(0, 6);
+  const titleLiveRows = snapshot.bracketForecast.rows.filter(
+    (row) => row.championshipProbability > 0 || row.reachFinalsProbability > 0,
+  );
+  const championshipRows = (titleLiveRows.length
+    ? titleLiveRows
+    : snapshot.bracketForecast.rows
+  ).slice(0, 6);
+  const championshipGridClass = `grid gap-3 p-4 sm:grid-cols-2 ${
+    championshipRows.length > 2 ? "xl:grid-cols-6" : ""
+  }`;
+  const activeSeriesGridClass = `grid gap-4 p-4 ${
+    activeSeries.length > 1 ? "xl:grid-cols-2" : ""
+  }`;
   const topChampionshipProbability =
     championshipRows[0]?.championshipProbability ?? 1;
   const selectedTeam = selectedTeamId ? snapshot.teamsById[selectedTeamId] : null;
@@ -120,7 +132,7 @@ export function ForecastDashboard() {
         title="Championship Estimate"
         description="Top title probabilities from the current manual input set and bracket simulation."
       >
-        <div className="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-6">
+        <div className={championshipGridClass}>
           {championshipRows.map((row) => {
             const team = snapshot.teamsById[row.teamId];
             const scale =
@@ -160,7 +172,7 @@ export function ForecastDashboard() {
         title="Active Series"
         description="Each card shows the current manual series state, next-game estimate, series probability, and main model drivers."
       >
-        <div className="grid gap-4 p-4 xl:grid-cols-2">
+        <div className={activeSeriesGridClass}>
           {activeSeries.map((series) => {
             const forecast = snapshot.seriesForecasts.find(
               (item) => item.seriesId === series.id,
@@ -190,7 +202,7 @@ export function ForecastDashboard() {
       <div className="grid gap-[18px] xl:grid-cols-[1.4fr_1fr]">
         <Section
           title="Probability Table"
-          description="Current series, conference finals, Finals, and championship probabilities."
+          description="Current series, conference-final participation, Finals appearance, and championship probabilities."
         >
           <ProbabilityTable
             seriesForecasts={snapshot.seriesForecasts}

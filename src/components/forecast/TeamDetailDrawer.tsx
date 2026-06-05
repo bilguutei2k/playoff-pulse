@@ -86,8 +86,8 @@ export function TeamDetailDrawer({
 
   const probabilityRows = [
     ["Current series", currentSeriesProbability],
-    ["Conference finals", bracketRow?.reachConferenceFinalsProbability ?? null],
-    ["Finals", bracketRow?.reachFinalsProbability ?? null],
+    ["Reached conference final", bracketRow?.reachConferenceFinalsProbability ?? null],
+    ["Made Finals", bracketRow?.reachFinalsProbability ?? null],
     ["Championship", bracketRow?.championshipProbability ?? null],
   ] as const;
 

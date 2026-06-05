@@ -7,6 +7,8 @@ import type {
   PlayoffConfig,
   PlayoffRound,
   Series,
+  SeriesConference,
+  SeriesRound,
   Team,
 } from "@/lib/model/types";
 import {
@@ -59,8 +61,8 @@ function homePatternFor(teamAId: string, teamBId: string): string[] {
 
 function createFutureSeries(
   id: string,
-  round: PlayoffRound | "NBA Finals",
-  conference: Conference,
+  round: SeriesRound,
+  conference: SeriesConference,
   bracketOrder: number,
   teamAId: string,
   teamBId: string,
@@ -73,7 +75,7 @@ function createFutureSeries(
 
   return {
     id,
-    round: round === "NBA Finals" ? "Conference Final" : round,
+    round,
     conference,
     bracketOrder,
     teamA,
@@ -96,6 +98,33 @@ function hasSameTeams(seriesList: Series[], teamIds: string[]): boolean {
   }
 
   return teamIds.every((teamId) => configured.has(teamId));
+}
+
+function hasSameTeamPair(series: Series, teamIds: string[]): boolean {
+  if (teamIds.length !== 2) {
+    return false;
+  }
+
+  const configured = new Set([series.teamA, series.teamB]);
+
+  return configured.size === 2 && teamIds.every((teamId) => configured.has(teamId));
+}
+
+function configuredFinalsSeries(
+  config: PlayoffConfig,
+  notes: Set<string>,
+): Series | null {
+  const finalsSeries = config.series
+    .filter((series) => series.round === "NBA Finals")
+    .sort(byBracketOrder);
+
+  if (finalsSeries.length > 1) {
+    notes.add(
+      `Multiple NBA Finals series are configured; ${finalsSeries[0].id} is used for championship simulation.`,
+    );
+  }
+
+  return finalsSeries[0] ?? null;
 }
 
 function pairFutureRound(
@@ -199,6 +228,35 @@ function selectRoundSeries(
   return pairFutureRound(conference, round, incomingTeamIds, teamsById, settings);
 }
 
+function selectFinalsSeries(
+  configuredFinals: Series | null,
+  conferenceChampions: string[],
+  teamsById: Record<string, Team>,
+  settings: ModelSettings,
+  notes: Set<string>,
+): Series {
+  if (configuredFinals && hasSameTeamPair(configuredFinals, conferenceChampions)) {
+    return configuredFinals;
+  }
+
+  if (configuredFinals) {
+    notes.add(
+      "NBA Finals was generated from conference champions because configured Finals teams did not match this simulated path.",
+    );
+  }
+
+  return createFutureSeries(
+    "nba-finals",
+    "NBA Finals",
+    "Finals",
+    1,
+    conferenceChampions[0],
+    conferenceChampions[1],
+    teamsById,
+    settings,
+  );
+}
+
 function simulateConferencePath(
   conference: Conference,
   config: PlayoffConfig,
@@ -267,6 +325,7 @@ export function estimateBracketForecast(
   const championships: Counter = {};
   const coverage = assessBracketCoverage(config);
   const notes = new Set<string>(coverage.warnings);
+  const configuredFinals = configuredFinalsSeries(config, notes);
   const random = createSeededRandom(
     [
       "bracket",
@@ -328,15 +387,12 @@ export function estimateBracketForecast(
     }
 
     if (conferenceChampions.length === 2) {
-      const finals = createFutureSeries(
-        "nba-finals",
-        "NBA Finals",
-        teamsById[conferenceChampions[0]].conference,
-        1,
-        conferenceChampions[0],
-        conferenceChampions[1],
+      const finals = selectFinalsSeries(
+        configuredFinals,
+        conferenceChampions,
         teamsById,
         settings,
+        notes,
       );
       const outcome = simulateSeriesOutcome(finals, teamsById, settings, random);
       increment(championships, outcome.winnerId);

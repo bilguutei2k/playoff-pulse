@@ -69,6 +69,14 @@ function ProbabilityRow({
   );
 }
 
+function seriesStageLabel(series: Series): string {
+  if (series.round === "NBA Finals") {
+    return "NBA Finals";
+  }
+
+  return `${series.conference} / ${series.round}`;
+}
+
 export function SeriesCard({
   series,
   forecast,
@@ -97,7 +105,7 @@ export function SeriesCard({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[var(--color-text-primary)] bg-[var(--color-bg-primary)] px-4 py-3">
         <div>
           <div className="pp-kicker text-[var(--color-accent)]">
-            {series.conference} / {series.round}
+            {seriesStageLabel(series)}
           </div>
           <h3 className="mt-2 text-sm font-bold text-[var(--color-text-primary)]">
             {teamA.name} <span className="text-[var(--color-text-faint)]">vs</span>{" "}
