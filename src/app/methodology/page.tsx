@@ -51,7 +51,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. Series scores and the snapshot timestamp are the only model inputs that are no longer fully manual: a daily GitHub Actions cron consumes the same ESPN public scoreboard the read-only probe uses, detects finalized games between teams in active series, and opens a pull request proposing win-count updates that a human reviews and merges before anything reaches the live site. The automation is bookkeeping only — it does not adjust ratings, minutes, or injuries. It is new: it has not yet been observed across a full playoff round, and known limitations in the refresh script are being addressed. No odds API, account system, database, or authentication is active.",
+    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but the impacts are still subjective estimates. Series scores and the snapshot timestamp are the only model inputs that are no longer fully manual: a daily GitHub Actions cron consumes the same ESPN public scoreboard the read-only probe uses, detects finalized games between teams in active series, and opens a pull request proposing win-count updates that a human reviews and merges before anything reaches the live site. The automation is bookkeeping only - it does not adjust ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Backtest Results",
@@ -106,7 +106,7 @@ const sections: MethodologySection[] = [
     title: "Limitations",
     body: [
       "The current numbers should be read as model estimates from assumed inputs. They are not official data, not calibrated against historical outcomes, and not certainties. The bracket is structurally complete, but team ratings, player impacts, injury statuses, and series scores are still manual assumptions.",
-      "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale.",
+      "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale. Roster recency checks reduce a data-staleness risk; they do not validate the subjective impact ratings.",
     ],
   },
 ];

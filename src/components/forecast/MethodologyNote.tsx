@@ -3,10 +3,10 @@ import { ArrowRight } from "lucide-react";
 
 export function MethodologyNote() {
   const limits = [
-    ["Live injuries", "Manual entry"],
+    ["Finals rosters", "Manual recheck"],
+    ["Live injuries", "Manual / TBD"],
     ["Live scores", "Read-only"],
     ["Rest / travel", "Not modeled"],
-    ["Market odds", "Planned"],
     ["Calibration", "Future work"],
   ];
 

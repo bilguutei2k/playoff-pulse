@@ -28,7 +28,7 @@ export function SimulationSummary({
       icon: Database,
       label: "Manual data snapshot",
       value: "Manual",
-      subtext: "Static team, rotation, injury, rating, and score inputs.",
+      subtext: "Finals rosters rechecked; ratings and impacts remain manual.",
     },
     {
       icon: FileWarning,

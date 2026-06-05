@@ -1,17 +1,16 @@
-// MANUAL DATA - Last updated 2026-06-05 12:19 AM PT
+// MANUAL DATA - Last updated 2026-06-05 01:45 AM PT
 // All ratings, player impacts, and injury statuses are manual estimates based on
 // public reporting. This is not official NBA data. Series states reflect games
 // completed through NBA Finals Game 1 (June 3). Game 2 on June 5 is scheduled
 // and is not counted.
-// Injury sources: ESPN, Yahoo Sports, NBA.com - last verified May 11, 2026.
-// This refresh updates series scores and the active NBA Finals entry only; injuries
-// are not re-verified.
+// Finals roster/minute inputs were re-checked against NBA.com Game 2 notes and
+// ESPN Game 1 participation on June 5, 2026; ratings remain manual estimates.
 // Do NOT present these ratings as official statistics.
 
 import type { InjuryStatus, PlayoffConfig, Team } from "@/lib/model/types";
 
 export const dataLastUpdated = "2026-06-05";
-export const dataLastUpdatedTimestamp = "2026-06-05 12:19 AM PT";
+export const dataLastUpdatedTimestamp = "2026-06-05 01:45 AM PT";
 export const dataSnapshotLabel = "Manual data snapshot";
 export const liveApiStatus = "Read-only live scoreboard probe";
 
@@ -63,13 +62,21 @@ const nyk = team(
   5.2,
   0,
   [
-    { name: "Jalen Brunson", projectedMinutes: 38, impact: 7.5, status: "healthy" },
-    { name: "Karl-Anthony Towns", projectedMinutes: 33, impact: 5.0, status: "healthy" },
-    { name: "OG Anunoby", projectedMinutes: 28, impact: 6.0, status: "questionable" },
+    { name: "Jalen Brunson", projectedMinutes: 38, impact: 8.5, status: "healthy" },
+    { name: "Karl-Anthony Towns", projectedMinutes: 34, impact: 5.5, status: "healthy" },
+    { name: "OG Anunoby", projectedMinutes: 32, impact: 4.5, status: "healthy" },
     { name: "Mikal Bridges", projectedMinutes: 32, impact: 3.5, status: "healthy" },
-    { name: "Josh Hart", projectedMinutes: 30, impact: 2.5, status: "healthy" },
-    { name: "Miles McBride", projectedMinutes: 22, impact: 1.5, status: "healthy" },
-    { name: "Precious Achiuwa", projectedMinutes: 14, impact: 0.5, status: "healthy" },
+    { name: "Josh Hart", projectedMinutes: 30, impact: 3.0, status: "healthy" },
+    { name: "Landry Shamet", projectedMinutes: 28, impact: 1.0, status: "healthy" },
+    { name: "Miles McBride", projectedMinutes: 20, impact: 1.2, status: "healthy" },
+    { name: "Mitchell Robinson", projectedMinutes: 14, impact: 1.0, status: "healthy" },
+    { name: "Jose Alvarado", projectedMinutes: 8, impact: 0.8, status: "healthy" },
+    { name: "Jordan Clarkson", projectedMinutes: 4, impact: 0.8, status: "healthy" },
+    { name: "Jeremy Sochan", projectedMinutes: 0, impact: 0.7, status: "healthy" },
+    { name: "Pacome Dadiet", projectedMinutes: 0, impact: 0.2, status: "healthy" },
+    { name: "Tyler Kolek", projectedMinutes: 0, impact: 0.2, status: "healthy" },
+    { name: "Mohamed Diawara", projectedMinutes: 0, impact: 0.1, status: "healthy" },
+    { name: "Ariel Hukporti", projectedMinutes: 0, impact: 0.2, status: "healthy" },
   ],
 );
 
@@ -202,20 +209,29 @@ const sas = team(
   6.8,
   0,
   [
-    { name: "Victor Wembanyama", projectedMinutes: 35, impact: 9.5, status: "healthy" },
-    { name: "Stephon Castle", projectedMinutes: 32, impact: 4.0, status: "healthy" },
-    { name: "Devin Vassell", projectedMinutes: 28, impact: 3.0, status: "healthy" },
-    { name: "Harrison Barnes", projectedMinutes: 26, impact: 1.5, status: "healthy" },
-    { name: "Zach Collins", projectedMinutes: 22, impact: 1.5, status: "healthy" },
-    { name: "Julian Champagnie", projectedMinutes: 18, impact: 0.5, status: "healthy" },
-    { name: "Malaki Branham", projectedMinutes: 16, impact: 0.5, status: "healthy" },
+    { name: "Victor Wembanyama", projectedMinutes: 38, impact: 10.0, status: "healthy" },
+    { name: "De'Aaron Fox", projectedMinutes: 38, impact: 6.5, status: "healthy" },
+    { name: "Devin Vassell", projectedMinutes: 36, impact: 3.5, status: "healthy" },
+    { name: "Stephon Castle", projectedMinutes: 34, impact: 4.0, status: "healthy" },
+    { name: "Julian Champagnie", projectedMinutes: 32, impact: 2.0, status: "healthy" },
+    { name: "Dylan Harper", projectedMinutes: 28, impact: 3.0, status: "healthy" },
+    { name: "Harrison Barnes", projectedMinutes: 12, impact: 1.5, status: "healthy" },
+    { name: "Luke Kornet", projectedMinutes: 10, impact: 1.0, status: "healthy" },
+    { name: "Keldon Johnson", projectedMinutes: 8, impact: 1.5, status: "healthy" },
+    { name: "Carter Bryant", projectedMinutes: 4, impact: 0.5, status: "healthy" },
+    { name: "Kelly Olynyk", projectedMinutes: 0, impact: 0.8, status: "healthy" },
+    { name: "Bismack Biyombo", projectedMinutes: 0, impact: 0.5, status: "healthy" },
+    { name: "Mason Plumlee", projectedMinutes: 0, impact: 0.4, status: "healthy" },
+    { name: "Jordan McLaughlin", projectedMinutes: 0, impact: 0.3, status: "healthy" },
+    { name: "Lindy Waters III", projectedMinutes: 0, impact: 0.4, status: "healthy" },
   ],
 );
 
 export const playoffConfig: PlayoffConfig = {
   notes: [
     "Manual data only. Ratings, player impacts, injury statuses, and availability are estimates, not official NBA data.",
-    "Series state is locked to 2026-06-05 12:19 AM PT after NBA Finals Game 1; NBA Finals Game 2 on June 5 is scheduled and not counted.",
+    "Series state is locked to 2026-06-05 01:45 AM PT after NBA Finals Game 1; NBA Finals Game 2 on June 5 is scheduled and not counted.",
+    "NBA Finals roster inputs were re-checked against public Game 2 notes on June 5; projected minutes use Game 1 participation as the baseline.",
     "DET-CLE completed 4-3: DET won Game 6, 115-94; CLE won Game 7, 125-94.",
     "MIN-SAS completed 4-2: SAS won Game 6, 139-109.",
     "NYK-CLE Conference Final completed 4-0: NYK won Game 3, 121-108, and Game 4, 130-93.",
