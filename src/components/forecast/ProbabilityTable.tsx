@@ -65,8 +65,8 @@ export function ProbabilityTable({
               <th>Series</th>
               <th>Team</th>
               <th className="num">Current series</th>
-              <th className="num">Conf finals</th>
-              <th className="num">Finals</th>
+              <th className="num">Reached CF</th>
+              <th className="num">Made Finals</th>
               <th className="num">Champ</th>
               <th className="num">Games left</th>
             </tr>

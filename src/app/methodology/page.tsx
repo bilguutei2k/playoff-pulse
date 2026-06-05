@@ -47,7 +47,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Full Bracket Simulation",
-    body: "The bracket simulation repeatedly resolves configured first-round and conference semifinal series, creates future best-of-seven rounds from winners when matchups are not manually configured, and then simulates the Finals across 10,000 iterations. That produces title probability estimates stable to within roughly +/-1 percentage point. It reports each team's probability of reaching the conference finals, reaching the Finals, and winning the championship.",
+    body: "The bracket simulation repeatedly resolves configured first-round, conference semifinal, and conference final series, creates future best-of-seven rounds from winners when matchups are not manually configured, and then simulates the Finals across 10,000 iterations. When an NBA Finals series is manually configured, the championship simulation respects that current Finals score and home pattern instead of restarting the Finals at 0-0. That produces title probability estimates stable to within roughly +/-1 percentage point. It reports each team's probability of reaching the conference finals, reaching the Finals, and winning the championship.",
   },
   {
     title: "Manual and Static Inputs",

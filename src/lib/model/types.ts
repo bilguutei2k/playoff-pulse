@@ -5,6 +5,10 @@ export type PlayoffRound =
   | "Conference Semifinal"
   | "Conference Final";
 
+export type SeriesRound = PlayoffRound | "NBA Finals";
+
+export type SeriesConference = Conference | "Finals";
+
 export type InjuryStatus = "healthy" | "questionable" | "limited" | "out";
 
 export type Team = {
@@ -30,8 +34,8 @@ export type Player = {
 
 export type Series = {
   id: string;
-  round: PlayoffRound;
-  conference: Conference;
+  round: SeriesRound;
+  conference: SeriesConference;
   bracketOrder: number;
   teamA: string;
   teamB: string;

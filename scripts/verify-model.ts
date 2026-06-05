@@ -166,6 +166,57 @@ const currentBracketForecast = estimateBracketForecast(
 const currentTeamsById = Object.fromEntries(
   playoffConfig.teams.map((team) => [team.id, team]),
 );
+const configuredFinals = playoffConfig.series.find(
+  (series) => series.round === "NBA Finals",
+);
+assert(configuredFinals, "Current config should include a configured NBA Finals series.");
+assert(
+  configuredFinals.teamA === "sas" &&
+    configuredFinals.teamB === "nyk" &&
+    configuredFinals.winsA === 0 &&
+    configuredFinals.winsB === 1,
+  "NBA Finals config should reflect NYK leading SAS 1-0 with SAS as the home-court team.",
+);
+const finalsNextGame = nextGameForecast(
+  configuredFinals,
+  currentTeamsById,
+  defaultModelSettings,
+);
+assert(
+  finalsNextGame?.gameNumber === 2 && finalsNextGame.homeTeamId === "sas",
+  "NBA Finals home pattern should put Game 2 in San Antonio after NYK won Game 1.",
+);
+const currentFinalsForecast = estimateSeriesProbability(
+  configuredFinals,
+  currentTeamsById,
+  defaultModelSettings,
+);
+const preSeriesFinalsForecast = estimateSeriesProbability(
+  { ...configuredFinals, winsA: 0, winsB: 0 },
+  currentTeamsById,
+  defaultModelSettings,
+);
+assert(
+  currentFinalsForecast.teamBSeriesWinProbability >
+    preSeriesFinalsForecast.teamBSeriesWinProbability,
+  "NYK's 1-0 Finals lead should improve NYK's series probability versus a 0-0 Finals.",
+);
+const titleLiveTeams = currentBracketForecast.rows
+  .filter((row) => row.championshipProbability > 0)
+  .map((row) => row.teamId)
+  .sort();
+assert.deepEqual(
+  titleLiveTeams,
+  ["nyk", "sas"],
+  "Only NBA Finals teams should have non-zero championship probability.",
+);
+for (const teamId of ["nyk", "sas"]) {
+  const row = currentBracketForecast.rows.find((item) => item.teamId === teamId);
+  assert(
+    row?.reachFinalsProbability === 1,
+    `${currentTeamsById[teamId]?.name ?? teamId} should be locked into the NBA Finals.`,
+  );
+}
 const activeConferenceSemifinalCount = playoffConfig.series.filter(
   (series) =>
     series.round === "Conference Semifinal" &&
