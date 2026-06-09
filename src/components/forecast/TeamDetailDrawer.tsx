@@ -56,6 +56,14 @@ function DetailMetric({
   );
 }
 
+function probabilityValue(value: number | null, eliminatedFromTitlePath: boolean): string {
+  if (eliminatedFromTitlePath) {
+    return "n/a";
+  }
+
+  return value === null ? "n/a" : formatPercent(value);
+}
+
 export function TeamDetailDrawer({
   team,
   forecast,
@@ -84,11 +92,39 @@ export function TeamDetailDrawer({
     return null;
   }
 
+  const eliminatedFromTitlePath =
+    currentSeriesProbability === null &&
+    (bracketRow?.reachFinalsProbability ?? 0) === 0 &&
+    (bracketRow?.championshipProbability ?? 0) === 0;
   const probabilityRows = [
-    ["Current series", currentSeriesProbability],
-    ["Reached conference final", bracketRow?.reachConferenceFinalsProbability ?? null],
-    ["Made Finals", bracketRow?.reachFinalsProbability ?? null],
-    ["Championship", bracketRow?.championshipProbability ?? null],
+    [
+      "Current series",
+      currentSeriesProbability === null
+        ? eliminatedFromTitlePath
+          ? "Eliminated"
+          : "n/a"
+        : formatPercent(currentSeriesProbability),
+    ],
+    [
+      "Reached conference final",
+      probabilityValue(
+        bracketRow?.reachConferenceFinalsProbability ?? null,
+        eliminatedFromTitlePath,
+      ),
+    ],
+    [
+      "Made Finals",
+      probabilityValue(
+        bracketRow?.reachFinalsProbability ?? null,
+        eliminatedFromTitlePath,
+      ),
+    ],
+    [
+      "Championship",
+      bracketRow?.championshipProbability === undefined
+        ? "n/a"
+        : formatPercent(bracketRow.championshipProbability),
+    ],
   ] as const;
 
   return (
@@ -158,7 +194,7 @@ export function TeamDetailDrawer({
                 <DetailMetric
                   key={label}
                   label={label}
-                  value={value === null ? "n/a" : formatPercent(value)}
+                  value={value}
                 />
               ))}
             </div>

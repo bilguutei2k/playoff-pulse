@@ -51,7 +51,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "The forecast model still uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but impacts remain subjective estimates. A read-only scoreboard probe can display external game status, but it does not update ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
+    body: "The forecast model still uses static configuration files for teams, players, injuries, ratings, series scores, model settings, and placeholder market odds. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but impacts remain subjective estimates. Series scores are current through NBA Finals Game 3 on June 8, 2026. A read-only scoreboard probe can display external game status, but it does not update ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Backtest Results",

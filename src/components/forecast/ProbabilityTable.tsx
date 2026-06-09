@@ -28,6 +28,18 @@ function heatClass(value: number): string {
   return "pp-heat-zero";
 }
 
+function ProbabilityCell({ value }: { value: number | null }) {
+  if (value === null) {
+    return <span className="pp-heat pp-heat-zero">n/a</span>;
+  }
+
+  return (
+    <span className={`pp-heat ${heatClass(value)}`}>
+      {formatPercent(value)}
+    </span>
+  );
+}
+
 export function ProbabilityTable({
   seriesForecasts,
   bracketForecast,
@@ -77,6 +89,10 @@ export function ProbabilityTable({
               const seriesRow = currentSeriesRows.find(
                 (row) => row.teamId === bracketRow.teamId,
               );
+              const eliminatedFromTitlePath =
+                !seriesRow &&
+                bracketRow.reachFinalsProbability === 0 &&
+                bracketRow.championshipProbability === 0;
               const muted =
                 bracketRow.championshipProbability === 0 &&
                 bracketRow.reachFinalsProbability === 0;
@@ -96,7 +112,10 @@ export function ProbabilityTable({
                     }
                   }}
                 >
-                  <td>{seriesRow?.series ?? "Future path"}</td>
+                  <td>
+                    {seriesRow?.series ??
+                      (eliminatedFromTitlePath ? "Eliminated" : "Future path")}
+                  </td>
                   <td>
                     <button
                       type="button"
@@ -116,35 +135,33 @@ export function ProbabilityTable({
                   </td>
                   <td className="num pp-number font-bold">
                     {seriesRow ? (
-                      <span className={`pp-heat ${heatClass(seriesRow.probability)}`}>
-                        {formatPercent(seriesRow.probability)}
-                      </span>
+                      <ProbabilityCell value={seriesRow.probability} />
+                    ) : eliminatedFromTitlePath ? (
+                      <span className="pp-heat pp-heat-zero">Eliminated</span>
                     ) : (
                       <span className="pp-heat pp-heat-zero">n/a</span>
                     )}
                   </td>
                   <td className="num pp-number">
-                    <span
-                      className={`pp-heat ${heatClass(
-                        bracketRow.reachConferenceFinalsProbability,
-                      )}`}
-                    >
-                      {formatPercent(bracketRow.reachConferenceFinalsProbability)}
-                    </span>
+                    <ProbabilityCell
+                      value={
+                        eliminatedFromTitlePath
+                          ? null
+                          : bracketRow.reachConferenceFinalsProbability
+                      }
+                    />
                   </td>
                   <td className="num pp-number">
-                    <span
-                      className={`pp-heat ${heatClass(bracketRow.reachFinalsProbability)}`}
-                    >
-                      {formatPercent(bracketRow.reachFinalsProbability)}
-                    </span>
+                    <ProbabilityCell
+                      value={
+                        eliminatedFromTitlePath
+                          ? null
+                          : bracketRow.reachFinalsProbability
+                      }
+                    />
                   </td>
                   <td className="num pp-number font-bold">
-                    <span
-                      className={`pp-heat ${heatClass(bracketRow.championshipProbability)}`}
-                    >
-                      {formatPercent(bracketRow.championshipProbability)}
-                    </span>
+                    <ProbabilityCell value={bracketRow.championshipProbability} />
                   </td>
                   <td className="num pp-number">
                     {seriesRow ? formatNumber(seriesRow.games) : "n/a"}
