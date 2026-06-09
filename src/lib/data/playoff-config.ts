@@ -1,7 +1,7 @@
-// MANUAL DATA - Last updated 2026-06-05 01:45 AM PT
+// MANUAL DATA - Last updated 2026-06-08 09:18 PM PT
 // All ratings, player impacts, and injury statuses are manual estimates based on
 // public reporting. This is not official NBA data. Series states reflect games
-// completed through NBA Finals Game 1 (June 3). Game 2 on June 5 is scheduled
+// completed through NBA Finals Game 3 (June 8). Game 4 on June 10 is scheduled
 // and is not counted.
 // Finals roster/minute inputs were re-checked against NBA.com Game 2 notes and
 // ESPN Game 1 participation on June 5, 2026; ratings remain manual estimates.
@@ -9,8 +9,8 @@
 
 import type { InjuryStatus, PlayoffConfig, Team } from "@/lib/model/types";
 
-export const dataLastUpdated = "2026-06-05";
-export const dataLastUpdatedTimestamp = "2026-06-05 01:45 AM PT";
+export const dataLastUpdated = "2026-06-08";
+export const dataLastUpdatedTimestamp = "2026-06-08 09:18 PM PT";
 export const dataSnapshotLabel = "Manual data snapshot";
 export const liveApiStatus = "Read-only live scoreboard probe";
 
@@ -230,13 +230,15 @@ const sas = team(
 export const playoffConfig: PlayoffConfig = {
   notes: [
     "Manual data only. Ratings, player impacts, injury statuses, and availability are estimates, not official NBA data.",
-    "Series state is locked to 2026-06-05 01:45 AM PT after NBA Finals Game 1; NBA Finals Game 2 on June 5 is scheduled and not counted.",
+    "Series state is locked to 2026-06-08 09:18 PM PT after NBA Finals Game 3; NBA Finals Game 4 on June 10 is scheduled and not counted.",
     "NBA Finals roster inputs were re-checked against public Game 2 notes on June 5; projected minutes use Game 1 participation as the baseline.",
     "DET-CLE completed 4-3: DET won Game 6, 115-94; CLE won Game 7, 125-94.",
     "MIN-SAS completed 4-2: SAS won Game 6, 139-109.",
     "NYK-CLE Conference Final completed 4-0: NYK won Game 3, 121-108, and Game 4, 130-93.",
     "OKC-SAS Conference Final completed 4-3: SAS won Game 6, 118-91, and Game 7, 111-103.",
-    "NBA Finals Game 1: NYK 105, SAS 95 at San Antonio. NYK leads the NBA Finals 1-0.",
+    "NBA Finals Game 1: NYK 105, SAS 95 at San Antonio.",
+    "NBA Finals Game 2: NYK 105, SAS 104 at San Antonio.",
+    "NBA Finals Game 3: SAS 115, NYK 111 at New York. NYK leads the NBA Finals 2-1.",
     "OKC-LAL completed 4-0; OKC has advanced to the West Conference Finals.",
     "NYK-PHI is completed and inactive; NYK is represented as already advanced to the East Conference Finals.",
     "PHI is retained only as an inactive completed-series placeholder because the existing Series type requires both team IDs to resolve.",
@@ -407,8 +409,8 @@ export const playoffConfig: PlayoffConfig = {
       bracketOrder: 1,
       teamA: "sas",
       teamB: "nyk",
-      winsA: 0,
-      winsB: 1,
+      winsA: 1,
+      winsB: 2,
       homePattern: ["sas", "sas", "nyk", "nyk", "sas", "nyk", "sas"],
     },
   ],

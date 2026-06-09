@@ -202,7 +202,7 @@ export function ForecastDashboard() {
       <div className="grid gap-[18px] xl:grid-cols-[1.4fr_1fr]">
         <Section
           title="Probability Table"
-          description="Current series, conference-final participation, Finals appearance, and championship probabilities."
+          description="Current title-path probabilities. Eliminated teams are shown as inactive rather than active future paths."
         >
           <ProbabilityTable
             seriesForecasts={snapshot.seriesForecasts}

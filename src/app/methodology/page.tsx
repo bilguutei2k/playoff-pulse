@@ -51,7 +51,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but the impacts are still subjective estimates. Series scores and the snapshot timestamp are the only model inputs that are no longer fully manual: a daily GitHub Actions cron consumes the same ESPN public scoreboard the read-only probe uses, detects finalized games between teams in active series, and opens a pull request proposing win-count updates that a human reviews and merges before anything reaches the live site. The automation is bookkeeping only - it does not adjust ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
+    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but the impacts are still subjective estimates. Series scores are current through NBA Finals Game 3 on June 8, 2026. The daily scoreboard workflow is bookkeeping only - it does not adjust ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Backtest Results",

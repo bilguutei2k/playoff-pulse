@@ -282,9 +282,9 @@ assert(configuredFinals, "Current config should include a configured NBA Finals 
 assert(
   configuredFinals.teamA === "sas" &&
     configuredFinals.teamB === "nyk" &&
-    configuredFinals.winsA === 0 &&
-    configuredFinals.winsB === 1,
-  "NBA Finals config should reflect NYK leading SAS 1-0 with SAS as the home-court team.",
+    configuredFinals.winsA === 1 &&
+    configuredFinals.winsB === 2,
+  "NBA Finals config should reflect NYK leading SAS 2-1 with SAS as the home-court team.",
 );
 const finalsNextGame = nextGameForecast(
   configuredFinals,
@@ -292,8 +292,8 @@ const finalsNextGame = nextGameForecast(
   defaultModelSettings,
 );
 assert(
-  finalsNextGame?.gameNumber === 2 && finalsNextGame.homeTeamId === "sas",
-  "NBA Finals home pattern should put Game 2 in San Antonio after NYK won Game 1.",
+  finalsNextGame?.gameNumber === 4 && finalsNextGame.homeTeamId === "nyk",
+  "NBA Finals home pattern should put Game 4 in New York after SAS won Game 3.",
 );
 const currentFinalsForecast = estimateSeriesProbability(
   configuredFinals,
@@ -308,7 +308,17 @@ const preSeriesFinalsForecast = estimateSeriesProbability(
 assert(
   currentFinalsForecast.teamBSeriesWinProbability >
     preSeriesFinalsForecast.teamBSeriesWinProbability,
-  "NYK's 1-0 Finals lead should improve NYK's series probability versus a 0-0 Finals.",
+  "NYK's 2-1 Finals lead should improve NYK's series probability versus a 0-0 Finals.",
+);
+const finalsBeforeGameThreeForecast = estimateSeriesProbability(
+  { ...configuredFinals, winsA: 0, winsB: 2 },
+  currentTeamsById,
+  defaultModelSettings,
+);
+assert(
+  currentFinalsForecast.teamASeriesWinProbability >
+    finalsBeforeGameThreeForecast.teamASeriesWinProbability,
+  "SAS winning Game 3 should improve SAS's series probability versus trailing 0-2.",
 );
 const titleLiveTeams = currentBracketForecast.rows
   .filter((row) => row.championshipProbability > 0)
@@ -324,6 +334,13 @@ for (const teamId of ["nyk", "sas"]) {
   assert(
     row?.reachFinalsProbability === 1,
     `${currentTeamsById[teamId]?.name ?? teamId} should be locked into the NBA Finals.`,
+  );
+}
+for (const teamId of ["cle", "okc"]) {
+  const row = currentBracketForecast.rows.find((item) => item.teamId === teamId);
+  assert(
+    row && row.reachFinalsProbability === 0 && row.championshipProbability === 0,
+    `${currentTeamsById[teamId]?.name ?? teamId} should have no active Finals or title probability after elimination.`,
   );
 }
 const activeConferenceSemifinalCount = playoffConfig.series.filter(
