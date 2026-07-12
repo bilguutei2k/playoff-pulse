@@ -611,14 +611,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "James Johnson",
-        "bpm": -9.7,
-        "mpg": 37,
-        "gamesPlayed": 12,
-        "impact": -9.7,
-        "projectedMinutes": 37
-      },
-      {
         "name": "Tyrese Haliburton",
         "bpm": 5.8,
         "mpg": 33.57534246575342,
@@ -689,6 +681,14 @@
         "gamesPlayed": 79,
         "impact": 1.2,
         "projectedMinutes": 17.911392405063292
+      },
+      {
+        "name": "Jarace Walker",
+        "bpm": -0.9,
+        "mpg": 15.826666666666666,
+        "gamesPlayed": 75,
+        "impact": -0.9,
+        "projectedMinutes": 15.826666666666666
       }
     ],
     "srs": 1.68,
@@ -1235,14 +1235,6 @@
         "projectedMinutes": 32.26086956521739
       },
       {
-        "name": "Leonard Miller",
-        "bpm": -3.7,
-        "mpg": 32,
-        "gamesPlayed": 13,
-        "impact": -3.7,
-        "projectedMinutes": 32
-      },
-      {
         "name": "Jaden McDaniels",
         "bpm": 0,
         "mpg": 31.878048780487806,
@@ -1289,6 +1281,14 @@
         "gamesPlayed": 40,
         "impact": -0.2,
         "projectedMinutes": 13.05
+      },
+      {
+        "name": "Terrence Shannon Jr.",
+        "bpm": -2.1,
+        "mpg": 10.59375,
+        "gamesPlayed": 32,
+        "impact": -2.1,
+        "projectedMinutes": 10.59375
       }
     ],
     "srs": 5.15,

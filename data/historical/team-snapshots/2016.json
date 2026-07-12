@@ -1311,14 +1311,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Luis Montero",
-        "bpm": -15.5,
-        "mpg": 42,
-        "gamesPlayed": 12,
-        "impact": -15.5,
-        "projectedMinutes": 40
-      },
-      {
         "name": "Damian Lillard",
         "bpm": 4.4,
         "mpg": 35.68,
@@ -1389,6 +1381,14 @@
         "gamesPlayed": 78,
         "impact": -0.5,
         "projectedMinutes": 18.67948717948718
+      },
+      {
+        "name": "Noah Vonleh",
+        "bpm": -4.2,
+        "mpg": 15.051282051282051,
+        "gamesPlayed": 78,
+        "impact": -4.2,
+        "projectedMinutes": 15.051282051282051
       }
     ],
     "srs": 0.98,

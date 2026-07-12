@@ -435,14 +435,6 @@
         "projectedMinutes": 30.8
       },
       {
-        "name": "Ike Anigbogu",
-        "bpm": 1.9,
-        "mpg": 30,
-        "gamesPlayed": 11,
-        "impact": 1.9,
-        "projectedMinutes": 30
-      },
-      {
         "name": "Darren Collison",
         "bpm": 2.7,
         "mpg": 29.246376811594203,
@@ -489,6 +481,14 @@
         "gamesPlayed": 17,
         "impact": -1.1,
         "projectedMinutes": 15.823529411764707
+      },
+      {
+        "name": "Glenn Robinson III",
+        "bpm": -0.7,
+        "mpg": 14.695652173913043,
+        "gamesPlayed": 23,
+        "impact": -0.7,
+        "projectedMinutes": 14.695652173913043
       }
     ],
     "srs": 1.18,
@@ -811,14 +811,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Charles Cooke",
-        "bpm": -14.4,
-        "mpg": 38,
-        "gamesPlayed": 13,
-        "impact": -14.4,
-        "projectedMinutes": 38
-      },
-      {
         "name": "Anthony Davis",
         "bpm": 6.7,
         "mpg": 36.36,
@@ -889,6 +881,14 @@
         "gamesPlayed": 12,
         "impact": -4.8,
         "projectedMinutes": 15.583333333333334
+      },
+      {
+        "name": "Emeka Okafor",
+        "bpm": -1.2,
+        "mpg": 13.576923076923077,
+        "gamesPlayed": 26,
+        "impact": -1.2,
+        "projectedMinutes": 13.576923076923077
       }
     ],
     "srs": 1.48,

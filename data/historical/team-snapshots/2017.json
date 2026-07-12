@@ -511,14 +511,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Kyle Wiltjer",
-        "bpm": -5.4,
-        "mpg": 44,
-        "gamesPlayed": 14,
-        "impact": -5.4,
-        "projectedMinutes": 40
-      },
-      {
         "name": "James Harden",
         "bpm": 8.7,
         "mpg": 36.382716049382715,
@@ -589,6 +581,14 @@
         "gamesPlayed": 58,
         "impact": 1,
         "projectedMinutes": 18.344827586206897
+      },
+      {
+        "name": "Nenê",
+        "bpm": 0.8,
+        "mpg": 17.880597014925375,
+        "gamesPlayed": 67,
+        "impact": 0.8,
+        "projectedMinutes": 17.880597014925375
       }
     ],
     "srs": 5.84,

@@ -16,7 +16,8 @@ export const SEASONS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 20
 export type Season = (typeof SEASONS)[number];
 
 const RAW_DIR = path.join(process.cwd(), "data", "historical", "raw");
-const FETCH_DELAY_MS = 2000;
+// Basketball-Reference asks crawlers to stay under 20 requests/minute.
+const FETCH_DELAY_MS = 3500;
 
 const BBREF_PAGES = {
   playoffBracket: (year: number) =>
@@ -439,6 +440,10 @@ export function parsePlayerAdvanced(html: string, season: number): RawPlayerAdva
       return;
     }
 
+    if (gamesPlayed <= 0) {
+      return;
+    }
+
     if (teamId === "TOT" || /^\d+TM$/.test(teamId)) {
       return;
     }
@@ -448,7 +453,11 @@ export function parsePlayerAdvanced(html: string, season: number): RawPlayerAdva
       name,
       teamId,
       gamesPlayed,
-      mpg: minutes > 48 ? minutes / gamesPlayed : minutes,
+      // The BBRef advanced table's MP column is TOTAL minutes, never per game.
+      // An earlier "minutes > 48" heuristic misread deep-bench players with
+      // <= 48 total minutes as 40+ MPG starters and corrupted six team
+      // snapshots (see docs/CODEBASE_HANDOVER.md, finding P0-3).
+      mpg: minutes / gamesPlayed,
       bpm,
     });
   });
