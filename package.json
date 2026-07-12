@@ -9,6 +9,9 @@
     "start": "next start",
     "lint": "eslint .",
     "verify": "tsx scripts/verify-model.ts",
+    "verify:invariants": "tsx scripts/verify/invariants.ts",
+    "verify:refresh": "tsx scripts/verify/refresh-checks.ts",
+    "verify:data": "tsx scripts/verify/data-snapshot.ts",
     "refresh-data": "tsx scripts/refresh-data.ts"
   },
   "dependencies": {

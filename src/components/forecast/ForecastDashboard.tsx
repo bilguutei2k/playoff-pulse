@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
+import { AlertTriangle } from "lucide-react";
 import {
+  dataLastUpdated,
   dataLastUpdatedTimestamp,
   playoffConfig,
 } from "@/lib/data/playoff-config";
@@ -28,11 +30,35 @@ const initialAdjustments = Object.fromEntries(
   playoffConfig.teams.map((team) => [team.id, team.manualAdjustment]),
 );
 
+// Mirrors DEFAULT_STALE_DAYS in scripts/refresh-data.ts: active playoff series
+// never pause this long, so an older snapshot means the data pipeline broke.
+const STALE_SNAPSHOT_DAYS = 4;
+
+// Snapshot age is a client-only value: the page is statically prerendered, so
+// it must be measured against the viewer's clock, not the build clock. The
+// server snapshot is null (no banner in prerendered HTML); the value is stable
+// within a day, so Object.is comparison keeps re-renders quiet.
+const emptySubscribe = () => () => {};
+
+function getSnapshotAgeDays(): number {
+  const snapshotMs = new Date(`${dataLastUpdated}T00:00:00-07:00`).getTime();
+  if (Number.isNaN(snapshotMs)) {
+    return -1;
+  }
+
+  return Math.floor((Date.now() - snapshotMs) / (24 * 60 * 60 * 1000));
+}
+
 export function ForecastDashboard() {
   const [settings, setSettings] = useState<ModelSettings>(defaultModelSettings);
   const [manualAdjustments, setManualAdjustments] =
     useState<Record<string, number>>(initialAdjustments);
   const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);
+  const snapshotAgeDays = useSyncExternalStore<number | null>(
+    emptySubscribe,
+    getSnapshotAgeDays,
+    () => null,
+  );
 
   const adjustedTeams = useMemo(
     () => applyManualAdjustments(playoffConfig.teams, manualAdjustments),
@@ -55,6 +81,25 @@ export function ForecastDashboard() {
   const activeSeries = playoffConfig.series.filter(
     (series) => series.winsA < 4 && series.winsB < 4,
   );
+  const showStaleWarning =
+    activeSeries.length > 0 &&
+    snapshotAgeDays !== null &&
+    snapshotAgeDays > STALE_SNAPSHOT_DAYS;
+  const finalsSeries = playoffConfig.series.find(
+    (series) => series.round === "NBA Finals",
+  );
+  const finalsComplete = Boolean(
+    finalsSeries && (finalsSeries.winsA === 4 || finalsSeries.winsB === 4),
+  );
+  const championTeam =
+    finalsSeries && finalsComplete
+      ? snapshot.teamsById[
+          finalsSeries.winsA === 4 ? finalsSeries.teamA : finalsSeries.teamB
+        ]
+      : null;
+  const finalsScoreLabel = finalsSeries
+    ? `${Math.max(finalsSeries.winsA, finalsSeries.winsB)}-${Math.min(finalsSeries.winsA, finalsSeries.winsB)}`
+    : null;
   const titleLiveRows = snapshot.bracketForecast.rows.filter(
     (row) => row.championshipProbability > 0 || row.reachFinalsProbability > 0,
   );
@@ -109,6 +154,9 @@ export function ForecastDashboard() {
       <div className="flex flex-wrap items-center gap-2 border-y-2 border-[var(--color-border-strong)] bg-[var(--overlay-accent-soft)] px-4 py-3">
         <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
         {[
+          ...(championTeam
+            ? [`Playoffs complete: ${championTeam.name} won the title`]
+            : []),
           "Manual data snapshot",
           `Last updated ${dataLastUpdatedTimestamp}`,
           "Read-only live scoreboard probe",
@@ -120,6 +168,18 @@ export function ForecastDashboard() {
           </span>
         ))}
       </div>
+
+      {showStaleWarning ? (
+        <div className="flex items-start gap-3 border-y-2 border-[var(--color-border-strong)] bg-[var(--overlay-danger-soft)] px-4 py-3 text-sm leading-6 text-[var(--color-danger)]">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+          <span>
+            This snapshot is {snapshotAgeDays} days old while series are still
+            active. Active playoff series do not pause this long, so the data
+            refresh has likely failed - treat every probability on this page as
+            outdated.
+          </span>
+        </div>
+      ) : null}
 
       <Section
         title="Live Data Probe"
@@ -172,27 +232,36 @@ export function ForecastDashboard() {
         title="Active Series"
         description="Each card shows the current manual series state, next-game estimate, series probability, and main model drivers."
       >
-        <div className={activeSeriesGridClass}>
-          {activeSeries.map((series) => {
-            const forecast = snapshot.seriesForecasts.find(
-              (item) => item.seriesId === series.id,
-            );
+        {activeSeries.length === 0 ? (
+          <div className="p-4 text-sm leading-6 text-[var(--color-text-muted)]">
+            No active series remain.{" "}
+            {championTeam && finalsScoreLabel
+              ? `The ${championTeam.name} won the NBA Finals ${finalsScoreLabel}. Series results stay available in the probability table below.`
+              : "The configured bracket is complete."}
+          </div>
+        ) : (
+          <div className={activeSeriesGridClass}>
+            {activeSeries.map((series) => {
+              const forecast = snapshot.seriesForecasts.find(
+                (item) => item.seriesId === series.id,
+              );
 
-            if (!forecast) {
-              return null;
-            }
+              if (!forecast) {
+                return null;
+              }
 
-            return (
-              <SeriesCard
-                key={series.id}
-                series={series}
-                forecast={forecast}
-                teamsById={snapshot.teamsById}
-                onTeamSelect={setSelectedTeamId}
-              />
-            );
-          })}
-        </div>
+              return (
+                <SeriesCard
+                  key={series.id}
+                  series={series}
+                  forecast={forecast}
+                  teamsById={snapshot.teamsById}
+                  onTeamSelect={setSelectedTeamId}
+                />
+              );
+            })}
+          </div>
+        )}
       </Section>
 
       <Section title="Model Validation">

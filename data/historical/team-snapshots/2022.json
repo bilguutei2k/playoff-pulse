@@ -11,14 +11,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Sharife Cooper",
-        "bpm": -16.3,
-        "mpg": 39,
-        "gamesPlayed": 13,
-        "impact": -16.3,
-        "projectedMinutes": 39
-      },
-      {
         "name": "Trae Young",
         "bpm": 5.2,
         "mpg": 34.89473684210526,
@@ -89,6 +81,14 @@
         "gamesPlayed": 77,
         "impact": 2.2,
         "projectedMinutes": 18.857142857142858
+      },
+      {
+        "name": "Lou Williams",
+        "bpm": -3.4,
+        "mpg": 14.267857142857142,
+        "gamesPlayed": 56,
+        "impact": -3.4,
+        "projectedMinutes": 14.267857142857142
       }
     ],
     "srs": 1.55,
@@ -511,14 +511,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Petr Cornelie",
-        "bpm": -8.8,
-        "mpg": 38,
-        "gamesPlayed": 13,
-        "impact": -8.8,
-        "projectedMinutes": 38
-      },
-      {
         "name": "Nikola Jokić",
         "bpm": 13.7,
         "mpg": 33.45945945945946,
@@ -589,6 +581,14 @@
         "gamesPlayed": 65,
         "impact": -0.8,
         "projectedMinutes": 18.215384615384615
+      },
+      {
+        "name": "Bryn Forbes",
+        "bpm": -4.3,
+        "mpg": 17.428571428571427,
+        "gamesPlayed": 35,
+        "impact": -4.3,
+        "projectedMinutes": 17.428571428571427
       }
     ],
     "srs": 2.16,
@@ -1511,14 +1511,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Miye Oni",
-        "bpm": -7.9,
-        "mpg": 44,
-        "gamesPlayed": 16,
-        "impact": -7.9,
-        "projectedMinutes": 40
-      },
-      {
         "name": "Donovan Mitchell",
         "bpm": 4.3,
         "mpg": 33.82089552238806,
@@ -1589,6 +1581,14 @@
         "gamesPlayed": 55,
         "impact": -1,
         "projectedMinutes": 18.87272727272727
+      },
+      {
+        "name": "Hassan Whiteside",
+        "bpm": 2.1,
+        "mpg": 17.876923076923077,
+        "gamesPlayed": 65,
+        "impact": 2.1,
+        "projectedMinutes": 17.876923076923077
       }
     ],
     "srs": 5.67,

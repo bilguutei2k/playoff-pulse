@@ -378,6 +378,26 @@ export function validateSnapshots(
         issue: "snapshot has no qualifying players.",
       });
     }
+
+    for (const player of snapshot.players) {
+      // The league's heaviest workloads top out around 43 minutes per game.
+      // Anything above this means minutes were parsed as totals, not per game.
+      if (player.mpg > 44) {
+        anomalies.push({
+          season: snapshot.season,
+          entityId: snapshot.teamId,
+          issue: `${player.name} has implausible minutes per game (${player.mpg}).`,
+        });
+      }
+
+      if (player.projectedMinutes > 40) {
+        anomalies.push({
+          season: snapshot.season,
+          entityId: snapshot.teamId,
+          issue: `${player.name} has projectedMinutes above the 40-minute cap (${player.projectedMinutes}).`,
+        });
+      }
+    }
   }
 
   for (const row of series) {

@@ -1027,14 +1027,6 @@
         "projectedMinutes": 34.875
       },
       {
-        "name": "Theo Pinson",
-        "bpm": -15.7,
-        "mpg": 34,
-        "gamesPlayed": 17,
-        "impact": -15.7,
-        "projectedMinutes": 34
-      },
-      {
         "name": "Reggie Bullock",
         "bpm": -0.1,
         "mpg": 29.984615384615385,
@@ -1089,6 +1081,14 @@
         "gamesPlayed": 45,
         "impact": 1.3,
         "projectedMinutes": 20.8
+      },
+      {
+        "name": "Immanuel Quickley",
+        "bpm": 0.9,
+        "mpg": 19.421875,
+        "gamesPlayed": 64,
+        "impact": 0.9,
+        "projectedMinutes": 19.421875
       }
     ],
     "srs": 2.13,
@@ -1110,14 +1110,6 @@
     "netRating": 5.62,
     "manualAdjustment": 0,
     "players": [
-      {
-        "name": "Vincent Poirier",
-        "bpm": -14.8,
-        "mpg": 39,
-        "gamesPlayed": 10,
-        "impact": -14.8,
-        "projectedMinutes": 39
-      },
       {
         "name": "Tobias Harris",
         "bpm": 3.7,
@@ -1189,6 +1181,14 @@
         "gamesPlayed": 16,
         "impact": -3.9,
         "projectedMinutes": 18.9375
+      },
+      {
+        "name": "Dwight Howard",
+        "bpm": -1.5,
+        "mpg": 17.333333333333332,
+        "gamesPlayed": 69,
+        "impact": -1.5,
+        "projectedMinutes": 17.333333333333332
       }
     ],
     "srs": 5.28,
@@ -1210,14 +1210,6 @@
     "netRating": 5.87,
     "manualAdjustment": 0,
     "players": [
-      {
-        "name": "Ty-Shon Alexander",
-        "bpm": -6.5,
-        "mpg": 47,
-        "gamesPlayed": 15,
-        "impact": -6.5,
-        "projectedMinutes": 40
-      },
       {
         "name": "Devin Booker",
         "bpm": 0.3,
@@ -1289,6 +1281,14 @@
         "gamesPlayed": 50,
         "impact": -2,
         "projectedMinutes": 17.42
+      },
+      {
+        "name": "Frank Kaminsky",
+        "bpm": 1.3,
+        "mpg": 15.212765957446809,
+        "gamesPlayed": 47,
+        "impact": 1.3,
+        "projectedMinutes": 15.212765957446809
       }
     ],
     "srs": 5.67,

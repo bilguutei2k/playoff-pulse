@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-07-12T22:09:00.492Z",
+  "firstSeason": 2016,
+  "lastSeason": 2025,
+  "totalSeries": 150,
+  "models": {
+    "playoff_pulse": {
+      "brierScore": 0.190469,
+      "logLoss": 0.561172,
+      "accuracy": 0.7,
+      "n": 150
+    },
+    "coinflip": {
+      "brierScore": 0.25,
+      "logLoss": 0.693147,
+      "accuracy": 0.5,
+      "n": 150
+    },
+    "home_team": {
+      "brierScore": 0.21525,
+      "logLoss": 0.622096,
+      "accuracy": 0.683333,
+      "n": 150
+    },
+    "higher_seed": {
+      "brierScore": 0.2125,
+      "logLoss": 0.616495,
+      "accuracy": 0.7,
+      "n": 150
+    },
+    "elo_only": {
+      "brierScore": 0.192632,
+      "logLoss": 0.567952,
+      "accuracy": 0.686667,
+      "n": 150
+    },
+    "net_rating_only": {
+      "brierScore": 0.195247,
+      "logLoss": 0.575863,
+      "accuracy": 0.7,
+      "n": 150
+    }
+  }
+}

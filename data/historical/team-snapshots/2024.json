@@ -311,14 +311,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Hunter Tyson",
-        "bpm": -8.9,
-        "mpg": 48,
-        "gamesPlayed": 18,
-        "impact": -8.9,
-        "projectedMinutes": 40
-      },
-      {
         "name": "Nikola Jokić",
         "bpm": 13.2,
         "mpg": 34.64556962025316,
@@ -389,6 +381,14 @@
         "gamesPlayed": 58,
         "impact": -1.6,
         "projectedMinutes": 14.862068965517242
+      },
+      {
+        "name": "DeAndre Jordan",
+        "bpm": -1.7,
+        "mpg": 11,
+        "gamesPlayed": 36,
+        "impact": -1.7,
+        "projectedMinutes": 11
       }
     ],
     "srs": 5.23,
@@ -1111,22 +1111,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "DaQuan Jeffries",
-        "bpm": -8.1,
-        "mpg": 46,
-        "gamesPlayed": 17,
-        "impact": -8.1,
-        "projectedMinutes": 40
-      },
-      {
-        "name": "Ryan Arcidiacono",
-        "bpm": -9.6,
-        "mpg": 45,
-        "gamesPlayed": 20,
-        "impact": -9.6,
-        "projectedMinutes": 40
-      },
-      {
         "name": "Julius Randle",
         "bpm": 1.9,
         "mpg": 35.43478260869565,
@@ -1189,6 +1173,22 @@
         "gamesPlayed": 49,
         "impact": -1.4,
         "projectedMinutes": 24.224489795918366
+      },
+      {
+        "name": "Miles McBride",
+        "bpm": -0.1,
+        "mpg": 19.529411764705884,
+        "gamesPlayed": 68,
+        "impact": -0.1,
+        "projectedMinutes": 19.529411764705884
+      },
+      {
+        "name": "Bojan Bogdanović",
+        "bpm": -4.9,
+        "mpg": 19.20689655172414,
+        "gamesPlayed": 29,
+        "impact": -4.9,
+        "projectedMinutes": 19.20689655172414
       }
     ],
     "srs": 4.36,

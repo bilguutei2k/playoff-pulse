@@ -1,15 +1,65 @@
 // Report generator:
 //   docs/backtest/results.json
 //   docs/backtest/methodology.md
+//   docs/backtest/summary.json   (small headline file imported by the UI —
+//   BacktestSummaryCard and the methodology sidebar read it at build time,
+//   so regenerating the backtest updates the displayed numbers automatically)
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { BacktestPrediction, BacktestReport, EvaluationResult } from "./types";
+import type { BacktestPrediction, BacktestReport, EvaluationResult, ModelName } from "./types";
 import { evaluate, loadPredictions, MODEL_NAMES } from "./evaluate";
 
 const DOCS_DIR = path.join(process.cwd(), "docs", "backtest");
 const RESULTS_PATH = path.join(DOCS_DIR, "results.json");
 const METHODOLOGY_PATH = path.join(DOCS_DIR, "methodology.md");
+const SUMMARY_PATH = path.join(DOCS_DIR, "summary.json");
+
+type ModelHeadline = {
+  brierScore: number;
+  logLoss: number;
+  accuracy: number;
+  n: number;
+};
+
+export type BacktestSummary = {
+  generatedAt: string;
+  firstSeason: number;
+  lastSeason: number;
+  totalSeries: number;
+  models: Record<ModelName, ModelHeadline>;
+};
+
+export function buildSummary(report: BacktestReport): BacktestSummary {
+  const models = Object.fromEntries(
+    report.results.map((result) => [
+      result.modelName,
+      {
+        brierScore: result.brierScore,
+        logLoss: result.logLoss,
+        accuracy: result.accuracy,
+        n: result.n,
+      },
+    ]),
+  ) as Record<ModelName, ModelHeadline>;
+
+  return {
+    generatedAt: report.generatedAt,
+    firstSeason: report.seasons[0],
+    lastSeason: report.seasons[report.seasons.length - 1],
+    totalSeries: report.totalSeries,
+    models,
+  };
+}
+
+export function writeSummaryJson(report: BacktestReport): void {
+  fs.mkdirSync(DOCS_DIR, { recursive: true });
+  fs.writeFileSync(
+    SUMMARY_PATH,
+    JSON.stringify(buildSummary(report), null, 2),
+    "utf-8",
+  );
+}
 
 function uniqueSortedNumbers(values: number[]): number[] {
   return [...new Set(values)].sort((a, b) => a - b);
@@ -117,6 +167,7 @@ export function renderMethodologyMarkdown(report: BacktestReport): string {
     "- Projected minutes use regular-season minutes per game capped at 40.",
     "- Historical manual adjustments are fixed at 0.",
     "- All historical players are treated as healthy because injury timelines are not yet modeled.",
+    "- Simulated series use the full seven-game 2-2-1-1-1 home pattern reconstructed from the actual Game 1 host, so games beyond the realized series length keep the correct home court instead of defaulting to neutral.",
     "",
     "## Leakage Controls",
     "",
@@ -157,6 +208,7 @@ export async function generateReport(): Promise<void> {
 
   writeResultsJson(report);
   writeMethodologyMarkdown(report);
+  writeSummaryJson(report);
 }
 
 if (typeof require !== "undefined" && require.main === module) {

@@ -46,8 +46,14 @@ jobs:
           REFRESH_SUMMARY_PATH: ${{ runner.temp }}/refresh-summary.md
         run: corepack pnpm refresh-data
 
-      - name: Run model verifier
-        run: corepack pnpm verify
+      # Invariants and refresh regression checks only: the refresh legitimately
+      # changes series scores, and scripts/verify/data-snapshot.ts asserts the
+      # exact pre-refresh scores. Running the full verifier here would fail on
+      # every real update.
+      - name: Run model invariant and refresh checks
+        run: |
+          corepack pnpm verify:invariants
+          corepack pnpm verify:refresh
 
       - name: Create or update pull request
         uses: peter-evans/create-pull-request@v6

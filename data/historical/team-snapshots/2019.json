@@ -211,14 +211,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Thomas Welsh",
-        "bpm": 1.2,
-        "mpg": 36,
-        "gamesPlayed": 11,
-        "impact": 1.2,
-        "projectedMinutes": 36
-      },
-      {
         "name": "Jamal Murray",
         "bpm": 0.6,
         "mpg": 32.626666666666665,
@@ -289,6 +281,14 @@
         "gamesPlayed": 75,
         "impact": -1.9,
         "projectedMinutes": 20.04
+      },
+      {
+        "name": "Juancho Hernangómez",
+        "bpm": -1.1,
+        "mpg": 19.4,
+        "gamesPlayed": 70,
+        "impact": -1.1,
+        "projectedMinutes": 19.4
       }
     ],
     "srs": 4.2,
@@ -611,14 +611,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Davon Reed",
-        "bpm": -5.5,
-        "mpg": 47,
-        "gamesPlayed": 10,
-        "impact": -5.5,
-        "projectedMinutes": 40
-      },
-      {
         "name": "Victor Oladipo",
         "bpm": 2.9,
         "mpg": 31.86111111111111,
@@ -689,6 +681,14 @@
         "gamesPlayed": 69,
         "impact": -2.7,
         "projectedMinutes": 20.318840579710145
+      },
+      {
+        "name": "Doug McDermott",
+        "bpm": -1.4,
+        "mpg": 17.4025974025974,
+        "gamesPlayed": 77,
+        "impact": -1.4,
+        "projectedMinutes": 17.4025974025974
       }
     ],
     "srs": 2.76,
@@ -1011,14 +1011,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Melvin Frazier",
-        "bpm": -14.5,
-        "mpg": 44,
-        "gamesPlayed": 10,
-        "impact": -14.5,
-        "projectedMinutes": 40
-      },
-      {
         "name": "Aaron Gordon",
         "bpm": 0.6,
         "mpg": 33.756410256410255,
@@ -1089,6 +1081,14 @@
         "gamesPlayed": 47,
         "impact": -1.4,
         "projectedMinutes": 16.29787234042553
+      },
+      {
+        "name": "Jerian Grant",
+        "bpm": -1.6,
+        "mpg": 15.65,
+        "gamesPlayed": 60,
+        "impact": -1.6,
+        "projectedMinutes": 15.65
       }
     ],
     "srs": 0.28,
@@ -1511,14 +1511,6 @@
     "manualAdjustment": 0,
     "players": [
       {
-        "name": "Tyler Cavanaugh",
-        "bpm": -8.4,
-        "mpg": 39,
-        "gamesPlayed": 11,
-        "impact": -8.4,
-        "projectedMinutes": 39
-      },
-      {
         "name": "Donovan Mitchell",
         "bpm": 1.3,
         "mpg": 33.74025974025974,
@@ -1589,6 +1581,14 @@
         "gamesPlayed": 42,
         "impact": -2.1,
         "projectedMinutes": 15.80952380952381
+      },
+      {
+        "name": "Raul Neto",
+        "bpm": -0.3,
+        "mpg": 12.81081081081081,
+        "gamesPlayed": 37,
+        "impact": -0.3,
+        "projectedMinutes": 12.81081081081081
       }
     ],
     "srs": 5.29,

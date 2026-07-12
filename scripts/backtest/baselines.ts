@@ -25,6 +25,34 @@ function settingsForSeries(series: HistoricalSeries, settings: ModelSettings): M
   };
 }
 
+// Historical homePattern only covers games actually played (a sweep records
+// four entries). Simulating from 0-0 with the truncated pattern would place
+// unplayed games 5-7 on neutral court, understating home-court advantage in
+// series that ended early. Reconstruct the full seven-slot 2-2-1-1-1 pattern
+// (the NBA format for every round since 2014) from the Game 1 host, and
+// verify it agrees with every game that was actually played.
+export function fullHomePattern(series: HistoricalSeries): string[] {
+  const hostTeam = series.homePattern[0];
+  if (hostTeam !== series.teamA && hostTeam !== series.teamB) {
+    throw new Error(
+      `Game 1 host ${hostTeam} for ${series.id} is not one of its teams.`,
+    );
+  }
+
+  const otherTeam = hostTeam === series.teamA ? series.teamB : series.teamA;
+  const pattern = [hostTeam, hostTeam, otherTeam, otherTeam, hostTeam, otherTeam, hostTeam];
+
+  series.homePattern.forEach((homeTeam, index) => {
+    if (pattern[index] !== homeTeam) {
+      throw new Error(
+        `${series.id} game ${index + 1} was hosted by ${homeTeam}, which breaks the 2-2-1-1-1 pattern (expected ${pattern[index]}). Extend fullHomePattern before backtesting this series.`,
+      );
+    }
+  });
+
+  return pattern;
+}
+
 function historicalSeriesToModelSeries(series: HistoricalSeries): Series {
   return {
     id: series.id,
@@ -39,7 +67,7 @@ function historicalSeriesToModelSeries(series: HistoricalSeries): Series {
     teamB: series.teamB,
     winsA: 0,
     winsB: 0,
-    homePattern: series.homePattern,
+    homePattern: fullHomePattern(series),
   };
 }
 
