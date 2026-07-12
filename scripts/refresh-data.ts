@@ -24,6 +24,7 @@ import {
   dataLastUpdatedTimestamp,
 } from "../src/lib/data/playoff-config";
 import { fetchEspnNbaScoreboard } from "../src/lib/live-data/espn-scoreboard";
+import { canonicalTeamAbbreviation } from "../src/lib/live-data/espn-abbreviations";
 import type { Series, Team } from "../src/lib/model/types";
 import type { LiveScoreboardGame } from "../src/lib/live-data/types";
 
@@ -34,6 +35,22 @@ const SUMMARY_PATH =
 // Pacific Daylight Time during NBA playoffs (April-June) is UTC-7.
 // This is a deliberately narrow assumption; the script runs during PT-PDT only.
 const PT_OFFSET_HOURS = -7;
+
+// If active series exist but the snapshot has not advanced in this many days,
+// the refresh fails loudly instead of exiting green. NBA playoff series never
+// go this long without a game, so a quiet stretch this size means the feed or
+// the matching logic is broken — the June 2026 failure mode, where 30+ runs
+// reported success while matching nothing (docs/CODEBASE_HANDOVER.md, P0-1).
+const DEFAULT_STALE_DAYS = 4;
+const STALE_DAYS = Number(process.env.REFRESH_STALE_DAYS ?? DEFAULT_STALE_DAYS);
+
+export function isSnapshotStale(
+  snapshotUtc: Date,
+  now: Date,
+  staleDays: number,
+): boolean {
+  return now.getTime() - snapshotUtc.getTime() > staleDays * 24 * 60 * 60 * 1000;
+}
 
 type SeriesUpdate = {
   series: Series;
@@ -63,7 +80,7 @@ function teamsById(): Record<string, Team> {
   return Object.fromEntries(playoffConfig.teams.map((t) => [t.id, t]));
 }
 
-function parseSnapshotTimestamp(stamp: string): Date {
+export function parseSnapshotTimestamp(stamp: string): Date {
   // Expected format: "YYYY-MM-DD HH:MM AM/PM PT"
   const match = stamp.match(
     /^(\d{4})-(\d{2})-(\d{2})\s+(\d{1,2}):(\d{2})\s+(AM|PM)\s+PT$/i,
@@ -89,6 +106,28 @@ function parseSnapshotTimestamp(stamp: string): Date {
       0,
     ),
   );
+}
+
+// Format a Date as the manual-snapshot timestamp strings, in PT (UTC-7).
+// The timestamp MUST be the actual moment the data was fetched, never a
+// point in the future: later runs skip games dated at or before this
+// timestamp, so a forward-dated stamp would permanently drop games played
+// between the fetch and the claimed time.
+export function ptSnapshotStamp(date: Date): { date: string; timestamp: string } {
+  const pt = new Date(date.getTime() + PT_OFFSET_HOURS * 60 * 60 * 1000);
+  const y = pt.getUTCFullYear();
+  const mo = String(pt.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(pt.getUTCDate()).padStart(2, "0");
+  let hours = pt.getUTCHours();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours %= 12;
+  if (hours === 0) hours = 12;
+  const hh = String(hours).padStart(2, "0");
+  const mm = String(pt.getUTCMinutes()).padStart(2, "0");
+  return {
+    date: `${y}-${mo}-${d}`,
+    timestamp: `${y}-${mo}-${d} ${hh}:${mm} ${ampm} PT`,
+  };
 }
 
 function yyyymmdd(date: Date): string {
@@ -208,7 +247,9 @@ async function fetchAllGames(
   return games;
 }
 
-function computeUpdate(
+// Exported for verification: this matching logic is where the June 2026
+// abbreviation bug lived, so it must stay directly testable.
+export function computeUpdate(
   series: Series,
   teams: Record<string, Team>,
   games: Iterable<LiveScoreboardGame>,
@@ -218,8 +259,10 @@ function computeUpdate(
   const teamB = teams[series.teamB];
   if (!teamA || !teamB) return null;
 
-  const abbrA = teamA.abbreviation.toUpperCase();
-  const abbrB = teamB.abbreviation.toUpperCase();
+  // ESPN abbreviations differ from config tricodes for several teams
+  // (NY vs NYK, SA vs SAS, ...). Canonicalize both sides before comparing.
+  const abbrA = canonicalTeamAbbreviation(teamA.abbreviation);
+  const abbrB = canonicalTeamAbbreviation(teamB.abbreviation);
   const matched: GameRecord[] = [];
   let newWinsA = series.winsA;
   let newWinsB = series.winsB;
@@ -231,8 +274,12 @@ function computeUpdate(
     if (Number.isNaN(gameDate.getTime())) continue;
     if (gameDate.getTime() <= snapshotUtc.getTime()) continue;
 
-    const home = game.homeTeam?.abbreviation?.toUpperCase();
-    const away = game.awayTeam?.abbreviation?.toUpperCase();
+    const home = game.homeTeam?.abbreviation
+      ? canonicalTeamAbbreviation(game.homeTeam.abbreviation)
+      : null;
+    const away = game.awayTeam?.abbreviation
+      ? canonicalTeamAbbreviation(game.awayTeam.abbreviation)
+      : null;
     if (!home || !away) continue;
     const pair = new Set([home, away]);
     if (!pair.has(abbrA) || !pair.has(abbrB)) continue;
@@ -249,8 +296,9 @@ function computeUpdate(
       homeAway: outcome.homeAway,
     });
 
-    if (outcome.winnerAbbr === abbrA) newWinsA++;
-    else if (outcome.winnerAbbr === abbrB) newWinsB++;
+    const winner = canonicalTeamAbbreviation(outcome.winnerAbbr);
+    if (winner === abbrA) newWinsA++;
+    else if (winner === abbrB) newWinsB++;
   }
 
   newWinsA = Math.min(4, newWinsA);
@@ -278,10 +326,18 @@ function applyUpdates(
 ): string {
   let next = source;
 
-  next = next.replace(
-    /\/\/ MANUAL DATA — Last updated [^\n]+/,
-    `// MANUAL DATA — Last updated ${newTimestamp}`,
+  // Header comment uses a plain ASCII hyphen; keep this regex in sync with
+  // the first line of playoff-config.ts.
+  const headerUpdated = next.replace(
+    /\/\/ MANUAL DATA - Last updated [^\n]+/,
+    `// MANUAL DATA - Last updated ${newTimestamp}`,
   );
+  if (headerUpdated === next) {
+    console.warn(
+      "[refresh-data] Header 'MANUAL DATA - Last updated' comment not found; header timestamp was NOT updated.",
+    );
+  }
+  next = headerUpdated;
 
   next = next.replace(
     /export const dataLastUpdated = "[^"]+";/,
@@ -318,6 +374,7 @@ function buildSummary(
   refreshDate: string,
   snapshotTimestamp: string,
   teams: Record<string, Team>,
+  mismatchWarnings: string[] = [],
 ): string {
   const lines: string[] = [];
   lines.push("# Daily playoff data refresh");
@@ -325,6 +382,15 @@ function buildSummary(
   lines.push(`Run date: ${refreshDate}`);
   lines.push(`Prior snapshot: ${snapshotTimestamp}`);
   lines.push("");
+
+  if (mismatchWarnings.length > 0) {
+    lines.push("## Possible abbreviation mismatches");
+    lines.push("");
+    for (const warning of mismatchWarnings) {
+      lines.push(`- ${warning}`);
+    }
+    lines.push("");
+  }
 
   if (updates.length === 0) {
     lines.push("No new finalized games found in the active series window.");
@@ -426,16 +492,57 @@ async function main(): Promise<void> {
     }
   }
 
-  const refreshDate = new Date().toISOString().slice(0, 10);
-  const refreshTimestamp = `${refreshDate} 11:00 PM PT`;
+  // Warn loudly about final games where exactly one team matches an active
+  // series: during the playoffs that pattern almost always means a feed/config
+  // abbreviation mismatch (the failure mode that silently froze the June 2026
+  // refresh). Off-season exhibition games can trigger false positives; the
+  // warning is informational, not fatal.
+  const activeAbbrs = new Set(Array.from(abbrs).map(canonicalTeamAbbreviation));
+  const mismatchWarnings: string[] = [];
+  for (const game of games.values()) {
+    if (game.status !== "final") continue;
+    const home = game.homeTeam?.abbreviation
+      ? canonicalTeamAbbreviation(game.homeTeam.abbreviation)
+      : null;
+    const away = game.awayTeam?.abbreviation
+      ? canonicalTeamAbbreviation(game.awayTeam.abbreviation)
+      : null;
+    if (!home || !away) continue;
+    if (activeAbbrs.has(home) !== activeAbbrs.has(away)) {
+      mismatchWarnings.push(
+        `${game.date?.slice(0, 10) ?? "unknown date"}: ${game.shortName} matched only one active-series team - check ESPN abbreviation mapping in src/lib/live-data/espn-abbreviations.ts.`,
+      );
+    }
+  }
+  for (const warning of mismatchWarnings) {
+    console.warn(`[refresh-data] ${warning}`);
+  }
+
+  // Stamp the actual run time. Never forward-date the snapshot: games played
+  // later today must remain newer than the snapshot so tomorrow's run counts them.
+  const stamp = ptSnapshotStamp(new Date());
+  const refreshDate = stamp.date;
+  const refreshTimestamp = stamp.timestamp;
   const summary = buildSummary(
     updates,
     refreshDate,
     dataLastUpdatedTimestamp,
     teams,
+    mismatchWarnings,
   );
 
   if (updates.length === 0) {
+    if (isSnapshotStale(snapshotUtc, now, STALE_DAYS)) {
+      const staleMessage = `Active series exist but the snapshot (${dataLastUpdatedTimestamp}) is more than ${STALE_DAYS} day(s) old and no new finalized games matched. NBA playoff series do not pause this long - the feed, the abbreviation mapping, or the matching logic is likely broken. Investigate before trusting the dashboard.`;
+      console.error(`[refresh-data] STALE: ${staleMessage}`);
+      await fs.writeFile(
+        SUMMARY_PATH,
+        `${summary}\n\n## STALE DATA ALARM\n\n${staleMessage}\n`,
+      );
+      process.exitCode = 1;
+      return;
+    }
+
     console.log("[refresh-data] No new games detected. Exiting without changes.");
     await fs.writeFile(SUMMARY_PATH, summary);
     return;
@@ -458,7 +565,11 @@ async function main(): Promise<void> {
   void dataLastUpdated;
 }
 
-main().catch((err) => {
-  console.error("[refresh-data] Failed:", err);
-  process.exit(1);
-});
+// Only run when executed directly (corepack pnpm refresh-data). Importing the
+// exported helpers for verification must never trigger a refresh.
+if (typeof require !== "undefined" && require.main === module) {
+  main().catch((err) => {
+    console.error("[refresh-data] Failed:", err);
+    process.exit(1);
+  });
+}

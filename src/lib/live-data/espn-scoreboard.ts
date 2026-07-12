@@ -4,6 +4,7 @@ import type {
   LiveScoreboardSnapshot,
   LiveScoreboardTeam,
 } from "@/lib/live-data/types";
+import { canonicalTeamAbbreviation } from "@/lib/live-data/espn-abbreviations";
 
 const ESPN_NBA_SCOREBOARD_URL =
   "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
@@ -174,14 +175,15 @@ export function normalizeEspnScoreboard(
     .map(parseGame)
     .filter((game): game is LiveScoreboardGame => Boolean(game));
   const manualTeamSet = new Set(
-    options.manualTeamAbbreviations.map((abbreviation) => abbreviation.toUpperCase()),
+    options.manualTeamAbbreviations.map(canonicalTeamAbbreviation),
   );
   const liveTeamMatches = new Set<string>();
 
   for (const game of games) {
     for (const team of [game.homeTeam, game.awayTeam]) {
-      if (team && manualTeamSet.has(team.abbreviation.toUpperCase())) {
-        liveTeamMatches.add(team.abbreviation.toUpperCase());
+      const canonical = team ? canonicalTeamAbbreviation(team.abbreviation) : null;
+      if (canonical && manualTeamSet.has(canonical)) {
+        liveTeamMatches.add(canonical);
       }
     }
   }
