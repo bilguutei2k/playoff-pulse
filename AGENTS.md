@@ -3,7 +3,7 @@
 ## Project Identity
 - Playoff Pulse is a transparent, manually configured NBA playoff forecasting dashboard.
 - It is a polished MVP with a working model, deployed at https://548-sable.vercel.app.
-- It is not a betting product. Modeling inputs — team ratings, player impact, projected minutes, injury statuses, and model weights — remain manual configuration; the model itself does not consume live data at runtime. As of May 13, 2026, the model has been backtested against 150 playoff series (2016–2025); see docs/backtest/methodology.md for results and known limitations. It is not yet calibrated against external benchmarks or production-grade for unsupervised public use.
+- It is not a betting product. Modeling inputs — team ratings, player impact, projected minutes, injury statuses, and model weights — remain manual configuration; the model itself does not consume live data at runtime. The model has been backtested against 150 playoff series (2016–2025), first on May 13, 2026 and regenerated on July 12, 2026 after correcting a minutes-parsing defect and home-pattern truncation in the historical inputs; see docs/backtest/methodology.md for results and known limitations. It is not yet calibrated against external benchmarks or production-grade for unsupervised public use.
 - Series scores and the snapshot timestamp are updated via a PR-gated GitHub Actions workflow that fetches finalized game results from the ESPN public scoreboard daily (`.github/workflows/refresh-data.yml` + `scripts/refresh-data.ts`). The workflow opens a pull request; a human reviewer merges or rejects before any change reaches `src/lib/data/playoff-config.ts` on the default branch. No other model inputs are auto-fetched.
 - The repo includes a read-only live scoreboard probe for display only: `src/app/api/live-scoreboard/route.ts`, `src/lib/live-data/espn-scoreboard.ts`.
 - The scoreboard MUST NOT feed model inputs. Team ratings, player impact, projected minutes, and injuries remain manual in `src/lib/data/`.
@@ -18,12 +18,12 @@
 - Random number generation MUST be seeded; same inputs must produce same outputs.
 - Historical backtests MUST NOT use future data. Check available-at-time-of-prediction.
 - UI probabilities MUST NOT use fake precision. One decimal point is enough.
-- New probability outputs MUST add or reuse invariants in `scripts/verify-model.ts`.
+- New probability outputs MUST add or reuse invariants in `scripts/verify/invariants.ts` (generic) or `scripts/verify/data-snapshot.ts` (current-snapshot assertions).
 
 ## Never Do
 - Never put forecasting math in UI components.
 - Never import from `src/lib/live-data/` inside `src/lib/model/`. Never pass scoreboard-derived values into model functions. The scoreboard is display-only.
-- Never claim official NBA data sources. Current model data is manually configured for May 11, 2026 11:00 PM PT.
+- Never claim official NBA data sources. Current model data is manually configured; the authoritative snapshot time is `dataLastUpdatedTimestamp` in `src/lib/data/playoff-config.ts`.
 - Never hide placeholder or manual-data caveats. Keep caveats visible in the UI.
 - Never make betting recommendations or use betting framing. Market odds, if added later, are comparison only.
 - Never present model output as authoritative beyond what has been validated.
@@ -55,14 +55,11 @@
 When claiming a task is done, include the actual output or summary of the verify/build commands you ran. Never claim a check passed without running it in this session.
 
 ## Verification Expectations
-- `scripts/verify-model.ts` is the current model verifier.
-- It checks equal teams on neutral court are near 50/50.
-- It checks stronger teams, home court, manual adjustments, and injuries move probabilities as expected.
-- It checks series simulations terminate at 4 wins and respect home pattern by games already played.
-- It checks a 3-0 lead massively improves series probability.
-- It checks title probabilities sum to approximately 100% and no reach-CF probability exceeds 1.0.
-- It checks live scoreboard normalization, but that normalization must remain display-only.
-- New model features should add focused invariants here before UI polish.
+- `corepack pnpm verify` runs `scripts/verify-model.ts`, which runs both halves of the verifier:
+  - `scripts/verify/invariants.ts` (`pnpm verify:invariants`) — generic model invariants that must hold for any valid config: equal teams near 50/50, stronger teams/home court/adjustments/injuries move probabilities the right way, series terminate at 4 wins and respect the home pattern, a 3-0 lead massively improves series probability, title probabilities sum to ~100%, no reach probability exceeds 1.0, and live scoreboard normalization (display-only) maps games, scores, and ESPN abbreviation aliases.
+  - `scripts/verify/data-snapshot.ts` (`pnpm verify:data`) — assertions describing the current manual snapshot (rosters, series scores, bracket state). Update this file in the same commit as any manual data change.
+- The automated refresh workflow runs ONLY `pnpm verify:invariants`, because the refresh changes series scores by design and snapshot assertions would block every legitimate update.
+- New model features should add focused invariants before UI polish.
 
 ## Tech Stack and Project Map
 - Package scripts live in `package.json`; use the actual `dev`, `build`, `start`, `lint`, and `verify` scripts.
