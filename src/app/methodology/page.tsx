@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import backtestSummary from "../../../docs/backtest/summary.json";
+import { formatNumber, formatSigned } from "@/lib/utils/format";
 
 type SectionTable = {
   type: "table";
@@ -51,13 +53,14 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Manual and Static Inputs",
-    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. Current NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but the impacts are still subjective estimates. Series scores are current through NBA Finals Game 3 on June 8, 2026. The daily scoreboard workflow is bookkeeping only - it does not adjust ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
+    body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but the impacts are still subjective estimates. The 2026 playoffs are complete: the Knicks defeated the Spurs 4-1 in the NBA Finals, with the final series state verified against the ESPN public scoreboard on July 12, 2026. The daily scoreboard workflow is bookkeeping only - it does not adjust ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
   },
   {
     title: "Backtest Results",
     body: [
-      'Across 150 playoff series from 2016 through 2025, Playoff Pulse posts a Brier score of 0.193 -- comfortably better than a 50/50 coinflip (0.250), a "higher seed always wins" rule (0.213), and a "home team always wins" rule (0.215). It also beats those simple baselines on log loss. Against single-component baselines built from just Elo (0.194) or just net rating (0.195), the aggregate edge is small. Where the full model earns its weight, and where it doesn\'t, is described round-by-round below.',
-      "The aggregate Brier edge is only 0.001 better than Elo-only and 0.002 better than net-rating-only. That means the three-component formula does not dominantly outperform single-component baselines overall; its value shows up in specific rounds, not as a clean sweep across the whole sample.",
+      'Across 150 playoff series from 2016 through 2025, Playoff Pulse posts a Brier score of 0.190 -- comfortably better than a 50/50 coinflip (0.250), a "higher seed always wins" rule (0.212), and a "home team always wins" rule (0.215). It also beats those simple baselines on log loss. Against single-component baselines built from just Elo (0.193) or just net rating (0.195), the aggregate edge is small. Where the full model earns its weight, and where it doesn\'t, is described round-by-round below.',
+      "The aggregate Brier edge is only 0.002 better than Elo-only and 0.005 better than net-rating-only. That means the three-component formula does not dominantly outperform single-component baselines overall; its value shows up in specific rounds, not as a clean sweep across the whole sample.",
+      "Correction, July 2026: the original May 2026 run contained two input defects -- a minutes-parsing bug that promoted a handful of deep-bench players into 21 historical rotations, and truncated home patterns that placed unplayed late-series games on neutral court. Both were fixed and every number on this page was regenerated on July 12, 2026. The headline Brier improved from 0.193 to 0.190 and every qualitative conclusion below survived the correction.",
     ],
   },
   {
@@ -68,10 +71,10 @@ const sections: MethodologySection[] = [
         type: "table",
         headers: ["Round", "N", "Playoff Pulse", "Elo-only", "Delta vs Elo"],
         rows: [
-          ["First Round", "80", "0.147", "0.129", "+0.0184"],
-          ["Conference Semifinal", "40", "0.258", "0.292", "-0.0342"],
-          ["Conference Final", "20", "0.256", "0.263", "-0.0073"],
-          ["NBA Finals", "10", "0.169", "0.184", "-0.0150"],
+          ["First Round", "80", "0.142", "0.127", "+0.0157"],
+          ["Conference Semifinal", "40", "0.263", "0.294", "-0.0311"],
+          ["Conference Final", "20", "0.248", "0.261", "-0.0124"],
+          ["NBA Finals", "10", "0.172", "0.180", "-0.0087"],
         ],
       },
       "The first-round result is the warning sign: the player-impact layer appears to add noise when seed gaps are large and the simpler Elo-only baseline is already confident. The same layer earns more of its weight in balanced matchups, especially the conference semifinals, where Playoff Pulse improves materially against Elo-only.",
@@ -84,7 +87,7 @@ const sections: MethodologySection[] = [
       {
         type: "subsection",
         label: "Calibration",
-        text: "In the 40-50% and 50-60% probability buckets, calibration is good: predicted probability and actual win rate are within about one percentage point. The model is underconfident higher up the board. In the 60-70% bucket, 65.3% predicted produces 70.2% actual; in the 70-80% bucket, 74.7% predicted produces 83.3% actual. One likely explanation is that the logistic-scale parameter, currently 6.5, may be too conservative. Recalibration via leave-one-year-out cross-validation is a candidate future improvement; we have not retuned against the historical data to avoid overfitting.",
+        text: "In the 50-60% probability bucket calibration is good: 55.1% predicted produces 53.1% actual. The model remains underconfident higher up the board. In the 60-70% bucket, 65.6% predicted produces 68.8% actual; in the 70-80% bucket, 74.3% predicted produces 83.3% actual. One likely explanation is that the logistic-scale parameter, currently 6.5, may be too conservative. Recalibration via leave-one-year-out cross-validation is a candidate future improvement; we have not retuned against the historical data to avoid overfitting.",
       },
       {
         type: "subsection",
@@ -94,7 +97,7 @@ const sections: MethodologySection[] = [
       {
         type: "subsection",
         label: "Sample size",
-        text: "The smallest calibration buckets should not be read as signal: the 0.2-0.3 bucket has n=1, the 0.3-0.4 bucket has n=3, and the 0.9-1.0 bucket has n=6. The Finals subset is also only n=10, too small to draw conclusions from Finals-only Brier numbers.",
+        text: "The smallest calibration buckets should not be read as signal: the 0.2-0.3 bucket has n=1, the 0.3-0.4 bucket has n=2, and the 0.9-1.0 bucket has n=5. The Finals subset is also only n=10, too small to draw conclusions from Finals-only Brier numbers.",
       },
     ],
   },
@@ -258,11 +261,31 @@ export default function MethodologyPage() {
             </div>
             <div className="grid gap-2 p-4">
               {[
-                ["Series", "150"],
-                ["Seasons", "2016–2025"],
-                ["Brier", "0.193"],
-                ["vs Coinflip", "-0.057"],
-                ["vs Higher-Seed", "-0.020"],
+                ["Series", String(backtestSummary.totalSeries)],
+                [
+                  "Seasons",
+                  `${backtestSummary.firstSeason}–${backtestSummary.lastSeason}`,
+                ],
+                [
+                  "Brier",
+                  formatNumber(backtestSummary.models.playoff_pulse.brierScore, 3),
+                ],
+                [
+                  "vs Coinflip",
+                  formatSigned(
+                    backtestSummary.models.playoff_pulse.brierScore -
+                      backtestSummary.models.coinflip.brierScore,
+                    3,
+                  ),
+                ],
+                [
+                  "vs Higher-Seed",
+                  formatSigned(
+                    backtestSummary.models.playoff_pulse.brierScore -
+                      backtestSummary.models.higher_seed.brierScore,
+                    3,
+                  ),
+                ],
               ].map(([label, value]) => (
                 <div key={label} className="flex items-center justify-between gap-3 border-b border-[var(--color-border-subtle)] pb-2">
                   <span className="pp-kicker">{label}</span>
