@@ -1,0 +1,45 @@
+name: CI
+
+# Lint, full verification, and build on every push and pull request.
+#
+# Note: `corepack pnpm verify` includes scripts/verify/data-snapshot.ts, which
+# pins the current manual series scores and rosters. An automated data-refresh
+# PR (branch data-refresh/auto) changes scores without updating those pins, so
+# it will fail this workflow until a human updates
+# scripts/verify/data-snapshot.ts on the PR branch. That is intentional: data
+# changes and their pinned expectations must land together. The refresh
+# workflow itself gates only on verify:invariants + verify:refresh so the PR
+# still gets created.
+
+on:
+  push:
+    branches: [main, feature/setup]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: corepack pnpm lint
+
+      - name: Verify (invariants + refresh checks + data snapshot)
+        run: corepack pnpm verify
+
+      - name: Build
+        run: corepack pnpm build
