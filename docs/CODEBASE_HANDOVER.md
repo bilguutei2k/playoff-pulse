@@ -108,6 +108,19 @@ and `pnpm lint` pass after every item.
     authored by hand — deliberately, since they need human rewording when
     results change.
 
+12. **Shipped and branch topology consolidated.** All remediation commits were
+    pushed; `main` was updated to the identical tree via a merge (no history
+    rewrite) and made the **default branch**. First CI runs on both branches
+    passed, and a manually triggered refresh workflow run passed with the new
+    invariants + refresh-checks gate ("0 active series", clean exit).
+13. **Deploy finding: Vercel Git integration is NOT connected.** GitHub shows
+    zero deployment records and no Vercel commit statuses for this repository,
+    and production did not update after the pushes — the live site was
+    deployed manually. Until the owner either runs `vercel --prod` or connects
+    the Vercel Git integration (recommended, pointed at `main`), production
+    keeps serving the stale 2026-06-08 snapshot regardless of what lands in
+    the repo.
+
 Not addressed (unchanged from the audit): JSON-based series state,
 seed-inference tiebreakers, raw-HTML archival policy, calibration work — see
 §16 P1/P2.
@@ -358,7 +371,7 @@ Assessment: input validation is fine (`date` param sanitized to 8 digits); no au
 - **Scheduled job status [Confirmed-impl via `gh run list` / `--log`]:** `refresh-data.yml` has run daily since ~June 3 (2 early failures June 3–4, success since June 5). Every run since June 9: "No new games detected." No `data-refresh` PR has ever been created (`gh pr list --state all` is empty). All June 5–8 config updates were manual commits.
 - **Monitoring/alerting:** none. Job success is defined as "script didn't crash," which conceals total functional failure (this happened — 30+ green runs while production is wrong).
 - **Recovery/rollback:** git revert of config commits is the mechanism; adequate for this design.
-- **Branch topology oddity [Confirmed-impl]:** the default branch is `feature/setup`; `origin/main` diverged after the workflow commit and carries duplicate-content commits with different SHAs (`efc0eff` vs `4eb8872`). Which branch Vercel deploys from is **[Unknown]**. This will eventually bite; consolidate to `main`.
+- **Branch topology oddity [FIXED 2026-07-12, §0.12]:** the default branch was `feature/setup` with a diverged `origin/main` carrying duplicate-content commits. Consolidated: `main` now holds the identical tree (merge, no history rewrite) and is the default branch. `feature/setup` still exists and can be deleted once nothing external references it. **Deploy linkage resolved [§0.13]:** Vercel Git integration is *not* connected (zero GitHub deployment records) — production updates only via manual `vercel --prod`. Connecting the integration to `main` is the recommended fix.
 
 ---
 
@@ -441,7 +454,7 @@ No confirmed vulnerabilities. Findings, honestly graded:
 | 4 | Truncated homePattern in backtest | Reconstruct 7-slot 2-2-1-1-1 pattern from Game 1 host; regenerate | S–M | ✅ Done 2026-07-12 (§0.6) |
 | 5 | No tests for refresh-data | Extract pure functions; add fixture tests: abbreviation map, timestamp parsing incl. non-PDT dates, regex round-trip, win capping | M | Mostly done 2026-07-12 (`verify/refresh-checks.ts`); regex round-trip + non-PDT parsing tests still open |
 | 6 | Raw-source reproducibility | Archive raw HTML (private storage or committed compressed) or document irreversibility and pin the normalized JSON as canonical | S–M | Open — note the raw cache is currently re-populated locally from the 2026-07-12 re-fetch (still gitignored) |
-| 7 | Branch topology | Make `main` the default; retire `feature/setup`; confirm Vercel target | S | Open |
+| 7 | Branch topology | Make `main` the default; retire `feature/setup`; confirm Vercel target | S | ✅ Mostly done 2026-07-12 (§0.12–0.13): `main` default with identical tree; Vercel confirmed **not** Git-connected — owner must run `vercel --prod` or connect the integration; `feature/setup` deletion pending |
 
 ### P2 — High-value analytical/product improvements
 
@@ -467,7 +480,7 @@ Most of the original 30-day plan was completed during the 2026-07-12
 remediation passes (§0): statistical corrections, pipeline fixes, verifier
 split, CI, freshness alerting, and the summary.json UI wiring. What remains:
 
-1. **Now:** confirm the deployed site reflects the completed Finals; confirm the first CI run and a manually triggered refresh run are green; archive the raw BBRef HTML while the local cache exists and commit its checksum manifest (§19.4).
+1. **Now:** deploy — run `vercel --prod` from the linked project (or connect Vercel's Git integration to `main`); production still serves the 2026-06-08 snapshot because no Git integration exists (§0.13). CI and the refresh workflow are already confirmed green. Then archive the raw BBRef HTML while the local cache exists and commit its checksum manifest (§19.4).
 2. **Week 1–2 — remaining pipeline hardening:** JSON migration for series state (retires the regex editing); regex round-trip and non-PDT timestamp tests; seed cross-check table; decide whether the daily cron pauses for the off-season (§19.2).
 3. **Week 3–4 — analytics & product:** calibration experiment (leave-one-season-out on `logisticScale`, publish raw vs calibrated); Monte Carlo SE display; decide off-season presentation beyond the completed-state view (§19.1); provenance metadata design.
 
