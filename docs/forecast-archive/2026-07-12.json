@@ -1,0 +1,502 @@
+{
+  "issuedForDataSnapshot": "2026-07-12 02:45 PM PT",
+  "model": {
+    "modelVersion": "2026.2-exact-uncertainty",
+    "researchProtocolVersion": "rolling-origin-v1"
+  },
+  "settings": {
+    "playerWeight": 0.55,
+    "netRatingWeight": 0.25,
+    "eloWeight": 0.2,
+    "homeCourtAdvantage": 2.2,
+    "logisticScale": 6.5,
+    "simulationIterations": 10000
+  },
+  "seriesForecasts": [
+    {
+      "seriesId": "east-entry-nyk-advanced",
+      "teamAId": "nyk",
+      "teamBId": "nyk",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-entry-phi-eliminated",
+      "teamAId": "phi",
+      "teamBId": "phi",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-entry-det-active",
+      "teamAId": "det",
+      "teamBId": "det",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-entry-cle-active",
+      "teamAId": "cle",
+      "teamBId": "cle",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-sf-nyk-phi",
+      "teamAId": "nyk",
+      "teamBId": "phi",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 3.7492023809523816
+    },
+    {
+      "seriesId": "east-sf-det-cle",
+      "teamAId": "det",
+      "teamBId": "cle",
+      "winsA": 3,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "3-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0.6901934523809521
+    },
+    {
+      "seriesId": "east-cf-nyk-cle",
+      "teamAId": "nyk",
+      "teamBId": "cle",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0.8562857142857143
+    },
+    {
+      "seriesId": "west-entry-okc-active",
+      "teamAId": "okc",
+      "teamBId": "okc",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        },
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-entry-lal-active",
+      "teamAId": "lal",
+      "teamBId": "lal",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-entry-min-active",
+      "teamAId": "min",
+      "teamBId": "min",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Donte DiVincenzo",
+          "teamId": "min",
+          "playerId": "min-7",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        },
+        {
+          "label": "Donte DiVincenzo",
+          "teamId": "min",
+          "playerId": "min-7",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-entry-sas-active",
+      "teamAId": "sas",
+      "teamBId": "sas",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-sf-okc-lal",
+      "teamAId": "okc",
+      "teamBId": "lal",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": 1.2427678571428573
+    },
+    {
+      "seriesId": "west-sf-min-sas",
+      "teamAId": "min",
+      "teamBId": "sas",
+      "winsA": 2,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "2-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Donte DiVincenzo",
+          "teamId": "min",
+          "playerId": "min-7",
+          "ifAvailable": 0,
+          "ifOut": 0,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": -1.652916666666667
+    },
+    {
+      "seriesId": "west-cf-okc-sas",
+      "teamAId": "okc",
+      "teamBId": "sas",
+      "winsA": 3,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "3-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 0,
+          "ifOut": 0,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": -0.9608035714285714
+    },
+    {
+      "seriesId": "nba-finals-sas-nyk",
+      "teamAId": "sas",
+      "teamBId": "nyk",
+      "winsA": 1,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "1-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0.8349345238095234
+    }
+  ],
+  "bracketForecast": {
+    "rows": [
+      {
+        "teamId": "nyk",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 1,
+        "championshipProbability": 1
+      },
+      {
+        "teamId": "det",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "okc",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "sas",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 1,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "cle",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "lal",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "min",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "phi",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      }
+    ],
+    "iterations": 10000,
+    "titleProbabilityTotal": 1,
+    "structurallyComplete": true,
+    "notes": []
+  }
+}

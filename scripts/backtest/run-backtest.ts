@@ -31,7 +31,7 @@ const MODEL_NAMES: ModelName[] = [
   "coinflip",
   "home_team",
   "higher_seed",
-  "elo_only",
+  "srs_proxy_only",
   "net_rating_only",
 ];
 

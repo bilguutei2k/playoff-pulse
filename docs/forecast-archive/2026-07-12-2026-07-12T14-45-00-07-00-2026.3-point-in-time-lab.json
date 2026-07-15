@@ -1,0 +1,1465 @@
+{
+  "issuedAt": "2026-07-12T14:45:00-07:00",
+  "issuedForDataSnapshot": "2026-07-12 02:45 PM PT",
+  "model": {
+    "modelVersion": "2026.3-point-in-time-lab",
+    "researchProtocolVersion": "rolling-origin-v2"
+  },
+  "inputDefinition": {
+    "informationSet": "production_manual_snapshot",
+    "provenance": {
+      "impactScale": "manual_point_estimate",
+      "ratingScale": "manual_rating_ensemble",
+      "rotationSource": "manual_projected_minutes",
+      "availabilitySource": "manual_status"
+    }
+  },
+  "settings": {
+    "playerWeight": 0.55,
+    "netRatingWeight": 0.25,
+    "eloWeight": 0.2,
+    "homeCourtAdvantage": 2.2,
+    "logisticScale": 6.5,
+    "simulationIterations": 10000
+  },
+  "inputSnapshot": {
+    "teams": [
+      {
+        "id": "nyk",
+        "name": "New York Knicks",
+        "abbreviation": "NYK",
+        "conference": "East",
+        "seed": 3,
+        "eloRating": 1535,
+        "netRating": 5.2,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "nyk-1",
+            "name": "Jalen Brunson",
+            "teamId": "nyk",
+            "impact": 8.5,
+            "projectedMinutes": 38,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-2",
+            "name": "Karl-Anthony Towns",
+            "teamId": "nyk",
+            "impact": 5.5,
+            "projectedMinutes": 34,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-3",
+            "name": "OG Anunoby",
+            "teamId": "nyk",
+            "impact": 4.5,
+            "projectedMinutes": 32,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-4",
+            "name": "Mikal Bridges",
+            "teamId": "nyk",
+            "impact": 3.5,
+            "projectedMinutes": 32,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-5",
+            "name": "Josh Hart",
+            "teamId": "nyk",
+            "impact": 3,
+            "projectedMinutes": 30,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-6",
+            "name": "Landry Shamet",
+            "teamId": "nyk",
+            "impact": 1,
+            "projectedMinutes": 28,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-7",
+            "name": "Miles McBride",
+            "teamId": "nyk",
+            "impact": 1.2,
+            "projectedMinutes": 20,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-8",
+            "name": "Mitchell Robinson",
+            "teamId": "nyk",
+            "impact": 1,
+            "projectedMinutes": 14,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-9",
+            "name": "Jose Alvarado",
+            "teamId": "nyk",
+            "impact": 0.8,
+            "projectedMinutes": 8,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-10",
+            "name": "Jordan Clarkson",
+            "teamId": "nyk",
+            "impact": 0.8,
+            "projectedMinutes": 4,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-11",
+            "name": "Jeremy Sochan",
+            "teamId": "nyk",
+            "impact": 0.7,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-12",
+            "name": "Pacome Dadiet",
+            "teamId": "nyk",
+            "impact": 0.2,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-13",
+            "name": "Tyler Kolek",
+            "teamId": "nyk",
+            "impact": 0.2,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-14",
+            "name": "Mohamed Diawara",
+            "teamId": "nyk",
+            "impact": 0.1,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "nyk-15",
+            "name": "Ariel Hukporti",
+            "teamId": "nyk",
+            "impact": 0.2,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          }
+        ]
+      },
+      {
+        "id": "det",
+        "name": "Detroit Pistons",
+        "abbreviation": "DET",
+        "conference": "East",
+        "seed": 1,
+        "eloRating": 1558,
+        "netRating": 7.1,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "det-1",
+            "name": "Cade Cunningham",
+            "teamId": "det",
+            "impact": 7.5,
+            "projectedMinutes": 37,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "det-2",
+            "name": "Ausar Thompson",
+            "teamId": "det",
+            "impact": 3.5,
+            "projectedMinutes": 32,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "det-3",
+            "name": "Jalen Duren",
+            "teamId": "det",
+            "impact": 3,
+            "projectedMinutes": 28,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "det-4",
+            "name": "Tobias Harris",
+            "teamId": "det",
+            "impact": 2,
+            "projectedMinutes": 28,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "det-5",
+            "name": "Kevin Huerter",
+            "teamId": "det",
+            "impact": 1.5,
+            "projectedMinutes": 24,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "det-6",
+            "name": "Marcus Sasser",
+            "teamId": "det",
+            "impact": 1,
+            "projectedMinutes": 20,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "det-7",
+            "name": "Caris Levert",
+            "teamId": "det",
+            "impact": 0.5,
+            "projectedMinutes": 18,
+            "injuryStatus": "healthy"
+          }
+        ]
+      },
+      {
+        "id": "cle",
+        "name": "Cleveland Cavaliers",
+        "abbreviation": "CLE",
+        "conference": "East",
+        "seed": 4,
+        "eloRating": 1522,
+        "netRating": 4.8,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "cle-1",
+            "name": "Donovan Mitchell",
+            "teamId": "cle",
+            "impact": 7,
+            "projectedMinutes": 37,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "cle-2",
+            "name": "James Harden",
+            "teamId": "cle",
+            "impact": 4.5,
+            "projectedMinutes": 33,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "cle-3",
+            "name": "Evan Mobley",
+            "teamId": "cle",
+            "impact": 4,
+            "projectedMinutes": 32,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "cle-4",
+            "name": "Jarrett Allen",
+            "teamId": "cle",
+            "impact": 2.5,
+            "projectedMinutes": 27,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "cle-5",
+            "name": "Max Strus",
+            "teamId": "cle",
+            "impact": 1,
+            "projectedMinutes": 22,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "cle-6",
+            "name": "Sam Merrill",
+            "teamId": "cle",
+            "impact": 0.5,
+            "projectedMinutes": 18,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "cle-7",
+            "name": "Dean Wade",
+            "teamId": "cle",
+            "impact": 0,
+            "projectedMinutes": 15,
+            "injuryStatus": "healthy"
+          }
+        ]
+      },
+      {
+        "id": "phi",
+        "name": "Philadelphia 76ers",
+        "abbreviation": "PHI",
+        "conference": "East",
+        "seed": 7,
+        "eloRating": 1480,
+        "netRating": 0,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "phi-1",
+            "name": "Inactive eliminated placeholder",
+            "teamId": "phi",
+            "impact": 0,
+            "projectedMinutes": 0,
+            "injuryStatus": "out"
+          }
+        ]
+      },
+      {
+        "id": "okc",
+        "name": "Oklahoma City Thunder",
+        "abbreviation": "OKC",
+        "conference": "West",
+        "seed": 1,
+        "eloRating": 1585,
+        "netRating": 9.2,
+        "manualAdjustment": -1,
+        "players": [
+          {
+            "id": "okc-1",
+            "name": "Shai Gilgeous-Alexander",
+            "teamId": "okc",
+            "impact": 9,
+            "projectedMinutes": 38,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "okc-2",
+            "name": "Jalen Williams",
+            "teamId": "okc",
+            "impact": 6.5,
+            "projectedMinutes": 0,
+            "injuryStatus": "out",
+            "healthyProjectedMinutes": 35
+          },
+          {
+            "id": "okc-3",
+            "name": "Ajay Mitchell",
+            "teamId": "okc",
+            "impact": 4,
+            "projectedMinutes": 34,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "okc-4",
+            "name": "Chet Holmgren",
+            "teamId": "okc",
+            "impact": 4.5,
+            "projectedMinutes": 30,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "okc-5",
+            "name": "Isaiah Hartenstein",
+            "teamId": "okc",
+            "impact": 2.5,
+            "projectedMinutes": 26,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "okc-6",
+            "name": "Alex Caruso",
+            "teamId": "okc",
+            "impact": 2,
+            "projectedMinutes": 22,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "okc-7",
+            "name": "Lu Dort",
+            "teamId": "okc",
+            "impact": 1.5,
+            "projectedMinutes": 20,
+            "injuryStatus": "healthy"
+          }
+        ]
+      },
+      {
+        "id": "lal",
+        "name": "Los Angeles Lakers",
+        "abbreviation": "LAL",
+        "conference": "West",
+        "seed": 4,
+        "eloRating": 1498,
+        "netRating": 3.4,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "lal-1",
+            "name": "LeBron James",
+            "teamId": "lal",
+            "impact": 6.5,
+            "projectedMinutes": 36,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "lal-2",
+            "name": "Anthony Davis",
+            "teamId": "lal",
+            "impact": 6,
+            "projectedMinutes": 34,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "lal-3",
+            "name": "Austin Reaves",
+            "teamId": "lal",
+            "impact": 3,
+            "projectedMinutes": 30,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "lal-4",
+            "name": "Rui Hachimura",
+            "teamId": "lal",
+            "impact": 2,
+            "projectedMinutes": 26,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "lal-5",
+            "name": "Deandre Ayton",
+            "teamId": "lal",
+            "impact": 1.5,
+            "projectedMinutes": 22,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "lal-6",
+            "name": "Max Christie",
+            "teamId": "lal",
+            "impact": 0.5,
+            "projectedMinutes": 20,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "lal-7",
+            "name": "Gabe Vincent",
+            "teamId": "lal",
+            "impact": 0,
+            "projectedMinutes": 16,
+            "injuryStatus": "healthy"
+          }
+        ]
+      },
+      {
+        "id": "min",
+        "name": "Minnesota Timberwolves",
+        "abbreviation": "MIN",
+        "conference": "West",
+        "seed": 6,
+        "eloRating": 1510,
+        "netRating": 4.1,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "min-1",
+            "name": "Anthony Edwards",
+            "teamId": "min",
+            "impact": 8,
+            "projectedMinutes": 38,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-2",
+            "name": "Julius Randle",
+            "teamId": "min",
+            "impact": 4,
+            "projectedMinutes": 31,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-3",
+            "name": "Rudy Gobert",
+            "teamId": "min",
+            "impact": 3,
+            "projectedMinutes": 27,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-4",
+            "name": "Ayo Dosunmu",
+            "teamId": "min",
+            "impact": 3.5,
+            "projectedMinutes": 28,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-5",
+            "name": "Jaden McDaniels",
+            "teamId": "min",
+            "impact": 2.5,
+            "projectedMinutes": 28,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-6",
+            "name": "Naz Reid",
+            "teamId": "min",
+            "impact": 2,
+            "projectedMinutes": 22,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-7",
+            "name": "Donte DiVincenzo",
+            "teamId": "min",
+            "impact": 2.5,
+            "projectedMinutes": 0,
+            "injuryStatus": "out",
+            "healthyProjectedMinutes": 26
+          },
+          {
+            "id": "min-8",
+            "name": "Mike Conley",
+            "teamId": "min",
+            "impact": 1,
+            "projectedMinutes": 18,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "min-9",
+            "name": "Terrence Shannon Jr.",
+            "teamId": "min",
+            "impact": 1,
+            "projectedMinutes": 18,
+            "injuryStatus": "healthy"
+          }
+        ]
+      },
+      {
+        "id": "sas",
+        "name": "San Antonio Spurs",
+        "abbreviation": "SAS",
+        "conference": "West",
+        "seed": 2,
+        "eloRating": 1552,
+        "netRating": 6.8,
+        "manualAdjustment": 0,
+        "players": [
+          {
+            "id": "sas-1",
+            "name": "Victor Wembanyama",
+            "teamId": "sas",
+            "impact": 10,
+            "projectedMinutes": 38,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-2",
+            "name": "De'Aaron Fox",
+            "teamId": "sas",
+            "impact": 6.5,
+            "projectedMinutes": 38,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-3",
+            "name": "Devin Vassell",
+            "teamId": "sas",
+            "impact": 3.5,
+            "projectedMinutes": 36,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-4",
+            "name": "Stephon Castle",
+            "teamId": "sas",
+            "impact": 4,
+            "projectedMinutes": 34,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-5",
+            "name": "Julian Champagnie",
+            "teamId": "sas",
+            "impact": 2,
+            "projectedMinutes": 32,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-6",
+            "name": "Dylan Harper",
+            "teamId": "sas",
+            "impact": 3,
+            "projectedMinutes": 28,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-7",
+            "name": "Harrison Barnes",
+            "teamId": "sas",
+            "impact": 1.5,
+            "projectedMinutes": 12,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-8",
+            "name": "Luke Kornet",
+            "teamId": "sas",
+            "impact": 1,
+            "projectedMinutes": 10,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-9",
+            "name": "Keldon Johnson",
+            "teamId": "sas",
+            "impact": 1.5,
+            "projectedMinutes": 8,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-10",
+            "name": "Carter Bryant",
+            "teamId": "sas",
+            "impact": 0.5,
+            "projectedMinutes": 4,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-11",
+            "name": "Kelly Olynyk",
+            "teamId": "sas",
+            "impact": 0.8,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-12",
+            "name": "Bismack Biyombo",
+            "teamId": "sas",
+            "impact": 0.5,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-13",
+            "name": "Mason Plumlee",
+            "teamId": "sas",
+            "impact": 0.4,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-14",
+            "name": "Jordan McLaughlin",
+            "teamId": "sas",
+            "impact": 0.3,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          },
+          {
+            "id": "sas-15",
+            "name": "Lindy Waters III",
+            "teamId": "sas",
+            "impact": 0.4,
+            "projectedMinutes": 0,
+            "injuryStatus": "healthy"
+          }
+        ]
+      }
+    ],
+    "series": [
+      {
+        "id": "east-entry-nyk-advanced",
+        "round": "First Round",
+        "conference": "East",
+        "bracketOrder": 1,
+        "teamA": "nyk",
+        "teamB": "nyk",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "nyk",
+          "nyk",
+          "nyk",
+          "nyk",
+          "nyk",
+          "nyk",
+          "nyk"
+        ]
+      },
+      {
+        "id": "east-entry-phi-eliminated",
+        "round": "First Round",
+        "conference": "East",
+        "bracketOrder": 2,
+        "teamA": "phi",
+        "teamB": "phi",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "phi",
+          "phi",
+          "phi",
+          "phi",
+          "phi",
+          "phi",
+          "phi"
+        ]
+      },
+      {
+        "id": "east-entry-det-active",
+        "round": "First Round",
+        "conference": "East",
+        "bracketOrder": 3,
+        "teamA": "det",
+        "teamB": "det",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "det",
+          "det",
+          "det",
+          "det",
+          "det",
+          "det",
+          "det"
+        ]
+      },
+      {
+        "id": "east-entry-cle-active",
+        "round": "First Round",
+        "conference": "East",
+        "bracketOrder": 4,
+        "teamA": "cle",
+        "teamB": "cle",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "cle",
+          "cle",
+          "cle",
+          "cle",
+          "cle",
+          "cle",
+          "cle"
+        ]
+      },
+      {
+        "id": "east-sf-nyk-phi",
+        "round": "Conference Semifinal",
+        "conference": "East",
+        "bracketOrder": 1,
+        "teamA": "nyk",
+        "teamB": "phi",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "nyk",
+          "nyk",
+          "phi",
+          "phi",
+          "nyk",
+          "phi",
+          "nyk"
+        ]
+      },
+      {
+        "id": "east-sf-det-cle",
+        "round": "Conference Semifinal",
+        "conference": "East",
+        "bracketOrder": 2,
+        "teamA": "det",
+        "teamB": "cle",
+        "winsA": 3,
+        "winsB": 4,
+        "homePattern": [
+          "det",
+          "det",
+          "cle",
+          "cle",
+          "det",
+          "cle",
+          "det"
+        ]
+      },
+      {
+        "id": "east-cf-nyk-cle",
+        "round": "Conference Final",
+        "conference": "East",
+        "bracketOrder": 1,
+        "teamA": "nyk",
+        "teamB": "cle",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "nyk",
+          "nyk",
+          "cle",
+          "cle",
+          "nyk",
+          "cle",
+          "nyk"
+        ]
+      },
+      {
+        "id": "west-entry-okc-active",
+        "round": "First Round",
+        "conference": "West",
+        "bracketOrder": 1,
+        "teamA": "okc",
+        "teamB": "okc",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "okc",
+          "okc",
+          "okc",
+          "okc",
+          "okc",
+          "okc",
+          "okc"
+        ]
+      },
+      {
+        "id": "west-entry-lal-active",
+        "round": "First Round",
+        "conference": "West",
+        "bracketOrder": 2,
+        "teamA": "lal",
+        "teamB": "lal",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "lal",
+          "lal",
+          "lal",
+          "lal",
+          "lal",
+          "lal",
+          "lal"
+        ]
+      },
+      {
+        "id": "west-entry-min-active",
+        "round": "First Round",
+        "conference": "West",
+        "bracketOrder": 3,
+        "teamA": "min",
+        "teamB": "min",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "min",
+          "min",
+          "min",
+          "min",
+          "min",
+          "min",
+          "min"
+        ]
+      },
+      {
+        "id": "west-entry-sas-active",
+        "round": "First Round",
+        "conference": "West",
+        "bracketOrder": 4,
+        "teamA": "sas",
+        "teamB": "sas",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "sas",
+          "sas",
+          "sas",
+          "sas",
+          "sas",
+          "sas",
+          "sas"
+        ]
+      },
+      {
+        "id": "west-sf-okc-lal",
+        "round": "Conference Semifinal",
+        "conference": "West",
+        "bracketOrder": 1,
+        "teamA": "okc",
+        "teamB": "lal",
+        "winsA": 4,
+        "winsB": 0,
+        "homePattern": [
+          "okc",
+          "okc",
+          "lal",
+          "lal",
+          "okc",
+          "lal",
+          "okc"
+        ]
+      },
+      {
+        "id": "west-sf-min-sas",
+        "round": "Conference Semifinal",
+        "conference": "West",
+        "bracketOrder": 2,
+        "teamA": "min",
+        "teamB": "sas",
+        "winsA": 2,
+        "winsB": 4,
+        "homePattern": [
+          "sas",
+          "sas",
+          "min",
+          "min",
+          "sas",
+          "min",
+          "sas"
+        ]
+      },
+      {
+        "id": "west-cf-okc-sas",
+        "round": "Conference Final",
+        "conference": "West",
+        "bracketOrder": 1,
+        "teamA": "okc",
+        "teamB": "sas",
+        "winsA": 3,
+        "winsB": 4,
+        "homePattern": [
+          "okc",
+          "okc",
+          "sas",
+          "sas",
+          "okc",
+          "sas",
+          "okc"
+        ]
+      },
+      {
+        "id": "nba-finals-sas-nyk",
+        "round": "NBA Finals",
+        "conference": "Finals",
+        "bracketOrder": 1,
+        "teamA": "sas",
+        "teamB": "nyk",
+        "winsA": 1,
+        "winsB": 4,
+        "homePattern": [
+          "sas",
+          "sas",
+          "nyk",
+          "nyk",
+          "sas",
+          "nyk",
+          "sas"
+        ]
+      }
+    ],
+    "notes": [
+      "Manual data only. Ratings, player impacts, injury statuses, and availability are estimates, not official NBA data.",
+      "The 2026 playoffs are complete. Series state updated 2026-07-12 with the final NBA Finals result after the automated refresh silently failed to match ESPN's NY/SA abbreviations (fixed the same day).",
+      "NBA Finals roster inputs were re-checked against public Game 2 notes on June 5; projected minutes use Game 1 participation as the baseline.",
+      "DET-CLE completed 4-3: DET won Game 6, 115-94; CLE won Game 7, 125-94.",
+      "MIN-SAS completed 4-2: SAS won Game 6, 139-109.",
+      "NYK-CLE Conference Final completed 4-0: NYK won Game 3, 121-108, and Game 4, 130-93.",
+      "OKC-SAS Conference Final completed 4-3: SAS won Game 6, 118-91, and Game 7, 111-103.",
+      "NBA Finals Game 1: NYK 105, SAS 95 at San Antonio.",
+      "NBA Finals Game 2: NYK 105, SAS 104 at San Antonio.",
+      "NBA Finals Game 3: SAS 115, NYK 111 at New York.",
+      "NBA Finals Game 4: NYK 107, SAS 106 at New York (June 10).",
+      "NBA Finals Game 5: NYK 94, SAS 90 at San Antonio (June 13). NYK won the NBA Finals 4-1.",
+      "OKC-LAL completed 4-0; OKC has advanced to the West Conference Finals.",
+      "NYK-PHI is completed and inactive; NYK is represented as already advanced to the East Conference Finals.",
+      "PHI is retained only as an inactive completed-series placeholder because the existing Series type requires both team IDs to resolve.",
+      "LAL is retained only as an inactive completed-series participant because the existing Series type requires both team IDs to resolve.",
+      "Self-advance first-round placeholders preserve the existing bracket simulator shape without changing the active current playoff series.",
+      "Market odds records are not active in this configuration."
+    ]
+  },
+  "seriesForecasts": [
+    {
+      "seriesId": "east-entry-nyk-advanced",
+      "teamAId": "nyk",
+      "teamBId": "nyk",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-entry-phi-eliminated",
+      "teamAId": "phi",
+      "teamBId": "phi",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-entry-det-active",
+      "teamAId": "det",
+      "teamBId": "det",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-entry-cle-active",
+      "teamAId": "cle",
+      "teamBId": "cle",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "east-sf-nyk-phi",
+      "teamAId": "nyk",
+      "teamBId": "phi",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 3.7492023809523816
+    },
+    {
+      "seriesId": "east-sf-det-cle",
+      "teamAId": "det",
+      "teamBId": "cle",
+      "winsA": 3,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "3-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0.6901934523809521
+    },
+    {
+      "seriesId": "east-cf-nyk-cle",
+      "teamAId": "nyk",
+      "teamBId": "cle",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0.8562857142857143
+    },
+    {
+      "seriesId": "west-entry-okc-active",
+      "teamAId": "okc",
+      "teamBId": "okc",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        },
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-entry-lal-active",
+      "teamAId": "lal",
+      "teamBId": "lal",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-entry-min-active",
+      "teamAId": "min",
+      "teamBId": "min",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Donte DiVincenzo",
+          "teamId": "min",
+          "playerId": "min-7",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        },
+        {
+          "label": "Donte DiVincenzo",
+          "teamId": "min",
+          "playerId": "min-7",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-entry-sas-active",
+      "teamAId": "sas",
+      "teamBId": "sas",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0
+    },
+    {
+      "seriesId": "west-sf-okc-lal",
+      "teamAId": "okc",
+      "teamBId": "lal",
+      "winsA": 4,
+      "winsB": 0,
+      "nextGame": null,
+      "teamASeriesWinProbability": 1,
+      "teamBSeriesWinProbability": 0,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "4-0": 1
+      },
+      "uncertainty": {
+        "lower": 1,
+        "median": 1,
+        "upper": 1,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 1,
+          "ifOut": 1,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": 1.2427678571428573
+    },
+    {
+      "seriesId": "west-sf-min-sas",
+      "teamAId": "min",
+      "teamBId": "sas",
+      "winsA": 2,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "2-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Donte DiVincenzo",
+          "teamId": "min",
+          "playerId": "min-7",
+          "ifAvailable": 0,
+          "ifOut": 0,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": -1.652916666666667
+    },
+    {
+      "seriesId": "west-cf-okc-sas",
+      "teamAId": "okc",
+      "teamBId": "sas",
+      "winsA": 3,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "3-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [
+        {
+          "label": "Jalen Williams",
+          "teamId": "okc",
+          "playerId": "okc-2",
+          "ifAvailable": 0,
+          "ifOut": 0,
+          "swing": 0
+        }
+      ],
+      "teamStrengthDifference": -0.9608035714285714
+    },
+    {
+      "seriesId": "nba-finals-sas-nyk",
+      "teamAId": "sas",
+      "teamBId": "nyk",
+      "winsA": 1,
+      "winsB": 4,
+      "nextGame": null,
+      "teamASeriesWinProbability": 0,
+      "teamBSeriesWinProbability": 1,
+      "expectedGamesRemaining": 0,
+      "iterations": 0,
+      "computationMethod": "exact",
+      "finalScoreProbabilities": {
+        "1-4": 1
+      },
+      "uncertainty": {
+        "lower": 0,
+        "median": 0,
+        "upper": 0,
+        "samples": 0
+      },
+      "scenarioImpacts": [],
+      "teamStrengthDifference": 0.8349345238095234
+    }
+  ],
+  "bracketForecast": {
+    "rows": [
+      {
+        "teamId": "nyk",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 1,
+        "championshipProbability": 1
+      },
+      {
+        "teamId": "det",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "okc",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "sas",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 1,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "cle",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 1,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "lal",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "min",
+        "conference": "West",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      },
+      {
+        "teamId": "phi",
+        "conference": "East",
+        "reachConferenceFinalsProbability": 0,
+        "reachFinalsProbability": 0,
+        "championshipProbability": 0
+      }
+    ],
+    "iterations": 10000,
+    "titleProbabilityTotal": 1,
+    "structurallyComplete": true,
+    "notes": []
+  }
+}

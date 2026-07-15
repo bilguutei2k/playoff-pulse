@@ -92,10 +92,12 @@ function modelPrediction(
 }
 
 export function coinflipPrediction(_series: HistoricalSeries): number {
+  void _series;
   return 0.5;
 }
 
 export function higherSeedPrediction(_series: HistoricalSeries): number {
+  void _series;
   return DIRECTIONAL_PRIOR;
 }
 
@@ -107,19 +109,19 @@ export function homeTeamPrediction(series: HistoricalSeries): number {
   return DIRECTIONAL_PRIOR;
 }
 
-const ELO_ONLY_SETTINGS: ModelSettings = {
+const SRS_PROXY_ONLY_SETTINGS: ModelSettings = {
   ...defaultModelSettings,
   playerWeight: 0,
   netRatingWeight: 0,
   eloWeight: 1,
 };
 
-export function eloOnlyPrediction(
+export function srsProxyOnlyPrediction(
   series: HistoricalSeries,
   teamASnapshot: TeamSeasonSnapshot,
   teamBSnapshot: TeamSeasonSnapshot,
 ): number {
-  return modelPrediction(series, teamASnapshot, teamBSnapshot, ELO_ONLY_SETTINGS);
+  return modelPrediction(series, teamASnapshot, teamBSnapshot, SRS_PROXY_ONLY_SETTINGS);
 }
 
 const NET_RATING_ONLY_SETTINGS: ModelSettings = {
@@ -174,8 +176,8 @@ export function predict(
       return clampBaseline(higherSeedPrediction(series));
     case "home_team":
       return clampBaseline(homeTeamPrediction(series));
-    case "elo_only":
-      return eloOnlyPrediction(series, teamASnapshot, teamBSnapshot);
+    case "srs_proxy_only":
+      return srsProxyOnlyPrediction(series, teamASnapshot, teamBSnapshot);
     case "net_rating_only":
       return netRatingOnlyPrediction(series, teamASnapshot, teamBSnapshot);
     case "playoff_pulse":
@@ -183,4 +185,4 @@ export function predict(
   }
 }
 
-export { ELO_ONLY_SETTINGS, NET_RATING_ONLY_SETTINGS, historicalSeriesToModelSeries, settingsForSeries };
+export { SRS_PROXY_ONLY_SETTINGS, NET_RATING_ONLY_SETTINGS, historicalSeriesToModelSeries, settingsForSeries };

@@ -50,7 +50,8 @@ export type HistoricalPlayerSnapshot = {
   mpg: number;                   // minutes per game (regular season only)
   gamesPlayed: number;
   impact: number;                // proxy: equal to bpm; see methodology for approximation gap
-  projectedMinutes: number;      // min(mpg, 40) — capped at playoff-rotation ceiling
+  projectedMinutes: number;      // deterministic share of a 240-minute playoff rotation
+  availabilityStatus: "unknown_assumed_available";
 };
 
 // Pre-series team strength snapshot — the historical equivalent of the live Team record.
@@ -65,7 +66,7 @@ export type TeamSeasonSnapshot = {
   snapshot_as_of: string;        // ISO "YYYY-MM-DD" — last day of regular season
 
   // Model inputs (parallel to the live Team type)
-  eloRating: number;             // proxy: 1500 + (srs × 35); see eloSource
+  eloRating: number;             // legacy-compatible storage for 1500 + (SRS × 35); see ratingSource
   netRating: number;             // ORTG − DRTG from BBRef team ratings page
   manualAdjustment: 0;           // always 0 for historical; literal type enforces it
   players: HistoricalPlayerSnapshot[];
@@ -78,8 +79,9 @@ export type TeamSeasonSnapshot = {
   losses: number;
 
   // Documentation literals — make the methodological gap visible in the type itself
-  eloSource: "srs_proxy";
+  ratingSource: "srs_point_proxy";
   playerImpactSource: "bpm_proxy";
+  rotationSource: "normalized_regular_season_mpg";
 };
 
 // Which model generated a prediction.
@@ -88,7 +90,7 @@ export type ModelName =
   | "coinflip"
   | "home_team"
   | "higher_seed"
-  | "elo_only"
+  | "srs_proxy_only"
   | "net_rating_only";
 
 // One prediction from one model for one series.

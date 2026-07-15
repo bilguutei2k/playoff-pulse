@@ -161,6 +161,7 @@ export function ForecastDashboard() {
           `Last updated ${dataLastUpdatedTimestamp}`,
           "Read-only live scoreboard probe",
           "Probabilities are model estimates",
+          `Model ${snapshot.metadata.modelVersion}`,
           validationStatus,
         ].map((label) => (
           <span key={label} className="pp-pill border-[rgba(201,150,31,0.45)] text-[var(--color-accent)]">

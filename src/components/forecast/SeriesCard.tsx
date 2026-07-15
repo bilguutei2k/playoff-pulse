@@ -99,6 +99,8 @@ export function SeriesCard({
       ? `${teamB.abbreviation} ${formatSigned(teamB.manualAdjustment)}`
       : null,
   ].filter(Boolean);
+  const scoreDistribution = Object.entries(forecast.finalScoreProbabilities)
+    .sort(([, probabilityA], [, probabilityB]) => probabilityB - probabilityA);
 
   return (
     <article className="pp-card">
@@ -191,7 +193,7 @@ export function SeriesCard({
         <div className="flex items-center justify-between">
           <span className="pp-kicker">Series win probability</span>
           <span className="pp-kicker text-[var(--color-text-faint)]">
-            {forecast.iterations.toLocaleString()} sims
+            Exact solver
           </span>
         </div>
         <ProbabilityRow
@@ -202,7 +204,57 @@ export function SeriesCard({
           label={teamB.abbreviation}
           value={forecast.teamBSeriesWinProbability}
         />
+        {forecast.uncertainty.samples > 0 ? (
+          <div className="mt-1 grid gap-1">
+            <div className="flex justify-between text-[11px] text-[var(--color-text-muted)]">
+              <span>80% input/model range</span>
+              <span className="pp-number">
+                {formatPercent(forecast.uncertainty.lower)}–{formatPercent(forecast.uncertainty.upper)}
+              </span>
+            </div>
+            <div className="relative h-2 bg-[var(--color-panel-secondary)]">
+              <span
+                className="absolute h-2 bg-[var(--color-accent)] opacity-70"
+                style={{
+                  left: `${forecast.uncertainty.lower * 100}%`,
+                  width: `${(forecast.uncertainty.upper - forecast.uncertainty.lower) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
+
+      {scoreDistribution.length > 1 ? (
+        <div className="grid gap-2 border-b-2 border-[var(--color-border-subtle)] px-4 py-3">
+          <div className="pp-kicker">Exact final-score distribution</div>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            {scoreDistribution.map(([score, probability]) => (
+              <div key={score} className="grid grid-cols-[30px_1fr_48px] items-center gap-2 text-xs">
+                <span className="pp-number font-bold">{score}</span>
+                <span className="pp-probbar h-[7px]">
+                  <span className="pp-probbar-fill" style={{ width: `${probability * 100}%` }} />
+                </span>
+                <span className="pp-number text-right">{formatPercent(probability)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {forecast.scenarioImpacts.length ? (
+        <div className="grid gap-2 border-b-2 border-[var(--color-border-subtle)] bg-[var(--overlay-accent-soft)] px-4 py-3 text-xs">
+          <div className="pp-kicker text-[var(--color-accent)]">Availability scenarios</div>
+          {forecast.scenarioImpacts.map((scenario) => (
+            <div key={scenario.playerId} className="flex flex-wrap justify-between gap-2">
+              <span>{scenario.label}</span>
+              <span className="pp-number">
+                available {formatPercent(scenario.ifAvailable)} / out {formatPercent(scenario.ifOut)}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       <div className="grid gap-2 border-b-2 border-[var(--color-border-subtle)] px-4 py-3 text-sm sm:grid-cols-3">
         <div className="bg-[var(--color-panel-secondary)] p-3">
@@ -239,6 +291,21 @@ export function SeriesCard({
           </p>
         </div>
       </div>
+
+      {nextGame ? (
+        <div className="grid gap-2 border-b-2 border-[var(--color-border-subtle)] px-4 py-3">
+          <div className="pp-kicker">Next-game margin drivers</div>
+          {nextGame.drivers
+            .filter((driver) => Math.abs(driver.marginPointsForTeamA) >= 0.05)
+            .sort((a, b) => Math.abs(b.marginPointsForTeamA) - Math.abs(a.marginPointsForTeamA))
+            .map((driver) => (
+              <div key={driver.label} className="flex justify-between text-xs text-[var(--color-text-muted)]">
+                <span>{driver.label}</span>
+                <span className="pp-number">{formatSigned(driver.marginPointsForTeamA)}</span>
+              </div>
+            ))}
+        </div>
+      ) : null}
 
       {manualNotes.length ? (
         <div className="flex flex-wrap items-center gap-2 bg-[var(--overlay-accent-soft)] px-4 py-3">

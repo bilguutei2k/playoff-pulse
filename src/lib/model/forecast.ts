@@ -9,8 +9,13 @@ import type {
 import { estimateBracketForecast } from "@/lib/model/bracket-simulator";
 import { estimateSeriesProbability } from "@/lib/model/simulator";
 import { estimateTeamForecasts } from "@/lib/model/team-strength";
+import { MODEL_VERSION, RESEARCH_PROTOCOL_VERSION } from "@/lib/model/version";
 
 export type ForecastSnapshot = {
+  metadata: {
+    modelVersion: string;
+    researchProtocolVersion: string;
+  };
   teams: Team[];
   teamsById: Record<string, Team>;
   teamForecasts: TeamForecast[];
@@ -51,6 +56,10 @@ export function buildForecastSnapshot(
   );
 
   return {
+    metadata: {
+      modelVersion: MODEL_VERSION,
+      researchProtocolVersion: RESEARCH_PROTOCOL_VERSION,
+    },
     teams,
     teamsById,
     teamForecasts,

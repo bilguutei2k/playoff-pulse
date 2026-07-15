@@ -1,6 +1,6 @@
 # Playoff Pulse Backtest Methodology
 
-Generated: 2026-07-12T22:09:00.492Z
+Generated: 2026-07-15T04:26:45.631Z
 
 ## Scope
 
@@ -18,11 +18,11 @@ Raw HTML is cached under `data/historical/raw/` and normalized JSON is written u
 ## Hybrid Input Methodology
 
 - `netRating` is calculated as ORtg minus DRtg from regular-season team ratings.
-- `eloRating` is approximated as `1500 + adjustedMargin * 35`; the ratings table exposes adjusted margin (`MOV/A`), not a literal SRS column.
+- The historical point-scale rating stored in the legacy-compatible `eloRating` field is `1500 + SRS × 35`; it is an SRS point proxy, not Elo.
 - Player impact is proxied with regular-season BPM.
-- Projected minutes use regular-season minutes per game capped at 40.
+- Raw regular-season MPG is retained, then deterministically normalized into a complete 240-minute playoff rotation with a 40-minute player cap.
 - Historical manual adjustments are fixed at 0.
-- All historical players are treated as healthy because injury timelines are not yet modeled.
+- Historical availability is explicitly marked unknown and assumed available because injury timelines are not yet modeled.
 - Simulated series use the full seven-game 2-2-1-1-1 home pattern reconstructed from the actual Game 1 host, so games beyond the realized series length keep the correct home court instead of defaulting to neutral.
 
 ## Leakage Controls
@@ -34,7 +34,7 @@ Raw HTML is cached under `data/historical/raw/` and normalized JSON is written u
 
 ## Known Limitations
 
-- Elo is an adjusted-margin proxy, not a true possession-by-possession Elo history.
+- The SRS point proxy is not a possession-by-possession Elo history; its legacy storage field is retained only for model compatibility.
 - BPM is a player impact proxy and is not the same scale as the current manual player-impact inputs.
 - Historical injuries, absences, and minute changes are not modeled.
 - 2020 bubble series are tagged and model home-court advantage is set to zero, but BBRef still supplies nominal home/away designations.
@@ -46,9 +46,9 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 
 | Model | N | Brier Score | Log Loss | Accuracy |
 |---|---:|---:|---:|---:|
-| playoff_pulse | 150 | 0.1905 | 0.5612 | 70.0% |
-| elo_only | 150 | 0.1926 | 0.5680 | 68.7% |
-| net_rating_only | 150 | 0.1952 | 0.5759 | 70.0% |
+| playoff_pulse | 150 | 0.1907 | 0.5618 | 69.3% |
+| srs_proxy_only | 150 | 0.1935 | 0.5702 | 68.7% |
+| net_rating_only | 150 | 0.1949 | 0.5747 | 70.0% |
 | higher_seed | 150 | 0.2125 | 0.6165 | 70.0% |
 | home_team | 150 | 0.2152 | 0.6221 | 68.3% |
 | coinflip | 150 | 0.2500 | 0.6931 | 50.0% |
@@ -59,14 +59,14 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.2-0.3 | 1 | 27.4% | 100.0% |
-| 0.3-0.4 | 2 | 37.5% | 0.0% |
-| 0.4-0.5 | 11 | 47.6% | 54.5% |
-| 0.5-0.6 | 32 | 55.1% | 53.1% |
-| 0.6-0.7 | 48 | 65.6% | 68.8% |
-| 0.7-0.8 | 30 | 74.3% | 83.3% |
-| 0.8-0.9 | 21 | 85.4% | 85.7% |
-| 0.9-1.0 | 5 | 92.3% | 100.0% |
+| 0.2-0.3 | 1 | 26.3% | 100.0% |
+| 0.3-0.4 | 2 | 38.0% | 0.0% |
+| 0.4-0.5 | 10 | 47.8% | 60.0% |
+| 0.5-0.6 | 33 | 54.9% | 51.5% |
+| 0.6-0.7 | 50 | 65.7% | 68.0% |
+| 0.7-0.8 | 27 | 74.1% | 88.9% |
+| 0.8-0.9 | 22 | 84.8% | 81.8% |
+| 0.9-1.0 | 5 | 92.2% | 100.0% |
 
 ### coinflip
 
@@ -87,30 +87,30 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 |---|---:|---:|---:|
 | 0.6-0.7 | 150 | 65.0% | 70.0% |
 
-### elo_only
+### srs_proxy_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.1-0.2 | 1 | 14.5% | 100.0% |
-| 0.2-0.3 | 2 | 26.5% | 0.0% |
-| 0.3-0.4 | 1 | 33.2% | 100.0% |
-| 0.4-0.5 | 12 | 45.8% | 58.3% |
-| 0.5-0.6 | 17 | 54.5% | 35.3% |
-| 0.6-0.7 | 23 | 64.9% | 73.9% |
-| 0.7-0.8 | 41 | 75.5% | 70.7% |
-| 0.8-0.9 | 21 | 83.9% | 76.2% |
-| 0.9-1.0 | 32 | 95.1% | 87.5% |
+| 0.1-0.2 | 1 | 14.0% | 100.0% |
+| 0.2-0.3 | 1 | 24.2% | 0.0% |
+| 0.3-0.4 | 2 | 31.3% | 50.0% |
+| 0.4-0.5 | 12 | 45.7% | 58.3% |
+| 0.5-0.6 | 19 | 55.1% | 42.1% |
+| 0.6-0.7 | 20 | 65.0% | 70.0% |
+| 0.7-0.8 | 43 | 75.4% | 72.1% |
+| 0.8-0.9 | 20 | 84.1% | 75.0% |
+| 0.9-1.0 | 32 | 95.0% | 87.5% |
 
 ### net_rating_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.1-0.2 | 1 | 16.7% | 100.0% |
-| 0.2-0.3 | 2 | 25.5% | 0.0% |
-| 0.3-0.4 | 1 | 31.0% | 100.0% |
+| 0.1-0.2 | 1 | 16.6% | 100.0% |
+| 0.2-0.3 | 2 | 25.6% | 0.0% |
+| 0.3-0.4 | 1 | 31.7% | 100.0% |
 | 0.4-0.5 | 14 | 46.3% | 50.0% |
-| 0.5-0.6 | 14 | 54.9% | 42.9% |
-| 0.6-0.7 | 22 | 65.1% | 68.2% |
+| 0.5-0.6 | 15 | 55.0% | 46.7% |
+| 0.6-0.7 | 21 | 65.2% | 66.7% |
 | 0.7-0.8 | 38 | 75.5% | 73.7% |
-| 0.8-0.9 | 25 | 84.0% | 72.0% |
+| 0.8-0.9 | 25 | 83.9% | 72.0% |
 | 0.9-1.0 | 33 | 95.5% | 87.9% |

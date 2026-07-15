@@ -41,6 +41,8 @@ export const REGULAR_SEASON_END_DATES: Record<Season, string> = {
 };
 
 export const BUBBLE_SEASON = 2020;
+export const PLAYOFF_ROTATION_MINUTES = 240;
+export const PLAYER_MINUTE_CAP = 40;
 
 // -- Output paths ------------------------------------------------------------
 
@@ -141,6 +143,68 @@ function seedForTeam(series: HistoricalSeries[], teamId: string): number {
   }
 
   return seeds[0];
+}
+
+type RotationInput = {
+  mpg: number;
+};
+
+/**
+ * Converts regular-season MPG into a deterministic 240-minute rotation.
+ * Allocation is proportional to MPG, subject to the per-player cap. The
+ * iterative pass also handles unusually shallow source rosters without
+ * silently losing minutes.
+ */
+export function allocatePlayoffRotation<T extends RotationInput>(players: T[]): number[] {
+  if (players.length === 0) {
+    return [];
+  }
+
+  const weights = players.map((player) =>
+    Number.isFinite(player.mpg) ? Math.max(0, player.mpg) : 0,
+  );
+  const capacity = players.length * PLAYER_MINUTE_CAP;
+  if (capacity < PLAYOFF_ROTATION_MINUTES) {
+    throw new Error(
+      `At least ${Math.ceil(PLAYOFF_ROTATION_MINUTES / PLAYER_MINUTE_CAP)} players are required for a 240-minute rotation.`,
+    );
+  }
+  if (weights.every((weight) => weight === 0)) {
+    throw new Error("Cannot allocate a rotation when every MPG weight is zero.");
+  }
+
+  const minutes = Array.from({ length: players.length }, () => 0);
+  const active = new Set(players.map((_, index) => index));
+  let remaining = PLAYOFF_ROTATION_MINUTES;
+
+  while (remaining > 1e-9 && active.size > 0) {
+    const activeWeight = [...active].reduce((sum, index) => sum + weights[index], 0);
+    const equalShare = activeWeight === 0 ? remaining / active.size : null;
+    let allocated = 0;
+
+    for (const index of [...active]) {
+      const proposed =
+        equalShare ?? remaining * (weights[index] / activeWeight);
+      const available = PLAYER_MINUTE_CAP - minutes[index];
+      const addition = Math.min(available, proposed);
+      minutes[index] += addition;
+      allocated += addition;
+      if (available - addition <= 1e-9) {
+        active.delete(index);
+      }
+    }
+
+    if (allocated <= 1e-9) {
+      break;
+    }
+    remaining -= allocated;
+  }
+
+  if (Math.abs(minutes.reduce((sum, value) => sum + value, 0) - PLAYOFF_ROTATION_MINUTES) > 1e-6) {
+    throw new Error("Unable to allocate a complete 240-minute rotation.");
+  }
+
+  return minutes.map((value) => Number(value.toFixed(6)));
 }
 
 // -- Normalizers -------------------------------------------------------------
@@ -262,17 +326,19 @@ export function buildSnapshots(
         throw new Error(`No team rating found for playoff team ${teamId}.`);
       }
 
-      const players = playerAdvanced
+      const qualifyingPlayers = playerAdvanced
         .filter((player) => player.teamId === teamId && player.gamesPlayed >= 10)
         .sort((a, b) => b.mpg - a.mpg)
-        .slice(0, 10)
-        .map((player) => ({
+        .slice(0, 10);
+      const rotationMinutes = allocatePlayoffRotation(qualifyingPlayers);
+      const players = qualifyingPlayers.map((player, index) => ({
           name: player.name,
           bpm: player.bpm,
           mpg: player.mpg,
           gamesPlayed: player.gamesPlayed,
           impact: player.bpm,
-          projectedMinutes: Math.min(player.mpg, 40),
+          projectedMinutes: rotationMinutes[index],
+          availabilityStatus: "unknown_assumed_available" as const,
         }));
 
       return {
@@ -291,8 +357,9 @@ export function buildSnapshots(
         drtg: rating.drtg,
         wins: rating.wins,
         losses: rating.losses,
-        eloSource: "srs_proxy",
+        ratingSource: "srs_point_proxy",
         playerImpactSource: "bpm_proxy",
+        rotationSource: "normalized_regular_season_mpg",
       };
     });
 }
@@ -376,6 +443,18 @@ export function validateSnapshots(
         season: snapshot.season,
         entityId: snapshot.teamId,
         issue: "snapshot has no qualifying players.",
+      });
+    }
+
+    const rotationTotal = snapshot.players.reduce(
+      (sum, player) => sum + player.projectedMinutes,
+      0,
+    );
+    if (Math.abs(rotationTotal - PLAYOFF_ROTATION_MINUTES) > 1e-4) {
+      anomalies.push({
+        season: snapshot.season,
+        entityId: snapshot.teamId,
+        issue: `projected playoff rotation must total 240 minutes, got ${rotationTotal}.`,
       });
     }
 

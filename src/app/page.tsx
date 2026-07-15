@@ -6,6 +6,7 @@ import {
   playoffConfig,
 } from "@/lib/data/playoff-config";
 import { ForecastDashboard } from "@/components/forecast/ForecastDashboard";
+import Link from "next/link";
 
 function formatDataLastUpdated(value: string): string {
   const [year, month, day] = value.split("-").map(Number);
@@ -36,8 +37,12 @@ export default function Home() {
               </h1>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
                 Transparent NBA playoff forecasting built from manual ratings,
-                player availability, home court, and Monte Carlo simulation.
+                player availability, exact series paths, and uncertainty-aware bracket simulation.
               </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link href="/lab" className="border-2 border-[var(--color-accent)] bg-[var(--overlay-accent-soft)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em]">Open preserved scenario lab</Link>
+                <Link href="/evidence" className="border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em]">Browse historical evidence</Link>
+              </div>
             </div>
 
             <div className="grid gap-0 divide-y divide-[var(--color-border-subtle)] sm:grid-cols-3 sm:divide-x sm:divide-y-0 xl:grid-cols-1 xl:divide-x-0 xl:divide-y">
@@ -64,7 +69,7 @@ export default function Home() {
               <div className="p-4">
                 <div className="pp-kicker">Probabilities are model estimates</div>
                 <div className="pp-number mt-2 text-sm font-bold text-[var(--color-warning)]">
-                  Calibration planned
+                  Rolling evidence published
                 </div>
                 <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
                   No odds feed or betting recommendation is active.

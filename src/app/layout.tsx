@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 export const metadata: Metadata = {
   title: "Playoff Pulse",
   description:
-    "Transparent NBA playoff probability simulator based on assumed inputs and Monte Carlo simulation.",
+    "Transparent NBA playoff forecast using exact series solving, uncertainty-aware bracket simulation, and manual inputs.",
 };
 
 export default function RootLayout({

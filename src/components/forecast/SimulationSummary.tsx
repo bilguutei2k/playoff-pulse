@@ -46,7 +46,7 @@ export function SimulationSummary({
       icon: LineChart,
       label: "Probabilities",
       value: "Model estimates",
-      subtext: "Simulation probabilities, not certainties or recommendations.",
+      subtext: "Forecast probabilities, not certainties or recommendations.",
     },
     {
       icon: ShieldCheck,

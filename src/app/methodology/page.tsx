@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import backtestSummary from "../../../docs/backtest/summary.json";
 import { formatNumber, formatSigned } from "@/lib/utils/format";
+import { ResearchEvidence } from "@/components/forecast/ResearchEvidence";
 
 type SectionTable = {
   type: "table";
@@ -37,19 +38,19 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Injury Handling",
-    body: "Players marked out are excluded from the player-minute impact calculation. Limited and questionable players receive conservative availability multipliers. These are simple assumptions for the MVP, not medical or official availability forecasts.",
+    body: "Players marked out are excluded from the central player-minute estimate. Limited and questionable players receive disclosed central multipliers. The uncertainty layer samples questionable availability and exposes available-versus-out scenarios; these are model assumptions, not medical forecasts.",
   },
   {
     title: "Home Court",
     body: "Expected margin starts with the difference between the two teams' strength estimates. The configured home-court advantage is 2.2 points added to the expected margin when the home team has court advantage. This is a manual assumption, not empirically fitted to playoff data.",
   },
   {
-    title: "Monte Carlo Simulation",
-    body: "Game margins are converted to win probabilities with a logistic function using a scale parameter of 6.5. In plain language, a team with a +6.5 expected margin wins approximately 73% of the time, while a team with a +13 margin wins approximately 88% of the time. The remaining games in each best-of-seven series are simulated until one team reaches four wins, respecting the current series score and home pattern.",
+    title: "Exact Series Solver",
+    body: "Game margins are converted to win probabilities with a logistic function using a scale parameter of 6.5. Every possible remaining best-of-seven path is then solved exactly with dynamic programming, respecting the current score and home pattern. Monte Carlo is reserved for bracket-wide and input-uncertainty calculations.",
   },
   {
     title: "Full Bracket Simulation",
-    body: "The bracket simulation repeatedly resolves configured first-round, conference semifinal, and conference final series, creates future best-of-seven rounds from winners when matchups are not manually configured, and then simulates the Finals across 10,000 iterations. When an NBA Finals series is manually configured, the championship simulation respects that current Finals score and home pattern instead of restarting the Finals at 0-0. That produces title probability estimates stable to within roughly +/-1 percentage point. It reports each team's probability of reaching the conference finals, reaching the Finals, and winning the championship.",
+    body: "The bracket simulation repeatedly resolves configured rounds and creates future series from winners. Each path draws shared team-strength and parameter uncertainty, so a team's latent strength is correlated across its games. The 10th–90th percentile series ranges are sensitivity intervals under disclosed assumptions, not empirically validated coverage guarantees. A configured Finals score and home pattern are always respected.",
   },
   {
     title: "Manual and Static Inputs",
@@ -58,26 +59,26 @@ const sections: MethodologySection[] = [
   {
     title: "Backtest Results",
     body: [
-      'Across 150 playoff series from 2016 through 2025, Playoff Pulse posts a Brier score of 0.190 -- comfortably better than a 50/50 coinflip (0.250), a "higher seed always wins" rule (0.212), and a "home team always wins" rule (0.215). It also beats those simple baselines on log loss. Against single-component baselines built from just Elo (0.193) or just net rating (0.195), the aggregate edge is small. Where the full model earns its weight, and where it doesn\'t, is described round-by-round below.',
-      "The aggregate Brier edge is only 0.002 better than Elo-only and 0.005 better than net-rating-only. That means the three-component formula does not dominantly outperform single-component baselines overall; its value shows up in specific rounds, not as a clean sweep across the whole sample.",
+      'Across 150 playoff series from 2016 through 2025, Playoff Pulse posts a Brier score of 0.191 -- comfortably better than a 50/50 coinflip (0.250), a "higher seed always wins" rule (0.213), and a "home team always wins" rule (0.215). Against the historical SRS-proxy-only model (0.194) or net-rating-only model (0.195), the aggregate edge is small.',
+      "The aggregate edge does not establish dominant superiority over rating-only models. Rolling-origin game evaluation and season-clustered intervals are shown above; feature additions remain excluded when their interval includes harm.",
       "Correction, July 2026: the original May 2026 run contained two input defects -- a minutes-parsing bug that promoted a handful of deep-bench players into 21 historical rotations, and truncated home patterns that placed unplayed late-series games on neutral court. Both were fixed and every number on this page was regenerated on July 12, 2026. The headline Brier improved from 0.193 to 0.190 and every qualitative conclusion below survived the correction.",
     ],
   },
   {
     title: "Round-Level Finding",
     body: [
-      "Round-by-round Brier score against the Elo-only baseline:",
+      "Round-by-round Brier score against the SRS-proxy-only baseline:",
       {
         type: "table",
-        headers: ["Round", "N", "Playoff Pulse", "Elo-only", "Delta vs Elo"],
+        headers: ["Round", "N", "Playoff Pulse", "SRS proxy", "Delta"],
         rows: [
-          ["First Round", "80", "0.142", "0.127", "+0.0157"],
-          ["Conference Semifinal", "40", "0.263", "0.294", "-0.0311"],
-          ["Conference Final", "20", "0.248", "0.261", "-0.0124"],
-          ["NBA Finals", "10", "0.172", "0.180", "-0.0087"],
+          ["First Round", "80", "0.143", "0.128", "+0.0157"],
+          ["Conference Semifinal", "40", "0.262", "0.294", "-0.0320"],
+          ["Conference Final", "20", "0.246", "0.262", "-0.0163"],
+          ["NBA Finals", "10", "0.173", "0.181", "-0.0079"],
         ],
       },
-      "The first-round result is the warning sign: the player-impact layer appears to add noise when seed gaps are large and the simpler Elo-only baseline is already confident. The same layer earns more of its weight in balanced matchups, especially the conference semifinals, where Playoff Pulse improves materially against Elo-only.",
+      "The first-round result is the warning sign: the player-impact layer appears to add noise when seed gaps are large and the simpler rating proxy is already confident. Later-round improvements are suggestive but based on smaller samples.",
       "This is a known weakness, documented here rather than tuned against.",
     ],
   },
@@ -103,12 +104,30 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Future Versions",
-    body: "Planned extensions include real data ingestion, market odds comparison, hybrid model probabilities, player-level external ratings, editable playoff rotations, real bracket synchronization, and citations.",
+    body: "The research harness now supports rolling-origin game and series evaluation, regularized expected-margin models, exact series solving, equal-count calibration, season-clustered uncertainty, and feature ablations. Matchup and player extensions remain research-only unless they improve future held-out seasons.",
+  },
+  {
+    title: "Point-in-Time Reconstruction",
+    body: [
+      "The research archive reconstructs 834 forecasts immediately before historical playoff games from 2016–2025. A Game N record includes the regular-season snapshot and Games 1 through N-1 only. It never includes Game N's result or a later result.",
+      "These are leakage-safe reconstructed forecasts, not claims about forecasts published at the time. Every record identifies its model version, information set, source snapshot, impact scale, rotation source, and availability assumption.",
+    ],
+  },
+  {
+    title: "Replacement Minutes and Scenario Lab",
+    body: "Scenario rotations conserve 240 minutes. Out players receive zero minutes; missing or vacated time becomes a disclosed replacement-level player rather than disappearing. Requests above 240 are proportionally scaled. The preserved Finals demonstration resets a completed series to 0–0 and is explicitly hypothetical, never presented as live 2026 state.",
+  },
+  {
+    title: "Calibration and Dynamic Candidate",
+    body: [
+      "Nested calibration is trained only on earlier rolling-origin predictions. It worsened both game Brier and game log loss and was rejected. It improved the eligible 75-series research subset, but is not applied to production because historical BPM/SRS inputs and subjective manual inputs are not interchangeable.",
+      "The dynamic_margin_update_v1 candidate is preregistered for a genuinely future season: after each prediction it splits 12% of margin residual between opponents and caps the carried postseason adjustment at +/-4 points. Results through 2025 are descriptive and cannot qualify it for promotion.",
+    ],
   },
   {
     title: "Limitations",
     body: [
-      "The current numbers should be read as model estimates from assumed inputs. They are not official data, not calibrated against historical outcomes, and not certainties. The bracket is structurally complete, but team ratings, player impacts, injury statuses, and series scores are still manual assumptions.",
+      "The current numbers should be read as model estimates from assumed inputs. They are not official data or certainties. Historical calibration evidence applies to the SRS-based research model; it does not automatically calibrate subjective production player ratings. The bracket is structurally complete, but team ratings, player impacts, and injury statuses remain manual assumptions.",
       "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale. Roster recency checks reduce a data-staleness risk; they do not validate the subjective impact ratings.",
     ],
   },
@@ -213,6 +232,8 @@ export default function MethodologyPage() {
             </div>
           </div>
 
+          <ResearchEvidence />
+
           <div className="pp-card">
             <div className="divide-y divide-[var(--color-border-subtle)]">
               {sections.map((section, index) => (
@@ -240,8 +261,8 @@ export default function MethodologyPage() {
             <div className="grid gap-3 p-4 text-sm leading-6 text-[var(--color-text-muted)]">
               <p>
                 The current numbers should be read as model estimates from
-                assumed inputs. They are not official data, not calibrated
-                against historical outcomes, and not certainties.
+                assumed inputs. They are not official data or certainties;
+                research-model calibration does not validate subjective live inputs.
               </p>
               <div className="border-y-2 border-[var(--color-border-strong)] bg-[var(--overlay-danger-soft)] px-3 py-2">
                 <span className="pp-kicker text-[var(--color-danger)]">
@@ -304,7 +325,9 @@ export default function MethodologyPage() {
                 ["Weights", "0.55 / 0.25 / 0.20"],
                 ["Home court", "+2.2 points"],
                 ["Logistic", "scale 6.5"],
-                ["Simulation", "10,000 runs"],
+                ["Series", "Exact solver"],
+                ["Bracket", "10,000 runs"],
+                ["Model", "2026.3 point-in-time"],
               ].map(([label, value]) => (
                 <div key={label} className="flex items-center justify-between gap-3 border-b border-[var(--color-border-subtle)] pb-2">
                   <span className="pp-kicker">{label}</span>

@@ -12,7 +12,7 @@ const sections = [
   },
   {
     title: "Methodology",
-    body: "Team strength combines player-minute impact, net rating, an Elo-derived point value, and a manual adjustment. Game margins are converted to win probabilities, then remaining series and bracket paths are simulated with Monte Carlo runs.",
+    body: "Team strength combines player-minute impact, net rating, a rating-derived point value, and a manual adjustment. Game margins become win probabilities; remaining series paths are solved exactly, while bracket paths sample shared input and parameter uncertainty.",
   },
   {
     title: "Data pipeline",
@@ -46,7 +46,7 @@ const sections = [
 
 const highlights = [
   ["Stack", "Next.js, React, TypeScript, Tailwind CSS"],
-  ["Model", "Manual inputs plus Monte Carlo simulation"],
+  ["Model", "Manual inputs, exact series solver, uncertainty simulation"],
   ["Status", "Manual model snapshot, read-only live scores"],
   ["Positioning", "Portfolio analytics showcase, not sportsbook"],
 ];

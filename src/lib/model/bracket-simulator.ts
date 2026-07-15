@@ -16,6 +16,7 @@ import {
   simulateSeriesOutcome,
 } from "@/lib/model/simulator";
 import { clampProbability, teamStrength } from "@/lib/model/probability";
+import { sampleUncertainModelInputs } from "@/lib/model/uncertainty";
 
 const CONFERENCES: Conference[] = ["East", "West"];
 const PLAYOFF_ROUNDS: PlayoffRound[] = [
@@ -370,12 +371,16 @@ export function estimateBracketForecast(
   );
 
   for (let iteration = 0; iteration < simulationCount; iteration += 1) {
+    const sampled = sampleUncertainModelInputs(teams, settings, random);
+    const sampledTeamsById = Object.fromEntries(
+      sampled.teams.map((team) => [team.id, team]),
+    );
     const conferenceChampions = CONFERENCES.map((conference) =>
       simulateConferencePath(
         conference,
         config,
-        teamsById,
-        settings,
+        sampledTeamsById,
+        sampled.settings,
         random,
         reachConferenceFinals,
         notes,
@@ -390,11 +395,11 @@ export function estimateBracketForecast(
       const finals = selectFinalsSeries(
         configuredFinals,
         conferenceChampions,
-        teamsById,
-        settings,
+        sampledTeamsById,
+        sampled.settings,
         notes,
       );
-      const outcome = simulateSeriesOutcome(finals, teamsById, settings, random);
+      const outcome = simulateSeriesOutcome(finals, sampledTeamsById, sampled.settings, random);
       increment(championships, outcome.winnerId);
     }
   }

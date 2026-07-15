@@ -6,7 +6,7 @@ This is not a sportsbook, not a betting recommendation tool, and not a fake AI p
 
 ## Live Demo
 
-Live demo: `TODO: add deployed URL`
+Live demo: https://548-sable.vercel.app
 
 ## Tech Stack
 
@@ -23,10 +23,10 @@ The model builds a point-scale team strength estimate from:
 
 - player-minute weighted impact
 - net rating
-- Elo-derived point value
+- rating-derived point value
 - manual adjustment
 
-Expected margins are converted into win probabilities with a logistic function. Remaining games are simulated through best-of-seven series, and the bracket Monte Carlo simulation estimates conference finals, Finals, and championship probabilities.
+Expected margins are converted into win probabilities with a logistic function. Remaining best-of-seven paths are solved exactly; the bracket simulation samples shared team-strength, availability, and parameter uncertainty to estimate advancement probabilities.
 
 ## Architecture Overview
 
@@ -54,7 +54,9 @@ The verification script checks core model behavior, including:
 - home court changes game probability
 - manual adjustments affect outputs
 - injuries affect player-minute impact and probabilities
-- series simulations terminate correctly
+- exact series paths terminate correctly and final-score probabilities sum to one
+- historical playoff rotations total exactly 240 minutes
+- uncertainty intervals are deterministic, ordered, and bounded
 - full bracket title probabilities sum to approximately 100 percent
 - bracket coverage warnings surface incomplete paths
 - live scoreboard normalization maps games, teams, status, scores, and manual-team matches
@@ -64,6 +66,9 @@ Run:
 ```bash
 corepack pnpm verify
 corepack pnpm build
+corepack pnpm backtest:pregame
+corepack pnpm backtest:evidence
+corepack pnpm archive:forecast -- --issued-at 2026-06-01T19:00:00-07:00
 ```
 
 ## Current Limitations
@@ -71,17 +76,24 @@ corepack pnpm build
 - Team ratings, player impacts, projected minutes, injuries, and series states are manual estimates.
 - Live scoreboard data is observational only and does not drive forecast math yet.
 - No odds feed, market comparison, database, or authentication is active.
-- Probabilities are not presented as calibrated betting edges.
+- Rolling-origin calibration evidence applies to the historical research model, not subjective production inputs or betting edges.
 - Player impact values are subjective and intended for transparent demonstration.
 
-## Future Roadmap
+## Model Research
 
-- Add explicit live-to-manual reconciliation for scores and series state.
-- Add injury and lineup source citations.
-- Add market odds comparison as a separate analysis layer.
-- Add historical backtesting and calibration reports.
-- Add editable rotation assumptions with saved scenario exports.
-- Add clearer provenance metadata for every manual input.
+- Historical rotations are normalized to 240 minutes with raw MPG retained.
+- Rolling-origin evaluation trains only on seasons before each test season.
+- Strong fitted seed/rating baselines, calibration diagnostics, and season-clustered intervals are reported.
+- Candidate player and matchup additions are retained as rejected ablations because they did not reliably improve game forecasts.
+- Exact score distributions, availability scenarios, sensitivity ranges, model versioning, and forecast archives are exposed in the product.
+
+See `docs/model-development.md` and `docs/backtest/research.json` for the promotion protocol and reproducible results.
+
+The `/lab` route provides a clearly labeled preserved scenario workspace. The
+`/evidence` route provides reconstructed pregame timelines, separate game and
+series calibration, failure analysis, and immutable production-version
+comparison. Full implementation details are in
+`docs/point-in-time-implementation.md`.
 
 ## Portfolio Framing
 

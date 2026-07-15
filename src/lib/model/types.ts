@@ -30,6 +30,7 @@ export type Player = {
   impact: number;
   projectedMinutes: number;
   injuryStatus: InjuryStatus;
+  healthyProjectedMinutes?: number;
 };
 
 export type Series = {
@@ -59,6 +60,12 @@ export type GameForecast = {
   expectedMarginForTeamA: number;
   teamAWinProbability: number;
   teamBWinProbability: number;
+  drivers: ForecastDriver[];
+};
+
+export type ForecastDriver = {
+  label: string;
+  marginPointsForTeamA: number;
 };
 
 export type SeriesForecast = {
@@ -72,7 +79,27 @@ export type SeriesForecast = {
   teamBSeriesWinProbability: number;
   expectedGamesRemaining: number;
   iterations: number;
+  computationMethod: "exact";
+  finalScoreProbabilities: Record<string, number>;
+  uncertainty: ProbabilityInterval;
+  scenarioImpacts: ScenarioImpact[];
   teamStrengthDifference: number;
+};
+
+export type ProbabilityInterval = {
+  lower: number;
+  median: number;
+  upper: number;
+  samples: number;
+};
+
+export type ScenarioImpact = {
+  label: string;
+  teamId: string;
+  playerId: string;
+  ifAvailable: number;
+  ifOut: number;
+  swing: number;
 };
 
 export type SeriesSimulationOutcome = {

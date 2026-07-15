@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-12T22:09:00.492Z",
+  "generatedAt": "2026-07-15T04:26:45.631Z",
   "firstSeason": 2016,
   "lastSeason": 2025,
   "totalSeries": 150,
   "models": {
     "playoff_pulse": {
-      "brierScore": 0.190469,
-      "logLoss": 0.561172,
-      "accuracy": 0.7,
+      "brierScore": 0.190662,
+      "logLoss": 0.561751,
+      "accuracy": 0.693333,
       "n": 150
     },
     "coinflip": {
@@ -28,15 +28,15 @@
       "accuracy": 0.7,
       "n": 150
     },
-    "elo_only": {
-      "brierScore": 0.192632,
-      "logLoss": 0.567952,
+    "srs_proxy_only": {
+      "brierScore": 0.193542,
+      "logLoss": 0.570237,
       "accuracy": 0.686667,
       "n": 150
     },
     "net_rating_only": {
-      "brierScore": 0.195247,
-      "logLoss": 0.575863,
+      "brierScore": 0.194905,
+      "logLoss": 0.574739,
       "accuracy": 0.7,
       "n": 150
     }

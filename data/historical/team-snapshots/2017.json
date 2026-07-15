@@ -16,7 +16,8 @@
         "mpg": 33.95652173913044,
         "gamesPlayed": 69,
         "impact": 2.1,
-        "projectedMinutes": 33.95652173913044
+        "projectedMinutes": 32.49853,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Dennis Schröder",
@@ -24,7 +25,8 @@
         "mpg": 31.455696202531644,
         "gamesPlayed": 79,
         "impact": 0,
-        "projectedMinutes": 31.455696202531644
+        "projectedMinutes": 30.105082,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Dwight Howard",
@@ -32,7 +34,8 @@
         "mpg": 29.716216216216218,
         "gamesPlayed": 74,
         "impact": 1.4,
-        "projectedMinutes": 29.716216216216218
+        "projectedMinutes": 28.440291,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Tim Hardaway Jr.",
@@ -40,7 +43,8 @@
         "mpg": 27.265822784810126,
         "gamesPlayed": 79,
         "impact": 0.5,
-        "projectedMinutes": 27.265822784810126
+        "projectedMinutes": 26.09511,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kent Bazemore",
@@ -48,7 +52,8 @@
         "mpg": 26.89041095890411,
         "gamesPlayed": 73,
         "impact": -1,
-        "projectedMinutes": 26.89041095890411
+        "projectedMinutes": 25.735817,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Thabo Sefolosha",
@@ -56,7 +61,8 @@
         "mpg": 25.741935483870968,
         "gamesPlayed": 62,
         "impact": 0.4,
-        "projectedMinutes": 25.741935483870968
+        "projectedMinutes": 24.636654,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Ersan İlyasova",
@@ -64,7 +70,8 @@
         "mpg": 24.346153846153847,
         "gamesPlayed": 26,
         "impact": -0.4,
-        "projectedMinutes": 24.346153846153847
+        "projectedMinutes": 23.300803,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Mike Muscala",
@@ -72,7 +79,8 @@
         "mpg": 17.67142857142857,
         "gamesPlayed": 70,
         "impact": 1.1,
-        "projectedMinutes": 17.67142857142857
+        "projectedMinutes": 16.91267,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Malcolm Delaney",
@@ -80,7 +88,8 @@
         "mpg": 17.095890410958905,
         "gamesPlayed": 73,
         "impact": -5.6,
-        "projectedMinutes": 17.095890410958905
+        "projectedMinutes": 16.361844,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Taurean Prince",
@@ -88,7 +97,8 @@
         "mpg": 16.627118644067796,
         "gamesPlayed": 59,
         "impact": -1.8,
-        "projectedMinutes": 16.627118644067796
+        "projectedMinutes": 15.9132,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": -1.23,
@@ -96,8 +106,9 @@
     "drtg": 106.54,
     "wins": 43,
     "losses": 39,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "BOS",
@@ -116,7 +127,8 @@
         "mpg": 33.80263157894737,
         "gamesPlayed": 76,
         "impact": 6.7,
-        "projectedMinutes": 33.80263157894737
+        "projectedMinutes": 32.081547,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Avery Bradley",
@@ -124,7 +136,8 @@
         "mpg": 33.36363636363637,
         "gamesPlayed": 55,
         "impact": -0.6,
-        "projectedMinutes": 33.36363636363637
+        "projectedMinutes": 31.664903,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jae Crowder",
@@ -132,7 +145,8 @@
         "mpg": 32.43055555555556,
         "gamesPlayed": 72,
         "impact": 0.9,
-        "projectedMinutes": 32.43055555555556
+        "projectedMinutes": 30.779331,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Al Horford",
@@ -140,7 +154,8 @@
         "mpg": 32.25,
         "gamesPlayed": 68,
         "impact": 3.4,
-        "projectedMinutes": 32.25
+        "projectedMinutes": 30.607968,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Marcus Smart",
@@ -148,7 +163,8 @@
         "mpg": 30.367088607594937,
         "gamesPlayed": 79,
         "impact": -1.3,
-        "projectedMinutes": 30.367088607594937
+        "projectedMinutes": 28.820927,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kelly Olynyk",
@@ -156,7 +172,8 @@
         "mpg": 20.506666666666668,
         "gamesPlayed": 75,
         "impact": 0.3,
-        "projectedMinutes": 20.506666666666668
+        "projectedMinutes": 19.462555,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Amir Johnson",
@@ -164,7 +181,8 @@
         "mpg": 20.1,
         "gamesPlayed": 80,
         "impact": 0.6,
-        "projectedMinutes": 20.1
+        "projectedMinutes": 19.076594,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jaylen Brown",
@@ -172,7 +190,8 @@
         "mpg": 17.192307692307693,
         "gamesPlayed": 78,
         "impact": -3.7,
-        "projectedMinutes": 17.192307692307693
+        "projectedMinutes": 16.316949,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Terry Rozier",
@@ -180,7 +199,8 @@
         "mpg": 17.06756756756757,
         "gamesPlayed": 74,
         "impact": -1.4,
-        "projectedMinutes": 17.06756756756757
+        "projectedMinutes": 16.19856,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jonas Jerebko",
@@ -188,7 +208,8 @@
         "mpg": 15.794871794871796,
         "gamesPlayed": 78,
         "impact": -2.4,
-        "projectedMinutes": 15.794871794871796
+        "projectedMinutes": 14.990665,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 2.25,
@@ -196,8 +217,9 @@
     "drtg": 109.16,
     "wins": 53,
     "losses": 29,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "CHI",
@@ -216,7 +238,8 @@
         "mpg": 36.96052631578947,
         "gamesPlayed": 76,
         "impact": 7.3,
-        "projectedMinutes": 36.96052631578947
+        "projectedMinutes": 38.117221,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Dwyane Wade",
@@ -224,7 +247,8 @@
         "mpg": 29.866666666666667,
         "gamesPlayed": 60,
         "impact": 2.5,
-        "projectedMinutes": 29.866666666666667
+        "projectedMinutes": 30.801357,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Robin Lopez",
@@ -232,7 +256,8 @@
         "mpg": 28.037037037037038,
         "gamesPlayed": 81,
         "impact": -2.2,
-        "projectedMinutes": 28.037037037037038
+        "projectedMinutes": 28.914468,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Rajon Rondo",
@@ -240,7 +265,8 @@
         "mpg": 26.71014492753623,
         "gamesPlayed": 69,
         "impact": -0.5,
-        "projectedMinutes": 26.71014492753623
+        "projectedMinutes": 27.54605,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Nikola Mirotić",
@@ -248,7 +274,8 @@
         "mpg": 23.985714285714284,
         "gamesPlayed": 70,
         "impact": 0.7,
-        "projectedMinutes": 23.985714285714284
+        "projectedMinutes": 24.736357,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Paul Zipser",
@@ -256,7 +283,8 @@
         "mpg": 19.15909090909091,
         "gamesPlayed": 44,
         "impact": -4.4,
-        "projectedMinutes": 19.15909090909091
+        "projectedMinutes": 19.758683,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Michael Carter-Williams",
@@ -264,7 +292,8 @@
         "mpg": 18.8,
         "gamesPlayed": 45,
         "impact": -3.2,
-        "projectedMinutes": 18.8
+        "projectedMinutes": 19.388354,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Denzel Valentine",
@@ -272,7 +301,8 @@
         "mpg": 17.12280701754386,
         "gamesPlayed": 57,
         "impact": -3.3,
-        "projectedMinutes": 17.12280701754386
+        "projectedMinutes": 17.658672,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jerian Grant",
@@ -280,7 +310,8 @@
         "mpg": 16.317460317460316,
         "gamesPlayed": 63,
         "impact": 0.1,
-        "projectedMinutes": 16.317460317460316
+        "projectedMinutes": 16.828122,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Cristiano Felício",
@@ -288,7 +319,8 @@
         "mpg": 15.757575757575758,
         "gamesPlayed": 66,
         "impact": -0.7,
-        "projectedMinutes": 15.757575757575758
+        "projectedMinutes": 16.250716,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 0.03,
@@ -296,8 +328,9 @@
     "drtg": 107.72,
     "wins": 41,
     "losses": 41,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "CLE",
@@ -316,7 +349,8 @@
         "mpg": 37.75675675675676,
         "gamesPlayed": 74,
         "impact": 7.6,
-        "projectedMinutes": 37.75675675675676
+        "projectedMinutes": 33.223814,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kyrie Irving",
@@ -324,7 +358,8 @@
         "mpg": 35.06944444444444,
         "gamesPlayed": 72,
         "impact": 3.4,
-        "projectedMinutes": 35.06944444444444
+        "projectedMinutes": 30.859131,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kevin Love",
@@ -332,7 +367,8 @@
         "mpg": 31.416666666666668,
         "gamesPlayed": 60,
         "impact": 2.1,
-        "projectedMinutes": 31.416666666666668
+        "projectedMinutes": 27.644892,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Tristan Thompson",
@@ -340,7 +376,8 @@
         "mpg": 29.94871794871795,
         "gamesPlayed": 78,
         "impact": -0.7,
-        "projectedMinutes": 29.94871794871795
+        "projectedMinutes": 26.35318,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "J.R. Smith",
@@ -348,7 +385,8 @@
         "mpg": 28.951219512195124,
         "gamesPlayed": 41,
         "impact": -2.1,
-        "projectedMinutes": 28.951219512195124
+        "projectedMinutes": 25.475438,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Iman Shumpert",
@@ -356,7 +394,8 @@
         "mpg": 25.486842105263158,
         "gamesPlayed": 76,
         "impact": -2.3,
-        "projectedMinutes": 25.486842105263158
+        "projectedMinutes": 22.426982,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kyle Korver",
@@ -364,7 +403,8 @@
         "mpg": 24.542857142857144,
         "gamesPlayed": 35,
         "impact": 0.3,
-        "projectedMinutes": 24.542857142857144
+        "projectedMinutes": 21.596328,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Richard Jefferson",
@@ -372,7 +412,8 @@
         "mpg": 20.430379746835442,
         "gamesPlayed": 79,
         "impact": -3.1,
-        "projectedMinutes": 20.430379746835442
+        "projectedMinutes": 17.97758,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Deron Williams",
@@ -380,7 +421,8 @@
         "mpg": 20.25,
         "gamesPlayed": 24,
         "impact": -3,
-        "projectedMinutes": 20.25
+        "projectedMinutes": 17.818856,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Channing Frye",
@@ -388,7 +430,8 @@
         "mpg": 18.89189189189189,
         "gamesPlayed": 74,
         "impact": 1,
-        "projectedMinutes": 18.89189189189189
+        "projectedMinutes": 16.623798,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 2.88,
@@ -396,8 +439,9 @@
     "drtg": 110.99,
     "wins": 51,
     "losses": 31,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "GSW",
@@ -416,7 +460,8 @@
         "mpg": 33.96153846153846,
         "gamesPlayed": 78,
         "impact": 0.8,
-        "projectedMinutes": 33.96153846153846
+        "projectedMinutes": 33.167141,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Stephen Curry",
@@ -424,7 +469,8 @@
         "mpg": 33.392405063291136,
         "gamesPlayed": 79,
         "impact": 6.9,
-        "projectedMinutes": 33.392405063291136
+        "projectedMinutes": 32.61132,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kevin Durant",
@@ -432,7 +478,8 @@
         "mpg": 33.38709677419355,
         "gamesPlayed": 62,
         "impact": 8.9,
-        "projectedMinutes": 33.38709677419355
+        "projectedMinutes": 32.606136,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Draymond Green",
@@ -440,7 +487,8 @@
         "mpg": 32.51315789473684,
         "gamesPlayed": 76,
         "impact": 4.9,
-        "projectedMinutes": 32.51315789473684
+        "projectedMinutes": 31.75264,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Andre Iguodala",
@@ -448,7 +496,8 @@
         "mpg": 26.289473684210527,
         "gamesPlayed": 76,
         "impact": 2.5,
-        "projectedMinutes": 26.289473684210527
+        "projectedMinutes": 25.674534,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Matt Barnes",
@@ -456,7 +505,8 @@
         "mpg": 20.5,
         "gamesPlayed": 20,
         "impact": -0.7,
-        "projectedMinutes": 20.5
+        "projectedMinutes": 20.020483,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Zaza Pachulia",
@@ -464,7 +514,8 @@
         "mpg": 18.114285714285714,
         "gamesPlayed": 70,
         "impact": 0.6,
-        "projectedMinutes": 18.114285714285714
+        "projectedMinutes": 17.690573,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Shaun Livingston",
@@ -472,7 +523,8 @@
         "mpg": 17.69736842105263,
         "gamesPlayed": 76,
         "impact": -2.5,
-        "projectedMinutes": 17.69736842105263
+        "projectedMinutes": 17.283408,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Patrick McCaw",
@@ -480,7 +532,8 @@
         "mpg": 15.126760563380282,
         "gamesPlayed": 71,
         "impact": -2.4,
-        "projectedMinutes": 15.126760563380282
+        "projectedMinutes": 14.772929,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Ian Clark",
@@ -488,7 +541,8 @@
         "mpg": 14.766233766233766,
         "gamesPlayed": 77,
         "impact": -1.5,
-        "projectedMinutes": 14.766233766233766
+        "projectedMinutes": 14.420836,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 11.35,
@@ -496,8 +550,9 @@
     "drtg": 104.57,
     "wins": 67,
     "losses": 15,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "HOU",
@@ -516,7 +571,8 @@
         "mpg": 36.382716049382715,
         "gamesPlayed": 81,
         "impact": 8.7,
-        "projectedMinutes": 36.382716049382715
+        "projectedMinutes": 32.785216,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Trevor Ariza",
@@ -524,7 +580,8 @@
         "mpg": 34.6625,
         "gamesPlayed": 80,
         "impact": 1,
-        "projectedMinutes": 34.6625
+        "projectedMinutes": 31.235094,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Eric Gordon",
@@ -532,7 +589,8 @@
         "mpg": 30.973333333333333,
         "gamesPlayed": 75,
         "impact": -0.1,
-        "projectedMinutes": 30.973333333333333
+        "projectedMinutes": 27.910709,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Patrick Beverley",
@@ -540,7 +598,8 @@
         "mpg": 30.71641791044776,
         "gamesPlayed": 67,
         "impact": 1.1,
-        "projectedMinutes": 30.71641791044776
+        "projectedMinutes": 27.679198,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Ryan Anderson",
@@ -548,7 +607,8 @@
         "mpg": 29.38888888888889,
         "gamesPlayed": 72,
         "impact": -0.4,
-        "projectedMinutes": 29.38888888888889
+        "projectedMinutes": 26.482934,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Lou Williams",
@@ -556,7 +616,8 @@
         "mpg": 25.695652173913043,
         "gamesPlayed": 23,
         "impact": -0.5,
-        "projectedMinutes": 25.695652173913043
+        "projectedMinutes": 23.154882,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Clint Capela",
@@ -564,7 +625,8 @@
         "mpg": 23.861538461538462,
         "gamesPlayed": 65,
         "impact": 1.2,
-        "projectedMinutes": 23.861538461538462
+        "projectedMinutes": 21.502124,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Sam Dekker",
@@ -572,7 +634,8 @@
         "mpg": 18.428571428571427,
         "gamesPlayed": 77,
         "impact": -0.2,
-        "projectedMinutes": 18.428571428571427
+        "projectedMinutes": 16.606366,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Montrezl Harrell",
@@ -580,7 +643,8 @@
         "mpg": 18.344827586206897,
         "gamesPlayed": 58,
         "impact": 1,
-        "projectedMinutes": 18.344827586206897
+        "projectedMinutes": 16.530902,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Nenê",
@@ -588,7 +652,8 @@
         "mpg": 17.880597014925375,
         "gamesPlayed": 67,
         "impact": 0.8,
-        "projectedMinutes": 17.880597014925375
+        "projectedMinutes": 16.112575,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 5.84,
@@ -596,8 +661,9 @@
     "drtg": 109.96,
     "wins": 55,
     "losses": 27,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "IND",
@@ -616,7 +682,8 @@
         "mpg": 35.85333333333333,
         "gamesPlayed": 75,
         "impact": 3.1,
-        "projectedMinutes": 35.85333333333333
+        "projectedMinutes": 34.818026,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jeff Teague",
@@ -624,7 +691,8 @@
         "mpg": 32.40243902439025,
         "gamesPlayed": 82,
         "impact": 2.2,
-        "projectedMinutes": 32.40243902439025
+        "projectedMinutes": 31.46678,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Myles Turner",
@@ -632,7 +700,8 @@
         "mpg": 31.37037037037037,
         "gamesPlayed": 81,
         "impact": 1.1,
-        "projectedMinutes": 31.37037037037037
+        "projectedMinutes": 30.464514,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Thaddeus Young",
@@ -640,7 +709,8 @@
         "mpg": 30.22972972972973,
         "gamesPlayed": 74,
         "impact": 0.5,
-        "projectedMinutes": 30.22972972972973
+        "projectedMinutes": 29.35681,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Monta Ellis",
@@ -648,7 +718,8 @@
         "mpg": 27,
         "gamesPlayed": 74,
         "impact": -2.9,
-        "projectedMinutes": 27
+        "projectedMinutes": 26.220343,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "C.J. Miles",
@@ -656,7 +727,8 @@
         "mpg": 23.36842105263158,
         "gamesPlayed": 76,
         "impact": 0.5,
-        "projectedMinutes": 23.36842105263158
+        "projectedMinutes": 22.69363,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Glenn Robinson III",
@@ -664,7 +736,8 @@
         "mpg": 20.681159420289855,
         "gamesPlayed": 69,
         "impact": -0.3,
-        "projectedMinutes": 20.681159420289855
+        "projectedMinutes": 20.083966,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Rodney Stuckey",
@@ -672,7 +745,8 @@
         "mpg": 17.846153846153847,
         "gamesPlayed": 39,
         "impact": -4.4,
-        "projectedMinutes": 17.846153846153847
+        "projectedMinutes": 17.330825,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Lavoy Allen",
@@ -680,7 +754,8 @@
         "mpg": 14.278688524590164,
         "gamesPlayed": 61,
         "impact": -1.7,
-        "projectedMinutes": 14.278688524590164
+        "projectedMinutes": 13.866374,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Al Jefferson",
@@ -688,7 +763,8 @@
         "mpg": 14.106060606060606,
         "gamesPlayed": 66,
         "impact": -1.4,
-        "projectedMinutes": 14.106060606060606
+        "projectedMinutes": 13.698731,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": -0.64,
@@ -696,8 +772,9 @@
     "drtg": 109.49,
     "wins": 42,
     "losses": 40,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "LAC",
@@ -716,7 +793,8 @@
         "mpg": 34.032786885245905,
         "gamesPlayed": 61,
         "impact": 4.7,
-        "projectedMinutes": 34.032786885245905
+        "projectedMinutes": 32.583331,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "DeAndre Jordan",
@@ -724,7 +802,8 @@
         "mpg": 31.728395061728396,
         "gamesPlayed": 81,
         "impact": 3.3,
-        "projectedMinutes": 31.728395061728396
+        "projectedMinutes": 30.377083,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Chris Paul",
@@ -732,7 +811,8 @@
         "mpg": 31.491803278688526,
         "gamesPlayed": 61,
         "impact": 8.7,
-        "projectedMinutes": 31.491803278688526
+        "projectedMinutes": 30.150568,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "JJ Redick",
@@ -740,7 +820,8 @@
         "mpg": 28.17948717948718,
         "gamesPlayed": 78,
         "impact": 0.4,
-        "projectedMinutes": 28.17948717948718
+        "projectedMinutes": 26.979323,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Austin Rivers",
@@ -748,7 +829,8 @@
         "mpg": 27.756756756756758,
         "gamesPlayed": 74,
         "impact": -2.2,
-        "projectedMinutes": 27.756756756756758
+        "projectedMinutes": 26.574597,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jamal Crawford",
@@ -756,7 +838,8 @@
         "mpg": 26.304878048780488,
         "gamesPlayed": 82,
         "impact": -2.1,
-        "projectedMinutes": 26.304878048780488
+        "projectedMinutes": 25.184554,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Luc Mbah a Moute",
@@ -764,7 +847,8 @@
         "mpg": 22.3375,
         "gamesPlayed": 80,
         "impact": -0.2,
-        "projectedMinutes": 22.3375
+        "projectedMinutes": 21.386146,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Raymond Felton",
@@ -772,7 +856,8 @@
         "mpg": 21.25,
         "gamesPlayed": 80,
         "impact": -1.3,
-        "projectedMinutes": 21.25
+        "projectedMinutes": 20.344963,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Marreese Speights",
@@ -780,7 +865,8 @@
         "mpg": 15.682926829268293,
         "gamesPlayed": 82,
         "impact": 0.6,
-        "projectedMinutes": 15.682926829268293
+        "projectedMinutes": 15.014991,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Wesley Johnson",
@@ -788,7 +874,8 @@
         "mpg": 11.911764705882353,
         "gamesPlayed": 68,
         "impact": -2,
-        "projectedMinutes": 11.911764705882353
+        "projectedMinutes": 11.404443,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 4.42,
@@ -796,8 +883,9 @@
     "drtg": 108.88,
     "wins": 51,
     "losses": 31,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "MEM",
@@ -816,7 +904,8 @@
         "mpg": 34.2027027027027,
         "gamesPlayed": 74,
         "impact": 5.2,
-        "projectedMinutes": 34.2027027027027
+        "projectedMinutes": 32.547119,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Mike Conley",
@@ -824,7 +913,8 @@
         "mpg": 33.21739130434783,
         "gamesPlayed": 69,
         "impact": 6.8,
-        "projectedMinutes": 33.21739130434783
+        "projectedMinutes": 31.609502,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "JaMychal Green",
@@ -832,7 +922,8 @@
         "mpg": 27.285714285714285,
         "gamesPlayed": 77,
         "impact": -0.8,
-        "projectedMinutes": 27.285714285714285
+        "projectedMinutes": 25.964948,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Tony Allen",
@@ -840,7 +931,8 @@
         "mpg": 26.95774647887324,
         "gamesPlayed": 71,
         "impact": -1,
-        "projectedMinutes": 26.95774647887324
+        "projectedMinutes": 25.652855,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Vince Carter",
@@ -848,7 +940,8 @@
         "mpg": 24.643835616438356,
         "gamesPlayed": 73,
         "impact": 0.8,
-        "projectedMinutes": 24.643835616438356
+        "projectedMinutes": 23.450949,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Zach Randolph",
@@ -856,7 +949,8 @@
         "mpg": 24.465753424657535,
         "gamesPlayed": 73,
         "impact": -0.5,
-        "projectedMinutes": 24.465753424657535
+        "projectedMinutes": 23.281487,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "James Ennis III",
@@ -864,7 +958,8 @@
         "mpg": 23.453125,
         "gamesPlayed": 64,
         "impact": -1.2,
-        "projectedMinutes": 23.453125
+        "projectedMinutes": 22.317875,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Andrew Harrison",
@@ -872,7 +967,8 @@
         "mpg": 20.47222222222222,
         "gamesPlayed": 72,
         "impact": -3.4,
-        "projectedMinutes": 20.47222222222222
+        "projectedMinutes": 19.481263,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Chandler Parsons",
@@ -880,7 +976,8 @@
         "mpg": 19.852941176470587,
         "gamesPlayed": 34,
         "impact": -3.8,
-        "projectedMinutes": 19.852941176470587
+        "projectedMinutes": 18.891959,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Troy Daniels",
@@ -888,7 +985,8 @@
         "mpg": 17.65671641791045,
         "gamesPlayed": 67,
         "impact": -1.8,
-        "projectedMinutes": 17.65671641791045
+        "projectedMinutes": 16.802042,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 0.96,
@@ -896,8 +994,9 @@
     "drtg": 107.89,
     "wins": 43,
     "losses": 39,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "MIL",
@@ -916,7 +1015,8 @@
         "mpg": 35.5625,
         "gamesPlayed": 80,
         "impact": 7.3,
-        "projectedMinutes": 35.5625
+        "projectedMinutes": 32.970358,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jabari Parker",
@@ -924,7 +1024,8 @@
         "mpg": 33.88235294117647,
         "gamesPlayed": 51,
         "impact": 0.7,
-        "projectedMinutes": 33.88235294117647
+        "projectedMinutes": 31.412677,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Khris Middleton",
@@ -932,7 +1033,8 @@
         "mpg": 30.655172413793103,
         "gamesPlayed": 29,
         "impact": -0.3,
-        "projectedMinutes": 30.655172413793103
+        "projectedMinutes": 28.420725,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Tony Snell",
@@ -940,7 +1042,8 @@
         "mpg": 29.2,
         "gamesPlayed": 80,
         "impact": -1.7,
-        "projectedMinutes": 29.2
+        "projectedMinutes": 27.071619,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Malcolm Brogdon",
@@ -948,7 +1051,8 @@
         "mpg": 26.426666666666666,
         "gamesPlayed": 75,
         "impact": -0.4,
-        "projectedMinutes": 26.426666666666666
+        "projectedMinutes": 24.500434,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Matthew Dellavedova",
@@ -956,7 +1060,8 @@
         "mpg": 26.13157894736842,
         "gamesPlayed": 76,
         "impact": -4.2,
-        "projectedMinutes": 26.13157894736842
+        "projectedMinutes": 24.226855,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Greg Monroe",
@@ -964,7 +1069,8 @@
         "mpg": 22.506172839506174,
         "gamesPlayed": 81,
         "impact": 1.8,
-        "projectedMinutes": 22.506172839506174
+        "projectedMinutes": 20.865704,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "John Henson",
@@ -972,7 +1078,8 @@
         "mpg": 19.362068965517242,
         "gamesPlayed": 58,
         "impact": -1.6,
-        "projectedMinutes": 19.362068965517242
+        "projectedMinutes": 17.950773,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jason Terry",
@@ -980,7 +1087,8 @@
         "mpg": 18.445945945945947,
         "gamesPlayed": 74,
         "impact": -0.9,
-        "projectedMinutes": 18.445945945945947
+        "projectedMinutes": 17.101426,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Michael Beasley",
@@ -988,7 +1096,8 @@
         "mpg": 16.696428571428573,
         "gamesPlayed": 56,
         "impact": -0.8,
-        "projectedMinutes": 16.696428571428573
+        "projectedMinutes": 15.47943,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": -0.44,
@@ -996,8 +1105,9 @@
     "drtg": 110.16,
     "wins": 42,
     "losses": 40,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "OKC",
@@ -1016,7 +1126,8 @@
         "mpg": 34.592592592592595,
         "gamesPlayed": 81,
         "impact": 11.1,
-        "projectedMinutes": 34.592592592592595
+        "projectedMinutes": 33.959854,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Victor Oladipo",
@@ -1024,7 +1135,8 @@
         "mpg": 33.16417910447761,
         "gamesPlayed": 67,
         "impact": -0.5,
-        "projectedMinutes": 33.16417910447761
+        "projectedMinutes": 32.557567,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Andre Roberson",
@@ -1032,7 +1144,8 @@
         "mpg": 30.075949367088608,
         "gamesPlayed": 79,
         "impact": -1,
-        "projectedMinutes": 30.075949367088608
+        "projectedMinutes": 29.525825,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Steven Adams",
@@ -1040,7 +1153,8 @@
         "mpg": 29.8625,
         "gamesPlayed": 80,
         "impact": -0.2,
-        "projectedMinutes": 29.8625
+        "projectedMinutes": 29.31628,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Enes Freedom",
@@ -1048,7 +1162,8 @@
         "mpg": 21.291666666666668,
         "gamesPlayed": 72,
         "impact": 1.7,
-        "projectedMinutes": 21.291666666666668
+        "projectedMinutes": 20.902217,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Taj Gibson",
@@ -1056,7 +1171,8 @@
         "mpg": 21.17391304347826,
         "gamesPlayed": 23,
         "impact": -2.5,
-        "projectedMinutes": 21.17391304347826
+        "projectedMinutes": 20.786617,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Domantas Sabonis",
@@ -1064,7 +1180,8 @@
         "mpg": 20.14814814814815,
         "gamesPlayed": 81,
         "impact": -4.5,
-        "projectedMinutes": 20.14814814814815
+        "projectedMinutes": 19.779615,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Doug McDermott",
@@ -1072,7 +1189,8 @@
         "mpg": 19.545454545454547,
         "gamesPlayed": 22,
         "impact": -2.7,
-        "projectedMinutes": 19.545454545454547
+        "projectedMinutes": 19.187945,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jerami Grant",
@@ -1080,7 +1198,8 @@
         "mpg": 19.102564102564102,
         "gamesPlayed": 78,
         "impact": -1.1,
-        "projectedMinutes": 19.102564102564102
+        "projectedMinutes": 18.753156,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Álex Abrines",
@@ -1088,7 +1207,8 @@
         "mpg": 15.514705882352942,
         "gamesPlayed": 68,
         "impact": -1.6,
-        "projectedMinutes": 15.514705882352942
+        "projectedMinutes": 15.230924,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 1.15,
@@ -1096,8 +1216,9 @@
     "drtg": 108.17,
     "wins": 47,
     "losses": 35,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "POR",
@@ -1116,7 +1237,8 @@
         "mpg": 35.92,
         "gamesPlayed": 75,
         "impact": 5,
-        "projectedMinutes": 35.92
+        "projectedMinutes": 32.802988,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "CJ McCollum",
@@ -1124,7 +1246,8 @@
         "mpg": 34.95,
         "gamesPlayed": 80,
         "impact": 2,
-        "projectedMinutes": 34.95
+        "projectedMinutes": 31.917162,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jusuf Nurkić",
@@ -1132,7 +1255,8 @@
         "mpg": 29.2,
         "gamesPlayed": 20,
         "impact": 0.9,
-        "projectedMinutes": 29.2
+        "projectedMinutes": 26.666126,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Al-Farouq Aminu",
@@ -1140,7 +1264,8 @@
         "mpg": 29.065573770491802,
         "gamesPlayed": 61,
         "impact": -1.1,
-        "projectedMinutes": 29.065573770491802
+        "projectedMinutes": 26.543365,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Maurice Harkless",
@@ -1148,7 +1273,8 @@
         "mpg": 28.87012987012987,
         "gamesPlayed": 77,
         "impact": -0.6,
-        "projectedMinutes": 28.87012987012987
+        "projectedMinutes": 26.364881,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Allen Crabbe",
@@ -1156,7 +1282,8 @@
         "mpg": 28.531645569620252,
         "gamesPlayed": 79,
         "impact": -1.3,
-        "projectedMinutes": 28.531645569620252
+        "projectedMinutes": 26.05577,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Evan Turner",
@@ -1164,7 +1291,8 @@
         "mpg": 25.50769230769231,
         "gamesPlayed": 65,
         "impact": -2.5,
-        "projectedMinutes": 25.50769230769231
+        "projectedMinutes": 23.294224,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Ed Davis",
@@ -1172,7 +1300,8 @@
         "mpg": 17.152173913043477,
         "gamesPlayed": 46,
         "impact": -4.1,
-        "projectedMinutes": 17.152173913043477
+        "projectedMinutes": 15.663768,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Noah Vonleh",
@@ -1180,7 +1309,8 @@
         "mpg": 17.094594594594593,
         "gamesPlayed": 74,
         "impact": -3.9,
-        "projectedMinutes": 17.094594594594593
+        "projectedMinutes": 15.611186,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Meyers Leonard",
@@ -1188,7 +1318,8 @@
         "mpg": 16.513513513513512,
         "gamesPlayed": 74,
         "impact": -3.3,
-        "projectedMinutes": 16.513513513513512
+        "projectedMinutes": 15.080529,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": -0.23,
@@ -1196,8 +1327,9 @@
     "drtg": 111.46,
     "wins": 41,
     "losses": 41,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "SAS",
@@ -1216,7 +1348,8 @@
         "mpg": 33.432432432432435,
         "gamesPlayed": 74,
         "impact": 9.4,
-        "projectedMinutes": 33.432432432432435
+        "projectedMinutes": 33.752182,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "LaMarcus Aldridge",
@@ -1224,7 +1357,8 @@
         "mpg": 32.43055555555556,
         "gamesPlayed": 72,
         "impact": 0.8,
-        "projectedMinutes": 32.43055555555556
+        "projectedMinutes": 32.740723,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Danny Green",
@@ -1232,7 +1366,8 @@
         "mpg": 26.573529411764707,
         "gamesPlayed": 68,
         "impact": 0.8,
-        "projectedMinutes": 26.573529411764707
+        "projectedMinutes": 26.82768,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Pau Gasol",
@@ -1240,7 +1375,8 @@
         "mpg": 25.421875,
         "gamesPlayed": 64,
         "impact": 4,
-        "projectedMinutes": 25.421875
+        "projectedMinutes": 25.665011,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Tony Parker",
@@ -1248,7 +1384,8 @@
         "mpg": 25.19047619047619,
         "gamesPlayed": 63,
         "impact": -2.6,
-        "projectedMinutes": 25.19047619047619
+        "projectedMinutes": 25.4314,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Patty Mills",
@@ -1256,7 +1393,8 @@
         "mpg": 21.925,
         "gamesPlayed": 80,
         "impact": 1.6,
-        "projectedMinutes": 21.925
+        "projectedMinutes": 22.134692,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Manu Ginóbili",
@@ -1264,7 +1402,8 @@
         "mpg": 18.71014492753623,
         "gamesPlayed": 69,
         "impact": 1.4,
-        "projectedMinutes": 18.71014492753623
+        "projectedMinutes": 18.88909,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "David Lee",
@@ -1272,7 +1411,8 @@
         "mpg": 18.696202531645568,
         "gamesPlayed": 79,
         "impact": 1.8,
-        "projectedMinutes": 18.696202531645568
+        "projectedMinutes": 18.875014,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jonathon Simmons",
@@ -1280,7 +1420,8 @@
         "mpg": 17.846153846153847,
         "gamesPlayed": 78,
         "impact": -2.6,
-        "projectedMinutes": 17.846153846153847
+        "projectedMinutes": 18.016836,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Dewayne Dedmon",
@@ -1288,7 +1429,8 @@
         "mpg": 17.5,
         "gamesPlayed": 76,
         "impact": 0.6,
-        "projectedMinutes": 17.5
+        "projectedMinutes": 17.667371,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 7.13,
@@ -1296,8 +1438,9 @@
     "drtg": 104.25,
     "wins": 61,
     "losses": 21,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "TOR",
@@ -1316,7 +1459,8 @@
         "mpg": 37.4,
         "gamesPlayed": 60,
         "impact": 6.1,
-        "projectedMinutes": 37.4
+        "projectedMinutes": 33.514292,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "DeMar DeRozan",
@@ -1324,7 +1468,8 @@
         "mpg": 35.4054054054054,
         "gamesPlayed": 74,
         "impact": 3,
-        "projectedMinutes": 35.4054054054054
+        "projectedMinutes": 31.726928,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Serge Ibaka",
@@ -1332,7 +1477,8 @@
         "mpg": 30.956521739130434,
         "gamesPlayed": 23,
         "impact": -1.5,
-        "projectedMinutes": 30.956521739130434
+        "projectedMinutes": 27.740265,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "DeMarre Carroll",
@@ -1340,7 +1486,8 @@
         "mpg": 26.13888888888889,
         "gamesPlayed": 72,
         "impact": 0,
-        "projectedMinutes": 26.13888888888889
+        "projectedMinutes": 23.423165,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Jonas Valančiūnas",
@@ -1348,7 +1495,8 @@
         "mpg": 25.825,
         "gamesPlayed": 80,
         "impact": 0.3,
-        "projectedMinutes": 25.825
+        "projectedMinutes": 23.141888,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "P.J. Tucker",
@@ -1356,7 +1504,8 @@
         "mpg": 25.375,
         "gamesPlayed": 24,
         "impact": 0.5,
-        "projectedMinutes": 25.375
+        "projectedMinutes": 22.738641,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Cory Joseph",
@@ -1364,7 +1513,8 @@
         "mpg": 25.0375,
         "gamesPlayed": 80,
         "impact": -1.3,
-        "projectedMinutes": 25.0375
+        "projectedMinutes": 22.436206,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Patrick Patterson",
@@ -1372,7 +1522,8 @@
         "mpg": 24.6,
         "gamesPlayed": 65,
         "impact": 0.1,
-        "projectedMinutes": 24.6
+        "projectedMinutes": 22.04416,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Lucas Nogueira",
@@ -1380,7 +1531,8 @@
         "mpg": 19.087719298245613,
         "gamesPlayed": 57,
         "impact": 2,
-        "projectedMinutes": 19.087719298245613
+        "projectedMinutes": 17.104583,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Norman Powell",
@@ -1388,7 +1540,8 @@
         "mpg": 18,
         "gamesPlayed": 76,
         "impact": -0.5,
-        "projectedMinutes": 18
+        "projectedMinutes": 16.129873,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 3.65,
@@ -1396,8 +1549,9 @@
     "drtg": 108.68,
     "wins": 51,
     "losses": 31,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "UTA",
@@ -1416,7 +1570,8 @@
         "mpg": 34.465753424657535,
         "gamesPlayed": 73,
         "impact": 5,
-        "projectedMinutes": 34.465753424657535
+        "projectedMinutes": 32.268789,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Rudy Gobert",
@@ -1424,7 +1579,8 @@
         "mpg": 33.876543209876544,
         "gamesPlayed": 81,
         "impact": 4.4,
-        "projectedMinutes": 33.876543209876544
+        "projectedMinutes": 31.717137,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "George Hill",
@@ -1432,7 +1588,8 @@
         "mpg": 31.510204081632654,
         "gamesPlayed": 49,
         "impact": 3.8,
-        "projectedMinutes": 31.510204081632654
+        "projectedMinutes": 29.501637,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Rodney Hood",
@@ -1440,7 +1597,8 @@
         "mpg": 27,
         "gamesPlayed": 59,
         "impact": -0.9,
-        "projectedMinutes": 27
+        "projectedMinutes": 25.278928,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Joe Ingles",
@@ -1448,7 +1606,8 @@
         "mpg": 24.048780487804876,
         "gamesPlayed": 82,
         "impact": 1.6,
-        "projectedMinutes": 24.048780487804876
+        "projectedMinutes": 22.51583,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Derrick Favors",
@@ -1456,7 +1615,8 @@
         "mpg": 23.72,
         "gamesPlayed": 50,
         "impact": -0.1,
-        "projectedMinutes": 23.72
+        "projectedMinutes": 22.208007,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Joe Johnson",
@@ -1464,7 +1624,8 @@
         "mpg": 23.628205128205128,
         "gamesPlayed": 78,
         "impact": 0.4,
-        "projectedMinutes": 23.628205128205128
+        "projectedMinutes": 22.122063,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Shelvin Mack",
@@ -1472,7 +1633,8 @@
         "mpg": 21.90909090909091,
         "gamesPlayed": 55,
         "impact": -2.3,
-        "projectedMinutes": 21.90909090909091
+        "projectedMinutes": 20.512531,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Danté Exum",
@@ -1480,7 +1642,8 @@
         "mpg": 18.606060606060606,
         "gamesPlayed": 66,
         "impact": -3.3,
-        "projectedMinutes": 18.606060606060606
+        "projectedMinutes": 17.420047,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Boris Diaw",
@@ -1488,7 +1651,8 @@
         "mpg": 17.575342465753426,
         "gamesPlayed": 73,
         "impact": -2.5,
-        "projectedMinutes": 17.575342465753426
+        "projectedMinutes": 16.45503,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 4,
@@ -1496,8 +1660,9 @@
     "drtg": 106.19,
     "wins": 51,
     "losses": 31,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   },
   {
     "teamId": "WAS",
@@ -1516,7 +1681,8 @@
         "mpg": 36.35897435897436,
         "gamesPlayed": 78,
         "impact": 4.7,
-        "projectedMinutes": 36.35897435897436
+        "projectedMinutes": 33.407125,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Bradley Beal",
@@ -1524,7 +1690,8 @@
         "mpg": 34.857142857142854,
         "gamesPlayed": 77,
         "impact": 3.3,
-        "projectedMinutes": 34.857142857142854
+        "projectedMinutes": 32.027222,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Otto Porter Jr.",
@@ -1532,7 +1699,8 @@
         "mpg": 32.5625,
         "gamesPlayed": 80,
         "impact": 3.3,
-        "projectedMinutes": 32.5625
+        "projectedMinutes": 29.918872,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Markieff Morris",
@@ -1540,7 +1708,8 @@
         "mpg": 31.236842105263158,
         "gamesPlayed": 76,
         "impact": -1.5,
-        "projectedMinutes": 31.236842105263158
+        "projectedMinutes": 28.70084,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Marcin Gortat",
@@ -1548,7 +1717,8 @@
         "mpg": 31.170731707317074,
         "gamesPlayed": 82,
         "impact": -0.8,
-        "projectedMinutes": 31.170731707317074
+        "projectedMinutes": 28.640096,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Bojan Bogdanović",
@@ -1556,7 +1726,8 @@
         "mpg": 23.115384615384617,
         "gamesPlayed": 26,
         "impact": -1.2,
-        "projectedMinutes": 23.115384615384617
+        "projectedMinutes": 21.238733,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Kelly Oubre Jr.",
@@ -1564,7 +1735,8 @@
         "mpg": 20.31645569620253,
         "gamesPlayed": 79,
         "impact": -3.2,
-        "projectedMinutes": 20.31645569620253
+        "projectedMinutes": 18.667039,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Ian Mahinmi",
@@ -1572,7 +1744,8 @@
         "mpg": 17.903225806451612,
         "gamesPlayed": 31,
         "impact": -1.4,
-        "projectedMinutes": 17.903225806451612
+        "projectedMinutes": 16.44973,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Marcus Thornton",
@@ -1580,7 +1753,8 @@
         "mpg": 17.424242424242426,
         "gamesPlayed": 33,
         "impact": -2.4,
-        "projectedMinutes": 17.424242424242426
+        "projectedMinutes": 16.009633,
+        "availabilityStatus": "unknown_assumed_available"
       },
       {
         "name": "Brandon Jennings",
@@ -1588,7 +1762,8 @@
         "mpg": 16.26086956521739,
         "gamesPlayed": 23,
         "impact": -4,
-        "projectedMinutes": 16.26086956521739
+        "projectedMinutes": 14.94071,
+        "availabilityStatus": "unknown_assumed_available"
       }
     ],
     "srs": 1.36,
@@ -1596,7 +1771,8 @@
     "drtg": 110.06,
     "wins": 49,
     "losses": 33,
-    "eloSource": "srs_proxy",
-    "playerImpactSource": "bpm_proxy"
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
   }
 ]

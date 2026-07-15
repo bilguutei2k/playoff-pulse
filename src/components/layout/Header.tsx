@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BriefcaseBusiness, FileText, LayoutDashboard } from "lucide-react";
+import { BriefcaseBusiness, ChartNoAxesCombined, FileText, FlaskConical, LayoutDashboard } from "lucide-react";
 
 export function Header() {
   return (
@@ -27,7 +27,7 @@ export function Header() {
           </div>
         </div>
 
-        <nav className="flex items-center justify-between gap-3 px-4 py-3 sm:justify-end">
+        <nav className="flex flex-wrap items-center justify-center gap-2 px-3 py-3 sm:justify-end sm:gap-3 sm:px-4">
           <Link
             href="/"
             className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
@@ -48,6 +48,20 @@ export function Header() {
           >
             <FileText className="h-4 w-4" aria-hidden />
             Methodology
+          </Link>
+          <Link
+            href="/lab"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+          >
+            <FlaskConical className="h-4 w-4" aria-hidden />
+            Lab
+          </Link>
+          <Link
+            href="/evidence"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+          >
+            <ChartNoAxesCombined className="h-4 w-4" aria-hidden />
+            Evidence
           </Link>
         </nav>
       </div>

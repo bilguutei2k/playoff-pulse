@@ -12,6 +12,10 @@
     "verify:invariants": "tsx scripts/verify/invariants.ts",
     "verify:refresh": "tsx scripts/verify/refresh-checks.ts",
     "verify:data": "tsx scripts/verify/data-snapshot.ts",
+    "backtest:research": "tsx scripts/backtest/research-model.ts",
+    "backtest:pregame": "tsx scripts/backtest/build-pregame-archive.ts",
+    "backtest:evidence": "tsx scripts/backtest/build-evidence.ts",
+    "archive:forecast": "tsx scripts/archive-forecast.ts",
     "refresh-data": "tsx scripts/refresh-data.ts"
   },
   "dependencies": {

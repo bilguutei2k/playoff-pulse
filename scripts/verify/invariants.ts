@@ -109,6 +109,29 @@ export function runInvariantChecks(): void {
 
   const teamsById = { a: strongerA, b: equalB };
   const seriesForecast = estimateSeriesProbability(baseSeries, teamsById, settings, 3000);
+  const repeatedSeriesForecast = estimateSeriesProbability(baseSeries, teamsById, settings, 3000);
+  assert.equal(
+    seriesForecast.teamASeriesWinProbability,
+    repeatedSeriesForecast.teamASeriesWinProbability,
+    "Exact series estimates must be deterministic.",
+  );
+  assert.equal(seriesForecast.computationMethod, "exact");
+  assert(
+    Math.abs(
+      Object.values(seriesForecast.finalScoreProbabilities).reduce(
+        (sum, probability) => sum + probability,
+        0,
+      ) - 1,
+    ) < 1e-10,
+    "Exact final-score probabilities must sum to one.",
+  );
+  assert(
+    seriesForecast.uncertainty.lower <= seriesForecast.uncertainty.median &&
+      seriesForecast.uncertainty.median <= seriesForecast.uncertainty.upper &&
+      seriesForecast.uncertainty.lower >= 0 &&
+      seriesForecast.uncertainty.upper <= 1,
+    "Series uncertainty intervals must be ordered and bounded.",
+  );
   const terminalOutcome = simulateSeriesOutcome(
     baseSeries,
     teamsById,

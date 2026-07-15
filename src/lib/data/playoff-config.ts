@@ -19,6 +19,7 @@ type PlayerInput = {
   projectedMinutes: number;
   impact: number;
   status: InjuryStatus;
+  healthyProjectedMinutes?: number;
 };
 
 function team(
@@ -48,6 +49,7 @@ function team(
       impact: player.impact,
       projectedMinutes: player.projectedMinutes,
       injuryStatus: player.status,
+      healthyProjectedMinutes: player.healthyProjectedMinutes,
     })),
   };
 }
@@ -148,7 +150,7 @@ const okc = team(
   -1.0,
   [
     { name: "Shai Gilgeous-Alexander", projectedMinutes: 38, impact: 9.0, status: "healthy" },
-    { name: "Jalen Williams", projectedMinutes: 0, impact: 6.5, status: "out" },
+    { name: "Jalen Williams", projectedMinutes: 0, healthyProjectedMinutes: 35, impact: 6.5, status: "out" },
     { name: "Ajay Mitchell", projectedMinutes: 34, impact: 4.0, status: "healthy" },
     { name: "Chet Holmgren", projectedMinutes: 30, impact: 4.5, status: "healthy" },
     { name: "Isaiah Hartenstein", projectedMinutes: 26, impact: 2.5, status: "healthy" },
@@ -193,7 +195,7 @@ const min = team(
     { name: "Ayo Dosunmu", projectedMinutes: 28, impact: 3.5, status: "healthy" },
     { name: "Jaden McDaniels", projectedMinutes: 28, impact: 2.5, status: "healthy" },
     { name: "Naz Reid", projectedMinutes: 22, impact: 2.0, status: "healthy" },
-    { name: "Donte DiVincenzo", projectedMinutes: 0, impact: 2.5, status: "out" },
+    { name: "Donte DiVincenzo", projectedMinutes: 0, healthyProjectedMinutes: 26, impact: 2.5, status: "out" },
     { name: "Mike Conley", projectedMinutes: 18, impact: 1.0, status: "healthy" },
     { name: "Terrence Shannon Jr.", projectedMinutes: 18, impact: 1.0, status: "healthy" },
   ],

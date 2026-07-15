@@ -26,6 +26,13 @@ export function validateConfig(
       if (player.projectedMinutes < 0) {
         errors.push(`${player.name} has negative projected minutes.`);
       }
+
+      if (
+        player.healthyProjectedMinutes !== undefined &&
+        player.healthyProjectedMinutes < 0
+      ) {
+        errors.push(`${player.name} has negative healthy projected minutes.`);
+      }
     }
   }
 

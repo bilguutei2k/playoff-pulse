@@ -13,62 +13,18 @@ import {
   playerMinuteWeightedImpact,
   teamStrength,
 } from "@/lib/model/probability";
-
-export type RandomSource = () => number;
-
-function hashSeed(value: string): number {
-  let hash = 2166136261;
-
-  for (let index = 0; index < value.length; index += 1) {
-    hash ^= value.charCodeAt(index);
-    hash = Math.imul(hash, 16777619);
-  }
-
-  return hash >>> 0;
-}
-
-function seededRandom(seed: number): RandomSource {
-  let state = seed || 1;
-
-  return () => {
-    state += 0x6d2b79f5;
-    let value = state;
-    value = Math.imul(value ^ (value >>> 15), value | 1);
-    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
-  };
-}
+import { solveSeriesExactly } from "@/lib/model/series-solver";
+import {
+  estimateAvailabilityScenarios,
+  estimateSeriesUncertainty,
+} from "@/lib/model/uncertainty";
+import type { RandomSource } from "@/lib/model/random";
 
 function getGameNumber(winsA: number, winsB: number): number {
   return winsA + winsB + 1;
 }
 
-function teamSimulationSignature(team: Team, settings: ModelSettings): string {
-  const playerSignature = team.players
-    .map((player) =>
-      [
-        player.id,
-        player.impact,
-        player.projectedMinutes,
-        player.injuryStatus,
-      ].join(":"),
-    )
-    .join("|");
-
-  return [
-    team.id,
-    team.eloRating,
-    team.netRating,
-    team.manualAdjustment,
-    playerMinuteWeightedImpact(team).toFixed(4),
-    teamStrength(team, settings).toFixed(4),
-    playerSignature,
-  ].join(";");
-}
-
-export function createSeededRandom(seedInput: string): RandomSource {
-  return seededRandom(hashSeed(seedInput));
-}
+export { createSeededRandom } from "@/lib/model/random";
 
 export function nextGameForecast(
   series: Series,
@@ -91,6 +47,35 @@ export function nextGameForecast(
   const teamAWinProbability = clampProbability(
     gameWinProbability(teamA, teamB, homeTeamId, settings),
   );
+  const homeCourt =
+    homeTeamId === teamA.id
+      ? settings.homeCourtAdvantage
+      : homeTeamId === teamB.id
+        ? -settings.homeCourtAdvantage
+        : 0;
+  const drivers = [
+    {
+      label: "Player rotation",
+      marginPointsForTeamA:
+        settings.playerWeight *
+        (playerMinuteWeightedImpact(teamA) - playerMinuteWeightedImpact(teamB)),
+    },
+    {
+      label: "Net rating",
+      marginPointsForTeamA:
+        settings.netRatingWeight * (teamA.netRating - teamB.netRating),
+    },
+    {
+      label: "Rating proxy",
+      marginPointsForTeamA:
+        settings.eloWeight * ((teamA.eloRating - teamB.eloRating) / 35),
+    },
+    {
+      label: "Manual adjustment",
+      marginPointsForTeamA: teamA.manualAdjustment - teamB.manualAdjustment,
+    },
+    { label: "Home court", marginPointsForTeamA: homeCourt },
+  ];
 
   return {
     gameNumber,
@@ -98,6 +83,7 @@ export function nextGameForecast(
     expectedMarginForTeamA: expectedMargin(teamA, teamB, homeTeamId, settings),
     teamAWinProbability,
     teamBWinProbability: clampProbability(1 - teamAWinProbability),
+    drivers,
   };
 }
 
@@ -151,41 +137,24 @@ export function estimateSeriesProbability(
 ): SeriesForecast {
   const teamA = teamsById[series.teamA];
   const teamB = teamsById[series.teamB];
-  const simulationCount = Math.max(1, Math.floor(iterations));
+  void iterations; // retained for API compatibility; central series estimates are exact.
 
   if (!teamA || !teamB) {
     throw new Error(`Cannot simulate ${series.id}: one or both teams are missing.`);
   }
 
-  let teamAWinsSeries = 0;
-  let totalGamesRemaining = 0;
-  const random = createSeededRandom(
-    [
-      series.id,
-      series.winsA,
-      series.winsB,
-      series.homePattern.join(","),
-      settings.homeCourtAdvantage,
-      settings.logisticScale,
-      simulationCount,
-      teamSimulationSignature(teamA, settings),
-      teamSimulationSignature(teamB, settings),
-    ].join(":"),
+  const solution = solveSeriesExactly(
+    series.winsA,
+    series.winsB,
+    (gameNumber) =>
+      gameWinProbability(
+        teamA,
+        teamB,
+        series.homePattern[gameNumber - 1] ?? null,
+        settings,
+      ),
   );
-
-  for (let iteration = 0; iteration < simulationCount; iteration += 1) {
-    const outcome = simulateSeriesOutcome(series, teamsById, settings, random);
-
-    if (outcome.winnerId === series.teamA) {
-      teamAWinsSeries += 1;
-    }
-
-    totalGamesRemaining += outcome.gamesPlayed;
-  }
-
-  const teamASeriesWinProbability = clampProbability(
-    teamAWinsSeries / simulationCount,
-  );
+  const teamASeriesWinProbability = solution.teamAWinProbability;
 
   return {
     seriesId: series.id,
@@ -196,8 +165,12 @@ export function estimateSeriesProbability(
     nextGame: nextGameForecast(series, teamsById, settings),
     teamASeriesWinProbability,
     teamBSeriesWinProbability: clampProbability(1 - teamASeriesWinProbability),
-    expectedGamesRemaining: totalGamesRemaining / simulationCount,
-    iterations: simulationCount,
+    expectedGamesRemaining: solution.expectedGamesRemaining,
+    iterations: 0,
+    computationMethod: "exact",
+    finalScoreProbabilities: solution.finalScoreProbabilities,
+    uncertainty: estimateSeriesUncertainty(series, teamA, teamB, settings),
+    scenarioImpacts: estimateAvailabilityScenarios(series, teamA, teamB, settings),
     teamStrengthDifference:
       teamStrength(teamA, settings) - teamStrength(teamB, settings),
   };

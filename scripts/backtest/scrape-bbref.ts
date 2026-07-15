@@ -309,7 +309,9 @@ export function parsePlayoffBracket(
 
   const seedMap = inferSeedMap(parsedRows, ratings, season);
 
-  return parsedRows.map(({ game1HomeTeam: _game1HomeTeam, ...row }) => {
+  return parsedRows.map((parsedRow) => {
+    const { game1HomeTeam, ...row } = parsedRow;
+    void game1HomeTeam;
     const seedA = seedMap.get(row.teamA);
     const seedB = seedMap.get(row.teamB);
     if (!seedA || !seedB) {
