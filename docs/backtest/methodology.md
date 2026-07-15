@@ -53,6 +53,31 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 | home_team | 150 | 0.2152 | 0.6221 | 68.3% |
 | coinflip | 150 | 0.2500 | 0.6931 | 50.0% |
 
+Note that playoff_pulse accuracy (69.3%) is below the higher-seed baseline
+(70.0%). Accuracy is not the optimization target; Brier score and log loss are
+the proper scoring rules used for all comparisons.
+
+## Statistical Significance
+
+Paired bootstrap intervals for every playoff_pulse-versus-baseline Brier
+difference are computed by `scripts/backtest/significance.ts` (10,000
+iterations, percentile intervals, both series-resampled and season-clustered)
+and stored in `docs/backtest/significance.json`. Negative differences favor
+playoff_pulse.
+
+| Contrast | Difference | 95% CI (series) | 95% CI (season) | Conclusive |
+|---|---:|---|---|---|
+| vs coinflip | −0.0593 | [−0.0842, −0.0333] | [−0.0812, −0.0359] | Yes |
+| vs home_team | −0.0246 | [−0.0426, −0.0067] | [−0.0377, −0.0103] | Yes |
+| vs higher_seed | −0.0218 | [−0.0381, −0.0050] | [−0.0355, −0.0081] | Yes |
+| vs net_rating_only | −0.0042 | [−0.0174, +0.0083] | [−0.0155, +0.0079] | No |
+| vs srs_proxy_only | −0.0029 | [−0.0148, +0.0087] | [−0.0129, +0.0080] | No |
+
+The model conclusively beats the naive baselines. Its edge over the simple
+rating baselines is not statistically distinguishable from zero. See
+`docs/parameter-provenance.md` for how each parameter was chosen and why this
+evaluation is classified as descriptive rather than out-of-sample.
+
 ## Calibration Data
 
 ### playoff_pulse
