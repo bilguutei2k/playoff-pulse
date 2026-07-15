@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.vercel/
+.pnpm-store/
+.env*
+.claude/settings.local.json
+refresh-summary.md
+
+# Local Basketball Reference scrape cache. Historical JSON snapshots are
+# committed separately and remain available to the build.
+data/historical/raw/

@@ -98,6 +98,22 @@ Implementation entries are added below as each workstream is completed.
 - Final command and browser results are recorded at the end of this file after
   completion.
 
+### 8. Deployment packaging
+
+- Added an explicit `.vercelignore` so local Basketball Reference HTML caches,
+  build output, package stores, and environment files never enter a deployment
+  upload.
+- The first production attempt exposed the missing boundary by uploading 40
+  ignored raw-cache files (33.7 MB total) and remaining in Vercel's `UNKNOWN`
+  state without starting a build. A Vercel dry run confirmed the raw files were
+  included even though `data/historical/raw/` was listed in `.gitignore`.
+- Product-required `docs/backtest/evidence.json`,
+  `docs/backtest/research.json`, and `docs/backtest/summary.json` remain in the
+  source bundle. Raw HTML is research provenance/cache only and is not a model
+  or runtime input.
+- Environment files are now explicitly ignored by both Git and Vercel after
+  linking the production project.
+
 ## Evaluation results
 
 ### Nested calibration
