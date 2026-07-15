@@ -15,11 +15,14 @@ export function BacktestSummaryCard() {
           Brier {formatNumber(models.playoff_pulse.brierScore, 3)}
         </div>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
-          Beats coinflip ({formatNumber(models.coinflip.brierScore, 3)}),
+          Conclusively beats coinflip ({formatNumber(models.coinflip.brierScore, 3)}),
           higher-seed-wins ({formatNumber(models.higher_seed.brierScore, 3)}), and
           home-team-wins ({formatNumber(models.home_team.brierScore, 3)}) on{" "}
-          {totalSeries} historical series, {firstSeason}–{lastSeason}. Inputs
-          corrected and results regenerated July 2026.
+          {totalSeries} reconstructed historical series, {firstSeason}–{lastSeason}.
+          Its small edge over SRS-only ({formatNumber(models.srs_proxy_only.brierScore, 3)})
+          and net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)}) is
+          not statistically distinguishable from zero. Inputs corrected and
+          results regenerated July 2026.
         </p>
       </div>
 

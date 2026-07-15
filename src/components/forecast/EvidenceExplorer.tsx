@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import evidence from "../../../docs/backtest/evidence.json";
+import backtestSummary from "../../../docs/backtest/summary.json";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 
 type CalibrationBlock = {
@@ -45,11 +46,17 @@ function ReliabilityPlot({ title, block }: { title: string; block: CalibrationBl
   );
 }
 
+// Featured by mechanical rule, not editorial choice: the most recent
+// completed NBA Finals in the reconstruction archive.
+const featuredReplay = evidence.seriesIndex
+  .filter((row) => row.round === "NBA Finals")
+  .sort((a, b) => b.season - a.season)[0];
+
 export function EvidenceExplorer() {
   const seasons = [...new Set(evidence.seriesIndex.map((row) => row.season))].sort((a, b) => b - a);
-  const [season, setSeason] = useState(seasons[0]);
+  const [season, setSeason] = useState(featuredReplay?.season ?? seasons[0]);
   const availableSeries = useMemo(() => evidence.seriesIndex.filter((row) => row.season === season), [season]);
-  const [selectedSeriesId, setSelectedSeriesId] = useState(availableSeries[0].seriesId);
+  const [selectedSeriesId, setSelectedSeriesId] = useState(featuredReplay?.seriesId ?? availableSeries[0].seriesId);
   const selectedMeta = evidence.seriesIndex.find((row) => row.seriesId === selectedSeriesId) ?? availableSeries[0];
   const timeline = evidence.timeline.filter((row) => row.seriesId === selectedMeta.seriesId);
   const [selectedGame, setSelectedGame] = useState(1);
@@ -109,9 +116,49 @@ export function EvidenceExplorer() {
 
       <section className="pp-card">
         <div className="pp-section-head">
+          <div className="pp-kicker">Two evaluation regimes / what each may claim</div>
+        </div>
+        <div className="overflow-x-auto p-4">
+          <table className="w-full min-w-[720px] border-collapse text-left text-xs">
+            <thead>
+              <tr className="border-y-2 border-[var(--color-border-strong)]">
+                {["Evaluation", "Scope", "Protocol", "Permitted claim"].map((header) => (
+                  <th key={header} className="pp-kicker px-2 py-2 text-[var(--color-text-primary)]">{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-[var(--color-border-subtle)] align-top">
+                <td className="px-2 py-2 font-bold">Historical reconstruction</td>
+                <td className="pp-number px-2 py-2">{backtestSummary.totalSeries} series / 834 pregame snapshots, {backtestSummary.firstSeason}–{backtestSummary.lastSeason}</td>
+                <td className="px-2 py-2">Fixed configuration (never refit); leakage-checked point-in-time inputs</td>
+                <td className="px-2 py-2">Descriptive performance on reconstructed history: Brier {formatNumber(backtestSummary.models.playoff_pulse.brierScore, 4)}, conclusively better than naive baselines, statistically indistinguishable from SRS-only and net-rating-only</td>
+              </tr>
+              <tr className="border-b border-[var(--color-border-subtle)] align-top">
+                <td className="px-2 py-2 font-bold">Rolling origin</td>
+                <td className="pp-number px-2 py-2">105 series / 587 games, 2019–2025</td>
+                <td className="px-2 py-2">Models fitted only on seasons before each evaluated season</td>
+                <td className="px-2 py-2">Out-of-period model comparison: no candidate conclusively beat SRS + home court (reference series Brier {formatNumber(evidence.modelComparison[0].series.brier, 4)})</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="mt-3 max-w-4xl text-xs leading-5 text-[var(--color-text-muted)]">
+            The two Brier levels are not comparable with each other: the regimes cover different season ranges (the reconstruction includes 2016–2018), evaluate different model families (a fixed configuration versus refitted regressions), and serve different purposes (description versus model selection). Bootstrap intervals for every headline difference live in docs/backtest/significance.json and docs/backtest/research.json.
+          </p>
+        </div>
+      </section>
+
+      <section className="pp-card">
+        <div className="pp-section-head">
           <div className="pp-kicker">Reconstructed archive / immediately before each game</div>
         </div>
         <div className="grid gap-4 p-4">
+          <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+            Featured by rule, not curation: the default series is the most
+            recent completed NBA Finals in the archive
+            {featuredReplay ? ` (${featuredReplay.season} ${featuredReplay.teamA} vs ${featuredReplay.teamB})` : ""}.
+            Every archived series is selectable.
+          </p>
           <div className="grid gap-3 sm:grid-cols-[140px_1fr]">
             <select value={season} onChange={(event) => changeSeason(Number(event.target.value))} className="border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] p-2 text-sm">
               {seasons.map((value) => <option key={value} value={value}>{value}</option>)}
@@ -159,7 +206,14 @@ export function EvidenceExplorer() {
           <ReliabilityPlot title="Series forecasts" block={evidence.calibration.series} />
         </div>
         <p className="border-t border-[var(--color-border-subtle)] p-4 text-xs leading-5 text-[var(--color-text-muted)]">
-          Game calibration is rejected because both Brier and log loss worsen. Series calibration improves both on 75 eligible forecasts, but remains research-only because production inputs use a different scale.
+          Rolling-origin forecasts are systematically overconfident: the
+          calibration fit for the reference model has slope{" "}
+          {formatNumber(evidence.modelComparison[0].series.calibrationFit.slope, 2)} for
+          series and {formatNumber(evidence.modelComparison[0].game.calibrationFit.slope, 2)} for
+          games (a slope of 1 would be perfectly calibrated). Game calibration
+          is rejected because both Brier and log loss worsen. Series
+          calibration improves both on 75 eligible forecasts, but remains
+          research-only because production inputs use a different scale.
         </p>
       </section>
 
@@ -193,6 +247,11 @@ export function EvidenceExplorer() {
                 </div>
               ))}
             </div>
+            <p className="border-t border-[var(--color-border-subtle)] p-4 text-xs leading-5 text-[var(--color-text-muted)]">
+              Ranked mechanically by Brier loss; no editorial substitutions.
+              These misses are the tail of the measured overconfidence pattern
+              (calibration slope ≈ 0.8 above), not isolated anecdotes.
+            </p>
           </div>
         ))}
       </section>

@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 export const metadata: Metadata = {
   title: "Playoff Pulse",
   description:
-    "Transparent NBA playoff forecast using exact series solving, uncertainty-aware bracket simulation, and manual inputs.",
+    "A traceable NBA playoff forecasting experiment: exact series solving, rolling-origin evaluation, uncertainty propagation, and honest failure analysis.",
 };
 
 export default function RootLayout({

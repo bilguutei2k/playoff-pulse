@@ -60,6 +60,7 @@ const sections: MethodologySection[] = [
     title: "Backtest Results",
     body: [
       'Across 150 playoff series from 2016 through 2025, Playoff Pulse posts a Brier score of 0.191 -- comfortably better than a 50/50 coinflip (0.250), a "higher seed always wins" rule (0.213), and a "home team always wins" rule (0.215). Against the historical SRS-proxy-only model (0.194) or net-rating-only model (0.195), the aggregate edge is small.',
+      "Paired bootstrap intervals (scripts/backtest/significance.ts, both series- and season-resampled) make the split explicit: the advantages over coinflip, home-team, and higher-seed are conclusive, while the -0.003 edge over SRS-only and -0.004 over net-rating-only have 95% intervals that include zero. The reconstruction evaluates a fixed configuration whose parameters predate the harness and were never refit; docs/parameter-provenance.md records when and how each parameter was chosen and why this result is descriptive rather than out-of-sample.",
       "The aggregate edge does not establish dominant superiority over rating-only models. Rolling-origin game evaluation and season-clustered intervals are shown above; feature additions remain excluded when their interval includes harm.",
       "Correction, July 2026: the original May 2026 run contained two input defects -- a minutes-parsing bug that promoted a handful of deep-bench players into 21 historical rotations, and truncated home patterns that placed unplayed late-series games on neutral court. Both were fixed and every number on this page was regenerated on July 12, 2026. The headline Brier improved from 0.193 to 0.190 and every qualitative conclusion below survived the correction.",
     ],
@@ -227,7 +228,7 @@ export default function MethodologyPage() {
                 className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:border-[var(--color-accent)]"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden />
-                Back to forecast
+                Back to retrospective
               </Link>
             </div>
           </div>

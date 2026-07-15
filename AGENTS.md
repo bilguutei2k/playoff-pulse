@@ -1,8 +1,10 @@
 # AGENTS.md
 
 ## Project Identity
-- Playoff Pulse is a transparent, manually configured NBA playoff forecasting dashboard.
-- It is a polished MVP with a working model, deployed at https://548-sable.vercel.app.
+- Playoff Pulse is a transparent, manually configured NBA playoff forecasting system, repositioned in July 2026 as a portfolio retrospective ("a traceable NBA playoff forecasting experiment") after the configured 2026 postseason completed.
+- It is deployed at https://548-sable.vercel.app. The homepage (`/`) is a five-section retrospective narrative; the frozen completed-season dashboard lives at `/snapshot`; `/case-study` permanently redirects to `/`.
+- All public claims are gated by `docs/claims-ledger.md`. Statistical significance for the 150-series backtest lives in `docs/backtest/significance.json` (regenerate with `pnpm exec tsx scripts/backtest/significance.ts`); parameter provenance is recorded in `docs/parameter-provenance.md`. Do not add performance claims that are not supported by those documents — in particular, the model's edge over SRS-only and net-rating-only baselines is NOT statistically distinguishable from zero and must never be framed as outperformance.
+- Featured content (replay series, failure examples) is selected by the mechanical rules in the claims ledger, never editorially.
 - It is not a betting product. Modeling inputs — team ratings, player impact, projected minutes, injury statuses, and model weights — remain manual configuration; the model itself does not consume live data at runtime. The model has been backtested against 150 playoff series (2016–2025), first on May 13, 2026 and regenerated on July 12, 2026 after correcting a minutes-parsing defect and home-pattern truncation in the historical inputs; see docs/backtest/methodology.md for results and known limitations. It is not yet calibrated against external benchmarks or production-grade for unsupervised public use.
 - Series scores and the snapshot timestamp are updated via a PR-gated GitHub Actions workflow that fetches finalized game results from the ESPN public scoreboard daily (`.github/workflows/refresh-data.yml` + `scripts/refresh-data.ts`). The workflow opens a pull request; a human reviewer merges or rejects before any change reaches `src/lib/data/playoff-config.ts` on the default branch. No other model inputs are auto-fetched.
 - The repo includes a read-only live scoreboard probe for display only: `src/app/api/live-scoreboard/route.ts`, `src/lib/live-data/espn-scoreboard.ts`.

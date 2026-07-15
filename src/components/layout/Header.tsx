@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { BriefcaseBusiness, ChartNoAxesCombined, FileText, FlaskConical, LayoutDashboard } from "lucide-react";
+import { Camera, ChartNoAxesCombined, FileText, FlaskConical, ScrollText } from "lucide-react";
+
+const navItems = [
+  { href: "/", label: "Retrospective", Icon: ScrollText },
+  { href: "/evidence", label: "Evidence", Icon: ChartNoAxesCombined },
+  { href: "/methodology", label: "Methodology", Icon: FileText },
+  { href: "/lab", label: "Lab", Icon: FlaskConical },
+  { href: "/snapshot", label: "Snapshot", Icon: Camera },
+];
 
 export function Header() {
   return (
@@ -17,52 +25,27 @@ export function Header() {
           </span>
           <span className="grid gap-1">
             <span className="pp-kicker text-[var(--color-text-primary)]">Playoff Pulse</span>
-            <span className="pp-kicker text-[var(--color-text-muted)]">Forecasting Engine</span>
+            <span className="pp-kicker text-[var(--color-text-muted)]">Forecasting Retrospective</span>
           </span>
         </Link>
 
         <div className="flex items-center px-4 py-3">
           <div className="text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)]">
-            2026 NBA Playoffs / manual inputs / model estimates
+            2026 season complete / manual inputs / reconstructed evaluation
           </div>
         </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-2 px-3 py-3 sm:justify-end sm:gap-3 sm:px-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
-          >
-            <LayoutDashboard className="h-4 w-4" aria-hidden />
-            Forecast
-          </Link>
-          <Link
-            href="/case-study"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
-          >
-            <BriefcaseBusiness className="h-4 w-4" aria-hidden />
-            Case Study
-          </Link>
-          <Link
-            href="/methodology"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
-          >
-            <FileText className="h-4 w-4" aria-hidden />
-            Methodology
-          </Link>
-          <Link
-            href="/lab"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
-          >
-            <FlaskConical className="h-4 w-4" aria-hidden />
-            Lab
-          </Link>
-          <Link
-            href="/evidence"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
-          >
-            <ChartNoAxesCombined className="h-4 w-4" aria-hidden />
-            Evidence
-          </Link>
+          {navItems.map(({ href, label, Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+            >
+              <Icon className="h-4 w-4" aria-hidden />
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

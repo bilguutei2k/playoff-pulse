@@ -183,15 +183,15 @@ export function ForecastDashboard() {
       ) : null}
 
       <Section
-        title="Live Data Probe"
-        description="Read-only NBA scoreboard feed for data-ingestion validation. It does not overwrite manual ratings, injuries, rotations, or series state yet."
+        title="Engineering Appendix: Live Data Probe"
+        description="Preserved read-only NBA scoreboard feed, kept as a data-ingestion validation demo. It never fed the model, and with the season complete it typically shows no games."
       >
         <LiveDataPanel />
       </Section>
 
       <Section
         title="Championship Estimate"
-        description="Top title probabilities from the current manual input set and bracket simulation."
+        description="Terminal title probabilities of the completed bracket from the frozen manual input set. With a finished Finals these are accounting, not forecasts."
       >
         <div className={championshipGridClass}>
           {championshipRows.map((row) => {
