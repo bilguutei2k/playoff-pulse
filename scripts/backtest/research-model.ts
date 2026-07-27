@@ -925,7 +925,8 @@ export function runResearchModel() {
       multiplicityPolicy:
         "Exactly one primary challenger is promotion-eligible; all other candidates are exploratory and cannot be promoted from the same evaluation.",
       promotionChecks: {
-        genuinelyFutureArchivedSeasonAvailable: false,
+        genuinelyFutureArchivedSeasonAvailable: true,
+        prospectiveRegistrationBeforeEvaluatedSeason: false,
         candidateMinusBaselinePointEstimateAtMostNegativeThreshold:
           primarySeriesChallenger.comparisonToSrsHome
             .candidateMinusBaselineBrier <=
@@ -949,7 +950,13 @@ export function runResearchModel() {
         productionEquivalentInputDefinitions: false,
       },
       decision:
-        "not_eligible_requires_future_archived_season_and_production_equivalent_inputs",
+        "not_eligible_contaminated_2026_registration_and_no_production_equivalent_inputs",
+      registrationClassification: {
+        exact_srs_logit_plus_seed_v1: "CONTAMINATED_2026",
+        ten_season_training_window_v1: "CONTAMINATED_2026",
+        provenance:
+          "First durable main-branch registration was 2026-07-27, after the 2026 playoffs began on 2026-04-18.",
+      },
     },
     preregisteredDynamicRatingCandidate: (() => {
       const candidate = evaluateDynamicRatingCandidate(games, {
@@ -966,7 +973,7 @@ export function runResearchModel() {
     })(),
     preregisteredRatingGapShrinkageCandidate: {
       registration: RATING_GAP_SHRINKAGE_CANDIDATE,
-      status: "research_only_not_promotion_eligible_on_history_through_2025",
+      status: "research_only_not_promotion_eligible_on_history_through_2026",
       result: shrinkageResult,
       comparisonToSrsHome: {
         game: bootstrapDifference(

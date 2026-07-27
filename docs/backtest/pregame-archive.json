@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T19:27:19.288Z",
+  "generatedAt": "2026-07-27T09:35:19.303Z",
   "modelVersion": "2026.3-point-in-time-lab",
   "researchProtocolVersion": "rolling-origin-v2",
   "seasons": [
@@ -25,7 +25,8 @@
     2022,
     2023,
     2024,
-    2025
+    2025,
+    2026
   ],
   "records": [
     {
@@ -122731,6 +122732,5407 @@
       ],
       "actualGameWinner": "OKC",
       "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-1",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-06-03",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6248653174018755,
+      "teamASeriesWinProbability": 0.6174522325691533,
+      "expectedMarginForTeamA": 3.3166316252708334,
+      "uncertainty": {
+        "lower": 0.5053261949519071,
+        "median": 0.6194635434903197,
+        "upper": 0.717389522074931,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.08205696498362686,
+        "4-1": 0.18271293072100783,
+        "4-2": 0.1582458721037177,
+        "4-3": 0.19443646476080084,
+        "3-4": 0.11672893255913253,
+        "2-4": 0.14674817743427732,
+        "1-4": 0.07779570746485584,
+        "0-4": 0.04127494997258108
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.22063162527083321
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.44999999999999996
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.44599999999999973
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-2",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-06-05",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6248653174018755,
+      "teamASeriesWinProbability": 0.4230157678083525,
+      "expectedMarginForTeamA": 3.3166316252708334,
+      "uncertainty": {
+        "lower": 0.3233727163738834,
+        "median": 0.4192650068862539,
+        "upper": 0.520651176805373,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.08205696498362686,
+        "4-2": 0.13404609546960397,
+        "4-3": 0.2069127073551216,
+        "3-4": 0.12421898069478166,
+        "2-4": 0.2041095631557212,
+        "1-4": 0.1386286716795095,
+        "0-4": 0.11002701666163521
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.22063162527083321
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.44999999999999996
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.44599999999999973
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-3",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-06-08",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "winsA": 0,
+      "winsB": 2,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.4584281783536932,
+      "teamASeriesWinProbability": 0.2161030604532308,
+      "expectedMarginForTeamA": -1.083368374729167,
+      "uncertainty": {
+        "lower": 0.1473863885402961,
+        "median": 0.21015911026364908,
+        "upper": 0.28892012499092284,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.06020053270852883,
+        "4-3": 0.15590252774470198,
+        "3-4": 0.093595281467895,
+        "2-4": 0.21073090656609467,
+        "1-4": 0.1862707135114804,
+        "0-4": 0.2933000380012991
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.22063162527083321
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.44999999999999996
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.44599999999999973
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-4",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-06-10",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.4584281783536932,
+      "teamASeriesWinProbability": 0.3744606648412363,
+      "expectedMarginForTeamA": -1.083368374729167,
+      "uncertainty": {
+        "lower": 0.3006228702364747,
+        "median": 0.3740414460914029,
+        "upper": 0.461871530141875,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.13131944228367662,
+        "4-3": 0.24314122255755968,
+        "3-4": 0.1459685836459842,
+        "2-4": 0.2764083780954041,
+        "1-4": 0.20316237341737542
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.22063162527083321
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.44999999999999996
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.44599999999999973
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-5",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-06-13",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "winsA": 1,
+      "winsB": 3,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6248653174018755,
+      "teamASeriesWinProbability": 0.17899633761238182,
+      "expectedMarginForTeamA": 3.3166316252708334,
+      "uncertainty": {
+        "lower": 0.13686177454992143,
+        "median": 0.1806688321110507,
+        "upper": 0.23437133611078367,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.17899633761238182,
+        "3-4": 0.10745953156056226,
+        "2-4": 0.3384094482289314,
+        "1-4": 0.37513468259812455
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.22063162527083321
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.44999999999999996
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.44599999999999973
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-1",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-19",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6298892088427068,
+      "teamASeriesWinProbability": 0.62845297161946,
+      "expectedMarginForTeamA": 3.4563200656666666,
+      "uncertainty": {
+        "lower": 0.5222592304142091,
+        "median": 0.6276691520515716,
+        "upper": 0.7223522120550557,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.08533561755535506,
+        "4-1": 0.18746867045763332,
+        "4-2": 0.16076380714580238,
+        "4-3": 0.19488487646066932,
+        "3-4": 0.11451060726055622,
+        "2-4": 0.14281116826128337,
+        "1-4": 0.07483683211839845,
+        "0-4": 0.039388420740301834
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.19782006566666685
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6025
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.4559999999999998
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-2",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-21",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6298892088427068,
+      "teamASeriesWinProbability": 0.7429635788800163,
+      "expectedMarginForTeamA": 3.4563200656666666,
+      "uncertainty": {
+        "lower": 0.6499665164805681,
+        "median": 0.7395628391297404,
+        "upper": 0.8233424915990455,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.13547718607871037,
+        "4-1": 0.24748008910445013,
+        "4-2": 0.17412324118454703,
+        "4-3": 0.1858830625123088,
+        "3-4": 0.10922131442063007,
+        "2-4": 0.10842668595905175,
+        "1-4": 0.039388420740301834
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.19782006566666685
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6025
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.4559999999999998
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-3",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-23",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.46376823568134207,
+      "teamASeriesWinProbability": 0.8521848933006464,
+      "expectedMarginForTeamA": -0.9436799343333337,
+      "uncertainty": {
+        "lower": 0.7810224047815684,
+        "median": 0.8504693913869003,
+        "upper": 0.9009697734176125,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.21508097642698484,
+        "4-1": 0.3132908419619764,
+        "4-2": 0.16937041235488978,
+        "4-3": 0.1544426625567954,
+        "3-4": 0.0907475397655342,
+        "2-4": 0.057067566933819376
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.19782006566666685
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6025
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.4559999999999998
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-4",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-25",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.46376823568134207,
+      "teamASeriesWinProbability": 0.9606115792596981,
+      "expectedMarginForTeamA": -0.9436799343333337,
+      "uncertainty": {
+        "lower": 0.938116195201803,
+        "median": 0.9606209283191549,
+        "upper": 0.9760203954203042,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.46376823568134207,
+        "4-1": 0.33776660178300827,
+        "4-2": 0.09204183827336902,
+        "4-3": 0.06703490352197879,
+        "3-4": 0.039388420740301834
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.19782006566666685
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6025
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.4559999999999998
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-1",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-18",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.6597753275600363,
+      "expectedMarginForTeamA": 3.862385335291667,
+      "uncertainty": {
+        "lower": 0.5565433302667324,
+        "median": 0.661410616789617,
+        "upper": 0.76464795653036,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.09538836140926617,
+        "4-1": 0.20137600242293574,
+        "4-2": 0.1676770932492062,
+        "4-3": 0.19533387047862835,
+        "3-4": 0.10782366079544198,
+        "2-4": 0.13145754009662608,
+        "1-4": 0.06665016423616982,
+        "0-4": 0.03429330731172588
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-2",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-20",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.464441457081408,
+      "expectedMarginForTeamA": 3.862385335291667,
+      "uncertainty": {
+        "lower": 0.3579864568835903,
+        "median": 0.4633399224732946,
+        "upper": 0.5702470180502901,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.09538836140926617,
+        "4-2": 0.14980869539552102,
+        "4-3": 0.21924440027662087,
+        "3-4": 0.1210221954277659,
+        "2-4": 0.1928491129113042,
+        "1-4": 0.12526800426263293,
+        "0-4": 0.09641923031688908
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-3",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-22",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.4793342926172149,
+      "teamASeriesWinProbability": 0.5854636525091739,
+      "expectedMarginForTeamA": -0.5376146647083333,
+      "uncertainty": {
+        "lower": 0.4890504454075086,
+        "median": 0.5832470956104767,
+        "upper": 0.6748834846815012,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.14804242646835714,
+        "4-2": 0.19333191855257614,
+        "4-3": 0.24408930748824073,
+        "3-4": 0.13473650335150628,
+        "2-4": 0.18338061382243082,
+        "1-4": 0.09641923031688908
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-4",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-24",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.4793342926172149,
+      "teamASeriesWinProbability": 0.778312765420478,
+      "expectedMarginForTeamA": -0.5376146647083333,
+      "uncertainty": {
+        "lower": 0.7031382236268996,
+        "median": 0.7770048460496976,
+        "upper": 0.8366143844047061,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.3088500629905491,
+        "4-2": 0.2425265741326807,
+        "4-3": 0.2269361282972483,
+        "3-4": 0.12526800426263293,
+        "2-4": 0.09641923031688908
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-5",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-05-26",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.6348593900941958,
+      "expectedMarginForTeamA": 3.862385335291667,
+      "uncertainty": {
+        "lower": 0.5662629287705682,
+        "median": 0.6377136128148782,
+        "upper": 0.7098879583452469,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.3088500629905491,
+        "4-3": 0.3260093271036468,
+        "3-4": 0.17995608757273798,
+        "2-4": 0.18518452233306618
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-6",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-28",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.4793342926172149,
+      "teamASeriesWinProbability": 0.8148154776669339,
+      "expectedMarginForTeamA": -0.5376146647083333,
+      "uncertainty": {
+        "lower": 0.7675572686783702,
+        "median": 0.8130969667802328,
+        "upper": 0.856072875752048,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.4793342926172149,
+        "4-3": 0.335481185049719,
+        "3-4": 0.18518452233306618
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-7",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-30",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 6,
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.6443312480402681,
+      "expectedMarginForTeamA": 3.862385335291667,
+      "uncertainty": {
+        "lower": 0.5891163981051276,
+        "median": 0.6424162242709861,
+        "upper": 0.6963448581924337,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.6443312480402681,
+        "3-4": 0.3556687519597319
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.4153853352916667
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.6950000000000003
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.5520000000000008
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-1",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-05",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.6800673753594436,
+      "expectedMarginForTeamA": 4.133448435291666,
+      "uncertainty": {
+        "lower": 0.5683600103846185,
+        "median": 0.6774666488855994,
+        "upper": 0.7688222150336712,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.10253613190302299,
+        "4-1": 0.2106849983170301,
+        "4-2": 0.1719191038201479,
+        "4-3": 0.19492714131924255,
+        "3-4": 0.10320431978918464,
+        "2-4": 0.12399780370388139,
+        "1-4": 0.06153104008226754,
+        "0-4": 0.031199461065222825
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-2",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-07",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.7832716951486283,
+      "expectedMarginForTeamA": 4.133448435291666,
+      "uncertainty": {
+        "lower": 0.707874231622586,
+        "median": 0.7859370257874452,
+        "upper": 0.8551162665382549,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.15682396311650504,
+        "4-1": 0.2679444959872357,
+        "4-2": 0.17938753482141195,
+        "4-3": 0.17911570122347556,
+        "3-4": 0.09483294108364781,
+        "2-4": 0.09069590270250111,
+        "1-4": 0.031199461065222825
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-3",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-09",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.4897494531882197,
+      "teamASeriesWinProbability": 0.8781046362322761,
+      "expectedMarginForTeamA": -0.2665515647083341,
+      "uncertainty": {
+        "lower": 0.8196456948789014,
+        "median": 0.8751263794559605,
+        "upper": 0.916664218367021,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.23985452689816023,
+        "4-1": 0.3267773446707012,
+        "4-2": 0.16810194054532335,
+        "4-3": 0.1433708241180913,
+        "3-4": 0.07590778934417061,
+        "2-4": 0.04598757442355333
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-4",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-11",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.4897494531882197,
+      "teamASeriesWinProbability": 0.791052757439588,
+      "expectedMarginForTeamA": -0.2665515647083341,
+      "uncertainty": {
+        "lower": 0.7309328824954403,
+        "median": 0.7984166527431031,
+        "upper": 0.8512508096743417,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.32021263545185563,
+        "4-2": 0.24641923611700578,
+        "4-3": 0.2244208858707266,
+        "3-4": 0.11881980475382972,
+        "2-4": 0.09012743780658228
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-5",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-05-13",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.6491893449744673,
+      "expectedMarginForTeamA": 4.133448435291666,
+      "uncertainty": {
+        "lower": 0.5748131359414895,
+        "median": 0.6515344446526277,
+        "upper": 0.7172098860642737,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.32021263545185563,
+        "4-3": 0.3289767095226117,
+        "3-4": 0.17417696326424148,
+        "2-4": 0.17663369176129118
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-6",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-15",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 2,
+      "winsB": 3,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.4897494531882197,
+      "teamASeriesWinProbability": 0.32021263545185563,
+      "expectedMarginForTeamA": -0.2665515647083341,
+      "uncertainty": {
+        "lower": 0.26073843487957876,
+        "median": 0.31956522716403957,
+        "upper": 0.3804772994283493,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.32021263545185563,
+        "3-4": 0.1695368177363641,
+        "2-4": 0.5102505468117803
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-7",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-17",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 6,
+      "teamA": "DET",
+      "teamB": "CLE",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.6538294905023447,
+      "expectedMarginForTeamA": 4.133448435291666,
+      "uncertainty": {
+        "lower": 0.6046117661313516,
+        "median": 0.6561707560208209,
+        "upper": 0.7081224915272484,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.6538294905023447,
+        "3-4": 0.34617050949765527
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1364484352916666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0450000000000002
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7519999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-1",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-04",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.707182115747392,
+      "teamASeriesWinProbability": 0.7870024162861056,
+      "expectedMarginForTeamA": 5.731292852125001,
+      "uncertainty": {
+        "lower": 0.695494129446748,
+        "median": 0.7889276971593335,
+        "upper": 0.8619944020782798,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.15184680421320332,
+        "4-1": 0.26391852191689885,
+        "4-2": 0.1894954393979983,
+        "4-3": 0.18174165075800497,
+        "3-4": 0.07525247665418164,
+        "2-4": 0.08359304606726858,
+        "1-4": 0.036868274726737815,
+        "0-4": 0.017283786265706546
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.604792852125
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.6624999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.2640000000000002
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-2",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-06",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.707182115747392,
+      "teamASeriesWinProbability": 0.8622548929402872,
+      "expectedMarginForTeamA": 5.731292852125001,
+      "uncertainty": {
+        "lower": 0.7873515683708063,
+        "median": 0.8627582922302584,
+        "upper": 0.9161724433993446,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.21472093373391182,
+        "4-1": 0.31032326339974753,
+        "4-2": 0.18281007277071204,
+        "4-3": 0.1544006230359157,
+        "3-4": 0.06393157117227063,
+        "2-4": 0.05652974962173575,
+        "1-4": 0.017283786265706542
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.604792852125
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.6624999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.2640000000000002
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-3",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-08",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5510253245031363,
+      "teamASeriesWinProbability": 0.9261864641125579,
+      "expectedMarginForTeamA": 1.3312928521250003,
+      "uncertainty": {
+        "lower": 0.8878073083769396,
+        "median": 0.9264887685972908,
+        "upper": 0.9560795140754291,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.3036289082437867,
+        "4-1": 0.34990864215721873,
+        "4-2": 0.15838491754235173,
+        "4-3": 0.11426399616920055,
+        "3-4": 0.04731248268227547,
+        "2-4": 0.026501053205166818
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.604792852125
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.6624999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.2640000000000002
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-4",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-10",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5510253245031363,
+      "teamASeriesWinProbability": 0.9827162137342935,
+      "expectedMarginForTeamA": 1.3312928521250003,
+      "uncertainty": {
+        "lower": 0.9720594145892751,
+        "median": 0.9830451000427505,
+        "upper": 0.9905824592748463,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.5510253245031363,
+        "4-1": 0.3175068609348708,
+        "4-2": 0.07244209518074028,
+        "4-3": 0.041741933115546054,
+        "3-4": 0.017283786265706542
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.604792852125
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.6624999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.2640000000000002
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-1",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-05",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7565877166677293,
+      "teamASeriesWinProbability": 0.8702623551639659,
+      "expectedMarginForTeamA": 7.371401909666667,
+      "uncertainty": {
+        "lower": 0.8048545542095612,
+        "median": 0.8744657506629567,
+        "upper": 0.9254069680056621,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.21463325385980805,
+        "4-1": 0.31010310563458415,
+        "4-2": 0.1922514137312264,
+        "4-3": 0.15327458193834742,
+        "3-4": 0.04931208258407045,
+        "2-4": 0.051200556394728876,
+        "1-4": 0.020320747758165947,
+        "0-4": 0.008904258099068734
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.9694019096666666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.33
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.872000000000001
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-2",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-07",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7565877166677293,
+      "teamASeriesWinProbability": 0.9195744377480364,
+      "expectedMarginForTeamA": 7.371401909666667,
+      "uncertainty": {
+        "lower": 0.8708776462716099,
+        "median": 0.9217132497165696,
+        "upper": 0.955637456143745,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.2836858821937081,
+        "4-1": 0.34081803015416545,
+        "4-2": 0.17335759936562778,
+        "4-3": 0.1217129260345351,
+        "3-4": 0.03915794637481407,
+        "2-4": 0.03236335777808075,
+        "1-4": 0.008904258099068734
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.9694019096666666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.33
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.872000000000001
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-3",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-09",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.6123351902788032,
+      "teamASeriesWinProbability": 0.9587323841228504,
+      "expectedMarginForTeamA": 2.9714019096666666,
+      "uncertainty": {
+        "lower": 0.9310871591003781,
+        "median": 0.9592942027309578,
+        "upper": 0.9774508575636575,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.37495438525377817,
+        "4-1": 0.3591988025092623,
+        "4-2": 0.14038754145805848,
+        "4-3": 0.08419165490175157,
+        "3-4": 0.027086460043810028,
+        "2-4": 0.01418115583333945
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.9694019096666666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.33
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.872000000000001
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-4",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-11",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.6123351902788032,
+      "teamASeriesWinProbability": 0.9910957419009312,
+      "expectedMarginForTeamA": 2.9714019096666666,
+      "uncertainty": {
+        "lower": 0.9842292688425943,
+        "median": 0.9909147474538178,
+        "upper": 0.995096601318199,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.6123351902788032,
+        "4-1": 0.29330243321939,
+        "4-2": 0.05778140377039392,
+        "4-3": 0.027676714632344113,
+        "3-4": 0.008904258099068734
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.9694019096666666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.33
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.872000000000001
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-1",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-04",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6862063895856435,
+      "teamASeriesWinProbability": 0.7466574339189176,
+      "expectedMarginForTeamA": 5.08587926475,
+      "uncertainty": {
+        "lower": 0.6445554957323137,
+        "median": 0.7421093552238376,
+        "upper": 0.8266943659960185,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.13045714858031512,
+        "4-1": 0.2429845128285772,
+        "4-2": 0.18405097359854805,
+        "4-3": 0.1891647989114773,
+        "3-4": 0.08650269964635734,
+        "2-4": 0.09902743408058359,
+        "1-4": 0.045722562891212834,
+        "0-4": 0.02208986946292854
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.54637926475
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.2974999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.0419999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-2",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-06",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6862063895856435,
+      "teamASeriesWinProbability": 0.5574926350074404,
+      "expectedMarginForTeamA": 5.08587926475,
+      "uncertainty": {
+        "lower": 0.4519073424789389,
+        "median": 0.5572431994906186,
+        "upper": 0.65627223177078,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.13045714858031512,
+        "4-2": 0.18638159301206336,
+        "4-3": 0.24065389341506194,
+        "3-4": 0.11004801940212641,
+        "2-4": 0.1646604451793048,
+        "1-4": 0.09740272684417962,
+        "0-4": 0.07039617356694876
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.54637926475
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.2974999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.0419999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-3",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-08",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.5263555217457754,
+      "teamASeriesWinProbability": 0.6675406544095668,
+      "expectedMarginForTeamA": 0.6858792647499996,
+      "uncertainty": {
+        "lower": 0.5739853931108052,
+        "median": 0.669065752982948,
+        "upper": 0.7517612020407115,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.19011357305939677,
+        "4-2": 0.22585202780386837,
+        "4-3": 0.25157505354630166,
+        "3-4": 0.1150421295117166,
+        "2-4": 0.14702104251176784,
+        "1-4": 0.07039617356694877
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.54637926475
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.2974999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.0419999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-4",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-10",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.5263555217457754,
+      "teamASeriesWinProbability": 0.8322010995888716,
+      "expectedMarginForTeamA": 0.6858792647499996,
+      "uncertainty": {
+        "lower": 0.7727825561858606,
+        "median": 0.8319064620037522,
+        "upper": 0.8830260877654944,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.3611885222156362,
+        "4-2": 0.25801151136911005,
+        "4-3": 0.21300106600412538,
+        "3-4": 0.09740272684417962,
+        "2-4": 0.07039617356694877
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.54637926475
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.2974999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.0419999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-5",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-05-12",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6862063895856435,
+      "teamASeriesWinProbability": 0.6975565099607048,
+      "expectedMarginForTeamA": 5.08587926475,
+      "uncertainty": {
+        "lower": 0.6252992564844979,
+        "median": 0.6967571923972846,
+        "upper": 0.7621852773668348,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.3611885222156362,
+        "4-3": 0.33636798774506876,
+        "3-4": 0.15381687915507775,
+        "2-4": 0.1486266108842173
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.54637926475
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.2974999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.0419999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-6",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-15",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.5263555217457754,
+      "teamASeriesWinProbability": 0.8513733891157826,
+      "expectedMarginForTeamA": 0.6858792647499996,
+      "uncertainty": {
+        "lower": 0.8071551441269911,
+        "median": 0.8505357089190335,
+        "upper": 0.8875669498086561,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.5263555217457754,
+        "4-3": 0.3250178673700073,
+        "3-4": 0.1486266108842173
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.54637926475
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.2974999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.0419999999999996
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-1",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.5981945957288126,
+      "expectedMarginForTeamA": 3.0750737585625005,
+      "uncertainty": {
+        "lower": 0.4802898130742971,
+        "median": 0.599050499078791,
+        "upper": 0.7013404747804437,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.07660112817980817,
+        "4-1": 0.1745434473705663,
+        "4-2": 0.15374150132664532,
+        "4-3": 0.1933085188517929,
+        "3-4": 0.12044571883249877,
+        "2-4": 0.15357148973104784,
+        "1-4": 0.08308232286526246,
+        "0-4": 0.044705872842378216
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-2",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-20",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.7186403145613114,
+      "expectedMarginForTeamA": 3.0750737585625005,
+      "uncertainty": {
+        "lower": 0.6185818266929376,
+        "median": 0.716519861260455,
+        "upper": 0.7979786584895985,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.12432938144975869,
+        "4-1": 0.23556886471442012,
+        "4-2": 0.1702402910747446,
+        "4-3": 0.18850177732238801,
+        "3-4": 0.11745075801964877,
+        "2-4": 0.11920305457666153,
+        "1-4": 0.044705872842378216
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-3",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-23",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "TOR",
+      "teamAGameWinProbability": 0.4492170070761434,
+      "teamASeriesWinProbability": 0.8360910725809602,
+      "expectedMarginForTeamA": -1.3249262414375,
+      "uncertainty": {
+        "lower": 0.7673178713065887,
+        "median": 0.8340323792617603,
+        "upper": 0.8901840104788545,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.2017959194464479,
+        "4-1": 0.3048794134887356,
+        "4-2": 0.16929570121963017,
+        "4-3": 0.16012003842614655,
+        "3-4": 0.09976680408229033,
+        "2-4": 0.06414212333674942
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "TOR",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-4",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "TOR",
+      "teamAGameWinProbability": 0.4492170070761434,
+      "teamASeriesWinProbability": 0.7388694079703667,
+      "expectedMarginForTeamA": -1.3249262414375,
+      "uncertainty": {
+        "lower": 0.6611601487821868,
+        "median": 0.735796029807585,
+        "upper": 0.8031757796706637,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.2767690881941265,
+        "4-2": 0.229906244741057,
+        "4-3": 0.23219407503518322,
+        "3-4": 0.14467433945682223,
+        "2-4": 0.11645625257281099
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "TOR",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-5",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-29",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.5920923211993621,
+      "expectedMarginForTeamA": 3.0750737585625005,
+      "uncertainty": {
+        "lower": 0.5075966826739587,
+        "median": 0.5927722983682215,
+        "upper": 0.6660773794943214,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.2767690881941265,
+        "4-3": 0.31532323300523557,
+        "3-4": 0.19647004534249918,
+        "2-4": 0.2114376334581387
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-6",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-01",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "TOR",
+      "teamAGameWinProbability": 0.4492170070761434,
+      "teamASeriesWinProbability": 0.7885623665418613,
+      "expectedMarginForTeamA": -1.3249262414375,
+      "uncertainty": {
+        "lower": 0.7356217305505843,
+        "median": 0.7879902028445267,
+        "upper": 0.8370674090080437,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.4492170070761434,
+        "4-3": 0.33934535946571787,
+        "3-4": 0.2114376334581387
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "TOR",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-7",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-03",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 6,
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.6161144476598444,
+      "expectedMarginForTeamA": 3.0750737585625005,
+      "uncertainty": {
+        "lower": 0.5610854075748029,
+        "median": 0.6190872595619706,
+        "upper": 0.6684484814149299,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.6161144476598444,
+        "3-4": 0.38388555234015564
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.30107375856249974
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.3699999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.2040000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-1",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.8052436315821584,
+      "expectedMarginForTeamA": 6.047674832104168,
+      "uncertainty": {
+        "lower": 0.717487351069297,
+        "median": 0.802953973432285,
+        "upper": 0.8777430204384042,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.16304268147727077,
+        "4-1": 0.2737225958523511,
+        "4-2": 0.1912777312017381,
+        "4-3": 0.17720062305079848,
+        "3-4": 0.06988639825102236,
+        "2-4": 0.07655225184268999,
+        "1-4": 0.03304280058976007,
+        "0-4": 0.015274917734369089
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "ORL",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-2",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-22",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.62804300853136,
+      "expectedMarginForTeamA": 6.047674832104168,
+      "uncertainty": {
+        "lower": 0.5256796257838162,
+        "median": 0.6279792135812026,
+        "upper": 0.7264751677101543,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.1630426814772708,
+        "4-2": 0.21489716358100522,
+        "4-3": 0.250103163473084,
+        "3-4": 0.09863853176921283,
+        "2-4": 0.14121898987026715,
+        "1-4": 0.07809419815871155,
+        "0-4": 0.054005271670448454
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-3",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-25",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "ORL",
+      "teamAGameWinProbability": 0.5630349367448753,
+      "teamASeriesWinProbability": 0.7266815403005727,
+      "expectedMarginForTeamA": 1.6476748321041668,
+      "uncertainty": {
+        "lower": 0.6395778011026376,
+        "median": 0.7251498418338376,
+        "upper": 0.8088952276418331,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.22734530961401644,
+        "4-2": 0.24916733383157225,
+        "4-3": 0.2501688968549841,
+        "3-4": 0.09866445644840847,
+        "2-4": 0.12064873158057021,
+        "1-4": 0.05400527167044846
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "ORL",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-4",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-27",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "ORL",
+      "teamAGameWinProbability": 0.5630349367448753,
+      "teamASeriesWinProbability": 0.5447191096282654,
+      "expectedMarginForTeamA": 1.6476748321041668,
+      "uncertainty": {
+        "lower": 0.45944579685344433,
+        "median": 0.5437871859325651,
+        "upper": 0.6302704771267247,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.22734530961401644,
+        "4-3": 0.317373800014249,
+        "3-4": 0.12516949094404542,
+        "2-4": 0.20651966129617366,
+        "1-4": 0.12359173813151544
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "ORL",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-5",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-29",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 1,
+      "winsB": 3,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.2895782674160225,
+      "expectedMarginForTeamA": 6.047674832104168,
+      "uncertainty": {
+        "lower": 0.22785209467470688,
+        "median": 0.2907004319496594,
+        "upper": 0.3558274603067245,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.2895782674160225,
+        "3-4": 0.11420717248649653,
+        "2-4": 0.31337332512360927,
+        "1-4": 0.2828412349738717
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-6",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-01",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 2,
+      "winsB": 3,
+      "homeTeam": "ORL",
+      "teamAGameWinProbability": 0.5630349367448753,
+      "teamASeriesWinProbability": 0.403785439902519,
+      "expectedMarginForTeamA": 1.6476748321041668,
+      "uncertainty": {
+        "lower": 0.3480365631241651,
+        "median": 0.40807711517561124,
+        "upper": 0.47144768781810936,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.403785439902519,
+        "3-4": 0.15924949684235626,
+        "2-4": 0.43696506325512474
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-7",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-03",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 6,
+      "teamA": "DET",
+      "teamB": "ORL",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.7171587650261283,
+      "expectedMarginForTeamA": 6.047674832104168,
+      "uncertainty": {
+        "lower": 0.6725566255275666,
+        "median": 0.7159959930221127,
+        "upper": 0.7660568616570232,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.7171587650261283,
+        "3-4": 0.2828412349738717
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.5811748321041664
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.9225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.3440000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-1",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6718988567487533,
+      "teamASeriesWinProbability": 0.7177915873664897,
+      "expectedMarginForTeamA": 4.659108310895833,
+      "uncertainty": {
+        "lower": 0.6125787589930106,
+        "median": 0.7177544155522002,
+        "upper": 0.8028424121106752,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.11740524456629606,
+        "4-1": 0.2286450780962328,
+        "4-2": 0.1791828949407021,
+        "4-3": 0.1925583697632588,
+        "3-4": 0.09402995797259739,
+        "2-4": 0.10993676724657911,
+        "1-4": 0.05239107848512911,
+        "0-4": 0.02585060892920462
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.6976083108958333
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0274999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7340000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-2",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-20",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6718988567487533,
+      "teamASeriesWinProbability": 0.8118215453390871,
+      "expectedMarginForTeamA": 4.659108310895833,
+      "uncertainty": {
+        "lower": 0.7354707840995557,
+        "median": 0.8127963097884178,
+        "upper": 0.8762527057468662,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.17473648509302053,
+        "4-1": 0.2829656297531594,
+        "4-2": 0.18193877872934827,
+        "4-3": 0.17218065176355896,
+        "3-4": 0.08407912607967583,
+        "2-4": 0.07824871965203238,
+        "1-4": 0.025850608929204613
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.6976083108958333
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0274999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7340000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "ATL",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-3",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-23",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "ATL",
+      "teamAGameWinProbability": 0.5099643848128572,
+      "teamASeriesWinProbability": 0.6396408935755282,
+      "expectedMarginForTeamA": 0.2591083108958334,
+      "uncertainty": {
+        "lower": 0.550356741390879,
+        "median": 0.6356734014837473,
+        "upper": 0.7308053095825691,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.17473648509302056,
+        "4-2": 0.21476802922171437,
+        "4-3": 0.25013637926079335,
+        "3-4": 0.12214640816822023,
+        "2-4": 0.1594241616695038,
+        "1-4": 0.07878853658674774
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.6976083108958333
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0274999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7340000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "ATL",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-4",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-25",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "ATL",
+      "teamAGameWinProbability": 0.5099643848128572,
+      "teamASeriesWinProbability": 0.45770211484618,
+      "expectedMarginForTeamA": 0.2591083108958334,
+      "uncertainty": {
+        "lower": 0.3867857425483743,
+        "median": 0.4633472643726062,
+        "upper": 0.5413538943606966,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.17473648509302056,
+        "4-3": 0.2829656297531595,
+        "3-4": 0.1381775630220149,
+        "2-4": 0.24333907655507553,
+        "1-4": 0.16078124557672954
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.6976083108958333
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0274999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7340000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-5",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-28",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6718988567487533,
+      "teamASeriesWinProbability": 0.6762921696179346,
+      "expectedMarginForTeamA": 4.659108310895833,
+      "uncertainty": {
+        "lower": 0.598290857607855,
+        "median": 0.6768157470236014,
+        "upper": 0.747979834164933,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.34264448713834006,
+        "4-3": 0.3336476824795946,
+        "3-4": 0.16292658480533584,
+        "2-4": 0.16078124557672954
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.6976083108958333
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0274999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7340000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-6",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-04-30",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "ATL",
+      "teamAGameWinProbability": 0.5099643848128572,
+      "teamASeriesWinProbability": 0.8392187544232704,
+      "expectedMarginForTeamA": 0.2591083108958334,
+      "uncertainty": {
+        "lower": 0.7939425275728446,
+        "median": 0.8384147648259386,
+        "upper": 0.8772681608383346,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.5099643848128572,
+        "4-3": 0.3292543696104132,
+        "3-4": 0.16078124557672954
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.6976083108958333
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 1.0274999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.7340000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-1",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.8368120572959231,
+      "expectedMarginForTeamA": 6.644378882145834,
+      "uncertainty": {
+        "lower": 0.7602386393541827,
+        "median": 0.8319507360650323,
+        "upper": 0.9003042204281954,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.1853819376049311,
+        "4-1": 0.2911511442183912,
+        "4-2": 0.19300855770193515,
+        "4-3": 0.16727041777066565,
+        "3-4": 0.06018358466748913,
+        "2-4": 0.06428847379794209,
+        "1-4": 0.026685736202994394,
+        "0-4": 0.012030148035651231
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "BOS",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-2",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-21",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.8969956419634122,
+      "expectedMarginForTeamA": 6.644378882145834,
+      "uncertainty": {
+        "lower": 0.8422903412292021,
+        "median": 0.8976888660416333,
+        "upper": 0.9384971572159859,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.25208201336468783,
+        "4-1": 0.32920670769621896,
+        "4-2": 0.17905383842900124,
+        "4-3": 0.13665308247350422,
+        "3-4": 0.04916752447162126,
+        "2-4": 0.04180668552931522,
+        "1-4": 0.012030148035651231
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-3",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-24",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5854747237173844,
+      "teamASeriesWinProbability": 0.760342559489908,
+      "expectedMarginForTeamA": 2.244378882145834,
+      "uncertainty": {
+        "lower": 0.6797884582790231,
+        "median": 0.7660390413302169,
+        "upper": 0.8364079855102016,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.25208201336468783,
+        "4-2": 0.2620904929338452,
+        "4-3": 0.24617005319137503,
+        "3-4": 0.08857152649164729,
+        "2-4": 0.10561993960448593,
+        "1-4": 0.0454659744139587
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "BOS",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-4",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5854747237173844,
+      "teamASeriesWinProbability": 0.8871154821072686,
+      "expectedMarginForTeamA": 2.244378882145834,
+      "uncertainty": {
+        "lower": 0.8432526933687249,
+        "median": 0.8878586315967057,
+        "upper": 0.9262430787938478,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.4305600278764055,
+        "4-2": 0.2691766532589774,
+        "4-3": 0.18737880097188575,
+        "3-4": 0.0674185434787726,
+        "2-4": 0.0454659744139587
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "BOS",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-5",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-28",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 3,
+      "winsB": 1,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.9709784934141161,
+      "expectedMarginForTeamA": 6.644378882145834,
+      "uncertainty": {
+        "lower": 0.9549972580247076,
+        "median": 0.9711766872072787,
+        "upper": 0.9825352861878145,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.7354032726513433,
+        "4-2": 0.15491469584097886,
+        "4-3": 0.08066052492179403,
+        "3-4": 0.029021506585883802
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-6",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-04-30",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5854747237173844,
+      "teamASeriesWinProbability": 0.8903179684923221,
+      "expectedMarginForTeamA": 2.244378882145834,
+      "uncertainty": {
+        "lower": 0.8549828583864637,
+        "median": 0.8922980245732149,
+        "upper": 0.9189689526594483,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.5854747237173844,
+        "4-3": 0.3048432447749378,
+        "3-4": 0.10968203150767783
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-7",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-02",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 6,
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.7354032726513433,
+      "expectedMarginForTeamA": 6.644378882145834,
+      "uncertainty": {
+        "lower": 0.6880658142601659,
+        "median": 0.7342030174707618,
+        "upper": 0.7826939291758865,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.7354032726513433,
+        "3-4": 0.2645967273486567
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.8338788821458331
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.0825
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.5280000000000005
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-1",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.5308658241806373,
+      "teamASeriesWinProbability": 0.4115817691062818,
+      "expectedMarginForTeamA": 0.8035331684583333,
+      "uncertainty": {
+        "lower": 0.305511607001918,
+        "median": 0.41227389853103286,
+        "upper": 0.5218692888808322,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.03756554438637266,
+        "4-1": 0.10460522418223397,
+        "4-2": 0.10621033012097959,
+        "4-3": 0.16320067041669556,
+        "3-4": 0.1442229062819683,
+        "2-4": 0.21341753416760648,
+        "1-4": 0.14206079635543134,
+        "0-4": 0.08871699408871207
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1565331684583334
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": -0.9149999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": -0.6380000000000006
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-2",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-21",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.5308658241806373,
+      "teamASeriesWinProbability": 0.5558046753882501,
+      "expectedMarginForTeamA": 0.8035331684583333,
+      "uncertainty": {
+        "lower": 0.4505623623378507,
+        "median": 0.5561771821184599,
+        "upper": 0.6543178204970758,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.07076278538810263,
+        "4-1": 0.163849205421312,
+        "4-2": 0.13649433268975464,
+        "4-3": 0.18469835188908085,
+        "3-4": 0.16322073326610453,
+        "2-4": 0.19225759725693325,
+        "1-4": 0.08871699408871207
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1565331684583334
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": -0.9149999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": -0.6380000000000006
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-3",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-24",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "HOU",
+      "teamAGameWinProbability": 0.36509852296985257,
+      "teamASeriesWinProbability": 0.7190254086543546,
+      "expectedMarginForTeamA": -3.596466831541667,
+      "uncertainty": {
+        "lower": 0.630772828933916,
+        "median": 0.7186923453748538,
+        "upper": 0.7970938533593356,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.13329693147476795,
+        "4-1": 0.246111085830843,
+        "4-2": 0.15753418938423347,
+        "4-3": 0.18208320196451025,
+        "3-4": 0.16090968563669444,
+        "2-4": 0.12006490570895086
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1565331684583334
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": -0.9149999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": -0.6380000000000006
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-4",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "HOU",
+      "teamAGameWinProbability": 0.36509852296985257,
+      "teamASeriesWinProbability": 0.911283005911288,
+      "expectedMarginForTeamA": -3.596466831541667,
+      "uncertainty": {
+        "lower": 0.8755451829086136,
+        "median": 0.9128743160231186,
+        "upper": 0.9413846480848068,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.36509852296985257,
+        "4-1": 0.3370474958771132,
+        "4-2": 0.10874604857966311,
+        "4-3": 0.10039093848465905,
+        "3-4": 0.08871699408871209
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1565331684583334
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": -0.9149999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": -0.6380000000000006
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "HOU",
+      "actualSeriesWinner": "LAL",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-5",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-29",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "winsA": 3,
+      "winsB": 1,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.5308658241806373,
+      "teamASeriesWinProbability": 0.8602665180372553,
+      "expectedMarginForTeamA": 0.8035331684583333,
+      "uncertainty": {
+        "lower": 0.8164621874825099,
+        "median": 0.8612800349705911,
+        "upper": 0.8991614752606291,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.5308658241806373,
+        "4-2": 0.17128019466632843,
+        "4-3": 0.15812049919028953,
+        "3-4": 0.1397334819627447
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1565331684583334
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": -0.9149999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": -0.6380000000000006
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "HOU",
+      "actualSeriesWinner": "LAL",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-6",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-01",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "HOU",
+      "teamAGameWinProbability": 0.36509852296985257,
+      "teamASeriesWinProbability": 0.7021460188469657,
+      "expectedMarginForTeamA": -3.596466831541667,
+      "uncertainty": {
+        "lower": 0.6399540707370821,
+        "median": 0.7034247665904639,
+        "upper": 0.7561738492924609,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.36509852296985257,
+        "4-3": 0.3370474958771132,
+        "3-4": 0.29785398115303424
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.1565331684583334
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": -0.9149999999999999
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": -0.6380000000000006
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-1",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "DEN",
+      "teamAGameWinProbability": 0.6215022799812586,
+      "teamASeriesWinProbability": 0.6100643058115884,
+      "expectedMarginForTeamA": 3.223541947125,
+      "uncertainty": {
+        "lower": 0.4933201547087862,
+        "median": 0.6088409588715286,
+        "upper": 0.7152790296298588,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.07992250361198044,
+        "4-1": 0.17955560371448165,
+        "4-2": 0.15653170744083,
+        "4-3": 0.19405449104429642,
+        "3-4": 0.11818006914130438,
+        "2-4": 0.14937645061629928,
+        "1-4": 0.07980765410021705,
+        "0-4": 0.04257152033059066
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.12104194712500006
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.5225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.38
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DEN",
+      "actualSeriesWinner": "MIN",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-2",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-20",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "DEN",
+      "teamAGameWinProbability": 0.6215022799812586,
+      "teamASeriesWinProbability": 0.7282443749528927,
+      "expectedMarginForTeamA": 3.223541947125,
+      "uncertainty": {
+        "lower": 0.6377826570884466,
+        "median": 0.7341189122051549,
+        "upper": 0.8082113495814884,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.1285956724316289,
+        "4-1": 0.24023261559661485,
+        "4-2": 0.1718273232768312,
+        "4-3": 0.18758876364781793,
+        "3-4": 0.11424241169955918,
+        "2-4": 0.11494169301695717,
+        "1-4": 0.04257152033059066
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.12104194712500006
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.5225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.38
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-3",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-23",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.45487473310039234,
+      "teamASeriesWinProbability": 0.5406556113050749,
+      "expectedMarginForTeamA": -1.1764580528750002,
+      "uncertainty": {
+        "lower": 0.443964491448515,
+        "median": 0.5413489665492727,
+        "upper": 0.6411035308418347,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.12859567243162892,
+        "4-2": 0.175825174615312,
+        "4-3": 0.23623476425813406,
+        "3-4": 0.14386804769817557,
+        "2-4": 0.20300136934174773,
+        "1-4": 0.11247497165500159
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.12104194712500006
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.5225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.38
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-4",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-25",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.45487473310039234,
+      "teamASeriesWinProbability": 0.36882828802824374,
+      "expectedMarginForTeamA": -1.1764580528750002,
+      "uncertainty": {
+        "lower": 0.2870489816401785,
+        "median": 0.3689247739343033,
+        "upper": 0.45487260116592243,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-2": 0.12859567243162892,
+        "4-3": 0.24023261559661485,
+        "3-4": 0.14630275737717224,
+        "2-4": 0.2785402839484746,
+        "1-4": 0.20632867064610935
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.12104194712500006
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.5225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.38
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-5",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-27",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "winsA": 1,
+      "winsB": 3,
+      "homeTeam": "DEN",
+      "teamAGameWinProbability": 0.6215022799812586,
+      "teamASeriesWinProbability": 0.17570222700046365,
+      "expectedMarginForTeamA": 3.223541947125,
+      "uncertainty": {
+        "lower": 0.12998868444586595,
+        "median": 0.1715311468212058,
+        "upper": 0.22708877569350777,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.17570222700046365,
+        "3-4": 0.10700345672729668,
+        "2-4": 0.3387965962534983,
+        "1-4": 0.3784977200187414
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.12104194712500006
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.5225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.38
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "DEN",
+      "actualSeriesWinner": "MIN",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-6",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 6,
+      "forecastAsOf": "2026-04-30",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 5,
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "winsA": 2,
+      "winsB": 3,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.45487473310039234,
+      "teamASeriesWinProbability": 0.28270568372776034,
+      "expectedMarginForTeamA": -1.1764580528750002,
+      "uncertainty": {
+        "lower": 0.22987379436446972,
+        "median": 0.28351571774086043,
+        "upper": 0.34482721177377407,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-3": 0.28270568372776034,
+        "3-4": 0.172169049372632,
+        "2-4": 0.5451252668996076
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 0.12104194712500006
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 0.5225
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 0.38
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-1",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7667133162547769,
+      "teamASeriesWinProbability": 0.8849347741634518,
+      "expectedMarginForTeamA": 7.7339915841875,
+      "uncertainty": {
+        "lower": 0.8176389412147902,
+        "median": 0.8815944028472118,
+        "upper": 0.9296249884119953,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.22998968706659378,
+        "4-1": 0.318467359928047,
+        "4-2": 0.1907366056846665,
+        "4-3": 0.14574112148414445,
+        "3-4": 0.04434442730488301,
+        "2-4": 0.04543459557311835,
+        "1-4": 0.017653048513276308,
+        "0-4": 0.00763315444527057
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2664915841875
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.4075
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.8600000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-2",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-22",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7667133162547769,
+      "teamASeriesWinProbability": 0.9292792014683348,
+      "expectedMarginForTeamA": 7.7339915841875,
+      "uncertainty": {
+        "lower": 0.8872136470595097,
+        "median": 0.930133241877282,
+        "upper": 0.9616228743467122,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.29996829609017617,
+        "4-1": 0.34538832562637106,
+        "4-2": 0.16972025357926324,
+        "4-3": 0.11420232617252427,
+        "3-4": 0.03474816647103263,
+        "2-4": 0.028339477615362027,
+        "1-4": 0.00763315444527057
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2664915841875
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.4075
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.8600000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-3",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-25",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "PHO",
+      "teamAGameWinProbability": 0.6254911582558845,
+      "teamASeriesWinProbability": 0.9640273679393674,
+      "expectedMarginForTeamA": 3.3339915841874994,
+      "uncertainty": {
+        "lower": 0.9398138801026082,
+        "median": 0.9637989293750449,
+        "upper": 0.9808818877910872,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.39123918905628796,
+        "4-1": 0.359208208288469,
+        "4-2": 0.1356268378349261,
+        "4-3": 0.07795313275968428,
+        "3-4": 0.023718680037917696,
+        "2-4": 0.012253952022714898
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2664915841875
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.4075
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.8600000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-4",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-27",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "PHO",
+      "teamAGameWinProbability": 0.6254911582558845,
+      "teamASeriesWinProbability": 0.9923668455547294,
+      "expectedMarginForTeamA": 3.3339915841874994,
+      "uncertainty": {
+        "lower": 0.9860930900471174,
+        "median": 0.992529168334549,
+        "upper": 0.9963167188959233,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.6254911582558845,
+        "4-1": 0.2871409160203662,
+        "4-2": 0.054647865055362024,
+        "4-3": 0.02508690622311668,
+        "3-4": 0.007633154445270569
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2664915841875
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.4075
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.8600000000000003
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-1",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 0,
+      "teamA": "SAS",
+      "teamB": "POR",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.7539151052958118,
+      "teamASeriesWinProbability": 0.8662440737199932,
+      "expectedMarginForTeamA": 7.277420750604167,
+      "uncertainty": {
+        "lower": 0.7962078301276975,
+        "median": 0.8657025549147483,
+        "upper": 0.9230070773684484,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.21073332459170466,
+        "4-1": 0.30781146439350277,
+        "4-2": 0.19252293369808363,
+        "4-3": 0.15517635103670238,
+        "3-4": 0.05065100266224786,
+        "2-4": 0.052777185236682775,
+        "1-4": 0.021064748722254164,
+        "0-4": 0.009262989658821845
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2554207506041666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.11
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.7119999999999995
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-2",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-21",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 1,
+      "teamA": "SAS",
+      "teamB": "POR",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.7539151052958118,
+      "teamASeriesWinProbability": 0.9168950763822412,
+      "expectedMarginForTeamA": 7.277420750604167,
+      "uncertainty": {
+        "lower": 0.8618221683747749,
+        "median": 0.915278781497533,
+        "upper": 0.9511096002508695,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-0": 0.279518639580805,
+        "4-1": 0.339498671140515,
+        "4-2": 0.1742178518373624,
+        "4-3": 0.12365991382355886,
+        "3-4": 0.04036374474876636,
+        "2-4": 0.033478189210170574,
+        "1-4": 0.009262989658821847
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2554207506041666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.11
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.7119999999999995
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "POR",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-3",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-24",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 2,
+      "teamA": "SAS",
+      "teamB": "POR",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "POR",
+      "teamAGameWinProbability": 0.6088974629938,
+      "teamASeriesWinProbability": 0.7932351625586823,
+      "expectedMarginForTeamA": 2.8774207506041662,
+      "uncertainty": {
+        "lower": 0.712419083866777,
+        "median": 0.7933681648806692,
+        "upper": 0.8640528022809395,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.279518639580805,
+        "4-2": 0.27419516878643235,
+        "4-3": 0.23952135419144507,
+        "3-4": 0.07818199530898,
+        "2-4": 0.09094140270162156,
+        "1-4": 0.0376414394307161
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2554207506041666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.11
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.7119999999999995
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-4",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 3,
+      "teamA": "SAS",
+      "teamB": "POR",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "POR",
+      "teamAGameWinProbability": 0.6088974629938,
+      "teamASeriesWinProbability": 0.9051374909250209,
+      "expectedMarginForTeamA": 2.8774207506041662,
+      "uncertainty": {
+        "lower": 0.8617111092271209,
+        "median": 0.9029732132690991,
+        "upper": 0.9388470624934522,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.45905699492732344,
+        "4-2": 0.2707758362059996,
+        "4-3": 0.1753046597916979,
+        "3-4": 0.05722106964426299,
+        "2-4": 0.0376414394307161
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2554207506041666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.11
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.7119999999999995
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": -2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
+      "provenance": {
+        "impactScale": "bpm_proxy",
+        "ratingScale": "srs_point_proxy",
+        "rotationSource": "normalized_regular_season_mpg",
+        "availabilitySource": "unknown_assumed_available"
+      },
+      "modelVersion": "2026.3-point-in-time-lab"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-5",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-28",
+      "snapshotAsOf": "2026-04-12",
+      "lastIncludedGameNumber": 4,
+      "teamA": "SAS",
+      "teamB": "POR",
+      "winsA": 3,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.7539151052958118,
+      "teamASeriesWinProbability": 0.9763157004049938,
+      "expectedMarginForTeamA": 7.277420750604167,
+      "uncertainty": {
+        "lower": 0.9633264660599029,
+        "median": 0.9772002132695257,
+        "upper": 0.9867158515563349,
+        "samples": 800
+      },
+      "finalScoreProbabilities": {
+        "4-1": 0.7539151052958118,
+        "4-2": 0.14984046806647658,
+        "4-3": 0.07256012704270536,
+        "3-4": 0.023684299595006217
+      },
+      "drivers": [
+        {
+          "label": "Player rotation",
+          "marginPointsForTeamA": 1.2554207506041666
+        },
+        {
+          "label": "Net rating",
+          "marginPointsForTeamA": 2.11
+        },
+        {
+          "label": "Rating proxy",
+          "marginPointsForTeamA": 1.7119999999999995
+        },
+        {
+          "label": "Manual adjustment",
+          "marginPointsForTeamA": 0
+        },
+        {
+          "label": "Home court",
+          "marginPointsForTeamA": 2.2
+        }
+      ],
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS",
       "provenance": {
         "impactScale": "bpm_proxy",
         "ratingScale": "srs_point_proxy",

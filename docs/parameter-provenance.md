@@ -16,8 +16,8 @@ claim. Input leakage control and parameter provenance are separate questions.
 
 `git log --follow -- src/lib/data/model-settings.ts` shows the production
 parameters were fixed before the original harness and have not been changed
-after any backtest result. No recorded process fit them to either 150 or 345
-series.
+after any backtest result. No recorded process fit them to the original 150,
+the frozen 345, or the pooled 360 series.
 
 ## Production model
 
@@ -56,11 +56,11 @@ manual production impact values.
 ## Baseline parameters
 
 `higher_seed` and `home_team` use a fixed 0.65 directional prior. Team A won
-71.6% of the expanded reconstructed series; an in-sample constant at that rate
-would score approximately 0.2034, not 0.168. It is not used as a headline
+71.4% of the pooled reconstructed series; an in-sample constant at that rate
+would be an invalid hindsight fit. It is not used as a headline
 baseline because fitting it on all evaluated outcomes would leak the evaluation
 period. The rolling climatology instead estimates its rate only from seasons
-before each evaluated season and scores 0.2039.
+before each evaluated season and scores 0.2049.
 
 Rating-only comparisons reuse the same logistic scale, home-court treatment,
 and exact series solver as the fixed blend. They isolate the input blend while
@@ -70,12 +70,12 @@ holding the probability mapping constant.
 
 All regression weights, ridge strengths, and logistic scales are fitted inside
 each rolling fold using only earlier seasons. Evaluation begins in 2006 after
-a 2003–2005 initialization window and continues through 2025.
+a 2003–2005 initialization window and continues through 2026.
 
 Nested calibration is likewise fitted only on earlier rolling predictions. In
-the expanded evaluation, game calibration improved both Brier and log loss and
-is retained for research; series calibration worsened both and was rejected.
-Neither mapping is transferred to production.
+the expanded evaluation, game and series calibration both improve Brier and
+log loss and are retained for research. Neither mapping is transferred to
+production.
 
 ## Frozen candidates
 
@@ -84,22 +84,23 @@ Neither mapping is transferred to production.
 - Frozen: 2026-07-15.
 - Rule: split 12% of game-margin residual between opponents and cap carried
   postseason adjustment at ±4 points.
-- Historical game Brier: 0.21815 versus 0.21851 static.
-- Difference: −0.00036; season-clustered 95% interval includes zero.
+- Historical game Brier: 0.21858 versus 0.21928 static.
+- Difference: −0.00070; season-clustered 95% interval includes zero.
 - First promotion-eligible season: 2027.
 
 ### `rating_gap_player_shrinkage_v1`
 
 - Frozen: 2026-07-26 before executing its expanded rolling comparison.
 - Rule: `shrunkPlayerDiff = playerDiff × exp(-abs(srsDiff) / 5)`.
-- Historical game difference versus SRS + home: +0.00005, interval includes
+- Historical game difference versus SRS + home: +0.00004, interval includes
   zero.
-- Historical series difference: −0.00083, interval includes zero.
+- Historical series difference: −0.00104, interval includes zero.
 - First promotion-eligible season: 2027.
 
-Both registrations are research-only. History through 2025 cannot promote them.
+Both registrations are research-only. The pooled history through 2026 cannot
+promote them; 2026 is contaminated because registration followed the season.
 
-## Classification of the 345-series reconstruction
+## Classification of the 360-series reconstruction
 
 The reconstruction is a descriptive evaluation of a fixed configuration:
 
@@ -112,18 +113,19 @@ The reconstruction is a descriptive evaluation of a fixed configuration:
   series and every pregame state contains only previously completed games.
 
 The permitted statement is: “A fixed configuration, specified before the
-original evaluation harness and never refit, scored Brier 0.1825 on 345
-reconstructed 2003–2025 series.”
+original evaluation harness and never refit, scored Brier 0.1840 on 360
+reconstructed 2003–2026 series.” The frozen pre-2026 record remains Brier
+0.1825 on 345 reconstructed 2003–2025 series.
 
 ## Paired bootstrap comparisons
 
 | Contrast | Difference | Series-resampled 95% CI | Season-resampled 95% CI | Conclusive |
 |---|---:|---|---|---|
-| vs coin flip | −0.0675 | [−0.0828, −0.0516] | [−0.0797, −0.0546] | Yes |
-| vs home team | −0.0264 | [−0.0372, −0.0156] | [−0.0355, −0.0174] | Yes |
-| vs higher seed | −0.0252 | [−0.0354, −0.0147] | [−0.0342, −0.0163] | Yes |
-| vs net rating | +0.0005 | [−0.0075, +0.0083] | [−0.0059, +0.0069] | No |
-| vs SRS | +0.0024 | [−0.0043, +0.0088] | [−0.0032, +0.0078] | No |
+| vs coin flip | −0.0660 | [−0.0813, −0.0509] | [−0.0782, −0.0533] | Yes |
+| vs home team | −0.0255 | [−0.0359, −0.0149] | [−0.0343, −0.0165] | Yes |
+| vs higher seed | −0.0244 | [−0.0346, −0.0139] | [−0.0333, −0.0155] | Yes |
+| vs net rating | −0.0013 | [−0.0093, +0.0066] | [−0.0085, +0.0058] | No |
+| vs SRS | +0.0006 | [−0.0062, +0.0072] | [−0.0058, +0.0067] | No |
 
 Negative favors Playoff Pulse. The full blend conclusively beats naive
 directional baselines but does not beat simple rating models.

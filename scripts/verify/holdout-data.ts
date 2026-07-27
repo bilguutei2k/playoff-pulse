@@ -41,7 +41,9 @@ function expectedHomePattern(series: HistoricalSeries): string[] {
 export function historicalExtremeFlags(
   holdoutSnapshots: TeamSeasonSnapshot[],
 ): string[] {
-  const archivedSnapshots = SEASONS.flatMap((season) => loadSnapshots(season));
+  const archivedSnapshots = SEASONS.filter(
+    (season) => season < HOLDOUT_SEASON,
+  ).flatMap((season) => loadSnapshots(season));
   return RANGE_FIELDS.flatMap((field) => {
     const archivedValues = archivedSnapshots.map((snapshot) => snapshot[field]);
     const minimum = Math.min(...archivedValues);

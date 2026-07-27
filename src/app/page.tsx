@@ -105,6 +105,7 @@ export default function Home() {
               {[
                 "2026 season complete: Knicks beat Spurs 4–1",
                 "No forecasts were issued during the 2026 postseason",
+                "2026 holdout scored separately; challenger registrations are contaminated",
                 "Historical evaluation is reconstructed, and labeled as such",
               ].map((label) => (
                 <span key={label} className="pp-pill border-[rgba(201,150,31,0.45)] text-[var(--color-accent)]">
@@ -423,7 +424,7 @@ corepack pnpm backtest:all`}
               <ul className="mt-2 grid gap-1 text-xs leading-5 text-[var(--color-text-muted)]">
                 <li>Reconstructed forecasts were not issued contemporaneously.</li>
                 <li>Production inputs are manual, subjective estimates.</li>
-                <li>Sensitivity bands pass 7 of 10 grouped reliability checks, but are not individual probability-interval coverage guarantees.</li>
+                <li>Sensitivity bands pass 8 of 10 grouped reliability checks, but are not individual probability-interval coverage guarantees.</li>
                 <li>Historical availability coverage is 0%; injury effects remain unvalidated rather than inferred from outcomes.</li>
                 <li>No official NBA data; no betting use.</li>
               </ul>

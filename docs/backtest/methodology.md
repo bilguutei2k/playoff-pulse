@@ -1,10 +1,10 @@
 # Playoff Pulse Backtest Methodology
 
-Generated: 2026-07-26T19:27:06.311Z
+Generated: 2026-07-27T09:35:05.876Z
 
 ## Scope
 
-This report evaluates Playoff Pulse on NBA playoff series from 2003-2025. It includes 345 historical series and 2070 model-series predictions across six model variants.
+This report evaluates Playoff Pulse on NBA playoff series from 2003-2026. It includes 360 historical series and 2160 model-series predictions across six model variants.
 
 ## Data Sources
 
@@ -46,12 +46,12 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 
 | Model | N | Brier Score | Log Loss | Accuracy |
 |---|---:|---:|---:|---:|
-| srs_proxy_only | 345 | 0.1801 | 0.5354 | 71.3% |
-| net_rating_only | 345 | 0.1819 | 0.5400 | 72.2% |
-| playoff_pulse | 345 | 0.1825 | 0.5447 | 72.5% |
-| higher_seed | 345 | 0.2077 | 0.6066 | 71.6% |
-| home_team | 345 | 0.2089 | 0.6091 | 70.9% |
-| coinflip | 345 | 0.2500 | 0.6931 | 50.0% |
+| srs_proxy_only | 360 | 0.1833 | 0.5436 | 70.8% |
+| playoff_pulse | 360 | 0.1840 | 0.5478 | 71.9% |
+| net_rating_only | 360 | 0.1852 | 0.5489 | 71.7% |
+| higher_seed | 360 | 0.2083 | 0.6079 | 71.4% |
+| home_team | 360 | 0.2095 | 0.6102 | 70.7% |
+| coinflip | 360 | 0.2500 | 0.6931 | 50.0% |
 
 ## Calibration Data
 
@@ -61,56 +61,56 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 |---|---:|---:|---:|
 | 0.2-0.3 | 3 | 25.0% | 33.3% |
 | 0.3-0.4 | 2 | 38.0% | 0.0% |
-| 0.4-0.5 | 26 | 46.8% | 50.0% |
-| 0.5-0.6 | 82 | 55.4% | 58.5% |
-| 0.6-0.7 | 101 | 65.2% | 67.3% |
-| 0.7-0.8 | 81 | 74.4% | 88.9% |
-| 0.8-0.9 | 43 | 84.7% | 88.4% |
+| 0.4-0.5 | 27 | 46.5% | 51.9% |
+| 0.5-0.6 | 83 | 55.4% | 59.0% |
+| 0.6-0.7 | 106 | 65.2% | 65.1% |
+| 0.7-0.8 | 84 | 74.4% | 89.3% |
+| 0.8-0.9 | 48 | 84.7% | 87.5% |
 | 0.9-1.0 | 7 | 92.3% | 100.0% |
 
 ### coinflip
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.5-0.6 | 345 | 50.0% | 71.6% |
+| 0.5-0.6 | 360 | 50.0% | 71.4% |
 
 ### home_team
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
 | 0.5-0.6 | 15 | 50.0% | 66.7% |
-| 0.6-0.7 | 330 | 65.0% | 71.8% |
+| 0.6-0.7 | 345 | 65.0% | 71.6% |
 
 ### higher_seed
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.6-0.7 | 345 | 65.0% | 71.6% |
+| 0.6-0.7 | 360 | 65.0% | 71.4% |
 
 ### srs_proxy_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
 | 0.1-0.2 | 3 | 14.5% | 33.3% |
-| 0.2-0.3 | 1 | 24.2% | 0.0% |
+| 0.2-0.3 | 2 | 25.9% | 50.0% |
 | 0.3-0.4 | 5 | 33.9% | 20.0% |
 | 0.4-0.5 | 28 | 45.6% | 60.7% |
 | 0.5-0.6 | 50 | 55.4% | 52.0% |
-| 0.6-0.7 | 53 | 65.2% | 66.0% |
-| 0.7-0.8 | 82 | 75.2% | 72.0% |
-| 0.8-0.9 | 66 | 84.6% | 86.4% |
-| 0.9-1.0 | 57 | 94.5% | 89.5% |
+| 0.6-0.7 | 55 | 65.1% | 65.5% |
+| 0.7-0.8 | 86 | 75.1% | 70.9% |
+| 0.8-0.9 | 68 | 84.6% | 85.3% |
+| 0.9-1.0 | 63 | 94.5% | 88.9% |
 
 ### net_rating_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
 | 0.1-0.2 | 3 | 15.0% | 33.3% |
-| 0.2-0.3 | 2 | 25.6% | 0.0% |
+| 0.2-0.3 | 3 | 25.2% | 33.3% |
 | 0.3-0.4 | 6 | 35.6% | 33.3% |
 | 0.4-0.5 | 27 | 45.8% | 55.6% |
 | 0.5-0.6 | 40 | 55.1% | 55.0% |
-| 0.6-0.7 | 53 | 65.1% | 64.2% |
-| 0.7-0.8 | 73 | 75.2% | 72.6% |
-| 0.8-0.9 | 72 | 84.8% | 79.2% |
-| 0.9-1.0 | 69 | 95.0% | 91.3% |
+| 0.6-0.7 | 56 | 65.2% | 62.5% |
+| 0.7-0.8 | 75 | 75.2% | 72.0% |
+| 0.8-0.9 | 75 | 84.8% | 78.7% |
+| 0.9-1.0 | 75 | 95.1% | 90.7% |

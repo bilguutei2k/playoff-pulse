@@ -20,8 +20,8 @@ export function BacktestSummaryCard() {
           home-team-wins ({formatNumber(models.home_team.brierScore, 3)}) on{" "}
           {totalSeries} reconstructed historical series, {firstSeason}–{lastSeason}.
           Its point estimate trails SRS-only ({formatNumber(models.srs_proxy_only.brierScore, 3)})
-          and net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)});
-          neither difference is statistically distinguishable from zero.
+          and leads net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)}),
+          but neither difference is statistically distinguishable from zero.
           Results were expanded and regenerated in July 2026.
         </p>
       </div>

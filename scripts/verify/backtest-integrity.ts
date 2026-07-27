@@ -387,11 +387,21 @@ export function runBacktestIntegrityChecks(): void {
   assert.equal(
     research.modelSelectionGate.promotionChecks
       .genuinelyFutureArchivedSeasonAvailable,
+    true,
+  );
+  assert.equal(
+    research.modelSelectionGate.promotionChecks
+      .prospectiveRegistrationBeforeEvaluatedSeason,
     false,
   );
   assert.equal(
     research.modelSelectionGate.decision,
-    "not_eligible_requires_future_archived_season_and_production_equivalent_inputs",
+    "not_eligible_contaminated_2026_registration_and_no_production_equivalent_inputs",
+  );
+  assert.equal(
+    research.modelSelectionGate.registrationClassification
+      .exact_srs_logit_plus_seed_v1,
+    "CONTAMINATED_2026",
   );
   assert(
     research.nestedCalibration.gamePropagatedThroughExactSeries.predictions.every(

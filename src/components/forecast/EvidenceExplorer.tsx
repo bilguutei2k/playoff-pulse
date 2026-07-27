@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import evidence from "../../../docs/backtest/evidence.json";
 import backtestSummary from "../../../docs/backtest/summary.json";
+import holdout from "../../../docs/backtest/holdout-2026.json";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 
 type CalibrationBlock = {
@@ -62,6 +63,56 @@ export function EvidenceExplorer() {
   const [selectedGame, setSelectedGame] = useState(1);
   const selectedPoint = timeline.find((row) => row.gameNumber === selectedGame) ?? timeline[0];
   const maxModelBrier = Math.max(...evidence.modelComparison.map((row) => row.game.brier));
+  const holdoutComparison = [
+    {
+      id: "production",
+      label: "Production",
+      pooledBrier: backtestSummary.models.playoff_pulse.brierScore,
+      pooledN: backtestSummary.models.playoff_pulse.n,
+    },
+    {
+      id: "exact_srs_logit_plus_seed_v1",
+      label: "Exact SRS logit + seed",
+      pooledBrier: evidence.primarySeriesChallenger.metrics.brier,
+      pooledN: evidence.primarySeriesChallenger.metrics.n,
+    },
+    {
+      id: "ten_season_training_window_v1",
+      label: "Ten-season window",
+      pooledBrier: evidence.temporalWindowCandidate.metrics.series.brier,
+      pooledN: evidence.temporalWindowCandidate.metrics.series.n,
+    },
+    {
+      id: "srs_only",
+      label: "SRS-only",
+      pooledBrier: backtestSummary.models.srs_proxy_only.brierScore,
+      pooledN: backtestSummary.models.srs_proxy_only.n,
+    },
+    {
+      id: "net_rating_only",
+      label: "Net-rating-only",
+      pooledBrier: backtestSummary.models.net_rating_only.brierScore,
+      pooledN: backtestSummary.models.net_rating_only.n,
+    },
+    {
+      id: "higher_seed",
+      label: "Higher seed",
+      pooledBrier: backtestSummary.models.higher_seed.brierScore,
+      pooledN: backtestSummary.models.higher_seed.n,
+    },
+    {
+      id: "home_team",
+      label: "Home team",
+      pooledBrier: backtestSummary.models.home_team.brierScore,
+      pooledN: backtestSummary.models.home_team.n,
+    },
+    {
+      id: "coin_flip",
+      label: "Coin flip",
+      pooledBrier: backtestSummary.models.coinflip.brierScore,
+      pooledN: backtestSummary.models.coinflip.n,
+    },
+  ] as const;
   const distinctVersions = useMemo(
     () => Array.from(
       new Map(evidence.versions.map((version) => [version.modelVersion, version])).values(),
@@ -111,6 +162,89 @@ export function EvidenceExplorer() {
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
             Leakage-safe historical BPM/SRS forecasts are reconstructed from the information available before each game and kept separate from manual production estimates. They were not originally issued forecasts, and no result here silently recalibrates production.
           </p>
+        </div>
+      </section>
+
+      <section className="pp-card">
+        <div className="pp-section-head">
+          <div className="pp-kicker text-[var(--color-warning)]">
+            2026 isolated holdout / separate from pooled history
+          </div>
+          <p className="mt-2 max-w-4xl text-xs leading-5 text-[var(--color-text-muted)]">
+            Every 2026 predictive fit used only 2003–2025 inputs. Both registered
+            challengers are{" "}
+            <span className="font-bold text-[var(--color-warning)]">
+              {
+                holdout.selectionGate.registrationClassification
+                  .exact_srs_logit_plus_seed_v1
+              }
+            </span>
+            : their durable registration followed the April 18, 2026 playoff
+            start. The season is a valid archived holdout for model isolation,
+            but not prospective promotion evidence.
+          </p>
+        </div>
+        <div className="overflow-x-auto p-4">
+          <table className="w-full min-w-[760px] border-collapse text-left text-xs">
+            <thead>
+              <tr className="border-y-2 border-[var(--color-border-strong)]">
+                {[
+                  "Model",
+                  "2026 game Brier",
+                  "2026 series Brier",
+                  "Pooled series Brier",
+                  "Pooled scope",
+                ].map((header) => (
+                  <th
+                    key={header}
+                    className="pp-kicker px-2 py-2 text-[var(--color-text-primary)]"
+                  >
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {holdoutComparison.map((row) => {
+                const heldOut = holdout.metrics[row.id];
+                return (
+                  <tr
+                    key={row.id}
+                    className="border-b border-[var(--color-border-subtle)]"
+                  >
+                    <td className="px-2 py-2 font-bold">{row.label}</td>
+                    <td className="pp-number px-2 py-2 text-right">
+                      {formatNumber(heldOut.game.brier, 4)}
+                    </td>
+                    <td className="pp-number px-2 py-2 text-right">
+                      {formatNumber(heldOut.series.brier, 4)}
+                    </td>
+                    <td className="pp-number px-2 py-2 text-right">
+                      {formatNumber(row.pooledBrier, 4)}
+                    </td>
+                    <td className="pp-number px-2 py-2 text-right">
+                      n={row.pooledN}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="mt-3 grid gap-2 text-xs leading-5 text-[var(--color-text-muted)]">
+            <p>
+              Production scored 0.2182 series Brier in 2026. Both challenger
+              point estimates were worse, and every paired
+              challenger-versus-production interval crossed zero. The gate
+              decision is <span className="font-bold">not promoted</span>.
+            </p>
+            <p>
+              The primary challenger&apos;s game column is its frozen SRS +
+              home component; the registered seed adjustment applies only to
+              series. Pooled scopes differ by design: fixed models use all 360
+              series, the ten-season rolling candidate uses 315, and the
+              primary challenger&apos;s initialized window uses 285.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -250,9 +384,9 @@ export function EvidenceExplorer() {
           {formatNumber(evidence.modelComparison[0].series.calibrationFit.slope, 2)} for
           series and {formatNumber(evidence.modelComparison[0].game.calibrationFit.slope, 2)} for
           games (a slope of 1 would be perfectly calibrated). With the expanded
-          history, nested game calibration improves Brier and log loss and is
-          retained inside research. Series calibration now worsens both and is
-          rejected. Neither mapping is transferred to manual production inputs.
+          history, nested game and series calibration both improve Brier and log
+          loss and are retained inside research. Neither mapping is transferred
+          to manual production inputs.
         </p>
       </section>
 
@@ -427,7 +561,7 @@ export function EvidenceExplorer() {
                 evidence.dynamicCandidate.comparisonToSrsHome
                   .candidateMinusBaselineBrier,
                 4,
-              )}; interval includes zero. Research-only through 2025.
+              )}; interval includes zero. Research-only through 2026.
             </p>
             <p>
               Frozen {evidence.shrinkageCandidate.registration.id}: game Brier{" "}

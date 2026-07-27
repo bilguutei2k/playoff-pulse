@@ -23,7 +23,7 @@ on the same scale as the manually assigned current player and rating inputs.
 
 ## Phase 1 — evaluation protocol
 
-The research harness evaluates 2006–2025 with rolling origin after a
+The research harness evaluates 2006–2026 with rolling origin after a
 three-season 2003–2005 initialization window:
 
 1. Train only on seasons strictly earlier than the evaluation season.
@@ -44,7 +44,7 @@ Raw results and rolling predictions are committed in
 
 The research model is regularized linear expected margin followed by a fitted
 logistic probability scale. The parsimonious `srs_home` specification is the
-reference model. It evaluates 1,675 games and 300 series from 2006–2025.
+reference model. It evaluates 1,760 games and 315 series from 2006–2026.
 
 Production series probabilities no longer use Monte Carlo for their central
 estimate. Dynamic programming enumerates every possible remaining path and
@@ -69,7 +69,7 @@ calibrated coverage guarantees:
 
 These intervals describe sensitivity to the stated assumptions. A grouped
 reliability diagnostic places observed rates inside the mean sensitivity band
-for seven of ten equal-count groups; this is not individual interval coverage,
+for eight of ten equal-count groups; this is not individual interval coverage,
 because one binary outcome does not identify a series' latent probability.
 
 ## Phase 4 — feature ablation decision
@@ -134,25 +134,35 @@ provenance, 240-minute replacement allocation, 834 leakage-safe reconstructed
 pregame forecasts in its original release, nested calibration evaluation, and
 the preregistered `dynamic_margin_update_v1` candidate.
 
-The 2026-07-26 extension expands the archive to 1,929 pregame forecasts across
-2003–2025, adds rolling climatology and grouped Murphy decomposition, records
+The frozen 2026-07-26 extension expanded the archive to 1,929 pregame forecasts
+across 2003–2025. The 2026 fold brings the pooled archive to 2,014 pregame
+forecasts across 2003–2026, adds rolling climatology and grouped Murphy
+decomposition, records
 zero historical availability coverage rather than imputing injuries, and
 freezes `rating_gap_player_shrinkage_v1` for 2027. In the expanded sample, game
-calibration improves and is retained for research; series calibration worsens
-and is rejected. Neither mapping is applied to manual production inputs. See
+calibration improves and is retained for research; series calibration now also
+improves slightly and is retained inside research. Neither mapping is applied
+to manual production inputs. See
 `docs/point-in-time-implementation.md` for the complete record.
 
 The subsequent rigor pass adds three high-return tests:
 
 1. Nested game calibration is propagated through every possible future game
    and then through the exact series solver. The series point estimate improves
-   0.1853 → 0.1845, but its interval includes zero.
+   0.1888 → 0.1877, but its interval includes zero.
 2. The single primary challenger combines the exact SRS-series logit and seed
-   difference. It improves the matched point estimate 0.1853 → 0.1800, but its
-   interval [−0.0127, +0.0020] does not establish improvement.
+   difference. It improves the matched point estimate 0.1888 → 0.1826, but its
+   interval [−0.0133, +0.0010] does not establish improvement.
 3. A fixed ten-season training window improves historical game Brier by
-   0.0009, with an interval below zero. It remains frozen research until a
+   0.0010, with an interval below zero. It remains frozen research until a
    future 2027 evaluation.
+
+The isolated 2026 artifact uses only models fit on 2003–2025. It records
+production series Brier 0.2182, primary-challenger Brier 0.2304, and
+ten-season-challenger Brier 0.2408. Both challenger registrations are
+`CONTAMINATED_2026`, all paired production comparisons include zero, and the
+gate decision remains not promoted. A single archived season is necessary but
+cannot supply a season-clustered interval by itself.
 
 Timestamped lagged-rotation and external-benchmark schemas now fail closed:
 zero coverage produces `not_estimable` artifacts. No rotation is inferred from

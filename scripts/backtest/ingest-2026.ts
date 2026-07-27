@@ -1,5 +1,5 @@
-// Builds the isolated 2026 held-out season artifacts without changing the
-// archived SEASONS list that drives the 2003-2025 evaluation pipeline.
+// Builds the 2026 season artifacts through the same isolated ingestion entry
+// point used before 2026 was admitted to the pooled evaluation.
 
 import * as fs from "node:fs";
 import * as path from "node:path";

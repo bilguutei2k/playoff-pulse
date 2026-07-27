@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-26T19:28:02.181Z",
+  "generatedAt": "2026-07-27T09:36:04.611Z",
   "productionLabel": "Manual production forecast",
   "researchLabel": "Historical rolling-origin research",
-  "researchProtocol": "Rolling origin: train only on seasons before each evaluation season; 2006-2025 evaluated after a three-season initialization window.",
+  "researchProtocol": "Rolling origin: train only on seasons before each evaluation season; 2006-2026 evaluated after a three-season initialization window.",
   "evaluationSeasons": [
     2006,
     2007,
@@ -23,7 +23,8 @@
     2022,
     2023,
     2024,
-    2025
+    2025,
+    2026
   ],
   "seriesIndex": [
     {
@@ -2785,6 +2786,126 @@
       "conference": "West",
       "teamA": "OKC",
       "teamB": "MEM"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR"
     }
   ],
   "timeline": [
@@ -48338,6 +48459,2007 @@
       },
       "actualGameWinner": "OKC",
       "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-1",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-06-03",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6248653174018755,
+      "teamASeriesWinProbability": 0.6174522325691533,
+      "lower": 0.5053261949519071,
+      "upper": 0.717389522074931,
+      "finalScoreProbabilities": {
+        "4-0": 0.08205696498362686,
+        "4-1": 0.18271293072100783,
+        "4-2": 0.1582458721037177,
+        "4-3": 0.19443646476080084,
+        "3-4": 0.11672893255913253,
+        "2-4": 0.14674817743427732,
+        "1-4": 0.07779570746485584,
+        "0-4": 0.04127494997258108
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-2",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-06-05",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6248653174018755,
+      "teamASeriesWinProbability": 0.4230157678083525,
+      "lower": 0.3233727163738834,
+      "upper": 0.520651176805373,
+      "finalScoreProbabilities": {
+        "4-1": 0.08205696498362686,
+        "4-2": 0.13404609546960397,
+        "4-3": 0.2069127073551216,
+        "3-4": 0.12421898069478166,
+        "2-4": 0.2041095631557212,
+        "1-4": 0.1386286716795095,
+        "0-4": 0.11002701666163521
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-3",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-06-08",
+      "winsA": 0,
+      "winsB": 2,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.4584281783536932,
+      "teamASeriesWinProbability": 0.2161030604532308,
+      "lower": 0.1473863885402961,
+      "upper": 0.28892012499092284,
+      "finalScoreProbabilities": {
+        "4-2": 0.06020053270852883,
+        "4-3": 0.15590252774470198,
+        "3-4": 0.093595281467895,
+        "2-4": 0.21073090656609467,
+        "1-4": 0.1862707135114804,
+        "0-4": 0.2933000380012991
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-4",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-06-10",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.4584281783536932,
+      "teamASeriesWinProbability": 0.3744606648412363,
+      "lower": 0.3006228702364747,
+      "upper": 0.461871530141875,
+      "finalScoreProbabilities": {
+        "4-2": 0.13131944228367662,
+        "4-3": 0.24314122255755968,
+        "3-4": 0.1459685836459842,
+        "2-4": 0.2764083780954041,
+        "1-4": 0.20316237341737542
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-finals-finals-sas-nyk:pregame-5",
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-06-13",
+      "winsA": 1,
+      "winsB": 3,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6248653174018755,
+      "teamASeriesWinProbability": 0.17899633761238182,
+      "lower": 0.13686177454992143,
+      "upper": 0.23437133611078367,
+      "finalScoreProbabilities": {
+        "4-3": 0.17899633761238182,
+        "3-4": 0.10745953156056226,
+        "2-4": 0.3384094482289314,
+        "1-4": 0.37513468259812455
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-1",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-19",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6298892088427068,
+      "teamASeriesWinProbability": 0.62845297161946,
+      "lower": 0.5222592304142091,
+      "upper": 0.7223522120550557,
+      "finalScoreProbabilities": {
+        "4-0": 0.08533561755535506,
+        "4-1": 0.18746867045763332,
+        "4-2": 0.16076380714580238,
+        "4-3": 0.19488487646066932,
+        "3-4": 0.11451060726055622,
+        "2-4": 0.14281116826128337,
+        "1-4": 0.07483683211839845,
+        "0-4": 0.039388420740301834
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-2",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-21",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6298892088427068,
+      "teamASeriesWinProbability": 0.7429635788800163,
+      "lower": 0.6499665164805681,
+      "upper": 0.8233424915990455,
+      "finalScoreProbabilities": {
+        "4-0": 0.13547718607871037,
+        "4-1": 0.24748008910445013,
+        "4-2": 0.17412324118454703,
+        "4-3": 0.1858830625123088,
+        "3-4": 0.10922131442063007,
+        "2-4": 0.10842668595905175,
+        "1-4": 0.039388420740301834
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-3",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-23",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.46376823568134207,
+      "teamASeriesWinProbability": 0.8521848933006464,
+      "lower": 0.7810224047815684,
+      "upper": 0.9009697734176125,
+      "finalScoreProbabilities": {
+        "4-0": 0.21508097642698484,
+        "4-1": 0.3132908419619764,
+        "4-2": 0.16937041235488978,
+        "4-3": 0.1544426625567954,
+        "3-4": 0.0907475397655342,
+        "2-4": 0.057067566933819376
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-cf-nyk-cle:pregame-4",
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-25",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.46376823568134207,
+      "teamASeriesWinProbability": 0.9606115792596981,
+      "lower": 0.938116195201803,
+      "upper": 0.9760203954203042,
+      "finalScoreProbabilities": {
+        "4-0": 0.46376823568134207,
+        "4-1": 0.33776660178300827,
+        "4-2": 0.09204183827336902,
+        "4-3": 0.06703490352197879,
+        "3-4": 0.039388420740301834
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-1",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-18",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.6597753275600363,
+      "lower": 0.5565433302667324,
+      "upper": 0.76464795653036,
+      "finalScoreProbabilities": {
+        "4-0": 0.09538836140926617,
+        "4-1": 0.20137600242293574,
+        "4-2": 0.1676770932492062,
+        "4-3": 0.19533387047862835,
+        "3-4": 0.10782366079544198,
+        "2-4": 0.13145754009662608,
+        "1-4": 0.06665016423616982,
+        "0-4": 0.03429330731172588
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-2",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-20",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.464441457081408,
+      "lower": 0.3579864568835903,
+      "upper": 0.5702470180502901,
+      "finalScoreProbabilities": {
+        "4-1": 0.09538836140926617,
+        "4-2": 0.14980869539552102,
+        "4-3": 0.21924440027662087,
+        "3-4": 0.1210221954277659,
+        "2-4": 0.1928491129113042,
+        "1-4": 0.12526800426263293,
+        "0-4": 0.09641923031688908
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-3",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-22",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.4793342926172149,
+      "teamASeriesWinProbability": 0.5854636525091739,
+      "lower": 0.4890504454075086,
+      "upper": 0.6748834846815012,
+      "finalScoreProbabilities": {
+        "4-1": 0.14804242646835714,
+        "4-2": 0.19333191855257614,
+        "4-3": 0.24408930748824073,
+        "3-4": 0.13473650335150628,
+        "2-4": 0.18338061382243082,
+        "1-4": 0.09641923031688908
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-4",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-24",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.4793342926172149,
+      "teamASeriesWinProbability": 0.778312765420478,
+      "lower": 0.7031382236268996,
+      "upper": 0.8366143844047061,
+      "finalScoreProbabilities": {
+        "4-1": 0.3088500629905491,
+        "4-2": 0.2425265741326807,
+        "4-3": 0.2269361282972483,
+        "3-4": 0.12526800426263293,
+        "2-4": 0.09641923031688908
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-5",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-05-26",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.6348593900941958,
+      "lower": 0.5662629287705682,
+      "upper": 0.7098879583452469,
+      "finalScoreProbabilities": {
+        "4-2": 0.3088500629905491,
+        "4-3": 0.3260093271036468,
+        "3-4": 0.17995608757273798,
+        "2-4": 0.18518452233306618
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-6",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-28",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.4793342926172149,
+      "teamASeriesWinProbability": 0.8148154776669339,
+      "lower": 0.7675572686783702,
+      "upper": 0.856072875752048,
+      "finalScoreProbabilities": {
+        "4-2": 0.4793342926172149,
+        "4-3": 0.335481185049719,
+        "3-4": 0.18518452233306618
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-cf-okc-sas:pregame-7",
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-30",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.6443312480402681,
+      "teamASeriesWinProbability": 0.6443312480402681,
+      "lower": 0.5891163981051276,
+      "upper": 0.6963448581924337,
+      "finalScoreProbabilities": {
+        "4-3": 0.6443312480402681,
+        "3-4": 0.3556687519597319
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-1",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-05",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.6800673753594436,
+      "lower": 0.5683600103846185,
+      "upper": 0.7688222150336712,
+      "finalScoreProbabilities": {
+        "4-0": 0.10253613190302299,
+        "4-1": 0.2106849983170301,
+        "4-2": 0.1719191038201479,
+        "4-3": 0.19492714131924255,
+        "3-4": 0.10320431978918464,
+        "2-4": 0.12399780370388139,
+        "1-4": 0.06153104008226754,
+        "0-4": 0.031199461065222825
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-2",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-07",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.7832716951486283,
+      "lower": 0.707874231622586,
+      "upper": 0.8551162665382549,
+      "finalScoreProbabilities": {
+        "4-0": 0.15682396311650504,
+        "4-1": 0.2679444959872357,
+        "4-2": 0.17938753482141195,
+        "4-3": 0.17911570122347556,
+        "3-4": 0.09483294108364781,
+        "2-4": 0.09069590270250111,
+        "1-4": 0.031199461065222825
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-3",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-09",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.4897494531882197,
+      "teamASeriesWinProbability": 0.8781046362322761,
+      "lower": 0.8196456948789014,
+      "upper": 0.916664218367021,
+      "finalScoreProbabilities": {
+        "4-0": 0.23985452689816023,
+        "4-1": 0.3267773446707012,
+        "4-2": 0.16810194054532335,
+        "4-3": 0.1433708241180913,
+        "3-4": 0.07590778934417061,
+        "2-4": 0.04598757442355333
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-4",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-11",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.4897494531882197,
+      "teamASeriesWinProbability": 0.791052757439588,
+      "lower": 0.7309328824954403,
+      "upper": 0.8512508096743417,
+      "finalScoreProbabilities": {
+        "4-1": 0.32021263545185563,
+        "4-2": 0.24641923611700578,
+        "4-3": 0.2244208858707266,
+        "3-4": 0.11881980475382972,
+        "2-4": 0.09012743780658228
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-5",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-05-13",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.6491893449744673,
+      "lower": 0.5748131359414895,
+      "upper": 0.7172098860642737,
+      "finalScoreProbabilities": {
+        "4-2": 0.32021263545185563,
+        "4-3": 0.3289767095226117,
+        "3-4": 0.17417696326424148,
+        "2-4": 0.17663369176129118
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-6",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-15",
+      "winsA": 2,
+      "winsB": 3,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.4897494531882197,
+      "teamASeriesWinProbability": 0.32021263545185563,
+      "lower": 0.26073843487957876,
+      "upper": 0.3804772994283493,
+      "finalScoreProbabilities": {
+        "4-3": 0.32021263545185563,
+        "3-4": 0.1695368177363641,
+        "2-4": 0.5102505468117803
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-det-cle:pregame-7",
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-17",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.6538294905023447,
+      "teamASeriesWinProbability": 0.6538294905023447,
+      "lower": 0.6046117661313516,
+      "upper": 0.7081224915272484,
+      "finalScoreProbabilities": {
+        "4-3": 0.6538294905023447,
+        "3-4": 0.34617050949765527
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-1",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-04",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.707182115747392,
+      "teamASeriesWinProbability": 0.7870024162861056,
+      "lower": 0.695494129446748,
+      "upper": 0.8619944020782798,
+      "finalScoreProbabilities": {
+        "4-0": 0.15184680421320332,
+        "4-1": 0.26391852191689885,
+        "4-2": 0.1894954393979983,
+        "4-3": 0.18174165075800497,
+        "3-4": 0.07525247665418164,
+        "2-4": 0.08359304606726858,
+        "1-4": 0.036868274726737815,
+        "0-4": 0.017283786265706546
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-2",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-06",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.707182115747392,
+      "teamASeriesWinProbability": 0.8622548929402872,
+      "lower": 0.7873515683708063,
+      "upper": 0.9161724433993446,
+      "finalScoreProbabilities": {
+        "4-0": 0.21472093373391182,
+        "4-1": 0.31032326339974753,
+        "4-2": 0.18281007277071204,
+        "4-3": 0.1544006230359157,
+        "3-4": 0.06393157117227063,
+        "2-4": 0.05652974962173575,
+        "1-4": 0.017283786265706542
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-3",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-08",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5510253245031363,
+      "teamASeriesWinProbability": 0.9261864641125579,
+      "lower": 0.8878073083769396,
+      "upper": 0.9560795140754291,
+      "finalScoreProbabilities": {
+        "4-0": 0.3036289082437867,
+        "4-1": 0.34990864215721873,
+        "4-2": 0.15838491754235173,
+        "4-3": 0.11426399616920055,
+        "3-4": 0.04731248268227547,
+        "2-4": 0.026501053205166818
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-csf-nyk-phi:pregame-4",
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-10",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5510253245031363,
+      "teamASeriesWinProbability": 0.9827162137342935,
+      "lower": 0.9720594145892751,
+      "upper": 0.9905824592748463,
+      "finalScoreProbabilities": {
+        "4-0": 0.5510253245031363,
+        "4-1": 0.3175068609348708,
+        "4-2": 0.07244209518074028,
+        "4-3": 0.041741933115546054,
+        "3-4": 0.017283786265706542
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-1",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-05",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7565877166677293,
+      "teamASeriesWinProbability": 0.8702623551639659,
+      "lower": 0.8048545542095612,
+      "upper": 0.9254069680056621,
+      "finalScoreProbabilities": {
+        "4-0": 0.21463325385980805,
+        "4-1": 0.31010310563458415,
+        "4-2": 0.1922514137312264,
+        "4-3": 0.15327458193834742,
+        "3-4": 0.04931208258407045,
+        "2-4": 0.051200556394728876,
+        "1-4": 0.020320747758165947,
+        "0-4": 0.008904258099068734
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-2",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-07",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7565877166677293,
+      "teamASeriesWinProbability": 0.9195744377480364,
+      "lower": 0.8708776462716099,
+      "upper": 0.955637456143745,
+      "finalScoreProbabilities": {
+        "4-0": 0.2836858821937081,
+        "4-1": 0.34081803015416545,
+        "4-2": 0.17335759936562778,
+        "4-3": 0.1217129260345351,
+        "3-4": 0.03915794637481407,
+        "2-4": 0.03236335777808075,
+        "1-4": 0.008904258099068734
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-3",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-09",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.6123351902788032,
+      "teamASeriesWinProbability": 0.9587323841228504,
+      "lower": 0.9310871591003781,
+      "upper": 0.9774508575636575,
+      "finalScoreProbabilities": {
+        "4-0": 0.37495438525377817,
+        "4-1": 0.3591988025092623,
+        "4-2": 0.14038754145805848,
+        "4-3": 0.08419165490175157,
+        "3-4": 0.027086460043810028,
+        "2-4": 0.01418115583333945
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-csf-okc-lal:pregame-4",
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-11",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.6123351902788032,
+      "teamASeriesWinProbability": 0.9910957419009312,
+      "lower": 0.9842292688425943,
+      "upper": 0.995096601318199,
+      "finalScoreProbabilities": {
+        "4-0": 0.6123351902788032,
+        "4-1": 0.29330243321939,
+        "4-2": 0.05778140377039392,
+        "4-3": 0.027676714632344113,
+        "3-4": 0.008904258099068734
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-1",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-05-04",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6862063895856435,
+      "teamASeriesWinProbability": 0.7466574339189176,
+      "lower": 0.6445554957323137,
+      "upper": 0.8266943659960185,
+      "finalScoreProbabilities": {
+        "4-0": 0.13045714858031512,
+        "4-1": 0.2429845128285772,
+        "4-2": 0.18405097359854805,
+        "4-3": 0.1891647989114773,
+        "3-4": 0.08650269964635734,
+        "2-4": 0.09902743408058359,
+        "1-4": 0.045722562891212834,
+        "0-4": 0.02208986946292854
+      },
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-2",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-05-06",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6862063895856435,
+      "teamASeriesWinProbability": 0.5574926350074404,
+      "lower": 0.4519073424789389,
+      "upper": 0.65627223177078,
+      "finalScoreProbabilities": {
+        "4-1": 0.13045714858031512,
+        "4-2": 0.18638159301206336,
+        "4-3": 0.24065389341506194,
+        "3-4": 0.11004801940212641,
+        "2-4": 0.1646604451793048,
+        "1-4": 0.09740272684417962,
+        "0-4": 0.07039617356694876
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-3",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-05-08",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.5263555217457754,
+      "teamASeriesWinProbability": 0.6675406544095668,
+      "lower": 0.5739853931108052,
+      "upper": 0.7517612020407115,
+      "finalScoreProbabilities": {
+        "4-1": 0.19011357305939677,
+        "4-2": 0.22585202780386837,
+        "4-3": 0.25157505354630166,
+        "3-4": 0.1150421295117166,
+        "2-4": 0.14702104251176784,
+        "1-4": 0.07039617356694877
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-4",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-05-10",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.5263555217457754,
+      "teamASeriesWinProbability": 0.8322010995888716,
+      "lower": 0.7727825561858606,
+      "upper": 0.8830260877654944,
+      "finalScoreProbabilities": {
+        "4-1": 0.3611885222156362,
+        "4-2": 0.25801151136911005,
+        "4-3": 0.21300106600412538,
+        "3-4": 0.09740272684417962,
+        "2-4": 0.07039617356694877
+      },
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-5",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-05-12",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.6862063895856435,
+      "teamASeriesWinProbability": 0.6975565099607048,
+      "lower": 0.6252992564844979,
+      "upper": 0.7621852773668348,
+      "finalScoreProbabilities": {
+        "4-2": 0.3611885222156362,
+        "4-3": 0.33636798774506876,
+        "3-4": 0.15381687915507775,
+        "2-4": 0.1486266108842173
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-csf-sas-min:pregame-6",
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-15",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.5263555217457754,
+      "teamASeriesWinProbability": 0.8513733891157826,
+      "lower": 0.8071551441269911,
+      "upper": 0.8875669498086561,
+      "finalScoreProbabilities": {
+        "4-2": 0.5263555217457754,
+        "4-3": 0.3250178673700073,
+        "3-4": 0.1486266108842173
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-1",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.5981945957288126,
+      "lower": 0.4802898130742971,
+      "upper": 0.7013404747804437,
+      "finalScoreProbabilities": {
+        "4-0": 0.07660112817980817,
+        "4-1": 0.1745434473705663,
+        "4-2": 0.15374150132664532,
+        "4-3": 0.1933085188517929,
+        "3-4": 0.12044571883249877,
+        "2-4": 0.15357148973104784,
+        "1-4": 0.08308232286526246,
+        "0-4": 0.044705872842378216
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-2",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-20",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.7186403145613114,
+      "lower": 0.6185818266929376,
+      "upper": 0.7979786584895985,
+      "finalScoreProbabilities": {
+        "4-0": 0.12432938144975869,
+        "4-1": 0.23556886471442012,
+        "4-2": 0.1702402910747446,
+        "4-3": 0.18850177732238801,
+        "3-4": 0.11745075801964877,
+        "2-4": 0.11920305457666153,
+        "1-4": 0.044705872842378216
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-3",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-23",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "TOR",
+      "teamAGameWinProbability": 0.4492170070761434,
+      "teamASeriesWinProbability": 0.8360910725809602,
+      "lower": 0.7673178713065887,
+      "upper": 0.8901840104788545,
+      "finalScoreProbabilities": {
+        "4-0": 0.2017959194464479,
+        "4-1": 0.3048794134887356,
+        "4-2": 0.16929570121963017,
+        "4-3": 0.16012003842614655,
+        "3-4": 0.09976680408229033,
+        "2-4": 0.06414212333674942
+      },
+      "actualGameWinner": "TOR",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-4",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "TOR",
+      "teamAGameWinProbability": 0.4492170070761434,
+      "teamASeriesWinProbability": 0.7388694079703667,
+      "lower": 0.6611601487821868,
+      "upper": 0.8031757796706637,
+      "finalScoreProbabilities": {
+        "4-1": 0.2767690881941265,
+        "4-2": 0.229906244741057,
+        "4-3": 0.23219407503518322,
+        "3-4": 0.14467433945682223,
+        "2-4": 0.11645625257281099
+      },
+      "actualGameWinner": "TOR",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-5",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-29",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.5920923211993621,
+      "lower": 0.5075966826739587,
+      "upper": 0.6660773794943214,
+      "finalScoreProbabilities": {
+        "4-2": 0.2767690881941265,
+        "4-3": 0.31532323300523557,
+        "3-4": 0.19647004534249918,
+        "2-4": 0.2114376334581387
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-6",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-01",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "TOR",
+      "teamAGameWinProbability": 0.4492170070761434,
+      "teamASeriesWinProbability": 0.7885623665418613,
+      "lower": 0.7356217305505843,
+      "upper": 0.8370674090080437,
+      "finalScoreProbabilities": {
+        "4-2": 0.4492170070761434,
+        "4-3": 0.33934535946571787,
+        "3-4": 0.2114376334581387
+      },
+      "actualGameWinner": "TOR",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-cle-tor:pregame-7",
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-03",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "CLE",
+      "teamAGameWinProbability": 0.6161144476598444,
+      "teamASeriesWinProbability": 0.6161144476598444,
+      "lower": 0.5610854075748029,
+      "upper": 0.6684484814149299,
+      "finalScoreProbabilities": {
+        "4-3": 0.6161144476598444,
+        "3-4": 0.38388555234015564
+      },
+      "actualGameWinner": "CLE",
+      "actualSeriesWinner": "CLE"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-1",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.8052436315821584,
+      "lower": 0.717487351069297,
+      "upper": 0.8777430204384042,
+      "finalScoreProbabilities": {
+        "4-0": 0.16304268147727077,
+        "4-1": 0.2737225958523511,
+        "4-2": 0.1912777312017381,
+        "4-3": 0.17720062305079848,
+        "3-4": 0.06988639825102236,
+        "2-4": 0.07655225184268999,
+        "1-4": 0.03304280058976007,
+        "0-4": 0.015274917734369089
+      },
+      "actualGameWinner": "ORL",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-2",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-22",
+      "winsA": 0,
+      "winsB": 1,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.62804300853136,
+      "lower": 0.5256796257838162,
+      "upper": 0.7264751677101543,
+      "finalScoreProbabilities": {
+        "4-1": 0.1630426814772708,
+        "4-2": 0.21489716358100522,
+        "4-3": 0.250103163473084,
+        "3-4": 0.09863853176921283,
+        "2-4": 0.14121898987026715,
+        "1-4": 0.07809419815871155,
+        "0-4": 0.054005271670448454
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-3",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-25",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "ORL",
+      "teamAGameWinProbability": 0.5630349367448753,
+      "teamASeriesWinProbability": 0.7266815403005727,
+      "lower": 0.6395778011026376,
+      "upper": 0.8088952276418331,
+      "finalScoreProbabilities": {
+        "4-1": 0.22734530961401644,
+        "4-2": 0.24916733383157225,
+        "4-3": 0.2501688968549841,
+        "3-4": 0.09866445644840847,
+        "2-4": 0.12064873158057021,
+        "1-4": 0.05400527167044846
+      },
+      "actualGameWinner": "ORL",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-4",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-27",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "ORL",
+      "teamAGameWinProbability": 0.5630349367448753,
+      "teamASeriesWinProbability": 0.5447191096282654,
+      "lower": 0.45944579685344433,
+      "upper": 0.6302704771267247,
+      "finalScoreProbabilities": {
+        "4-2": 0.22734530961401644,
+        "4-3": 0.317373800014249,
+        "3-4": 0.12516949094404542,
+        "2-4": 0.20651966129617366,
+        "1-4": 0.12359173813151544
+      },
+      "actualGameWinner": "ORL",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-5",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-29",
+      "winsA": 1,
+      "winsB": 3,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.2895782674160225,
+      "lower": 0.22785209467470688,
+      "upper": 0.3558274603067245,
+      "finalScoreProbabilities": {
+        "4-3": 0.2895782674160225,
+        "3-4": 0.11420717248649653,
+        "2-4": 0.31337332512360927,
+        "1-4": 0.2828412349738717
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-6",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-01",
+      "winsA": 2,
+      "winsB": 3,
+      "homeTeam": "ORL",
+      "teamAGameWinProbability": 0.5630349367448753,
+      "teamASeriesWinProbability": 0.403785439902519,
+      "lower": 0.3480365631241651,
+      "upper": 0.47144768781810936,
+      "finalScoreProbabilities": {
+        "4-3": 0.403785439902519,
+        "3-4": 0.15924949684235626,
+        "2-4": 0.43696506325512474
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-det-orl:pregame-7",
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-03",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "DET",
+      "teamAGameWinProbability": 0.7171587650261283,
+      "teamASeriesWinProbability": 0.7171587650261283,
+      "lower": 0.6725566255275666,
+      "upper": 0.7660568616570232,
+      "finalScoreProbabilities": {
+        "4-3": 0.7171587650261283,
+        "3-4": 0.2828412349738717
+      },
+      "actualGameWinner": "DET",
+      "actualSeriesWinner": "DET"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-1",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6718988567487533,
+      "teamASeriesWinProbability": 0.7177915873664897,
+      "lower": 0.6125787589930106,
+      "upper": 0.8028424121106752,
+      "finalScoreProbabilities": {
+        "4-0": 0.11740524456629606,
+        "4-1": 0.2286450780962328,
+        "4-2": 0.1791828949407021,
+        "4-3": 0.1925583697632588,
+        "3-4": 0.09402995797259739,
+        "2-4": 0.10993676724657911,
+        "1-4": 0.05239107848512911,
+        "0-4": 0.02585060892920462
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-2",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-20",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6718988567487533,
+      "teamASeriesWinProbability": 0.8118215453390871,
+      "lower": 0.7354707840995557,
+      "upper": 0.8762527057468662,
+      "finalScoreProbabilities": {
+        "4-0": 0.17473648509302053,
+        "4-1": 0.2829656297531594,
+        "4-2": 0.18193877872934827,
+        "4-3": 0.17218065176355896,
+        "3-4": 0.08407912607967583,
+        "2-4": 0.07824871965203238,
+        "1-4": 0.025850608929204613
+      },
+      "actualGameWinner": "ATL",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-3",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-23",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "ATL",
+      "teamAGameWinProbability": 0.5099643848128572,
+      "teamASeriesWinProbability": 0.6396408935755282,
+      "lower": 0.550356741390879,
+      "upper": 0.7308053095825691,
+      "finalScoreProbabilities": {
+        "4-1": 0.17473648509302056,
+        "4-2": 0.21476802922171437,
+        "4-3": 0.25013637926079335,
+        "3-4": 0.12214640816822023,
+        "2-4": 0.1594241616695038,
+        "1-4": 0.07878853658674774
+      },
+      "actualGameWinner": "ATL",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-4",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-25",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "ATL",
+      "teamAGameWinProbability": 0.5099643848128572,
+      "teamASeriesWinProbability": 0.45770211484618,
+      "lower": 0.3867857425483743,
+      "upper": 0.5413538943606966,
+      "finalScoreProbabilities": {
+        "4-2": 0.17473648509302056,
+        "4-3": 0.2829656297531595,
+        "3-4": 0.1381775630220149,
+        "2-4": 0.24333907655507553,
+        "1-4": 0.16078124557672954
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-5",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-28",
+      "winsA": 2,
+      "winsB": 2,
+      "homeTeam": "NYK",
+      "teamAGameWinProbability": 0.6718988567487533,
+      "teamASeriesWinProbability": 0.6762921696179346,
+      "lower": 0.598290857607855,
+      "upper": 0.747979834164933,
+      "finalScoreProbabilities": {
+        "4-2": 0.34264448713834006,
+        "4-3": 0.3336476824795946,
+        "3-4": 0.16292658480533584,
+        "2-4": 0.16078124557672954
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-r1-nyk-atl:pregame-6",
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-04-30",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "ATL",
+      "teamAGameWinProbability": 0.5099643848128572,
+      "teamASeriesWinProbability": 0.8392187544232704,
+      "lower": 0.7939425275728446,
+      "upper": 0.8772681608383346,
+      "finalScoreProbabilities": {
+        "4-2": 0.5099643848128572,
+        "4-3": 0.3292543696104132,
+        "3-4": 0.16078124557672954
+      },
+      "actualGameWinner": "NYK",
+      "actualSeriesWinner": "NYK"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-1",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.8368120572959231,
+      "lower": 0.7602386393541827,
+      "upper": 0.9003042204281954,
+      "finalScoreProbabilities": {
+        "4-0": 0.1853819376049311,
+        "4-1": 0.2911511442183912,
+        "4-2": 0.19300855770193515,
+        "4-3": 0.16727041777066565,
+        "3-4": 0.06018358466748913,
+        "2-4": 0.06428847379794209,
+        "1-4": 0.026685736202994394,
+        "0-4": 0.012030148035651231
+      },
+      "actualGameWinner": "BOS",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-2",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-21",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.8969956419634122,
+      "lower": 0.8422903412292021,
+      "upper": 0.9384971572159859,
+      "finalScoreProbabilities": {
+        "4-0": 0.25208201336468783,
+        "4-1": 0.32920670769621896,
+        "4-2": 0.17905383842900124,
+        "4-3": 0.13665308247350422,
+        "3-4": 0.04916752447162126,
+        "2-4": 0.04180668552931522,
+        "1-4": 0.012030148035651231
+      },
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-3",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-24",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5854747237173844,
+      "teamASeriesWinProbability": 0.760342559489908,
+      "lower": 0.6797884582790231,
+      "upper": 0.8364079855102016,
+      "finalScoreProbabilities": {
+        "4-1": 0.25208201336468783,
+        "4-2": 0.2620904929338452,
+        "4-3": 0.24617005319137503,
+        "3-4": 0.08857152649164729,
+        "2-4": 0.10561993960448593,
+        "1-4": 0.0454659744139587
+      },
+      "actualGameWinner": "BOS",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-4",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5854747237173844,
+      "teamASeriesWinProbability": 0.8871154821072686,
+      "lower": 0.8432526933687249,
+      "upper": 0.9262430787938478,
+      "finalScoreProbabilities": {
+        "4-1": 0.4305600278764055,
+        "4-2": 0.2691766532589774,
+        "4-3": 0.18737880097188575,
+        "3-4": 0.0674185434787726,
+        "2-4": 0.0454659744139587
+      },
+      "actualGameWinner": "BOS",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-5",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-28",
+      "winsA": 3,
+      "winsB": 1,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.9709784934141161,
+      "lower": 0.9549972580247076,
+      "upper": 0.9825352861878145,
+      "finalScoreProbabilities": {
+        "4-1": 0.7354032726513433,
+        "4-2": 0.15491469584097886,
+        "4-3": 0.08066052492179403,
+        "3-4": 0.029021506585883802
+      },
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-6",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-04-30",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "PHI",
+      "teamAGameWinProbability": 0.5854747237173844,
+      "teamASeriesWinProbability": 0.8903179684923221,
+      "lower": 0.8549828583864637,
+      "upper": 0.9189689526594483,
+      "finalScoreProbabilities": {
+        "4-2": 0.5854747237173844,
+        "4-3": 0.3048432447749378,
+        "3-4": 0.10968203150767783
+      },
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-east-r1-bos-phi:pregame-7",
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "gameNumber": 7,
+      "forecastAsOf": "2026-05-02",
+      "winsA": 3,
+      "winsB": 3,
+      "homeTeam": "BOS",
+      "teamAGameWinProbability": 0.7354032726513433,
+      "teamASeriesWinProbability": 0.7354032726513433,
+      "lower": 0.6880658142601659,
+      "upper": 0.7826939291758865,
+      "finalScoreProbabilities": {
+        "4-3": 0.7354032726513433,
+        "3-4": 0.2645967273486567
+      },
+      "actualGameWinner": "PHI",
+      "actualSeriesWinner": "PHI"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-1",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.5308658241806373,
+      "teamASeriesWinProbability": 0.4115817691062818,
+      "lower": 0.305511607001918,
+      "upper": 0.5218692888808322,
+      "finalScoreProbabilities": {
+        "4-0": 0.03756554438637266,
+        "4-1": 0.10460522418223397,
+        "4-2": 0.10621033012097959,
+        "4-3": 0.16320067041669556,
+        "3-4": 0.1442229062819683,
+        "2-4": 0.21341753416760648,
+        "1-4": 0.14206079635543134,
+        "0-4": 0.08871699408871207
+      },
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-2",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-21",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.5308658241806373,
+      "teamASeriesWinProbability": 0.5558046753882501,
+      "lower": 0.4505623623378507,
+      "upper": 0.6543178204970758,
+      "finalScoreProbabilities": {
+        "4-0": 0.07076278538810263,
+        "4-1": 0.163849205421312,
+        "4-2": 0.13649433268975464,
+        "4-3": 0.18469835188908085,
+        "3-4": 0.16322073326610453,
+        "2-4": 0.19225759725693325,
+        "1-4": 0.08871699408871207
+      },
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-3",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-24",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "HOU",
+      "teamAGameWinProbability": 0.36509852296985257,
+      "teamASeriesWinProbability": 0.7190254086543546,
+      "lower": 0.630772828933916,
+      "upper": 0.7970938533593356,
+      "finalScoreProbabilities": {
+        "4-0": 0.13329693147476795,
+        "4-1": 0.246111085830843,
+        "4-2": 0.15753418938423347,
+        "4-3": 0.18208320196451025,
+        "3-4": 0.16090968563669444,
+        "2-4": 0.12006490570895086
+      },
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-4",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "HOU",
+      "teamAGameWinProbability": 0.36509852296985257,
+      "teamASeriesWinProbability": 0.911283005911288,
+      "lower": 0.8755451829086136,
+      "upper": 0.9413846480848068,
+      "finalScoreProbabilities": {
+        "4-0": 0.36509852296985257,
+        "4-1": 0.3370474958771132,
+        "4-2": 0.10874604857966311,
+        "4-3": 0.10039093848465905,
+        "3-4": 0.08871699408871209
+      },
+      "actualGameWinner": "HOU",
+      "actualSeriesWinner": "LAL"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-5",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-29",
+      "winsA": 3,
+      "winsB": 1,
+      "homeTeam": "LAL",
+      "teamAGameWinProbability": 0.5308658241806373,
+      "teamASeriesWinProbability": 0.8602665180372553,
+      "lower": 0.8164621874825099,
+      "upper": 0.8991614752606291,
+      "finalScoreProbabilities": {
+        "4-1": 0.5308658241806373,
+        "4-2": 0.17128019466632843,
+        "4-3": 0.15812049919028953,
+        "3-4": 0.1397334819627447
+      },
+      "actualGameWinner": "HOU",
+      "actualSeriesWinner": "LAL"
+    },
+    {
+      "id": "2026-west-r1-lal-hou:pregame-6",
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-05-01",
+      "winsA": 3,
+      "winsB": 2,
+      "homeTeam": "HOU",
+      "teamAGameWinProbability": 0.36509852296985257,
+      "teamASeriesWinProbability": 0.7021460188469657,
+      "lower": 0.6399540707370821,
+      "upper": 0.7561738492924609,
+      "finalScoreProbabilities": {
+        "4-2": 0.36509852296985257,
+        "4-3": 0.3370474958771132,
+        "3-4": 0.29785398115303424
+      },
+      "actualGameWinner": "LAL",
+      "actualSeriesWinner": "LAL"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-1",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-18",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "DEN",
+      "teamAGameWinProbability": 0.6215022799812586,
+      "teamASeriesWinProbability": 0.6100643058115884,
+      "lower": 0.4933201547087862,
+      "upper": 0.7152790296298588,
+      "finalScoreProbabilities": {
+        "4-0": 0.07992250361198044,
+        "4-1": 0.17955560371448165,
+        "4-2": 0.15653170744083,
+        "4-3": 0.19405449104429642,
+        "3-4": 0.11818006914130438,
+        "2-4": 0.14937645061629928,
+        "1-4": 0.07980765410021705,
+        "0-4": 0.04257152033059066
+      },
+      "actualGameWinner": "DEN",
+      "actualSeriesWinner": "MIN"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-2",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-20",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "DEN",
+      "teamAGameWinProbability": 0.6215022799812586,
+      "teamASeriesWinProbability": 0.7282443749528927,
+      "lower": 0.6377826570884466,
+      "upper": 0.8082113495814884,
+      "finalScoreProbabilities": {
+        "4-0": 0.1285956724316289,
+        "4-1": 0.24023261559661485,
+        "4-2": 0.1718273232768312,
+        "4-3": 0.18758876364781793,
+        "3-4": 0.11424241169955918,
+        "2-4": 0.11494169301695717,
+        "1-4": 0.04257152033059066
+      },
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-3",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-23",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.45487473310039234,
+      "teamASeriesWinProbability": 0.5406556113050749,
+      "lower": 0.443964491448515,
+      "upper": 0.6411035308418347,
+      "finalScoreProbabilities": {
+        "4-1": 0.12859567243162892,
+        "4-2": 0.175825174615312,
+        "4-3": 0.23623476425813406,
+        "3-4": 0.14386804769817557,
+        "2-4": 0.20300136934174773,
+        "1-4": 0.11247497165500159
+      },
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-4",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-25",
+      "winsA": 1,
+      "winsB": 2,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.45487473310039234,
+      "teamASeriesWinProbability": 0.36882828802824374,
+      "lower": 0.2870489816401785,
+      "upper": 0.45487260116592243,
+      "finalScoreProbabilities": {
+        "4-2": 0.12859567243162892,
+        "4-3": 0.24023261559661485,
+        "3-4": 0.14630275737717224,
+        "2-4": 0.2785402839484746,
+        "1-4": 0.20632867064610935
+      },
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-5",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-27",
+      "winsA": 1,
+      "winsB": 3,
+      "homeTeam": "DEN",
+      "teamAGameWinProbability": 0.6215022799812586,
+      "teamASeriesWinProbability": 0.17570222700046365,
+      "lower": 0.12998868444586595,
+      "upper": 0.22708877569350777,
+      "finalScoreProbabilities": {
+        "4-3": 0.17570222700046365,
+        "3-4": 0.10700345672729668,
+        "2-4": 0.3387965962534983,
+        "1-4": 0.3784977200187414
+      },
+      "actualGameWinner": "DEN",
+      "actualSeriesWinner": "MIN"
+    },
+    {
+      "id": "2026-west-r1-den-min:pregame-6",
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "gameNumber": 6,
+      "forecastAsOf": "2026-04-30",
+      "winsA": 2,
+      "winsB": 3,
+      "homeTeam": "MIN",
+      "teamAGameWinProbability": 0.45487473310039234,
+      "teamASeriesWinProbability": 0.28270568372776034,
+      "lower": 0.22987379436446972,
+      "upper": 0.34482721177377407,
+      "finalScoreProbabilities": {
+        "4-3": 0.28270568372776034,
+        "3-4": 0.172169049372632,
+        "2-4": 0.5451252668996076
+      },
+      "actualGameWinner": "MIN",
+      "actualSeriesWinner": "MIN"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-1",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7667133162547769,
+      "teamASeriesWinProbability": 0.8849347741634518,
+      "lower": 0.8176389412147902,
+      "upper": 0.9296249884119953,
+      "finalScoreProbabilities": {
+        "4-0": 0.22998968706659378,
+        "4-1": 0.318467359928047,
+        "4-2": 0.1907366056846665,
+        "4-3": 0.14574112148414445,
+        "3-4": 0.04434442730488301,
+        "2-4": 0.04543459557311835,
+        "1-4": 0.017653048513276308,
+        "0-4": 0.00763315444527057
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-2",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-22",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "OKC",
+      "teamAGameWinProbability": 0.7667133162547769,
+      "teamASeriesWinProbability": 0.9292792014683348,
+      "lower": 0.8872136470595097,
+      "upper": 0.9616228743467122,
+      "finalScoreProbabilities": {
+        "4-0": 0.29996829609017617,
+        "4-1": 0.34538832562637106,
+        "4-2": 0.16972025357926324,
+        "4-3": 0.11420232617252427,
+        "3-4": 0.03474816647103263,
+        "2-4": 0.028339477615362027,
+        "1-4": 0.00763315444527057
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-3",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-25",
+      "winsA": 2,
+      "winsB": 0,
+      "homeTeam": "PHO",
+      "teamAGameWinProbability": 0.6254911582558845,
+      "teamASeriesWinProbability": 0.9640273679393674,
+      "lower": 0.9398138801026082,
+      "upper": 0.9808818877910872,
+      "finalScoreProbabilities": {
+        "4-0": 0.39123918905628796,
+        "4-1": 0.359208208288469,
+        "4-2": 0.1356268378349261,
+        "4-3": 0.07795313275968428,
+        "3-4": 0.023718680037917696,
+        "2-4": 0.012253952022714898
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-r1-okc-pho:pregame-4",
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-27",
+      "winsA": 3,
+      "winsB": 0,
+      "homeTeam": "PHO",
+      "teamAGameWinProbability": 0.6254911582558845,
+      "teamASeriesWinProbability": 0.9923668455547294,
+      "lower": 0.9860930900471174,
+      "upper": 0.9963167188959233,
+      "finalScoreProbabilities": {
+        "4-0": 0.6254911582558845,
+        "4-1": 0.2871409160203662,
+        "4-2": 0.054647865055362024,
+        "4-3": 0.02508690622311668,
+        "3-4": 0.007633154445270569
+      },
+      "actualGameWinner": "OKC",
+      "actualSeriesWinner": "OKC"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-1",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "gameNumber": 1,
+      "forecastAsOf": "2026-04-19",
+      "winsA": 0,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.7539151052958118,
+      "teamASeriesWinProbability": 0.8662440737199932,
+      "lower": 0.7962078301276975,
+      "upper": 0.9230070773684484,
+      "finalScoreProbabilities": {
+        "4-0": 0.21073332459170466,
+        "4-1": 0.30781146439350277,
+        "4-2": 0.19252293369808363,
+        "4-3": 0.15517635103670238,
+        "3-4": 0.05065100266224786,
+        "2-4": 0.052777185236682775,
+        "1-4": 0.021064748722254164,
+        "0-4": 0.009262989658821845
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-2",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "gameNumber": 2,
+      "forecastAsOf": "2026-04-21",
+      "winsA": 1,
+      "winsB": 0,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.7539151052958118,
+      "teamASeriesWinProbability": 0.9168950763822412,
+      "lower": 0.8618221683747749,
+      "upper": 0.9511096002508695,
+      "finalScoreProbabilities": {
+        "4-0": 0.279518639580805,
+        "4-1": 0.339498671140515,
+        "4-2": 0.1742178518373624,
+        "4-3": 0.12365991382355886,
+        "3-4": 0.04036374474876636,
+        "2-4": 0.033478189210170574,
+        "1-4": 0.009262989658821847
+      },
+      "actualGameWinner": "POR",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-3",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "gameNumber": 3,
+      "forecastAsOf": "2026-04-24",
+      "winsA": 1,
+      "winsB": 1,
+      "homeTeam": "POR",
+      "teamAGameWinProbability": 0.6088974629938,
+      "teamASeriesWinProbability": 0.7932351625586823,
+      "lower": 0.712419083866777,
+      "upper": 0.8640528022809395,
+      "finalScoreProbabilities": {
+        "4-1": 0.279518639580805,
+        "4-2": 0.27419516878643235,
+        "4-3": 0.23952135419144507,
+        "3-4": 0.07818199530898,
+        "2-4": 0.09094140270162156,
+        "1-4": 0.0376414394307161
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-4",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "gameNumber": 4,
+      "forecastAsOf": "2026-04-26",
+      "winsA": 2,
+      "winsB": 1,
+      "homeTeam": "POR",
+      "teamAGameWinProbability": 0.6088974629938,
+      "teamASeriesWinProbability": 0.9051374909250209,
+      "lower": 0.8617111092271209,
+      "upper": 0.9388470624934522,
+      "finalScoreProbabilities": {
+        "4-1": 0.45905699492732344,
+        "4-2": 0.2707758362059996,
+        "4-3": 0.1753046597916979,
+        "3-4": 0.05722106964426299,
+        "2-4": 0.0376414394307161
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
+    },
+    {
+      "id": "2026-west-r1-sas-por:pregame-5",
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "gameNumber": 5,
+      "forecastAsOf": "2026-04-28",
+      "winsA": 3,
+      "winsB": 1,
+      "homeTeam": "SAS",
+      "teamAGameWinProbability": 0.7539151052958118,
+      "teamASeriesWinProbability": 0.9763157004049938,
+      "lower": 0.9633264660599029,
+      "upper": 0.9867158515563349,
+      "finalScoreProbabilities": {
+        "4-1": 0.7539151052958118,
+        "4-2": 0.14984046806647658,
+        "4-3": 0.07256012704270536,
+        "3-4": 0.023684299595006217
+      },
+      "actualGameWinner": "SAS",
+      "actualSeriesWinner": "SAS"
     }
   ],
   "versions": [
@@ -48554,308 +50676,308 @@
   ],
   "calibration": {
     "game": {
-      "protocol": "For each season 2008-2025, fit logistic calibration only on earlier rolling-origin predictions.",
+      "protocol": "For each season 2008-2026, fit logistic calibration only on earlier rolling-origin predictions.",
       "raw": {
-        "n": 1507,
-        "brier": 0.22008358997802294,
-        "logLoss": 0.6315891079782163,
+        "n": 1592,
+        "brier": 0.2208528276240702,
+        "logLoss": 0.6335063876909798,
         "calibrationFit": {
-          "intercept": -0.10524972711394132,
-          "slope": 0.882430179997991
+          "intercept": -0.11176119873307541,
+          "slope": 0.875066212539571
         },
         "calibration": [
           {
-            "n": 188,
-            "predicted": 0.399215920245644,
-            "observed": 0.35106382978723405
+            "n": 199,
+            "predicted": 0.3947195059766807,
+            "observed": 0.34673366834170855
           },
           {
-            "n": 188,
-            "predicted": 0.5289199814231074,
-            "observed": 0.48936170212765956
+            "n": 199,
+            "predicted": 0.5263108009210011,
+            "observed": 0.4824120603015075
           },
           {
-            "n": 189,
-            "predicted": 0.5990709169214794,
-            "observed": 0.5767195767195767
+            "n": 199,
+            "predicted": 0.5955517381872105,
+            "observed": 0.5778894472361809
           },
           {
-            "n": 188,
-            "predicted": 0.6497009700011467,
-            "observed": 0.648936170212766
+            "n": 199,
+            "predicted": 0.6493650366478915,
+            "observed": 0.6582914572864321
           },
           {
-            "n": 188,
-            "predicted": 0.6926084748775609,
-            "observed": 0.6595744680851063
+            "n": 199,
+            "predicted": 0.6934315572403266,
+            "observed": 0.6582914572864321
           },
           {
-            "n": 189,
-            "predicted": 0.7384694328932458,
-            "observed": 0.7407407407407407
+            "n": 199,
+            "predicted": 0.738743738259312,
+            "observed": 0.7185929648241206
           },
           {
-            "n": 188,
-            "predicted": 0.7815712253043732,
-            "observed": 0.6861702127659575
+            "n": 199,
+            "predicted": 0.7825801787730902,
+            "observed": 0.6884422110552764
           },
           {
-            "n": 189,
-            "predicted": 0.858116764955858,
-            "observed": 0.7936507936507936
+            "n": 199,
+            "predicted": 0.8584404056196705,
+            "observed": 0.7889447236180904
           }
         ]
       },
       "calibrated": {
-        "n": 1507,
-        "brier": 0.21957487608487097,
-        "logLoss": 0.6297586031477397,
+        "n": 1592,
+        "brier": 0.22016226323112262,
+        "logLoss": 0.6311203409781156,
         "calibrationFit": {
-          "intercept": -0.13056318904221292,
-          "slope": 0.9567868967412351
+          "intercept": -0.13213910204507354,
+          "slope": 0.9521401242839033
         },
         "calibration": [
           {
-            "n": 188,
-            "predicted": 0.41024846155821976,
-            "observed": 0.3776595744680851
+            "n": 199,
+            "predicted": 0.40423001848663465,
+            "observed": 0.35175879396984927
           },
           {
-            "n": 188,
-            "predicted": 0.5295885024425551,
-            "observed": 0.4521276595744681
+            "n": 199,
+            "predicted": 0.5250144094043973,
+            "observed": 0.457286432160804
           },
           {
-            "n": 189,
-            "predicted": 0.597883013110894,
-            "observed": 0.6031746031746031
+            "n": 199,
+            "predicted": 0.5939495860352123,
+            "observed": 0.6130653266331658
           },
           {
-            "n": 188,
-            "predicted": 0.6485905852864818,
-            "observed": 0.6223404255319149
+            "n": 199,
+            "predicted": 0.6471863535070534,
+            "observed": 0.6231155778894473
           },
           {
-            "n": 188,
-            "predicted": 0.6867137551410682,
-            "observed": 0.6808510638297872
+            "n": 199,
+            "predicted": 0.6855331313661198,
+            "observed": 0.6834170854271356
           },
           {
-            "n": 189,
-            "predicted": 0.7287914425891385,
-            "observed": 0.6984126984126984
+            "n": 199,
+            "predicted": 0.727608767894656,
+            "observed": 0.6834170854271356
           },
           {
-            "n": 188,
-            "predicted": 0.7705867348242664,
-            "observed": 0.723404255319149
+            "n": 199,
+            "predicted": 0.770379469277409,
+            "observed": 0.7185929648241206
           },
           {
-            "n": 189,
-            "predicted": 0.8417646946338323,
-            "observed": 0.7883597883597884
+            "n": 199,
+            "predicted": 0.8405754781864797,
+            "observed": 0.7889447236180904
           }
         ]
       },
       "retained": true
     },
     "series": {
-      "protocol": "For each season 2008-2025, fit logistic calibration only on earlier rolling-origin predictions.",
+      "protocol": "For each season 2008-2026, fit logistic calibration only on earlier rolling-origin predictions.",
       "raw": {
-        "n": 270,
-        "brier": 0.18528435644110788,
-        "logLoss": 0.548406921493242,
+        "n": 285,
+        "brier": 0.18884826416287875,
+        "logLoss": 0.5571051924849736,
         "calibrationFit": {
-          "intercept": 0.07029424518235423,
-          "slope": 0.7617944770313345
+          "intercept": 0.08749237390408642,
+          "slope": 0.7180047670640234
         },
         "calibration": [
           {
-            "n": 33,
-            "predicted": 0.4556155230499795,
-            "observed": 0.5151515151515151
+            "n": 35,
+            "predicted": 0.45381428409888747,
+            "observed": 0.5142857142857142
           },
           {
-            "n": 34,
-            "predicted": 0.5891307056014705,
-            "observed": 0.5588235294117647
+            "n": 36,
+            "predicted": 0.5937983201464541,
+            "observed": 0.5555555555555556
           },
           {
-            "n": 34,
-            "predicted": 0.6677432997170953,
-            "observed": 0.6470588235294118
+            "n": 35,
+            "predicted": 0.672328881795227,
+            "observed": 0.6571428571428571
           },
           {
-            "n": 34,
-            "predicted": 0.737425229569607,
-            "observed": 0.7352941176470589
+            "n": 36,
+            "predicted": 0.7382769915832016,
+            "observed": 0.7222222222222222
           },
           {
-            "n": 33,
-            "predicted": 0.789674700997916,
-            "observed": 0.7272727272727273
+            "n": 36,
+            "predicted": 0.7917816673450861,
+            "observed": 0.6666666666666666
           },
           {
-            "n": 34,
-            "predicted": 0.8376840450150226,
-            "observed": 0.7647058823529411
+            "n": 35,
+            "predicted": 0.8412814812671403,
+            "observed": 0.8
           },
           {
-            "n": 34,
-            "predicted": 0.9068050358352747,
-            "observed": 0.7941176470588235
+            "n": 36,
+            "predicted": 0.9107678527912313,
+            "observed": 0.8055555555555556
           },
           {
-            "n": 34,
-            "predicted": 0.9641327381009802,
+            "n": 36,
+            "predicted": 0.9645652197301173,
             "observed": 1
           }
         ]
       },
       "calibrated": {
-        "n": 270,
-        "brier": 0.1862202276753455,
-        "logLoss": 0.5494300047264535,
+        "n": 285,
+        "brier": 0.18879360915224808,
+        "logLoss": 0.555168434461822,
         "calibrationFit": {
-          "intercept": -0.05537759372342691,
-          "slope": 0.9294196337776334
+          "intercept": -0.03751016620850158,
+          "slope": 0.8906813967586562
         },
         "calibration": [
           {
-            "n": 33,
-            "predicted": 0.509225683302864,
-            "observed": 0.5757575757575758
+            "n": 35,
+            "predicted": 0.5074079430458838,
+            "observed": 0.5714285714285714
           },
           {
-            "n": 34,
-            "predicted": 0.6123853592761086,
-            "observed": 0.4411764705882353
+            "n": 36,
+            "predicted": 0.6154528017412375,
+            "observed": 0.4722222222222222
           },
           {
-            "n": 34,
-            "predicted": 0.6743677520860097,
-            "observed": 0.7647058823529411
+            "n": 35,
+            "predicted": 0.6749551226678814,
+            "observed": 0.7142857142857143
           },
           {
-            "n": 34,
-            "predicted": 0.7282496930858976,
-            "observed": 0.7058823529411765
+            "n": 36,
+            "predicted": 0.7276508607631347,
+            "observed": 0.7222222222222222
           },
           {
-            "n": 33,
-            "predicted": 0.7702477026946674,
-            "observed": 0.7272727272727273
+            "n": 36,
+            "predicted": 0.7709098900130411,
+            "observed": 0.6944444444444444
           },
           {
-            "n": 34,
-            "predicted": 0.8101128568452597,
-            "observed": 0.7058823529411765
+            "n": 35,
+            "predicted": 0.8128420736538277,
+            "observed": 0.7428571428571429
           },
           {
-            "n": 34,
-            "predicted": 0.8740564062766023,
-            "observed": 0.8823529411764706
+            "n": 36,
+            "predicted": 0.8762516420888274,
+            "observed": 0.8611111111111112
           },
           {
-            "n": 34,
-            "predicted": 0.9376355048729169,
-            "observed": 0.9411764705882353
+            "n": 36,
+            "predicted": 0.9370835681637083,
+            "observed": 0.9444444444444444
           }
         ]
       },
-      "retained": false
+      "retained": true
     },
     "gamePropagatedThroughExactSeries": {
       "protocol": "For each eligible season, fit the game calibrator only on earlier rolling-origin game predictions, calibrate each possible future game's home-win probability, then recompute the pre-series probability with the exact series solver.",
       "raw": {
-        "n": 270,
-        "brier": 0.18528435644110788,
-        "logLoss": 0.548406921493242,
+        "n": 285,
+        "brier": 0.18884826416287875,
+        "logLoss": 0.5571051924849736,
         "calibrationFit": {
-          "intercept": 0.07029424518235423,
-          "slope": 0.7617944770313345
+          "intercept": 0.08749237390408642,
+          "slope": 0.7180047670640234
         },
         "calibration": [
           {
-            "n": 38,
-            "predicted": 0.4671831263087013,
+            "n": 40,
+            "predicted": 0.46559213208382977,
             "observed": 0.5
           },
           {
-            "n": 39,
-            "predicted": 0.6093372071949381,
-            "observed": 0.5384615384615384
+            "n": 41,
+            "predicted": 0.6132882566065313,
+            "observed": 0.5853658536585366
           },
           {
-            "n": 38,
-            "predicted": 0.692777250102395,
-            "observed": 0.7368421052631579
+            "n": 41,
+            "predicted": 0.6967860682430901,
+            "observed": 0.6585365853658537
           },
           {
-            "n": 39,
-            "predicted": 0.7650051880302003,
-            "observed": 0.717948717948718
+            "n": 40,
+            "predicted": 0.7670287157189869,
+            "observed": 0.75
           },
           {
-            "n": 38,
-            "predicted": 0.819627466550226,
-            "observed": 0.7631578947368421
+            "n": 41,
+            "predicted": 0.8219111443433536,
+            "observed": 0.7073170731707317
           },
           {
-            "n": 39,
-            "predicted": 0.8899421931627239,
-            "observed": 0.8461538461538461
+            "n": 41,
+            "predicted": 0.8950458221223198,
+            "observed": 0.8780487804878049
           },
           {
-            "n": 39,
-            "predicted": 0.9605758011401279,
-            "observed": 0.9230769230769231
+            "n": 41,
+            "predicted": 0.9614045768795959,
+            "observed": 0.926829268292683
           }
         ]
       },
       "calibrated": {
-        "n": 270,
-        "brier": 0.18454832443107172,
-        "logLoss": 0.5464687679162715,
+        "n": 285,
+        "brier": 0.18765648959334005,
+        "logLoss": 0.5536050985018491,
         "calibrationFit": {
-          "intercept": 0.07450709620014169,
-          "slope": 0.828505839270353
+          "intercept": 0.08980903728057524,
+          "slope": 0.7856128088828552
         },
         "calibration": [
           {
-            "n": 38,
-            "predicted": 0.4711424154333956,
-            "observed": 0.47368421052631576
+            "n": 40,
+            "predicted": 0.46949402610265417,
+            "observed": 0.5
           },
           {
-            "n": 39,
-            "predicted": 0.6034274114940655,
-            "observed": 0.5641025641025641
+            "n": 41,
+            "predicted": 0.6067445406559573,
+            "observed": 0.5853658536585366
           },
           {
-            "n": 38,
-            "predicted": 0.6787986771977907,
-            "observed": 0.7105263157894737
+            "n": 41,
+            "predicted": 0.6815351566207399,
+            "observed": 0.6585365853658537
           },
           {
-            "n": 39,
-            "predicted": 0.7469213257845693,
-            "observed": 0.7435897435897436
+            "n": 40,
+            "predicted": 0.7483020087481321,
+            "observed": 0.725
           },
           {
-            "n": 38,
-            "predicted": 0.7995760853157834,
-            "observed": 0.7631578947368421
+            "n": 41,
+            "predicted": 0.8018054117702159,
+            "observed": 0.7560975609756098
           },
           {
-            "n": 39,
-            "predicted": 0.8679723157373942,
-            "observed": 0.8717948717948718
+            "n": 41,
+            "predicted": 0.8727328188137066,
+            "observed": 0.8536585365853658
           },
           {
-            "n": 39,
-            "predicted": 0.9481976870635421,
-            "observed": 0.8974358974358975
+            "n": 41,
+            "predicted": 0.9485750934621859,
+            "observed": 0.926829268292683
           }
         ]
       },
@@ -50749,16 +52871,121 @@
           "rawP": 0.9497521315171089,
           "p": 0.9366645358169046,
           "y": 1
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk",
+          "season": 2026,
+          "rawP": 0.7029413128650214,
+          "p": 0.6773890941701622,
+          "y": 0
+        },
+        {
+          "id": "2026-east-cf-nyk-cle",
+          "season": 2026,
+          "rawP": 0.7061740562038142,
+          "p": 0.680414464711629,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas",
+          "season": 2026,
+          "rawP": 0.7363012394286785,
+          "p": 0.7087893168241617,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-det-cle",
+          "season": 2026,
+          "rawP": 0.7933199602777519,
+          "p": 0.7635803633958627,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-nyk-phi",
+          "season": 2026,
+          "rawP": 0.9008570265933091,
+          "p": 0.8732767897342197,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-okc-lal",
+          "season": 2026,
+          "rawP": 0.9658771722261239,
+          "p": 0.9485005482695449,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-sas-min",
+          "season": 2026,
+          "rawP": 0.8610141666659179,
+          "p": 0.8313010527983602,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor",
+          "season": 2026,
+          "rawP": 0.6200427414805216,
+          "p": 0.6008136551429921,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl",
+          "season": 2026,
+          "rawP": 0.9128352225612097,
+          "p": 0.8863486733547477,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl",
+          "season": 2026,
+          "rawP": 0.7885246568053097,
+          "p": 0.7589068155497001,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-bos-phi",
+          "season": 2026,
+          "rawP": 0.9360592817113518,
+          "p": 0.9125181358628689,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-lal-hou",
+          "season": 2026,
+          "rawP": 0.3126402802253988,
+          "p": 0.3229363970180864,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min",
+          "season": 2026,
+          "rawP": 0.6811866084213605,
+          "p": 0.6571166017116074,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-okc-pho",
+          "season": 2026,
+          "rawP": 0.9650858723712115,
+          "p": 0.94749489478839,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-sas-por",
+          "season": 2026,
+          "rawP": 0.9539516861443267,
+          "p": 0.9336848398460296,
+          "y": 1
         }
       ],
       "retained": true,
       "comparisonToRaw": {
-        "candidateMinusBaselineBrier": -0.000732793438591947,
+        "candidateMinusBaselineBrier": -0.001190197874067358,
         "ci95": [
-          -0.002117243567134812,
-          0.0006896168990854475
+          -0.0027987876074645887,
+          0.0004067307875519968
         ],
-        "probabilityCandidateBetter": 0.8432
+        "probabilityCandidateBetter": 0.9271
       }
     }
   },
@@ -50770,100 +52997,100 @@
         "homeCourt"
       ],
       "game": {
-        "n": 1675,
-        "brier": 0.21851079596712555,
-        "logLoss": 0.6278233765204784,
-        "marginMae": 10.622194057664972,
+        "n": 1760,
+        "brier": 0.2192825651849855,
+        "logLoss": 0.6297395108821993,
+        "marginMae": 10.713539131804904,
         "calibrationFit": {
-          "intercept": -0.08708017130695284,
-          "slope": 0.8876420742956851
+          "intercept": -0.09395029703318648,
+          "slope": 0.8808136047639248
         },
         "calibration": [
           {
-            "n": 209,
-            "predicted": 0.39869870664954105,
-            "observed": 0.36363636363636365
+            "n": 220,
+            "predicted": 0.39475044069905757,
+            "observed": 0.35454545454545455
           },
           {
-            "n": 209,
-            "predicted": 0.5274087901819248,
-            "observed": 0.5023923444976076
+            "n": 220,
+            "predicted": 0.5250496498253512,
+            "observed": 0.4909090909090909
           },
           {
-            "n": 210,
-            "predicted": 0.5979840692484396,
-            "observed": 0.5714285714285714
+            "n": 220,
+            "predicted": 0.5948317073844884,
+            "observed": 0.5818181818181818
           },
           {
-            "n": 209,
-            "predicted": 0.6496629607899576,
-            "observed": 0.645933014354067
+            "n": 220,
+            "predicted": 0.6493609942628001,
+            "observed": 0.6545454545454545
           },
           {
-            "n": 209,
-            "predicted": 0.6932735179653987,
-            "observed": 0.6507177033492823
+            "n": 220,
+            "predicted": 0.6939991111329149,
+            "observed": 0.6454545454545455
           },
           {
-            "n": 210,
-            "predicted": 0.7398411798681289,
-            "observed": 0.7428571428571429
+            "n": 220,
+            "predicted": 0.7400084945191957,
+            "observed": 0.7272727272727273
           },
           {
-            "n": 209,
-            "predicted": 0.7834953901060685,
-            "observed": 0.7033492822966507
+            "n": 220,
+            "predicted": 0.7843505463846837,
+            "observed": 0.7045454545454546
           },
           {
-            "n": 210,
-            "predicted": 0.8584069867825596,
-            "observed": 0.8047619047619048
+            "n": 220,
+            "predicted": 0.8586519473017715,
+            "observed": 0.8
           }
         ]
       },
       "series": {
-        "n": 300,
-        "brier": 0.1846577780014755,
-        "logLoss": 0.5485752974559989,
+        "n": 315,
+        "brier": 0.18791210300877453,
+        "logLoss": 0.5564371437836246,
         "calibrationFit": {
-          "intercept": 0.05734626385169736,
-          "slope": 0.7635110926811486
+          "intercept": 0.07242284150409396,
+          "slope": 0.7249949294881307
         },
         "calibration": [
           {
-            "n": 42,
-            "predicted": 0.4590771100258625,
-            "observed": 0.5
+            "n": 45,
+            "predicted": 0.46031821347040175,
+            "observed": 0.4888888888888889
           },
           {
-            "n": 43,
-            "predicted": 0.609015131053234,
-            "observed": 0.5348837209302325
+            "n": 45,
+            "predicted": 0.6148134091704139,
+            "observed": 0.5777777777777777
           },
           {
-            "n": 43,
-            "predicted": 0.695432435228085,
-            "observed": 0.6976744186046512
+            "n": 45,
+            "predicted": 0.6997755959011862,
+            "observed": 0.6666666666666666
           },
           {
-            "n": 43,
-            "predicted": 0.7678023598226684,
-            "observed": 0.6976744186046512
+            "n": 45,
+            "predicted": 0.7700277185033966,
+            "observed": 0.6888888888888889
           },
           {
-            "n": 43,
-            "predicted": 0.8221561132762418,
-            "observed": 0.7674418604651163
+            "n": 45,
+            "predicted": 0.8249200321249557,
+            "observed": 0.7777777777777778
           },
           {
-            "n": 43,
-            "predicted": 0.8922842530094949,
-            "observed": 0.9069767441860465
+            "n": 45,
+            "predicted": 0.8966028323902511,
+            "observed": 0.8888888888888888
           },
           {
-            "n": 43,
-            "predicted": 0.960641674035124,
-            "observed": 0.9069767441860465
+            "n": 45,
+            "predicted": 0.9613938531357507,
+            "observed": 0.9111111111111111
           }
         ]
       }
@@ -50875,100 +53102,100 @@
         "homeCourt"
       ],
       "game": {
-        "n": 1675,
-        "brier": 0.21908709114471633,
-        "logLoss": 0.6286073395891306,
-        "marginMae": 10.65026500041412,
+        "n": 1760,
+        "brier": 0.21987106700936992,
+        "logLoss": 0.6305451335021899,
+        "marginMae": 10.74479677753013,
         "calibrationFit": {
-          "intercept": -0.11434677732550279,
-          "slope": 0.9280381970973591
+          "intercept": -0.12040035271418882,
+          "slope": 0.9202224271850208
         },
         "calibration": [
           {
-            "n": 209,
-            "predicted": 0.41345923741496926,
-            "observed": 0.3588516746411483
+            "n": 220,
+            "predicted": 0.4097069364451131,
+            "observed": 0.35
           },
           {
-            "n": 209,
-            "predicted": 0.5360560041187823,
-            "observed": 0.49760765550239233
+            "n": 220,
+            "predicted": 0.5335061098173552,
+            "observed": 0.5
           },
           {
-            "n": 210,
-            "predicted": 0.6005474171782097,
-            "observed": 0.5857142857142857
+            "n": 220,
+            "predicted": 0.5974927591699113,
+            "observed": 0.5818181818181818
           },
           {
-            "n": 209,
-            "predicted": 0.6506062474465341,
-            "observed": 0.631578947368421
+            "n": 220,
+            "predicted": 0.6503369281589635,
+            "observed": 0.6363636363636364
           },
           {
-            "n": 209,
-            "predicted": 0.6913718485557901,
-            "observed": 0.6746411483253588
+            "n": 220,
+            "predicted": 0.6920168601058693,
+            "observed": 0.6727272727272727
           },
           {
-            "n": 210,
-            "predicted": 0.7363972118318767,
-            "observed": 0.7428571428571429
+            "n": 220,
+            "predicted": 0.7366625862310243,
+            "observed": 0.7272727272727273
           },
           {
-            "n": 209,
-            "predicted": 0.7763817058590959,
-            "observed": 0.6842105263157895
+            "n": 220,
+            "predicted": 0.7771991957041099,
+            "observed": 0.6863636363636364
           },
           {
-            "n": 210,
-            "predicted": 0.850510692822044,
-            "observed": 0.8095238095238095
+            "n": 220,
+            "predicted": 0.8506919292828979,
+            "observed": 0.8045454545454546
           }
         ]
       },
       "series": {
-        "n": 300,
-        "brier": 0.18519808154248493,
-        "logLoss": 0.5483832088290135,
+        "n": 315,
+        "brier": 0.18815947750503006,
+        "logLoss": 0.5556497773657014,
         "calibrationFit": {
-          "intercept": 0.0585712055188642,
-          "slope": 0.8003647173902532
+          "intercept": 0.07491717051917146,
+          "slope": 0.7594626734109753
         },
         "calibration": [
           {
-            "n": 42,
-            "predicted": 0.46579924239813103,
-            "observed": 0.5238095238095238
+            "n": 45,
+            "predicted": 0.46621908467113266,
+            "observed": 0.5111111111111111
           },
           {
-            "n": 43,
-            "predicted": 0.6062823833317886,
-            "observed": 0.5116279069767442
+            "n": 45,
+            "predicted": 0.6125707498382076,
+            "observed": 0.5777777777777777
           },
           {
-            "n": 43,
-            "predicted": 0.6912448702795033,
-            "observed": 0.7209302325581395
+            "n": 45,
+            "predicted": 0.6944315008514288,
+            "observed": 0.6666666666666666
           },
           {
-            "n": 43,
-            "predicted": 0.7542875820508641,
-            "observed": 0.7674418604651163
+            "n": 45,
+            "predicted": 0.7563876452360793,
+            "observed": 0.7333333333333333
           },
           {
-            "n": 43,
-            "predicted": 0.8086336495505909,
-            "observed": 0.7209302325581395
+            "n": 45,
+            "predicted": 0.8120304995889639,
+            "observed": 0.7333333333333333
           },
           {
-            "n": 43,
-            "predicted": 0.8810300022168063,
-            "observed": 0.8372093023255814
+            "n": 45,
+            "predicted": 0.8853884099510504,
+            "observed": 0.8444444444444444
           },
           {
-            "n": 43,
-            "predicted": 0.9523291971022536,
-            "observed": 0.9302325581395349
+            "n": 45,
+            "predicted": 0.9529279548811409,
+            "observed": 0.9333333333333333
           }
         ]
       }
@@ -50981,100 +53208,100 @@
         "homeCourt"
       ],
       "game": {
-        "n": 1675,
-        "brier": 0.2182507083396872,
-        "logLoss": 0.6273676768400946,
-        "marginMae": 10.616064102178004,
+        "n": 1760,
+        "brier": 0.2188926036944871,
+        "logLoss": 0.6289458535370797,
+        "marginMae": 10.70650536281333,
         "calibrationFit": {
-          "intercept": -0.12966062816294632,
-          "slope": 0.9302229922623931
+          "intercept": -0.13949948827447164,
+          "slope": 0.9289811701567556
         },
         "calibration": [
           {
-            "n": 209,
-            "predicted": 0.41124713598942414,
-            "observed": 0.3684210526315789
+            "n": 220,
+            "predicted": 0.4080138494071472,
+            "observed": 0.36818181818181817
           },
           {
-            "n": 209,
-            "predicted": 0.5367255750372163,
-            "observed": 0.4688995215311005
+            "n": 220,
+            "predicted": 0.5344822527735397,
+            "observed": 0.45454545454545453
           },
           {
-            "n": 210,
-            "predicted": 0.6064271789587578,
-            "observed": 0.5952380952380952
+            "n": 220,
+            "predicted": 0.6035473770219518,
+            "observed": 0.6
           },
           {
-            "n": 209,
-            "predicted": 0.6530297326883815,
-            "observed": 0.6411483253588517
+            "n": 220,
+            "predicted": 0.6528257695412466,
+            "observed": 0.6409090909090909
           },
           {
-            "n": 209,
-            "predicted": 0.6946713691829246,
-            "observed": 0.6650717703349283
+            "n": 220,
+            "predicted": 0.6948647453429581,
+            "observed": 0.6636363636363637
           },
           {
-            "n": 210,
-            "predicted": 0.7391320292809432,
-            "observed": 0.7238095238095238
+            "n": 220,
+            "predicted": 0.7387788345442678,
+            "observed": 0.7136363636363636
           },
           {
-            "n": 209,
-            "predicted": 0.782454000006108,
-            "observed": 0.722488038277512
+            "n": 220,
+            "predicted": 0.7830035899157808,
+            "observed": 0.7272727272727273
           },
           {
-            "n": 210,
-            "predicted": 0.8553102233575979,
-            "observed": 0.8
+            "n": 220,
+            "predicted": 0.8552912420539236,
+            "observed": 0.7909090909090909
           }
         ]
       },
       "series": {
-        "n": 300,
-        "brier": 0.1821901597995889,
-        "logLoss": 0.5438765626333093,
+        "n": 315,
+        "brier": 0.18457350987901072,
+        "logLoss": 0.5493331500737859,
         "calibrationFit": {
-          "intercept": 0.0301569620001279,
-          "slope": 0.8178191544589396
+          "intercept": 0.028496129657580253,
+          "slope": 0.7942313211029753
         },
         "calibration": [
           {
-            "n": 42,
-            "predicted": 0.46731306585545224,
-            "observed": 0.4523809523809524
+            "n": 45,
+            "predicted": 0.470337359357468,
+            "observed": 0.4666666666666667
           },
           {
-            "n": 43,
-            "predicted": 0.6023211839240468,
-            "observed": 0.5581395348837209
+            "n": 45,
+            "predicted": 0.6089609876393641,
+            "observed": 0.5777777777777777
           },
           {
-            "n": 43,
-            "predicted": 0.690134009668252,
-            "observed": 0.7674418604651163
+            "n": 45,
+            "predicted": 0.6931233520854942,
+            "observed": 0.7333333333333333
           },
           {
-            "n": 43,
-            "predicted": 0.7559262855350046,
-            "observed": 0.627906976744186
+            "n": 45,
+            "predicted": 0.7581155876508575,
+            "observed": 0.6
           },
           {
-            "n": 43,
-            "predicted": 0.8193480562918296,
-            "observed": 0.813953488372093
+            "n": 45,
+            "predicted": 0.8224652725283887,
+            "observed": 0.8444444444444444
           },
           {
-            "n": 43,
-            "predicted": 0.8827168369715199,
-            "observed": 0.9069767441860465
+            "n": 45,
+            "predicted": 0.8856050266203536,
+            "observed": 0.8888888888888888
           },
           {
-            "n": 43,
-            "predicted": 0.9563553378020021,
-            "observed": 0.8837209302325582
+            "n": 45,
+            "predicted": 0.9574546707188402,
+            "observed": 0.8888888888888888
           }
         ]
       }
@@ -51088,100 +53315,100 @@
         "homeCourt"
       ],
       "game": {
-        "n": 1675,
-        "brier": 0.21856764558410074,
-        "logLoss": 0.6290678155703808,
-        "marginMae": 10.616086000320049,
+        "n": 1760,
+        "brier": 0.2191874510718297,
+        "logLoss": 0.6305641868264377,
+        "marginMae": 10.704549007099335,
         "calibrationFit": {
-          "intercept": -0.07428769905279631,
-          "slope": 0.8543603490692194
+          "intercept": -0.08599064325908924,
+          "slope": 0.8555855442804947
         },
         "calibration": [
           {
-            "n": 209,
-            "predicted": 0.39295331070969364,
-            "observed": 0.3684210526315789
+            "n": 220,
+            "predicted": 0.3900719264874368,
+            "observed": 0.35454545454545455
           },
           {
-            "n": 209,
-            "predicted": 0.5279168492960321,
-            "observed": 0.46411483253588515
+            "n": 220,
+            "predicted": 0.5257444280700796,
+            "observed": 0.4681818181818182
           },
           {
-            "n": 210,
-            "predicted": 0.6025280862797457,
-            "observed": 0.6
+            "n": 220,
+            "predicted": 0.5995115948148708,
+            "observed": 0.6045454545454545
           },
           {
-            "n": 209,
-            "predicted": 0.6521570378460838,
-            "observed": 0.631578947368421
+            "n": 220,
+            "predicted": 0.6519427428037299,
+            "observed": 0.6272727272727273
           },
           {
-            "n": 209,
-            "predicted": 0.6946831950258634,
-            "observed": 0.6650717703349283
+            "n": 220,
+            "predicted": 0.6949097573131976,
+            "observed": 0.6636363636363637
           },
           {
-            "n": 210,
-            "predicted": 0.7415623585808292,
-            "observed": 0.719047619047619
+            "n": 220,
+            "predicted": 0.7412331323637903,
+            "observed": 0.7136363636363636
           },
           {
-            "n": 209,
-            "predicted": 0.7878794221000822,
-            "observed": 0.7368421052631579
+            "n": 220,
+            "predicted": 0.788236067039482,
+            "observed": 0.7318181818181818
           },
           {
-            "n": 210,
-            "predicted": 0.8632191339641617,
-            "observed": 0.8
+            "n": 220,
+            "predicted": 0.8630559775436781,
+            "observed": 0.7954545454545454
           }
         ]
       },
       "series": {
-        "n": 300,
-        "brier": 0.18407837431512009,
-        "logLoss": 0.5525167011645867,
+        "n": 315,
+        "brier": 0.18661609449519115,
+        "logLoss": 0.5581716844937814,
         "calibrationFit": {
-          "intercept": 0.08884605164438243,
-          "slope": 0.7219590851668941
+          "intercept": 0.08539854258049435,
+          "slope": 0.7029572721367211
         },
         "calibration": [
           {
-            "n": 42,
-            "predicted": 0.46260345808259085,
-            "observed": 0.47619047619047616
+            "n": 45,
+            "predicted": 0.46564726236191306,
+            "observed": 0.4888888888888889
           },
           {
-            "n": 43,
-            "predicted": 0.6085738589248233,
-            "observed": 0.5581395348837209
+            "n": 45,
+            "predicted": 0.6149816159259458,
+            "observed": 0.5555555555555556
           },
           {
-            "n": 43,
-            "predicted": 0.6925453284025539,
-            "observed": 0.7441860465116279
+            "n": 45,
+            "predicted": 0.6959719615676506,
+            "observed": 0.7555555555555555
           },
           {
-            "n": 43,
-            "predicted": 0.7661145508668892,
-            "observed": 0.627906976744186
+            "n": 45,
+            "predicted": 0.7683347550111119,
+            "observed": 0.5777777777777777
           },
           {
-            "n": 43,
-            "predicted": 0.8300229373590903,
-            "observed": 0.813953488372093
+            "n": 45,
+            "predicted": 0.8329053351951502,
+            "observed": 0.8444444444444444
           },
           {
-            "n": 43,
-            "predicted": 0.8925211657062412,
-            "observed": 0.9069767441860465
+            "n": 45,
+            "predicted": 0.8953582056005737,
+            "observed": 0.8888888888888888
           },
           {
-            "n": 43,
-            "predicted": 0.9649232624315907,
-            "observed": 0.8837209302325582
+            "n": 45,
+            "predicted": 0.9656222404680761,
+            "observed": 0.8888888888888888
           }
         ]
       }
@@ -51195,100 +53422,100 @@
         "homeCourt"
       ],
       "game": {
-        "n": 1675,
-        "brier": 0.21876714929819477,
-        "logLoss": 0.6283209535050945,
-        "marginMae": 10.634910751152415,
+        "n": 1760,
+        "brier": 0.2193842331928342,
+        "logLoss": 0.6298280730985097,
+        "marginMae": 10.72759449653372,
         "calibrationFit": {
-          "intercept": -0.1445384226859347,
-          "slope": 0.9519308024827096
+          "intercept": -0.15572231416264934,
+          "slope": 0.9529330786493141
         },
         "calibration": [
           {
-            "n": 209,
-            "predicted": 0.41889421072176003,
-            "observed": 0.3588516746411483
+            "n": 220,
+            "predicted": 0.41583677403360925,
+            "observed": 0.35909090909090907
           },
           {
-            "n": 209,
-            "predicted": 0.5456288776346018,
-            "observed": 0.4784688995215311
+            "n": 220,
+            "predicted": 0.5435264287144863,
+            "observed": 0.4772727272727273
           },
           {
-            "n": 210,
-            "predicted": 0.6078984308316238,
-            "observed": 0.5904761904761905
+            "n": 220,
+            "predicted": 0.6053730493917255,
+            "observed": 0.5818181818181818
           },
           {
-            "n": 209,
-            "predicted": 0.6535250746545151,
+            "n": 220,
+            "predicted": 0.653226335366802,
             "observed": 0.6363636363636364
           },
           {
-            "n": 209,
-            "predicted": 0.6941627916928736,
-            "observed": 0.6602870813397129
+            "n": 220,
+            "predicted": 0.6941920596196548,
+            "observed": 0.6590909090909091
           },
           {
-            "n": 210,
-            "predicted": 0.7340633532836743,
-            "observed": 0.7285714285714285
+            "n": 220,
+            "predicted": 0.7335735373590481,
+            "observed": 0.7227272727272728
           },
           {
-            "n": 209,
-            "predicted": 0.7774978444842376,
-            "observed": 0.722488038277512
+            "n": 220,
+            "predicted": 0.7780962082745058,
+            "observed": 0.7227272727272728
           },
           {
-            "n": 210,
-            "predicted": 0.8508650799173997,
-            "observed": 0.8095238095238095
+            "n": 220,
+            "predicted": 0.8506252776947215,
+            "observed": 0.8
           }
         ]
       },
       "series": {
-        "n": 300,
-        "brier": 0.18209722043032484,
-        "logLoss": 0.5435613823515568,
+        "n": 315,
+        "brier": 0.18398949148848368,
+        "logLoss": 0.5479206164899401,
         "calibrationFit": {
-          "intercept": 0.03835909299421952,
-          "slope": 0.8437140446801883
+          "intercept": 0.029081353372741557,
+          "slope": 0.8273613435627379
         },
         "calibration": [
           {
-            "n": 42,
-            "predicted": 0.4717003903421572,
-            "observed": 0.47619047619047616
+            "n": 45,
+            "predicted": 0.4754066741240748,
+            "observed": 0.4666666666666667
           },
           {
-            "n": 43,
-            "predicted": 0.6003353741732873,
-            "observed": 0.5116279069767442
+            "n": 45,
+            "predicted": 0.6067110051677118,
+            "observed": 0.5555555555555556
           },
           {
-            "n": 43,
-            "predicted": 0.6805119666732098,
-            "observed": 0.7906976744186046
+            "n": 45,
+            "predicted": 0.6836081160790717,
+            "observed": 0.7555555555555555
           },
           {
-            "n": 43,
-            "predicted": 0.745720650127544,
-            "observed": 0.6511627906976745
+            "n": 45,
+            "predicted": 0.747224581987846,
+            "observed": 0.6444444444444445
           },
           {
-            "n": 43,
-            "predicted": 0.8065971589924594,
-            "observed": 0.7906976744186046
+            "n": 45,
+            "predicted": 0.8103818079904782,
+            "observed": 0.8
           },
           {
-            "n": 43,
-            "predicted": 0.8748784341302384,
-            "observed": 0.8837209302325582
+            "n": 45,
+            "predicted": 0.8778072416396385,
+            "observed": 0.8888888888888888
           },
           {
-            "n": 43,
-            "predicted": 0.9520695018837005,
-            "observed": 0.9069767441860465
+            "n": 45,
+            "predicted": 0.9526451247215046,
+            "observed": 0.8888888888888888
           }
         ]
       }
@@ -51297,64 +53524,64 @@
   "strongSeriesBaselines": [
     {
       "id": "rolling_team_a_rate",
-      "n": 300,
-      "brier": 0.2038895371084027,
-      "logLoss": 0.5981620515807986
+      "n": 315,
+      "brier": 0.20487814408199662,
+      "logLoss": 0.6002636856192929
     },
     {
       "id": "fitted_seed",
-      "n": 300,
-      "brier": 0.17802437454817746,
-      "logLoss": 0.5450522394106879
+      "n": 315,
+      "brier": 0.1801104699936524,
+      "logLoss": 0.5492607115102165
     },
     {
       "id": "fitted_seed_srs",
-      "n": 300,
-      "brier": 0.1772084843860209,
-      "logLoss": 0.5378213296838638
+      "n": 315,
+      "brier": 0.1801481958359325,
+      "logLoss": 0.5444692619926376
     }
   ],
   "strongSeriesBaselineComparisons": [
     {
       "id": "rolling_team_a_rate",
       "series": {
-        "candidateMinusBaselineBrier": 0.019250116161744588,
+        "candidateMinusBaselineBrier": 0.016937027502450637,
         "ci95": [
-          0.006224937450923211,
-          0.03169501729394015
+          0.004137046539439826,
+          0.02933248896879017
         ],
-        "probabilityCandidateBetter": 0.0017
+        "probabilityCandidateBetter": 0.0046
       }
     },
     {
       "id": "fitted_seed",
       "series": {
-        "candidateMinusBaselineBrier": -0.006686294763652756,
+        "candidateMinusBaselineBrier": -0.007868618645202568,
         "ci95": [
-          -0.019778109792014262,
-          0.006418841282710361
+          -0.020745290633046587,
+          0.004904388550283911
         ],
-        "probabilityCandidateBetter": 0.8397
+        "probabilityCandidateBetter": 0.8831
       }
     },
     {
       "id": "fitted_seed_srs",
       "series": {
-        "candidateMinusBaselineBrier": -0.007484578179477376,
+        "candidateMinusBaselineBrier": -0.00780382767056447,
         "ci95": [
-          -0.015319607992731112,
-          0.0005571038294691441
+          -0.015313529632683434,
+          0.00000461206870757485
         ],
-        "probabilityCandidateBetter": 0.9655
+        "probabilityCandidateBetter": 0.9749
       }
     }
   ],
   "climatologyBaselines": {
     "game": {
       "id": "rolling_home_win_rate",
-      "n": 1675,
-      "brier": 0.23514812700018947,
-      "logLoss": 0.6631931119327881,
+      "n": 1760,
+      "brier": 0.23597498782912252,
+      "logLoss": 0.6648796978886894,
       "predictions": [
         {
           "season": 2006,
@@ -59730,18 +61957,443 @@
           "season": 2025,
           "p": 0.6265582655826558,
           "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 0
+        },
+        {
+          "season": 2026,
+          "p": 0.6241575946086055,
+          "y": 1
         }
       ],
       "protocol": "For each season, predict the prior-season empirical home-team win rate using only earlier seasons."
     },
     "series": {
       "id": "rolling_team_a_rate",
-      "n": 300,
-      "brier": 0.2038895371084027,
-      "logLoss": 0.5981620515807986,
+      "n": 315,
+      "brier": 0.20487814408199662,
+      "logLoss": 0.6002636856192929,
       "calibrationFit": {
-        "intercept": 4.327495329926205,
-        "slope": -3.4278949997136103
+        "intercept": 3.6440169885449807,
+        "slope": -2.7600044493495703
       },
       "predictions": [
         {
@@ -61543,6 +64195,96 @@
           "season": 2025,
           "p": 0.7181818181818181,
           "y": 1
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 0
+        },
+        {
+          "id": "2026-east-cf-nyk-cle",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-det-cle",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-nyk-phi",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-okc-lal",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-sas-min",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-bos-phi",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-lal-hou",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-okc-pho",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-sas-por",
+          "season": 2026,
+          "p": 0.7159420289855073,
+          "y": 1
         }
       ],
       "protocol": "For each season, predict the prior-season empirical team-A series win rate using only earlier seasons."
@@ -61551,108 +64293,108 @@
   "brierDecomposition": {
     "game": {
       "reference": {
-        "n": 1675,
+        "n": 1760,
         "bins": 10,
-        "baseRate": 0.6232835820895523,
-        "brier": 0.21851079596712555,
-        "uncertainty": 0.23480115838716864,
-        "resolution": 0.018450852602150188,
-        "reliability": 0.0018824904486079092,
-        "groupedEstimate": 0.21823279623362637,
-        "residual": 0.00027799973349917906,
+        "baseRate": 0.6198863636363636,
+        "brier": 0.2192825651849855,
+        "uncertainty": 0.23562725981404958,
+        "resolution": 0.01916612861570248,
+        "reliability": 0.002497113378586243,
+        "groupedEstimate": 0.21895824457693333,
+        "residual": 0.000324320608052181,
         "note": "Murphy decomposition using equal-count probability groups. The residual records within-group forecast variation, so components should be read as a grouped diagnostic.",
         "seasonClusteredCi95": {
           "uncertainty": [
-            0.2272042159017907,
-            0.24083779996917773
+            0.22852972525228435,
+            0.2413917606613459
           ],
           "resolution": [
-            0.014872790121342317,
-            0.025291170274449496
+            0.015214495907358025,
+            0.024974928797525858
           ],
           "reliability": [
-            0.0012851950476661029,
-            0.006482911226486409
+            0.0014276596779964888,
+            0.006483065520421359
           ]
         }
       },
       "climatology": {
-        "n": 1675,
+        "n": 1760,
         "bins": 10,
-        "baseRate": 0.6232835820895523,
-        "brier": 0.23514812700018947,
-        "uncertainty": 0.23480115838716864,
-        "resolution": 0.0015720941276280139,
-        "reliability": 0.0019612284148734825,
-        "groupedEstimate": 0.2351902926744141,
-        "residual": -0.000042165674224631244,
+        "baseRate": 0.6198863636363636,
+        "brier": 0.23597498782912252,
+        "uncertainty": 0.23562725981404958,
+        "resolution": 0.0012813145661157025,
+        "reliability": 0.00167295667928596,
+        "groupedEstimate": 0.23601890192721983,
+        "residual": -0.00004391409809731406,
         "note": "Murphy decomposition using equal-count probability groups. The residual records within-group forecast variation, so components should be read as a grouped diagnostic.",
         "seasonClusteredCi95": {
           "uncertainty": [
-            0.2272042159017907,
-            0.24083779996917773
+            0.22852972525228435,
+            0.2413917606613459
           ],
           "resolution": [
-            0.0007952317303401429,
-            0.004411356378415562
+            0.0008634670774662002,
+            0.00399008061734506
           ],
           "reliability": [
-            0.0010175801772223164,
-            0.005683650848553815
+            0.0010538795000480535,
+            0.00537008256820517
           ]
         }
       }
     },
     "series": {
       "reference": {
-        "n": 300,
+        "n": 315,
         "bins": 10,
-        "baseRate": 0.7166666666666667,
-        "brier": 0.1846577780014755,
-        "uncertainty": 0.20305555555555554,
-        "resolution": 0.02138888888888889,
-        "reliability": 0.00448699129490797,
-        "groupedEstimate": 0.18615365796157463,
-        "residual": -0.0014958799600991168,
+        "baseRate": 0.7142857142857143,
+        "brier": 0.18791210300877453,
+        "uncertainty": 0.20408163265306123,
+        "resolution": 0.020095457537853852,
+        "reliability": 0.005435206011035596,
+        "groupedEstimate": 0.18942138112624296,
+        "residual": -0.0015092781174684267,
         "note": "Murphy decomposition using equal-count probability groups. The residual records within-group forecast variation, so components should be read as a grouped diagnostic.",
         "seasonClusteredCi95": {
           "uncertainty": [
-            0.18582222222222225,
-            0.2187888888888889
+            0.18789619551524314,
+            0.21782816830435878
           ],
           "resolution": [
-            0.018011111111111117,
-            0.03890000000000001
+            0.017442619819731955,
+            0.03677839953185576
           ],
           "reliability": [
-            0.002803131430115203,
-            0.019884979224334264
+            0.003018052729194775,
+            0.02141510143108008
           ]
         }
       },
       "climatology": {
-        "n": 300,
+        "n": 315,
         "bins": 10,
-        "baseRate": 0.7166666666666667,
-        "brier": 0.2038895371084027,
-        "uncertainty": 0.20305555555555554,
-        "resolution": 0.003833333333333336,
-        "reliability": 0.004598737522943309,
-        "groupedEstimate": 0.20382095974516554,
-        "residual": 0.00006857736323717667,
+        "baseRate": 0.7142857142857143,
+        "brier": 0.20487814408199662,
+        "uncertainty": 0.20408163265306123,
+        "resolution": 0.004827280374515397,
+        "reliability": 0.005544553712993103,
+        "groupedEstimate": 0.20479890599153894,
+        "residual": 0.00007923809045767838,
         "note": "Murphy decomposition using equal-count probability groups. The residual records within-group forecast variation, so components should be read as a grouped diagnostic.",
         "seasonClusteredCi95": {
           "uncertainty": [
-            0.18582222222222225,
-            0.2187888888888889
+            0.18789619551524314,
+            0.21782816830435878
           ],
           "resolution": [
-            0.0015111111111111141,
-            0.008455555555555562
+            0.0014289371662643555,
+            0.008169919700257641
           ],
           "reliability": [
-            0.002190569810820032,
-            0.01029515656198823
+            0.0020551982909074924,
+            0.009876670092902181
           ]
         }
       }
@@ -61660,105 +64402,105 @@
   },
   "sensitivityReliability": {
     "target": "pre-series reconstructed forecasts",
-    "n": 345,
+    "n": 360,
     "groups": [
       {
         "bin": 1,
-        "n": 34,
-        "centralMean": 0.44613553790797367,
-        "lowerMean": 0.3394980757389,
-        "upperMean": 0.5575881268693775,
-        "observed": 0.4411764705882353,
+        "n": 36,
+        "centralMean": 0.44682367125992006,
+        "lowerMean": 0.3401421340346134,
+        "upperMean": 0.558460621427391,
+        "observed": 0.4444444444444444,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 2,
-        "n": 35,
-        "centralMean": 0.5296929872491541,
-        "lowerMean": 0.4173669945243733,
-        "upperMean": 0.6393859993947268,
-        "observed": 0.5142857142857142,
+        "n": 36,
+        "centralMean": 0.5317215365500092,
+        "lowerMean": 0.4191917429456553,
+        "upperMean": 0.6410835769580842,
+        "observed": 0.5,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 3,
-        "n": 34,
-        "centralMean": 0.5711193006568118,
-        "lowerMean": 0.458288781899963,
-        "upperMean": 0.6792537382582883,
-        "observed": 0.6176470588235294,
+        "n": 36,
+        "centralMean": 0.574594645241516,
+        "lowerMean": 0.4614555374829579,
+        "upperMean": 0.6825039891387913,
+        "observed": 0.6666666666666666,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 4,
-        "n": 35,
-        "centralMean": 0.6112526451817129,
-        "lowerMean": 0.500247626086318,
-        "upperMean": 0.7148924322619296,
-        "observed": 0.6857142857142857,
+        "n": 36,
+        "centralMean": 0.614043647896337,
+        "lowerMean": 0.5035063000311496,
+        "upperMean": 0.7170546228422182,
+        "observed": 0.6666666666666666,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 5,
-        "n": 34,
-        "centralMean": 0.6463435566599454,
-        "lowerMean": 0.5375854635510733,
-        "upperMean": 0.7468888007571952,
-        "observed": 0.7352941176470589,
+        "n": 36,
+        "centralMean": 0.6479508456816572,
+        "lowerMean": 0.5391454851110248,
+        "upperMean": 0.7485312470720608,
+        "observed": 0.7222222222222222,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 6,
-        "n": 35,
-        "centralMean": 0.6739493861753079,
-        "lowerMean": 0.5670223785693785,
-        "upperMean": 0.7700375568878272,
-        "observed": 0.6571428571428571,
+        "n": 36,
+        "centralMean": 0.6756942132008388,
+        "lowerMean": 0.5688621512772122,
+        "upperMean": 0.7713605064226637,
+        "observed": 0.6388888888888888,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 7,
-        "n": 34,
-        "centralMean": 0.7087623441989732,
-        "lowerMean": 0.6061014976713599,
-        "upperMean": 0.799324515574619,
-        "observed": 0.7647058823529411,
+        "n": 36,
+        "centralMean": 0.7116762862840617,
+        "lowerMean": 0.6092922038732803,
+        "upperMean": 0.8017702877718862,
+        "observed": 0.75,
         "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 8,
-        "n": 35,
-        "centralMean": 0.7465052689947317,
-        "lowerMean": 0.6492964800914615,
-        "upperMean": 0.830785197687184,
-        "observed": 0.9142857142857143,
+        "n": 36,
+        "centralMean": 0.7501051612544283,
+        "lowerMean": 0.653290101894457,
+        "upperMean": 0.8329676792470901,
+        "observed": 0.9444444444444444,
         "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 9,
-        "n": 34,
-        "centralMean": 0.800486380630658,
-        "lowerMean": 0.7126682571972159,
-        "upperMean": 0.8719549563290747,
-        "observed": 0.8823529411764706,
-        "observedWithinMeanSensitivityBand": false
+        "n": 36,
+        "centralMean": 0.8055454204079564,
+        "lowerMean": 0.7190995836948573,
+        "upperMean": 0.8762583961974207,
+        "observed": 0.8333333333333334,
+        "observedWithinMeanSensitivityBand": true
       },
       {
         "bin": 10,
-        "n": 35,
-        "centralMean": 0.8731699368636039,
-        "lowerMean": 0.8051573993226896,
-        "upperMean": 0.9248990424044016,
-        "observed": 0.9428571428571428,
+        "n": 36,
+        "centralMean": 0.8753805957054409,
+        "lowerMean": 0.8079502423697148,
+        "upperMean": 0.9263888185028422,
+        "observed": 0.9722222222222222,
         "observedWithinMeanSensitivityBand": false
       }
     ],
-    "groupsWithinBand": 7,
+    "groupsWithinBand": 8,
     "totalGroups": 10,
     "interpretation": "Grouped reliability diagnostic only. A binary outcome cannot validate an individual probability interval, and these sensitivity bands are not prediction-interval coverage guarantees."
   },
   "availability": {
-    "generatedAt": "2026-07-26T19:27:19.813Z",
+    "generatedAt": "2026-07-27T09:35:19.806Z",
     "protocol": "Only sourced observations timestamped strictly before a series begins are eligible. No status is inferred from game outcomes or retrospective participation.",
     "seasons": [
       2003,
@@ -61783,12 +64525,13 @@
       2022,
       2023,
       2024,
-      2025
+      2025,
+      2026
     ],
     "observations": 0,
     "coveredSeries": 0,
-    "totalSeries": 345,
-    "playerSeriesOpportunities": 6900,
+    "totalSeries": 360,
+    "playerSeriesOpportunities": 7200,
     "observationCoverage": 0,
     "defaultAssumption": "unknown_assumed_available",
     "effectEvaluationStatus": "not_estimable_no_point_in_time_observations",
@@ -61799,13 +64542,13 @@
     ]
   },
   "inputAudit": {
-    "generatedAt": "2026-07-26T19:27:20.304Z",
+    "generatedAt": "2026-07-27T09:35:20.294Z",
     "conservativeDeadline": "Inputs must be timestamped before 00:00 UTC on seriesStartDate because historical tip times are not retained.",
     "laggedRotations": {
       "method": "last_10_team_games_before_deadline",
       "observations": 0,
       "coveredSeries": 0,
-      "totalSeries": 345,
+      "totalSeries": 360,
       "completePairedSeries": 0,
       "status": "not_estimable_no_timestamped_player_game_log_inputs",
       "rule": "Do not infer a pre-series rotation from games played after the deadline. Only named, sourced, lagged observations totaling 240 minutes are eligible."
@@ -61813,7 +64556,7 @@
     "externalBenchmarks": {
       "observations": 0,
       "coveredSeries": 0,
-      "totalSeries": 345,
+      "totalSeries": 360,
       "status": "not_estimable_no_timestamped_external_probabilities",
       "rule": "Only timestamped public probabilities or explicitly no-vig two-sided series prices are eligible. Closing prices observed after the deadline are excluded."
     }
@@ -61829,63 +64572,63 @@
     },
     "status": "research_only_first_prospective_promotion_check_2027",
     "metrics": {
-      "n": 270,
-      "brier": 0.17995396457086377,
-      "logLoss": 0.5344275928749019,
+      "n": 285,
+      "brier": 0.1826070510044209,
+      "logLoss": 0.5405727667883224,
       "calibrationFit": {
-        "intercept": -0.05833572373731009,
-        "slope": 0.8834958036370467
+        "intercept": -0.043632339976559666,
+        "slope": 0.8533486152010825
       },
       "calibration": [
         {
-          "n": 38,
-          "predicted": 0.4898186837567275,
-          "observed": 0.42105263157894735
+          "n": 40,
+          "predicted": 0.4883206726512638,
+          "observed": 0.45
         },
         {
-          "n": 39,
-          "predicted": 0.5961118072725566,
-          "observed": 0.5897435897435898
+          "n": 41,
+          "predicted": 0.593531922390362,
+          "observed": 0.5853658536585366
         },
         {
-          "n": 38,
-          "predicted": 0.679971061225927,
-          "observed": 0.631578947368421
+          "n": 41,
+          "predicted": 0.6804445642404804,
+          "observed": 0.6097560975609756
         },
         {
-          "n": 39,
-          "predicted": 0.7619160343561934,
-          "observed": 0.7692307692307693
+          "n": 40,
+          "predicted": 0.7621810773784075,
+          "observed": 0.75
         },
         {
-          "n": 38,
-          "predicted": 0.8388334496215648,
-          "observed": 0.8157894736842105
+          "n": 41,
+          "predicted": 0.8399041804841341,
+          "observed": 0.8292682926829268
         },
         {
-          "n": 39,
-          "predicted": 0.8976470135679415,
-          "observed": 0.8461538461538461
+          "n": 41,
+          "predicted": 0.8984714203070118,
+          "observed": 0.8292682926829268
         },
         {
-          "n": 39,
-          "predicted": 0.9563433335689533,
-          "observed": 0.9487179487179487
+          "n": 41,
+          "predicted": 0.9559884755875776,
+          "observed": 0.9512195121951219
         }
       ]
     },
     "baselineMetrics": {
-      "n": 270,
-      "brier": 0.18528435644110788,
-      "logLoss": 0.548406921493242
+      "n": 285,
+      "brier": 0.18884826416287875,
+      "logLoss": 0.5571051924849736
     },
     "comparisonToSrsHome": {
-      "candidateMinusBaselineBrier": -0.005364651362737395,
+      "candidateMinusBaselineBrier": -0.006252690039962737,
       "ci95": [
-        -0.012689978013466779,
-        0.002010930098545309
+        -0.0132915079065461,
+        0.0010362677027898998
       ],
-      "probabilityCandidateBetter": 0.9254
+      "probabilityCandidateBetter": 0.956
     },
     "finalModel": {
       "featureNames": [
@@ -61893,17 +64636,17 @@
         "seedDiff"
       ],
       "means": [
-        1.3324614960658976,
-        3.1666666666666665
+        1.3472447035345139,
+        3.1714285714285713
       ],
       "scales": [
-        1.1234621531846254,
-        2.0877952219719456
+        1.1259965381013035,
+        2.084518030505168
       ],
-      "intercept": 1.1354582971997924,
+      "intercept": 1.107181836674815,
       "coefficients": [
-        0.49121451185878423,
-        0.6280364098502148
+        0.4522179794304358,
+        0.6178844778945488
       ],
       "lambda": 1
     },
@@ -63527,6 +66270,96 @@
         "season": 2025,
         "p": 0.9540185778827748,
         "y": 1
+      },
+      {
+        "id": "2026-finals-finals-sas-nyk",
+        "season": 2026,
+        "p": 0.5689842575152471,
+        "y": 0
+      },
+      {
+        "id": "2026-east-cf-nyk-cle",
+        "season": 2026,
+        "p": 0.5706487671601322,
+        "y": 1
+      },
+      {
+        "id": "2026-west-cf-okc-sas",
+        "season": 2026,
+        "p": 0.5866333514564452,
+        "y": 0
+      },
+      {
+        "id": "2026-east-csf-det-cle",
+        "season": 2026,
+        "p": 0.7485377829675349,
+        "y": 0
+      },
+      {
+        "id": "2026-east-csf-nyk-phi",
+        "season": 2026,
+        "p": 0.85426085868675,
+        "y": 1
+      },
+      {
+        "id": "2026-west-csf-okc-lal",
+        "season": 2026,
+        "p": 0.877011235326317,
+        "y": 1
+      },
+      {
+        "id": "2026-west-csf-sas-min",
+        "season": 2026,
+        "p": 0.832149526988635,
+        "y": 1
+      },
+      {
+        "id": "2026-east-r1-cle-tor",
+        "season": 2026,
+        "p": 0.5287747449831142,
+        "y": 1
+      },
+      {
+        "id": "2026-east-r1-det-orl",
+        "season": 2026,
+        "p": 0.938942175746013,
+        "y": 1
+      },
+      {
+        "id": "2026-east-r1-nyk-atl",
+        "season": 2026,
+        "p": 0.7461436180982595,
+        "y": 1
+      },
+      {
+        "id": "2026-east-r1-bos-phi",
+        "season": 2026,
+        "p": 0.9070187126442919,
+        "y": 0
+      },
+      {
+        "id": "2026-west-r1-lal-hou",
+        "season": 2026,
+        "p": 0.39094217831178724,
+        "y": 1
+      },
+      {
+        "id": "2026-west-r1-den-min",
+        "season": 2026,
+        "p": 0.6973451196967467,
+        "y": 0
+      },
+      {
+        "id": "2026-west-r1-okc-pho",
+        "season": 2026,
+        "p": 0.9591953141554915,
+        "y": 1
+      },
+      {
+        "id": "2026-west-r1-sas-por",
+        "season": 2026,
+        "p": 0.9190546840218,
+        "y": 1
       }
     ]
   },
@@ -63542,21 +66375,21 @@
     "status": "research_only_first_prospective_promotion_check_2027",
     "metrics": {
       "game": {
-        "n": 1675,
-        "brier": 0.21760353250195752,
-        "logLoss": 0.6254070777046414,
+        "n": 1760,
+        "brier": 0.21828843092050393,
+        "logLoss": 0.6269988518871061,
         "calibrationFit": {
-          "intercept": -0.07001717557812563,
-          "slope": 0.9133451864246941
+          "intercept": -0.07995942228659605,
+          "slope": 0.9150175138370611
         }
       },
       "series": {
-        "n": 300,
-        "brier": 0.18397252008678394,
-        "logLoss": 0.5460953583412003,
+        "n": 315,
+        "brier": 0.18667656393729257,
+        "logLoss": 0.5521658428320622,
         "calibrationFit": {
-          "intercept": 0.0505422076908703,
-          "slope": 0.7878050178395081
+          "intercept": 0.056793775329359655,
+          "slope": 0.7632914363213743
         }
       }
     },
@@ -76961,6 +79794,686 @@
           "season": 2025,
           "p": 0.3545370075276639,
           "y": 0
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk:game-1",
+          "seriesId": "2026-finals-finals-sas-nyk",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.6784481298004115,
+          "y": 0
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk:game-2",
+          "seriesId": "2026-finals-finals-sas-nyk",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.6784481298004115,
+          "y": 0
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk:game-3",
+          "seriesId": "2026-finals-finals-sas-nyk",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5517612513406708,
+          "y": 0
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk:game-4",
+          "seriesId": "2026-finals-finals-sas-nyk",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5517612513406708,
+          "y": 1
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk:game-5",
+          "seriesId": "2026-finals-finals-sas-nyk",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.6784481298004115,
+          "y": 0
+        },
+        {
+          "id": "2026-east-cf-nyk-cle:game-1",
+          "seriesId": "2026-east-cf-nyk-cle",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.6797645948276532,
+          "y": 1
+        },
+        {
+          "id": "2026-east-cf-nyk-cle:game-2",
+          "seriesId": "2026-east-cf-nyk-cle",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.6797645948276532,
+          "y": 1
+        },
+        {
+          "id": "2026-east-cf-nyk-cle:game-3",
+          "seriesId": "2026-east-cf-nyk-cle",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5502667167438147,
+          "y": 0
+        },
+        {
+          "id": "2026-east-cf-nyk-cle:game-4",
+          "seriesId": "2026-east-cf-nyk-cle",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5502667167438147,
+          "y": 0
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-1",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.6922552542558792,
+          "y": 0
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-2",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.6922552542558792,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-3",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5358768683136137,
+          "y": 0
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-4",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5358768683136137,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-5",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.6922552542558792,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-6",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.5358768683136137,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas:game-7",
+          "seriesId": "2026-west-cf-okc-sas",
+          "gameNumber": 7,
+          "season": 2026,
+          "p": 0.6922552542558792,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-1",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.7173804422611791,
+          "y": 1
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-2",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.7173804422611791,
+          "y": 1
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-3",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5057332377697816,
+          "y": 1
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-4",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5057332377697816,
+          "y": 1
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-5",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.7173804422611791,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-6",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.5057332377697816,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-det-cle:game-7",
+          "seriesId": "2026-east-csf-det-cle",
+          "gameNumber": 7,
+          "season": 2026,
+          "p": 0.7173804422611791,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-nyk-phi:game-1",
+          "seriesId": "2026-east-csf-nyk-phi",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.7757041542971747,
+          "y": 1
+        },
+        {
+          "id": "2026-east-csf-nyk-phi:game-2",
+          "seriesId": "2026-east-csf-nyk-phi",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.7757041542971747,
+          "y": 1
+        },
+        {
+          "id": "2026-east-csf-nyk-phi:game-3",
+          "seriesId": "2026-east-csf-nyk-phi",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.4288935912778749,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-nyk-phi:game-4",
+          "seriesId": "2026-east-csf-nyk-phi",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.4288935912778749,
+          "y": 0
+        },
+        {
+          "id": "2026-west-csf-okc-lal:game-1",
+          "seriesId": "2026-west-csf-okc-lal",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.8331474028568947,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-okc-lal:game-2",
+          "seriesId": "2026-west-csf-okc-lal",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.8331474028568947,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-okc-lal:game-3",
+          "seriesId": "2026-west-csf-okc-lal",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.3421649635198787,
+          "y": 0
+        },
+        {
+          "id": "2026-west-csf-okc-lal:game-4",
+          "seriesId": "2026-west-csf-okc-lal",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.3421649635198787,
+          "y": 0
+        },
+        {
+          "id": "2026-west-csf-sas-min:game-1",
+          "seriesId": "2026-west-csf-sas-min",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.7515123416873223,
+          "y": 0
+        },
+        {
+          "id": "2026-west-csf-sas-min:game-2",
+          "seriesId": "2026-west-csf-sas-min",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.7515123416873223,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-sas-min:game-3",
+          "seriesId": "2026-west-csf-sas-min",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.4620093958146113,
+          "y": 0
+        },
+        {
+          "id": "2026-west-csf-sas-min:game-4",
+          "seriesId": "2026-west-csf-sas-min",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.4620093958146113,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-sas-min:game-5",
+          "seriesId": "2026-west-csf-sas-min",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.7515123416873223,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-sas-min:game-6",
+          "seriesId": "2026-west-csf-sas-min",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.4620093958146113,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-1",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.6457606870901073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-2",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.6457606870901073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-3",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5875829451469594,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-4",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5875829451469594,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-5",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.6457606870901073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-6",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.5875829451469594,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor:game-7",
+          "seriesId": "2026-east-r1-cle-tor",
+          "gameNumber": 7,
+          "season": 2026,
+          "p": 0.6457606870901073,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-1",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.7840004906600179,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-2",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.7840004906600179,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-3",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.41709871591253717,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-4",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.41709871591253717,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-5",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.7840004906600179,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-6",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.41709871591253717,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-det-orl:game-7",
+          "seriesId": "2026-east-r1-det-orl",
+          "gameNumber": 7,
+          "season": 2026,
+          "p": 0.7840004906600179,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl:game-1",
+          "seriesId": "2026-east-r1-nyk-atl",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.7151706134947046,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl:game-2",
+          "seriesId": "2026-east-r1-nyk-atl",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.7151706134947046,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-nyk-atl:game-3",
+          "seriesId": "2026-east-r1-nyk-atl",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5084511469072637,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl:game-4",
+          "seriesId": "2026-east-r1-nyk-atl",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5084511469072637,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-nyk-atl:game-5",
+          "seriesId": "2026-east-r1-nyk-atl",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.7151706134947046,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl:game-6",
+          "seriesId": "2026-east-r1-nyk-atl",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.5084511469072637,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-1",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.8022296544908367,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-2",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.8022296544908367,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-3",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.3903479537304614,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-4",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.3903479537304614,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-5",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.8022296544908367,
+          "y": 0
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-6",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.3903479537304614,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-bos-phi:game-7",
+          "seriesId": "2026-east-r1-bos-phi",
+          "gameNumber": 7,
+          "season": 2026,
+          "p": 0.8022296544908367,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-lal-hou:game-1",
+          "seriesId": "2026-west-r1-lal-hou",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.5229343156054143,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-lal-hou:game-2",
+          "seriesId": "2026-west-r1-lal-hou",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.5229343156054143,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-lal-hou:game-3",
+          "seriesId": "2026-west-r1-lal-hou",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.703211284720698,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-lal-hou:game-4",
+          "seriesId": "2026-west-r1-lal-hou",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.703211284720698,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-lal-hou:game-5",
+          "seriesId": "2026-west-r1-lal-hou",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.5229343156054143,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-lal-hou:game-6",
+          "seriesId": "2026-west-r1-lal-hou",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.703211284720698,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-den-min:game-1",
+          "seriesId": "2026-west-r1-den-min",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.6696889073483792,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min:game-2",
+          "seriesId": "2026-west-r1-den-min",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.6696889073483792,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-den-min:game-3",
+          "seriesId": "2026-west-r1-den-min",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.5616005160098063,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min:game-4",
+          "seriesId": "2026-west-r1-den-min",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.5616005160098063,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min:game-5",
+          "seriesId": "2026-west-r1-den-min",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.6696889073483792,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min:game-6",
+          "seriesId": "2026-west-r1-den-min",
+          "gameNumber": 6,
+          "season": 2026,
+          "p": 0.5616005160098063,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-okc-pho:game-1",
+          "seriesId": "2026-west-r1-okc-pho",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.8321372312661174,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-okc-pho:game-2",
+          "seriesId": "2026-west-r1-okc-pho",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.8321372312661174,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-okc-pho:game-3",
+          "seriesId": "2026-west-r1-okc-pho",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.34379854181491665,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-okc-pho:game-4",
+          "seriesId": "2026-west-r1-okc-pho",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.34379854181491665,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-sas-por:game-1",
+          "seriesId": "2026-west-r1-sas-por",
+          "gameNumber": 1,
+          "season": 2026,
+          "p": 0.8192750135440601,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-sas-por:game-2",
+          "seriesId": "2026-west-r1-sas-por",
+          "gameNumber": 2,
+          "season": 2026,
+          "p": 0.8192750135440601,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-sas-por:game-3",
+          "seriesId": "2026-west-r1-sas-por",
+          "gameNumber": 3,
+          "season": 2026,
+          "p": 0.3642407808250193,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-sas-por:game-4",
+          "seriesId": "2026-west-r1-sas-por",
+          "gameNumber": 4,
+          "season": 2026,
+          "p": 0.3642407808250193,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-sas-por:game-5",
+          "seriesId": "2026-west-r1-sas-por",
+          "gameNumber": 5,
+          "season": 2026,
+          "p": 0.8192750135440601,
+          "y": 1
         }
       ],
       "series": [
@@ -78763,25 +82276,115 @@
           "season": 2025,
           "p": 0.935888208886594,
           "y": 1
+        },
+        {
+          "id": "2026-finals-finals-sas-nyk",
+          "season": 2026,
+          "p": 0.6748706666687476,
+          "y": 0
+        },
+        {
+          "id": "2026-east-cf-nyk-cle",
+          "season": 2026,
+          "p": 0.6777470619499824,
+          "y": 1
+        },
+        {
+          "id": "2026-west-cf-okc-sas",
+          "season": 2026,
+          "p": 0.7047686233440851,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-det-cle",
+          "season": 2026,
+          "p": 0.7572418423012803,
+          "y": 0
+        },
+        {
+          "id": "2026-east-csf-nyk-phi",
+          "season": 2026,
+          "p": 0.8643675748202024,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-okc-lal",
+          "season": 2026,
+          "p": 0.941254851593495,
+          "y": 1
+        },
+        {
+          "id": "2026-west-csf-sas-min",
+          "season": 2026,
+          "p": 0.8229271467314258,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-cle-tor",
+          "season": 2026,
+          "p": 0.6022691502643791,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-det-orl",
+          "season": 2026,
+          "p": 0.8774355785323209,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-nyk-atl",
+          "season": 2026,
+          "p": 0.7527470957664459,
+          "y": 1
+        },
+        {
+          "id": "2026-east-r1-bos-phi",
+          "season": 2026,
+          "p": 0.9039068324525201,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-lal-hou",
+          "season": 2026,
+          "p": 0.33786229790462174,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-den-min",
+          "season": 2026,
+          "p": 0.6556159082178853,
+          "y": 0
+        },
+        {
+          "id": "2026-west-r1-okc-pho",
+          "season": 2026,
+          "p": 0.9401905319882282,
+          "y": 1
+        },
+        {
+          "id": "2026-west-r1-sas-por",
+          "season": 2026,
+          "p": 0.9257091938653259,
+          "y": 1
         }
       ]
     },
     "comparisonToSrsHome": {
       "game": {
-        "candidateMinusBaselineBrier": -0.0009095843128278089,
+        "candidateMinusBaselineBrier": -0.0009980346440482165,
         "ci95": [
-          -0.0016897980832288816,
-          -0.000197081422103608
+          -0.0017498203163990279,
+          -0.00030932411183427435
         ],
-        "probabilityCandidateBetter": 0.9962
+        "probabilityCandidateBetter": 0.9987
       },
       "series": {
-        "candidateMinusBaselineBrier": -0.000683831101527995,
+        "candidateMinusBaselineBrier": -0.0012330916036938926,
         "ci95": [
-          -0.0015944676030442341,
-          0.00008116294330283646
+          -0.0026992358132234295,
+          -0.00008447413921541455
         ],
-        "probabilityCandidateBetter": 0.9561
+        "probabilityCandidateBetter": 0.9861
       }
     }
   },
@@ -78793,14 +82396,20 @@
     "uncertaintyMethod": "Paired season-clustered bootstrap with 10,000 deterministic resamples.",
     "multiplicityPolicy": "Exactly one primary challenger is promotion-eligible; all other candidates are exploratory and cannot be promoted from the same evaluation.",
     "promotionChecks": {
-      "genuinelyFutureArchivedSeasonAvailable": false,
+      "genuinelyFutureArchivedSeasonAvailable": true,
+      "prospectiveRegistrationBeforeEvaluatedSeason": false,
       "candidateMinusBaselinePointEstimateAtMostNegativeThreshold": true,
       "brierIntervalUpperBoundBelowZero": false,
       "logLossNoWorse": true,
       "calibrationSlopeNotFartherFromOne": true,
       "productionEquivalentInputDefinitions": false
     },
-    "decision": "not_eligible_requires_future_archived_season_and_production_equivalent_inputs"
+    "decision": "not_eligible_contaminated_2026_registration_and_no_production_equivalent_inputs",
+    "registrationClassification": {
+      "exact_srs_logit_plus_seed_v1": "CONTAMINATED_2026",
+      "ten_season_training_window_v1": "CONTAMINATED_2026",
+      "provenance": "First durable main-branch registration was 2026-07-27, after the 2026 playoffs began on 2026-04-18."
+    }
   },
   "dynamicCandidate": {
     "registration": {
@@ -78811,65 +82420,65 @@
       "maximumAdjustment": 4,
       "rule": "After prediction, split 12% of margin residual between opponents; carry adjustment through that postseason and cap at ±4 points."
     },
-    "status": "research_only_not_promotion_eligible_on_2003_2025",
+    "status": "research_only_not_promotion_eligible_on_2003_2026",
     "metrics": {
-      "n": 1675,
-      "brier": 0.21815157549430914,
-      "logLoss": 0.6273484610578921,
+      "n": 1760,
+      "brier": 0.21858126630004968,
+      "logLoss": 0.6285664627006656,
       "calibrationFit": {
-        "intercept": -0.07989465304861762,
-        "slope": 0.8863954469501791
+        "intercept": -0.09003729285145234,
+        "slope": 0.8857564929909163
       },
       "calibration": [
         {
-          "n": 209,
-          "predicted": 0.39215594328455683,
-          "observed": 0.35406698564593303
+          "n": 220,
+          "predicted": 0.3875174780851558,
+          "observed": 0.33181818181818185
         },
         {
-          "n": 209,
-          "predicted": 0.5280955263877023,
-          "observed": 0.49760765550239233
+          "n": 220,
+          "predicted": 0.525527028076953,
+          "observed": 0.509090909090909
         },
         {
-          "n": 210,
-          "predicted": 0.6007081528810255,
-          "observed": 0.6428571428571429
+          "n": 220,
+          "predicted": 0.5988724023096879,
+          "observed": 0.6363636363636364
         },
         {
-          "n": 209,
-          "predicted": 0.6490639551229731,
-          "observed": 0.6172248803827751
+          "n": 220,
+          "predicted": 0.6483774276887926,
+          "observed": 0.6363636363636364
         },
         {
-          "n": 209,
-          "predicted": 0.6910743956712724,
-          "observed": 0.6698564593301436
+          "n": 220,
+          "predicted": 0.6907578078444085,
+          "observed": 0.65
         },
         {
-          "n": 210,
-          "predicted": 0.7366837592679845,
-          "observed": 0.6333333333333333
+          "n": 220,
+          "predicted": 0.7366671131656798,
+          "observed": 0.6318181818181818
         },
         {
-          "n": 209,
-          "predicted": 0.7826257554969499,
-          "observed": 0.7655502392344498
+          "n": 220,
+          "predicted": 0.7827074910692482,
+          "observed": 0.7681818181818182
         },
         {
-          "n": 210,
-          "predicted": 0.8565532402462672,
-          "observed": 0.8047619047619048
+          "n": 220,
+          "predicted": 0.8575996953492309,
+          "observed": 0.7954545454545454
         }
       ]
     },
     "comparisonToSrsHome": {
-      "candidateMinusBaselineBrier": -0.0003550569614865079,
+      "candidateMinusBaselineBrier": -0.0007038906448089476,
       "ci95": [
-        -0.002511648132737186,
-        0.001706171426317816
+        -0.002904804007713069,
+        0.0014161093462083975
       ],
-      "probabilityCandidateBetter": 0.6181
+      "probabilityCandidateBetter": 0.7338
     }
   },
   "shrinkageCandidate": {
@@ -78883,123 +82492,123 @@
       "secondaryMetric": "season-clustered rolling-origin series Brier versus srs_home",
       "promotionRule": "Research-only on all history through 2025; promotion requires a lower primary metric on a genuinely future archived season without changing the formula."
     },
-    "status": "research_only_not_promotion_eligible_on_history_through_2025",
+    "status": "research_only_not_promotion_eligible_on_history_through_2026",
     "metrics": {
       "game": {
-        "n": 1675,
-        "brier": 0.21856693629427812,
-        "logLoss": 0.6279512832860967,
-        "marginMae": 10.62142559562574,
+        "n": 1760,
+        "brier": 0.21932463303264013,
+        "logLoss": 0.6298123660180903,
+        "marginMae": 10.712453741662449,
         "calibrationFit": {
-          "intercept": -0.1208920400875437,
-          "slope": 0.9194525995827137
+          "intercept": -0.12687037742093862,
+          "slope": 0.9125415948105402
         },
         "calibration": [
           {
-            "n": 209,
-            "predicted": 0.41553461838720324,
+            "n": 220,
+            "predicted": 0.411471829473285,
             "observed": 0.36363636363636365
           },
           {
-            "n": 209,
-            "predicted": 0.5273941426966173,
-            "observed": 0.48325358851674644
+            "n": 220,
+            "predicted": 0.5251069428155176,
+            "observed": 0.4681818181818182
           },
           {
-            "n": 210,
-            "predicted": 0.5964238399665877,
-            "observed": 0.5904761904761905
+            "n": 220,
+            "predicted": 0.5929195012449268,
+            "observed": 0.6
           },
           {
-            "n": 209,
-            "predicted": 0.6511711788968495,
-            "observed": 0.6363636363636364
+            "n": 220,
+            "predicted": 0.6508465638319447,
+            "observed": 0.6318181818181818
           },
           {
-            "n": 209,
-            "predicted": 0.699195471862743,
-            "observed": 0.6555023923444976
+            "n": 220,
+            "predicted": 0.699949610899975,
+            "observed": 0.6545454545454545
           },
           {
-            "n": 210,
-            "predicted": 0.7473470894741113,
-            "observed": 0.7380952380952381
+            "n": 220,
+            "predicted": 0.7471489608422577,
+            "observed": 0.7272727272727273
           },
           {
-            "n": 209,
-            "predicted": 0.7868215390422749,
-            "observed": 0.7129186602870813
+            "n": 220,
+            "predicted": 0.7875112781883735,
+            "observed": 0.7136363636363636
           },
           {
-            "n": 210,
-            "predicted": 0.8513939223006769,
-            "observed": 0.8047619047619048
+            "n": 220,
+            "predicted": 0.8514431277222121,
+            "observed": 0.8
           }
         ]
       },
       "series": {
-        "n": 300,
-        "brier": 0.18383470546637468,
-        "logLoss": 0.5472579823058923,
+        "n": 315,
+        "brier": 0.18688343390321646,
+        "logLoss": 0.554442392429033,
         "calibrationFit": {
-          "intercept": 0.013430269195418286,
-          "slope": 0.8060020462311555
+          "intercept": 0.02414190783472374,
+          "slope": 0.770991046979879
         },
         "calibration": [
           {
-            "n": 42,
-            "predicted": 0.458809314949241,
-            "observed": 0.5238095238095238
+            "n": 45,
+            "predicted": 0.460828419213188,
+            "observed": 0.5111111111111111
           },
           {
-            "n": 43,
-            "predicted": 0.6114179594048035,
-            "observed": 0.5348837209302325
+            "n": 45,
+            "predicted": 0.6189564513244232,
+            "observed": 0.5555555555555556
           },
           {
-            "n": 43,
-            "predicted": 0.7109360642145729,
-            "observed": 0.7441860465116279
+            "n": 45,
+            "predicted": 0.7145380109019978,
+            "observed": 0.7555555555555555
           },
           {
-            "n": 43,
-            "predicted": 0.7746608816833676,
-            "observed": 0.627906976744186
+            "n": 45,
+            "predicted": 0.776801524323797,
+            "observed": 0.5777777777777777
           },
           {
-            "n": 43,
-            "predicted": 0.8260777014530883,
-            "observed": 0.813953488372093
+            "n": 45,
+            "predicted": 0.82870954877726,
+            "observed": 0.8222222222222222
           },
           {
-            "n": 43,
-            "predicted": 0.8842508777014947,
-            "observed": 0.8837209302325582
+            "n": 45,
+            "predicted": 0.8884122966062785,
+            "observed": 0.8666666666666667
           },
           {
-            "n": 43,
-            "predicted": 0.951201179110304,
-            "observed": 0.8837209302325582
+            "n": 45,
+            "predicted": 0.9520057402873999,
+            "observed": 0.9111111111111111
           }
         ]
       }
     },
     "comparisonToSrsHome": {
       "game": {
-        "candidateMinusBaselineBrier": 0.00005235957253600852,
+        "candidateMinusBaselineBrier": 0.00004136349015635327,
         "ci95": [
-          -0.0007164937115203063,
-          0.0007905967661376338
+          -0.000662585800603035,
+          0.0007507638582293328
         ],
-        "probabilityCandidateBetter": 0.4374
+        "probabilityCandidateBetter": 0.4476
       },
       "series": {
-        "candidateMinusBaselineBrier": -0.000834355553326576,
+        "candidateMinusBaselineBrier": -0.001039288603051729,
         "ci95": [
-          -0.003753493193752163,
-          0.0019948160348028637
+          -0.003720865446515191,
+          0.0017400936912177294
         ],
-        "probabilityCandidateBetter": 0.7063
+        "probabilityCandidateBetter": 0.7704
       }
     }
   },
@@ -79125,6 +82734,13 @@
         "brierLoss": 0.8791066780838885
       },
       {
+        "id": "2026-east-r1-bos-phi",
+        "season": 2026,
+        "probability": 0.9360592817113518,
+        "outcome": 0,
+        "brierLoss": 0.8762069788779718
+      },
+      {
         "id": "2025-east-csf-cle-ind",
         "season": 2025,
         "probability": 0.9329240629838147,
@@ -79179,13 +82795,6 @@
         "probability": 0.8498000146495432,
         "outcome": 0,
         "brierLoss": 0.7221600648983639
-      },
-      {
-        "id": "2014-east-r1-tor-brk",
-        "season": 2014,
-        "probability": 0.8429066345030208,
-        "outcome": 0,
-        "brierLoss": 0.7104915944892092
       }
     ]
   }

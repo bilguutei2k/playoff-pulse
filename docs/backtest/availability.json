@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T19:27:19.813Z",
+  "generatedAt": "2026-07-27T09:35:19.806Z",
   "protocol": "Only sourced observations timestamped strictly before a series begins are eligible. No status is inferred from game outcomes or retrospective participation.",
   "seasons": [
     2003,
@@ -24,12 +24,13 @@
     2022,
     2023,
     2024,
-    2025
+    2025,
+    2026
   ],
   "observations": 0,
   "coveredSeries": 0,
-  "totalSeries": 345,
-  "playerSeriesOpportunities": 6900,
+  "totalSeries": 360,
+  "playerSeriesOpportunities": 7200,
   "observationCoverage": 0,
   "defaultAssumption": "unknown_assumed_available",
   "effectEvaluationStatus": "not_estimable_no_point_in_time_observations",

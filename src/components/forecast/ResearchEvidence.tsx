@@ -123,8 +123,8 @@ export function ResearchEvidence() {
               research.primarySeriesChallenger.comparisonToSrsHome
                 .candidateMinusBaselineBrier,
               4,
-            )}; its interval still crosses zero, and no future season is
-            available. It is not promoted.
+            )}; its interval still crosses zero. The 2026 registration is
+            contaminated, so it is not promoted.
           </p>
         </div>
       </div>
@@ -135,8 +135,9 @@ export function ResearchEvidence() {
           <p className="text-xs leading-5 text-[var(--color-text-muted)]">
             The unchanged SRS + home model was refit using at most the ten
             completed seasons before each target season. Its historical game
-            point estimate improved, but it remains frozen research until a
-            future season is observed.
+            point estimate improved, but the 2026 registration is contaminated;
+            it remains frozen research until a prospectively eligible season is
+            observed.
           </p>
           <span className="pp-number text-xs font-bold">
             Δ game Brier{" "}

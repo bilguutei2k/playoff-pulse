@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-26T19:27:20.304Z",
+  "generatedAt": "2026-07-27T09:35:20.294Z",
   "conservativeDeadline": "Inputs must be timestamped before 00:00 UTC on seriesStartDate because historical tip times are not retained.",
   "laggedRotations": {
     "method": "last_10_team_games_before_deadline",
     "observations": 0,
     "coveredSeries": 0,
-    "totalSeries": 345,
+    "totalSeries": 360,
     "completePairedSeries": 0,
     "status": "not_estimable_no_timestamped_player_game_log_inputs",
     "rule": "Do not infer a pre-series rotation from games played after the deadline. Only named, sourced, lagged observations totaling 240 minutes are eligible."
@@ -13,7 +13,7 @@
   "externalBenchmarks": {
     "observations": 0,
     "coveredSeries": 0,
-    "totalSeries": 345,
+    "totalSeries": 360,
     "status": "not_estimable_no_timestamped_external_probabilities",
     "rule": "Only timestamped public probabilities or explicitly no-vig two-sided series prices are eligible. Closing prices observed after the deadline are excluded."
   }

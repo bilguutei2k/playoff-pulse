@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T19:27:06.311Z",
+  "generatedAt": "2026-07-27T09:35:05.876Z",
   "seasons": [
     2003,
     2004,
@@ -23,9 +23,10 @@
     2022,
     2023,
     2024,
-    2025
+    2025,
+    2026
   ],
-  "totalSeries": 345,
+  "totalSeries": 360,
   "models": [
     "playoff_pulse",
     "coinflip",
@@ -37,10 +38,10 @@
   "results": [
     {
       "modelName": "playoff_pulse",
-      "n": 345,
-      "brierScore": 0.182471,
-      "logLoss": 0.544663,
-      "accuracy": 0.724638,
+      "n": 360,
+      "brierScore": 0.183958,
+      "logLoss": 0.547758,
+      "accuracy": 0.719444,
       "calibrationBuckets": [
         {
           "bucketMin": 0,
@@ -73,37 +74,37 @@
         {
           "bucketMin": 0.4,
           "bucketMax": 0.5,
-          "predictedMean": 0.467554,
-          "actualWinRate": 0.5,
-          "count": 26
+          "predictedMean": 0.465481,
+          "actualWinRate": 0.518519,
+          "count": 27
         },
         {
           "bucketMin": 0.5,
           "bucketMax": 0.6,
-          "predictedMean": 0.553883,
-          "actualWinRate": 0.585366,
-          "count": 82
+          "predictedMean": 0.554417,
+          "actualWinRate": 0.590361,
+          "count": 83
         },
         {
           "bucketMin": 0.6,
           "bucketMax": 0.7,
-          "predictedMean": 0.652128,
-          "actualWinRate": 0.673267,
-          "count": 101
+          "predictedMean": 0.651516,
+          "actualWinRate": 0.650943,
+          "count": 106
         },
         {
           "bucketMin": 0.7,
           "bucketMax": 0.8,
-          "predictedMean": 0.744139,
-          "actualWinRate": 0.888889,
-          "count": 81
+          "predictedMean": 0.744365,
+          "actualWinRate": 0.892857,
+          "count": 84
         },
         {
           "bucketMin": 0.8,
           "bucketMax": 0.9,
-          "predictedMean": 0.846616,
-          "actualWinRate": 0.883721,
-          "count": 43
+          "predictedMean": 0.84725,
+          "actualWinRate": 0.875,
+          "count": 48
         },
         {
           "bucketMin": 0.9,
@@ -229,28 +230,33 @@
             "brierScore": 0.203179,
             "logLoss": 0.58172,
             "n": 15
+          },
+          "2026": {
+            "brierScore": 0.218153,
+            "logLoss": 0.618937,
+            "n": 15
           }
         },
         "byRound": {
           "First Round": {
-            "brierScore": 0.156004,
-            "logLoss": 0.485114,
-            "n": 184
+            "brierScore": 0.158508,
+            "logLoss": 0.490787,
+            "n": 192
           },
           "Conference Semifinal": {
-            "brierScore": 0.206912,
-            "logLoss": 0.601536,
-            "n": 92
+            "brierScore": 0.204425,
+            "logLoss": 0.595329,
+            "n": 96
           },
           "Conference Final": {
-            "brierScore": 0.239642,
-            "logLoss": 0.670718,
-            "n": 46
+            "brierScore": 0.241602,
+            "logLoss": 0.67491,
+            "n": 48
           },
           "NBA Finals": {
-            "brierScore": 0.1821,
-            "logLoss": 0.541462,
-            "n": 23
+            "brierScore": 0.190398,
+            "logLoss": 0.558939,
+            "n": 24
           }
         },
         "bubble": {
@@ -259,15 +265,15 @@
           "n": 15
         },
         "nonBubble": {
-          "brierScore": 0.180929,
-          "logLoss": 0.541057,
-          "n": 330
+          "brierScore": 0.182547,
+          "logLoss": 0.544443,
+          "n": 345
         }
       }
     },
     {
       "modelName": "coinflip",
-      "n": 345,
+      "n": 360,
       "brierScore": 0.25,
       "logLoss": 0.693147,
       "accuracy": 0.5,
@@ -311,8 +317,8 @@
           "bucketMin": 0.5,
           "bucketMax": 0.6,
           "predictedMean": 0.5,
-          "actualWinRate": 0.715942,
-          "count": 345
+          "actualWinRate": 0.713889,
+          "count": 360
         },
         {
           "bucketMin": 0.6,
@@ -459,28 +465,33 @@
             "brierScore": 0.25,
             "logLoss": 0.693147,
             "n": 15
+          },
+          "2026": {
+            "brierScore": 0.25,
+            "logLoss": 0.693147,
+            "n": 15
           }
         },
         "byRound": {
           "First Round": {
             "brierScore": 0.25,
             "logLoss": 0.693147,
-            "n": 184
+            "n": 192
           },
           "Conference Semifinal": {
             "brierScore": 0.25,
             "logLoss": 0.693147,
-            "n": 92
+            "n": 96
           },
           "Conference Final": {
             "brierScore": 0.25,
             "logLoss": 0.693147,
-            "n": 46
+            "n": 48
           },
           "NBA Finals": {
             "brierScore": 0.25,
             "logLoss": 0.693147,
-            "n": 23
+            "n": 24
           }
         },
         "bubble": {
@@ -491,16 +502,16 @@
         "nonBubble": {
           "brierScore": 0.25,
           "logLoss": 0.693147,
-          "n": 330
+          "n": 345
         }
       }
     },
     {
       "modelName": "home_team",
-      "n": 345,
-      "brierScore": 0.208913,
-      "logLoss": 0.609061,
-      "accuracy": 0.708696,
+      "n": 360,
+      "brierScore": 0.209479,
+      "logLoss": 0.610231,
+      "accuracy": 0.706944,
       "calibrationBuckets": [
         {
           "bucketMin": 0,
@@ -548,8 +559,8 @@
           "bucketMin": 0.6,
           "bucketMax": 0.7,
           "predictedMean": 0.65,
-          "actualWinRate": 0.718182,
-          "count": 330
+          "actualWinRate": 0.715942,
+          "count": 345
         },
         {
           "bucketMin": 0.7,
@@ -689,28 +700,33 @@
             "brierScore": 0.2225,
             "logLoss": 0.637129,
             "n": 15
+          },
+          "2026": {
+            "brierScore": 0.2225,
+            "logLoss": 0.637129,
+            "n": 15
           }
         },
         "byRound": {
           "First Round": {
-            "brierScore": 0.18837,
-            "logLoss": 0.566671,
-            "n": 184
+            "brierScore": 0.18875,
+            "logLoss": 0.567457,
+            "n": 192
           },
           "Conference Semifinal": {
-            "brierScore": 0.212826,
-            "logLoss": 0.617136,
-            "n": 92
+            "brierScore": 0.212187,
+            "logLoss": 0.61582,
+            "n": 96
           },
           "Conference Final": {
-            "brierScore": 0.271522,
-            "logLoss": 0.738252,
-            "n": 46
+            "brierScore": 0.271562,
+            "logLoss": 0.738338,
+            "n": 48
           },
           "NBA Finals": {
-            "brierScore": 0.232391,
-            "logLoss": 0.657508,
-            "n": 23
+            "brierScore": 0.240313,
+            "logLoss": 0.673854,
+            "n": 24
           }
         },
         "bubble": {
@@ -719,18 +735,18 @@
           "n": 15
         },
         "nonBubble": {
-          "brierScore": 0.207045,
-          "logLoss": 0.605239,
-          "n": 330
+          "brierScore": 0.207717,
+          "logLoss": 0.606626,
+          "n": 345
         }
       }
     },
     {
       "modelName": "higher_seed",
-      "n": 345,
-      "brierScore": 0.207717,
-      "logLoss": 0.606626,
-      "accuracy": 0.715942,
+      "n": 360,
+      "brierScore": 0.208333,
+      "logLoss": 0.607897,
+      "accuracy": 0.713889,
       "calibrationBuckets": [
         {
           "bucketMin": 0,
@@ -778,8 +794,8 @@
           "bucketMin": 0.6,
           "bucketMax": 0.7,
           "predictedMean": 0.65,
-          "actualWinRate": 0.715942,
-          "count": 345
+          "actualWinRate": 0.713889,
+          "count": 360
         },
         {
           "bucketMin": 0.7,
@@ -919,28 +935,33 @@
             "brierScore": 0.2225,
             "logLoss": 0.637129,
             "n": 15
+          },
+          "2026": {
+            "brierScore": 0.2225,
+            "logLoss": 0.637129,
+            "n": 15
           }
         },
         "byRound": {
           "First Round": {
-            "brierScore": 0.184457,
-            "logLoss": 0.558628,
-            "n": 184
+            "brierScore": 0.185,
+            "logLoss": 0.559749,
+            "n": 192
           },
           "Conference Semifinal": {
-            "brierScore": 0.217065,
-            "logLoss": 0.625915,
-            "n": 92
+            "brierScore": 0.21625,
+            "logLoss": 0.624233,
+            "n": 96
           },
           "Conference Final": {
             "brierScore": 0.2725,
             "logLoss": 0.740303,
-            "n": 46
+            "n": 48
           },
           "NBA Finals": {
-            "brierScore": 0.226848,
-            "logLoss": 0.646101,
-            "n": 23
+            "brierScore": 0.235,
+            "logLoss": 0.662923,
+            "n": 24
           }
         },
         "bubble": {
@@ -949,18 +970,18 @@
           "n": 15
         },
         "nonBubble": {
-          "brierScore": 0.207045,
-          "logLoss": 0.605239,
-          "n": 330
+          "brierScore": 0.207717,
+          "logLoss": 0.606626,
+          "n": 345
         }
       }
     },
     {
       "modelName": "srs_proxy_only",
-      "n": 345,
-      "brierScore": 0.180093,
-      "logLoss": 0.535369,
-      "accuracy": 0.713043,
+      "n": 360,
+      "brierScore": 0.183342,
+      "logLoss": 0.543568,
+      "accuracy": 0.708333,
       "calibrationBuckets": [
         {
           "bucketMin": 0,
@@ -979,9 +1000,9 @@
         {
           "bucketMin": 0.2,
           "bucketMax": 0.3,
-          "predictedMean": 0.242188,
-          "actualWinRate": 0,
-          "count": 1
+          "predictedMean": 0.259134,
+          "actualWinRate": 0.5,
+          "count": 2
         },
         {
           "bucketMin": 0.3,
@@ -1007,30 +1028,30 @@
         {
           "bucketMin": 0.6,
           "bucketMax": 0.7,
-          "predictedMean": 0.651608,
-          "actualWinRate": 0.660377,
-          "count": 53
+          "predictedMean": 0.65132,
+          "actualWinRate": 0.654545,
+          "count": 55
         },
         {
           "bucketMin": 0.7,
           "bucketMax": 0.8,
-          "predictedMean": 0.752259,
-          "actualWinRate": 0.719512,
-          "count": 82
+          "predictedMean": 0.75146,
+          "actualWinRate": 0.709302,
+          "count": 86
         },
         {
           "bucketMin": 0.8,
           "bucketMax": 0.9,
-          "predictedMean": 0.846133,
-          "actualWinRate": 0.863636,
-          "count": 66
+          "predictedMean": 0.845837,
+          "actualWinRate": 0.852941,
+          "count": 68
         },
         {
           "bucketMin": 0.9,
           "bucketMax": 1,
-          "predictedMean": 0.945016,
-          "actualWinRate": 0.894737,
-          "count": 57
+          "predictedMean": 0.945381,
+          "actualWinRate": 0.888889,
+          "count": 63
         }
       ],
       "breakdown": {
@@ -1149,28 +1170,33 @@
             "brierScore": 0.220945,
             "logLoss": 0.639587,
             "n": 15
+          },
+          "2026": {
+            "brierScore": 0.258057,
+            "logLoss": 0.732135,
+            "n": 15
           }
         },
         "byRound": {
           "First Round": {
-            "brierScore": 0.144588,
-            "logLoss": 0.446149,
-            "n": 184
+            "brierScore": 0.149403,
+            "logLoss": 0.459937,
+            "n": 192
           },
           "Conference Semifinal": {
-            "brierScore": 0.215056,
-            "logLoss": 0.63145,
-            "n": 92
+            "brierScore": 0.213025,
+            "logLoss": 0.624581,
+            "n": 96
           },
           "Conference Final": {
-            "brierScore": 0.250514,
-            "logLoss": 0.701359,
-            "n": 46
+            "brierScore": 0.253243,
+            "logLoss": 0.707342,
+            "n": 48
           },
           "NBA Finals": {
-            "brierScore": 0.183441,
-            "logLoss": 0.532824,
-            "n": 23
+            "brierScore": 0.19631,
+            "logLoss": 0.561015,
+            "n": 24
           }
         },
         "bubble": {
@@ -1179,18 +1205,18 @@
           "n": 15
         },
         "nonBubble": {
-          "brierScore": 0.178246,
-          "logLoss": 0.529979,
-          "n": 330
+          "brierScore": 0.181716,
+          "logLoss": 0.538768,
+          "n": 345
         }
       }
     },
     {
       "modelName": "net_rating_only",
-      "n": 345,
-      "brierScore": 0.181943,
-      "logLoss": 0.539972,
-      "accuracy": 0.721739,
+      "n": 360,
+      "brierScore": 0.185225,
+      "logLoss": 0.548899,
+      "accuracy": 0.716667,
       "calibrationBuckets": [
         {
           "bucketMin": 0,
@@ -1209,9 +1235,9 @@
         {
           "bucketMin": 0.2,
           "bucketMax": 0.3,
-          "predictedMean": 0.255878,
-          "actualWinRate": 0,
-          "count": 2
+          "predictedMean": 0.252171,
+          "actualWinRate": 0.333333,
+          "count": 3
         },
         {
           "bucketMin": 0.3,
@@ -1237,30 +1263,30 @@
         {
           "bucketMin": 0.6,
           "bucketMax": 0.7,
-          "predictedMean": 0.65121,
-          "actualWinRate": 0.641509,
-          "count": 53
+          "predictedMean": 0.652172,
+          "actualWinRate": 0.625,
+          "count": 56
         },
         {
           "bucketMin": 0.7,
           "bucketMax": 0.8,
-          "predictedMean": 0.752262,
-          "actualWinRate": 0.726027,
-          "count": 73
+          "predictedMean": 0.751588,
+          "actualWinRate": 0.72,
+          "count": 75
         },
         {
           "bucketMin": 0.8,
           "bucketMax": 0.9,
-          "predictedMean": 0.847911,
-          "actualWinRate": 0.791667,
-          "count": 72
+          "predictedMean": 0.847514,
+          "actualWinRate": 0.786667,
+          "count": 75
         },
         {
           "bucketMin": 0.9,
           "bucketMax": 1,
-          "predictedMean": 0.950118,
-          "actualWinRate": 0.913043,
-          "count": 69
+          "predictedMean": 0.950649,
+          "actualWinRate": 0.906667,
+          "count": 75
         }
       ],
       "breakdown": {
@@ -1379,28 +1405,33 @@
             "brierScore": 0.218482,
             "logLoss": 0.642902,
             "n": 15
+          },
+          "2026": {
+            "brierScore": 0.260729,
+            "logLoss": 0.754213,
+            "n": 15
           }
         },
         "byRound": {
           "First Round": {
-            "brierScore": 0.145526,
-            "logLoss": 0.447205,
-            "n": 184
+            "brierScore": 0.150567,
+            "logLoss": 0.462648,
+            "n": 192
           },
           "Conference Semifinal": {
-            "brierScore": 0.215613,
-            "logLoss": 0.633252,
-            "n": 92
+            "brierScore": 0.213933,
+            "logLoss": 0.627485,
+            "n": 96
           },
           "Conference Final": {
-            "brierScore": 0.26068,
-            "logLoss": 0.72958,
-            "n": 46
+            "brierScore": 0.262915,
+            "logLoss": 0.734224,
+            "n": 48
           },
           "NBA Finals": {
-            "brierScore": 0.181121,
-            "logLoss": 0.529767,
-            "n": 23
+            "brierScore": 0.192286,
+            "logLoss": 0.553906,
+            "n": 24
           }
         },
         "bubble": {
@@ -1409,9 +1440,9 @@
           "n": 15
         },
         "nonBubble": {
-          "brierScore": 0.179911,
-          "logLoss": 0.534225,
-          "n": 330
+          "brierScore": 0.183425,
+          "logLoss": 0.54379,
+          "n": 345
         }
       }
     }
@@ -30396,6 +30427,1266 @@
       "bubble": false,
       "snapshotAsOf": "2025-04-13",
       "seriesStartDate": "2025-04-20"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.6174522325691533,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-06-03"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-06-03"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-06-03"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-06-03"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.7016287736151541,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-06-03"
+    },
+    {
+      "seriesId": "2026-finals-finals-sas-nyk",
+      "season": 2026,
+      "round": "NBA Finals",
+      "conference": "Finals",
+      "teamA": "SAS",
+      "teamB": "NYK",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.6701436323713451,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-06-03"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.62845297161946,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-19"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-19"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-19"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-19"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.7051940553655415,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-19"
+    },
+    {
+      "seriesId": "2026-east-cf-nyk-cle",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "CLE",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.7143650220371119,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-19"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.6597753275600363,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-18"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-18"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-18"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-18"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.7383173027798264,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-18"
+    },
+    {
+      "seriesId": "2026-west-cf-okc-sas",
+      "season": 2026,
+      "round": "Conference Final",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "SAS",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.7396523230525256,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-18"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.6800673753594436,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.8002921779761384,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-east-csf-det-cle",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "CLE",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.8232847902596533,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.7870024162861056,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.9123957601382541,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-east-csf-nyk-phi",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "PHI",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.9222602367476538,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.8702623551639659,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.9737188716716944,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-west-csf-okc-lal",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "LAL",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.9732613422393686,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-05"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.7466574339189176,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.8718867657028444,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-west-csf-sas-min",
+      "season": 2026,
+      "round": "Conference Semifinal",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "MIN",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.8710469377983799,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-05-04"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.5981945957288126,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.6097823489798204,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-cle-tor",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "CLE",
+      "teamB": "TOR",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.645835082588573,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.8052436315821584,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.9242335844754829,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-det-orl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "DET",
+      "teamB": "ORL",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.9476297767080928,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.7177915873664897,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.7951266637325618,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-nyk-atl",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "NYK",
+      "teamB": "ATL",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.8195805976643468,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.8368120572959231,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.946592184542209,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-east-r1-bos-phi",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "East",
+      "teamA": "BOS",
+      "teamB": "PHI",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.9594788341536753,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.4115817691062818,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.276080027831643,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-lal-hou",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "LAL",
+      "teamB": "HOU",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.24475743333799238,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.6100643058115884,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.6775924505660761,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-den-min",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "DEN",
+      "teamB": "MIN",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.6915368109308715,
+      "actualOutcome": 0,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-18"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.8849347741634518,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.9730299532598988,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-okc-pho",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "OKC",
+      "teamB": "PHO",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.9766302156787092,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR",
+      "modelName": "playoff_pulse",
+      "predictedProbabilityA": 0.8662440737199932,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR",
+      "modelName": "coinflip",
+      "predictedProbabilityA": 0.5,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR",
+      "modelName": "home_team",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR",
+      "modelName": "higher_seed",
+      "predictedProbabilityA": 0.65,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR",
+      "modelName": "srs_proxy_only",
+      "predictedProbabilityA": 0.9631354894470352,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
+    },
+    {
+      "seriesId": "2026-west-r1-sas-por",
+      "season": 2026,
+      "round": "First Round",
+      "conference": "West",
+      "teamA": "SAS",
+      "teamB": "POR",
+      "modelName": "net_rating_only",
+      "predictedProbabilityA": 0.9612648406963066,
+      "actualOutcome": 1,
+      "bubble": false,
+      "snapshotAsOf": "2026-04-12",
+      "seriesStartDate": "2026-04-19"
     }
   ]
 }
