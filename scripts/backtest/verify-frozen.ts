@@ -17,7 +17,7 @@ function sha256(filePath: string): string {
     .digest("hex");
 }
 
-function main() {
+export function verifyFrozenArtifacts() {
   const entries = fs
     .readFileSync(CHECKSUM_PATH, "utf-8")
     .trim()
@@ -56,4 +56,6 @@ function main() {
   console.log(`Verified ${entries.length} frozen 2003–2025 artifacts.`);
 }
 
-main();
+if (typeof require !== "undefined" && require.main === module) {
+  verifyFrozenArtifacts();
+}

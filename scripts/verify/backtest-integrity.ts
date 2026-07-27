@@ -28,8 +28,87 @@ import {
 } from "../../src/lib/backtest/input-observations";
 import { seriesProbabilityChallenger } from "../../src/lib/backtest/prospective-challenger";
 import type { LogisticModel } from "../../src/lib/backtest/regression";
+import {
+  assertFitRowsPrecedeHoldout,
+  fitLogisticBeforeHoldout,
+  fitRidgeBeforeHoldout,
+  tuneScaleBeforeHoldout,
+} from "../backtest/fit-isolation";
 
 export function runBacktestIntegrityChecks(): void {
+  assert.doesNotThrow(() =>
+    assertFitRowsPrecedeHoldout(
+      [{ season: 2003 }, { season: 2025 }],
+      "verification clean fit",
+    ),
+  );
+  assert.throws(
+    () =>
+      assertFitRowsPrecedeHoldout(
+        [{ season: 2025 }, { season: 2026 }],
+        "verification contaminated fit",
+      ),
+    /received held-out row.*2026/,
+    "Any fitting path that receives a 2026 row must fail loudly.",
+  );
+  const contaminatedFitRows = [
+    { season: 2025, x: 0, y: 0 },
+    { season: 2026, x: 1, y: 1 },
+  ];
+  assert.throws(
+    () =>
+      fitRidgeBeforeHoldout(
+        contaminatedFitRows,
+        (row) => [row.x],
+        (row) => row.y,
+        ["x"],
+        1,
+        "verification ridge fit",
+      ),
+    /received held-out row.*2026/,
+  );
+  assert.throws(
+    () =>
+      fitLogisticBeforeHoldout(
+        contaminatedFitRows,
+        (row) => [row.x],
+        (row) => row.y,
+        ["x"],
+        1,
+        "verification logistic fit",
+      ),
+    /received held-out row.*2026/,
+  );
+  assert.throws(
+    () =>
+      tuneScaleBeforeHoldout(
+        contaminatedFitRows,
+        (row) => row.x,
+        (row) => row.y,
+        "verification scale fit",
+      ),
+    /received held-out row.*2026/,
+  );
+  const holdoutEvaluatorSource = fs.readFileSync(
+    path.join(
+      process.cwd(),
+      "scripts",
+      "backtest",
+      "evaluate-2026-holdout.ts",
+    ),
+    "utf-8",
+  );
+  for (const forbiddenDirectFit of [
+    "fitRidge" + "Model",
+    "fitLogistic" + "Model",
+    "tuneLogistic" + "Scale",
+  ]) {
+    assert(
+      !holdoutEvaluatorSource.includes(forbiddenDirectFit),
+      `Holdout evaluator must not bypass guarded fitting with ${forbiddenDirectFit}.`,
+    );
+  }
+
   const sample = [{ mpg: 38 }, { mpg: 34 }, { mpg: 30 }, { mpg: 26 }, { mpg: 22 }, { mpg: 18 }];
   const first = allocatePlayoffRotation(sample);
   const second = allocatePlayoffRotation(sample);

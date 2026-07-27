@@ -1,0 +1,339 @@
+{
+  "generatedAt": "2026-07-27T09:26:11.297Z",
+  "season": 2026,
+  "scope": {
+    "games": 85,
+    "series": 15,
+    "trainingSeasons": [
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "tenSeasonTrainingWindow": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "holdoutRowsUsedForPredictiveModelFitting": 0
+  },
+  "fitIsolation": {
+    "assertion": "Every fitting wrapper fails if any input row has season >= 2026.",
+    "frozenModelsLoadedWithoutRefit": [
+      "exact SRS + home game model",
+      "exact_srs_logit_plus_seed_v1 series mapping"
+    ],
+    "fittedForTarget": {
+      "ten_season_training_window_v1": "2016–2025 only"
+    },
+    "productionAndFixedBaselines": "No fitting functions used.",
+    "calibrationDiagnostics": "Slope/intercept are estimated after forecasts are fixed using 2026 outcomes; diagnostics never feed a prediction."
+  },
+  "modelDefinitions": {
+    "production": "Fixed Playoff Pulse configuration.",
+    "exact_srs_logit_plus_seed_v1": {
+      "game": "Frozen underlying exact SRS + home game model; the registered seed adjustment is series-only.",
+      "series": "Frozen exact SRS-series logit plus seed-difference mapping."
+    },
+    "ten_season_training_window_v1": "Unchanged SRS + home model fitted only on 2016–2025.",
+    "srs_only": "Fixed SRS-proxy-only production engine.",
+    "net_rating_only": "Fixed net-rating-only production engine.",
+    "higher_seed": "Directional 65% prior for the better playoff seed.",
+    "home_team": "Directional 65% home-team prior.",
+    "coin_flip": "Constant 50% probability."
+  },
+  "metrics": {
+    "production": {
+      "game": {
+        "n": 85,
+        "brier": 0.22893766786877148,
+        "logLoss": 0.6503493441452501,
+        "calibration": {
+          "intercept": -0.24360931649775242,
+          "slope": 1.2695653787940995,
+          "status": "estimated"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.21815270757703256,
+        "logLoss": 0.6189368193444691,
+        "calibration": {
+          "intercept": -0.02774599781453653,
+          "slope": 0.7556735418897306,
+          "status": "estimated"
+        }
+      }
+    },
+    "exact_srs_logit_plus_seed_v1": {
+      "game": {
+        "n": 85,
+        "brier": 0.2344909585957543,
+        "logLoss": 0.6674986291866817,
+        "calibration": {
+          "intercept": -0.2404483903537684,
+          "slope": 0.7570379296937939,
+          "status": "estimated"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.23036260680844917,
+        "logLoss": 0.6511858972298913,
+        "calibration": {
+          "intercept": 0.10051945128509196,
+          "slope": 0.48855355039271664,
+          "status": "estimated"
+        }
+      }
+    },
+    "ten_season_training_window_v1": {
+      "game": {
+        "n": 85,
+        "brier": 0.23178495858009351,
+        "logLoss": 0.6583661666592123,
+        "calibration": {
+          "intercept": -0.24117858557520216,
+          "slope": 0.897043811304021,
+          "status": "estimated"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.24075744094746498,
+        "logLoss": 0.6735755326493006,
+        "calibration": {
+          "intercept": 0.12878857145124312,
+          "slope": 0.42927142137637503,
+          "status": "estimated"
+        }
+      }
+    },
+    "srs_only": {
+      "game": {
+        "n": 85,
+        "brier": 0.2314350948645049,
+        "logLoss": 0.6570889126078526,
+        "calibration": {
+          "intercept": -0.05153092713323955,
+          "slope": 0.7044787288908771,
+          "status": "estimated"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.2580566623591441,
+        "logLoss": 0.7321354653926939,
+        "calibration": {
+          "intercept": 0.15005679748702863,
+          "slope": 0.33147690022232945,
+          "status": "estimated"
+        }
+      }
+    },
+    "net_rating_only": {
+      "game": {
+        "n": 85,
+        "brier": 0.23339551690898597,
+        "logLoss": 0.662466120324718,
+        "calibration": {
+          "intercept": -0.03283888829543162,
+          "slope": 0.6495484235822034,
+          "status": "estimated"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.26072918867140304,
+        "logLoss": 0.7542127313435999,
+        "calibration": {
+          "intercept": 0.17543305305327908,
+          "slope": 0.30160207312147475,
+          "status": "estimated"
+        }
+      }
+    },
+    "higher_seed": {
+      "game": {
+        "n": 85,
+        "brier": 0.2389705882352939,
+        "logLoss": 0.6711157852383995,
+        "calibration": {
+          "intercept": 0.18538977506013718,
+          "slope": 0.7159786946344597,
+          "status": "estimated"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.22250000000000003,
+        "logLoss": 0.6371293188945287,
+        "calibration": {
+          "intercept": 0.6931471805599452,
+          "slope": 0,
+          "status": "slope_not_identifiable_constant_predictions"
+        }
+      }
+    },
+    "home_team": {
+      "game": {
+        "n": 85,
+        "brier": 0.2566176470588233,
+        "logLoss": 0.7075298563211184,
+        "calibration": {
+          "intercept": 0.21256144198367288,
+          "slope": 0,
+          "status": "slope_not_identifiable_constant_predictions"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.22250000000000003,
+        "logLoss": 0.6371293188945287,
+        "calibration": {
+          "intercept": 0.6931471805599452,
+          "slope": 0,
+          "status": "slope_not_identifiable_constant_predictions"
+        }
+      }
+    },
+    "coin_flip": {
+      "game": {
+        "n": 85,
+        "brier": 0.25,
+        "logLoss": 0.6931471805599456,
+        "calibration": {
+          "intercept": 0.21256144198367288,
+          "slope": 0,
+          "status": "slope_not_identifiable_constant_predictions"
+        }
+      },
+      "series": {
+        "n": 15,
+        "brier": 0.25,
+        "logLoss": 0.6931471805599453,
+        "calibration": {
+          "intercept": 0.6931471805599452,
+          "slope": 0,
+          "status": "slope_not_identifiable_constant_predictions"
+        }
+      }
+    }
+  },
+  "pairedProductionComparisons": {
+    "exact_srs_logit_plus_seed_v1": {
+      "game": {
+        "direction": "challenger_minus_production_brier",
+        "pointEstimate": 0.005553290726982885,
+        "pairedObservationBootstrapCi95": [
+          -0.008989422127717743,
+          0.020620863440910773
+        ],
+        "iterations": 10000,
+        "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
+      },
+      "series": {
+        "direction": "challenger_minus_production_brier",
+        "pointEstimate": 0.01220989923141653,
+        "pairedObservationBootstrapCi95": [
+          -0.017697371116893713,
+          0.04436258586389262
+        ],
+        "iterations": 10000,
+        "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
+      }
+    },
+    "ten_season_training_window_v1": {
+      "game": {
+        "direction": "challenger_minus_production_brier",
+        "pointEstimate": 0.0028472907113219884,
+        "pairedObservationBootstrapCi95": [
+          -0.0064219517030957305,
+          0.012609147664810529
+        ],
+        "iterations": 10000,
+        "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
+      },
+      "series": {
+        "direction": "challenger_minus_production_brier",
+        "pointEstimate": 0.02260473337043237,
+        "pairedObservationBootstrapCi95": [
+          -0.0037584163314406996,
+          0.05162857611511672
+        ],
+        "iterations": 10000,
+        "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
+      }
+    }
+  },
+  "selectionGate": {
+    "primaryChallenger": "exact_srs_logit_plus_seed_v1",
+    "primaryEndpoint": "season-clustered rolling-origin series Brier",
+    "minimumMeaningfulImprovement": 0.005,
+    "registrationClassification": {
+      "exact_srs_logit_plus_seed_v1": "CONTAMINATED_2026",
+      "ten_season_training_window_v1": "CONTAMINATED_2026",
+      "provenance": "First durable main-branch registration was 2026-07-27, after the 2026 playoffs began on 2026-04-18."
+    },
+    "singleSeasonRegisteredBaseline": {
+      "id": "exact_srs_home_component",
+      "metrics": {
+        "n": 15,
+        "brier": 0.2529986031547543,
+        "logLoss": 0.7136740703361422,
+        "calibration": {
+          "intercept": 0.12019995328838853,
+          "slope": 0.3654352812736855,
+          "status": "estimated"
+        }
+      },
+      "candidateMinusBaselineBrier": -0.022635996346305143
+    },
+    "promotionChecks": {
+      "genuinelyFutureArchivedSeasonAvailable": true,
+      "prospectiveRegistrationBeforeSeason": false,
+      "candidateMinusBaselinePointEstimateAtMostNegativeThreshold": true,
+      "brierSeasonClusteredIntervalUpperBoundBelowZero": false,
+      "logLossNoWorse": true,
+      "calibrationSlopeNotFartherFromOne": true,
+      "productionEquivalentInputDefinitions": false
+    },
+    "seasonClusteredInterval": {
+      "ci95": null,
+      "status": "not_estimable_from_one_season"
+    },
+    "decision": "not_promoted",
+    "decisionReasons": [
+      "The primary challenger was registered after the 2026 playoffs began.",
+      "A season-clustered confidence interval cannot be estimated from one held-out season.",
+      "Historical proxy inputs are not production-equivalent manual inputs."
+    ],
+    "requiredInterpretation": "A single season satisfies the gate's genuinely future archived season condition, but cannot on its own produce a confidence interval below zero. It is necessary, not sufficient."
+  }
+}
