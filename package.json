@@ -19,6 +19,7 @@
     "backtest:availability": "tsx scripts/backtest/build-availability-audit.ts",
     "backtest:inputs": "tsx scripts/backtest/build-input-audits.ts",
     "backtest:evidence": "tsx scripts/backtest/build-evidence.ts",
+    "backtest:verify-frozen": "tsx scripts/backtest/verify-frozen.ts",
     "backtest:all": "pnpm backtest:fixed && pnpm backtest:pregame && pnpm backtest:availability && pnpm backtest:inputs && pnpm backtest:research && pnpm backtest:evidence",
     "archive:forecast": "tsx scripts/archive-forecast.ts",
     "archive:issue": "tsx scripts/archive-forecast.ts --prospective",
