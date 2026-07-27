@@ -1,0 +1,852 @@
+[
+  {
+    "seriesId": "2026-finals-finals-sas-nyk",
+    "gameNumber": 1,
+    "date": "2026-06-03",
+    "homeTeam": "SAS",
+    "awayTeam": "NYK",
+    "homeScore": 95,
+    "awayScore": 105,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-finals-finals-sas-nyk",
+    "gameNumber": 2,
+    "date": "2026-06-05",
+    "homeTeam": "SAS",
+    "awayTeam": "NYK",
+    "homeScore": 104,
+    "awayScore": 105,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-finals-finals-sas-nyk",
+    "gameNumber": 3,
+    "date": "2026-06-08",
+    "homeTeam": "NYK",
+    "awayTeam": "SAS",
+    "homeScore": 111,
+    "awayScore": 115,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-finals-finals-sas-nyk",
+    "gameNumber": 4,
+    "date": "2026-06-10",
+    "homeTeam": "NYK",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 106,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-finals-finals-sas-nyk",
+    "gameNumber": 5,
+    "date": "2026-06-13",
+    "homeTeam": "SAS",
+    "awayTeam": "NYK",
+    "homeScore": 90,
+    "awayScore": 94,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-cf-nyk-cle",
+    "gameNumber": 1,
+    "date": "2026-05-19",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 115,
+    "awayScore": 104,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-cf-nyk-cle",
+    "gameNumber": 2,
+    "date": "2026-05-21",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 109,
+    "awayScore": 93,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-cf-nyk-cle",
+    "gameNumber": 3,
+    "date": "2026-05-23",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 108,
+    "awayScore": 121,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-cf-nyk-cle",
+    "gameNumber": 4,
+    "date": "2026-05-25",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 93,
+    "awayScore": 130,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 1,
+    "date": "2026-05-18",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 115,
+    "awayScore": 122,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 2,
+    "date": "2026-05-20",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 122,
+    "awayScore": 113,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 3,
+    "date": "2026-05-22",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 108,
+    "awayScore": 123,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 4,
+    "date": "2026-05-24",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 103,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 5,
+    "date": "2026-05-26",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 127,
+    "awayScore": 114,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 6,
+    "date": "2026-05-28",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 118,
+    "awayScore": 91,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-cf-okc-sas",
+    "gameNumber": 7,
+    "date": "2026-05-30",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 103,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 1,
+    "date": "2026-05-05",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 111,
+    "awayScore": 101,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 2,
+    "date": "2026-05-07",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 107,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 3,
+    "date": "2026-05-09",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 116,
+    "awayScore": 109,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 4,
+    "date": "2026-05-11",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 112,
+    "awayScore": 103,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 5,
+    "date": "2026-05-13",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 113,
+    "awayScore": 117,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 6,
+    "date": "2026-05-15",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 115,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-csf-det-cle",
+    "gameNumber": 7,
+    "date": "2026-05-17",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 94,
+    "awayScore": 125,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-csf-nyk-phi",
+    "gameNumber": 1,
+    "date": "2026-05-04",
+    "homeTeam": "NYK",
+    "awayTeam": "PHI",
+    "homeScore": 137,
+    "awayScore": 98,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-csf-nyk-phi",
+    "gameNumber": 2,
+    "date": "2026-05-06",
+    "homeTeam": "NYK",
+    "awayTeam": "PHI",
+    "homeScore": 108,
+    "awayScore": 102,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-csf-nyk-phi",
+    "gameNumber": 3,
+    "date": "2026-05-08",
+    "homeTeam": "PHI",
+    "awayTeam": "NYK",
+    "homeScore": 94,
+    "awayScore": 108,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-csf-nyk-phi",
+    "gameNumber": 4,
+    "date": "2026-05-10",
+    "homeTeam": "PHI",
+    "awayTeam": "NYK",
+    "homeScore": 114,
+    "awayScore": 144,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-west-csf-okc-lal",
+    "gameNumber": 1,
+    "date": "2026-05-05",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 90,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-csf-okc-lal",
+    "gameNumber": 2,
+    "date": "2026-05-07",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 125,
+    "awayScore": 107,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-csf-okc-lal",
+    "gameNumber": 3,
+    "date": "2026-05-09",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 108,
+    "awayScore": 131,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-csf-okc-lal",
+    "gameNumber": 4,
+    "date": "2026-05-11",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 110,
+    "awayScore": 115,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-csf-sas-min",
+    "gameNumber": 1,
+    "date": "2026-05-04",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 102,
+    "awayScore": 104,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2026-west-csf-sas-min",
+    "gameNumber": 2,
+    "date": "2026-05-06",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 133,
+    "awayScore": 95,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-csf-sas-min",
+    "gameNumber": 3,
+    "date": "2026-05-08",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 108,
+    "awayScore": 115,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-csf-sas-min",
+    "gameNumber": 4,
+    "date": "2026-05-10",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 114,
+    "awayScore": 109,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2026-west-csf-sas-min",
+    "gameNumber": 5,
+    "date": "2026-05-12",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 126,
+    "awayScore": 97,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-csf-sas-min",
+    "gameNumber": 6,
+    "date": "2026-05-15",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 139,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 1,
+    "date": "2026-04-18",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 126,
+    "awayScore": 113,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 2,
+    "date": "2026-04-20",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 115,
+    "awayScore": 105,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 3,
+    "date": "2026-04-23",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 126,
+    "awayScore": 104,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 4,
+    "date": "2026-04-26",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 93,
+    "awayScore": 89,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 5,
+    "date": "2026-04-29",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 125,
+    "awayScore": 120,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 6,
+    "date": "2026-05-01",
+    "homeTeam": "TOR",
+    "awayTeam": "CLE",
+    "homeScore": 112,
+    "awayScore": 110,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2026-east-r1-cle-tor",
+    "gameNumber": 7,
+    "date": "2026-05-03",
+    "homeTeam": "CLE",
+    "awayTeam": "TOR",
+    "homeScore": 114,
+    "awayScore": 102,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 1,
+    "date": "2026-04-19",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 101,
+    "awayScore": 112,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 2,
+    "date": "2026-04-22",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 98,
+    "awayScore": 83,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 3,
+    "date": "2026-04-25",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 113,
+    "awayScore": 105,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 4,
+    "date": "2026-04-27",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 88,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 5,
+    "date": "2026-04-29",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 116,
+    "awayScore": 109,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 6,
+    "date": "2026-05-01",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 79,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-r1-det-orl",
+    "gameNumber": 7,
+    "date": "2026-05-03",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 116,
+    "awayScore": 94,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2026-east-r1-nyk-atl",
+    "gameNumber": 1,
+    "date": "2026-04-18",
+    "homeTeam": "NYK",
+    "awayTeam": "ATL",
+    "homeScore": 113,
+    "awayScore": 102,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-r1-nyk-atl",
+    "gameNumber": 2,
+    "date": "2026-04-20",
+    "homeTeam": "NYK",
+    "awayTeam": "ATL",
+    "homeScore": 106,
+    "awayScore": 107,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2026-east-r1-nyk-atl",
+    "gameNumber": 3,
+    "date": "2026-04-23",
+    "homeTeam": "ATL",
+    "awayTeam": "NYK",
+    "homeScore": 109,
+    "awayScore": 108,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2026-east-r1-nyk-atl",
+    "gameNumber": 4,
+    "date": "2026-04-25",
+    "homeTeam": "ATL",
+    "awayTeam": "NYK",
+    "homeScore": 98,
+    "awayScore": 114,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-r1-nyk-atl",
+    "gameNumber": 5,
+    "date": "2026-04-28",
+    "homeTeam": "NYK",
+    "awayTeam": "ATL",
+    "homeScore": 126,
+    "awayScore": 97,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-r1-nyk-atl",
+    "gameNumber": 6,
+    "date": "2026-04-30",
+    "homeTeam": "ATL",
+    "awayTeam": "NYK",
+    "homeScore": 89,
+    "awayScore": 140,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 1,
+    "date": "2026-04-19",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 123,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 2,
+    "date": "2026-04-21",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 97,
+    "awayScore": 111,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 3,
+    "date": "2026-04-24",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 100,
+    "awayScore": 108,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 4,
+    "date": "2026-04-26",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 96,
+    "awayScore": 128,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 5,
+    "date": "2026-04-28",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 97,
+    "awayScore": 113,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 6,
+    "date": "2026-04-30",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 93,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2026-east-r1-bos-phi",
+    "gameNumber": 7,
+    "date": "2026-05-02",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 100,
+    "awayScore": 109,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2026-west-r1-lal-hou",
+    "gameNumber": 1,
+    "date": "2026-04-18",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 107,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2026-west-r1-lal-hou",
+    "gameNumber": 2,
+    "date": "2026-04-21",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 101,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2026-west-r1-lal-hou",
+    "gameNumber": 3,
+    "date": "2026-04-24",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 112,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2026-west-r1-lal-hou",
+    "gameNumber": 4,
+    "date": "2026-04-26",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 115,
+    "awayScore": 96,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2026-west-r1-lal-hou",
+    "gameNumber": 5,
+    "date": "2026-04-29",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 93,
+    "awayScore": 99,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2026-west-r1-lal-hou",
+    "gameNumber": 6,
+    "date": "2026-05-01",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 78,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2026-west-r1-den-min",
+    "gameNumber": 1,
+    "date": "2026-04-18",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 116,
+    "awayScore": 105,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2026-west-r1-den-min",
+    "gameNumber": 2,
+    "date": "2026-04-20",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 114,
+    "awayScore": 119,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2026-west-r1-den-min",
+    "gameNumber": 3,
+    "date": "2026-04-23",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 113,
+    "awayScore": 96,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2026-west-r1-den-min",
+    "gameNumber": 4,
+    "date": "2026-04-25",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 112,
+    "awayScore": 96,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2026-west-r1-den-min",
+    "gameNumber": 5,
+    "date": "2026-04-27",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 125,
+    "awayScore": 113,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2026-west-r1-den-min",
+    "gameNumber": 6,
+    "date": "2026-04-30",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 110,
+    "awayScore": 98,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2026-west-r1-okc-pho",
+    "gameNumber": 1,
+    "date": "2026-04-19",
+    "homeTeam": "OKC",
+    "awayTeam": "PHO",
+    "homeScore": 119,
+    "awayScore": 84,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-r1-okc-pho",
+    "gameNumber": 2,
+    "date": "2026-04-22",
+    "homeTeam": "OKC",
+    "awayTeam": "PHO",
+    "homeScore": 120,
+    "awayScore": 107,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-r1-okc-pho",
+    "gameNumber": 3,
+    "date": "2026-04-25",
+    "homeTeam": "PHO",
+    "awayTeam": "OKC",
+    "homeScore": 109,
+    "awayScore": 121,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-r1-okc-pho",
+    "gameNumber": 4,
+    "date": "2026-04-27",
+    "homeTeam": "PHO",
+    "awayTeam": "OKC",
+    "homeScore": 122,
+    "awayScore": 131,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2026-west-r1-sas-por",
+    "gameNumber": 1,
+    "date": "2026-04-19",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 111,
+    "awayScore": 98,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-r1-sas-por",
+    "gameNumber": 2,
+    "date": "2026-04-21",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 103,
+    "awayScore": 106,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2026-west-r1-sas-por",
+    "gameNumber": 3,
+    "date": "2026-04-24",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 108,
+    "awayScore": 120,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-r1-sas-por",
+    "gameNumber": 4,
+    "date": "2026-04-26",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 93,
+    "awayScore": 114,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2026-west-r1-sas-por",
+    "gameNumber": 5,
+    "date": "2026-04-28",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 114,
+    "awayScore": 95,
+    "winner": "SAS"
+  }
+]

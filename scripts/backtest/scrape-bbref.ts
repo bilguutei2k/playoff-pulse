@@ -17,7 +17,9 @@ export const SEASONS = [
   2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024,
   2025,
 ] as const;
-export type Season = (typeof SEASONS)[number];
+export const HOLDOUT_SEASON = 2026 as const;
+export type ArchivedSeason = (typeof SEASONS)[number];
+export type Season = ArchivedSeason | typeof HOLDOUT_SEASON;
 
 const RAW_DIR = path.join(process.cwd(), "data", "historical", "raw");
 // Basketball-Reference asks crawlers to stay under 20 requests/minute.
@@ -32,6 +34,10 @@ const BBREF_PAGES = {
     `https://www.basketball-reference.com/leagues/NBA_${year}_ratings.html`,
   playerAdvanced: (year: number) =>
     `https://www.basketball-reference.com/leagues/NBA_${year}_advanced.html`,
+  leagueStandings: (year: number) =>
+    `https://www.basketball-reference.com/leagues/NBA_${year}_standings.html`,
+  aprilGames: (year: number) =>
+    `https://www.basketball-reference.com/leagues/NBA_${year}_games-april.html`,
 } as const;
 
 // -- Raw data types ----------------------------------------------------------
@@ -77,6 +83,29 @@ export type RawPlayerAdvanced = {
   gamesPlayed: number;
   mpg: number;
   bpm: number;
+};
+
+export type RawConferenceSeed = {
+  season: number;
+  teamId: string;
+  conference: "East" | "West";
+  regularSeasonSeed: number;
+};
+
+export type RawPlayInGame = {
+  season: number;
+  date: string;
+  conference: "East" | "West";
+  stage: "seventh_seed_game" | "elimination_game" | "eighth_seed_game";
+  homeTeam: string;
+  awayTeam: string;
+  homeRegularSeasonSeed: number;
+  awayRegularSeasonSeed: number;
+  homeScore: number;
+  awayScore: number;
+  winner: string;
+  loser: string;
+  playoffSeedAwarded: 7 | 8 | null;
 };
 
 // -- Cache helpers -----------------------------------------------------------
@@ -366,6 +395,142 @@ export function parsePlayoffGames(html: string, season: number): RawGameResult[]
   return games;
 }
 
+export function parseConferenceSeeds(
+  html: string,
+  season: number,
+): RawConferenceSeed[] {
+  const $ = cheerio.load(html);
+  const seeds: RawConferenceSeed[] = [];
+
+  for (const [tableId, conference] of [
+    ["confs_standings_E", "East"],
+    ["confs_standings_W", "West"],
+  ] as const) {
+    const table = $(`#${tableId}`);
+    if (table.length === 0) {
+      throw new Error(`Could not find #${tableId} on league standings page.`);
+    }
+
+    let conferenceSeed = 0;
+    table.find("tbody tr").each((_, row) => {
+      const teamHref = $(row).find("[data-stat='team_name'] a").attr("href");
+      if (!teamHref) {
+        return;
+      }
+      conferenceSeed += 1;
+      seeds.push({
+        season,
+        teamId: teamIdFromHref(teamHref),
+        conference,
+        regularSeasonSeed: conferenceSeed,
+      });
+    });
+  }
+
+  if (
+    seeds.filter((row) => row.conference === "East").length !== 15 ||
+    seeds.filter((row) => row.conference === "West").length !== 15
+  ) {
+    throw new Error(
+      `Expected 15 teams per conference in ${season} standings, parsed ${seeds.length} total.`,
+    );
+  }
+
+  return seeds;
+}
+
+export function parsePlayInGames(
+  html: string,
+  season: number,
+  conferenceSeeds: RawConferenceSeed[],
+): RawPlayInGame[] {
+  const $ = cheerio.load(html);
+  const table = $("#schedule");
+  if (table.length === 0) {
+    throw new Error("Could not find #schedule table on April games page.");
+  }
+
+  const seedByTeam = new Map(
+    conferenceSeeds.map((row) => [
+      row.teamId,
+      {
+        conference: row.conference,
+        seed: row.regularSeasonSeed,
+      },
+    ]),
+  );
+  const games: RawPlayInGame[] = [];
+
+  table.find("tbody tr").each((_, row) => {
+    const rowNode = $(row);
+    if (rowNode.find("[data-stat='game_remarks']").text().trim() !== "Play-In Game") {
+      return;
+    }
+
+    const dateText = rowNode.find("[data-stat='date_game']").text().trim();
+    const awayLink = rowNode.find("[data-stat='visitor_team_name'] a").attr("href");
+    const homeLink = rowNode.find("[data-stat='home_team_name'] a").attr("href");
+    const awayScore = parseOptionalNumber(rowNode.find("[data-stat='visitor_pts']").text());
+    const homeScore = parseOptionalNumber(rowNode.find("[data-stat='home_pts']").text());
+    if (!dateText || !awayLink || !homeLink || awayScore === null || homeScore === null) {
+      throw new Error(`Incomplete play-in result row for ${season}.`);
+    }
+
+    const awayTeam = teamIdFromHref(awayLink);
+    const homeTeam = teamIdFromHref(homeLink);
+    const awayStanding = seedByTeam.get(awayTeam);
+    const homeStanding = seedByTeam.get(homeTeam);
+    if (!awayStanding || !homeStanding) {
+      throw new Error(`Missing conference seed for play-in game ${awayTeam}-${homeTeam}.`);
+    }
+    if (awayStanding.conference !== homeStanding.conference) {
+      throw new Error(`Play-in game crossed conferences: ${awayTeam}-${homeTeam}.`);
+    }
+
+    const seedPair = [awayStanding.seed, homeStanding.seed].sort((a, b) => a - b);
+    let stage: RawPlayInGame["stage"];
+    let playoffSeedAwarded: RawPlayInGame["playoffSeedAwarded"];
+    if (seedPair[0] === 7 && seedPair[1] === 8) {
+      stage = "seventh_seed_game";
+      playoffSeedAwarded = 7;
+    } else if (seedPair[0] === 9 && seedPair[1] === 10) {
+      stage = "elimination_game";
+      playoffSeedAwarded = null;
+    } else if (seedPair[0] <= 8 && seedPair[1] >= 9) {
+      stage = "eighth_seed_game";
+      playoffSeedAwarded = 8;
+    } else {
+      throw new Error(
+        `Unexpected play-in seed pairing ${awayStanding.seed}-${homeStanding.seed} for ${awayTeam}-${homeTeam}.`,
+      );
+    }
+
+    const winner = homeScore > awayScore ? homeTeam : awayTeam;
+    const loser = winner === homeTeam ? awayTeam : homeTeam;
+    games.push({
+      season,
+      date: new Date(`${dateText} 00:00:00 GMT-0400`).toISOString().slice(0, 10),
+      conference: homeStanding.conference,
+      stage,
+      homeTeam,
+      awayTeam,
+      homeRegularSeasonSeed: homeStanding.seed,
+      awayRegularSeasonSeed: awayStanding.seed,
+      homeScore,
+      awayScore,
+      winner,
+      loser,
+      playoffSeedAwarded,
+    });
+  });
+
+  if (games.length !== 6) {
+    throw new Error(`Expected 6 play-in games for ${season}, parsed ${games.length}.`);
+  }
+
+  return games;
+}
+
 export function parseTeamRatings(html: string, season: number): RawTeamRating[] {
   const commentedTable = extractCommentedTable(html, "ratings");
   const $ = cheerio.load(commentedTable ?? html);
@@ -481,6 +646,7 @@ export async function fetchSeasonData(year: Season): Promise<{
   games: RawGameResult[];
   teamRatings: RawTeamRating[];
   playerAdvanced: RawPlayerAdvanced[];
+  playInGames: RawPlayInGame[];
 }> {
   const gamesHtml = await fetchWithCache(year, "playoff-games", BBREF_PAGES.playoffGames(year));
   const ratingsHtml = await fetchWithCache(year, "team-ratings", BBREF_PAGES.teamRatings(year));
@@ -495,12 +661,31 @@ export async function fetchSeasonData(year: Season): Promise<{
     "playoff-bracket",
     BBREF_PAGES.playoffBracket(year),
   );
+  let playInGames: RawPlayInGame[] = [];
+  if (year === HOLDOUT_SEASON) {
+    const standingsHtml = await fetchWithCache(
+      year,
+      "league-standings",
+      BBREF_PAGES.leagueStandings(year),
+    );
+    const aprilGamesHtml = await fetchWithCache(
+      year,
+      "april-games",
+      BBREF_PAGES.aprilGames(year),
+    );
+    playInGames = parsePlayInGames(
+      aprilGamesHtml,
+      year,
+      parseConferenceSeeds(standingsHtml, year),
+    );
+  }
 
   return {
     series: parsePlayoffBracket(bracketHtml, year, teamRatings),
     games: parsePlayoffGames(gamesHtml, year),
     teamRatings,
     playerAdvanced: parsePlayerAdvanced(advancedHtml, year),
+    playInGames,
   };
 }
 

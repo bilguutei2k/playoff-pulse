@@ -52,6 +52,7 @@ export const REGULAR_SEASON_END_DATES: Record<Season, string> = {
   2023: "2023-04-09",
   2024: "2024-04-14",
   2025: "2025-04-13",
+  2026: "2026-04-12",
 };
 
 export const BUBBLE_SEASON = 2020;
