@@ -189,7 +189,7 @@ export function normalizeEspnScoreboard(
   }
 
   const warnings = [
-    "Read-only scoreboard probe. It does not update forecast inputs yet.",
+    "Read-only scoreboard probe. It does not update forecast inputs.",
     "ESPN site scoreboard is an external public endpoint, not an official model input contract.",
   ];
 

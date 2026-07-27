@@ -11,3 +11,6 @@ data/historical/raw/
 # (CI run writes to $RUNNER_TEMP outside the repo)
 refresh-summary.md
 .env*
+
+# Finder-style duplicate TypeScript artifacts
+* 2.ts
