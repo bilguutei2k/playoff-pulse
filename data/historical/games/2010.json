@@ -1,0 +1,822 @@
+[
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 1,
+    "date": "2010-06-03",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 89,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 2,
+    "date": "2010-06-06",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 103,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 3,
+    "date": "2010-06-08",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 84,
+    "awayScore": 91,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 4,
+    "date": "2010-06-10",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 89,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 5,
+    "date": "2010-06-13",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 92,
+    "awayScore": 86,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 6,
+    "date": "2010-06-15",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 89,
+    "awayScore": 67,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-finals-finals-lal-bos",
+    "gameNumber": 7,
+    "date": "2010-06-17",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 83,
+    "awayScore": 79,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-east-cf-orl-bos",
+    "gameNumber": 1,
+    "date": "2010-05-16",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 88,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-cf-orl-bos",
+    "gameNumber": 2,
+    "date": "2010-05-18",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 92,
+    "awayScore": 95,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-cf-orl-bos",
+    "gameNumber": 3,
+    "date": "2010-05-22",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 94,
+    "awayScore": 71,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-cf-orl-bos",
+    "gameNumber": 4,
+    "date": "2010-05-24",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 92,
+    "awayScore": 96,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-cf-orl-bos",
+    "gameNumber": 5,
+    "date": "2010-05-26",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 113,
+    "awayScore": 92,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-cf-orl-bos",
+    "gameNumber": 6,
+    "date": "2010-05-28",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 96,
+    "awayScore": 84,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-west-cf-lal-pho",
+    "gameNumber": 1,
+    "date": "2010-05-17",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 128,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-cf-lal-pho",
+    "gameNumber": 2,
+    "date": "2010-05-19",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 124,
+    "awayScore": 112,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-cf-lal-pho",
+    "gameNumber": 3,
+    "date": "2010-05-23",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 118,
+    "awayScore": 109,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-cf-lal-pho",
+    "gameNumber": 4,
+    "date": "2010-05-25",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 115,
+    "awayScore": 106,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-cf-lal-pho",
+    "gameNumber": 5,
+    "date": "2010-05-27",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 103,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-cf-lal-pho",
+    "gameNumber": 6,
+    "date": "2010-05-29",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 111,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-east-csf-cle-bos",
+    "gameNumber": 1,
+    "date": "2010-05-01",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 101,
+    "awayScore": 93,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2010-east-csf-cle-bos",
+    "gameNumber": 2,
+    "date": "2010-05-03",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 86,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-csf-cle-bos",
+    "gameNumber": 3,
+    "date": "2010-05-07",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 95,
+    "awayScore": 124,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2010-east-csf-cle-bos",
+    "gameNumber": 4,
+    "date": "2010-05-09",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-csf-cle-bos",
+    "gameNumber": 5,
+    "date": "2010-05-11",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 88,
+    "awayScore": 120,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-csf-cle-bos",
+    "gameNumber": 6,
+    "date": "2010-05-13",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 94,
+    "awayScore": 85,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-csf-orl-atl",
+    "gameNumber": 1,
+    "date": "2010-05-04",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 114,
+    "awayScore": 71,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-csf-orl-atl",
+    "gameNumber": 2,
+    "date": "2010-05-06",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 112,
+    "awayScore": 98,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-csf-orl-atl",
+    "gameNumber": 3,
+    "date": "2010-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 75,
+    "awayScore": 105,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-csf-orl-atl",
+    "gameNumber": 4,
+    "date": "2010-05-10",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 84,
+    "awayScore": 98,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-west-csf-lal-uta",
+    "gameNumber": 1,
+    "date": "2010-05-02",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-csf-lal-uta",
+    "gameNumber": 2,
+    "date": "2010-05-04",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 111,
+    "awayScore": 103,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-csf-lal-uta",
+    "gameNumber": 3,
+    "date": "2010-05-08",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 110,
+    "awayScore": 111,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-csf-lal-uta",
+    "gameNumber": 4,
+    "date": "2010-05-10",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 111,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-csf-pho-sas",
+    "gameNumber": 1,
+    "date": "2010-05-03",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 111,
+    "awayScore": 102,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-csf-pho-sas",
+    "gameNumber": 2,
+    "date": "2010-05-05",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 110,
+    "awayScore": 102,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-csf-pho-sas",
+    "gameNumber": 3,
+    "date": "2010-05-07",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 96,
+    "awayScore": 110,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-csf-pho-sas",
+    "gameNumber": 4,
+    "date": "2010-05-09",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 101,
+    "awayScore": 107,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 1,
+    "date": "2010-04-17",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 2,
+    "date": "2010-04-20",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 96,
+    "awayScore": 86,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 3,
+    "date": "2010-04-24",
+    "homeTeam": "MIL",
+    "awayTeam": "ATL",
+    "homeScore": 107,
+    "awayScore": 89,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 4,
+    "date": "2010-04-26",
+    "homeTeam": "MIL",
+    "awayTeam": "ATL",
+    "homeScore": 111,
+    "awayScore": 104,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 5,
+    "date": "2010-04-28",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 87,
+    "awayScore": 91,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 6,
+    "date": "2010-04-30",
+    "homeTeam": "MIL",
+    "awayTeam": "ATL",
+    "homeScore": 69,
+    "awayScore": 83,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2010-east-r1-atl-mil",
+    "gameNumber": 7,
+    "date": "2010-05-02",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 95,
+    "awayScore": 74,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2010-east-r1-bos-mia",
+    "gameNumber": 1,
+    "date": "2010-04-17",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 85,
+    "awayScore": 76,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-r1-bos-mia",
+    "gameNumber": 2,
+    "date": "2010-04-20",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 106,
+    "awayScore": 77,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-r1-bos-mia",
+    "gameNumber": 3,
+    "date": "2010-04-23",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 98,
+    "awayScore": 100,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-r1-bos-mia",
+    "gameNumber": 4,
+    "date": "2010-04-25",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 101,
+    "awayScore": 92,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2010-east-r1-bos-mia",
+    "gameNumber": 5,
+    "date": "2010-04-27",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 86,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2010-east-r1-cle-chi",
+    "gameNumber": 1,
+    "date": "2010-04-17",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 83,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2010-east-r1-cle-chi",
+    "gameNumber": 2,
+    "date": "2010-04-19",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 112,
+    "awayScore": 102,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2010-east-r1-cle-chi",
+    "gameNumber": 3,
+    "date": "2010-04-22",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 108,
+    "awayScore": 106,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2010-east-r1-cle-chi",
+    "gameNumber": 4,
+    "date": "2010-04-25",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 98,
+    "awayScore": 121,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2010-east-r1-cle-chi",
+    "gameNumber": 5,
+    "date": "2010-04-27",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 94,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2010-east-r1-orl-cha",
+    "gameNumber": 1,
+    "date": "2010-04-18",
+    "homeTeam": "ORL",
+    "awayTeam": "CHA",
+    "homeScore": 98,
+    "awayScore": 89,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-r1-orl-cha",
+    "gameNumber": 2,
+    "date": "2010-04-21",
+    "homeTeam": "ORL",
+    "awayTeam": "CHA",
+    "homeScore": 92,
+    "awayScore": 77,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-r1-orl-cha",
+    "gameNumber": 3,
+    "date": "2010-04-24",
+    "homeTeam": "CHA",
+    "awayTeam": "ORL",
+    "homeScore": 86,
+    "awayScore": 90,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-east-r1-orl-cha",
+    "gameNumber": 4,
+    "date": "2010-04-26",
+    "homeTeam": "CHA",
+    "awayTeam": "ORL",
+    "homeScore": 90,
+    "awayScore": 99,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2010-west-r1-lal-okc",
+    "gameNumber": 1,
+    "date": "2010-04-18",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 87,
+    "awayScore": 79,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-r1-lal-okc",
+    "gameNumber": 2,
+    "date": "2010-04-20",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 95,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-r1-lal-okc",
+    "gameNumber": 3,
+    "date": "2010-04-22",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 101,
+    "awayScore": 96,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2010-west-r1-lal-okc",
+    "gameNumber": 4,
+    "date": "2010-04-24",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 110,
+    "awayScore": 89,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2010-west-r1-lal-okc",
+    "gameNumber": 5,
+    "date": "2010-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 111,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-r1-lal-okc",
+    "gameNumber": 6,
+    "date": "2010-04-30",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 94,
+    "awayScore": 95,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2010-west-r1-pho-por",
+    "gameNumber": 1,
+    "date": "2010-04-18",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 100,
+    "awayScore": 105,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2010-west-r1-pho-por",
+    "gameNumber": 2,
+    "date": "2010-04-20",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 119,
+    "awayScore": 90,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-r1-pho-por",
+    "gameNumber": 3,
+    "date": "2010-04-22",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 89,
+    "awayScore": 108,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-r1-pho-por",
+    "gameNumber": 4,
+    "date": "2010-04-24",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 96,
+    "awayScore": 87,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2010-west-r1-pho-por",
+    "gameNumber": 5,
+    "date": "2010-04-26",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 107,
+    "awayScore": 88,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-r1-pho-por",
+    "gameNumber": 6,
+    "date": "2010-04-29",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 90,
+    "awayScore": 99,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2010-west-r1-dal-sas",
+    "gameNumber": 1,
+    "date": "2010-04-18",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 100,
+    "awayScore": 94,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2010-west-r1-dal-sas",
+    "gameNumber": 2,
+    "date": "2010-04-21",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 88,
+    "awayScore": 102,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2010-west-r1-dal-sas",
+    "gameNumber": 3,
+    "date": "2010-04-23",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 94,
+    "awayScore": 90,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2010-west-r1-dal-sas",
+    "gameNumber": 4,
+    "date": "2010-04-25",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 92,
+    "awayScore": 89,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2010-west-r1-dal-sas",
+    "gameNumber": 5,
+    "date": "2010-04-27",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 103,
+    "awayScore": 81,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2010-west-r1-dal-sas",
+    "gameNumber": 6,
+    "date": "2010-04-29",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2010-west-r1-den-uta",
+    "gameNumber": 1,
+    "date": "2010-04-17",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 126,
+    "awayScore": 113,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2010-west-r1-den-uta",
+    "gameNumber": 2,
+    "date": "2010-04-19",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 111,
+    "awayScore": 114,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2010-west-r1-den-uta",
+    "gameNumber": 3,
+    "date": "2010-04-23",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 93,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2010-west-r1-den-uta",
+    "gameNumber": 4,
+    "date": "2010-04-25",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 117,
+    "awayScore": 106,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2010-west-r1-den-uta",
+    "gameNumber": 5,
+    "date": "2010-04-28",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 116,
+    "awayScore": 102,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2010-west-r1-den-uta",
+    "gameNumber": 6,
+    "date": "2010-04-30",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 112,
+    "awayScore": 104,
+    "winner": "UTA"
+  }
+]

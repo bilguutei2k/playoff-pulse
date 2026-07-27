@@ -19,16 +19,16 @@ export function BacktestSummaryCard() {
           higher-seed-wins ({formatNumber(models.higher_seed.brierScore, 3)}), and
           home-team-wins ({formatNumber(models.home_team.brierScore, 3)}) on{" "}
           {totalSeries} reconstructed historical series, {firstSeason}–{lastSeason}.
-          Its small edge over SRS-only ({formatNumber(models.srs_proxy_only.brierScore, 3)})
-          and net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)}) is
-          not statistically distinguishable from zero. Inputs corrected and
-          results regenerated July 2026.
+          Its point estimate trails SRS-only ({formatNumber(models.srs_proxy_only.brierScore, 3)})
+          and net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)});
+          neither difference is statistically distinguishable from zero.
+          Results were expanded and regenerated in July 2026.
         </p>
       </div>
 
       <Link
         href="/methodology"
-        className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-accent)] bg-[var(--color-accent)] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent-text)] transition hover:bg-[var(--color-accent-hover)]"
+        className="pp-button pp-button-primary w-fit"
       >
         View methodology
         <ArrowRight className="h-4 w-4" aria-hidden />

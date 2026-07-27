@@ -1,0 +1,80 @@
+name: Issue prospective forecast
+
+# Manual, PR-gated issuance for the next postseason. The workflow captures its
+# own UTC issue time, validates that it is after the committed data snapshot
+# and strictly before the declared game start, writes an immutable archive,
+# runs the verifier, and opens a reviewable pull request. A failed temporal
+# check produces no archive and no PR.
+
+on:
+  workflow_dispatch:
+    inputs:
+      series_id:
+        description: "Configured series ID"
+        required: true
+        type: string
+      game_id:
+        description: "Stable target game ID"
+        required: true
+        type: string
+      scheduled_start:
+        description: "Scheduled game start as ISO timestamp"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Issue immutable forecast archive
+        env:
+          SERIES_ID: ${{ inputs.series_id }}
+          GAME_ID: ${{ inputs.game_id }}
+          SCHEDULED_START: ${{ inputs.scheduled_start }}
+        run: |
+          ISSUED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          corepack pnpm archive:issue -- \
+            --issued-at "$ISSUED_AT" \
+            --target-series "$SERIES_ID" \
+            --target-game "$GAME_ID" \
+            --target-start "$SCHEDULED_START"
+
+      - name: Verify model and archive invariants
+        run: corepack pnpm verify
+
+      - name: Create issuance pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: forecast-issue/manual
+          title: "chore(forecast): issue ${{ inputs.game_id }}"
+          commit-message: "chore(forecast): issue ${{ inputs.game_id }}"
+          body: |
+            Immutable prospective forecast issued before `${{ inputs.game_id }}`.
+
+            - Series: `${{ inputs.series_id }}`
+            - Scheduled start: `${{ inputs.scheduled_start }}`
+            - Issue time: captured by the workflow at execution
+
+            Merge preserves the issued artifact; review must not change its inputs or timestamp.
+          add-paths: docs/forecast-archive/*.json
+          delete-branch: true
+

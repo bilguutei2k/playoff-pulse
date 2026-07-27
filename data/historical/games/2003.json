@@ -1,0 +1,882 @@
+[
+  {
+    "seriesId": "2003-finals-finals-njn-sas",
+    "gameNumber": 1,
+    "date": "2003-06-04",
+    "homeTeam": "SAS",
+    "awayTeam": "NJN",
+    "homeScore": 101,
+    "awayScore": 89,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-finals-finals-njn-sas",
+    "gameNumber": 2,
+    "date": "2003-06-06",
+    "homeTeam": "SAS",
+    "awayTeam": "NJN",
+    "homeScore": 85,
+    "awayScore": 87,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-finals-finals-njn-sas",
+    "gameNumber": 3,
+    "date": "2003-06-08",
+    "homeTeam": "NJN",
+    "awayTeam": "SAS",
+    "homeScore": 79,
+    "awayScore": 84,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-finals-finals-njn-sas",
+    "gameNumber": 4,
+    "date": "2003-06-11",
+    "homeTeam": "NJN",
+    "awayTeam": "SAS",
+    "homeScore": 77,
+    "awayScore": 76,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-finals-finals-njn-sas",
+    "gameNumber": 5,
+    "date": "2003-06-13",
+    "homeTeam": "NJN",
+    "awayTeam": "SAS",
+    "homeScore": 83,
+    "awayScore": 93,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-finals-finals-njn-sas",
+    "gameNumber": 6,
+    "date": "2003-06-15",
+    "homeTeam": "SAS",
+    "awayTeam": "NJN",
+    "homeScore": 88,
+    "awayScore": 77,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-east-cf-det-njn",
+    "gameNumber": 1,
+    "date": "2003-05-18",
+    "homeTeam": "DET",
+    "awayTeam": "NJN",
+    "homeScore": 74,
+    "awayScore": 76,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-cf-det-njn",
+    "gameNumber": 2,
+    "date": "2003-05-20",
+    "homeTeam": "DET",
+    "awayTeam": "NJN",
+    "homeScore": 86,
+    "awayScore": 88,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-cf-det-njn",
+    "gameNumber": 3,
+    "date": "2003-05-22",
+    "homeTeam": "NJN",
+    "awayTeam": "DET",
+    "homeScore": 97,
+    "awayScore": 85,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-cf-det-njn",
+    "gameNumber": 4,
+    "date": "2003-05-24",
+    "homeTeam": "NJN",
+    "awayTeam": "DET",
+    "homeScore": 102,
+    "awayScore": 82,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-west-cf-dal-sas",
+    "gameNumber": 1,
+    "date": "2003-05-19",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 110,
+    "awayScore": 113,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-cf-dal-sas",
+    "gameNumber": 2,
+    "date": "2003-05-21",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 119,
+    "awayScore": 106,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-cf-dal-sas",
+    "gameNumber": 3,
+    "date": "2003-05-23",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 83,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-cf-dal-sas",
+    "gameNumber": 4,
+    "date": "2003-05-25",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 95,
+    "awayScore": 102,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-cf-dal-sas",
+    "gameNumber": 5,
+    "date": "2003-05-27",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 91,
+    "awayScore": 103,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-cf-dal-sas",
+    "gameNumber": 6,
+    "date": "2003-05-29",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 78,
+    "awayScore": 90,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-east-csf-det-phi",
+    "gameNumber": 1,
+    "date": "2003-05-06",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 98,
+    "awayScore": 87,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-csf-det-phi",
+    "gameNumber": 2,
+    "date": "2003-05-08",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 104,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-csf-det-phi",
+    "gameNumber": 3,
+    "date": "2003-05-10",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 93,
+    "awayScore": 83,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2003-east-csf-det-phi",
+    "gameNumber": 4,
+    "date": "2003-05-11",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 95,
+    "awayScore": 82,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2003-east-csf-det-phi",
+    "gameNumber": 5,
+    "date": "2003-05-14",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 78,
+    "awayScore": 77,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-csf-det-phi",
+    "gameNumber": 6,
+    "date": "2003-05-16",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 89,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-csf-njn-bos",
+    "gameNumber": 1,
+    "date": "2003-05-05",
+    "homeTeam": "NJN",
+    "awayTeam": "BOS",
+    "homeScore": 97,
+    "awayScore": 93,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-csf-njn-bos",
+    "gameNumber": 2,
+    "date": "2003-05-07",
+    "homeTeam": "NJN",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 95,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-csf-njn-bos",
+    "gameNumber": 3,
+    "date": "2003-05-09",
+    "homeTeam": "BOS",
+    "awayTeam": "NJN",
+    "homeScore": 76,
+    "awayScore": 94,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-csf-njn-bos",
+    "gameNumber": 4,
+    "date": "2003-05-12",
+    "homeTeam": "BOS",
+    "awayTeam": "NJN",
+    "homeScore": 101,
+    "awayScore": 110,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 1,
+    "date": "2003-05-06",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 113,
+    "awayScore": 124,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 2,
+    "date": "2003-05-08",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 132,
+    "awayScore": 110,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 3,
+    "date": "2003-05-10",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 137,
+    "awayScore": 141,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 4,
+    "date": "2003-05-11",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 99,
+    "awayScore": 83,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 5,
+    "date": "2003-05-13",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 112,
+    "awayScore": 93,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 6,
+    "date": "2003-05-15",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 115,
+    "awayScore": 109,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-csf-dal-sac",
+    "gameNumber": 7,
+    "date": "2003-05-17",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 112,
+    "awayScore": 99,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-csf-sas-lal",
+    "gameNumber": 1,
+    "date": "2003-05-05",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 87,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-csf-sas-lal",
+    "gameNumber": 2,
+    "date": "2003-05-07",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 114,
+    "awayScore": 95,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-csf-sas-lal",
+    "gameNumber": 3,
+    "date": "2003-05-09",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 110,
+    "awayScore": 95,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2003-west-csf-sas-lal",
+    "gameNumber": 4,
+    "date": "2003-05-11",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 99,
+    "awayScore": 95,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2003-west-csf-sas-lal",
+    "gameNumber": 5,
+    "date": "2003-05-13",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 94,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-csf-sas-lal",
+    "gameNumber": 6,
+    "date": "2003-05-15",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 82,
+    "awayScore": 110,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-east-r1-ind-bos",
+    "gameNumber": 1,
+    "date": "2003-04-19",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 100,
+    "awayScore": 103,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2003-east-r1-ind-bos",
+    "gameNumber": 2,
+    "date": "2003-04-21",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 89,
+    "awayScore": 77,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2003-east-r1-ind-bos",
+    "gameNumber": 3,
+    "date": "2003-04-24",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 101,
+    "awayScore": 83,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2003-east-r1-ind-bos",
+    "gameNumber": 4,
+    "date": "2003-04-27",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2003-east-r1-ind-bos",
+    "gameNumber": 5,
+    "date": "2003-04-29",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 93,
+    "awayScore": 88,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2003-east-r1-ind-bos",
+    "gameNumber": 6,
+    "date": "2003-05-01",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 110,
+    "awayScore": 90,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 1,
+    "date": "2003-04-20",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 94,
+    "awayScore": 99,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 2,
+    "date": "2003-04-23",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 89,
+    "awayScore": 77,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 3,
+    "date": "2003-04-25",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 89,
+    "awayScore": 80,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 4,
+    "date": "2003-04-27",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 100,
+    "awayScore": 92,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 5,
+    "date": "2003-04-30",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 98,
+    "awayScore": 67,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 6,
+    "date": "2003-05-02",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 88,
+    "awayScore": 103,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-r1-det-orl",
+    "gameNumber": 7,
+    "date": "2003-05-04",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 108,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2003-east-r1-njn-mil",
+    "gameNumber": 1,
+    "date": "2003-04-19",
+    "homeTeam": "NJN",
+    "awayTeam": "MIL",
+    "homeScore": 109,
+    "awayScore": 96,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-r1-njn-mil",
+    "gameNumber": 2,
+    "date": "2003-04-22",
+    "homeTeam": "NJN",
+    "awayTeam": "MIL",
+    "homeScore": 85,
+    "awayScore": 88,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2003-east-r1-njn-mil",
+    "gameNumber": 3,
+    "date": "2003-04-24",
+    "homeTeam": "MIL",
+    "awayTeam": "NJN",
+    "homeScore": 101,
+    "awayScore": 103,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-r1-njn-mil",
+    "gameNumber": 4,
+    "date": "2003-04-26",
+    "homeTeam": "MIL",
+    "awayTeam": "NJN",
+    "homeScore": 119,
+    "awayScore": 114,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2003-east-r1-njn-mil",
+    "gameNumber": 5,
+    "date": "2003-04-29",
+    "homeTeam": "NJN",
+    "awayTeam": "MIL",
+    "homeScore": 89,
+    "awayScore": 82,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-r1-njn-mil",
+    "gameNumber": 6,
+    "date": "2003-05-01",
+    "homeTeam": "MIL",
+    "awayTeam": "NJN",
+    "homeScore": 101,
+    "awayScore": 113,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2003-east-r1-phi-noh",
+    "gameNumber": 1,
+    "date": "2003-04-20",
+    "homeTeam": "PHI",
+    "awayTeam": "NOH",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2003-east-r1-phi-noh",
+    "gameNumber": 2,
+    "date": "2003-04-23",
+    "homeTeam": "PHI",
+    "awayTeam": "NOH",
+    "homeScore": 90,
+    "awayScore": 85,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2003-east-r1-phi-noh",
+    "gameNumber": 3,
+    "date": "2003-04-26",
+    "homeTeam": "NOH",
+    "awayTeam": "PHI",
+    "homeScore": 99,
+    "awayScore": 85,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2003-east-r1-phi-noh",
+    "gameNumber": 4,
+    "date": "2003-04-28",
+    "homeTeam": "NOH",
+    "awayTeam": "PHI",
+    "homeScore": 87,
+    "awayScore": 96,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2003-east-r1-phi-noh",
+    "gameNumber": 5,
+    "date": "2003-04-30",
+    "homeTeam": "PHI",
+    "awayTeam": "NOH",
+    "homeScore": 91,
+    "awayScore": 93,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2003-east-r1-phi-noh",
+    "gameNumber": 6,
+    "date": "2003-05-02",
+    "homeTeam": "NOH",
+    "awayTeam": "PHI",
+    "homeScore": 103,
+    "awayScore": 107,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 1,
+    "date": "2003-04-19",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 96,
+    "awayScore": 86,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 2,
+    "date": "2003-04-23",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 103,
+    "awayScore": 99,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 3,
+    "date": "2003-04-25",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 103,
+    "awayScore": 115,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 4,
+    "date": "2003-04-27",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 98,
+    "awayScore": 79,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 5,
+    "date": "2003-04-30",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 99,
+    "awayScore": 103,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 6,
+    "date": "2003-05-02",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 125,
+    "awayScore": 103,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2003-west-r1-dal-por",
+    "gameNumber": 7,
+    "date": "2003-05-04",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 107,
+    "awayScore": 95,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2003-west-r1-min-lal",
+    "gameNumber": 1,
+    "date": "2003-04-20",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 98,
+    "awayScore": 117,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2003-west-r1-min-lal",
+    "gameNumber": 2,
+    "date": "2003-04-22",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 119,
+    "awayScore": 91,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2003-west-r1-min-lal",
+    "gameNumber": 3,
+    "date": "2003-04-24",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 110,
+    "awayScore": 114,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2003-west-r1-min-lal",
+    "gameNumber": 4,
+    "date": "2003-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 102,
+    "awayScore": 97,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2003-west-r1-min-lal",
+    "gameNumber": 5,
+    "date": "2003-04-29",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 90,
+    "awayScore": 120,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2003-west-r1-min-lal",
+    "gameNumber": 6,
+    "date": "2003-05-01",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 101,
+    "awayScore": 85,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2003-west-r1-sac-uta",
+    "gameNumber": 1,
+    "date": "2003-04-19",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 96,
+    "awayScore": 90,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-r1-sac-uta",
+    "gameNumber": 2,
+    "date": "2003-04-21",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 108,
+    "awayScore": 95,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-r1-sac-uta",
+    "gameNumber": 3,
+    "date": "2003-04-26",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 107,
+    "awayScore": 104,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2003-west-r1-sac-uta",
+    "gameNumber": 4,
+    "date": "2003-04-28",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 82,
+    "awayScore": 99,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-r1-sac-uta",
+    "gameNumber": 5,
+    "date": "2003-04-30",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 111,
+    "awayScore": 91,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2003-west-r1-sas-pho",
+    "gameNumber": 1,
+    "date": "2003-04-19",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 95,
+    "awayScore": 96,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2003-west-r1-sas-pho",
+    "gameNumber": 2,
+    "date": "2003-04-21",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 84,
+    "awayScore": 76,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-r1-sas-pho",
+    "gameNumber": 3,
+    "date": "2003-04-25",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 86,
+    "awayScore": 99,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-r1-sas-pho",
+    "gameNumber": 4,
+    "date": "2003-04-27",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 86,
+    "awayScore": 84,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2003-west-r1-sas-pho",
+    "gameNumber": 5,
+    "date": "2003-04-29",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 94,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2003-west-r1-sas-pho",
+    "gameNumber": 6,
+    "date": "2003-05-01",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 85,
+    "awayScore": 87,
+    "winner": "SAS"
+  }
+]

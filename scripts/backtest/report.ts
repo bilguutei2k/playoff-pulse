@@ -167,7 +167,7 @@ export function renderMethodologyMarkdown(report: BacktestReport): string {
     "- Raw regular-season MPG is retained, then deterministically normalized into a complete 240-minute playoff rotation with a 40-minute player cap.",
     "- Historical manual adjustments are fixed at 0.",
     "- Historical availability is explicitly marked unknown and assumed available because injury timelines are not yet modeled.",
-    "- Simulated series use the full seven-game 2-2-1-1-1 home pattern reconstructed from the actual Game 1 host, so games beyond the realized series length keep the correct home court instead of defaulting to neutral.",
+    "- Simulated series reconstruct the full seven-game home pattern from the actual Game 1 host: 2-3-2 for NBA Finals through 2013 and 2-2-1-1-1 otherwise. Games beyond the realized series length therefore keep the era-correct home court instead of defaulting to neutral.",
     "",
     "## Leakage Controls",
     "",

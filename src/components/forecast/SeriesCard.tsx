@@ -122,7 +122,7 @@ export function SeriesCard({
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b-2 border-[var(--color-border-subtle)] bg-gradient-to-b from-[var(--color-panel-secondary)] to-[var(--color-panel-primary)] px-4 py-4">
         <button
           type="button"
-          className="grid justify-items-center gap-2 text-center transition hover:opacity-80"
+          className="pp-action-tile grid justify-items-center gap-2 border-transparent bg-transparent p-2 text-center"
           onClick={() => onTeamSelect?.(teamA.id)}
         >
           <span className="pp-team-badge" data-team={teamA.abbreviation}>
@@ -159,7 +159,7 @@ export function SeriesCard({
         </div>
         <button
           type="button"
-          className="grid justify-items-center gap-2 text-center transition hover:opacity-80"
+          className="pp-action-tile grid justify-items-center gap-2 border-transparent bg-transparent p-2 text-center"
           onClick={() => onTeamSelect?.(teamB.id)}
         >
           <span className="pp-team-badge" data-team={teamB.abbreviation}>

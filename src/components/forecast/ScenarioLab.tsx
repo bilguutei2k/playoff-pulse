@@ -51,7 +51,7 @@ function PlayerControls({
                     projectedMinutes: injuryStatus === "out" ? 0 : minutes || player.healthyProjectedMinutes || player.projectedMinutes,
                   });
                 }}
-                className="border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] px-2 py-1 text-xs"
+                className="pp-select min-h-[30px] py-1 text-xs"
               >
                 <option value="healthy">Healthy</option>
                 <option value="questionable">Questionable</option>
@@ -122,7 +122,7 @@ export function ScenarioLab() {
           <span className="text-xs text-[var(--color-text-muted)]">
             Replacement minutes: {baseA.abbreviation} {formatNumber(allocationA.replacementMinutes)} / {baseB.abbreviation} {formatNumber(allocationB.replacementMinutes)}
           </span>
-          <button type="button" onClick={() => setOverrides({})} className="border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase">Reset assumptions</button>
+          <button type="button" onClick={() => setOverrides({})} className="pp-button pp-button-danger">Reset assumptions</button>
         </div>
       </section>
 
@@ -168,7 +168,7 @@ export function ScenarioLab() {
           <h2 className="mt-2 text-lg font-bold">Pregame probability path</h2>
         </div>
         <div className="grid gap-4 p-4">
-          <select value={replaySeriesId} onChange={(event) => setReplaySeriesId(event.target.value)} className="w-full border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] p-2 text-sm">
+          <select value={replaySeriesId} onChange={(event) => setReplaySeriesId(event.target.value)} className="pp-select">
             {evidence.seriesIndex.slice().sort((a, b) => b.season - a.season || a.seriesId.localeCompare(b.seriesId)).map((row) => (
               <option key={row.seriesId} value={row.seriesId}>{row.season} · {row.teamA} vs {row.teamB} · {row.round}</option>
             ))}

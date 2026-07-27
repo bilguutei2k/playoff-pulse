@@ -11,7 +11,9 @@ export function ResearchEvidence() {
         <div className="pp-kicker text-[var(--color-accent)]">Rolling-origin evidence</div>
         <h2 className="mt-2 text-lg font-bold">What survived validation</h2>
         <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
-          Each evaluation season from 2019–2025 was predicted using only earlier seasons.
+          Each evaluation season from {research.evaluationSeasons[0]}–
+          {research.evaluationSeasons.at(-1)} was predicted using only earlier
+          seasons after a three-season initialization window.
           Candidate complexity remains excluded when its season-clustered interval includes harm.
         </p>
       </div>
@@ -64,8 +66,91 @@ export function ResearchEvidence() {
         </div>
       </div>
 
+      <div className="grid gap-4 border-t-2 border-[var(--color-border-subtle)] p-4 lg:grid-cols-2">
+        <div className="bg-[var(--color-panel-secondary)] p-3">
+          <div className="pp-kicker">Coherent calibration experiment</div>
+          <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+            Game probabilities were calibrated using earlier seasons, then
+            propagated through the exact series solver—not calibrated again at
+            the series output.
+          </p>
+          <div className="mt-3 flex items-end justify-between gap-3">
+            <span className="text-xs">Series Brier</span>
+            <span className="pp-number font-bold">
+              {formatNumber(
+                research.nestedCalibration.gamePropagatedThroughExactSeries.raw
+                  .brier,
+                4,
+              )}{" "}
+              →{" "}
+              {formatNumber(
+                research.nestedCalibration.gamePropagatedThroughExactSeries
+                  .calibrated.brier,
+                4,
+              )}
+            </span>
+          </div>
+          <p className="mt-2 text-[11px] leading-5 text-[var(--color-text-muted)]">
+            Point estimate improved, but the paired interval includes zero;
+            research-only.
+          </p>
+        </div>
+
+        <div className="bg-[var(--color-panel-secondary)] p-3">
+          <div className="pp-kicker">Single primary challenger</div>
+          <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+            Exact SRS-series probability plus seed difference was declared as
+            the only promotion-eligible challenger for the next prospective
+            evaluation.
+          </p>
+          <div className="mt-3 flex items-end justify-between gap-3">
+            <span className="text-xs">Matched series Brier</span>
+            <span className="pp-number font-bold">
+              {formatNumber(
+                research.primarySeriesChallenger.baselineMetrics.brier,
+                4,
+              )}{" "}
+              →{" "}
+              {formatNumber(
+                research.primarySeriesChallenger.metrics.brier,
+                4,
+              )}
+            </span>
+          </div>
+          <p className="mt-2 text-[11px] leading-5 text-[var(--color-text-muted)]">
+            Historical Δ{" "}
+            {formatNumber(
+              research.primarySeriesChallenger.comparisonToSrsHome
+                .candidateMinusBaselineBrier,
+              4,
+            )}; its interval still crosses zero, and no future season is
+            available. It is not promoted.
+          </p>
+        </div>
+      </div>
+
       <div className="border-t-2 border-[var(--color-border-subtle)] p-4">
-        <div className="pp-kicker">Rejected additions</div>
+        <div className="pp-kicker">Temporal relevance challenger</div>
+        <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+          <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+            The unchanged SRS + home model was refit using at most the ten
+            completed seasons before each target season. Its historical game
+            point estimate improved, but it remains frozen research until a
+            future season is observed.
+          </p>
+          <span className="pp-number text-xs font-bold">
+            Δ game Brier{" "}
+            {formatNumber(
+              research.preregisteredTemporalWindowCandidate
+                .comparisonToSrsHome.game.candidateMinusBaselineBrier,
+              4,
+            )}
+          </span>
+        </div>
+      </div>
+
+      <div className="border-t-2 border-[var(--color-border-subtle)] p-4">
+        <div className="pp-kicker">Feature additions not promoted</div>
         <div className="mt-3 grid gap-2 text-xs text-[var(--color-text-muted)]">
           {research.comparisonsToSrsHome.map((comparison) => (
             <div key={comparison.id} className="grid gap-1 border-b border-[var(--color-border-subtle)] pb-2 sm:grid-cols-[1fr_auto]">

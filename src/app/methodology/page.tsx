@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import backtestSummary from "../../../docs/backtest/summary.json";
+import backtestResults from "../../../docs/backtest/results.json";
+import evidence from "../../../docs/backtest/evidence.json";
 import { formatNumber, formatSigned } from "@/lib/utils/format";
 import { ResearchEvidence } from "@/components/forecast/ResearchEvidence";
 
@@ -23,10 +25,23 @@ type MethodologySection = {
   body: SectionBodyContent;
 };
 
+const fixedModel = backtestResults.results.find(
+  (result) => result.modelName === "playoff_pulse",
+);
+const fixedSrs = backtestResults.results.find(
+  (result) => result.modelName === "srs_proxy_only",
+);
+const fixedNet = backtestResults.results.find(
+  (result) => result.modelName === "net_rating_only",
+);
+const fixedHigherSeed = backtestResults.results.find(
+  (result) => result.modelName === "higher_seed",
+);
+
 const sections: MethodologySection[] = [
   {
     title: "Purpose",
-    body: "Playoff Pulse is a transparent forecast engine for NBA playoff series. It turns manual input assumptions into game, series, finals, and championship model estimates. It is not a betting product and does not make wagering recommendations.",
+    body: "Playoff Pulse is a retrospective forecasting experiment and a preserved scenario engine for NBA playoff series. It turns disclosed manual assumptions into game, series, Finals, and championship estimates, then separates those production-style outputs from reconstructed and rolling-origin research evidence. It is not a betting product and does not make wagering recommendations.",
   },
   {
     title: "Team Strength Formula",
@@ -59,10 +74,10 @@ const sections: MethodologySection[] = [
   {
     title: "Backtest Results",
     body: [
-      'Across 150 playoff series from 2016 through 2025, Playoff Pulse posts a Brier score of 0.191 -- comfortably better than a 50/50 coinflip (0.250), a "higher seed always wins" rule (0.213), and a "home team always wins" rule (0.215). Against the historical SRS-proxy-only model (0.194) or net-rating-only model (0.195), the aggregate edge is small.',
-      "Paired bootstrap intervals (scripts/backtest/significance.ts, both series- and season-resampled) make the split explicit: the advantages over coinflip, home-team, and higher-seed are conclusive, while the -0.003 edge over SRS-only and -0.004 over net-rating-only have 95% intervals that include zero. The reconstruction evaluates a fixed configuration whose parameters predate the harness and were never refit; docs/parameter-provenance.md records when and how each parameter was chosen and why this result is descriptive rather than out-of-sample.",
+      `Across ${backtestSummary.totalSeries} playoff series from ${backtestSummary.firstSeason} through ${backtestSummary.lastSeason}, the fixed Playoff Pulse configuration posts Brier ${backtestSummary.models.playoff_pulse.brierScore.toFixed(4)}. It conclusively beats coin flip (${backtestSummary.models.coinflip.brierScore.toFixed(4)}), directional higher-seed (${backtestSummary.models.higher_seed.brierScore.toFixed(4)}), and directional home-team (${backtestSummary.models.home_team.brierScore.toFixed(4)}) baselines.`,
+      `The expanded result does not beat the simple rating models: its point estimate trails SRS-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.srs_proxy_only.brierScore).toFixed(4)} Brier and net-rating-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.net_rating_only.brierScore).toFixed(4)}. Both paired 95% intervals include zero. The reconstruction evaluates a fixed configuration whose parameters predate the harness and were never refit; docs/parameter-provenance.md records why this result is descriptive rather than prospective.`,
       "The aggregate edge does not establish dominant superiority over rating-only models. Rolling-origin game evaluation and season-clustered intervals are shown above; feature additions remain excluded when their interval includes harm.",
-      "Correction, July 2026: the original May 2026 run contained two input defects -- a minutes-parsing bug that promoted a handful of deep-bench players into 21 historical rotations, and truncated home patterns that placed unplayed late-series games on neutral court. Both were fixed and every number on this page was regenerated on July 12, 2026. The headline Brier improved from 0.193 to 0.190 and every qualitative conclusion below survived the correction.",
+      "Revision history: July 12 corrected a minutes parser and truncated home patterns. The July 26 extension added 2003–2015 and the era-correct 2–3–2 NBA Finals pattern through 2013. Every displayed number was regenerated from the full 2003–2025 archive.",
     ],
   },
   {
@@ -72,15 +87,29 @@ const sections: MethodologySection[] = [
       {
         type: "table",
         headers: ["Round", "N", "Playoff Pulse", "SRS proxy", "Delta"],
-        rows: [
-          ["First Round", "80", "0.143", "0.128", "+0.0157"],
-          ["Conference Semifinal", "40", "0.262", "0.294", "-0.0320"],
-          ["Conference Final", "20", "0.246", "0.262", "-0.0163"],
-          ["NBA Finals", "10", "0.173", "0.181", "-0.0079"],
-        ],
+        rows: ([
+          "First Round",
+          "Conference Semifinal",
+          "Conference Final",
+          "NBA Finals",
+        ] as const).map((round) => {
+          const pulse = fixedModel?.breakdown.byRound[round];
+          const srs = fixedSrs?.breakdown.byRound[round];
+          return [
+            round,
+            String(pulse?.n ?? 0),
+            pulse?.brierScore.toFixed(3) ?? "—",
+            srs?.brierScore.toFixed(3) ?? "—",
+            pulse && srs
+              ? `${pulse.brierScore - srs.brierScore >= 0 ? "+" : ""}${(
+                  pulse.brierScore - srs.brierScore
+                ).toFixed(4)}`
+              : "—",
+          ];
+        }),
       },
-      "The first-round result is the warning sign: the player-impact layer appears to add noise when seed gaps are large and the simpler rating proxy is already confident. Later-round improvements are suggestive but based on smaller samples.",
-      "This is a known weakness, documented here rather than tuned against.",
+      "The first-round result remains the warning sign: the full fixed blend trails SRS-only where rating gaps are often largest. Later-round point estimates favor the blend, but those slices are progressively smaller and were not used as proof of improvement.",
+      "A smooth rating-gap shrinkage rule was frozen and evaluated separately. Its game and series comparison intervals both include zero, so it remains a 2027 research candidate rather than a production change.",
     ],
   },
   {
@@ -89,28 +118,28 @@ const sections: MethodologySection[] = [
       {
         type: "subsection",
         label: "Calibration",
-        text: "In the 50-60% probability bucket calibration is good: 55.1% predicted produces 53.1% actual. The model remains underconfident higher up the board. In the 60-70% bucket, 65.6% predicted produces 68.8% actual; in the 70-80% bucket, 74.3% predicted produces 83.3% actual. One likely explanation is that the logistic-scale parameter, currently 6.5, may be too conservative. Recalibration via leave-one-year-out cross-validation is a candidate future improvement; we have not retuned against the historical data to avoid overfitting.",
+        text: `The two calibration regimes point in different directions and must not be conflated. The fixed ${backtestSummary.totalSeries}-series reconstruction is underconfident in its 70–80% bucket (${((fixedModel?.calibrationBuckets.find((bucket) => bucket.bucketMin === 0.7)?.predictedMean ?? 0) * 100).toFixed(1)}% predicted versus ${((fixedModel?.calibrationBuckets.find((bucket) => bucket.bucketMin === 0.7)?.actualWinRate ?? 0) * 100).toFixed(1)}% observed). The stricter rolling-origin SRS + home model is overconfident overall, with slopes ${evidence.modelComparison[0].series.calibrationFit.slope.toFixed(2)} for series and ${evidence.modelComparison[0].game.calibrationFit.slope.toFixed(2)} for games. Therefore the evidence does not support blindly lowering production logisticScale from 6.5. Historical BPM/SRS calibration cannot be transferred to subjective manual production inputs.`,
       },
       {
         type: "subsection",
         label: "Bubble",
-        text: "Across the rating-based baselines (Elo-only, net-rating-only, and Playoff Pulse), bubble degradation clusters around +0.03 Brier -- the rating-based models suffer comparably. The structural baselines behave differently: higher-seed is the most robust (+0.011), and home-team is the most affected (+0.039), since fixed home-court priors collapse to coinflip-equivalent when home court goes to zero.",
+        text: `The expanded reconstruction still shows broad bubble degradation across rating models: Playoff Pulse +${((fixedModel?.breakdown.bubble.brierScore ?? 0) - (fixedModel?.breakdown.nonBubble.brierScore ?? 0)).toFixed(3)}, SRS-only +${((fixedSrs?.breakdown.bubble.brierScore ?? 0) - (fixedSrs?.breakdown.nonBubble.brierScore ?? 0)).toFixed(3)}, and net-rating-only +${((fixedNet?.breakdown.bubble.brierScore ?? 0) - (fixedNet?.breakdown.nonBubble.brierScore ?? 0)).toFixed(3)} Brier. Higher-seed is less affected (+${((fixedHigherSeed?.breakdown.bubble.brierScore ?? 0) - (fixedHigherSeed?.breakdown.nonBubble.brierScore ?? 0)).toFixed(3)}). This is one unusual postseason, not an independent sample large enough for causal attribution.`,
       },
       {
         type: "subsection",
         label: "Sample size",
-        text: "The smallest calibration buckets should not be read as signal: the 0.2-0.3 bucket has n=1, the 0.3-0.4 bucket has n=2, and the 0.9-1.0 bucket has n=5. The Finals subset is also only n=10, too small to draw conclusions from Finals-only Brier numbers.",
+        text: `The smallest fixed-model calibration buckets should not be read as stable signal: the 0.2–0.3 and 0.3–0.4 groups contain only ${fixedModel?.calibrationBuckets.find((bucket) => bucket.bucketMin === 0.2)?.count ?? 0} and ${fixedModel?.calibrationBuckets.find((bucket) => bucket.bucketMin === 0.3)?.count ?? 0} series. Even the expanded Finals subset is only ${fixedModel?.breakdown.byRound["NBA Finals"]?.n ?? 0} series.`,
       },
     ],
   },
   {
     title: "Future Versions",
-    body: "The research harness now supports rolling-origin game and series evaluation, regularized expected-margin models, exact series solving, equal-count calibration, season-clustered uncertainty, and feature ablations. Matchup and player extensions remain research-only unless they improve future held-out seasons.",
+    body: "The research harness now supports rolling-origin game and series evaluation, rolling climatology baselines, grouped Murphy Brier decomposition, regularized expected-margin models, exact series solving, nested calibration, season-clustered uncertainty, feature ablations, and preregistered candidates. Matchup and player extensions remain research-only unless they improve genuinely future archived seasons.",
   },
   {
     title: "Point-in-Time Reconstruction",
     body: [
-      "The research archive reconstructs 834 forecasts immediately before historical playoff games from 2016–2025. A Game N record includes the regular-season snapshot and Games 1 through N-1 only. It never includes Game N's result or a later result.",
+      `The research archive reconstructs ${evidence.timeline.length} forecasts immediately before historical playoff games from ${backtestSummary.firstSeason}–${backtestSummary.lastSeason}. A Game N record includes the regular-season snapshot and Games 1 through N-1 only. It never includes Game N's result or a later result.`,
       "These are leakage-safe reconstructed forecasts, not claims about forecasts published at the time. Every record identifies its model version, information set, source snapshot, impact scale, rotation source, and availability assumption.",
     ],
   },
@@ -119,10 +148,13 @@ const sections: MethodologySection[] = [
     body: "Scenario rotations conserve 240 minutes. Out players receive zero minutes; missing or vacated time becomes a disclosed replacement-level player rather than disappearing. Requests above 240 are proportionally scaled. The preserved Finals demonstration resets a completed series to 0–0 and is explicitly hypothetical, never presented as live 2026 state.",
   },
   {
-    title: "Calibration and Dynamic Candidate",
+    title: "Calibration and Registered Challengers",
     body: [
-      "Nested calibration is trained only on earlier rolling-origin predictions. It worsened both game Brier and game log loss and was rejected. It improved the eligible 75-series research subset, but is not applied to production because historical BPM/SRS inputs and subjective manual inputs are not interchangeable.",
-      "The dynamic_margin_update_v1 candidate is preregistered for a genuinely future season: after each prediction it splits 12% of margin residual between opponents and caps the carried postseason adjustment at +/-4 points. Results through 2025 are descriptive and cannot qualify it for promotion.",
+      `Nested calibration is trained only on earlier rolling-origin predictions. Across the expanded eligible sample, game calibration improves Brier ${evidence.calibration.game.raw.brier.toFixed(4)} → ${evidence.calibration.game.calibrated.brier.toFixed(4)} and log loss, so it is retained inside research. Series calibration worsens Brier ${evidence.calibration.series.raw.brier.toFixed(4)} → ${evidence.calibration.series.calibrated.brier.toFixed(4)} and is rejected. Neither mapping is applied to production because historical BPM/SRS inputs and subjective manual inputs are not interchangeable.`,
+      `The coherent alternative calibrates each possible future game's probability and then reruns the exact series solver. It improves the eligible series point estimate from ${evidence.calibration.gamePropagatedThroughExactSeries.raw.brier.toFixed(4)} to ${evidence.calibration.gamePropagatedThroughExactSeries.calibrated.brier.toFixed(4)}, but its season-clustered comparison interval includes zero, so it remains research-only.`,
+      `The single primary challenger combines the exact SRS-series logit with seed difference. On ${evidence.primarySeriesChallenger.metrics.n} matched rolling series it changes Brier ${evidence.primarySeriesChallenger.baselineMetrics.brier.toFixed(4)} → ${evidence.primarySeriesChallenger.metrics.brier.toFixed(4)}; the point improvement exceeds the declared 0.005 future promotion threshold, but the 95% interval still crosses zero. It cannot be promoted before a genuinely future archived season.`,
+      `A frozen ten-season training-window challenger improves historical game Brier by ${Math.abs(evidence.temporalWindowCandidate.comparisonToSrsHome.game.candidateMinusBaselineBrier).toFixed(4)}, with its historical season-clustered interval below zero. This is encouraging but retrospective: it remains ineligible for promotion until 2027 because the window was selected before, not during, that future evaluation.`,
+      "The dynamic_margin_update_v1 and rating_gap_player_shrinkage_v1 candidates are frozen for 2027. Their historical comparison intervals include zero; results through 2025 are descriptive and cannot qualify either for promotion.",
     ],
   },
   {
@@ -130,6 +162,17 @@ const sections: MethodologySection[] = [
     body: [
       "The current numbers should be read as model estimates from assumed inputs. They are not official data or certainties. Historical calibration evidence applies to the SRS-based research model; it does not automatically calibrate subjective production player ratings. The bracket is structurally complete, but team ratings, player impacts, and injury statuses remain manual assumptions.",
       "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale. Roster recency checks reduce a data-staleness risk; they do not validate the subjective impact ratings.",
+      `Historical availability has ${evidence.availability.observations} eligible point-in-time observations across ${evidence.availability.playerSeriesOpportunities} player-series opportunities. Injury effects are therefore not estimable. Participation after a forecast deadline is deliberately not backfilled as availability evidence.`,
+      `Production-equivalent lagged rotations are not estimable yet: the timestamped rotation contract has ${evidence.inputAudit.laggedRotations.observations} observations and ${evidence.inputAudit.laggedRotations.completePairedSeries} completely covered series. External benchmark comparison is also unestimated (${evidence.inputAudit.externalBenchmarks.observations} eligible observations). Empty coverage is surfaced as a failed prerequisite, not replaced with hindsight-derived participation or unsourced prices.`,
+      `Sensitivity bands are evaluated only as a grouped reliability diagnostic: ${evidence.sensitivityReliability.groupsWithinBand} of ${evidence.sensitivityReliability.totalGroups} equal-count groups contain the observed group rate. This is not individual probability-interval coverage because one binary outcome cannot identify a series' true latent probability.`,
+    ],
+  },
+  {
+    title: "Prospective Issuance Protocol",
+    body: [
+      "The archive command now distinguishes retrospective snapshots from prospective before-game issuance. Prospective issuance requires an explicit issue time, series ID, game ID, and scheduled start; it rejects forecasts issued before their data snapshot or at/after tipoff.",
+      "Archive filenames include issue time and model version and are immutable: an existing issue cannot be overwritten. Each prospective archive also seals the registered primary challenger's probability beside the production estimate without replacing it. Promotion decisions begin with the 2027 postseason because no forecasts were issued contemporaneously in 2026.",
+      "The promotion gate has one primary challenger, one primary endpoint, a 0.005 minimum meaningful Brier improvement, paired season-clustered uncertainty, no-worse log loss and calibration checks, production-equivalent input requirements, and a mandatory future archived season. Exploratory candidates cannot be promoted from the same evaluation.",
     ],
   },
 ];
@@ -225,7 +268,7 @@ export default function MethodologyPage() {
             <div className="p-4">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:border-[var(--color-accent)]"
+                className="pp-button"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden />
                 Back to retrospective

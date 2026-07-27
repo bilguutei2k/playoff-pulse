@@ -145,7 +145,7 @@ export function LiveDataPanel() {
         <div className="flex items-center p-4">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:border-[var(--color-accent)]"
+            className="pp-button"
             onClick={loadSnapshot}
           >
             <RefreshCw className="h-4 w-4" aria-hidden />

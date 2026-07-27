@@ -24,17 +24,53 @@ type ResearchResult = {
 };
 
 type ResearchArtifact = {
+  protocol: string;
+  evaluationSeasons: number[];
   results: ResearchResult[];
   nestedCalibration: {
     game: CalibrationArtifact;
     series: CalibrationArtifact;
+    gamePropagatedThroughExactSeries: CalibrationArtifact & {
+      comparisonToRaw: unknown;
+    };
   };
   strongSeriesBaselines: Array<{ id: string; n: number; brier: number; logLoss: number }>;
+  strongSeriesBaselineComparisons: unknown[];
+  climatologyBaselines: {
+    game: { id: string; n: number; brier: number; logLoss: number; protocol: string };
+    series: { id: string; n: number; brier: number; logLoss: number; protocol: string };
+  };
+  brierDecomposition: unknown;
+  sensitivityReliability: unknown;
   preregisteredDynamicRatingCandidate: {
     registration: unknown;
     status: string;
     metrics: unknown;
+    comparisonToSrsHome: unknown;
   };
+  preregisteredRatingGapShrinkageCandidate: {
+    registration: unknown;
+    status: string;
+    result: {
+      game: { n: number; brier: number; logLoss: number };
+      series: { n: number; brier: number; logLoss: number };
+    };
+    comparisonToSrsHome: unknown;
+  };
+  primarySeriesChallenger: {
+    registration: unknown;
+    status: string;
+    metrics: { n: number; brier: number; logLoss: number };
+    baselineMetrics: { n: number; brier: number; logLoss: number };
+    comparisonToSrsHome: unknown;
+  };
+  preregisteredTemporalWindowCandidate: {
+    registration: unknown;
+    status: string;
+    metrics: unknown;
+    comparisonToSrsHome: unknown;
+  };
+  modelSelectionGate: unknown;
 };
 
 type CalibrationArtifact = {
@@ -45,6 +81,7 @@ type CalibrationArtifact = {
 };
 
 type ProductionArchive = {
+  issuance?: { type: "prospective_before_game" | "retrospective_snapshot" };
   issuedAt?: string;
   issuedForDataSnapshot: string;
   model: { modelVersion: string; researchProtocolVersion: string };
@@ -64,6 +101,12 @@ export function buildEvidenceArtifact() {
   const pregame = readJson<HistoricalPregameArchive>(
     path.join(DOCS, "backtest", "pregame-archive.json"),
   );
+  const availability = readJson<Record<string, unknown>>(
+    path.join(DOCS, "backtest", "availability.json"),
+  );
+  const inputAudit = readJson<Record<string, unknown>>(
+    path.join(DOCS, "backtest", "input-audit.json"),
+  );
   const baseline = research.results.find((result) => result.id === "srs_home");
   if (!baseline) throw new Error("Missing srs_home research baseline.");
   const archiveDirectory = path.join(DOCS, "forecast-archive");
@@ -77,6 +120,7 @@ export function buildEvidenceArtifact() {
         issuedAt: archive.issuedAt ?? archive.issuedForDataSnapshot,
         issuedForDataSnapshot: archive.issuedForDataSnapshot,
         modelVersion: archive.model.modelVersion,
+        issuanceType: archive.issuance?.type ?? "legacy_retrospective_snapshot",
         researchProtocolVersion: archive.model.researchProtocolVersion,
         series: archive.seriesForecasts.map((row) => ({
           seriesId: row.seriesId,
@@ -139,6 +183,8 @@ export function buildEvidenceArtifact() {
     generatedAt: new Date().toISOString(),
     productionLabel: "Manual production forecast",
     researchLabel: "Historical rolling-origin research",
+    researchProtocol: research.protocol,
+    evaluationSeasons: research.evaluationSeasons,
     seriesIndex,
     timeline,
     versions,
@@ -155,6 +201,8 @@ export function buildEvidenceArtifact() {
         calibrated: research.nestedCalibration.series.calibrated,
         retained: research.nestedCalibration.series.retained,
       },
+      gamePropagatedThroughExactSeries:
+        research.nestedCalibration.gamePropagatedThroughExactSeries,
     },
     modelComparison: research.results.map((result) => ({
       id: result.id,
@@ -168,10 +216,32 @@ export function buildEvidenceArtifact() {
       brier: row.brier,
       logLoss: row.logLoss,
     })),
+    strongSeriesBaselineComparisons: research.strongSeriesBaselineComparisons,
+    climatologyBaselines: research.climatologyBaselines,
+    brierDecomposition: research.brierDecomposition,
+    sensitivityReliability: research.sensitivityReliability,
+    availability,
+    inputAudit,
+    primarySeriesChallenger: research.primarySeriesChallenger,
+    temporalWindowCandidate: research.preregisteredTemporalWindowCandidate,
+    modelSelectionGate: research.modelSelectionGate,
     dynamicCandidate: {
       registration: research.preregisteredDynamicRatingCandidate.registration,
       status: research.preregisteredDynamicRatingCandidate.status,
       metrics: research.preregisteredDynamicRatingCandidate.metrics,
+      comparisonToSrsHome:
+        research.preregisteredDynamicRatingCandidate.comparisonToSrsHome,
+    },
+    shrinkageCandidate: {
+      registration:
+        research.preregisteredRatingGapShrinkageCandidate.registration,
+      status: research.preregisteredRatingGapShrinkageCandidate.status,
+      metrics: {
+        game: research.preregisteredRatingGapShrinkageCandidate.result.game,
+        series: research.preregisteredRatingGapShrinkageCandidate.result.series,
+      },
+      comparisonToSrsHome:
+        research.preregisteredRatingGapShrinkageCandidate.comparisonToSrsHome,
     },
     worstForecasts: { game: worstGames, series: worstSeries },
   };

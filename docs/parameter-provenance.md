@@ -1,116 +1,129 @@
 # Parameter Provenance
 
-Generated: 2026-07-15. This document records how every model parameter was
-chosen, which data informed each choice, and what the 150-series
-reconstruction is therefore allowed to claim. It exists because "the inputs
-avoid leakage" is a weaker statement than "the parameters were chosen without
-hindsight," and the two must not be conflated.
+Generated: 2026-07-26. This document records how model parameters were chosen,
+which data informed each choice, and what the expanded reconstruction may
+claim. Input leakage control and parameter provenance are separate questions.
 
 ## Verifiable timeline
 
-| Date | Event | Commit |
+| Date | Event | Commit / record |
 |---|---|---|
-| 2026-05-11 | `defaultModelSettings` committed with its current values in the repository's first day of history | `ce2ac4a` |
-| 2026-05-14 | Historical backtest harness (150-series reconstruction) added | `a174f0f` |
-| 2026-07-14 | Point-in-time lab, rolling-origin research, calibration, dynamic candidate | `22b51cc` |
+| 2026-05-11 | `defaultModelSettings` committed with current values | `ce2ac4a` |
+| 2026-05-14 | Original 2016–2025 reconstruction harness added | `a174f0f` |
+| 2026-07-14 | Point-in-time lab and rolling-origin research added | `22b51cc` |
+| 2026-07-15 | Dynamic update rule frozen | committed research registration |
+| 2026-07-26 | Archive extended to 2003; climatology, decomposition, availability audit, and rating-gap shrinkage registration added | current implementation |
 
-`git log --follow -- src/lib/data/model-settings.ts` shows exactly one commit:
-the production parameters were fixed three days before the evaluation harness
-existed and have never been modified after any backtest result. No recorded
-process fit them to the 150 series.
+`git log --follow -- src/lib/data/model-settings.ts` shows the production
+parameters were fixed before the original harness and have not been changed
+after any backtest result. No recorded process fit them to either 150 or 345
+series.
 
-## Parameter inventory
-
-### Production model (`src/lib/data/model-settings.ts`)
+## Production model
 
 | Parameter | Value | Provenance | Data informing the choice |
-|---|---|---|---|
+|---|---:|---|---|
 | `playerWeight` | 0.55 | Domain judgment | None recorded |
 | `netRatingWeight` | 0.25 | Domain judgment | None recorded |
-| `eloWeight` | 0.2 | Domain judgment | None recorded |
-| `homeCourtAdvantage` | 2.2 points | Domain judgment (consistent with the commonly cited 2–3 point NBA home edge) | Public basketball knowledge, no fitting |
-| `logisticScale` | 6.5 points per logit | Domain judgment | None recorded |
-| `simulationIterations` | 10,000 | Computational budget; does not change expected outputs | n/a |
+| `eloWeight` | 0.20 | Domain judgment | None recorded |
+| `homeCourtAdvantage` | 2.2 points | Domain judgment | General basketball knowledge; not fit here |
+| `logisticScale` | 6.5 points/logit | Domain judgment | None recorded |
+| `simulationIterations` | 10,000 | Computational budget | n/a |
 
-### Structural constants (`src/lib/model/probability.ts`)
+The production scale is not retuned from historical BPM/SRS results. The fixed
+reconstruction is underconfident in one large upper bucket, while the
+rolling-origin research model is overconfident overall. Those are different
+model/input regimes and do not justify a blind production scale change.
 
-| Constant | Value | Provenance |
+## Structural constants and historical inputs
+
+| Item | Value / rule | Provenance |
 |---|---|---|
-| `PLAYOFF_ROTATION_MINUTES` | 240 | Structural fact (48 minutes × 5 positions) |
-| `ELO_POINTS_PER_POINT` | 35 | Chosen at snapshot-construction time; the historical `eloRating` field stores `1500 + SRS × 35`, so `eloToPointScale` recovers SRS exactly. In the backtest the `eloWeight` term is literally `0.2 × SRS`. |
-| `INJURY_MULTIPLIER` | 1 / 0.75 / 0.6 / 0 | Domain judgment; unused in the backtest because all historical players are marked healthy |
+| Rotation minutes | 240 | 48 minutes × five positions |
+| Player cap | 40 minutes | Historical rotation heuristic |
+| `ELO_POINTS_PER_POINT` | 35 | Historical storage is `1500 + SRS × 35`, so conversion recovers SRS exactly |
+| Historical player impact | Regular-season BPM proxy | Distinct from manual production impact |
+| Historical adjustment | 0 | Prevents hindsight overrides |
+| Availability | `unknown_assumed_available` | No eligible point-in-time observations are present |
+| Finals home format through 2013 | 2–3–2 | Era-specific NBA series structure |
+| Other covered series | 2–2–1–1–1 | Era-specific NBA series structure |
+| 2020 bubble HCA | 0 | Neutral-site structural treatment |
 
-### Backtest-only constants (`scripts/backtest/baselines.ts`)
+Historical `eloWeight` is therefore literally a 0.2 × SRS contribution. The
+type system prevents fitted BPM coefficients from being silently applied to
+manual production impact values.
 
-| Constant | Value | Provenance | Note |
-|---|---|---|---|
-| `DIRECTIONAL_PRIOR` | 0.65 | Domain judgment | Affects the `higher_seed` and `home_team` baselines only. The observed higher-seed win rate is 70%; a constant 0.70 forecast would score Brier 0.2100 instead of 0.2125. Playoff Pulse's advantage over even that optimally tuned version remains conclusive (observed −0.0218 shrinks to ≈ −0.0193, still outside the bootstrap interval). The naive baselines are not strawmen. |
-| Bubble handling | HCA = 0 | Factual (2020 bubble had no home crowds) | Applied to all margin-based models identically |
-| Historical `manualAdjustment` | 0 | Leakage safety: no hindsight adjustments are permitted | |
+## Baseline parameters
 
-### Like-for-like guarantee
+`higher_seed` and `home_team` use a fixed 0.65 directional prior. Team A won
+71.6% of the expanded reconstructed series; an in-sample constant at that rate
+would score approximately 0.2034, not 0.168. It is not used as a headline
+baseline because fitting it on all evaluated outcomes would leak the evaluation
+period. The rolling climatology instead estimates its rate only from seasons
+before each evaluated season and scores 0.2039.
 
-The `srs_proxy_only` and `net_rating_only` baselines reuse the identical
-logistic scale, home-court advantage, series solver, and bubble handling —
-only the input mixture differs. The model-versus-rating-baseline contrast
-therefore isolates the value of the input blend while holding the
-margin-to-probability mapping constant.
+Rating-only comparisons reuse the same logistic scale, home-court treatment,
+and exact series solver as the fixed blend. They isolate the input blend while
+holding the probability mapping constant.
 
-### Rolling-origin research models (`scripts/backtest/research-model.ts`)
+## Rolling-origin fitted parameters
 
 All regression weights, ridge strengths, and logistic scales are fitted inside
-the rolling protocol using only seasons before each evaluation season. These
-are the only genuinely fitted parameters in the project, and they are never
-used in production.
+each rolling fold using only earlier seasons. Evaluation begins in 2006 after
+a 2003–2005 initialization window and continues through 2025.
 
-### Preregistered dynamic candidate
+Nested calibration is likewise fitted only on earlier rolling predictions. In
+the expanded evaluation, game calibration improved both Brier and log loss and
+is retained for research; series calibration worsened both and was rejected.
+Neither mapping is transferred to production.
 
-`dynamic_margin_update_v1` (update rate 12%, cap ±4 points) was frozen on
-2026-07-15 with first promotion-eligible season 2026. Its 2016–2025 result
-(game Brier 0.235332 vs static 0.235335) is research-only by construction.
+## Frozen candidates
 
-## Classification of the 150-series result
+### `dynamic_margin_update_v1`
 
-The 150-series reconstruction is a **descriptive evaluation of a fixed,
-pre-specified configuration**. It is:
+- Frozen: 2026-07-15.
+- Rule: split 12% of game-margin residual between opponents and cap carried
+  postseason adjustment at ±4 points.
+- Historical game Brier: 0.21815 versus 0.21851 static.
+- Difference: −0.00036; season-clustered 95% interval includes zero.
+- First promotion-eligible season: 2027.
 
-- **Not fitted**: no recorded process tuned any parameter against the 150
-  series; the configuration predates the harness and never changed afterward.
-- **Not genuinely out-of-sample**: the configuration was chosen in 2026 by a
-  person with ordinary knowledge of 2016–2025 NBA history, there is no
-  preregistration predating the evaluated seasons, and no repository history
-  exists before 2026-05-11 to rule out informal iteration.
+### `rating_gap_player_shrinkage_v1`
 
-The honest claim is therefore: *"a fixed configuration, specified before the
-evaluation harness existed and never adjusted afterward, scored Brier 0.1907
-on reconstructed 2016–2025 series."* Any stronger out-of-sample language
-belongs exclusively to the rolling-origin evaluation, whose parameters are
-fitted strictly on prior seasons.
+- Frozen: 2026-07-26 before executing its expanded rolling comparison.
+- Rule: `shrunkPlayerDiff = playerDiff × exp(-abs(srsDiff) / 5)`.
+- Historical game difference versus SRS + home: +0.00005, interval includes
+  zero.
+- Historical series difference: −0.00083, interval includes zero.
+- First promotion-eligible season: 2027.
 
-## Statistical significance of the 150-series comparisons
+Both registrations are research-only. History through 2025 cannot promote them.
 
-Paired bootstrap over per-series squared-error differences
-(`scripts/backtest/significance.ts`, 10,000 iterations, percentile intervals,
-reported under both series resampling and season-clustered resampling; output
-in `docs/backtest/significance.json`):
+## Classification of the 345-series reconstruction
 
-| Contrast | Brier difference | 95% CI (series-resampled) | 95% CI (season-resampled) | Conclusive |
+The reconstruction is a descriptive evaluation of a fixed configuration:
+
+- **Not fitted by the harness:** production parameters predate the original
+  evaluation code and were never changed afterward.
+- **Not genuinely prospective:** the parameters were selected in 2026 with
+  ordinary knowledge of historical NBA results, and the 2003–2015 extension
+  was added after the model existed.
+- **Leakage-controlled inputs:** every regular-season snapshot predates its
+  series and every pregame state contains only previously completed games.
+
+The permitted statement is: “A fixed configuration, specified before the
+original evaluation harness and never refit, scored Brier 0.1825 on 345
+reconstructed 2003–2025 series.”
+
+## Paired bootstrap comparisons
+
+| Contrast | Difference | Series-resampled 95% CI | Season-resampled 95% CI | Conclusive |
 |---|---:|---|---|---|
-| vs coinflip | −0.0593 | [−0.0842, −0.0333] | [−0.0812, −0.0359] | Yes |
-| vs home_team | −0.0246 | [−0.0426, −0.0067] | [−0.0377, −0.0103] | Yes |
-| vs higher_seed | −0.0218 | [−0.0381, −0.0050] | [−0.0355, −0.0081] | Yes |
-| vs net_rating_only | −0.0042 | [−0.0174, +0.0083] | [−0.0155, +0.0079] | No |
-| vs srs_proxy_only | −0.0029 | [−0.0148, +0.0087] | [−0.0129, +0.0080] | No |
+| vs coin flip | −0.0675 | [−0.0828, −0.0516] | [−0.0797, −0.0546] | Yes |
+| vs home team | −0.0264 | [−0.0372, −0.0156] | [−0.0355, −0.0174] | Yes |
+| vs higher seed | −0.0252 | [−0.0354, −0.0147] | [−0.0342, −0.0163] | Yes |
+| vs net rating | +0.0005 | [−0.0075, +0.0083] | [−0.0059, +0.0069] | No |
+| vs SRS | +0.0024 | [−0.0043, +0.0088] | [−0.0032, +0.0078] | No |
 
-Negative favors Playoff Pulse. The model conclusively outperforms the naive
-baselines. Its edge over the simple rating baselines is **not statistically
-distinguishable from zero** — consistent with the rolling-origin finding that
-richer feature sets did not conclusively beat SRS + home court. This is the
-project's central result and must be stated wherever the 0.1907 headline
-appears.
-
-Accuracy disclosure: Playoff Pulse's series accuracy (69.3%) is *below* the
-higher-seed baseline (70.0%). Accuracy is not the optimization target — a
-probabilistic forecast is scored on its stated probabilities, and Brier/log
-loss are the proper scoring rules used throughout — but the number must not be
-hidden where accuracy is shown at all.
+Negative favors Playoff Pulse. The full blend conclusively beats naive
+directional baselines but does not beat simple rating models.

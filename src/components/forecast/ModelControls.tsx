@@ -31,7 +31,7 @@ export function ModelControls({
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[rgba(184,65,47,0.45)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-danger)] transition hover:bg-[var(--overlay-danger-soft)] focus:outline-2"
+          className="pp-button pp-button-danger"
         >
           <RotateCcw className="h-4 w-4" aria-hidden />
           Reset
@@ -73,7 +73,7 @@ export function ModelControls({
                   simulationIterations: Number(event.target.value),
                 })
               }
-              className="mt-2 w-full rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-secondary)] px-3 py-2 text-sm text-[var(--color-text-primary)] focus:outline-2"
+              className="pp-select mt-2 bg-[var(--color-bg-secondary)]"
             >
               <option value={1000}>1,000</option>
               <option value={5000}>5,000</option>

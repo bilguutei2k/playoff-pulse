@@ -161,7 +161,7 @@ export function TeamDetailDrawer({
           </div>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] bg-[var(--color-panel-secondary)] transition hover:border-[var(--color-accent)]"
+            className="pp-button pp-icon-button bg-[var(--color-panel-secondary)]"
             aria-label="Close team detail drawer"
             onClick={onClose}
           >

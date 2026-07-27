@@ -18,6 +18,7 @@ import type {
 } from "./types";
 import {
   fetchSeasonData,
+  SEASONS,
   type RawGameResult,
   type RawPlayerAdvanced,
   type RawSeriesResult,
@@ -28,6 +29,19 @@ import {
 // -- Known regular-season end dates -----------------------------------------
 
 export const REGULAR_SEASON_END_DATES: Record<Season, string> = {
+  2003: "2003-04-16",
+  2004: "2004-04-14",
+  2005: "2005-04-20",
+  2006: "2006-04-19",
+  2007: "2007-04-18",
+  2008: "2008-04-16",
+  2009: "2009-04-15",
+  2010: "2010-04-14",
+  2011: "2011-04-13",
+  2012: "2012-04-26",
+  2013: "2013-04-17",
+  2014: "2014-04-16",
+  2015: "2015-04-15",
   2016: "2016-04-13",
   2017: "2017-04-12",
   2018: "2018-04-11",
@@ -506,11 +520,13 @@ export function validateSnapshots(
 
 function validateTeamRatings(ratings: RawTeamRating[]): ValidationAnomaly[] {
   return ratings
-    .filter((rating) => rating.netRating < -15 || rating.netRating > 20)
+    // The lockout-shortened 2011-12 Charlotte team finished at -15.41.
+    // Keep a broad corruption guard without rejecting that legitimate extreme.
+    .filter((rating) => rating.netRating < -20 || rating.netRating > 20)
     .map((rating) => ({
       season: rating.season,
       entityId: rating.teamId,
-      issue: `team rating netRating must be plausible (-15 to +20), got ${rating.netRating}.`,
+      issue: `team rating netRating must be plausible (-20 to +20), got ${rating.netRating}.`,
     }));
 }
 
@@ -579,7 +595,7 @@ export async function buildAllSnapshots(seasons: readonly Season[]): Promise<voi
 }
 
 if (typeof require !== "undefined" && require.main === module) {
-  buildAllSnapshots([2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]).catch((error: unknown) => {
+  buildAllSnapshots(SEASONS).catch((error: unknown) => {
     console.error(error);
     process.exitCode = 1;
   });

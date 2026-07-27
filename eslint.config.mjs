@@ -3,7 +3,11 @@ import nextTypeScript from "eslint-config-next/typescript";
 
 const eslintConfig = [
   {
-    ignores: ["design-reference/claude-export/**"],
+    ignores: [
+      ".next/**",
+      ".vercel/**",
+      "design-reference/claude-export/**",
+    ],
   },
   ...nextVitals,
   ...nextTypeScript,

@@ -116,6 +116,39 @@ export function EvidenceExplorer() {
 
       <section className="pp-card">
         <div className="pp-section-head">
+          <div className="pp-kicker text-[var(--color-danger)]">
+            Production-equivalent input gates
+          </div>
+        </div>
+        <div className="grid gap-3 p-4 sm:grid-cols-2">
+          <div className="bg-[var(--color-panel-secondary)] p-3">
+            <div className="pp-kicker">Lagged rotations</div>
+            <div className="pp-number mt-2 text-2xl font-bold">
+              {evidence.inputAudit.laggedRotations.completePairedSeries}/
+              {evidence.inputAudit.laggedRotations.totalSeries}
+            </div>
+            <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+              Series with timestamped, sourced, pre-series rotations for both
+              teams. Post-deadline participation is not backfilled.
+            </p>
+          </div>
+          <div className="bg-[var(--color-panel-secondary)] p-3">
+            <div className="pp-kicker">External benchmarks</div>
+            <div className="pp-number mt-2 text-2xl font-bold">
+              {evidence.inputAudit.externalBenchmarks.coveredSeries}/
+              {evidence.inputAudit.externalBenchmarks.totalSeries}
+            </div>
+            <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+              Series with an eligible timestamped public probability or
+              explicitly no-vig two-sided price. No comparison is estimated
+              while coverage is zero.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="pp-card">
+        <div className="pp-section-head">
           <div className="pp-kicker">Two evaluation regimes / what each may claim</div>
         </div>
         <div className="overflow-x-auto p-4">
@@ -130,20 +163,25 @@ export function EvidenceExplorer() {
             <tbody>
               <tr className="border-b border-[var(--color-border-subtle)] align-top">
                 <td className="px-2 py-2 font-bold">Historical reconstruction</td>
-                <td className="pp-number px-2 py-2">{backtestSummary.totalSeries} series / 834 pregame snapshots, {backtestSummary.firstSeason}–{backtestSummary.lastSeason}</td>
+                <td className="pp-number px-2 py-2">{backtestSummary.totalSeries} series / {evidence.timeline.length} pregame snapshots, {backtestSummary.firstSeason}–{backtestSummary.lastSeason}</td>
                 <td className="px-2 py-2">Fixed configuration (never refit); leakage-checked point-in-time inputs</td>
                 <td className="px-2 py-2">Descriptive performance on reconstructed history: Brier {formatNumber(backtestSummary.models.playoff_pulse.brierScore, 4)}, conclusively better than naive baselines, statistically indistinguishable from SRS-only and net-rating-only</td>
               </tr>
               <tr className="border-b border-[var(--color-border-subtle)] align-top">
                 <td className="px-2 py-2 font-bold">Rolling origin</td>
-                <td className="pp-number px-2 py-2">105 series / 587 games, 2019–2025</td>
+                <td className="pp-number px-2 py-2">{evidence.modelComparison[0].series.n} series / {evidence.modelComparison[0].game.n} games, {evidence.evaluationSeasons[0]}–{evidence.evaluationSeasons.at(-1)}</td>
                 <td className="px-2 py-2">Models fitted only on seasons before each evaluated season</td>
                 <td className="px-2 py-2">Out-of-period model comparison: no candidate conclusively beat SRS + home court (reference series Brier {formatNumber(evidence.modelComparison[0].series.brier, 4)})</td>
               </tr>
             </tbody>
           </table>
           <p className="mt-3 max-w-4xl text-xs leading-5 text-[var(--color-text-muted)]">
-            The two Brier levels are not comparable with each other: the regimes cover different season ranges (the reconstruction includes 2016–2018), evaluate different model families (a fixed configuration versus refitted regressions), and serve different purposes (description versus model selection). Bootstrap intervals for every headline difference live in docs/backtest/significance.json and docs/backtest/research.json.
+            The two Brier levels are not directly comparable: the reconstruction
+            evaluates a fixed configuration on all seasons, while rolling
+            origin reserves the first three seasons for initialization and
+            refits its parameters before every later season. Bootstrap
+            intervals for every headline difference live in
+            docs/backtest/significance.json and docs/backtest/research.json.
           </p>
         </div>
       </section>
@@ -160,10 +198,10 @@ export function EvidenceExplorer() {
             Every archived series is selectable.
           </p>
           <div className="grid gap-3 sm:grid-cols-[140px_1fr]">
-            <select value={season} onChange={(event) => changeSeason(Number(event.target.value))} className="border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] p-2 text-sm">
+            <select value={season} onChange={(event) => changeSeason(Number(event.target.value))} className="pp-select">
               {seasons.map((value) => <option key={value} value={value}>{value}</option>)}
             </select>
-            <select value={selectedMeta.seriesId} onChange={(event) => { setSelectedSeriesId(event.target.value); setSelectedGame(1); }} className="border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] p-2 text-sm">
+            <select value={selectedMeta.seriesId} onChange={(event) => { setSelectedSeriesId(event.target.value); setSelectedGame(1); }} className="pp-select">
               {availableSeries.map((row) => <option key={row.seriesId} value={row.seriesId}>{row.teamA} vs {row.teamB} · {row.round}</option>)}
             </select>
           </div>
@@ -177,7 +215,7 @@ export function EvidenceExplorer() {
               </svg>
               <div className="flex flex-wrap justify-center gap-2">
                 {timeline.map((row) => (
-                  <button key={row.id} type="button" aria-pressed={selectedGame === row.gameNumber} onClick={() => setSelectedGame(row.gameNumber)} className={`border-2 px-2 py-1 text-xs ${selectedGame === row.gameNumber ? "border-[var(--color-accent)] bg-[var(--overlay-accent-soft)]" : "border-[var(--color-border-strong)]"}`}>
+                  <button key={row.id} type="button" aria-pressed={selectedGame === row.gameNumber} onClick={() => setSelectedGame(row.gameNumber)} className={`pp-button pp-button-compact ${selectedGame === row.gameNumber ? "pp-button-active" : ""}`}>
                     G{row.gameNumber}
                   </button>
                 ))}
@@ -206,15 +244,136 @@ export function EvidenceExplorer() {
           <ReliabilityPlot title="Series forecasts" block={evidence.calibration.series} />
         </div>
         <p className="border-t border-[var(--color-border-subtle)] p-4 text-xs leading-5 text-[var(--color-text-muted)]">
-          Rolling-origin forecasts are systematically overconfident: the
+          Rolling-origin forecasts remain overconfident, especially at series
+          level: the
           calibration fit for the reference model has slope{" "}
           {formatNumber(evidence.modelComparison[0].series.calibrationFit.slope, 2)} for
           series and {formatNumber(evidence.modelComparison[0].game.calibrationFit.slope, 2)} for
-          games (a slope of 1 would be perfectly calibrated). Game calibration
-          is rejected because both Brier and log loss worsen. Series
-          calibration improves both on 75 eligible forecasts, but remains
-          research-only because production inputs use a different scale.
+          games (a slope of 1 would be perfectly calibrated). With the expanded
+          history, nested game calibration improves Brier and log loss and is
+          retained inside research. Series calibration now worsens both and is
+          rejected. Neither mapping is transferred to manual production inputs.
         </p>
+      </section>
+
+      <section className="pp-card">
+        <div className="pp-section-head">
+          <div className="pp-kicker">Brier decomposition / where skill comes from</div>
+        </div>
+        <div className="grid gap-6 p-4 lg:grid-cols-2">
+          {(["game", "series"] as const).map((kind) => {
+            const block = evidence.brierDecomposition[kind];
+            return (
+              <div key={kind} className="grid gap-3">
+                <div className="pp-kicker text-[var(--color-text-primary)]">{kind} forecasts</div>
+                <div className="overflow-x-auto">
+                  <table className="pp-table">
+                    <thead>
+                      <tr>
+                        <th>Model</th>
+                        <th className="num">Brier</th>
+                        <th className="num">Uncertainty</th>
+                        <th className="num">Resolution</th>
+                        <th className="num">Reliability</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {([
+                        ["SRS + home", block.reference],
+                        ["Rolling climatology", block.climatology],
+                      ] as const).map(([label, row]) => (
+                        <tr key={label}>
+                          <td>{label}</td>
+                          <td className="num pp-number">{formatNumber(row.brier, 4)}</td>
+                          <td className="num pp-number">{formatNumber(row.uncertainty, 4)}</td>
+                          <td className="num pp-number">{formatNumber(row.resolution, 4)}</td>
+                          <td className="num pp-number">{formatNumber(row.reliability, 4)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+                  Brier ≈ uncertainty − resolution + reliability. The reference
+                  earns its advantage mainly through more resolution, not
+                  perfect calibration. Components use ten equal-count groups;
+                  season-clustered intervals and the within-group residual are
+                  committed in the evidence artifact.
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="grid gap-[18px] lg:grid-cols-2">
+        <div className="pp-card">
+          <div className="pp-section-head">
+            <div className="pp-kicker text-[var(--color-warning)]">Sensitivity reliability diagnostic</div>
+          </div>
+          <div className="grid gap-3 p-4">
+            <div className="pp-number text-3xl font-bold">
+              {evidence.sensitivityReliability.groupsWithinBand}/{evidence.sensitivityReliability.totalGroups}
+            </div>
+            <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+              Equal-count pre-series groups whose observed win rate falls
+              inside the group&apos;s mean sensitivity band. The three highest
+              probability groups fall outside on the underconfident side.
+            </p>
+            <div className="grid gap-1">
+              {evidence.sensitivityReliability.groups.map((group) => (
+                <div key={group.bin} className="grid grid-cols-[34px_1fr_54px] items-center gap-2 text-[11px]">
+                  <span className="pp-number">B{group.bin}</span>
+                  <span className="relative h-3 bg-[var(--color-panel-secondary)]">
+                    <span
+                      className="absolute h-3 bg-[var(--overlay-info-soft)]"
+                      style={{
+                        left: `${group.lowerMean * 100}%`,
+                        width: `${(group.upperMean - group.lowerMean) * 100}%`,
+                      }}
+                    />
+                    <span
+                      className={`absolute top-[-2px] h-4 w-[2px] ${
+                        group.observedWithinMeanSensitivityBand
+                          ? "bg-[var(--color-success)]"
+                          : "bg-[var(--color-danger)]"
+                      }`}
+                      style={{ left: `${group.observed * 100}%` }}
+                    />
+                  </span>
+                  <span className="pp-number text-right">{formatPercent(group.observed)}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+              This is a grouped reliability diagnostic, not individual
+              probability-interval coverage. A binary result cannot reveal the
+              unobserved true probability for one series.
+            </p>
+          </div>
+        </div>
+
+        <div className="pp-card">
+          <div className="pp-section-head">
+            <div className="pp-kicker text-[var(--color-danger)]">Historical availability completeness</div>
+          </div>
+          <div className="grid gap-3 p-4">
+            <div className="pp-number text-3xl font-bold">
+              {formatPercent(evidence.availability.observationCoverage)}
+            </div>
+            <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+              Sourced point-in-time player availability coverage across{" "}
+              {evidence.availability.playerSeriesOpportunities} player-series
+              opportunities. With zero eligible observations, injury and
+              replacement-minute effects are not estimable historically.
+            </p>
+            <ul className="grid gap-1 text-xs leading-5 text-[var(--color-text-muted)]">
+              {evidence.availability.limitations.map((limitation) => (
+                <li key={limitation}>— {limitation}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section className="pp-card">
@@ -227,8 +386,56 @@ export function EvidenceExplorer() {
               <span className="pp-number text-right">{formatNumber(model.game.brier, 4)}</span>
             </div>
           ))}
-          <div className="mt-2 border-t border-[var(--color-border-subtle)] pt-3 text-xs text-[var(--color-text-muted)]">
-            Preregistered {evidence.dynamicCandidate.registration.id}: Brier {formatNumber(evidence.dynamicCandidate.metrics.brier, 4)}. Status: research-only; first promotion-eligible season {evidence.dynamicCandidate.registration.firstPromotionEligibleSeason}.
+          <div className="mt-2 grid gap-2 border-t border-[var(--color-border-subtle)] pt-3">
+            <div className="pp-kicker">Rolling series baselines</div>
+            {evidence.strongSeriesBaselines.map((model) => {
+              const comparison = evidence.strongSeriesBaselineComparisons.find(
+                (row) => row.id === model.id,
+              );
+              return (
+                <div key={model.id} className="grid gap-1 text-xs sm:grid-cols-[1fr_auto]">
+                  <span>{model.id.replaceAll("_", " ")}</span>
+                  <span className="pp-number">
+                    Brier {formatNumber(model.brier, 4)}
+                    {comparison
+                      ? ` · Δ ${formatSigned(
+                          comparison.series.candidateMinusBaselineBrier,
+                          4,
+                        )} [${formatNumber(
+                          comparison.series.ci95[0],
+                          4,
+                        )}, ${formatNumber(
+                          comparison.series.ci95[1],
+                          4,
+                        )}]`
+                      : ""}
+                  </span>
+                </div>
+              );
+            })}
+            <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+              Deltas are candidate minus SRS + home. The fitted seed + SRS
+              point estimate is lower, but its 95% interval still reaches zero;
+              it is not promoted.
+            </p>
+          </div>
+          <div className="mt-2 grid gap-2 border-t border-[var(--color-border-subtle)] pt-3 text-xs text-[var(--color-text-muted)]">
+            <p>
+              Preregistered {evidence.dynamicCandidate.registration.id}: Brier{" "}
+              {formatNumber(evidence.dynamicCandidate.metrics.brier, 4)}, Δ{" "}
+              {formatSigned(
+                evidence.dynamicCandidate.comparisonToSrsHome
+                  .candidateMinusBaselineBrier,
+                4,
+              )}; interval includes zero. Research-only through 2025.
+            </p>
+            <p>
+              Frozen {evidence.shrinkageCandidate.registration.id}: game Brier{" "}
+              {formatNumber(evidence.shrinkageCandidate.metrics.game.brier, 4)},
+              series {formatNumber(evidence.shrinkageCandidate.metrics.series.brier, 4)}.
+              Both comparison intervals include zero; first promotion-eligible
+              season {evidence.shrinkageCandidate.registration.firstPromotionEligibleSeason}.
+            </p>
           </div>
         </div>
       </section>
@@ -263,7 +470,11 @@ export function EvidenceExplorer() {
             <div key={version.file} className="grid gap-1 border-b border-[var(--color-border-subtle)] pb-2 text-xs sm:grid-cols-[1fr_auto_auto]">
               <span className="font-bold">{version.modelVersion}</span>
               <span>{version.issuedAt}</span>
-              <span className="pp-pill text-[var(--color-accent)]">Manual production archive</span>
+              <span className="pp-pill text-[var(--color-accent)]">
+                {version.issuanceType === "prospective_before_game"
+                  ? "Prospective issue"
+                  : "Retrospective archive"}
+              </span>
             </div>
           ))}
           {distinctVersions.length < 2 ? <p className="text-xs text-[var(--color-text-muted)]">One immutable production version is currently archived. Pairwise probability deltas will appear automatically when another version is issued for a comparable series.</p> : null}

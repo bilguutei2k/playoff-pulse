@@ -119,7 +119,7 @@ export function ProbabilityTable({
                   <td>
                     <button
                       type="button"
-                      className="flex items-center gap-2 text-left"
+                      className="flex items-center gap-2 rounded-[var(--radius-sm-retro)] p-1 text-left transition hover:bg-[var(--overlay-row-hover)] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
                       onClick={(event) => {
                         event.stopPropagation();
                         onTeamSelect?.(bracketRow.teamId);

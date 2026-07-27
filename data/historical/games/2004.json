@@ -1,0 +1,822 @@
+[
+  {
+    "seriesId": "2004-finals-finals-det-lal",
+    "gameNumber": 1,
+    "date": "2004-06-06",
+    "homeTeam": "LAL",
+    "awayTeam": "DET",
+    "homeScore": 75,
+    "awayScore": 87,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-finals-finals-det-lal",
+    "gameNumber": 2,
+    "date": "2004-06-08",
+    "homeTeam": "LAL",
+    "awayTeam": "DET",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-finals-finals-det-lal",
+    "gameNumber": 3,
+    "date": "2004-06-10",
+    "homeTeam": "DET",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 68,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-finals-finals-det-lal",
+    "gameNumber": 4,
+    "date": "2004-06-13",
+    "homeTeam": "DET",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 80,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-finals-finals-det-lal",
+    "gameNumber": 5,
+    "date": "2004-06-15",
+    "homeTeam": "DET",
+    "awayTeam": "LAL",
+    "homeScore": 100,
+    "awayScore": 87,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-cf-ind-det",
+    "gameNumber": 1,
+    "date": "2004-05-22",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 78,
+    "awayScore": 74,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-cf-ind-det",
+    "gameNumber": 2,
+    "date": "2004-05-24",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 67,
+    "awayScore": 72,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-cf-ind-det",
+    "gameNumber": 3,
+    "date": "2004-05-26",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 85,
+    "awayScore": 78,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-cf-ind-det",
+    "gameNumber": 4,
+    "date": "2004-05-28",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 68,
+    "awayScore": 83,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-cf-ind-det",
+    "gameNumber": 5,
+    "date": "2004-05-30",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 65,
+    "awayScore": 83,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-cf-ind-det",
+    "gameNumber": 6,
+    "date": "2004-06-01",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 69,
+    "awayScore": 65,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-west-cf-min-lal",
+    "gameNumber": 1,
+    "date": "2004-05-21",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 97,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-cf-min-lal",
+    "gameNumber": 2,
+    "date": "2004-05-23",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 89,
+    "awayScore": 71,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-cf-min-lal",
+    "gameNumber": 3,
+    "date": "2004-05-25",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 100,
+    "awayScore": 89,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-cf-min-lal",
+    "gameNumber": 4,
+    "date": "2004-05-27",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 92,
+    "awayScore": 85,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-cf-min-lal",
+    "gameNumber": 5,
+    "date": "2004-05-29",
+    "homeTeam": "MIN",
+    "awayTeam": "LAL",
+    "homeScore": 98,
+    "awayScore": 96,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-cf-min-lal",
+    "gameNumber": 6,
+    "date": "2004-05-31",
+    "homeTeam": "LAL",
+    "awayTeam": "MIN",
+    "homeScore": 96,
+    "awayScore": 90,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 1,
+    "date": "2004-05-03",
+    "homeTeam": "DET",
+    "awayTeam": "NJN",
+    "homeScore": 78,
+    "awayScore": 56,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 2,
+    "date": "2004-05-07",
+    "homeTeam": "DET",
+    "awayTeam": "NJN",
+    "homeScore": 95,
+    "awayScore": 80,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 3,
+    "date": "2004-05-09",
+    "homeTeam": "NJN",
+    "awayTeam": "DET",
+    "homeScore": 82,
+    "awayScore": 64,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 4,
+    "date": "2004-05-11",
+    "homeTeam": "NJN",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 79,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 5,
+    "date": "2004-05-14",
+    "homeTeam": "DET",
+    "awayTeam": "NJN",
+    "homeScore": 120,
+    "awayScore": 127,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 6,
+    "date": "2004-05-16",
+    "homeTeam": "NJN",
+    "awayTeam": "DET",
+    "homeScore": 75,
+    "awayScore": 81,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-csf-det-njn",
+    "gameNumber": 7,
+    "date": "2004-05-20",
+    "homeTeam": "DET",
+    "awayTeam": "NJN",
+    "homeScore": 90,
+    "awayScore": 69,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-csf-ind-mia",
+    "gameNumber": 1,
+    "date": "2004-05-06",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 81,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-csf-ind-mia",
+    "gameNumber": 2,
+    "date": "2004-05-08",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 91,
+    "awayScore": 80,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-csf-ind-mia",
+    "gameNumber": 3,
+    "date": "2004-05-10",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 94,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2004-east-csf-ind-mia",
+    "gameNumber": 4,
+    "date": "2004-05-12",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 100,
+    "awayScore": 88,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2004-east-csf-ind-mia",
+    "gameNumber": 5,
+    "date": "2004-05-15",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 83,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-csf-ind-mia",
+    "gameNumber": 6,
+    "date": "2004-05-18",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 70,
+    "awayScore": 73,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-west-csf-sas-lal",
+    "gameNumber": 1,
+    "date": "2004-05-02",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 78,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2004-west-csf-sas-lal",
+    "gameNumber": 2,
+    "date": "2004-05-05",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 95,
+    "awayScore": 85,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2004-west-csf-sas-lal",
+    "gameNumber": 3,
+    "date": "2004-05-09",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 81,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-csf-sas-lal",
+    "gameNumber": 4,
+    "date": "2004-05-11",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-csf-sas-lal",
+    "gameNumber": 5,
+    "date": "2004-05-13",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 73,
+    "awayScore": 74,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-csf-sas-lal",
+    "gameNumber": 6,
+    "date": "2004-05-15",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 88,
+    "awayScore": 76,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 1,
+    "date": "2004-05-04",
+    "homeTeam": "MIN",
+    "awayTeam": "SAC",
+    "homeScore": 98,
+    "awayScore": 104,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 2,
+    "date": "2004-05-08",
+    "homeTeam": "MIN",
+    "awayTeam": "SAC",
+    "homeScore": 94,
+    "awayScore": 89,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 3,
+    "date": "2004-05-10",
+    "homeTeam": "SAC",
+    "awayTeam": "MIN",
+    "homeScore": 113,
+    "awayScore": 114,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 4,
+    "date": "2004-05-12",
+    "homeTeam": "SAC",
+    "awayTeam": "MIN",
+    "homeScore": 87,
+    "awayScore": 81,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 5,
+    "date": "2004-05-14",
+    "homeTeam": "MIN",
+    "awayTeam": "SAC",
+    "homeScore": 86,
+    "awayScore": 74,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 6,
+    "date": "2004-05-16",
+    "homeTeam": "SAC",
+    "awayTeam": "MIN",
+    "homeScore": 104,
+    "awayScore": 87,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-csf-min-sac",
+    "gameNumber": 7,
+    "date": "2004-05-19",
+    "homeTeam": "MIN",
+    "awayTeam": "SAC",
+    "homeScore": 83,
+    "awayScore": 80,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-east-r1-det-mil",
+    "gameNumber": 1,
+    "date": "2004-04-18",
+    "homeTeam": "DET",
+    "awayTeam": "MIL",
+    "homeScore": 108,
+    "awayScore": 82,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-r1-det-mil",
+    "gameNumber": 2,
+    "date": "2004-04-21",
+    "homeTeam": "DET",
+    "awayTeam": "MIL",
+    "homeScore": 88,
+    "awayScore": 92,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2004-east-r1-det-mil",
+    "gameNumber": 3,
+    "date": "2004-04-24",
+    "homeTeam": "MIL",
+    "awayTeam": "DET",
+    "homeScore": 85,
+    "awayScore": 95,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-r1-det-mil",
+    "gameNumber": 4,
+    "date": "2004-04-26",
+    "homeTeam": "MIL",
+    "awayTeam": "DET",
+    "homeScore": 92,
+    "awayScore": 109,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-r1-det-mil",
+    "gameNumber": 5,
+    "date": "2004-04-29",
+    "homeTeam": "DET",
+    "awayTeam": "MIL",
+    "homeScore": 91,
+    "awayScore": 77,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2004-east-r1-ind-bos",
+    "gameNumber": 1,
+    "date": "2004-04-17",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 88,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-r1-ind-bos",
+    "gameNumber": 2,
+    "date": "2004-04-20",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 90,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-r1-ind-bos",
+    "gameNumber": 3,
+    "date": "2004-04-23",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 85,
+    "awayScore": 108,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-r1-ind-bos",
+    "gameNumber": 4,
+    "date": "2004-04-25",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 75,
+    "awayScore": 90,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 1,
+    "date": "2004-04-18",
+    "homeTeam": "MIA",
+    "awayTeam": "NOH",
+    "homeScore": 81,
+    "awayScore": 79,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 2,
+    "date": "2004-04-21",
+    "homeTeam": "MIA",
+    "awayTeam": "NOH",
+    "homeScore": 93,
+    "awayScore": 63,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 3,
+    "date": "2004-04-24",
+    "homeTeam": "NOH",
+    "awayTeam": "MIA",
+    "homeScore": 77,
+    "awayScore": 71,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 4,
+    "date": "2004-04-27",
+    "homeTeam": "NOH",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 85,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 5,
+    "date": "2004-04-30",
+    "homeTeam": "MIA",
+    "awayTeam": "NOH",
+    "homeScore": 87,
+    "awayScore": 83,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 6,
+    "date": "2004-05-02",
+    "homeTeam": "NOH",
+    "awayTeam": "MIA",
+    "homeScore": 89,
+    "awayScore": 83,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2004-east-r1-mia-noh",
+    "gameNumber": 7,
+    "date": "2004-05-04",
+    "homeTeam": "MIA",
+    "awayTeam": "NOH",
+    "homeScore": 85,
+    "awayScore": 77,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2004-east-r1-njn-nyk",
+    "gameNumber": 1,
+    "date": "2004-04-17",
+    "homeTeam": "NJN",
+    "awayTeam": "NYK",
+    "homeScore": 107,
+    "awayScore": 83,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-east-r1-njn-nyk",
+    "gameNumber": 2,
+    "date": "2004-04-20",
+    "homeTeam": "NJN",
+    "awayTeam": "NYK",
+    "homeScore": 99,
+    "awayScore": 81,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-east-r1-njn-nyk",
+    "gameNumber": 3,
+    "date": "2004-04-22",
+    "homeTeam": "NYK",
+    "awayTeam": "NJN",
+    "homeScore": 78,
+    "awayScore": 81,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-east-r1-njn-nyk",
+    "gameNumber": 4,
+    "date": "2004-04-25",
+    "homeTeam": "NYK",
+    "awayTeam": "NJN",
+    "homeScore": 94,
+    "awayScore": 100,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2004-west-r1-lal-hou",
+    "gameNumber": 1,
+    "date": "2004-04-17",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 72,
+    "awayScore": 71,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-r1-lal-hou",
+    "gameNumber": 2,
+    "date": "2004-04-19",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 98,
+    "awayScore": 84,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-r1-lal-hou",
+    "gameNumber": 3,
+    "date": "2004-04-23",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 102,
+    "awayScore": 91,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2004-west-r1-lal-hou",
+    "gameNumber": 4,
+    "date": "2004-04-25",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-r1-lal-hou",
+    "gameNumber": 5,
+    "date": "2004-04-28",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 97,
+    "awayScore": 78,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2004-west-r1-min-den",
+    "gameNumber": 1,
+    "date": "2004-04-18",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 106,
+    "awayScore": 92,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-r1-min-den",
+    "gameNumber": 2,
+    "date": "2004-04-21",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 95,
+    "awayScore": 81,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-r1-min-den",
+    "gameNumber": 3,
+    "date": "2004-04-24",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 107,
+    "awayScore": 86,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2004-west-r1-min-den",
+    "gameNumber": 4,
+    "date": "2004-04-27",
+    "homeTeam": "DEN",
+    "awayTeam": "MIN",
+    "homeScore": 82,
+    "awayScore": 84,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-r1-min-den",
+    "gameNumber": 5,
+    "date": "2004-04-30",
+    "homeTeam": "MIN",
+    "awayTeam": "DEN",
+    "homeScore": 102,
+    "awayScore": 91,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2004-west-r1-sac-dal",
+    "gameNumber": 1,
+    "date": "2004-04-18",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 116,
+    "awayScore": 105,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-r1-sac-dal",
+    "gameNumber": 2,
+    "date": "2004-04-20",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 83,
+    "awayScore": 79,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-r1-sac-dal",
+    "gameNumber": 3,
+    "date": "2004-04-24",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 104,
+    "awayScore": 79,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2004-west-r1-sac-dal",
+    "gameNumber": 4,
+    "date": "2004-04-26",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 92,
+    "awayScore": 94,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-r1-sac-dal",
+    "gameNumber": 5,
+    "date": "2004-04-29",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 119,
+    "awayScore": 118,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2004-west-r1-sas-mem",
+    "gameNumber": 1,
+    "date": "2004-04-17",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 98,
+    "awayScore": 74,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2004-west-r1-sas-mem",
+    "gameNumber": 2,
+    "date": "2004-04-19",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 87,
+    "awayScore": 70,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2004-west-r1-sas-mem",
+    "gameNumber": 3,
+    "date": "2004-04-22",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 93,
+    "awayScore": 95,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2004-west-r1-sas-mem",
+    "gameNumber": 4,
+    "date": "2004-04-25",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 97,
+    "awayScore": 110,
+    "winner": "SAS"
+  }
+]

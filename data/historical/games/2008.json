@@ -1,0 +1,862 @@
+[
+  {
+    "seriesId": "2008-finals-finals-bos-lal",
+    "gameNumber": 1,
+    "date": "2008-06-05",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 98,
+    "awayScore": 88,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-finals-finals-bos-lal",
+    "gameNumber": 2,
+    "date": "2008-06-08",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-finals-finals-bos-lal",
+    "gameNumber": 3,
+    "date": "2008-06-10",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 87,
+    "awayScore": 81,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-finals-finals-bos-lal",
+    "gameNumber": 4,
+    "date": "2008-06-12",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 91,
+    "awayScore": 97,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-finals-finals-bos-lal",
+    "gameNumber": 5,
+    "date": "2008-06-15",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-finals-finals-bos-lal",
+    "gameNumber": 6,
+    "date": "2008-06-17",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 131,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-cf-bos-det",
+    "gameNumber": 1,
+    "date": "2008-05-20",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 88,
+    "awayScore": 79,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-cf-bos-det",
+    "gameNumber": 2,
+    "date": "2008-05-22",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 97,
+    "awayScore": 103,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-cf-bos-det",
+    "gameNumber": 3,
+    "date": "2008-05-24",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 80,
+    "awayScore": 94,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-cf-bos-det",
+    "gameNumber": 4,
+    "date": "2008-05-26",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 75,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-cf-bos-det",
+    "gameNumber": 5,
+    "date": "2008-05-28",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 106,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-cf-bos-det",
+    "gameNumber": 6,
+    "date": "2008-05-30",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 81,
+    "awayScore": 89,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-west-cf-lal-sas",
+    "gameNumber": 1,
+    "date": "2008-05-21",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 89,
+    "awayScore": 85,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-cf-lal-sas",
+    "gameNumber": 2,
+    "date": "2008-05-23",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 71,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-cf-lal-sas",
+    "gameNumber": 3,
+    "date": "2008-05-25",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 84,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-cf-lal-sas",
+    "gameNumber": 4,
+    "date": "2008-05-27",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 93,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-cf-lal-sas",
+    "gameNumber": 5,
+    "date": "2008-05-29",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 100,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 1,
+    "date": "2008-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 76,
+    "awayScore": 72,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 2,
+    "date": "2008-05-08",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 89,
+    "awayScore": 73,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 3,
+    "date": "2008-05-10",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 108,
+    "awayScore": 84,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 4,
+    "date": "2008-05-12",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 88,
+    "awayScore": 77,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 5,
+    "date": "2008-05-14",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 96,
+    "awayScore": 89,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 6,
+    "date": "2008-05-16",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 74,
+    "awayScore": 69,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-csf-bos-cle",
+    "gameNumber": 7,
+    "date": "2008-05-18",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 97,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-csf-det-orl",
+    "gameNumber": 1,
+    "date": "2008-05-03",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 91,
+    "awayScore": 72,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-csf-det-orl",
+    "gameNumber": 2,
+    "date": "2008-05-05",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 100,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-csf-det-orl",
+    "gameNumber": 3,
+    "date": "2008-05-07",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 111,
+    "awayScore": 86,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2008-east-csf-det-orl",
+    "gameNumber": 4,
+    "date": "2008-05-10",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 89,
+    "awayScore": 90,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-csf-det-orl",
+    "gameNumber": 5,
+    "date": "2008-05-13",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 91,
+    "awayScore": 86,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-west-csf-lal-uta",
+    "gameNumber": 1,
+    "date": "2008-05-04",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 109,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-csf-lal-uta",
+    "gameNumber": 2,
+    "date": "2008-05-07",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 120,
+    "awayScore": 110,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-csf-lal-uta",
+    "gameNumber": 3,
+    "date": "2008-05-09",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2008-west-csf-lal-uta",
+    "gameNumber": 4,
+    "date": "2008-05-11",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 123,
+    "awayScore": 115,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2008-west-csf-lal-uta",
+    "gameNumber": 5,
+    "date": "2008-05-14",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 111,
+    "awayScore": 104,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-csf-lal-uta",
+    "gameNumber": 6,
+    "date": "2008-05-16",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 105,
+    "awayScore": 108,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 1,
+    "date": "2008-05-03",
+    "homeTeam": "NOH",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 82,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 2,
+    "date": "2008-05-05",
+    "homeTeam": "NOH",
+    "awayTeam": "SAS",
+    "homeScore": 102,
+    "awayScore": 84,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 3,
+    "date": "2008-05-08",
+    "homeTeam": "SAS",
+    "awayTeam": "NOH",
+    "homeScore": 110,
+    "awayScore": 99,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 4,
+    "date": "2008-05-11",
+    "homeTeam": "SAS",
+    "awayTeam": "NOH",
+    "homeScore": 100,
+    "awayScore": 80,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 5,
+    "date": "2008-05-13",
+    "homeTeam": "NOH",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 79,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 6,
+    "date": "2008-05-15",
+    "homeTeam": "SAS",
+    "awayTeam": "NOH",
+    "homeScore": 99,
+    "awayScore": 80,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-csf-noh-sas",
+    "gameNumber": 7,
+    "date": "2008-05-19",
+    "homeTeam": "NOH",
+    "awayTeam": "SAS",
+    "homeScore": 82,
+    "awayScore": 91,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 1,
+    "date": "2008-04-20",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 104,
+    "awayScore": 81,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 2,
+    "date": "2008-04-23",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 96,
+    "awayScore": 77,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 3,
+    "date": "2008-04-26",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 93,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 4,
+    "date": "2008-04-28",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 97,
+    "awayScore": 92,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 5,
+    "date": "2008-04-30",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 110,
+    "awayScore": 85,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 6,
+    "date": "2008-05-02",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 100,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2008-east-r1-bos-atl",
+    "gameNumber": 7,
+    "date": "2008-05-04",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 99,
+    "awayScore": 65,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2008-east-r1-cle-was",
+    "gameNumber": 1,
+    "date": "2008-04-19",
+    "homeTeam": "CLE",
+    "awayTeam": "WAS",
+    "homeScore": 93,
+    "awayScore": 86,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-r1-cle-was",
+    "gameNumber": 2,
+    "date": "2008-04-21",
+    "homeTeam": "CLE",
+    "awayTeam": "WAS",
+    "homeScore": 116,
+    "awayScore": 86,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-r1-cle-was",
+    "gameNumber": 3,
+    "date": "2008-04-24",
+    "homeTeam": "WAS",
+    "awayTeam": "CLE",
+    "homeScore": 108,
+    "awayScore": 72,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2008-east-r1-cle-was",
+    "gameNumber": 4,
+    "date": "2008-04-27",
+    "homeTeam": "WAS",
+    "awayTeam": "CLE",
+    "homeScore": 97,
+    "awayScore": 100,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-r1-cle-was",
+    "gameNumber": 5,
+    "date": "2008-04-30",
+    "homeTeam": "CLE",
+    "awayTeam": "WAS",
+    "homeScore": 87,
+    "awayScore": 88,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2008-east-r1-cle-was",
+    "gameNumber": 6,
+    "date": "2008-05-02",
+    "homeTeam": "WAS",
+    "awayTeam": "CLE",
+    "homeScore": 88,
+    "awayScore": 105,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2008-east-r1-det-phi",
+    "gameNumber": 1,
+    "date": "2008-04-20",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 86,
+    "awayScore": 90,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2008-east-r1-det-phi",
+    "gameNumber": 2,
+    "date": "2008-04-23",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 105,
+    "awayScore": 88,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-r1-det-phi",
+    "gameNumber": 3,
+    "date": "2008-04-25",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 95,
+    "awayScore": 75,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2008-east-r1-det-phi",
+    "gameNumber": 4,
+    "date": "2008-04-27",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 84,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-r1-det-phi",
+    "gameNumber": 5,
+    "date": "2008-04-29",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 98,
+    "awayScore": 81,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-r1-det-phi",
+    "gameNumber": 6,
+    "date": "2008-05-01",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 77,
+    "awayScore": 100,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2008-east-r1-orl-tor",
+    "gameNumber": 1,
+    "date": "2008-04-20",
+    "homeTeam": "ORL",
+    "awayTeam": "TOR",
+    "homeScore": 114,
+    "awayScore": 100,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2008-east-r1-orl-tor",
+    "gameNumber": 2,
+    "date": "2008-04-22",
+    "homeTeam": "ORL",
+    "awayTeam": "TOR",
+    "homeScore": 104,
+    "awayScore": 103,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2008-east-r1-orl-tor",
+    "gameNumber": 3,
+    "date": "2008-04-24",
+    "homeTeam": "TOR",
+    "awayTeam": "ORL",
+    "homeScore": 108,
+    "awayScore": 94,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2008-east-r1-orl-tor",
+    "gameNumber": 4,
+    "date": "2008-04-26",
+    "homeTeam": "TOR",
+    "awayTeam": "ORL",
+    "homeScore": 94,
+    "awayScore": 106,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2008-east-r1-orl-tor",
+    "gameNumber": 5,
+    "date": "2008-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "TOR",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2008-west-r1-lal-den",
+    "gameNumber": 1,
+    "date": "2008-04-20",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 128,
+    "awayScore": 114,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-r1-lal-den",
+    "gameNumber": 2,
+    "date": "2008-04-23",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 122,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-r1-lal-den",
+    "gameNumber": 3,
+    "date": "2008-04-26",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 84,
+    "awayScore": 102,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-r1-lal-den",
+    "gameNumber": 4,
+    "date": "2008-04-28",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 101,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2008-west-r1-noh-dal",
+    "gameNumber": 1,
+    "date": "2008-04-19",
+    "homeTeam": "NOH",
+    "awayTeam": "DAL",
+    "homeScore": 104,
+    "awayScore": 92,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-r1-noh-dal",
+    "gameNumber": 2,
+    "date": "2008-04-22",
+    "homeTeam": "NOH",
+    "awayTeam": "DAL",
+    "homeScore": 127,
+    "awayScore": 103,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-r1-noh-dal",
+    "gameNumber": 3,
+    "date": "2008-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "NOH",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2008-west-r1-noh-dal",
+    "gameNumber": 4,
+    "date": "2008-04-27",
+    "homeTeam": "DAL",
+    "awayTeam": "NOH",
+    "homeScore": 84,
+    "awayScore": 97,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-r1-noh-dal",
+    "gameNumber": 5,
+    "date": "2008-04-29",
+    "homeTeam": "NOH",
+    "awayTeam": "DAL",
+    "homeScore": 99,
+    "awayScore": 94,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2008-west-r1-sas-pho",
+    "gameNumber": 1,
+    "date": "2008-04-19",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 117,
+    "awayScore": 115,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-r1-sas-pho",
+    "gameNumber": 2,
+    "date": "2008-04-22",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 102,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-r1-sas-pho",
+    "gameNumber": 3,
+    "date": "2008-04-25",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 99,
+    "awayScore": 115,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-r1-sas-pho",
+    "gameNumber": 4,
+    "date": "2008-04-27",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 86,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2008-west-r1-sas-pho",
+    "gameNumber": 5,
+    "date": "2008-04-29",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 92,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2008-west-r1-hou-uta",
+    "gameNumber": 1,
+    "date": "2008-04-19",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 82,
+    "awayScore": 93,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2008-west-r1-hou-uta",
+    "gameNumber": 2,
+    "date": "2008-04-21",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 84,
+    "awayScore": 90,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2008-west-r1-hou-uta",
+    "gameNumber": 3,
+    "date": "2008-04-24",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 92,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2008-west-r1-hou-uta",
+    "gameNumber": 4,
+    "date": "2008-04-26",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 86,
+    "awayScore": 82,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2008-west-r1-hou-uta",
+    "gameNumber": 5,
+    "date": "2008-04-29",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 95,
+    "awayScore": 69,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2008-west-r1-hou-uta",
+    "gameNumber": 6,
+    "date": "2008-05-02",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 113,
+    "awayScore": 91,
+    "winner": "UTA"
+  }
+]

@@ -205,7 +205,7 @@ export function ForecastDashboard() {
               <button
                 type="button"
                 key={row.teamId}
-                className="border border-[var(--color-border-subtle)] bg-[var(--color-bg-secondary)] p-3 text-left transition hover:border-[var(--color-accent)] hover:bg-[var(--overlay-row-hover)]"
+                className="pp-action-tile p-3 text-left"
                 onClick={() => setSelectedTeamId(row.teamId)}
               >
                 <div className="flex items-center justify-between gap-2">

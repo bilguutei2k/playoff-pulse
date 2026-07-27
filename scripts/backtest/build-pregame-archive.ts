@@ -14,8 +14,8 @@ import {
   snapshotToTeam,
 } from "./baselines";
 import { loadGames, loadSeries, loadSnapshots } from "./build-snapshots";
+import { SEASONS } from "./scrape-bbref";
 
-const SEASONS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 const OUTPUT = path.join(process.cwd(), "docs", "backtest", "pregame-archive.json");
 
 export function buildPregameArchive(): HistoricalPregameArchive {
@@ -87,7 +87,7 @@ export function buildPregameArchive(): HistoricalPregameArchive {
     generatedAt: new Date().toISOString(),
     modelVersion: MODEL_VERSION,
     researchProtocolVersion: RESEARCH_PROTOCOL_VERSION,
-    seasons: SEASONS,
+    seasons: [...SEASONS],
     records,
   };
   assertPregameArchiveHasNoLeakage(archive);

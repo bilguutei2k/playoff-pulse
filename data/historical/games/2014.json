@@ -1,0 +1,892 @@
+[
+  {
+    "seriesId": "2014-finals-finals-sas-mia",
+    "gameNumber": 1,
+    "date": "2014-06-05",
+    "homeTeam": "SAS",
+    "awayTeam": "MIA",
+    "homeScore": 110,
+    "awayScore": 95,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-finals-finals-sas-mia",
+    "gameNumber": 2,
+    "date": "2014-06-08",
+    "homeTeam": "SAS",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 98,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-finals-finals-sas-mia",
+    "gameNumber": 3,
+    "date": "2014-06-10",
+    "homeTeam": "MIA",
+    "awayTeam": "SAS",
+    "homeScore": 92,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-finals-finals-sas-mia",
+    "gameNumber": 4,
+    "date": "2014-06-12",
+    "homeTeam": "MIA",
+    "awayTeam": "SAS",
+    "homeScore": 86,
+    "awayScore": 107,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-finals-finals-sas-mia",
+    "gameNumber": 5,
+    "date": "2014-06-15",
+    "homeTeam": "SAS",
+    "awayTeam": "MIA",
+    "homeScore": 104,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-east-cf-ind-mia",
+    "gameNumber": 1,
+    "date": "2014-05-18",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 107,
+    "awayScore": 96,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-cf-ind-mia",
+    "gameNumber": 2,
+    "date": "2014-05-20",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 83,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-cf-ind-mia",
+    "gameNumber": 3,
+    "date": "2014-05-24",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 99,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-cf-ind-mia",
+    "gameNumber": 4,
+    "date": "2014-05-26",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 102,
+    "awayScore": 90,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-cf-ind-mia",
+    "gameNumber": 5,
+    "date": "2014-05-28",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 93,
+    "awayScore": 90,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-cf-ind-mia",
+    "gameNumber": 6,
+    "date": "2014-05-30",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 117,
+    "awayScore": 92,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-west-cf-sas-okc",
+    "gameNumber": 1,
+    "date": "2014-05-19",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 122,
+    "awayScore": 105,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-cf-sas-okc",
+    "gameNumber": 2,
+    "date": "2014-05-21",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 112,
+    "awayScore": 77,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-cf-sas-okc",
+    "gameNumber": 3,
+    "date": "2014-05-25",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 106,
+    "awayScore": 97,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-cf-sas-okc",
+    "gameNumber": 4,
+    "date": "2014-05-27",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 92,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-cf-sas-okc",
+    "gameNumber": 5,
+    "date": "2014-05-29",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 117,
+    "awayScore": 89,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-cf-sas-okc",
+    "gameNumber": 6,
+    "date": "2014-05-31",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 112,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-east-csf-ind-was",
+    "gameNumber": 1,
+    "date": "2014-05-05",
+    "homeTeam": "IND",
+    "awayTeam": "WAS",
+    "homeScore": 96,
+    "awayScore": 102,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2014-east-csf-ind-was",
+    "gameNumber": 2,
+    "date": "2014-05-07",
+    "homeTeam": "IND",
+    "awayTeam": "WAS",
+    "homeScore": 86,
+    "awayScore": 82,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-csf-ind-was",
+    "gameNumber": 3,
+    "date": "2014-05-09",
+    "homeTeam": "WAS",
+    "awayTeam": "IND",
+    "homeScore": 63,
+    "awayScore": 85,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-csf-ind-was",
+    "gameNumber": 4,
+    "date": "2014-05-11",
+    "homeTeam": "WAS",
+    "awayTeam": "IND",
+    "homeScore": 92,
+    "awayScore": 95,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-csf-ind-was",
+    "gameNumber": 5,
+    "date": "2014-05-13",
+    "homeTeam": "IND",
+    "awayTeam": "WAS",
+    "homeScore": 79,
+    "awayScore": 102,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2014-east-csf-ind-was",
+    "gameNumber": 6,
+    "date": "2014-05-15",
+    "homeTeam": "WAS",
+    "awayTeam": "IND",
+    "homeScore": 80,
+    "awayScore": 93,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-csf-mia-brk",
+    "gameNumber": 1,
+    "date": "2014-05-06",
+    "homeTeam": "MIA",
+    "awayTeam": "BRK",
+    "homeScore": 107,
+    "awayScore": 86,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-csf-mia-brk",
+    "gameNumber": 2,
+    "date": "2014-05-08",
+    "homeTeam": "MIA",
+    "awayTeam": "BRK",
+    "homeScore": 94,
+    "awayScore": 82,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-csf-mia-brk",
+    "gameNumber": 3,
+    "date": "2014-05-10",
+    "homeTeam": "BRK",
+    "awayTeam": "MIA",
+    "homeScore": 104,
+    "awayScore": 90,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2014-east-csf-mia-brk",
+    "gameNumber": 4,
+    "date": "2014-05-12",
+    "homeTeam": "BRK",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 102,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-csf-mia-brk",
+    "gameNumber": 5,
+    "date": "2014-05-14",
+    "homeTeam": "MIA",
+    "awayTeam": "BRK",
+    "homeScore": 96,
+    "awayScore": 94,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-west-csf-okc-lac",
+    "gameNumber": 1,
+    "date": "2014-05-05",
+    "homeTeam": "OKC",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 122,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2014-west-csf-okc-lac",
+    "gameNumber": 2,
+    "date": "2014-05-07",
+    "homeTeam": "OKC",
+    "awayTeam": "LAC",
+    "homeScore": 112,
+    "awayScore": 101,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-csf-okc-lac",
+    "gameNumber": 3,
+    "date": "2014-05-09",
+    "homeTeam": "LAC",
+    "awayTeam": "OKC",
+    "homeScore": 112,
+    "awayScore": 118,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-csf-okc-lac",
+    "gameNumber": 4,
+    "date": "2014-05-11",
+    "homeTeam": "LAC",
+    "awayTeam": "OKC",
+    "homeScore": 101,
+    "awayScore": 99,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2014-west-csf-okc-lac",
+    "gameNumber": 5,
+    "date": "2014-05-13",
+    "homeTeam": "OKC",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 104,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-csf-okc-lac",
+    "gameNumber": 6,
+    "date": "2014-05-15",
+    "homeTeam": "LAC",
+    "awayTeam": "OKC",
+    "homeScore": 98,
+    "awayScore": 104,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-csf-sas-por",
+    "gameNumber": 1,
+    "date": "2014-05-06",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 116,
+    "awayScore": 92,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-csf-sas-por",
+    "gameNumber": 2,
+    "date": "2014-05-08",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 114,
+    "awayScore": 97,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-csf-sas-por",
+    "gameNumber": 3,
+    "date": "2014-05-10",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 103,
+    "awayScore": 118,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-csf-sas-por",
+    "gameNumber": 4,
+    "date": "2014-05-12",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 103,
+    "awayScore": 92,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2014-west-csf-sas-por",
+    "gameNumber": 5,
+    "date": "2014-05-14",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 104,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 1,
+    "date": "2014-04-19",
+    "homeTeam": "TOR",
+    "awayTeam": "BRK",
+    "homeScore": 87,
+    "awayScore": 94,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 2,
+    "date": "2014-04-22",
+    "homeTeam": "TOR",
+    "awayTeam": "BRK",
+    "homeScore": 100,
+    "awayScore": 95,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 3,
+    "date": "2014-04-25",
+    "homeTeam": "BRK",
+    "awayTeam": "TOR",
+    "homeScore": 102,
+    "awayScore": 98,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 4,
+    "date": "2014-04-27",
+    "homeTeam": "BRK",
+    "awayTeam": "TOR",
+    "homeScore": 79,
+    "awayScore": 87,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 5,
+    "date": "2014-04-30",
+    "homeTeam": "TOR",
+    "awayTeam": "BRK",
+    "homeScore": 115,
+    "awayScore": 113,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 6,
+    "date": "2014-05-02",
+    "homeTeam": "BRK",
+    "awayTeam": "TOR",
+    "homeScore": 97,
+    "awayScore": 83,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2014-east-r1-tor-brk",
+    "gameNumber": 7,
+    "date": "2014-05-04",
+    "homeTeam": "TOR",
+    "awayTeam": "BRK",
+    "homeScore": 103,
+    "awayScore": 104,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 1,
+    "date": "2014-04-19",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 93,
+    "awayScore": 101,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 2,
+    "date": "2014-04-22",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 101,
+    "awayScore": 85,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 3,
+    "date": "2014-04-24",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 98,
+    "awayScore": 85,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 4,
+    "date": "2014-04-26",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 88,
+    "awayScore": 91,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 5,
+    "date": "2014-04-28",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 97,
+    "awayScore": 107,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 6,
+    "date": "2014-05-01",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 88,
+    "awayScore": 95,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-r1-ind-atl",
+    "gameNumber": 7,
+    "date": "2014-05-03",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 92,
+    "awayScore": 80,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2014-east-r1-mia-cha",
+    "gameNumber": 1,
+    "date": "2014-04-20",
+    "homeTeam": "MIA",
+    "awayTeam": "CHA",
+    "homeScore": 99,
+    "awayScore": 88,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-r1-mia-cha",
+    "gameNumber": 2,
+    "date": "2014-04-23",
+    "homeTeam": "MIA",
+    "awayTeam": "CHA",
+    "homeScore": 101,
+    "awayScore": 97,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-r1-mia-cha",
+    "gameNumber": 3,
+    "date": "2014-04-26",
+    "homeTeam": "CHA",
+    "awayTeam": "MIA",
+    "homeScore": 85,
+    "awayScore": 98,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-r1-mia-cha",
+    "gameNumber": 4,
+    "date": "2014-04-28",
+    "homeTeam": "CHA",
+    "awayTeam": "MIA",
+    "homeScore": 98,
+    "awayScore": 109,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2014-east-r1-chi-was",
+    "gameNumber": 1,
+    "date": "2014-04-20",
+    "homeTeam": "CHI",
+    "awayTeam": "WAS",
+    "homeScore": 93,
+    "awayScore": 102,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2014-east-r1-chi-was",
+    "gameNumber": 2,
+    "date": "2014-04-22",
+    "homeTeam": "CHI",
+    "awayTeam": "WAS",
+    "homeScore": 99,
+    "awayScore": 101,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2014-east-r1-chi-was",
+    "gameNumber": 3,
+    "date": "2014-04-25",
+    "homeTeam": "WAS",
+    "awayTeam": "CHI",
+    "homeScore": 97,
+    "awayScore": 100,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2014-east-r1-chi-was",
+    "gameNumber": 4,
+    "date": "2014-04-27",
+    "homeTeam": "WAS",
+    "awayTeam": "CHI",
+    "homeScore": 98,
+    "awayScore": 89,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2014-east-r1-chi-was",
+    "gameNumber": 5,
+    "date": "2014-04-29",
+    "homeTeam": "CHI",
+    "awayTeam": "WAS",
+    "homeScore": 69,
+    "awayScore": 75,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 1,
+    "date": "2014-04-19",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 105,
+    "awayScore": 109,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 2,
+    "date": "2014-04-21",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 138,
+    "awayScore": 98,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 3,
+    "date": "2014-04-24",
+    "homeTeam": "GSW",
+    "awayTeam": "LAC",
+    "homeScore": 96,
+    "awayScore": 98,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 4,
+    "date": "2014-04-27",
+    "homeTeam": "GSW",
+    "awayTeam": "LAC",
+    "homeScore": 118,
+    "awayScore": 97,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 5,
+    "date": "2014-04-29",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 113,
+    "awayScore": 103,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 6,
+    "date": "2014-05-01",
+    "homeTeam": "GSW",
+    "awayTeam": "LAC",
+    "homeScore": 100,
+    "awayScore": 99,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2014-west-r1-lac-gsw",
+    "gameNumber": 7,
+    "date": "2014-05-03",
+    "homeTeam": "LAC",
+    "awayTeam": "GSW",
+    "homeScore": 126,
+    "awayScore": 121,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 1,
+    "date": "2014-04-19",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 100,
+    "awayScore": 86,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 2,
+    "date": "2014-04-21",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 105,
+    "awayScore": 111,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 3,
+    "date": "2014-04-24",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 98,
+    "awayScore": 95,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 4,
+    "date": "2014-04-26",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 89,
+    "awayScore": 92,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 5,
+    "date": "2014-04-29",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 99,
+    "awayScore": 100,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 6,
+    "date": "2014-05-01",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 84,
+    "awayScore": 104,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-r1-okc-mem",
+    "gameNumber": 7,
+    "date": "2014-05-03",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 120,
+    "awayScore": 109,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2014-west-r1-hou-por",
+    "gameNumber": 1,
+    "date": "2014-04-20",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 120,
+    "awayScore": 122,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2014-west-r1-hou-por",
+    "gameNumber": 2,
+    "date": "2014-04-23",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 105,
+    "awayScore": 112,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2014-west-r1-hou-por",
+    "gameNumber": 3,
+    "date": "2014-04-25",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 116,
+    "awayScore": 121,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2014-west-r1-hou-por",
+    "gameNumber": 4,
+    "date": "2014-04-27",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 123,
+    "awayScore": 120,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2014-west-r1-hou-por",
+    "gameNumber": 5,
+    "date": "2014-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 108,
+    "awayScore": 98,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2014-west-r1-hou-por",
+    "gameNumber": 6,
+    "date": "2014-05-02",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 99,
+    "awayScore": 98,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 1,
+    "date": "2014-04-20",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 90,
+    "awayScore": 85,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 2,
+    "date": "2014-04-23",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 92,
+    "awayScore": 113,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 3,
+    "date": "2014-04-26",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 108,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 4,
+    "date": "2014-04-28",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 89,
+    "awayScore": 93,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 5,
+    "date": "2014-04-30",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 109,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 6,
+    "date": "2014-05-02",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 113,
+    "awayScore": 111,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2014-west-r1-sas-dal",
+    "gameNumber": 7,
+    "date": "2014-05-04",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 119,
+    "awayScore": 96,
+    "winner": "SAS"
+  }
+]

@@ -1,0 +1,852 @@
+[
+  {
+    "seriesId": "2009-finals-finals-lal-orl",
+    "gameNumber": 1,
+    "date": "2009-06-04",
+    "homeTeam": "LAL",
+    "awayTeam": "ORL",
+    "homeScore": 100,
+    "awayScore": 75,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-finals-finals-lal-orl",
+    "gameNumber": 2,
+    "date": "2009-06-07",
+    "homeTeam": "LAL",
+    "awayTeam": "ORL",
+    "homeScore": 101,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-finals-finals-lal-orl",
+    "gameNumber": 3,
+    "date": "2009-06-09",
+    "homeTeam": "ORL",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 104,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-finals-finals-lal-orl",
+    "gameNumber": 4,
+    "date": "2009-06-11",
+    "homeTeam": "ORL",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-finals-finals-lal-orl",
+    "gameNumber": 5,
+    "date": "2009-06-14",
+    "homeTeam": "ORL",
+    "awayTeam": "LAL",
+    "homeScore": 86,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-east-cf-cle-orl",
+    "gameNumber": 1,
+    "date": "2009-05-20",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 106,
+    "awayScore": 107,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-cf-cle-orl",
+    "gameNumber": 2,
+    "date": "2009-05-22",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 96,
+    "awayScore": 95,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-cf-cle-orl",
+    "gameNumber": 3,
+    "date": "2009-05-24",
+    "homeTeam": "ORL",
+    "awayTeam": "CLE",
+    "homeScore": 99,
+    "awayScore": 89,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-cf-cle-orl",
+    "gameNumber": 4,
+    "date": "2009-05-26",
+    "homeTeam": "ORL",
+    "awayTeam": "CLE",
+    "homeScore": 116,
+    "awayScore": 114,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-cf-cle-orl",
+    "gameNumber": 5,
+    "date": "2009-05-28",
+    "homeTeam": "CLE",
+    "awayTeam": "ORL",
+    "homeScore": 112,
+    "awayScore": 102,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-cf-cle-orl",
+    "gameNumber": 6,
+    "date": "2009-05-30",
+    "homeTeam": "ORL",
+    "awayTeam": "CLE",
+    "homeScore": 103,
+    "awayScore": 90,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-west-cf-lal-den",
+    "gameNumber": 1,
+    "date": "2009-05-19",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 103,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-cf-lal-den",
+    "gameNumber": 2,
+    "date": "2009-05-21",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 103,
+    "awayScore": 106,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-cf-lal-den",
+    "gameNumber": 3,
+    "date": "2009-05-23",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 97,
+    "awayScore": 103,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-cf-lal-den",
+    "gameNumber": 4,
+    "date": "2009-05-25",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 120,
+    "awayScore": 101,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-cf-lal-den",
+    "gameNumber": 5,
+    "date": "2009-05-27",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 103,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-cf-lal-den",
+    "gameNumber": 6,
+    "date": "2009-05-29",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 92,
+    "awayScore": 119,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-east-csf-cle-atl",
+    "gameNumber": 1,
+    "date": "2009-05-05",
+    "homeTeam": "CLE",
+    "awayTeam": "ATL",
+    "homeScore": 99,
+    "awayScore": 72,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-csf-cle-atl",
+    "gameNumber": 2,
+    "date": "2009-05-07",
+    "homeTeam": "CLE",
+    "awayTeam": "ATL",
+    "homeScore": 105,
+    "awayScore": 85,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-csf-cle-atl",
+    "gameNumber": 3,
+    "date": "2009-05-09",
+    "homeTeam": "ATL",
+    "awayTeam": "CLE",
+    "homeScore": 82,
+    "awayScore": 97,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-csf-cle-atl",
+    "gameNumber": 4,
+    "date": "2009-05-11",
+    "homeTeam": "ATL",
+    "awayTeam": "CLE",
+    "homeScore": 74,
+    "awayScore": 84,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 1,
+    "date": "2009-05-04",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 90,
+    "awayScore": 95,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 2,
+    "date": "2009-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 112,
+    "awayScore": 94,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 3,
+    "date": "2009-05-08",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 117,
+    "awayScore": 96,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 4,
+    "date": "2009-05-10",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 95,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 5,
+    "date": "2009-05-12",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 92,
+    "awayScore": 88,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 6,
+    "date": "2009-05-14",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 83,
+    "awayScore": 75,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-csf-bos-orl",
+    "gameNumber": 7,
+    "date": "2009-05-17",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 82,
+    "awayScore": 101,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-west-csf-den-dal",
+    "gameNumber": 1,
+    "date": "2009-05-03",
+    "homeTeam": "DEN",
+    "awayTeam": "DAL",
+    "homeScore": 109,
+    "awayScore": 95,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-csf-den-dal",
+    "gameNumber": 2,
+    "date": "2009-05-05",
+    "homeTeam": "DEN",
+    "awayTeam": "DAL",
+    "homeScore": 117,
+    "awayScore": 105,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-csf-den-dal",
+    "gameNumber": 3,
+    "date": "2009-05-09",
+    "homeTeam": "DAL",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 106,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-csf-den-dal",
+    "gameNumber": 4,
+    "date": "2009-05-11",
+    "homeTeam": "DAL",
+    "awayTeam": "DEN",
+    "homeScore": 119,
+    "awayScore": 117,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2009-west-csf-den-dal",
+    "gameNumber": 5,
+    "date": "2009-05-13",
+    "homeTeam": "DEN",
+    "awayTeam": "DAL",
+    "homeScore": 124,
+    "awayScore": 110,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 1,
+    "date": "2009-05-04",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 92,
+    "awayScore": 100,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 2,
+    "date": "2009-05-06",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 111,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 3,
+    "date": "2009-05-08",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 94,
+    "awayScore": 108,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 4,
+    "date": "2009-05-10",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 99,
+    "awayScore": 87,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 5,
+    "date": "2009-05-12",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 118,
+    "awayScore": 78,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 6,
+    "date": "2009-05-14",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 95,
+    "awayScore": 80,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-csf-lal-hou",
+    "gameNumber": 7,
+    "date": "2009-05-17",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 89,
+    "awayScore": 70,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 1,
+    "date": "2009-04-19",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 90,
+    "awayScore": 64,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 2,
+    "date": "2009-04-22",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 93,
+    "awayScore": 108,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 3,
+    "date": "2009-04-25",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 107,
+    "awayScore": 78,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 4,
+    "date": "2009-04-27",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 71,
+    "awayScore": 81,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 5,
+    "date": "2009-04-29",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 106,
+    "awayScore": 91,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 6,
+    "date": "2009-05-01",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 98,
+    "awayScore": 72,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2009-east-r1-atl-mia",
+    "gameNumber": 7,
+    "date": "2009-05-03",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 91,
+    "awayScore": 78,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 1,
+    "date": "2009-04-18",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 103,
+    "awayScore": 105,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 2,
+    "date": "2009-04-20",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 118,
+    "awayScore": 115,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 3,
+    "date": "2009-04-23",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 86,
+    "awayScore": 107,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 4,
+    "date": "2009-04-26",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 121,
+    "awayScore": 118,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 5,
+    "date": "2009-04-28",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 106,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 6,
+    "date": "2009-04-30",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 128,
+    "awayScore": 127,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2009-east-r1-bos-chi",
+    "gameNumber": 7,
+    "date": "2009-05-02",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 109,
+    "awayScore": 99,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2009-east-r1-cle-det",
+    "gameNumber": 1,
+    "date": "2009-04-18",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 102,
+    "awayScore": 84,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-r1-cle-det",
+    "gameNumber": 2,
+    "date": "2009-04-21",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 82,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-r1-cle-det",
+    "gameNumber": 3,
+    "date": "2009-04-24",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 68,
+    "awayScore": 79,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-r1-cle-det",
+    "gameNumber": 4,
+    "date": "2009-04-26",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 78,
+    "awayScore": 99,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2009-east-r1-orl-phi",
+    "gameNumber": 1,
+    "date": "2009-04-19",
+    "homeTeam": "ORL",
+    "awayTeam": "PHI",
+    "homeScore": 98,
+    "awayScore": 100,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2009-east-r1-orl-phi",
+    "gameNumber": 2,
+    "date": "2009-04-22",
+    "homeTeam": "ORL",
+    "awayTeam": "PHI",
+    "homeScore": 96,
+    "awayScore": 87,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-r1-orl-phi",
+    "gameNumber": 3,
+    "date": "2009-04-24",
+    "homeTeam": "PHI",
+    "awayTeam": "ORL",
+    "homeScore": 96,
+    "awayScore": 94,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2009-east-r1-orl-phi",
+    "gameNumber": 4,
+    "date": "2009-04-26",
+    "homeTeam": "PHI",
+    "awayTeam": "ORL",
+    "homeScore": 81,
+    "awayScore": 84,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-r1-orl-phi",
+    "gameNumber": 5,
+    "date": "2009-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "PHI",
+    "homeScore": 91,
+    "awayScore": 78,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-east-r1-orl-phi",
+    "gameNumber": 6,
+    "date": "2009-04-30",
+    "homeTeam": "PHI",
+    "awayTeam": "ORL",
+    "homeScore": 89,
+    "awayScore": 114,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2009-west-r1-sas-dal",
+    "gameNumber": 1,
+    "date": "2009-04-18",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 97,
+    "awayScore": 105,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2009-west-r1-sas-dal",
+    "gameNumber": 2,
+    "date": "2009-04-20",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 105,
+    "awayScore": 84,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2009-west-r1-sas-dal",
+    "gameNumber": 3,
+    "date": "2009-04-23",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 88,
+    "awayScore": 67,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2009-west-r1-sas-dal",
+    "gameNumber": 4,
+    "date": "2009-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 99,
+    "awayScore": 90,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2009-west-r1-sas-dal",
+    "gameNumber": 5,
+    "date": "2009-04-28",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 93,
+    "awayScore": 106,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2009-west-r1-den-noh",
+    "gameNumber": 1,
+    "date": "2009-04-19",
+    "homeTeam": "DEN",
+    "awayTeam": "NOH",
+    "homeScore": 113,
+    "awayScore": 84,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-r1-den-noh",
+    "gameNumber": 2,
+    "date": "2009-04-22",
+    "homeTeam": "DEN",
+    "awayTeam": "NOH",
+    "homeScore": 108,
+    "awayScore": 93,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-r1-den-noh",
+    "gameNumber": 3,
+    "date": "2009-04-25",
+    "homeTeam": "NOH",
+    "awayTeam": "DEN",
+    "homeScore": 95,
+    "awayScore": 93,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2009-west-r1-den-noh",
+    "gameNumber": 4,
+    "date": "2009-04-27",
+    "homeTeam": "NOH",
+    "awayTeam": "DEN",
+    "homeScore": 63,
+    "awayScore": 121,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-r1-den-noh",
+    "gameNumber": 5,
+    "date": "2009-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "NOH",
+    "homeScore": 107,
+    "awayScore": 86,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2009-west-r1-por-hou",
+    "gameNumber": 1,
+    "date": "2009-04-18",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 81,
+    "awayScore": 108,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-r1-por-hou",
+    "gameNumber": 2,
+    "date": "2009-04-21",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 107,
+    "awayScore": 103,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2009-west-r1-por-hou",
+    "gameNumber": 3,
+    "date": "2009-04-24",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 86,
+    "awayScore": 83,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-r1-por-hou",
+    "gameNumber": 4,
+    "date": "2009-04-26",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 89,
+    "awayScore": 88,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-r1-por-hou",
+    "gameNumber": 5,
+    "date": "2009-04-28",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 88,
+    "awayScore": 77,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2009-west-r1-por-hou",
+    "gameNumber": 6,
+    "date": "2009-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 92,
+    "awayScore": 76,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2009-west-r1-lal-uta",
+    "gameNumber": 1,
+    "date": "2009-04-19",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 113,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-r1-lal-uta",
+    "gameNumber": 2,
+    "date": "2009-04-21",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 119,
+    "awayScore": 109,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-r1-lal-uta",
+    "gameNumber": 3,
+    "date": "2009-04-23",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 86,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2009-west-r1-lal-uta",
+    "gameNumber": 4,
+    "date": "2009-04-25",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 94,
+    "awayScore": 108,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2009-west-r1-lal-uta",
+    "gameNumber": 5,
+    "date": "2009-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 107,
+    "awayScore": 96,
+    "winner": "LAL"
+  }
+]

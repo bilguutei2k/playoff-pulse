@@ -37,7 +37,7 @@ export function MethodologyNote() {
 
       <Link
         href="/methodology"
-        className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-accent)] bg-[var(--color-accent)] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent-text)] transition hover:bg-[var(--color-accent-hover)]"
+        className="pp-button pp-button-primary w-fit"
       >
         Open methodology
         <ArrowRight className="h-4 w-4" aria-hidden />

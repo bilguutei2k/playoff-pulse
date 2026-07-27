@@ -13,7 +13,7 @@ import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 export const metadata: Metadata = {
   title: "Playoff Pulse — A Traceable NBA Playoff Forecasting Experiment",
   description:
-    "A retrospective on building and honestly evaluating an NBA playoff forecasting system: rolling-origin evaluation, bootstrap comparisons, overconfidence analysis, and rejected model changes.",
+    "A retrospective on building and evaluating an NBA playoff forecasting system: rolling-origin evaluation, bootstrap comparisons, overconfidence analysis, and rejected model changes.",
 };
 
 const RESEARCH_MODEL_LABELS: Record<string, string> = {
@@ -134,7 +134,8 @@ export default function Home() {
               </h2>
               <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
                 Models trained only on seasons before each evaluated season,
-                2019–2025: {referenceModel?.game.n} games, {referenceModel?.series.n} series.
+                {" "}{evidence.evaluationSeasons[0]}–{evidence.evaluationSeasons.at(-1)}:{" "}
+                {referenceModel?.game.n} games, {referenceModel?.series.n} series.
                 Lower Brier is better.
               </p>
               <table className="mt-3 w-full border-collapse text-left text-xs">
@@ -157,7 +158,7 @@ export default function Home() {
               </table>
               <p className="mt-3 text-xs leading-5 text-[var(--color-text-muted)]">
                 No richer feature set conclusively beat SRS + home court. The
-                best candidate improved the series point estimate by{" "}
+                best candidate changed the series point estimate by{" "}
                 {richestComparison
                   ? formatNumber(richestComparison.series.candidateMinusBaselineBrier, 4)
                   : "—"}{" "}
@@ -170,7 +171,7 @@ export default function Home() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-[var(--color-text-primary)]">
-                150-series reconstruction (descriptive)
+                {backtestSummary.totalSeries}-series reconstruction (descriptive)
               </h2>
               <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
                 A fixed configuration — specified before the evaluation harness
@@ -178,7 +179,8 @@ export default function Home() {
                 <span className="pp-number font-bold text-[var(--color-text-primary)]">
                   {formatNumber(pulse.brierScore, 4)}
                 </span>{" "}
-                on 150 reconstructed series, 2016–2025. Paired bootstrap
+                on {backtestSummary.totalSeries} reconstructed series,{" "}
+                {backtestSummary.firstSeason}–{backtestSummary.lastSeason}. Paired bootstrap
                 differences (negative favors the model):
               </p>
               <table className="mt-3 w-full border-collapse text-left text-xs">
@@ -208,21 +210,58 @@ export default function Home() {
                 </tbody>
               </table>
               <p className="mt-3 text-xs leading-5 text-[var(--color-text-muted)]">
-                The model conclusively beats the naive baselines; its edge over
-                simple rating baselines is not statistically distinguishable
-                from zero. Series accuracy (69.3%) is below the higher-seed
-                baseline (70.0%) — Brier and log loss, not accuracy, are the
-                scoring rules here.
+                The model conclusively beats the naive baselines. Its point
+                estimate trails SRS-only by{" "}
+                {formatNumber(
+                  pulse.brierScore -
+                    backtestSummary.models.srs_proxy_only.brierScore,
+                  4,
+                )}{" "}
+                Brier, but the difference is not statistically distinguishable
+                from zero. Series accuracy is {formatPercent(pulse.accuracy)}{" "}
+                versus{" "}
+                {formatPercent(backtestSummary.models.higher_seed.accuracy)}
+                for the higher-seed baseline.
               </p>
             </div>
           </div>
           <div className="border-t border-[var(--color-border-subtle)] p-4">
-            <h3 className="pp-kicker text-[var(--color-text-primary)]">Evaluated and rejected</h3>
-            <ul className="mt-2 grid gap-1 text-xs leading-5 text-[var(--color-text-muted)] sm:grid-cols-3">
+            <h3 className="pp-kicker text-[var(--color-text-primary)]">Evaluated / promoted only within research</h3>
+            <ul className="mt-2 grid gap-3 text-xs leading-5 text-[var(--color-text-muted)] sm:grid-cols-2 xl:grid-cols-5">
               <li>
-                Game-level calibration: Brier worsened{" "}
-                {formatNumber(evidence.calibration.game.raw.brier, 4)} →{" "}
-                {formatNumber(evidence.calibration.game.calibrated.brier, 4)}. Rejected.
+                Coherent game calibration through the exact solver: series
+                Brier{" "}
+                {formatNumber(
+                  evidence.calibration.gamePropagatedThroughExactSeries.raw
+                    .brier,
+                  4,
+                )}{" "}
+                →{" "}
+                {formatNumber(
+                  evidence.calibration.gamePropagatedThroughExactSeries
+                    .calibrated.brier,
+                  4,
+                )}
+                . Interval includes zero; not promoted.
+              </li>
+              <li>
+                Primary exact-SRS + seed challenger: matched series Brier{" "}
+                {formatNumber(
+                  evidence.primarySeriesChallenger.baselineMetrics.brier,
+                  4,
+                )}{" "}
+                →{" "}
+                {formatNumber(evidence.primarySeriesChallenger.metrics.brier, 4)}
+                . Its interval includes zero; sealed for 2027.
+              </li>
+              <li>
+                Ten-season window: historical game Δ{" "}
+                {formatSigned(
+                  evidence.temporalWindowCandidate.comparisonToSrsHome.game
+                    .candidateMinusBaselineBrier,
+                  4,
+                )}
+                , with the interval below zero. Retrospective; frozen for 2027.
               </li>
               <li>
                 Preregistered dynamic margin updates (frozen{" "}
@@ -231,8 +270,13 @@ export default function Home() {
                 {referenceModel ? formatNumber(referenceModel.game.brier, 6) : "—"}). Not promoted.
               </li>
               <li>
-                Normalized-BPM feature additions: worsened aggregate game
-                Brier. Kept visible as rejected ablations.
+                Rating-gap player shrinkage: game Δ{" "}
+                {formatSigned(
+                  evidence.shrinkageCandidate.comparisonToSrsHome.game
+                    .candidateMinusBaselineBrier,
+                  4,
+                )}{" "}
+                with an interval spanning zero. Frozen for 2027; not promoted.
               </li>
             </ul>
           </div>
@@ -318,7 +362,7 @@ export default function Home() {
                 </p>
                 <Link
                   href="/lab"
-                  className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-accent)] bg-[var(--overlay-accent-soft)] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:bg-[var(--color-accent)] hover:text-[var(--color-accent-text)]"
+                  className="pp-button pp-button-primary w-fit"
                 >
                   Open the scenario lab
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -343,7 +387,9 @@ export default function Home() {
                   ["Backtest methodology + limitations", "docs/backtest/methodology.md"],
                   ["Bootstrap significance", "docs/backtest/significance.json"],
                   ["Rolling-origin research", "docs/backtest/research.json"],
-                  ["All 900 series predictions", "docs/backtest/predictions.json"],
+                  [`All ${backtestSummary.totalSeries * 6} model-series predictions`, "docs/backtest/predictions.json"],
+                  ["Availability completeness audit", "docs/backtest/availability.json"],
+                  ["Rotation + benchmark input audit", "docs/backtest/input-audit.json"],
                   ["Point-in-time implementation record", "docs/point-in-time-implementation.md"],
                 ].map(([label, filePath]) => (
                   <li key={filePath}>
@@ -364,8 +410,7 @@ export default function Home() {
 {`git clone ${REPO_URL}
 corepack pnpm install
 corepack pnpm verify
-corepack pnpm backtest:research
-pnpm exec tsx scripts/backtest/significance.ts`}
+corepack pnpm backtest:all`}
               </pre>
               <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
                 Every headline number regenerates from committed inputs.
@@ -378,18 +423,18 @@ pnpm exec tsx scripts/backtest/significance.ts`}
               <ul className="mt-2 grid gap-1 text-xs leading-5 text-[var(--color-text-muted)]">
                 <li>Reconstructed forecasts were not issued contemporaneously.</li>
                 <li>Production inputs are manual, subjective estimates.</li>
-                <li>Uncertainty ranges are sensitivity to stated assumptions, not validated coverage.</li>
-                <li>Historical injuries and absences are not modeled.</li>
+                <li>Sensitivity bands pass 7 of 10 grouped reliability checks, but are not individual probability-interval coverage guarantees.</li>
+                <li>Historical availability coverage is 0%; injury effects remain unvalidated rather than inferred from outcomes.</li>
                 <li>No official NBA data; no betting use.</li>
               </ul>
               <div className="mt-3 flex flex-wrap gap-2">
-                <Link href="/methodology" className="border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:border-[var(--color-accent)]">
+                <Link href="/methodology" className="pp-button">
                   Methodology
                 </Link>
-                <Link href="/evidence" className="border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:border-[var(--color-accent)]">
+                <Link href="/evidence" className="pp-button">
                   Evidence archive
                 </Link>
-                <Link href="/snapshot" className="border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition hover:border-[var(--color-accent)]">
+                <Link href="/snapshot" className="pp-button">
                   Final 2026 snapshot
                 </Link>
               </div>

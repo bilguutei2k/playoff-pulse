@@ -1,0 +1,812 @@
+[
+  {
+    "seriesId": "2015-finals-finals-gsw-cle",
+    "gameNumber": 1,
+    "date": "2015-06-04",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 108,
+    "awayScore": 100,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-finals-finals-gsw-cle",
+    "gameNumber": 2,
+    "date": "2015-06-07",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 93,
+    "awayScore": 95,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-finals-finals-gsw-cle",
+    "gameNumber": 3,
+    "date": "2015-06-09",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-finals-finals-gsw-cle",
+    "gameNumber": 4,
+    "date": "2015-06-11",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 82,
+    "awayScore": 103,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-finals-finals-gsw-cle",
+    "gameNumber": 5,
+    "date": "2015-06-14",
+    "homeTeam": "GSW",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 91,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-finals-finals-gsw-cle",
+    "gameNumber": 6,
+    "date": "2015-06-16",
+    "homeTeam": "CLE",
+    "awayTeam": "GSW",
+    "homeScore": 97,
+    "awayScore": 105,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-east-cf-atl-cle",
+    "gameNumber": 1,
+    "date": "2015-05-20",
+    "homeTeam": "ATL",
+    "awayTeam": "CLE",
+    "homeScore": 89,
+    "awayScore": 97,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-cf-atl-cle",
+    "gameNumber": 2,
+    "date": "2015-05-22",
+    "homeTeam": "ATL",
+    "awayTeam": "CLE",
+    "homeScore": 82,
+    "awayScore": 94,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-cf-atl-cle",
+    "gameNumber": 3,
+    "date": "2015-05-24",
+    "homeTeam": "CLE",
+    "awayTeam": "ATL",
+    "homeScore": 114,
+    "awayScore": 111,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-cf-atl-cle",
+    "gameNumber": 4,
+    "date": "2015-05-26",
+    "homeTeam": "CLE",
+    "awayTeam": "ATL",
+    "homeScore": 118,
+    "awayScore": 88,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-west-cf-gsw-hou",
+    "gameNumber": 1,
+    "date": "2015-05-19",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 110,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-cf-gsw-hou",
+    "gameNumber": 2,
+    "date": "2015-05-21",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 99,
+    "awayScore": 98,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-cf-gsw-hou",
+    "gameNumber": 3,
+    "date": "2015-05-23",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 80,
+    "awayScore": 115,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-cf-gsw-hou",
+    "gameNumber": 4,
+    "date": "2015-05-25",
+    "homeTeam": "HOU",
+    "awayTeam": "GSW",
+    "homeScore": 128,
+    "awayScore": 115,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-cf-gsw-hou",
+    "gameNumber": 5,
+    "date": "2015-05-27",
+    "homeTeam": "GSW",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 90,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-east-csf-atl-was",
+    "gameNumber": 1,
+    "date": "2015-05-03",
+    "homeTeam": "ATL",
+    "awayTeam": "WAS",
+    "homeScore": 98,
+    "awayScore": 104,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2015-east-csf-atl-was",
+    "gameNumber": 2,
+    "date": "2015-05-05",
+    "homeTeam": "ATL",
+    "awayTeam": "WAS",
+    "homeScore": 106,
+    "awayScore": 90,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-csf-atl-was",
+    "gameNumber": 3,
+    "date": "2015-05-09",
+    "homeTeam": "WAS",
+    "awayTeam": "ATL",
+    "homeScore": 103,
+    "awayScore": 101,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2015-east-csf-atl-was",
+    "gameNumber": 4,
+    "date": "2015-05-11",
+    "homeTeam": "WAS",
+    "awayTeam": "ATL",
+    "homeScore": 101,
+    "awayScore": 106,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-csf-atl-was",
+    "gameNumber": 5,
+    "date": "2015-05-13",
+    "homeTeam": "ATL",
+    "awayTeam": "WAS",
+    "homeScore": 82,
+    "awayScore": 81,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-csf-atl-was",
+    "gameNumber": 6,
+    "date": "2015-05-15",
+    "homeTeam": "WAS",
+    "awayTeam": "ATL",
+    "homeScore": 91,
+    "awayScore": 94,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-csf-cle-chi",
+    "gameNumber": 1,
+    "date": "2015-05-04",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 92,
+    "awayScore": 99,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2015-east-csf-cle-chi",
+    "gameNumber": 2,
+    "date": "2015-05-06",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 106,
+    "awayScore": 91,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-csf-cle-chi",
+    "gameNumber": 3,
+    "date": "2015-05-08",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 99,
+    "awayScore": 96,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2015-east-csf-cle-chi",
+    "gameNumber": 4,
+    "date": "2015-05-10",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 84,
+    "awayScore": 86,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-csf-cle-chi",
+    "gameNumber": 5,
+    "date": "2015-05-12",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 106,
+    "awayScore": 101,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-csf-cle-chi",
+    "gameNumber": 6,
+    "date": "2015-05-14",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 73,
+    "awayScore": 94,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-west-csf-gsw-mem",
+    "gameNumber": 1,
+    "date": "2015-05-03",
+    "homeTeam": "GSW",
+    "awayTeam": "MEM",
+    "homeScore": 101,
+    "awayScore": 86,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-csf-gsw-mem",
+    "gameNumber": 2,
+    "date": "2015-05-05",
+    "homeTeam": "GSW",
+    "awayTeam": "MEM",
+    "homeScore": 90,
+    "awayScore": 97,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2015-west-csf-gsw-mem",
+    "gameNumber": 3,
+    "date": "2015-05-09",
+    "homeTeam": "MEM",
+    "awayTeam": "GSW",
+    "homeScore": 99,
+    "awayScore": 89,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2015-west-csf-gsw-mem",
+    "gameNumber": 4,
+    "date": "2015-05-11",
+    "homeTeam": "MEM",
+    "awayTeam": "GSW",
+    "homeScore": 84,
+    "awayScore": 101,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-csf-gsw-mem",
+    "gameNumber": 5,
+    "date": "2015-05-13",
+    "homeTeam": "GSW",
+    "awayTeam": "MEM",
+    "homeScore": 98,
+    "awayScore": 78,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-csf-gsw-mem",
+    "gameNumber": 6,
+    "date": "2015-05-15",
+    "homeTeam": "MEM",
+    "awayTeam": "GSW",
+    "homeScore": 95,
+    "awayScore": 108,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 1,
+    "date": "2015-05-04",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 101,
+    "awayScore": 117,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 2,
+    "date": "2015-05-06",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 115,
+    "awayScore": 109,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 3,
+    "date": "2015-05-08",
+    "homeTeam": "LAC",
+    "awayTeam": "HOU",
+    "homeScore": 124,
+    "awayScore": 99,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 4,
+    "date": "2015-05-10",
+    "homeTeam": "LAC",
+    "awayTeam": "HOU",
+    "homeScore": 128,
+    "awayScore": 95,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 5,
+    "date": "2015-05-12",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 124,
+    "awayScore": 103,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 6,
+    "date": "2015-05-14",
+    "homeTeam": "LAC",
+    "awayTeam": "HOU",
+    "homeScore": 107,
+    "awayScore": 119,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-csf-lac-hou",
+    "gameNumber": 7,
+    "date": "2015-05-17",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 113,
+    "awayScore": 100,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-east-r1-atl-brk",
+    "gameNumber": 1,
+    "date": "2015-04-19",
+    "homeTeam": "ATL",
+    "awayTeam": "BRK",
+    "homeScore": 99,
+    "awayScore": 92,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-r1-atl-brk",
+    "gameNumber": 2,
+    "date": "2015-04-22",
+    "homeTeam": "ATL",
+    "awayTeam": "BRK",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-r1-atl-brk",
+    "gameNumber": 3,
+    "date": "2015-04-25",
+    "homeTeam": "BRK",
+    "awayTeam": "ATL",
+    "homeScore": 91,
+    "awayScore": 83,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2015-east-r1-atl-brk",
+    "gameNumber": 4,
+    "date": "2015-04-27",
+    "homeTeam": "BRK",
+    "awayTeam": "ATL",
+    "homeScore": 120,
+    "awayScore": 115,
+    "winner": "BRK"
+  },
+  {
+    "seriesId": "2015-east-r1-atl-brk",
+    "gameNumber": 5,
+    "date": "2015-04-29",
+    "homeTeam": "ATL",
+    "awayTeam": "BRK",
+    "homeScore": 107,
+    "awayScore": 97,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-r1-atl-brk",
+    "gameNumber": 6,
+    "date": "2015-05-01",
+    "homeTeam": "BRK",
+    "awayTeam": "ATL",
+    "homeScore": 87,
+    "awayScore": 111,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2015-east-r1-chi-mil",
+    "gameNumber": 1,
+    "date": "2015-04-18",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 103,
+    "awayScore": 91,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2015-east-r1-chi-mil",
+    "gameNumber": 2,
+    "date": "2015-04-20",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 91,
+    "awayScore": 82,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2015-east-r1-chi-mil",
+    "gameNumber": 3,
+    "date": "2015-04-23",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 106,
+    "awayScore": 113,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2015-east-r1-chi-mil",
+    "gameNumber": 4,
+    "date": "2015-04-25",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 92,
+    "awayScore": 90,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2015-east-r1-chi-mil",
+    "gameNumber": 5,
+    "date": "2015-04-27",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 88,
+    "awayScore": 94,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2015-east-r1-chi-mil",
+    "gameNumber": 6,
+    "date": "2015-04-30",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 66,
+    "awayScore": 120,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2015-east-r1-cle-bos",
+    "gameNumber": 1,
+    "date": "2015-04-19",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 113,
+    "awayScore": 100,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-r1-cle-bos",
+    "gameNumber": 2,
+    "date": "2015-04-21",
+    "homeTeam": "CLE",
+    "awayTeam": "BOS",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-r1-cle-bos",
+    "gameNumber": 3,
+    "date": "2015-04-23",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 95,
+    "awayScore": 103,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-r1-cle-bos",
+    "gameNumber": 4,
+    "date": "2015-04-26",
+    "homeTeam": "BOS",
+    "awayTeam": "CLE",
+    "homeScore": 93,
+    "awayScore": 101,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2015-east-r1-tor-was",
+    "gameNumber": 1,
+    "date": "2015-04-18",
+    "homeTeam": "TOR",
+    "awayTeam": "WAS",
+    "homeScore": 86,
+    "awayScore": 93,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2015-east-r1-tor-was",
+    "gameNumber": 2,
+    "date": "2015-04-21",
+    "homeTeam": "TOR",
+    "awayTeam": "WAS",
+    "homeScore": 106,
+    "awayScore": 117,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2015-east-r1-tor-was",
+    "gameNumber": 3,
+    "date": "2015-04-24",
+    "homeTeam": "WAS",
+    "awayTeam": "TOR",
+    "homeScore": 106,
+    "awayScore": 99,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2015-east-r1-tor-was",
+    "gameNumber": 4,
+    "date": "2015-04-26",
+    "homeTeam": "WAS",
+    "awayTeam": "TOR",
+    "homeScore": 125,
+    "awayScore": 94,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2015-west-r1-gsw-nop",
+    "gameNumber": 1,
+    "date": "2015-04-18",
+    "homeTeam": "GSW",
+    "awayTeam": "NOP",
+    "homeScore": 106,
+    "awayScore": 99,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-r1-gsw-nop",
+    "gameNumber": 2,
+    "date": "2015-04-20",
+    "homeTeam": "GSW",
+    "awayTeam": "NOP",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-r1-gsw-nop",
+    "gameNumber": 3,
+    "date": "2015-04-23",
+    "homeTeam": "NOP",
+    "awayTeam": "GSW",
+    "homeScore": 119,
+    "awayScore": 123,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-r1-gsw-nop",
+    "gameNumber": 4,
+    "date": "2015-04-25",
+    "homeTeam": "NOP",
+    "awayTeam": "GSW",
+    "homeScore": 98,
+    "awayScore": 109,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2015-west-r1-hou-dal",
+    "gameNumber": 1,
+    "date": "2015-04-18",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 118,
+    "awayScore": 108,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-r1-hou-dal",
+    "gameNumber": 2,
+    "date": "2015-04-21",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 111,
+    "awayScore": 99,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-r1-hou-dal",
+    "gameNumber": 3,
+    "date": "2015-04-24",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 128,
+    "awayScore": 130,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-r1-hou-dal",
+    "gameNumber": 4,
+    "date": "2015-04-26",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 121,
+    "awayScore": 109,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2015-west-r1-hou-dal",
+    "gameNumber": 5,
+    "date": "2015-04-28",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 103,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 1,
+    "date": "2015-04-19",
+    "homeTeam": "LAC",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 92,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 2,
+    "date": "2015-04-22",
+    "homeTeam": "LAC",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 3,
+    "date": "2015-04-24",
+    "homeTeam": "SAS",
+    "awayTeam": "LAC",
+    "homeScore": 100,
+    "awayScore": 73,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 4,
+    "date": "2015-04-26",
+    "homeTeam": "SAS",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 114,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 5,
+    "date": "2015-04-28",
+    "homeTeam": "LAC",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 6,
+    "date": "2015-04-30",
+    "homeTeam": "SAS",
+    "awayTeam": "LAC",
+    "homeScore": 96,
+    "awayScore": 102,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-r1-lac-sas",
+    "gameNumber": 7,
+    "date": "2015-05-02",
+    "homeTeam": "LAC",
+    "awayTeam": "SAS",
+    "homeScore": 111,
+    "awayScore": 109,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2015-west-r1-mem-por",
+    "gameNumber": 1,
+    "date": "2015-04-19",
+    "homeTeam": "MEM",
+    "awayTeam": "POR",
+    "homeScore": 100,
+    "awayScore": 86,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2015-west-r1-mem-por",
+    "gameNumber": 2,
+    "date": "2015-04-22",
+    "homeTeam": "MEM",
+    "awayTeam": "POR",
+    "homeScore": 97,
+    "awayScore": 82,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2015-west-r1-mem-por",
+    "gameNumber": 3,
+    "date": "2015-04-25",
+    "homeTeam": "POR",
+    "awayTeam": "MEM",
+    "homeScore": 109,
+    "awayScore": 115,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2015-west-r1-mem-por",
+    "gameNumber": 4,
+    "date": "2015-04-27",
+    "homeTeam": "POR",
+    "awayTeam": "MEM",
+    "homeScore": 99,
+    "awayScore": 92,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2015-west-r1-mem-por",
+    "gameNumber": 5,
+    "date": "2015-04-29",
+    "homeTeam": "MEM",
+    "awayTeam": "POR",
+    "homeScore": 99,
+    "awayScore": 93,
+    "winner": "MEM"
+  }
+]

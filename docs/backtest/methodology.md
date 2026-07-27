@@ -1,10 +1,10 @@
 # Playoff Pulse Backtest Methodology
 
-Generated: 2026-07-15T04:26:45.631Z
+Generated: 2026-07-26T19:27:06.311Z
 
 ## Scope
 
-This report evaluates Playoff Pulse on NBA playoff series from 2016-2025. It includes 150 historical series and 900 model-series predictions across six model variants.
+This report evaluates Playoff Pulse on NBA playoff series from 2003-2025. It includes 345 historical series and 2070 model-series predictions across six model variants.
 
 ## Data Sources
 
@@ -23,7 +23,7 @@ Raw HTML is cached under `data/historical/raw/` and normalized JSON is written u
 - Raw regular-season MPG is retained, then deterministically normalized into a complete 240-minute playoff rotation with a 40-minute player cap.
 - Historical manual adjustments are fixed at 0.
 - Historical availability is explicitly marked unknown and assumed available because injury timelines are not yet modeled.
-- Simulated series use the full seven-game 2-2-1-1-1 home pattern reconstructed from the actual Game 1 host, so games beyond the realized series length keep the correct home court instead of defaulting to neutral.
+- Simulated series reconstruct the full seven-game home pattern from the actual Game 1 host: 2-3-2 for NBA Finals through 2013 and 2-2-1-1-1 otherwise. Games beyond the realized series length therefore keep the era-correct home court instead of defaulting to neutral.
 
 ## Leakage Controls
 
@@ -46,37 +46,12 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 
 | Model | N | Brier Score | Log Loss | Accuracy |
 |---|---:|---:|---:|---:|
-| playoff_pulse | 150 | 0.1907 | 0.5618 | 69.3% |
-| srs_proxy_only | 150 | 0.1935 | 0.5702 | 68.7% |
-| net_rating_only | 150 | 0.1949 | 0.5747 | 70.0% |
-| higher_seed | 150 | 0.2125 | 0.6165 | 70.0% |
-| home_team | 150 | 0.2152 | 0.6221 | 68.3% |
-| coinflip | 150 | 0.2500 | 0.6931 | 50.0% |
-
-Note that playoff_pulse accuracy (69.3%) is below the higher-seed baseline
-(70.0%). Accuracy is not the optimization target; Brier score and log loss are
-the proper scoring rules used for all comparisons.
-
-## Statistical Significance
-
-Paired bootstrap intervals for every playoff_pulse-versus-baseline Brier
-difference are computed by `scripts/backtest/significance.ts` (10,000
-iterations, percentile intervals, both series-resampled and season-clustered)
-and stored in `docs/backtest/significance.json`. Negative differences favor
-playoff_pulse.
-
-| Contrast | Difference | 95% CI (series) | 95% CI (season) | Conclusive |
-|---|---:|---|---|---|
-| vs coinflip | −0.0593 | [−0.0842, −0.0333] | [−0.0812, −0.0359] | Yes |
-| vs home_team | −0.0246 | [−0.0426, −0.0067] | [−0.0377, −0.0103] | Yes |
-| vs higher_seed | −0.0218 | [−0.0381, −0.0050] | [−0.0355, −0.0081] | Yes |
-| vs net_rating_only | −0.0042 | [−0.0174, +0.0083] | [−0.0155, +0.0079] | No |
-| vs srs_proxy_only | −0.0029 | [−0.0148, +0.0087] | [−0.0129, +0.0080] | No |
-
-The model conclusively beats the naive baselines. Its edge over the simple
-rating baselines is not statistically distinguishable from zero. See
-`docs/parameter-provenance.md` for how each parameter was chosen and why this
-evaluation is classified as descriptive rather than out-of-sample.
+| srs_proxy_only | 345 | 0.1801 | 0.5354 | 71.3% |
+| net_rating_only | 345 | 0.1819 | 0.5400 | 72.2% |
+| playoff_pulse | 345 | 0.1825 | 0.5447 | 72.5% |
+| higher_seed | 345 | 0.2077 | 0.6066 | 71.6% |
+| home_team | 345 | 0.2089 | 0.6091 | 70.9% |
+| coinflip | 345 | 0.2500 | 0.6931 | 50.0% |
 
 ## Calibration Data
 
@@ -84,58 +59,58 @@ evaluation is classified as descriptive rather than out-of-sample.
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.2-0.3 | 1 | 26.3% | 100.0% |
+| 0.2-0.3 | 3 | 25.0% | 33.3% |
 | 0.3-0.4 | 2 | 38.0% | 0.0% |
-| 0.4-0.5 | 10 | 47.8% | 60.0% |
-| 0.5-0.6 | 33 | 54.9% | 51.5% |
-| 0.6-0.7 | 50 | 65.7% | 68.0% |
-| 0.7-0.8 | 27 | 74.1% | 88.9% |
-| 0.8-0.9 | 22 | 84.8% | 81.8% |
-| 0.9-1.0 | 5 | 92.2% | 100.0% |
+| 0.4-0.5 | 26 | 46.8% | 50.0% |
+| 0.5-0.6 | 82 | 55.4% | 58.5% |
+| 0.6-0.7 | 101 | 65.2% | 67.3% |
+| 0.7-0.8 | 81 | 74.4% | 88.9% |
+| 0.8-0.9 | 43 | 84.7% | 88.4% |
+| 0.9-1.0 | 7 | 92.3% | 100.0% |
 
 ### coinflip
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.5-0.6 | 150 | 50.0% | 70.0% |
+| 0.5-0.6 | 345 | 50.0% | 71.6% |
 
 ### home_team
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
 | 0.5-0.6 | 15 | 50.0% | 66.7% |
-| 0.6-0.7 | 135 | 65.0% | 70.4% |
+| 0.6-0.7 | 330 | 65.0% | 71.8% |
 
 ### higher_seed
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.6-0.7 | 150 | 65.0% | 70.0% |
+| 0.6-0.7 | 345 | 65.0% | 71.6% |
 
 ### srs_proxy_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.1-0.2 | 1 | 14.0% | 100.0% |
+| 0.1-0.2 | 3 | 14.5% | 33.3% |
 | 0.2-0.3 | 1 | 24.2% | 0.0% |
-| 0.3-0.4 | 2 | 31.3% | 50.0% |
-| 0.4-0.5 | 12 | 45.7% | 58.3% |
-| 0.5-0.6 | 19 | 55.1% | 42.1% |
-| 0.6-0.7 | 20 | 65.0% | 70.0% |
-| 0.7-0.8 | 43 | 75.4% | 72.1% |
-| 0.8-0.9 | 20 | 84.1% | 75.0% |
-| 0.9-1.0 | 32 | 95.0% | 87.5% |
+| 0.3-0.4 | 5 | 33.9% | 20.0% |
+| 0.4-0.5 | 28 | 45.6% | 60.7% |
+| 0.5-0.6 | 50 | 55.4% | 52.0% |
+| 0.6-0.7 | 53 | 65.2% | 66.0% |
+| 0.7-0.8 | 82 | 75.2% | 72.0% |
+| 0.8-0.9 | 66 | 84.6% | 86.4% |
+| 0.9-1.0 | 57 | 94.5% | 89.5% |
 
 ### net_rating_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.1-0.2 | 1 | 16.6% | 100.0% |
+| 0.1-0.2 | 3 | 15.0% | 33.3% |
 | 0.2-0.3 | 2 | 25.6% | 0.0% |
-| 0.3-0.4 | 1 | 31.7% | 100.0% |
-| 0.4-0.5 | 14 | 46.3% | 50.0% |
-| 0.5-0.6 | 15 | 55.0% | 46.7% |
-| 0.6-0.7 | 21 | 65.2% | 66.7% |
-| 0.7-0.8 | 38 | 75.5% | 73.7% |
-| 0.8-0.9 | 25 | 83.9% | 72.0% |
-| 0.9-1.0 | 33 | 95.5% | 87.9% |
+| 0.3-0.4 | 6 | 35.6% | 33.3% |
+| 0.4-0.5 | 27 | 45.8% | 55.6% |
+| 0.5-0.6 | 40 | 55.1% | 55.0% |
+| 0.6-0.7 | 53 | 65.1% | 64.2% |
+| 0.7-0.8 | 73 | 75.2% | 72.6% |
+| 0.8-0.9 | 72 | 84.8% | 79.2% |
+| 0.9-1.0 | 69 | 95.0% | 91.3% |

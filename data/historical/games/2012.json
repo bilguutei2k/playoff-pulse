@@ -1,0 +1,842 @@
+[
+  {
+    "seriesId": "2012-finals-finals-mia-okc",
+    "gameNumber": 1,
+    "date": "2012-06-12",
+    "homeTeam": "OKC",
+    "awayTeam": "MIA",
+    "homeScore": 105,
+    "awayScore": 94,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-finals-finals-mia-okc",
+    "gameNumber": 2,
+    "date": "2012-06-14",
+    "homeTeam": "OKC",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 100,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-finals-finals-mia-okc",
+    "gameNumber": 3,
+    "date": "2012-06-17",
+    "homeTeam": "MIA",
+    "awayTeam": "OKC",
+    "homeScore": 91,
+    "awayScore": 85,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-finals-finals-mia-okc",
+    "gameNumber": 4,
+    "date": "2012-06-19",
+    "homeTeam": "MIA",
+    "awayTeam": "OKC",
+    "homeScore": 104,
+    "awayScore": 98,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-finals-finals-mia-okc",
+    "gameNumber": 5,
+    "date": "2012-06-21",
+    "homeTeam": "MIA",
+    "awayTeam": "OKC",
+    "homeScore": 121,
+    "awayScore": 106,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 1,
+    "date": "2012-05-28",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 93,
+    "awayScore": 79,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 2,
+    "date": "2012-05-30",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 115,
+    "awayScore": 111,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 3,
+    "date": "2012-06-01",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 101,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 4,
+    "date": "2012-06-03",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 93,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 5,
+    "date": "2012-06-05",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 90,
+    "awayScore": 94,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 6,
+    "date": "2012-06-07",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 79,
+    "awayScore": 98,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-cf-mia-bos",
+    "gameNumber": 7,
+    "date": "2012-06-09",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 101,
+    "awayScore": 88,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-west-cf-sas-okc",
+    "gameNumber": 1,
+    "date": "2012-05-27",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 101,
+    "awayScore": 98,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-cf-sas-okc",
+    "gameNumber": 2,
+    "date": "2012-05-29",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 120,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-cf-sas-okc",
+    "gameNumber": 3,
+    "date": "2012-05-31",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 102,
+    "awayScore": 82,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-cf-sas-okc",
+    "gameNumber": 4,
+    "date": "2012-06-02",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 103,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-cf-sas-okc",
+    "gameNumber": 5,
+    "date": "2012-06-04",
+    "homeTeam": "SAS",
+    "awayTeam": "OKC",
+    "homeScore": 103,
+    "awayScore": 108,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-cf-sas-okc",
+    "gameNumber": 6,
+    "date": "2012-06-06",
+    "homeTeam": "OKC",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 99,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 1,
+    "date": "2012-05-12",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 92,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 2,
+    "date": "2012-05-14",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 81,
+    "awayScore": 82,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 3,
+    "date": "2012-05-16",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 91,
+    "awayScore": 107,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 4,
+    "date": "2012-05-18",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 92,
+    "awayScore": 83,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 5,
+    "date": "2012-05-21",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 101,
+    "awayScore": 85,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 6,
+    "date": "2012-05-23",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 82,
+    "awayScore": 75,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-east-csf-bos-phi",
+    "gameNumber": 7,
+    "date": "2012-05-26",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 85,
+    "awayScore": 75,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-csf-mia-ind",
+    "gameNumber": 1,
+    "date": "2012-05-13",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 95,
+    "awayScore": 86,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-csf-mia-ind",
+    "gameNumber": 2,
+    "date": "2012-05-15",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 75,
+    "awayScore": 78,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2012-east-csf-mia-ind",
+    "gameNumber": 3,
+    "date": "2012-05-17",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 75,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2012-east-csf-mia-ind",
+    "gameNumber": 4,
+    "date": "2012-05-20",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 93,
+    "awayScore": 101,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-csf-mia-ind",
+    "gameNumber": 5,
+    "date": "2012-05-22",
+    "homeTeam": "MIA",
+    "awayTeam": "IND",
+    "homeScore": 115,
+    "awayScore": 83,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-csf-mia-ind",
+    "gameNumber": 6,
+    "date": "2012-05-24",
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "homeScore": 93,
+    "awayScore": 105,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-west-csf-okc-lal",
+    "gameNumber": 1,
+    "date": "2012-05-14",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 119,
+    "awayScore": 90,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-csf-okc-lal",
+    "gameNumber": 2,
+    "date": "2012-05-16",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 77,
+    "awayScore": 75,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-csf-okc-lal",
+    "gameNumber": 3,
+    "date": "2012-05-18",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 99,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2012-west-csf-okc-lal",
+    "gameNumber": 4,
+    "date": "2012-05-19",
+    "homeTeam": "LAL",
+    "awayTeam": "OKC",
+    "homeScore": 100,
+    "awayScore": 103,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-csf-okc-lal",
+    "gameNumber": 5,
+    "date": "2012-05-21",
+    "homeTeam": "OKC",
+    "awayTeam": "LAL",
+    "homeScore": 106,
+    "awayScore": 90,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-csf-sas-lac",
+    "gameNumber": 1,
+    "date": "2012-05-15",
+    "homeTeam": "SAS",
+    "awayTeam": "LAC",
+    "homeScore": 108,
+    "awayScore": 92,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-csf-sas-lac",
+    "gameNumber": 2,
+    "date": "2012-05-17",
+    "homeTeam": "SAS",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 88,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-csf-sas-lac",
+    "gameNumber": 3,
+    "date": "2012-05-19",
+    "homeTeam": "LAC",
+    "awayTeam": "SAS",
+    "homeScore": 86,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-csf-sas-lac",
+    "gameNumber": 4,
+    "date": "2012-05-20",
+    "homeTeam": "LAC",
+    "awayTeam": "SAS",
+    "homeScore": 99,
+    "awayScore": 102,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-east-r1-atl-bos",
+    "gameNumber": 1,
+    "date": "2012-04-29",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 83,
+    "awayScore": 74,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2012-east-r1-atl-bos",
+    "gameNumber": 2,
+    "date": "2012-05-01",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 80,
+    "awayScore": 87,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-r1-atl-bos",
+    "gameNumber": 3,
+    "date": "2012-05-04",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 90,
+    "awayScore": 84,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-r1-atl-bos",
+    "gameNumber": 4,
+    "date": "2012-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 101,
+    "awayScore": 79,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-r1-atl-bos",
+    "gameNumber": 5,
+    "date": "2012-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 87,
+    "awayScore": 86,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2012-east-r1-atl-bos",
+    "gameNumber": 6,
+    "date": "2012-05-10",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 83,
+    "awayScore": 80,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2012-east-r1-ind-orl",
+    "gameNumber": 1,
+    "date": "2012-04-28",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 77,
+    "awayScore": 81,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2012-east-r1-ind-orl",
+    "gameNumber": 2,
+    "date": "2012-04-30",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 93,
+    "awayScore": 78,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2012-east-r1-ind-orl",
+    "gameNumber": 3,
+    "date": "2012-05-02",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 74,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2012-east-r1-ind-orl",
+    "gameNumber": 4,
+    "date": "2012-05-05",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 99,
+    "awayScore": 101,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2012-east-r1-ind-orl",
+    "gameNumber": 5,
+    "date": "2012-05-08",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 105,
+    "awayScore": 87,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2012-east-r1-mia-nyk",
+    "gameNumber": 1,
+    "date": "2012-04-28",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 100,
+    "awayScore": 67,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-r1-mia-nyk",
+    "gameNumber": 2,
+    "date": "2012-04-30",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 104,
+    "awayScore": 94,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-r1-mia-nyk",
+    "gameNumber": 3,
+    "date": "2012-05-03",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 70,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-r1-mia-nyk",
+    "gameNumber": 4,
+    "date": "2012-05-06",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 89,
+    "awayScore": 87,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2012-east-r1-mia-nyk",
+    "gameNumber": 5,
+    "date": "2012-05-09",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 106,
+    "awayScore": 94,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2012-east-r1-chi-phi",
+    "gameNumber": 1,
+    "date": "2012-04-28",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 103,
+    "awayScore": 91,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2012-east-r1-chi-phi",
+    "gameNumber": 2,
+    "date": "2012-05-01",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 92,
+    "awayScore": 109,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-east-r1-chi-phi",
+    "gameNumber": 3,
+    "date": "2012-05-04",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 79,
+    "awayScore": 74,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-east-r1-chi-phi",
+    "gameNumber": 4,
+    "date": "2012-05-06",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 89,
+    "awayScore": 82,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-east-r1-chi-phi",
+    "gameNumber": 5,
+    "date": "2012-05-08",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 77,
+    "awayScore": 69,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2012-east-r1-chi-phi",
+    "gameNumber": 6,
+    "date": "2012-05-10",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 79,
+    "awayScore": 78,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 1,
+    "date": "2012-04-29",
+    "homeTeam": "MEM",
+    "awayTeam": "LAC",
+    "homeScore": 98,
+    "awayScore": 99,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 2,
+    "date": "2012-05-02",
+    "homeTeam": "MEM",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 98,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 3,
+    "date": "2012-05-05",
+    "homeTeam": "LAC",
+    "awayTeam": "MEM",
+    "homeScore": 87,
+    "awayScore": 86,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 4,
+    "date": "2012-05-07",
+    "homeTeam": "LAC",
+    "awayTeam": "MEM",
+    "homeScore": 101,
+    "awayScore": 97,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 5,
+    "date": "2012-05-09",
+    "homeTeam": "MEM",
+    "awayTeam": "LAC",
+    "homeScore": 92,
+    "awayScore": 80,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 6,
+    "date": "2012-05-11",
+    "homeTeam": "LAC",
+    "awayTeam": "MEM",
+    "homeScore": 88,
+    "awayScore": 90,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2012-west-r1-mem-lac",
+    "gameNumber": 7,
+    "date": "2012-05-13",
+    "homeTeam": "MEM",
+    "awayTeam": "LAC",
+    "homeScore": 72,
+    "awayScore": 82,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 1,
+    "date": "2012-04-29",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 103,
+    "awayScore": 88,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 2,
+    "date": "2012-05-01",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 104,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 3,
+    "date": "2012-05-04",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 99,
+    "awayScore": 84,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 4,
+    "date": "2012-05-06",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 5,
+    "date": "2012-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 99,
+    "awayScore": 102,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 6,
+    "date": "2012-05-10",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 113,
+    "awayScore": 96,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2012-west-r1-lal-den",
+    "gameNumber": 7,
+    "date": "2012-05-12",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 96,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2012-west-r1-okc-dal",
+    "gameNumber": 1,
+    "date": "2012-04-28",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 99,
+    "awayScore": 98,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-r1-okc-dal",
+    "gameNumber": 2,
+    "date": "2012-04-30",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 102,
+    "awayScore": 99,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-r1-okc-dal",
+    "gameNumber": 3,
+    "date": "2012-05-03",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 79,
+    "awayScore": 95,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-r1-okc-dal",
+    "gameNumber": 4,
+    "date": "2012-05-05",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 97,
+    "awayScore": 103,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2012-west-r1-sas-uta",
+    "gameNumber": 1,
+    "date": "2012-04-29",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 106,
+    "awayScore": 91,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-r1-sas-uta",
+    "gameNumber": 2,
+    "date": "2012-05-02",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 114,
+    "awayScore": 83,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-r1-sas-uta",
+    "gameNumber": 3,
+    "date": "2012-05-05",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 90,
+    "awayScore": 102,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2012-west-r1-sas-uta",
+    "gameNumber": 4,
+    "date": "2012-05-07",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 81,
+    "awayScore": 87,
+    "winner": "SAS"
+  }
+]

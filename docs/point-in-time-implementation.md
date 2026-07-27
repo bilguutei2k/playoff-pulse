@@ -7,6 +7,83 @@ This document records the implementation requested after model version
 minutes, historical pregame archives, calibration, the preregistered dynamic
 rating candidate, scenario/replay tools, evidence views, and verification.
 
+## 2026-07-26 rigor extension: calibration, challengers, and input gates
+
+This extension implements the approved high-ROI validity sequence without
+manufacturing unavailable history.
+
+### Production-equivalent input prerequisites
+
+- Added `data/historical/lagged-rotation-observations.json` and a typed
+  `last_10_team_games_before_deadline` contract.
+- A valid team-series rotation must be timestamped before the conservative
+  deadline, cite an HTTPS source, name at least six rostered players, constrain
+  each player to 0–48 minutes, and total exactly 240 minutes.
+- Added `data/historical/external-series-benchmarks.json` for timestamped public
+  probabilities or explicitly no-vig two-sided series prices.
+- `scripts/backtest/build-input-audits.ts` writes
+  `docs/backtest/input-audit.json`. Both inputs currently have zero coverage,
+  so both effects are explicitly `not_estimable`.
+- Post-deadline player participation and unsourced prices are never used as
+  substitutes.
+
+### Coherent nested calibration
+
+For every evaluation season from 2008 onward:
+
+1. fit the base game model using earlier seasons only;
+2. fit a logistic game calibrator using earlier rolling-origin game
+   predictions only;
+3. calibrate the home-win probability at every possible remaining game slot;
+4. convert back to team-A probability and rerun the exact series solver.
+
+On 270 eligible series, Brier changes 0.185284 → 0.184548 and log loss
+0.548407 → 0.546469. The paired season-clustered Brier difference is −0.000733
+with 95% interval [−0.002117, +0.000690]. The point estimate improves, but the
+interval includes zero. The component remains research-only.
+
+### Primary series challenger
+
+`exact_srs_logit_plus_seed_v1` is frozen on 2026-07-26:
+
+`logit(P(series)) = intercept + beta1 × exact SRS-series logit + beta2 × seed difference`
+
+On the same 270-series matched set, Brier changes 0.185284 → 0.179954 and log
+loss 0.548407 → 0.534428. The paired Brier difference is −0.005365 with 95%
+interval [−0.012690, +0.002011]. It clears the 0.005 point-estimate threshold
+but not the interval rule. It is the only primary challenger and is first
+promotion-eligible after a genuinely future 2027 archive.
+
+Prospective issuance now seals this candidate's probability beside the raw
+production estimate for the declared target series. It is labeled research and
+does not replace the production forecast.
+
+### Temporal weighting challenger
+
+`ten_season_training_window_v1` retains the SRS + home formula but trains on
+at most the ten completed seasons immediately before each target season.
+Historical game Brier changes 0.218511 → 0.217604, a difference of −0.000910
+with 95% interval [−0.001690, −0.000197]. Series Brier changes by −0.000684
+with an interval that narrowly includes zero.
+
+The game result is encouraging, but it is retrospective. The candidate is
+frozen for its first legitimate promotion check in 2027.
+
+### Model-selection gate
+
+The committed gate declares:
+
+- one primary challenger and one primary endpoint;
+- minimum meaningful Brier improvement of 0.005;
+- paired season-clustered uncertainty entirely below zero;
+- no-worse log loss;
+- calibration slope no farther from one;
+- production-equivalent inputs;
+- at least one genuinely future immutable evaluation season.
+
+Exploratory candidates cannot be promoted from the same evaluation. Current
+decision: `not_eligible_requires_future_archived_season_and_production_equivalent_inputs`.
+
 ## Scientific boundaries
 
 - Production inputs remain manual and use `manual_point_estimate` impact scale.
@@ -43,8 +120,9 @@ Implementation entries are added below as each workstream is completed.
 
 ### 3. Historical pregame reconstruction
 
-- Generated 834 forecasts, one immediately before each historical playoff game
-  from 2016–2025.
+- The original release generated 834 forecasts from 2016–2025. The July 26
+  extension now contains 1,929 forecasts, one immediately before each
+  historical playoff game from 2003–2025.
 - Each record includes only the regular-season snapshot and prior completed
   games, plus the pregame score, next-game probability, exact series
   distribution, sensitivity range, drivers, provenance, and actual outcomes.
@@ -56,15 +134,16 @@ Implementation entries are added below as each workstream is completed.
 ### 4. Calibration and dynamic candidate
 
 - Nested calibration trains on earlier rolling predictions and evaluates only
-  later seasons (2021–2025).
-- Game calibration was rejected because Brier and log loss worsened.
-- Series calibration improved both metrics across 75 eligible forecasts, but is
-  research-only because its input scale differs from production.
+  later seasons (2008–2025 after two rolling seasons initialize the calibrator).
+- Expanded-sample game calibration improves both Brier and log loss and is
+  retained inside research only.
+- Series calibration worsens both metrics and is rejected.
 - Preregistered `dynamic_margin_update_v1`: after each prediction, split 12% of
   the observed margin residual between opponents, carry it through that
   postseason, and cap adjustments at ±4 points.
 - The candidate is frozen for evaluation but is not promotion-eligible on data
-  through 2025; its first genuinely future evaluation season is 2026.
+  through 2025; because no 2026 forecast was issued contemporaneously, its
+  first genuinely future evaluation season is 2027.
 
 ### 5. Product interfaces
 
@@ -87,8 +166,10 @@ Implementation entries are added below as each workstream is completed.
   plus an explicit issue time, preventing forecasts issued before different
   games from overwriting one another. Each archive carries the complete manual
   team, player, series, note, settings, and output snapshot required to replay
-  it. Use `pnpm archive:forecast -- --issued-at <ISO timestamp>` immediately
-  before a game or forecast publication.
+  it. Prospective issuance uses
+  `pnpm archive:issue -- --issued-at <ISO> --target-series <id> --target-game <id> --target-start <ISO>`.
+  It rejects issue times before the data snapshot or at/after game start and
+  refuses to overwrite an existing archive.
 
 ### 7. Verification
 
@@ -114,21 +195,38 @@ Implementation entries are added below as each workstream is completed.
 - Environment files are now explicitly ignored by both Git and Vercel after
   linking the production project.
 
+### 9. Expanded evidence program (2026-07-26)
+
+- Added 2003–2015 source snapshots and regenerated the complete 2003–2025
+  corpus: 345 series and 1,929 pregame states.
+- Added the historical 2–3–2 NBA Finals home pattern through 2013; the modern
+  2–2–1–1–1 pattern applies elsewhere.
+- Added rolling prior-only climatology for games and series.
+- Added grouped Murphy Brier decomposition with season-clustered intervals.
+- Added a typed historical availability observation schema and completeness
+  audit. Coverage is currently zero; no status is inferred from later
+  participation.
+- Added a grouped sensitivity reliability diagnostic. Seven of ten groups
+  contain the observed rate, but this is not individual interval coverage.
+- Froze `rating_gap_player_shrinkage_v1` with exponential decay over absolute
+  SRS gap. Historical game and series comparison intervals include zero, so it
+  remains research-only for 2027.
+
 ## Evaluation results
 
 ### Nested calibration
 
 | Target | Eligible N | Raw Brier | Calibrated Brier | Raw log loss | Calibrated log loss | Decision |
 |---|---:|---:|---:|---:|---:|---|
-| Game | 422 | 0.2323 | 0.2339 | 0.6592 | 0.6602 | Rejected |
-| Series | 75 | 0.2122 | 0.2108 | 0.6112 | 0.6054 | Research improvement; not applied to production |
+| Game | 1,507 | 0.2201 | 0.2196 | 0.6316 | 0.6298 | Retained in research; not applied to production |
+| Series | 270 | 0.1853 | 0.1862 | 0.5484 | 0.5494 | Rejected |
 
 ### Dynamic candidate
 
-`dynamic_margin_update_v1` records game Brier 0.23533 across 587 rolling
-predictions, effectively indistinguishable from the static SRS/home reference
-(0.23533 at displayed precision). Its historical result is descriptive only;
-the registration explicitly prevents promotion on 2016–2025 data.
+`dynamic_margin_update_v1` records game Brier 0.21815 across 1,675 rolling
+predictions versus 0.21851 static. The −0.00036 difference has a
+season-clustered interval spanning zero. Its historical result is descriptive;
+the registration prevents promotion on data through 2025.
 
 ## Primary files
 
@@ -136,7 +234,9 @@ the registration explicitly prevents promotion on 2016–2025 data.
   scale compatibility.
 - `src/lib/model/rotation.ts` — deterministic replacement-minute allocation.
 - `src/lib/backtest/point-in-time-types.ts` — archive schema and leakage audit.
-- `scripts/backtest/build-pregame-archive.ts` — 834 pregame reconstructions.
+- `scripts/backtest/build-pregame-archive.ts` — 1,929 pregame reconstructions.
+- `scripts/backtest/build-availability-audit.ts` — sourced observation
+  validation and missingness report.
 - `scripts/backtest/research-model.ts` — nested calibration and dynamic candidate.
 - `scripts/backtest/build-evidence.ts` — compact UI evidence artifact.
 - `src/components/forecast/ScenarioLab.tsx` and `/lab` — scenario/replay UI.
@@ -145,7 +245,7 @@ the registration explicitly prevents promotion on 2016–2025 data.
 - `scripts/verify/backtest-integrity.ts` — rotation, provenance, and archive
   invariants.
 
-## Final verification record
+## Prior release verification record
 
 - `corepack pnpm backtest:research` — completed; all five registered research
   variants regenerated.
@@ -167,3 +267,36 @@ the registration explicitly prevents promotion on 2016–2025 data.
 - Evidence interaction: selecting Game 2 updated the archive detail from
   `PREGAME 1` to `PREGAME 2`; both production versions and their comparison
   rendered successfully.
+
+The verification record for the 2026-07-26 expansion is appended after the
+current implementation passes the complete command and browser suite.
+
+## 2026-07-26 expansion verification record
+
+- `corepack pnpm backtest:snapshots` — completed for 2003–2025. Every season
+  normalized to 15 series; validation caught and then explicitly accommodated
+  the legitimate 2012 Charlotte −15.41 net rating and the pre-2014 Finals
+  2–3–2 format.
+- `corepack pnpm backtest:all` — passed end to end: 2,070 fixed-model
+  predictions, 1,929 leakage-safe pregame forecasts, availability audit,
+  rolling research, significance, and compact evidence regenerated.
+- `corepack pnpm verify` — passed: `Model verification passed.` New checks
+  cover era-specific home patterns, smooth symmetric rating-gap shrinkage,
+  prospective issue-time ordering, availability observation validity, Brier
+  decomposition reconciliation, and candidate non-promotion.
+- `corepack pnpm lint` — passed with no source warnings or errors after
+  generated `.vercel/**` output was added to the global ignore list.
+- `corepack pnpm build` — passed under Next.js 16.1.5. `/`, `/evidence`,
+  `/lab`, `/methodology`, and `/snapshot` prerendered; the display-only
+  scoreboard API remains dynamic.
+- `git diff --check` — passed.
+- Collaborative-browser checks at 1280px and 390px found no page-level
+  horizontal overflow or Next.js error overlay. Wide evidence tables remain
+  intentionally scrollable inside their cards.
+- Shared navigation/actions, replay selectors, scenario controls, reset
+  actions, and snapshot controls render with the same 2px border, 6px radius,
+  and 38px minimum height.
+- Evidence replay interaction advanced from pregame Game 1 to Game 2.
+- Scenario interaction marking Victor Wembanyama out moved the preserved SAS
+  estimate from 59.5% to 52.4%, assigned 38.0 replacement minutes, and showed
+  a −7.1 percentage-point delta.

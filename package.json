@@ -12,10 +12,16 @@
     "verify:invariants": "tsx scripts/verify/invariants.ts",
     "verify:refresh": "tsx scripts/verify/refresh-checks.ts",
     "verify:data": "tsx scripts/verify/data-snapshot.ts",
+    "backtest:snapshots": "tsx scripts/backtest/build-snapshots.ts",
+    "backtest:fixed": "tsx scripts/backtest/run-backtest.ts && tsx scripts/backtest/report.ts && tsx scripts/backtest/significance.ts",
     "backtest:research": "tsx scripts/backtest/research-model.ts",
     "backtest:pregame": "tsx scripts/backtest/build-pregame-archive.ts",
+    "backtest:availability": "tsx scripts/backtest/build-availability-audit.ts",
+    "backtest:inputs": "tsx scripts/backtest/build-input-audits.ts",
     "backtest:evidence": "tsx scripts/backtest/build-evidence.ts",
+    "backtest:all": "pnpm backtest:fixed && pnpm backtest:pregame && pnpm backtest:availability && pnpm backtest:inputs && pnpm backtest:research && pnpm backtest:evidence",
     "archive:forecast": "tsx scripts/archive-forecast.ts",
+    "archive:issue": "tsx scripts/archive-forecast.ts --prospective",
     "refresh-data": "tsx scripts/refresh-data.ts"
   },
   "dependencies": {

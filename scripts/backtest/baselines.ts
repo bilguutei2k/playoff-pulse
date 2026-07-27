@@ -28,9 +28,9 @@ function settingsForSeries(series: HistoricalSeries, settings: ModelSettings): M
 // Historical homePattern only covers games actually played (a sweep records
 // four entries). Simulating from 0-0 with the truncated pattern would place
 // unplayed games 5-7 on neutral court, understating home-court advantage in
-// series that ended early. Reconstruct the full seven-slot 2-2-1-1-1 pattern
-// (the NBA format for every round since 2014) from the Game 1 host, and
-// verify it agrees with every game that was actually played.
+// series that ended early. Reconstruct the full seven-slot pattern from the
+// Game 1 host. NBA Finals used 2-3-2 through 2013; all other covered rounds
+// and Finals from 2014 onward use 2-2-1-1-1.
 export function fullHomePattern(series: HistoricalSeries): string[] {
   const hostTeam = series.homePattern[0];
   if (hostTeam !== series.teamA && hostTeam !== series.teamB) {
@@ -40,12 +40,17 @@ export function fullHomePattern(series: HistoricalSeries): string[] {
   }
 
   const otherTeam = hostTeam === series.teamA ? series.teamB : series.teamA;
-  const pattern = [hostTeam, hostTeam, otherTeam, otherTeam, hostTeam, otherTeam, hostTeam];
+  const usesLegacyFinalsPattern =
+    series.round === "NBA Finals" && series.season <= 2013;
+  const pattern = usesLegacyFinalsPattern
+    ? [hostTeam, hostTeam, otherTeam, otherTeam, otherTeam, hostTeam, hostTeam]
+    : [hostTeam, hostTeam, otherTeam, otherTeam, hostTeam, otherTeam, hostTeam];
+  const format = usesLegacyFinalsPattern ? "2-3-2" : "2-2-1-1-1";
 
   series.homePattern.forEach((homeTeam, index) => {
     if (pattern[index] !== homeTeam) {
       throw new Error(
-        `${series.id} game ${index + 1} was hosted by ${homeTeam}, which breaks the 2-2-1-1-1 pattern (expected ${pattern[index]}). Extend fullHomePattern before backtesting this series.`,
+        `${series.id} game ${index + 1} was hosted by ${homeTeam}, which breaks the ${format} pattern (expected ${pattern[index]}). Extend fullHomePattern before backtesting this series.`,
       );
     }
   });

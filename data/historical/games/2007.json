@@ -1,0 +1,792 @@
+[
+  {
+    "seriesId": "2007-finals-finals-cle-sas",
+    "gameNumber": 1,
+    "date": "2007-06-07",
+    "homeTeam": "SAS",
+    "awayTeam": "CLE",
+    "homeScore": 85,
+    "awayScore": 76,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-finals-finals-cle-sas",
+    "gameNumber": 2,
+    "date": "2007-06-10",
+    "homeTeam": "SAS",
+    "awayTeam": "CLE",
+    "homeScore": 103,
+    "awayScore": 92,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-finals-finals-cle-sas",
+    "gameNumber": 3,
+    "date": "2007-06-12",
+    "homeTeam": "CLE",
+    "awayTeam": "SAS",
+    "homeScore": 72,
+    "awayScore": 75,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-finals-finals-cle-sas",
+    "gameNumber": 4,
+    "date": "2007-06-14",
+    "homeTeam": "CLE",
+    "awayTeam": "SAS",
+    "homeScore": 82,
+    "awayScore": 83,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-east-cf-det-cle",
+    "gameNumber": 1,
+    "date": "2007-05-21",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 79,
+    "awayScore": 76,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-cf-det-cle",
+    "gameNumber": 2,
+    "date": "2007-05-24",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 79,
+    "awayScore": 76,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-cf-det-cle",
+    "gameNumber": 3,
+    "date": "2007-05-27",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 88,
+    "awayScore": 82,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-cf-det-cle",
+    "gameNumber": 4,
+    "date": "2007-05-29",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 91,
+    "awayScore": 87,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-cf-det-cle",
+    "gameNumber": 5,
+    "date": "2007-05-31",
+    "homeTeam": "DET",
+    "awayTeam": "CLE",
+    "homeScore": 107,
+    "awayScore": 109,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-cf-det-cle",
+    "gameNumber": 6,
+    "date": "2007-06-02",
+    "homeTeam": "CLE",
+    "awayTeam": "DET",
+    "homeScore": 98,
+    "awayScore": 82,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-west-cf-sas-uta",
+    "gameNumber": 1,
+    "date": "2007-05-20",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 108,
+    "awayScore": 100,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-cf-sas-uta",
+    "gameNumber": 2,
+    "date": "2007-05-22",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 105,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-cf-sas-uta",
+    "gameNumber": 3,
+    "date": "2007-05-26",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 83,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-cf-sas-uta",
+    "gameNumber": 4,
+    "date": "2007-05-28",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 79,
+    "awayScore": 91,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-cf-sas-uta",
+    "gameNumber": 5,
+    "date": "2007-05-30",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 109,
+    "awayScore": 84,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-east-csf-cle-njn",
+    "gameNumber": 1,
+    "date": "2007-05-06",
+    "homeTeam": "CLE",
+    "awayTeam": "NJN",
+    "homeScore": 81,
+    "awayScore": 77,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-csf-cle-njn",
+    "gameNumber": 2,
+    "date": "2007-05-08",
+    "homeTeam": "CLE",
+    "awayTeam": "NJN",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-csf-cle-njn",
+    "gameNumber": 3,
+    "date": "2007-05-12",
+    "homeTeam": "NJN",
+    "awayTeam": "CLE",
+    "homeScore": 96,
+    "awayScore": 85,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2007-east-csf-cle-njn",
+    "gameNumber": 4,
+    "date": "2007-05-14",
+    "homeTeam": "NJN",
+    "awayTeam": "CLE",
+    "homeScore": 85,
+    "awayScore": 87,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-csf-cle-njn",
+    "gameNumber": 5,
+    "date": "2007-05-16",
+    "homeTeam": "CLE",
+    "awayTeam": "NJN",
+    "homeScore": 72,
+    "awayScore": 83,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2007-east-csf-cle-njn",
+    "gameNumber": 6,
+    "date": "2007-05-18",
+    "homeTeam": "NJN",
+    "awayTeam": "CLE",
+    "homeScore": 72,
+    "awayScore": 88,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-csf-det-chi",
+    "gameNumber": 1,
+    "date": "2007-05-05",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 95,
+    "awayScore": 69,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-csf-det-chi",
+    "gameNumber": 2,
+    "date": "2007-05-07",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 108,
+    "awayScore": 87,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-csf-det-chi",
+    "gameNumber": 3,
+    "date": "2007-05-10",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 74,
+    "awayScore": 81,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-csf-det-chi",
+    "gameNumber": 4,
+    "date": "2007-05-13",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 102,
+    "awayScore": 87,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2007-east-csf-det-chi",
+    "gameNumber": 5,
+    "date": "2007-05-15",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 92,
+    "awayScore": 108,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2007-east-csf-det-chi",
+    "gameNumber": 6,
+    "date": "2007-05-17",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 85,
+    "awayScore": 95,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-west-csf-pho-sas",
+    "gameNumber": 1,
+    "date": "2007-05-06",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 106,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-csf-pho-sas",
+    "gameNumber": 2,
+    "date": "2007-05-08",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 81,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2007-west-csf-pho-sas",
+    "gameNumber": 3,
+    "date": "2007-05-12",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 108,
+    "awayScore": 101,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-csf-pho-sas",
+    "gameNumber": 4,
+    "date": "2007-05-14",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 98,
+    "awayScore": 104,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2007-west-csf-pho-sas",
+    "gameNumber": 5,
+    "date": "2007-05-16",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 85,
+    "awayScore": 88,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-csf-pho-sas",
+    "gameNumber": 6,
+    "date": "2007-05-18",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 114,
+    "awayScore": 106,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-csf-uta-gsw",
+    "gameNumber": 1,
+    "date": "2007-05-07",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 116,
+    "awayScore": 112,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-csf-uta-gsw",
+    "gameNumber": 2,
+    "date": "2007-05-09",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 127,
+    "awayScore": 117,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-csf-uta-gsw",
+    "gameNumber": 3,
+    "date": "2007-05-11",
+    "homeTeam": "GSW",
+    "awayTeam": "UTA",
+    "homeScore": 125,
+    "awayScore": 105,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2007-west-csf-uta-gsw",
+    "gameNumber": 4,
+    "date": "2007-05-13",
+    "homeTeam": "GSW",
+    "awayTeam": "UTA",
+    "homeScore": 101,
+    "awayScore": 115,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-csf-uta-gsw",
+    "gameNumber": 5,
+    "date": "2007-05-15",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 100,
+    "awayScore": 87,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-east-r1-chi-mia",
+    "gameNumber": 1,
+    "date": "2007-04-21",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2007-east-r1-chi-mia",
+    "gameNumber": 2,
+    "date": "2007-04-24",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 107,
+    "awayScore": 89,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2007-east-r1-chi-mia",
+    "gameNumber": 3,
+    "date": "2007-04-27",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 104,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2007-east-r1-chi-mia",
+    "gameNumber": 4,
+    "date": "2007-04-29",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 79,
+    "awayScore": 92,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2007-east-r1-cle-was",
+    "gameNumber": 1,
+    "date": "2007-04-22",
+    "homeTeam": "CLE",
+    "awayTeam": "WAS",
+    "homeScore": 97,
+    "awayScore": 82,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-r1-cle-was",
+    "gameNumber": 2,
+    "date": "2007-04-25",
+    "homeTeam": "CLE",
+    "awayTeam": "WAS",
+    "homeScore": 109,
+    "awayScore": 102,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-r1-cle-was",
+    "gameNumber": 3,
+    "date": "2007-04-28",
+    "homeTeam": "WAS",
+    "awayTeam": "CLE",
+    "homeScore": 92,
+    "awayScore": 98,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-r1-cle-was",
+    "gameNumber": 4,
+    "date": "2007-04-30",
+    "homeTeam": "WAS",
+    "awayTeam": "CLE",
+    "homeScore": 90,
+    "awayScore": 97,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "2007-east-r1-det-orl",
+    "gameNumber": 1,
+    "date": "2007-04-21",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 100,
+    "awayScore": 92,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-r1-det-orl",
+    "gameNumber": 2,
+    "date": "2007-04-23",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-r1-det-orl",
+    "gameNumber": 3,
+    "date": "2007-04-26",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 77,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-r1-det-orl",
+    "gameNumber": 4,
+    "date": "2007-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 93,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2007-east-r1-tor-njn",
+    "gameNumber": 1,
+    "date": "2007-04-21",
+    "homeTeam": "TOR",
+    "awayTeam": "NJN",
+    "homeScore": 91,
+    "awayScore": 96,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2007-east-r1-tor-njn",
+    "gameNumber": 2,
+    "date": "2007-04-24",
+    "homeTeam": "TOR",
+    "awayTeam": "NJN",
+    "homeScore": 89,
+    "awayScore": 83,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2007-east-r1-tor-njn",
+    "gameNumber": 3,
+    "date": "2007-04-27",
+    "homeTeam": "NJN",
+    "awayTeam": "TOR",
+    "homeScore": 102,
+    "awayScore": 89,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2007-east-r1-tor-njn",
+    "gameNumber": 4,
+    "date": "2007-04-29",
+    "homeTeam": "NJN",
+    "awayTeam": "TOR",
+    "homeScore": 102,
+    "awayScore": 81,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2007-east-r1-tor-njn",
+    "gameNumber": 5,
+    "date": "2007-05-01",
+    "homeTeam": "TOR",
+    "awayTeam": "NJN",
+    "homeScore": 98,
+    "awayScore": 96,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2007-east-r1-tor-njn",
+    "gameNumber": 6,
+    "date": "2007-05-04",
+    "homeTeam": "NJN",
+    "awayTeam": "TOR",
+    "homeScore": 98,
+    "awayScore": 97,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2007-west-r1-dal-gsw",
+    "gameNumber": 1,
+    "date": "2007-04-22",
+    "homeTeam": "DAL",
+    "awayTeam": "GSW",
+    "homeScore": 85,
+    "awayScore": 97,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2007-west-r1-dal-gsw",
+    "gameNumber": 2,
+    "date": "2007-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "GSW",
+    "homeScore": 112,
+    "awayScore": 99,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2007-west-r1-dal-gsw",
+    "gameNumber": 3,
+    "date": "2007-04-27",
+    "homeTeam": "GSW",
+    "awayTeam": "DAL",
+    "homeScore": 109,
+    "awayScore": 91,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2007-west-r1-dal-gsw",
+    "gameNumber": 4,
+    "date": "2007-04-29",
+    "homeTeam": "GSW",
+    "awayTeam": "DAL",
+    "homeScore": 103,
+    "awayScore": 99,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2007-west-r1-dal-gsw",
+    "gameNumber": 5,
+    "date": "2007-05-01",
+    "homeTeam": "DAL",
+    "awayTeam": "GSW",
+    "homeScore": 118,
+    "awayScore": 112,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2007-west-r1-dal-gsw",
+    "gameNumber": 6,
+    "date": "2007-05-03",
+    "homeTeam": "GSW",
+    "awayTeam": "DAL",
+    "homeScore": 111,
+    "awayScore": 86,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "2007-west-r1-pho-lal",
+    "gameNumber": 1,
+    "date": "2007-04-22",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 95,
+    "awayScore": 87,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2007-west-r1-pho-lal",
+    "gameNumber": 2,
+    "date": "2007-04-24",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 126,
+    "awayScore": 98,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2007-west-r1-pho-lal",
+    "gameNumber": 3,
+    "date": "2007-04-26",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 95,
+    "awayScore": 89,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2007-west-r1-pho-lal",
+    "gameNumber": 4,
+    "date": "2007-04-29",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 100,
+    "awayScore": 113,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2007-west-r1-pho-lal",
+    "gameNumber": 5,
+    "date": "2007-05-02",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 119,
+    "awayScore": 110,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2007-west-r1-sas-den",
+    "gameNumber": 1,
+    "date": "2007-04-22",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 89,
+    "awayScore": 95,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2007-west-r1-sas-den",
+    "gameNumber": 2,
+    "date": "2007-04-25",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 97,
+    "awayScore": 88,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-r1-sas-den",
+    "gameNumber": 3,
+    "date": "2007-04-28",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 91,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-r1-sas-den",
+    "gameNumber": 4,
+    "date": "2007-04-30",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 89,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-r1-sas-den",
+    "gameNumber": 5,
+    "date": "2007-05-02",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 93,
+    "awayScore": 78,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 1,
+    "date": "2007-04-21",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 84,
+    "awayScore": 75,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 2,
+    "date": "2007-04-23",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 3,
+    "date": "2007-04-26",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 81,
+    "awayScore": 67,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 4,
+    "date": "2007-04-28",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 98,
+    "awayScore": 85,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 5,
+    "date": "2007-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 96,
+    "awayScore": 92,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 6,
+    "date": "2007-05-03",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 94,
+    "awayScore": 82,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2007-west-r1-hou-uta",
+    "gameNumber": 7,
+    "date": "2007-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 99,
+    "awayScore": 103,
+    "winner": "UTA"
+  }
+]

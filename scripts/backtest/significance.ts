@@ -1,10 +1,10 @@
-// Paired bootstrap significance analysis for the 150-series reconstruction.
+// Paired bootstrap significance analysis for the full committed reconstruction.
 //
 // For every playoff_pulse-vs-baseline contrast this computes the observed
 // Brier difference plus percentile confidence intervals from paired
 // resampling. Two resampling units are reported:
-//   - series: resample the 150 series with replacement (primary)
-//   - season: resample the 10 seasons with replacement (robustness check,
+//   - series: resample series with replacement (primary)
+//   - season: resample seasons with replacement (robustness check,
 //     matching the rolling-origin protocol in research-model.ts)
 //
 // A difference is only treated as conclusive when its 95% interval excludes

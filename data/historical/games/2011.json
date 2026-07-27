@@ -1,0 +1,812 @@
+[
+  {
+    "seriesId": "2011-finals-finals-mia-dal",
+    "gameNumber": 1,
+    "date": "2011-05-31",
+    "homeTeam": "MIA",
+    "awayTeam": "DAL",
+    "homeScore": 92,
+    "awayScore": 84,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-finals-finals-mia-dal",
+    "gameNumber": 2,
+    "date": "2011-06-02",
+    "homeTeam": "MIA",
+    "awayTeam": "DAL",
+    "homeScore": 93,
+    "awayScore": 95,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-finals-finals-mia-dal",
+    "gameNumber": 3,
+    "date": "2011-06-05",
+    "homeTeam": "DAL",
+    "awayTeam": "MIA",
+    "homeScore": 86,
+    "awayScore": 88,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-finals-finals-mia-dal",
+    "gameNumber": 4,
+    "date": "2011-06-07",
+    "homeTeam": "DAL",
+    "awayTeam": "MIA",
+    "homeScore": 86,
+    "awayScore": 83,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-finals-finals-mia-dal",
+    "gameNumber": 5,
+    "date": "2011-06-09",
+    "homeTeam": "DAL",
+    "awayTeam": "MIA",
+    "homeScore": 112,
+    "awayScore": 103,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-finals-finals-mia-dal",
+    "gameNumber": 6,
+    "date": "2011-06-12",
+    "homeTeam": "MIA",
+    "awayTeam": "DAL",
+    "homeScore": 95,
+    "awayScore": 105,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-east-cf-chi-mia",
+    "gameNumber": 1,
+    "date": "2011-05-15",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 103,
+    "awayScore": 82,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-cf-chi-mia",
+    "gameNumber": 2,
+    "date": "2011-05-18",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 75,
+    "awayScore": 85,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-cf-chi-mia",
+    "gameNumber": 3,
+    "date": "2011-05-22",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 85,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-cf-chi-mia",
+    "gameNumber": 4,
+    "date": "2011-05-24",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 101,
+    "awayScore": 93,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-cf-chi-mia",
+    "gameNumber": 5,
+    "date": "2011-05-26",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 80,
+    "awayScore": 83,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-west-cf-dal-okc",
+    "gameNumber": 1,
+    "date": "2011-05-17",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 121,
+    "awayScore": 112,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-cf-dal-okc",
+    "gameNumber": 2,
+    "date": "2011-05-19",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 100,
+    "awayScore": 106,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-cf-dal-okc",
+    "gameNumber": 3,
+    "date": "2011-05-21",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 87,
+    "awayScore": 93,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-cf-dal-okc",
+    "gameNumber": 4,
+    "date": "2011-05-23",
+    "homeTeam": "OKC",
+    "awayTeam": "DAL",
+    "homeScore": 105,
+    "awayScore": 112,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-cf-dal-okc",
+    "gameNumber": 5,
+    "date": "2011-05-25",
+    "homeTeam": "DAL",
+    "awayTeam": "OKC",
+    "homeScore": 100,
+    "awayScore": 96,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-east-csf-chi-atl",
+    "gameNumber": 1,
+    "date": "2011-05-02",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 95,
+    "awayScore": 103,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2011-east-csf-chi-atl",
+    "gameNumber": 2,
+    "date": "2011-05-04",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 86,
+    "awayScore": 73,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-csf-chi-atl",
+    "gameNumber": 3,
+    "date": "2011-05-06",
+    "homeTeam": "ATL",
+    "awayTeam": "CHI",
+    "homeScore": 82,
+    "awayScore": 99,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-csf-chi-atl",
+    "gameNumber": 4,
+    "date": "2011-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "CHI",
+    "homeScore": 100,
+    "awayScore": 88,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2011-east-csf-chi-atl",
+    "gameNumber": 5,
+    "date": "2011-05-10",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 95,
+    "awayScore": 83,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-csf-chi-atl",
+    "gameNumber": 6,
+    "date": "2011-05-12",
+    "homeTeam": "ATL",
+    "awayTeam": "CHI",
+    "homeScore": 73,
+    "awayScore": 93,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-csf-mia-bos",
+    "gameNumber": 1,
+    "date": "2011-05-01",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 99,
+    "awayScore": 90,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-csf-mia-bos",
+    "gameNumber": 2,
+    "date": "2011-05-03",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 91,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-csf-mia-bos",
+    "gameNumber": 3,
+    "date": "2011-05-07",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 97,
+    "awayScore": 81,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2011-east-csf-mia-bos",
+    "gameNumber": 4,
+    "date": "2011-05-09",
+    "homeTeam": "BOS",
+    "awayTeam": "MIA",
+    "homeScore": 90,
+    "awayScore": 98,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-csf-mia-bos",
+    "gameNumber": 5,
+    "date": "2011-05-11",
+    "homeTeam": "MIA",
+    "awayTeam": "BOS",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-west-csf-lal-dal",
+    "gameNumber": 1,
+    "date": "2011-05-02",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 94,
+    "awayScore": 96,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-csf-lal-dal",
+    "gameNumber": 2,
+    "date": "2011-05-04",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 81,
+    "awayScore": 93,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-csf-lal-dal",
+    "gameNumber": 3,
+    "date": "2011-05-06",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 98,
+    "awayScore": 92,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-csf-lal-dal",
+    "gameNumber": 4,
+    "date": "2011-05-08",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 122,
+    "awayScore": 86,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 1,
+    "date": "2011-05-01",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 101,
+    "awayScore": 114,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 2,
+    "date": "2011-05-03",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 111,
+    "awayScore": 102,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 3,
+    "date": "2011-05-07",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 101,
+    "awayScore": 93,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 4,
+    "date": "2011-05-09",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 123,
+    "awayScore": 133,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 5,
+    "date": "2011-05-11",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 99,
+    "awayScore": 72,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 6,
+    "date": "2011-05-13",
+    "homeTeam": "MEM",
+    "awayTeam": "OKC",
+    "homeScore": 95,
+    "awayScore": 83,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-csf-okc-mem",
+    "gameNumber": 7,
+    "date": "2011-05-15",
+    "homeTeam": "OKC",
+    "awayTeam": "MEM",
+    "homeScore": 105,
+    "awayScore": 90,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-east-r1-orl-atl",
+    "gameNumber": 1,
+    "date": "2011-04-16",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 93,
+    "awayScore": 103,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2011-east-r1-orl-atl",
+    "gameNumber": 2,
+    "date": "2011-04-19",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 88,
+    "awayScore": 82,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2011-east-r1-orl-atl",
+    "gameNumber": 3,
+    "date": "2011-04-22",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 88,
+    "awayScore": 84,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2011-east-r1-orl-atl",
+    "gameNumber": 4,
+    "date": "2011-04-24",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 88,
+    "awayScore": 85,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2011-east-r1-orl-atl",
+    "gameNumber": 5,
+    "date": "2011-04-26",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 101,
+    "awayScore": 76,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2011-east-r1-orl-atl",
+    "gameNumber": 6,
+    "date": "2011-04-28",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 84,
+    "awayScore": 81,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "2011-east-r1-bos-nyk",
+    "gameNumber": 1,
+    "date": "2011-04-17",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 87,
+    "awayScore": 85,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2011-east-r1-bos-nyk",
+    "gameNumber": 2,
+    "date": "2011-04-19",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 96,
+    "awayScore": 93,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2011-east-r1-bos-nyk",
+    "gameNumber": 3,
+    "date": "2011-04-22",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 96,
+    "awayScore": 113,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2011-east-r1-bos-nyk",
+    "gameNumber": 4,
+    "date": "2011-04-24",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 89,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2011-east-r1-chi-ind",
+    "gameNumber": 1,
+    "date": "2011-04-16",
+    "homeTeam": "CHI",
+    "awayTeam": "IND",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-r1-chi-ind",
+    "gameNumber": 2,
+    "date": "2011-04-18",
+    "homeTeam": "CHI",
+    "awayTeam": "IND",
+    "homeScore": 96,
+    "awayScore": 90,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-r1-chi-ind",
+    "gameNumber": 3,
+    "date": "2011-04-21",
+    "homeTeam": "IND",
+    "awayTeam": "CHI",
+    "homeScore": 84,
+    "awayScore": 88,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-r1-chi-ind",
+    "gameNumber": 4,
+    "date": "2011-04-23",
+    "homeTeam": "IND",
+    "awayTeam": "CHI",
+    "homeScore": 89,
+    "awayScore": 84,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2011-east-r1-chi-ind",
+    "gameNumber": 5,
+    "date": "2011-04-26",
+    "homeTeam": "CHI",
+    "awayTeam": "IND",
+    "homeScore": 116,
+    "awayScore": 89,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2011-east-r1-mia-phi",
+    "gameNumber": 1,
+    "date": "2011-04-16",
+    "homeTeam": "MIA",
+    "awayTeam": "PHI",
+    "homeScore": 97,
+    "awayScore": 89,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-r1-mia-phi",
+    "gameNumber": 2,
+    "date": "2011-04-18",
+    "homeTeam": "MIA",
+    "awayTeam": "PHI",
+    "homeScore": 94,
+    "awayScore": 73,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-r1-mia-phi",
+    "gameNumber": 3,
+    "date": "2011-04-21",
+    "homeTeam": "PHI",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 100,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-east-r1-mia-phi",
+    "gameNumber": 4,
+    "date": "2011-04-24",
+    "homeTeam": "PHI",
+    "awayTeam": "MIA",
+    "homeScore": 86,
+    "awayScore": 82,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2011-east-r1-mia-phi",
+    "gameNumber": 5,
+    "date": "2011-04-27",
+    "homeTeam": "MIA",
+    "awayTeam": "PHI",
+    "homeScore": 97,
+    "awayScore": 91,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2011-west-r1-dal-por",
+    "gameNumber": 1,
+    "date": "2011-04-16",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 89,
+    "awayScore": 81,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-r1-dal-por",
+    "gameNumber": 2,
+    "date": "2011-04-19",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 101,
+    "awayScore": 89,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-r1-dal-por",
+    "gameNumber": 3,
+    "date": "2011-04-21",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 97,
+    "awayScore": 92,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2011-west-r1-dal-por",
+    "gameNumber": 4,
+    "date": "2011-04-23",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 84,
+    "awayScore": 82,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2011-west-r1-dal-por",
+    "gameNumber": 5,
+    "date": "2011-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 93,
+    "awayScore": 82,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-r1-dal-por",
+    "gameNumber": 6,
+    "date": "2011-04-28",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 96,
+    "awayScore": 103,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2011-west-r1-lal-noh",
+    "gameNumber": 1,
+    "date": "2011-04-17",
+    "homeTeam": "LAL",
+    "awayTeam": "NOH",
+    "homeScore": 100,
+    "awayScore": 109,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2011-west-r1-lal-noh",
+    "gameNumber": 2,
+    "date": "2011-04-20",
+    "homeTeam": "LAL",
+    "awayTeam": "NOH",
+    "homeScore": 87,
+    "awayScore": 78,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2011-west-r1-lal-noh",
+    "gameNumber": 3,
+    "date": "2011-04-22",
+    "homeTeam": "NOH",
+    "awayTeam": "LAL",
+    "homeScore": 86,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2011-west-r1-lal-noh",
+    "gameNumber": 4,
+    "date": "2011-04-24",
+    "homeTeam": "NOH",
+    "awayTeam": "LAL",
+    "homeScore": 93,
+    "awayScore": 88,
+    "winner": "NOH"
+  },
+  {
+    "seriesId": "2011-west-r1-lal-noh",
+    "gameNumber": 5,
+    "date": "2011-04-26",
+    "homeTeam": "LAL",
+    "awayTeam": "NOH",
+    "homeScore": 106,
+    "awayScore": 90,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2011-west-r1-lal-noh",
+    "gameNumber": 6,
+    "date": "2011-04-28",
+    "homeTeam": "NOH",
+    "awayTeam": "LAL",
+    "homeScore": 80,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2011-west-r1-sas-mem",
+    "gameNumber": 1,
+    "date": "2011-04-17",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 98,
+    "awayScore": 101,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-r1-sas-mem",
+    "gameNumber": 2,
+    "date": "2011-04-20",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 93,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2011-west-r1-sas-mem",
+    "gameNumber": 3,
+    "date": "2011-04-23",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 91,
+    "awayScore": 88,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-r1-sas-mem",
+    "gameNumber": 4,
+    "date": "2011-04-25",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 104,
+    "awayScore": 86,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-r1-sas-mem",
+    "gameNumber": 5,
+    "date": "2011-04-27",
+    "homeTeam": "SAS",
+    "awayTeam": "MEM",
+    "homeScore": 110,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2011-west-r1-sas-mem",
+    "gameNumber": 6,
+    "date": "2011-04-29",
+    "homeTeam": "MEM",
+    "awayTeam": "SAS",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "MEM"
+  },
+  {
+    "seriesId": "2011-west-r1-okc-den",
+    "gameNumber": 1,
+    "date": "2011-04-17",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 107,
+    "awayScore": 103,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-r1-okc-den",
+    "gameNumber": 2,
+    "date": "2011-04-20",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 106,
+    "awayScore": 89,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-r1-okc-den",
+    "gameNumber": 3,
+    "date": "2011-04-23",
+    "homeTeam": "DEN",
+    "awayTeam": "OKC",
+    "homeScore": 94,
+    "awayScore": 97,
+    "winner": "OKC"
+  },
+  {
+    "seriesId": "2011-west-r1-okc-den",
+    "gameNumber": 4,
+    "date": "2011-04-25",
+    "homeTeam": "DEN",
+    "awayTeam": "OKC",
+    "homeScore": 104,
+    "awayScore": 101,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2011-west-r1-okc-den",
+    "gameNumber": 5,
+    "date": "2011-04-27",
+    "homeTeam": "OKC",
+    "awayTeam": "DEN",
+    "homeScore": 100,
+    "awayScore": 97,
+    "winner": "OKC"
+  }
+]

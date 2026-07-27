@@ -1,0 +1,842 @@
+[
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 1,
+    "date": "2005-06-09",
+    "homeTeam": "SAS",
+    "awayTeam": "DET",
+    "homeScore": 84,
+    "awayScore": 69,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 2,
+    "date": "2005-06-12",
+    "homeTeam": "SAS",
+    "awayTeam": "DET",
+    "homeScore": 97,
+    "awayScore": 76,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 3,
+    "date": "2005-06-14",
+    "homeTeam": "DET",
+    "awayTeam": "SAS",
+    "homeScore": 96,
+    "awayScore": 79,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 4,
+    "date": "2005-06-16",
+    "homeTeam": "DET",
+    "awayTeam": "SAS",
+    "homeScore": 102,
+    "awayScore": 71,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 5,
+    "date": "2005-06-19",
+    "homeTeam": "DET",
+    "awayTeam": "SAS",
+    "homeScore": 95,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 6,
+    "date": "2005-06-21",
+    "homeTeam": "SAS",
+    "awayTeam": "DET",
+    "homeScore": 86,
+    "awayScore": 95,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-finals-finals-det-sas",
+    "gameNumber": 7,
+    "date": "2005-06-23",
+    "homeTeam": "SAS",
+    "awayTeam": "DET",
+    "homeScore": 81,
+    "awayScore": 74,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 1,
+    "date": "2005-05-23",
+    "homeTeam": "MIA",
+    "awayTeam": "DET",
+    "homeScore": 81,
+    "awayScore": 90,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 2,
+    "date": "2005-05-25",
+    "homeTeam": "MIA",
+    "awayTeam": "DET",
+    "homeScore": 92,
+    "awayScore": 86,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 3,
+    "date": "2005-05-29",
+    "homeTeam": "DET",
+    "awayTeam": "MIA",
+    "homeScore": 104,
+    "awayScore": 113,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 4,
+    "date": "2005-05-31",
+    "homeTeam": "DET",
+    "awayTeam": "MIA",
+    "homeScore": 106,
+    "awayScore": 96,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 5,
+    "date": "2005-06-02",
+    "homeTeam": "MIA",
+    "awayTeam": "DET",
+    "homeScore": 88,
+    "awayScore": 76,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 6,
+    "date": "2005-06-04",
+    "homeTeam": "DET",
+    "awayTeam": "MIA",
+    "homeScore": 91,
+    "awayScore": 66,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-cf-mia-det",
+    "gameNumber": 7,
+    "date": "2005-06-06",
+    "homeTeam": "MIA",
+    "awayTeam": "DET",
+    "homeScore": 82,
+    "awayScore": 88,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-west-cf-pho-sas",
+    "gameNumber": 1,
+    "date": "2005-05-22",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 114,
+    "awayScore": 121,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-cf-pho-sas",
+    "gameNumber": 2,
+    "date": "2005-05-24",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 108,
+    "awayScore": 111,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-cf-pho-sas",
+    "gameNumber": 3,
+    "date": "2005-05-28",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-cf-pho-sas",
+    "gameNumber": 4,
+    "date": "2005-05-30",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 106,
+    "awayScore": 111,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-cf-pho-sas",
+    "gameNumber": 5,
+    "date": "2005-06-01",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 95,
+    "awayScore": 101,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-east-csf-det-ind",
+    "gameNumber": 1,
+    "date": "2005-05-09",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 96,
+    "awayScore": 81,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-csf-det-ind",
+    "gameNumber": 2,
+    "date": "2005-05-11",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 83,
+    "awayScore": 92,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2005-east-csf-det-ind",
+    "gameNumber": 3,
+    "date": "2005-05-13",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 79,
+    "awayScore": 74,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2005-east-csf-det-ind",
+    "gameNumber": 4,
+    "date": "2005-05-15",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 76,
+    "awayScore": 89,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-csf-det-ind",
+    "gameNumber": 5,
+    "date": "2005-05-17",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 86,
+    "awayScore": 67,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-csf-det-ind",
+    "gameNumber": 6,
+    "date": "2005-05-19",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 79,
+    "awayScore": 88,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-csf-mia-was",
+    "gameNumber": 1,
+    "date": "2005-05-08",
+    "homeTeam": "MIA",
+    "awayTeam": "WAS",
+    "homeScore": 105,
+    "awayScore": 86,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-csf-mia-was",
+    "gameNumber": 2,
+    "date": "2005-05-10",
+    "homeTeam": "MIA",
+    "awayTeam": "WAS",
+    "homeScore": 108,
+    "awayScore": 102,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-csf-mia-was",
+    "gameNumber": 3,
+    "date": "2005-05-12",
+    "homeTeam": "WAS",
+    "awayTeam": "MIA",
+    "homeScore": 95,
+    "awayScore": 102,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-csf-mia-was",
+    "gameNumber": 4,
+    "date": "2005-05-14",
+    "homeTeam": "WAS",
+    "awayTeam": "MIA",
+    "homeScore": 95,
+    "awayScore": 99,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-west-csf-pho-dal",
+    "gameNumber": 1,
+    "date": "2005-05-09",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 127,
+    "awayScore": 102,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-csf-pho-dal",
+    "gameNumber": 2,
+    "date": "2005-05-11",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 106,
+    "awayScore": 108,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2005-west-csf-pho-dal",
+    "gameNumber": 3,
+    "date": "2005-05-13",
+    "homeTeam": "DAL",
+    "awayTeam": "PHO",
+    "homeScore": 102,
+    "awayScore": 119,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-csf-pho-dal",
+    "gameNumber": 4,
+    "date": "2005-05-15",
+    "homeTeam": "DAL",
+    "awayTeam": "PHO",
+    "homeScore": 119,
+    "awayScore": 109,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2005-west-csf-pho-dal",
+    "gameNumber": 5,
+    "date": "2005-05-18",
+    "homeTeam": "PHO",
+    "awayTeam": "DAL",
+    "homeScore": 114,
+    "awayScore": 108,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-csf-pho-dal",
+    "gameNumber": 6,
+    "date": "2005-05-20",
+    "homeTeam": "DAL",
+    "awayTeam": "PHO",
+    "homeScore": 126,
+    "awayScore": 130,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-csf-sas-sea",
+    "gameNumber": 1,
+    "date": "2005-05-08",
+    "homeTeam": "SAS",
+    "awayTeam": "SEA",
+    "homeScore": 103,
+    "awayScore": 81,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-csf-sas-sea",
+    "gameNumber": 2,
+    "date": "2005-05-10",
+    "homeTeam": "SAS",
+    "awayTeam": "SEA",
+    "homeScore": 108,
+    "awayScore": 91,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-csf-sas-sea",
+    "gameNumber": 3,
+    "date": "2005-05-12",
+    "homeTeam": "SEA",
+    "awayTeam": "SAS",
+    "homeScore": 92,
+    "awayScore": 91,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2005-west-csf-sas-sea",
+    "gameNumber": 4,
+    "date": "2005-05-15",
+    "homeTeam": "SEA",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 89,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2005-west-csf-sas-sea",
+    "gameNumber": 5,
+    "date": "2005-05-17",
+    "homeTeam": "SAS",
+    "awayTeam": "SEA",
+    "homeScore": 103,
+    "awayScore": 90,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-csf-sas-sea",
+    "gameNumber": 6,
+    "date": "2005-05-19",
+    "homeTeam": "SEA",
+    "awayTeam": "SAS",
+    "homeScore": 96,
+    "awayScore": 98,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-east-r1-det-phi",
+    "gameNumber": 1,
+    "date": "2005-04-23",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 106,
+    "awayScore": 85,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-r1-det-phi",
+    "gameNumber": 2,
+    "date": "2005-04-26",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 99,
+    "awayScore": 84,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-r1-det-phi",
+    "gameNumber": 3,
+    "date": "2005-04-29",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 115,
+    "awayScore": 104,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2005-east-r1-det-phi",
+    "gameNumber": 4,
+    "date": "2005-05-01",
+    "homeTeam": "PHI",
+    "awayTeam": "DET",
+    "homeScore": 92,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-r1-det-phi",
+    "gameNumber": 5,
+    "date": "2005-05-03",
+    "homeTeam": "DET",
+    "awayTeam": "PHI",
+    "homeScore": 88,
+    "awayScore": 78,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 1,
+    "date": "2005-04-23",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 102,
+    "awayScore": 82,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 2,
+    "date": "2005-04-25",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 79,
+    "awayScore": 82,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 3,
+    "date": "2005-04-28",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 99,
+    "awayScore": 76,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 4,
+    "date": "2005-04-30",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 79,
+    "awayScore": 110,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 5,
+    "date": "2005-05-03",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 85,
+    "awayScore": 90,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 6,
+    "date": "2005-05-05",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 89,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2005-east-r1-bos-ind",
+    "gameNumber": 7,
+    "date": "2005-05-07",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 70,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2005-east-r1-mia-njn",
+    "gameNumber": 1,
+    "date": "2005-04-24",
+    "homeTeam": "MIA",
+    "awayTeam": "NJN",
+    "homeScore": 116,
+    "awayScore": 98,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-r1-mia-njn",
+    "gameNumber": 2,
+    "date": "2005-04-26",
+    "homeTeam": "MIA",
+    "awayTeam": "NJN",
+    "homeScore": 104,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-r1-mia-njn",
+    "gameNumber": 3,
+    "date": "2005-04-28",
+    "homeTeam": "NJN",
+    "awayTeam": "MIA",
+    "homeScore": 105,
+    "awayScore": 108,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-r1-mia-njn",
+    "gameNumber": 4,
+    "date": "2005-05-01",
+    "homeTeam": "NJN",
+    "awayTeam": "MIA",
+    "homeScore": 97,
+    "awayScore": 110,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2005-east-r1-chi-was",
+    "gameNumber": 1,
+    "date": "2005-04-24",
+    "homeTeam": "CHI",
+    "awayTeam": "WAS",
+    "homeScore": 103,
+    "awayScore": 94,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2005-east-r1-chi-was",
+    "gameNumber": 2,
+    "date": "2005-04-27",
+    "homeTeam": "CHI",
+    "awayTeam": "WAS",
+    "homeScore": 113,
+    "awayScore": 103,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "2005-east-r1-chi-was",
+    "gameNumber": 3,
+    "date": "2005-04-30",
+    "homeTeam": "WAS",
+    "awayTeam": "CHI",
+    "homeScore": 117,
+    "awayScore": 99,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2005-east-r1-chi-was",
+    "gameNumber": 4,
+    "date": "2005-05-02",
+    "homeTeam": "WAS",
+    "awayTeam": "CHI",
+    "homeScore": 106,
+    "awayScore": 99,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2005-east-r1-chi-was",
+    "gameNumber": 5,
+    "date": "2005-05-04",
+    "homeTeam": "CHI",
+    "awayTeam": "WAS",
+    "homeScore": 110,
+    "awayScore": 112,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2005-east-r1-chi-was",
+    "gameNumber": 6,
+    "date": "2005-05-06",
+    "homeTeam": "WAS",
+    "awayTeam": "CHI",
+    "homeScore": 94,
+    "awayScore": 91,
+    "winner": "WAS"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 1,
+    "date": "2005-04-23",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 86,
+    "awayScore": 98,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 2,
+    "date": "2005-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 111,
+    "awayScore": 113,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 3,
+    "date": "2005-04-28",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 102,
+    "awayScore": 106,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 4,
+    "date": "2005-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 93,
+    "awayScore": 97,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 5,
+    "date": "2005-05-02",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 103,
+    "awayScore": 100,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 6,
+    "date": "2005-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 101,
+    "awayScore": 83,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "2005-west-r1-dal-hou",
+    "gameNumber": 7,
+    "date": "2005-05-07",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 116,
+    "awayScore": 76,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2005-west-r1-pho-mem",
+    "gameNumber": 1,
+    "date": "2005-04-24",
+    "homeTeam": "PHO",
+    "awayTeam": "MEM",
+    "homeScore": 114,
+    "awayScore": 103,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-r1-pho-mem",
+    "gameNumber": 2,
+    "date": "2005-04-27",
+    "homeTeam": "PHO",
+    "awayTeam": "MEM",
+    "homeScore": 108,
+    "awayScore": 103,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-r1-pho-mem",
+    "gameNumber": 3,
+    "date": "2005-04-29",
+    "homeTeam": "MEM",
+    "awayTeam": "PHO",
+    "homeScore": 90,
+    "awayScore": 110,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-r1-pho-mem",
+    "gameNumber": 4,
+    "date": "2005-05-01",
+    "homeTeam": "MEM",
+    "awayTeam": "PHO",
+    "homeScore": 115,
+    "awayScore": 123,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2005-west-r1-sas-den",
+    "gameNumber": 1,
+    "date": "2005-04-24",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 87,
+    "awayScore": 93,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "2005-west-r1-sas-den",
+    "gameNumber": 2,
+    "date": "2005-04-27",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 104,
+    "awayScore": 76,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-r1-sas-den",
+    "gameNumber": 3,
+    "date": "2005-04-30",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 78,
+    "awayScore": 86,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-r1-sas-den",
+    "gameNumber": 4,
+    "date": "2005-05-02",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 115,
+    "awayScore": 126,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-r1-sas-den",
+    "gameNumber": 5,
+    "date": "2005-05-04",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 99,
+    "awayScore": 89,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2005-west-r1-sea-sac",
+    "gameNumber": 1,
+    "date": "2005-04-23",
+    "homeTeam": "SEA",
+    "awayTeam": "SAC",
+    "homeScore": 87,
+    "awayScore": 82,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2005-west-r1-sea-sac",
+    "gameNumber": 2,
+    "date": "2005-04-26",
+    "homeTeam": "SEA",
+    "awayTeam": "SAC",
+    "homeScore": 105,
+    "awayScore": 93,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2005-west-r1-sea-sac",
+    "gameNumber": 3,
+    "date": "2005-04-29",
+    "homeTeam": "SAC",
+    "awayTeam": "SEA",
+    "homeScore": 116,
+    "awayScore": 104,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2005-west-r1-sea-sac",
+    "gameNumber": 4,
+    "date": "2005-05-01",
+    "homeTeam": "SAC",
+    "awayTeam": "SEA",
+    "homeScore": 102,
+    "awayScore": 115,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2005-west-r1-sea-sac",
+    "gameNumber": 5,
+    "date": "2005-05-03",
+    "homeTeam": "SEA",
+    "awayTeam": "SAC",
+    "homeScore": 122,
+    "awayScore": 118,
+    "winner": "SEA"
+  }
+]

@@ -40,7 +40,7 @@ export function Header() {
             <Link
               key={href}
               href={href}
-              className="inline-flex items-center gap-2 rounded-[var(--radius-sm-retro)] border-2 border-[var(--color-border-strong)] px-3 py-2 text-xs uppercase tracking-[0.08em] text-[var(--color-text-secondary)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-text-primary)]"
+              className="pp-button"
             >
               <Icon className="h-4 w-4" aria-hidden />
               {label}
