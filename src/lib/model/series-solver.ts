@@ -8,11 +8,12 @@ export type ExactSeriesSolution = {
 
 type StateResult = ExactSeriesSolution;
 
-/** Exact dynamic-programming solver for a best-of-seven from any valid score. */
+/** Exact dynamic-programming solver from any valid score. */
 export function solveSeriesExactly(
   winsA: number,
   winsB: number,
   probabilityAForGame: (gameNumber: number) => number,
+  winsRequired = 4,
 ): ExactSeriesSolution {
   const memo = new Map<string, StateResult>();
 
@@ -20,9 +21,9 @@ export function solveSeriesExactly(
     const key = `${a}-${b}`;
     const cached = memo.get(key);
     if (cached) return cached;
-    if (a >= 4 || b >= 4) {
+    if (a >= winsRequired || b >= winsRequired) {
       return {
-        teamAWinProbability: a >= 4 ? 1 : 0,
+        teamAWinProbability: a >= winsRequired ? 1 : 0,
         expectedGamesRemaining: 0,
         finalScoreProbabilities: { [key]: 1 },
       };
