@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T00:46:23.872Z",
+  "generatedAt": "2026-08-01T00:49:16.023Z",
   "protocol": "Rolling origin: train only on seasons before each evaluation season; 2006-2026 evaluated after a three-season initialization window.",
   "totalGames": 2014,
   "evaluationSeasons": [
@@ -144167,6 +144167,118 @@
       "retire_production_to_research_only",
       "retain_production_gate_not_met"
     ]
+  },
+  "modelRetirementDecision": {
+    "evaluatedAt": "2026-07-31",
+    "gateDefinitionCommit": "c80d332407e4de65c8e974df34cd690449491199",
+    "scope": {
+      "seasons": [
+        2003,
+        2026
+      ],
+      "series": 360,
+      "matchedComparisons": true
+    },
+    "gate": {
+      "definedAt": "2026-07-31",
+      "incumbent": "playoff_pulse",
+      "primaryEndpoint": "paired fixed-model series Brier over the full committed reconstruction",
+      "simpleComparators": [
+        "srs_proxy_only",
+        "net_rating_only"
+      ],
+      "minimumMeaningfulDeficit": 0.005,
+      "thresholdJustification": "The retirement threshold is symmetric with the preregistered 0.005 challenger-promotion threshold: production is not demoted for a deficit too small to justify promoting a replacement.",
+      "uncertaintyMethod": "Paired season-clustered bootstrap with 10,000 deterministic resamples over matched series losses.",
+      "differenceDirection": "productionMinusComparatorBrier; positive values mean production is worse.",
+      "retirementRule": {
+        "comparatorPolicy": "Demote production to research-only if every required check passes against at least one named simple comparator on identical series.",
+        "requiredChecks": {
+          "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": "productionMinusComparatorBrier >= 0.005",
+          "brierIntervalLowerBoundAboveZero": "The paired season-clustered 95% interval for productionMinusComparatorBrier has lower bound > 0.",
+          "comparatorLogLossNoWorse": "comparator log loss <= production log loss on the same series.",
+          "comparatorCalibrationSlopeNotFartherFromOne": "abs(comparator calibration slope - 1) <= abs(production calibration slope - 1) on the same series."
+        }
+      },
+      "possibleDecisions": [
+        "retire_production_to_research_only",
+        "retain_production_gate_not_met"
+      ]
+    },
+    "bootstrapIterations": 10000,
+    "comparisons": [
+      {
+        "comparator": "srs_proxy_only",
+        "n": 360,
+        "production": {
+          "n": 360,
+          "brier": 0.18395756906204833,
+          "logLoss": 0.5477582013393535,
+          "calibrationFit": {
+            "intercept": -0.009852114812530054,
+            "slope": 1.4671936761261684
+          }
+        },
+        "comparatorMetrics": {
+          "n": 360,
+          "brier": 0.18334164380119283,
+          "logLoss": 0.5435677590219697,
+          "calibrationFit": {
+            "intercept": 0.09446064732159276,
+            "slope": 0.8147298915125344
+          }
+        },
+        "productionMinusComparatorBrier": 0.0006159252608555628,
+        "seasonClusteredBrierDifferenceCi95": [
+          -0.0057568891790516314,
+          0.006654909967985419
+        ],
+        "checks": {
+          "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
+          "brierIntervalLowerBoundAboveZero": false,
+          "comparatorLogLossNoWorse": true,
+          "comparatorCalibrationSlopeNotFartherFromOne": true
+        },
+        "retirementGateMet": false
+      },
+      {
+        "comparator": "net_rating_only",
+        "n": 360,
+        "production": {
+          "n": 360,
+          "brier": 0.18395756906204833,
+          "logLoss": 0.5477582013393535,
+          "calibrationFit": {
+            "intercept": -0.009852114812530054,
+            "slope": 1.4671936761261684
+          }
+        },
+        "comparatorMetrics": {
+          "n": 360,
+          "brier": 0.1852254645132554,
+          "logLoss": 0.5488985078012694,
+          "calibrationFit": {
+            "intercept": 0.09628745596241757,
+            "slope": 0.7345439757227883
+          }
+        },
+        "productionMinusComparatorBrier": -0.0012678954512069889,
+        "seasonClusteredBrierDifferenceCi95": [
+          -0.008536095669310562,
+          0.0057911624578572685
+        ],
+        "checks": {
+          "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
+          "brierIntervalLowerBoundAboveZero": false,
+          "comparatorLogLossNoWorse": false,
+          "comparatorCalibrationSlopeNotFartherFromOne": true
+        },
+        "retirementGateMet": false
+      }
+    ],
+    "retirementGateMet": false,
+    "decision": "retain_production_gate_not_met",
+    "interpretation": "Production survives its symmetric retirement gate. No named simple comparator established a deficit of at least 0.005 with a season-clustered interval wholly above zero and both secondary conditions satisfied."
   },
   "preregisteredDynamicRatingCandidate": {
     "registration": {

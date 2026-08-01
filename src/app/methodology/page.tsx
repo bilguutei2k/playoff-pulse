@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import backtestSummary from "../../../docs/backtest/summary.json";
 import backtestResults from "../../../docs/backtest/results.json";
 import evidence from "../../../docs/backtest/evidence.json";
+import retirementDecision from "../../../docs/backtest/retirement-decision.json";
 import { formatNumber, formatSigned } from "@/lib/utils/format";
 import { ResearchEvidence } from "@/components/forecast/ResearchEvidence";
 
@@ -110,6 +111,17 @@ const sections: MethodologySection[] = [
       },
       "The first-round result remains the warning sign: the full fixed blend trails SRS-only where rating gaps are often largest. Later-round point estimates favor the blend, but those slices are progressively smaller and were not used as proof of improvement.",
       "A smooth rating-gap shrinkage rule was frozen and evaluated separately. Its game and series comparison intervals both include zero, so it remains a 2027 research candidate rather than a production change.",
+    ],
+  },
+  {
+    title: "Production Retirement Gate",
+    body: [
+      `Verdict: ${retirementDecision.decision === "retain_production_gate_not_met" ? "retain production" : "retire production to research-only"}. The gate was committed before this verdict and uses a symmetric 0.005 meaningful-deficit threshold, paired season-clustered inference, and log-loss and calibration-slope safeguards.`,
+      ...retirementDecision.comparisons.map(
+        (comparison) =>
+          `Against ${comparison.comparator === "srs_proxy_only" ? "SRS-only" : "net-rating-only"}, production-minus-comparator series Brier is ${formatSigned(comparison.productionMinusComparatorBrier, 6)} with season-clustered 95% interval [${formatSigned(comparison.seasonClusteredBrierDifferenceCi95[0], 6)}, ${formatSigned(comparison.seasonClusteredBrierDifferenceCi95[1], 6)}]. The retirement gate is ${comparison.retirementGateMet ? "met" : "not met"} for this comparison.`,
+      ),
+      "The retained verdict does not establish that the full model is better than either rating-only comparator. It means only that neither comparator cleared every precommitted condition required to demote the incumbent.",
     ],
   },
   {

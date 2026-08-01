@@ -19,6 +19,14 @@ import { ratingGapPlayerMultiplier } from "../../src/lib/backtest/research-candi
 const EVALUATION_SEASONS = SEASONS.slice(3);
 const LAMBDAS = [0.01, 0.1, 1, 10, 100];
 const OUTPUT = path.join(process.cwd(), "docs", "backtest", "research.json");
+const FIXED_RESULTS = path.join(process.cwd(), "docs", "backtest", "results.json");
+const SIGNIFICANCE = path.join(process.cwd(), "docs", "backtest", "significance.json");
+const RETIREMENT_DECISION_OUTPUT = path.join(
+  process.cwd(),
+  "docs",
+  "backtest",
+  "retirement-decision.json",
+);
 
 type FeatureName =
   | "srsDiff"
@@ -268,6 +276,144 @@ function calibrationFit(rows: Array<{ p: number; y: number }>) {
     if (Math.abs(delta0) + Math.abs(delta1) < 1e-8) break;
   }
   return { intercept, slope };
+}
+
+function evaluateModelRetirementGate() {
+  const fixed = JSON.parse(fs.readFileSync(FIXED_RESULTS, "utf-8")) as {
+    seasons: number[];
+    totalSeries: number;
+    predictions: Array<{
+      seriesId: string;
+      season: number;
+      modelName: string;
+      predictedProbabilityA: number;
+      actualOutcome: number;
+    }>;
+  };
+  const significance = JSON.parse(
+    fs.readFileSync(SIGNIFICANCE, "utf-8"),
+  ) as {
+    n: number;
+    iterations: number;
+    comparisons: Array<{
+      baseline: string;
+      candidateMinusBaselineBrier: number;
+      seasonResampled: { ci95: [number, number] };
+    }>;
+  };
+  const predictionsByModel = new Map(
+    [MODEL_RETIREMENT_GATE.incumbent, ...MODEL_RETIREMENT_GATE.simpleComparators].map(
+      (modelName) => [
+        modelName,
+        fixed.predictions.filter((row) => row.modelName === modelName),
+      ],
+    ),
+  );
+  const productionRows = predictionsByModel.get(MODEL_RETIREMENT_GATE.incumbent)!;
+  if (productionRows.length !== fixed.totalSeries) {
+    throw new Error(
+      `Retirement gate expected ${fixed.totalSeries} production rows, found ${productionRows.length}.`,
+    );
+  }
+  const productionIds = productionRows.map((row) => row.seriesId).sort();
+  const productionMetrics = probabilityMetrics(
+    productionRows.map((row) => ({
+      p: row.predictedProbabilityA,
+      y: row.actualOutcome,
+    })),
+  );
+  const productionCalibration = calibrationFit(
+    productionRows.map((row) => ({
+      p: row.predictedProbabilityA,
+      y: row.actualOutcome,
+    })),
+  );
+
+  const comparisons = MODEL_RETIREMENT_GATE.simpleComparators.map(
+    (comparator) => {
+      const comparatorRows = predictionsByModel.get(comparator)!;
+      const comparatorIds = comparatorRows.map((row) => row.seriesId).sort();
+      if (
+        comparatorRows.length !== productionRows.length ||
+        comparatorIds.some((id, index) => id !== productionIds[index])
+      ) {
+        throw new Error(
+          `Retirement gate requires identical matched series for ${comparator}.`,
+        );
+      }
+      const paired = significance.comparisons.find(
+        (comparison) => comparison.baseline === comparator,
+      );
+      if (!paired) {
+        throw new Error(`Missing paired significance result for ${comparator}.`);
+      }
+      const comparatorMetrics = probabilityMetrics(
+        comparatorRows.map((row) => ({
+          p: row.predictedProbabilityA,
+          y: row.actualOutcome,
+        })),
+      );
+      const comparatorCalibration = calibrationFit(
+        comparatorRows.map((row) => ({
+          p: row.predictedProbabilityA,
+          y: row.actualOutcome,
+        })),
+      );
+      const checks = {
+        productionMinusComparatorPointEstimateAtLeastPositiveThreshold:
+          paired.candidateMinusBaselineBrier >=
+          MODEL_RETIREMENT_GATE.minimumMeaningfulDeficit,
+        brierIntervalLowerBoundAboveZero:
+          paired.seasonResampled.ci95[0] > 0,
+        comparatorLogLossNoWorse:
+          comparatorMetrics.logLoss <= productionMetrics.logLoss,
+        comparatorCalibrationSlopeNotFartherFromOne:
+          Math.abs(comparatorCalibration.slope - 1) <=
+          Math.abs(productionCalibration.slope - 1),
+      };
+      return {
+        comparator,
+        n: comparatorRows.length,
+        production: {
+          ...productionMetrics,
+          calibrationFit: productionCalibration,
+        },
+        comparatorMetrics: {
+          ...comparatorMetrics,
+          calibrationFit: comparatorCalibration,
+        },
+        productionMinusComparatorBrier:
+          paired.candidateMinusBaselineBrier,
+        seasonClusteredBrierDifferenceCi95:
+          paired.seasonResampled.ci95,
+        checks,
+        retirementGateMet: Object.values(checks).every(Boolean),
+      };
+    },
+  );
+  const retirementGateMet = comparisons.some(
+    (comparison) => comparison.retirementGateMet,
+  );
+
+  return {
+    evaluatedAt: "2026-07-31",
+    gateDefinitionCommit: "c80d332407e4de65c8e974df34cd690449491199",
+    scope: {
+      seasons: [fixed.seasons[0], fixed.seasons.at(-1)],
+      series: fixed.totalSeries,
+      matchedComparisons: true,
+    },
+    gate: MODEL_RETIREMENT_GATE,
+    bootstrapIterations: significance.iterations,
+    comparisons,
+    retirementGateMet,
+    decision: retirementGateMet
+      ? "retire_production_to_research_only"
+      : "retain_production_gate_not_met",
+    interpretation: retirementGateMet
+      ? "Production met every preregistered retirement condition against at least one named simple comparator and should be demoted to research-only."
+      : "Production survives its symmetric retirement gate. No named simple comparator established a deficit of at least 0.005 with a season-clustered interval wholly above zero and both secondary conditions satisfied.",
+  };
 }
 
 function featuresForMatchup(
@@ -871,6 +1017,7 @@ export function runResearchModel() {
   const calibratedSeries = nestedGameCalibrationThroughSeries(games, baseline);
   const primarySeriesChallenger = evaluatePrimarySeriesChallenger(baseline);
   const temporalWindowCandidate = evaluateTemporalWindowCandidate(games);
+  const modelRetirementDecision = evaluateModelRetirementGate();
   const archive = JSON.parse(
     fs.readFileSync(
       path.join(process.cwd(), "docs", "backtest", "pregame-archive.json"),
@@ -991,6 +1138,7 @@ export function runResearchModel() {
       },
     },
     modelRetirementGate: MODEL_RETIREMENT_GATE,
+    modelRetirementDecision,
     preregisteredDynamicRatingCandidate: (() => {
       const candidate = evaluateDynamicRatingCandidate(games, {
         id: "srs_home",
@@ -1022,6 +1170,11 @@ export function runResearchModel() {
     sensitivityReliability: evaluateSensitivityReliability(archive.records),
   };
   fs.writeFileSync(OUTPUT, JSON.stringify(report, null, 2), "utf-8");
+  fs.writeFileSync(
+    RETIREMENT_DECISION_OUTPUT,
+    `${JSON.stringify(modelRetirementDecision, null, 2)}\n`,
+    "utf-8",
+  );
   return report;
 }
 
