@@ -17,14 +17,15 @@ export const LEGACY_INGESTION_SEASONS = [
   1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
 ] as const;
 export const SEASONS = [
-  2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
-  2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024,
-  2025, 2026,
+  1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994,
+  1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+  2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016,
+  2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026,
 ] as const;
 export const HOLDOUT_SEASON = 2026 as const;
 export type LegacyIngestionSeason = (typeof LEGACY_INGESTION_SEASONS)[number];
 export type ArchivedSeason = (typeof SEASONS)[number];
-export type Season = LegacyIngestionSeason | ArchivedSeason;
+export type Season = ArchivedSeason;
 
 const RAW_DIR = path.join(process.cwd(), "data", "historical", "raw");
 // Basketball-Reference asks crawlers to stay under 20 requests/minute.

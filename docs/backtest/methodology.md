@@ -1,10 +1,10 @@
 # Playoff Pulse Backtest Methodology
 
-Generated: 2026-08-01T04:09:29.900Z
+Generated: 2026-08-01T21:14:49.257Z
 
 ## Scope
 
-This report evaluates Playoff Pulse on NBA playoff series from 2003-2026. It includes 360 historical series and 2160 model-series predictions across six model variants.
+This report evaluates Playoff Pulse on NBA playoff series from 1984-2026. It includes 645 historical series and 3870 model-series predictions across six model variants.
 
 ## Data Sources
 
@@ -23,7 +23,7 @@ Raw HTML is cached under `data/historical/raw/` and normalized JSON is written u
 - Player impact, projected minutes, injuries, and manual adjustments are excluded from every published baseline prediction and from this backtest path.
 - Those manual inputs are available only through a visibly separate scenario overlay. The overlay defaults to zero, is always shown beside the baseline with a delta, and has no point-in-time historical validation.
 - Player BPM and normalized regular-season MPG remain in the archive for explicitly labeled research candidates. They do not enter the published baseline Brier.
-- Simulated series reconstruct the full seven-game home pattern from the actual Game 1 host: 2-3-2 for NBA Finals through 2013 and 2-2-1-1-1 otherwise. Games beyond the realized series length therefore keep the era-correct home court instead of defaulting to neutral.
+- Simulated series reconstruct the complete season-and-round-specific home pattern from the actual Game 1 host: Best-of-5, 2-2-1 for first rounds through 2002; Best-of-7, 2-3-2 for Finals from 1985 through 2013; and Best-of-7, 2-2-1-1-1 otherwise. Games beyond the realized series length therefore keep the era-correct home court instead of defaulting to neutral.
 
 ## Leakage Controls
 
@@ -46,12 +46,12 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 
 | Model | N | Brier Score | Log Loss | Accuracy |
 |---|---:|---:|---:|---:|
-| srs_proxy_only | 360 | 0.1833 | 0.5436 | 70.8% |
-| net_rating_only | 360 | 0.1852 | 0.5489 | 71.7% |
-| playoff_pulse | 360 | 0.1900 | 0.5641 | 72.5% |
-| higher_seed | 360 | 0.2083 | 0.6079 | 71.4% |
-| home_team | 360 | 0.2095 | 0.6102 | 70.7% |
-| coinflip | 360 | 0.2500 | 0.6931 | 50.0% |
+| srs_proxy_only | 645 | 0.1737 | 0.5201 | 71.9% |
+| net_rating_only | 645 | 0.1752 | 0.5237 | 72.6% |
+| playoff_pulse | 645 | 0.1855 | 0.5551 | 74.0% |
+| higher_seed | 645 | 0.2034 | 0.5978 | 73.0% |
+| home_team | 645 | 0.2041 | 0.5991 | 72.6% |
+| coinflip | 645 | 0.2500 | 0.6931 | 50.0% |
 
 ## Calibration Data
 
@@ -60,56 +60,56 @@ Accuracy gives half credit to exact 50/50 predictions because those predictions 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
 | 0.2-0.3 | 1 | 28.9% | 0.0% |
-| 0.3-0.4 | 4 | 35.2% | 50.0% |
-| 0.4-0.5 | 25 | 47.4% | 44.0% |
-| 0.5-0.6 | 100 | 55.4% | 59.0% |
-| 0.6-0.7 | 133 | 64.7% | 73.7% |
-| 0.7-0.8 | 69 | 74.4% | 85.5% |
-| 0.8-0.9 | 28 | 82.9% | 100.0% |
+| 0.3-0.4 | 7 | 35.5% | 28.6% |
+| 0.4-0.5 | 34 | 47.5% | 47.1% |
+| 0.5-0.6 | 191 | 55.5% | 57.1% |
+| 0.6-0.7 | 245 | 64.7% | 78.4% |
+| 0.7-0.8 | 127 | 74.2% | 88.2% |
+| 0.8-0.9 | 40 | 83.1% | 100.0% |
 
 ### coinflip
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.5-0.6 | 360 | 50.0% | 71.4% |
+| 0.5-0.6 | 645 | 50.0% | 73.0% |
 
 ### home_team
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
 | 0.5-0.6 | 15 | 50.0% | 66.7% |
-| 0.6-0.7 | 345 | 65.0% | 71.6% |
+| 0.6-0.7 | 630 | 65.0% | 73.2% |
 
 ### higher_seed
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.6-0.7 | 360 | 65.0% | 71.4% |
+| 0.6-0.7 | 645 | 65.0% | 73.0% |
 
 ### srs_proxy_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.1-0.2 | 3 | 14.5% | 33.3% |
-| 0.2-0.3 | 2 | 25.9% | 50.0% |
-| 0.3-0.4 | 5 | 33.9% | 20.0% |
-| 0.4-0.5 | 28 | 45.6% | 60.7% |
-| 0.5-0.6 | 50 | 55.4% | 52.0% |
-| 0.6-0.7 | 55 | 65.1% | 65.5% |
-| 0.7-0.8 | 86 | 75.1% | 70.9% |
-| 0.8-0.9 | 68 | 84.6% | 85.3% |
-| 0.9-1.0 | 63 | 94.5% | 88.9% |
+| 0.1-0.2 | 4 | 15.2% | 25.0% |
+| 0.2-0.3 | 3 | 24.5% | 33.3% |
+| 0.3-0.4 | 8 | 34.2% | 25.0% |
+| 0.4-0.5 | 46 | 45.9% | 65.2% |
+| 0.5-0.6 | 88 | 55.3% | 46.6% |
+| 0.6-0.7 | 116 | 65.5% | 67.2% |
+| 0.7-0.8 | 151 | 75.0% | 76.2% |
+| 0.8-0.9 | 131 | 84.8% | 87.0% |
+| 0.9-1.0 | 98 | 94.4% | 90.8% |
 
 ### net_rating_only
 
 | Bucket | Count | Mean Prediction | Actual Win Rate |
 |---|---:|---:|---:|
-| 0.1-0.2 | 3 | 15.0% | 33.3% |
-| 0.2-0.3 | 3 | 25.2% | 33.3% |
-| 0.3-0.4 | 6 | 35.6% | 33.3% |
-| 0.4-0.5 | 27 | 45.8% | 55.6% |
-| 0.5-0.6 | 40 | 55.1% | 55.0% |
-| 0.6-0.7 | 56 | 65.2% | 62.5% |
-| 0.7-0.8 | 75 | 75.2% | 72.0% |
-| 0.8-0.9 | 75 | 84.8% | 78.7% |
-| 0.9-1.0 | 75 | 95.1% | 90.7% |
+| 0.1-0.2 | 4 | 15.8% | 25.0% |
+| 0.2-0.3 | 5 | 25.7% | 20.0% |
+| 0.3-0.4 | 9 | 36.1% | 44.4% |
+| 0.4-0.5 | 45 | 46.3% | 60.0% |
+| 0.5-0.6 | 77 | 55.3% | 51.9% |
+| 0.6-0.7 | 102 | 65.4% | 63.7% |
+| 0.7-0.8 | 141 | 74.8% | 75.2% |
+| 0.8-0.9 | 140 | 84.9% | 81.4% |
+| 0.9-1.0 | 122 | 94.7% | 92.6% |

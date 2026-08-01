@@ -3,10 +3,10 @@
   "gateDefinitionCommit": "c80d332407e4de65c8e974df34cd690449491199",
   "scope": {
     "seasons": [
-      2003,
+      1984,
       2026
     ],
-    "series": 360,
+    "series": 645,
     "matchedComparisons": true
   },
   "gate": {
@@ -39,74 +39,74 @@
   "comparisons": [
     {
       "comparator": "srs_proxy_only",
-      "n": 360,
+      "n": 645,
       "production": {
-        "n": 360,
-        "brier": 0.19000329064588325,
-        "logLoss": 0.564132839930624,
+        "n": 645,
+        "brier": 0.18548039870209201,
+        "logLoss": 0.5550882441913326,
         "calibrationFit": {
-          "intercept": -0.014435437022865556,
-          "slope": 1.7987408389486321
+          "intercept": -0.04533397033806451,
+          "slope": 2.070024033016888
         }
       },
       "comparatorMetrics": {
-        "n": 360,
-        "brier": 0.18334164380119283,
-        "logLoss": 0.5435677590219697,
+        "n": 645,
+        "brier": 0.17373012025853096,
+        "logLoss": 0.5200948738073101,
         "calibrationFit": {
-          "intercept": 0.09446064732159276,
-          "slope": 0.8147298915125344
+          "intercept": 0.0788444399163762,
+          "slope": 0.9511356324229183
         }
       },
-      "productionMinusComparatorBrier": 0.006661646844690367,
+      "productionMinusComparatorBrier": 0.011750278443561264,
       "seasonClusteredBrierDifferenceCi95": [
-        -0.0018942229978144197,
-        0.014664855909139102
+        0.005310541093044525,
+        0.017991932696104287
       ],
       "checks": {
         "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": true,
-        "brierIntervalLowerBoundAboveZero": false,
+        "brierIntervalLowerBoundAboveZero": true,
         "comparatorLogLossNoWorse": true,
         "comparatorCalibrationSlopeNotFartherFromOne": true
       },
-      "retirementGateMet": false
+      "retirementGateMet": true
     },
     {
       "comparator": "net_rating_only",
-      "n": 360,
+      "n": 645,
       "production": {
-        "n": 360,
-        "brier": 0.19000329064588325,
-        "logLoss": 0.564132839930624,
+        "n": 645,
+        "brier": 0.18548039870209201,
+        "logLoss": 0.5550882441913326,
         "calibrationFit": {
-          "intercept": -0.014435437022865556,
-          "slope": 1.7987408389486321
+          "intercept": -0.04533397033806451,
+          "slope": 2.070024033016888
         }
       },
       "comparatorMetrics": {
-        "n": 360,
-        "brier": 0.1852254645132554,
-        "logLoss": 0.5488985078012694,
+        "n": 645,
+        "brier": 0.1752382566849668,
+        "logLoss": 0.5237252944768028,
         "calibrationFit": {
-          "intercept": 0.09628745596241757,
-          "slope": 0.7345439757227883
+          "intercept": 0.09370107577207418,
+          "slope": 0.8453125458634423
         }
       },
-      "productionMinusComparatorBrier": 0.004777826132627821,
+      "productionMinusComparatorBrier": 0.01024214201712543,
       "seasonClusteredBrierDifferenceCi95": [
-        -0.004659568655293819,
-        0.013944105364276566
+        0.0027295425966205934,
+        0.01758892471867536
       ],
       "checks": {
-        "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
-        "brierIntervalLowerBoundAboveZero": false,
+        "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": true,
+        "brierIntervalLowerBoundAboveZero": true,
         "comparatorLogLossNoWorse": true,
         "comparatorCalibrationSlopeNotFartherFromOne": true
       },
-      "retirementGateMet": false
+      "retirementGateMet": true
     }
   ],
-  "retirementGateMet": false,
-  "decision": "retain_production_gate_not_met",
-  "interpretation": "Production survives its symmetric retirement gate. No named simple comparator established a deficit of at least 0.005 with a season-clustered interval wholly above zero and both secondary conditions satisfied."
+  "retirementGateMet": true,
+  "decision": "retire_production_to_research_only",
+  "interpretation": "Production met every preregistered retirement condition against at least one named simple comparator and should be demoted to research-only."
 }

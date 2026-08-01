@@ -1,44 +1,44 @@
 {
-  "generatedAt": "2026-08-01T04:09:29.900Z",
-  "firstSeason": 2003,
+  "generatedAt": "2026-08-01T21:14:49.257Z",
+  "firstSeason": 1984,
   "lastSeason": 2026,
-  "totalSeries": 360,
+  "totalSeries": 645,
   "models": {
     "playoff_pulse": {
-      "brierScore": 0.190003,
-      "logLoss": 0.564133,
-      "accuracy": 0.725,
-      "n": 360
+      "brierScore": 0.18548,
+      "logLoss": 0.555088,
+      "accuracy": 0.739535,
+      "n": 645
     },
     "coinflip": {
       "brierScore": 0.25,
       "logLoss": 0.693147,
       "accuracy": 0.5,
-      "n": 360
+      "n": 645
     },
     "home_team": {
-      "brierScore": 0.209479,
-      "logLoss": 0.610231,
-      "accuracy": 0.706944,
-      "n": 360
+      "brierScore": 0.20407,
+      "logLoss": 0.599082,
+      "accuracy": 0.726357,
+      "n": 645
     },
     "higher_seed": {
-      "brierScore": 0.208333,
-      "logLoss": 0.607897,
-      "accuracy": 0.713889,
-      "n": 360
+      "brierScore": 0.20343,
+      "logLoss": 0.59778,
+      "accuracy": 0.730233,
+      "n": 645
     },
     "srs_proxy_only": {
-      "brierScore": 0.183342,
-      "logLoss": 0.543568,
-      "accuracy": 0.708333,
-      "n": 360
+      "brierScore": 0.17373,
+      "logLoss": 0.520095,
+      "accuracy": 0.71938,
+      "n": 645
     },
     "net_rating_only": {
-      "brierScore": 0.185225,
-      "logLoss": 0.548899,
-      "accuracy": 0.716667,
-      "n": 360
+      "brierScore": 0.175238,
+      "logLoss": 0.523725,
+      "accuracy": 0.725581,
+      "n": 645
     }
   }
 }

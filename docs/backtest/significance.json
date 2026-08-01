@@ -1,62 +1,62 @@
 {
-  "generatedAt": "2026-08-01T04:09:31.370Z",
+  "generatedAt": "2026-08-01T21:11:06.460Z",
   "candidate": "playoff_pulse",
-  "n": 360,
+  "n": 645,
   "iterations": 10000,
   "method": "Paired bootstrap over per-series squared-error differences. Negative values favor playoff_pulse. 95% percentile intervals; 'conclusive' requires the interval to exclude zero under both series and season resampling.",
   "comparisons": [
     {
       "baseline": "srs_proxy_only",
-      "candidateMinusBaselineBrier": 0.006661646844690367,
+      "candidateMinusBaselineBrier": 0.011750278443561264,
       "seriesResampled": {
         "ci95": [
-          -0.0022159595866383577,
-          0.015363605050745096
+          0.005491245293201047,
+          0.017771804166533327
         ],
-        "probabilityCandidateBetter": 0.069
+        "probabilityCandidateBetter": 0.0001
       },
       "seasonResampled": {
         "ci95": [
-          -0.0018942229978144197,
-          0.014664855909139102
+          0.005310541093044525,
+          0.017991932696104287
         ],
-        "probabilityCandidateBetter": 0.0598
+        "probabilityCandidateBetter": 0.0004
       },
-      "conclusive": false
+      "conclusive": true
     },
     {
       "baseline": "net_rating_only",
-      "candidateMinusBaselineBrier": 0.004777826132627821,
+      "candidateMinusBaselineBrier": 0.01024214201712543,
       "seriesResampled": {
         "ci95": [
-          -0.005420557620702173,
-          0.014625926002710609
+          0.002963619555498136,
+          0.017228568166518347
         ],
-        "probabilityCandidateBetter": 0.175
+        "probabilityCandidateBetter": 0.0034
       },
       "seasonResampled": {
         "ci95": [
-          -0.004659568655293819,
-          0.013944105364276566
+          0.0027295425966205934,
+          0.01758892471867536
         ],
-        "probabilityCandidateBetter": 0.1563
+        "probabilityCandidateBetter": 0.003
       },
-      "conclusive": false
+      "conclusive": true
     },
     {
       "baseline": "higher_seed",
-      "candidateMinusBaselineBrier": -0.018330042687450178,
+      "candidateMinusBaselineBrier": -0.01794983385604731,
       "seriesResampled": {
         "ci95": [
-          -0.027497593516908964,
-          -0.009002301984188528
+          -0.024587076188281633,
+          -0.011436390251742607
         ],
-        "probabilityCandidateBetter": 0.9999
+        "probabilityCandidateBetter": 1
       },
       "seasonResampled": {
         "ci95": [
-          -0.026139373348839125,
-          -0.010845588406382861
+          -0.023881697453209696,
+          -0.012263853430457713
         ],
         "probabilityCandidateBetter": 1
       },
@@ -64,18 +64,18 @@
     },
     {
       "baseline": "home_team",
-      "candidateMinusBaselineBrier": -0.01947587602078351,
+      "candidateMinusBaselineBrier": -0.018589368739768238,
       "seriesResampled": {
         "ci95": [
-          -0.028833598603421887,
-          -0.010097680363140224
+          -0.02539909268117701,
+          -0.012038617711021191
         ],
         "probabilityCandidateBetter": 1
       },
       "seasonResampled": {
         "ci95": [
-          -0.02735049259822547,
-          -0.011769546600134021
+          -0.024481891779422654,
+          -0.013034471419980473
         ],
         "probabilityCandidateBetter": 1
       },
@@ -83,18 +83,18 @@
     },
     {
       "baseline": "coinflip",
-      "candidateMinusBaselineBrier": -0.059996709354116905,
+      "candidateMinusBaselineBrier": -0.06451960129790772,
       "seriesResampled": {
         "ci95": [
-          -0.07305787205399905,
-          -0.04691422152810797
+          -0.07397829766541901,
+          -0.05496801505247227
         ],
         "probabilityCandidateBetter": 1
       },
       "seasonResampled": {
         "ci95": [
-          -0.06990190624865945,
-          -0.04949815572789145
+          -0.07341078774980563,
+          -0.05549690980857296
         ],
         "probabilityCandidateBetter": 1
       },

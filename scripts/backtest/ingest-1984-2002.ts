@@ -1,5 +1,5 @@
-// Isolated 1984-2002 ingestion entry point. This deliberately does not change
-// SEASONS, which remains the active evaluation range until Phase 9e.
+// Isolated, resumable 1984-2002 ingestion entry point. Evaluation consumes
+// the normalized outputs only after every season has passed this contract.
 
 import * as fs from "node:fs";
 import * as path from "node:path";
