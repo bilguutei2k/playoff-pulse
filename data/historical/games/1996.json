@@ -1,0 +1,682 @@
+[
+  {
+    "seriesId": "1996-finals-finals-chi-sea",
+    "gameNumber": 1,
+    "date": "1996-06-05",
+    "homeTeam": "CHI",
+    "awayTeam": "SEA",
+    "homeScore": 107,
+    "awayScore": 90,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-finals-finals-chi-sea",
+    "gameNumber": 2,
+    "date": "1996-06-07",
+    "homeTeam": "CHI",
+    "awayTeam": "SEA",
+    "homeScore": 92,
+    "awayScore": 88,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-finals-finals-chi-sea",
+    "gameNumber": 3,
+    "date": "1996-06-09",
+    "homeTeam": "SEA",
+    "awayTeam": "CHI",
+    "homeScore": 86,
+    "awayScore": 108,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-finals-finals-chi-sea",
+    "gameNumber": 4,
+    "date": "1996-06-12",
+    "homeTeam": "SEA",
+    "awayTeam": "CHI",
+    "homeScore": 107,
+    "awayScore": 86,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-finals-finals-chi-sea",
+    "gameNumber": 5,
+    "date": "1996-06-14",
+    "homeTeam": "SEA",
+    "awayTeam": "CHI",
+    "homeScore": 89,
+    "awayScore": 78,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-finals-finals-chi-sea",
+    "gameNumber": 6,
+    "date": "1996-06-16",
+    "homeTeam": "CHI",
+    "awayTeam": "SEA",
+    "homeScore": 87,
+    "awayScore": 75,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-cf-chi-orl",
+    "gameNumber": 1,
+    "date": "1996-05-19",
+    "homeTeam": "CHI",
+    "awayTeam": "ORL",
+    "homeScore": 121,
+    "awayScore": 83,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-cf-chi-orl",
+    "gameNumber": 2,
+    "date": "1996-05-21",
+    "homeTeam": "CHI",
+    "awayTeam": "ORL",
+    "homeScore": 93,
+    "awayScore": 88,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-cf-chi-orl",
+    "gameNumber": 3,
+    "date": "1996-05-25",
+    "homeTeam": "ORL",
+    "awayTeam": "CHI",
+    "homeScore": 67,
+    "awayScore": 86,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-cf-chi-orl",
+    "gameNumber": 4,
+    "date": "1996-05-27",
+    "homeTeam": "ORL",
+    "awayTeam": "CHI",
+    "homeScore": 101,
+    "awayScore": 106,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 1,
+    "date": "1996-05-18",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 102,
+    "awayScore": 72,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 2,
+    "date": "1996-05-20",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 91,
+    "awayScore": 87,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 3,
+    "date": "1996-05-24",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 96,
+    "awayScore": 76,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 4,
+    "date": "1996-05-26",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 86,
+    "awayScore": 88,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 5,
+    "date": "1996-05-28",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 95,
+    "awayScore": 98,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 6,
+    "date": "1996-05-30",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 118,
+    "awayScore": 83,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-cf-sea-uta",
+    "gameNumber": 7,
+    "date": "1996-06-02",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 90,
+    "awayScore": 86,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-east-csf-chi-nyk",
+    "gameNumber": 1,
+    "date": "1996-05-05",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 91,
+    "awayScore": 84,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-csf-chi-nyk",
+    "gameNumber": 2,
+    "date": "1996-05-07",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 91,
+    "awayScore": 80,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-csf-chi-nyk",
+    "gameNumber": 3,
+    "date": "1996-05-11",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 102,
+    "awayScore": 99,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1996-east-csf-chi-nyk",
+    "gameNumber": 4,
+    "date": "1996-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 91,
+    "awayScore": 94,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-csf-chi-nyk",
+    "gameNumber": 5,
+    "date": "1996-05-14",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 94,
+    "awayScore": 81,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-csf-orl-atl",
+    "gameNumber": 1,
+    "date": "1996-05-08",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 117,
+    "awayScore": 105,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-east-csf-orl-atl",
+    "gameNumber": 2,
+    "date": "1996-05-10",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 120,
+    "awayScore": 94,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-east-csf-orl-atl",
+    "gameNumber": 3,
+    "date": "1996-05-12",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 96,
+    "awayScore": 103,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-east-csf-orl-atl",
+    "gameNumber": 4,
+    "date": "1996-05-13",
+    "homeTeam": "ATL",
+    "awayTeam": "ORL",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1996-east-csf-orl-atl",
+    "gameNumber": 5,
+    "date": "1996-05-15",
+    "homeTeam": "ORL",
+    "awayTeam": "ATL",
+    "homeScore": 96,
+    "awayScore": 88,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-west-csf-sea-hou",
+    "gameNumber": 1,
+    "date": "1996-05-04",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 108,
+    "awayScore": 75,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-csf-sea-hou",
+    "gameNumber": 2,
+    "date": "1996-05-06",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 105,
+    "awayScore": 101,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-csf-sea-hou",
+    "gameNumber": 3,
+    "date": "1996-05-10",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 112,
+    "awayScore": 115,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-csf-sea-hou",
+    "gameNumber": 4,
+    "date": "1996-05-12",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 107,
+    "awayScore": 114,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-csf-sas-uta",
+    "gameNumber": 1,
+    "date": "1996-05-07",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 75,
+    "awayScore": 95,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-csf-sas-uta",
+    "gameNumber": 2,
+    "date": "1996-05-09",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 88,
+    "awayScore": 77,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1996-west-csf-sas-uta",
+    "gameNumber": 3,
+    "date": "1996-05-11",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 75,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-csf-sas-uta",
+    "gameNumber": 4,
+    "date": "1996-05-12",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 86,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-csf-sas-uta",
+    "gameNumber": 5,
+    "date": "1996-05-14",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 98,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1996-west-csf-sas-uta",
+    "gameNumber": 6,
+    "date": "1996-05-16",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 108,
+    "awayScore": 81,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-east-r1-ind-atl",
+    "gameNumber": 1,
+    "date": "1996-04-25",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 80,
+    "awayScore": 92,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1996-east-r1-ind-atl",
+    "gameNumber": 2,
+    "date": "1996-04-27",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 102,
+    "awayScore": 94,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1996-east-r1-ind-atl",
+    "gameNumber": 3,
+    "date": "1996-04-29",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 90,
+    "awayScore": 83,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1996-east-r1-ind-atl",
+    "gameNumber": 4,
+    "date": "1996-05-02",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 75,
+    "awayScore": 83,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1996-east-r1-ind-atl",
+    "gameNumber": 5,
+    "date": "1996-05-05",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 87,
+    "awayScore": 89,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1996-east-r1-chi-mia",
+    "gameNumber": 1,
+    "date": "1996-04-26",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 102,
+    "awayScore": 85,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-r1-chi-mia",
+    "gameNumber": 2,
+    "date": "1996-04-28",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 106,
+    "awayScore": 75,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-r1-chi-mia",
+    "gameNumber": 3,
+    "date": "1996-05-01",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 91,
+    "awayScore": 112,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1996-east-r1-cle-nyk",
+    "gameNumber": 1,
+    "date": "1996-04-25",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 83,
+    "awayScore": 106,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1996-east-r1-cle-nyk",
+    "gameNumber": 2,
+    "date": "1996-04-27",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 80,
+    "awayScore": 84,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1996-east-r1-cle-nyk",
+    "gameNumber": 3,
+    "date": "1996-05-01",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 81,
+    "awayScore": 76,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1996-east-r1-orl-det",
+    "gameNumber": 1,
+    "date": "1996-04-26",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 112,
+    "awayScore": 92,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-east-r1-orl-det",
+    "gameNumber": 2,
+    "date": "1996-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "DET",
+    "homeScore": 92,
+    "awayScore": 77,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-east-r1-orl-det",
+    "gameNumber": 3,
+    "date": "1996-04-30",
+    "homeTeam": "DET",
+    "awayTeam": "ORL",
+    "homeScore": 98,
+    "awayScore": 101,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1996-west-r1-lal-hou",
+    "gameNumber": 1,
+    "date": "1996-04-25",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 83,
+    "awayScore": 87,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1996-west-r1-lal-hou",
+    "gameNumber": 2,
+    "date": "1996-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1996-west-r1-lal-hou",
+    "gameNumber": 3,
+    "date": "1996-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 104,
+    "awayScore": 98,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1996-west-r1-lal-hou",
+    "gameNumber": 4,
+    "date": "1996-05-02",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 102,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1996-west-r1-sas-pho",
+    "gameNumber": 1,
+    "date": "1996-04-26",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 120,
+    "awayScore": 98,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1996-west-r1-sas-pho",
+    "gameNumber": 2,
+    "date": "1996-04-28",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 110,
+    "awayScore": 105,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1996-west-r1-sas-pho",
+    "gameNumber": 3,
+    "date": "1996-05-01",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 94,
+    "awayScore": 93,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1996-west-r1-sas-pho",
+    "gameNumber": 4,
+    "date": "1996-05-03",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 98,
+    "awayScore": 116,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1996-west-r1-sea-sac",
+    "gameNumber": 1,
+    "date": "1996-04-26",
+    "homeTeam": "SEA",
+    "awayTeam": "SAC",
+    "homeScore": 97,
+    "awayScore": 85,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-r1-sea-sac",
+    "gameNumber": 2,
+    "date": "1996-04-28",
+    "homeTeam": "SEA",
+    "awayTeam": "SAC",
+    "homeScore": 81,
+    "awayScore": 90,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "1996-west-r1-sea-sac",
+    "gameNumber": 3,
+    "date": "1996-04-30",
+    "homeTeam": "SAC",
+    "awayTeam": "SEA",
+    "homeScore": 89,
+    "awayScore": 96,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-r1-sea-sac",
+    "gameNumber": 4,
+    "date": "1996-05-02",
+    "homeTeam": "SAC",
+    "awayTeam": "SEA",
+    "homeScore": 87,
+    "awayScore": 101,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1996-west-r1-uta-por",
+    "gameNumber": 1,
+    "date": "1996-04-25",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 110,
+    "awayScore": 102,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-r1-uta-por",
+    "gameNumber": 2,
+    "date": "1996-04-27",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 105,
+    "awayScore": 90,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1996-west-r1-uta-por",
+    "gameNumber": 3,
+    "date": "1996-04-29",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 94,
+    "awayScore": 91,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1996-west-r1-uta-por",
+    "gameNumber": 4,
+    "date": "1996-05-01",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1996-west-r1-uta-por",
+    "gameNumber": 5,
+    "date": "1996-05-05",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 102,
+    "awayScore": 64,
+    "winner": "UTA"
+  }
+]

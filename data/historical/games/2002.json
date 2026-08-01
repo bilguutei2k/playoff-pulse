@@ -1,0 +1,712 @@
+[
+  {
+    "seriesId": "2002-finals-finals-njn-lal",
+    "gameNumber": 1,
+    "date": "2002-06-05",
+    "homeTeam": "LAL",
+    "awayTeam": "NJN",
+    "homeScore": 99,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-finals-finals-njn-lal",
+    "gameNumber": 2,
+    "date": "2002-06-07",
+    "homeTeam": "LAL",
+    "awayTeam": "NJN",
+    "homeScore": 106,
+    "awayScore": 83,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-finals-finals-njn-lal",
+    "gameNumber": 3,
+    "date": "2002-06-09",
+    "homeTeam": "NJN",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 106,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-finals-finals-njn-lal",
+    "gameNumber": 4,
+    "date": "2002-06-12",
+    "homeTeam": "NJN",
+    "awayTeam": "LAL",
+    "homeScore": 107,
+    "awayScore": 113,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-east-cf-njn-bos",
+    "gameNumber": 1,
+    "date": "2002-05-19",
+    "homeTeam": "NJN",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 97,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-cf-njn-bos",
+    "gameNumber": 2,
+    "date": "2002-05-21",
+    "homeTeam": "NJN",
+    "awayTeam": "BOS",
+    "homeScore": 86,
+    "awayScore": 93,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-cf-njn-bos",
+    "gameNumber": 3,
+    "date": "2002-05-25",
+    "homeTeam": "BOS",
+    "awayTeam": "NJN",
+    "homeScore": 94,
+    "awayScore": 90,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-cf-njn-bos",
+    "gameNumber": 4,
+    "date": "2002-05-27",
+    "homeTeam": "BOS",
+    "awayTeam": "NJN",
+    "homeScore": 92,
+    "awayScore": 94,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-cf-njn-bos",
+    "gameNumber": 5,
+    "date": "2002-05-29",
+    "homeTeam": "NJN",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 92,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-cf-njn-bos",
+    "gameNumber": 6,
+    "date": "2002-05-31",
+    "homeTeam": "BOS",
+    "awayTeam": "NJN",
+    "homeScore": 88,
+    "awayScore": 96,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 1,
+    "date": "2002-05-18",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 99,
+    "awayScore": 106,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 2,
+    "date": "2002-05-20",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 90,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 3,
+    "date": "2002-05-24",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 90,
+    "awayScore": 103,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 4,
+    "date": "2002-05-26",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 100,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 5,
+    "date": "2002-05-28",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 92,
+    "awayScore": 91,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 6,
+    "date": "2002-05-31",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 106,
+    "awayScore": 102,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-cf-sac-lal",
+    "gameNumber": 7,
+    "date": "2002-06-02",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 106,
+    "awayScore": 112,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-east-csf-det-bos",
+    "gameNumber": 1,
+    "date": "2002-05-05",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 96,
+    "awayScore": 84,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2002-east-csf-det-bos",
+    "gameNumber": 2,
+    "date": "2002-05-08",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 77,
+    "awayScore": 85,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-csf-det-bos",
+    "gameNumber": 3,
+    "date": "2002-05-10",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 66,
+    "awayScore": 64,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-csf-det-bos",
+    "gameNumber": 4,
+    "date": "2002-05-12",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 90,
+    "awayScore": 79,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-csf-det-bos",
+    "gameNumber": 5,
+    "date": "2002-05-14",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 81,
+    "awayScore": 90,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-csf-njn-chh",
+    "gameNumber": 1,
+    "date": "2002-05-05",
+    "homeTeam": "NJN",
+    "awayTeam": "CHH",
+    "homeScore": 99,
+    "awayScore": 93,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-csf-njn-chh",
+    "gameNumber": 2,
+    "date": "2002-05-07",
+    "homeTeam": "NJN",
+    "awayTeam": "CHH",
+    "homeScore": 102,
+    "awayScore": 88,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-csf-njn-chh",
+    "gameNumber": 3,
+    "date": "2002-05-09",
+    "homeTeam": "CHH",
+    "awayTeam": "NJN",
+    "homeScore": 115,
+    "awayScore": 97,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2002-east-csf-njn-chh",
+    "gameNumber": 4,
+    "date": "2002-05-12",
+    "homeTeam": "CHH",
+    "awayTeam": "NJN",
+    "homeScore": 79,
+    "awayScore": 89,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-csf-njn-chh",
+    "gameNumber": 5,
+    "date": "2002-05-15",
+    "homeTeam": "NJN",
+    "awayTeam": "CHH",
+    "homeScore": 103,
+    "awayScore": 95,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-west-csf-lal-sas",
+    "gameNumber": 1,
+    "date": "2002-05-05",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 86,
+    "awayScore": 80,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-csf-lal-sas",
+    "gameNumber": 2,
+    "date": "2002-05-07",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 85,
+    "awayScore": 88,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2002-west-csf-lal-sas",
+    "gameNumber": 3,
+    "date": "2002-05-10",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 89,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-csf-lal-sas",
+    "gameNumber": 4,
+    "date": "2002-05-12",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 85,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-csf-lal-sas",
+    "gameNumber": 5,
+    "date": "2002-05-14",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 93,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-csf-sac-dal",
+    "gameNumber": 1,
+    "date": "2002-05-04",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 108,
+    "awayScore": 91,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-csf-sac-dal",
+    "gameNumber": 2,
+    "date": "2002-05-06",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 102,
+    "awayScore": 110,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2002-west-csf-sac-dal",
+    "gameNumber": 3,
+    "date": "2002-05-09",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 119,
+    "awayScore": 125,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-csf-sac-dal",
+    "gameNumber": 4,
+    "date": "2002-05-11",
+    "homeTeam": "DAL",
+    "awayTeam": "SAC",
+    "homeScore": 113,
+    "awayScore": 115,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-csf-sac-dal",
+    "gameNumber": 5,
+    "date": "2002-05-13",
+    "homeTeam": "SAC",
+    "awayTeam": "DAL",
+    "homeScore": 114,
+    "awayScore": 101,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-east-r1-bos-phi",
+    "gameNumber": 1,
+    "date": "2002-04-21",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 92,
+    "awayScore": 82,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-r1-bos-phi",
+    "gameNumber": 2,
+    "date": "2002-04-25",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 93,
+    "awayScore": 85,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-r1-bos-phi",
+    "gameNumber": 3,
+    "date": "2002-04-28",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 108,
+    "awayScore": 103,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2002-east-r1-bos-phi",
+    "gameNumber": 4,
+    "date": "2002-05-01",
+    "homeTeam": "PHI",
+    "awayTeam": "BOS",
+    "homeScore": 83,
+    "awayScore": 81,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2002-east-r1-bos-phi",
+    "gameNumber": 5,
+    "date": "2002-05-03",
+    "homeTeam": "BOS",
+    "awayTeam": "PHI",
+    "homeScore": 120,
+    "awayScore": 87,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "2002-east-r1-chh-orl",
+    "gameNumber": 1,
+    "date": "2002-04-20",
+    "homeTeam": "CHH",
+    "awayTeam": "ORL",
+    "homeScore": 80,
+    "awayScore": 79,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2002-east-r1-chh-orl",
+    "gameNumber": 2,
+    "date": "2002-04-23",
+    "homeTeam": "CHH",
+    "awayTeam": "ORL",
+    "homeScore": 103,
+    "awayScore": 111,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2002-east-r1-chh-orl",
+    "gameNumber": 3,
+    "date": "2002-04-27",
+    "homeTeam": "ORL",
+    "awayTeam": "CHH",
+    "homeScore": 100,
+    "awayScore": 110,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2002-east-r1-chh-orl",
+    "gameNumber": 4,
+    "date": "2002-04-30",
+    "homeTeam": "ORL",
+    "awayTeam": "CHH",
+    "homeScore": 85,
+    "awayScore": 102,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2002-east-r1-det-tor",
+    "gameNumber": 1,
+    "date": "2002-04-21",
+    "homeTeam": "DET",
+    "awayTeam": "TOR",
+    "homeScore": 85,
+    "awayScore": 63,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2002-east-r1-det-tor",
+    "gameNumber": 2,
+    "date": "2002-04-24",
+    "homeTeam": "DET",
+    "awayTeam": "TOR",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2002-east-r1-det-tor",
+    "gameNumber": 3,
+    "date": "2002-04-27",
+    "homeTeam": "TOR",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 84,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2002-east-r1-det-tor",
+    "gameNumber": 4,
+    "date": "2002-04-29",
+    "homeTeam": "TOR",
+    "awayTeam": "DET",
+    "homeScore": 89,
+    "awayScore": 83,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2002-east-r1-det-tor",
+    "gameNumber": 5,
+    "date": "2002-05-02",
+    "homeTeam": "DET",
+    "awayTeam": "TOR",
+    "homeScore": 85,
+    "awayScore": 82,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "2002-east-r1-njn-ind",
+    "gameNumber": 1,
+    "date": "2002-04-20",
+    "homeTeam": "NJN",
+    "awayTeam": "IND",
+    "homeScore": 83,
+    "awayScore": 89,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2002-east-r1-njn-ind",
+    "gameNumber": 2,
+    "date": "2002-04-22",
+    "homeTeam": "NJN",
+    "awayTeam": "IND",
+    "homeScore": 95,
+    "awayScore": 79,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-r1-njn-ind",
+    "gameNumber": 3,
+    "date": "2002-04-26",
+    "homeTeam": "IND",
+    "awayTeam": "NJN",
+    "homeScore": 84,
+    "awayScore": 85,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-east-r1-njn-ind",
+    "gameNumber": 4,
+    "date": "2002-04-30",
+    "homeTeam": "IND",
+    "awayTeam": "NJN",
+    "homeScore": 97,
+    "awayScore": 74,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2002-east-r1-njn-ind",
+    "gameNumber": 5,
+    "date": "2002-05-02",
+    "homeTeam": "NJN",
+    "awayTeam": "IND",
+    "homeScore": 120,
+    "awayScore": 109,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "2002-west-r1-dal-min",
+    "gameNumber": 1,
+    "date": "2002-04-21",
+    "homeTeam": "DAL",
+    "awayTeam": "MIN",
+    "homeScore": 101,
+    "awayScore": 94,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2002-west-r1-dal-min",
+    "gameNumber": 2,
+    "date": "2002-04-24",
+    "homeTeam": "DAL",
+    "awayTeam": "MIN",
+    "homeScore": 122,
+    "awayScore": 110,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2002-west-r1-dal-min",
+    "gameNumber": 3,
+    "date": "2002-04-28",
+    "homeTeam": "MIN",
+    "awayTeam": "DAL",
+    "homeScore": 102,
+    "awayScore": 115,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2002-west-r1-lal-por",
+    "gameNumber": 1,
+    "date": "2002-04-21",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 95,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-r1-lal-por",
+    "gameNumber": 2,
+    "date": "2002-04-25",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 103,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-r1-lal-por",
+    "gameNumber": 3,
+    "date": "2002-04-28",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2002-west-r1-sac-uta",
+    "gameNumber": 1,
+    "date": "2002-04-20",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 89,
+    "awayScore": 86,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-r1-sac-uta",
+    "gameNumber": 2,
+    "date": "2002-04-23",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 86,
+    "awayScore": 93,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2002-west-r1-sac-uta",
+    "gameNumber": 3,
+    "date": "2002-04-27",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 87,
+    "awayScore": 90,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-r1-sac-uta",
+    "gameNumber": 4,
+    "date": "2002-04-29",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 86,
+    "awayScore": 91,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2002-west-r1-sas-sea",
+    "gameNumber": 1,
+    "date": "2002-04-20",
+    "homeTeam": "SAS",
+    "awayTeam": "SEA",
+    "homeScore": 110,
+    "awayScore": 89,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2002-west-r1-sas-sea",
+    "gameNumber": 2,
+    "date": "2002-04-22",
+    "homeTeam": "SAS",
+    "awayTeam": "SEA",
+    "homeScore": 90,
+    "awayScore": 98,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2002-west-r1-sas-sea",
+    "gameNumber": 3,
+    "date": "2002-04-27",
+    "homeTeam": "SEA",
+    "awayTeam": "SAS",
+    "homeScore": 75,
+    "awayScore": 102,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2002-west-r1-sas-sea",
+    "gameNumber": 4,
+    "date": "2002-05-01",
+    "homeTeam": "SEA",
+    "awayTeam": "SAS",
+    "homeScore": 91,
+    "awayScore": 79,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2002-west-r1-sas-sea",
+    "gameNumber": 5,
+    "date": "2002-05-03",
+    "homeTeam": "SAS",
+    "awayTeam": "SEA",
+    "homeScore": 101,
+    "awayScore": 78,
+    "winner": "SAS"
+  }
+]

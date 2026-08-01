@@ -1,0 +1,682 @@
+[
+  {
+    "seriesId": "1991-finals-finals-chi-lal",
+    "gameNumber": 1,
+    "date": "1991-06-02",
+    "homeTeam": "CHI",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 93,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-finals-finals-chi-lal",
+    "gameNumber": 2,
+    "date": "1991-06-05",
+    "homeTeam": "CHI",
+    "awayTeam": "LAL",
+    "homeScore": 107,
+    "awayScore": 86,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-finals-finals-chi-lal",
+    "gameNumber": 3,
+    "date": "1991-06-07",
+    "homeTeam": "LAL",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 104,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-finals-finals-chi-lal",
+    "gameNumber": 4,
+    "date": "1991-06-09",
+    "homeTeam": "LAL",
+    "awayTeam": "CHI",
+    "homeScore": 82,
+    "awayScore": 97,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-finals-finals-chi-lal",
+    "gameNumber": 5,
+    "date": "1991-06-12",
+    "homeTeam": "LAL",
+    "awayTeam": "CHI",
+    "homeScore": 101,
+    "awayScore": 108,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-cf-chi-det",
+    "gameNumber": 1,
+    "date": "1991-05-19",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 94,
+    "awayScore": 83,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-cf-chi-det",
+    "gameNumber": 2,
+    "date": "1991-05-21",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 105,
+    "awayScore": 97,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-cf-chi-det",
+    "gameNumber": 3,
+    "date": "1991-05-25",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 107,
+    "awayScore": 113,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-cf-chi-det",
+    "gameNumber": 4,
+    "date": "1991-05-27",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 94,
+    "awayScore": 115,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-west-cf-por-lal",
+    "gameNumber": 1,
+    "date": "1991-05-18",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 106,
+    "awayScore": 111,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-cf-por-lal",
+    "gameNumber": 2,
+    "date": "1991-05-21",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 109,
+    "awayScore": 98,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-cf-por-lal",
+    "gameNumber": 3,
+    "date": "1991-05-24",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 106,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-cf-por-lal",
+    "gameNumber": 4,
+    "date": "1991-05-26",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 116,
+    "awayScore": 95,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-cf-por-lal",
+    "gameNumber": 5,
+    "date": "1991-05-28",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 95,
+    "awayScore": 84,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-cf-por-lal",
+    "gameNumber": 6,
+    "date": "1991-05-30",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 91,
+    "awayScore": 90,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-east-csf-chi-phi",
+    "gameNumber": 1,
+    "date": "1991-05-04",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 105,
+    "awayScore": 92,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-csf-chi-phi",
+    "gameNumber": 2,
+    "date": "1991-05-06",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 112,
+    "awayScore": 100,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-csf-chi-phi",
+    "gameNumber": 3,
+    "date": "1991-05-10",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 99,
+    "awayScore": 97,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1991-east-csf-chi-phi",
+    "gameNumber": 4,
+    "date": "1991-05-12",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 85,
+    "awayScore": 101,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-csf-chi-phi",
+    "gameNumber": 5,
+    "date": "1991-05-14",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 100,
+    "awayScore": 95,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-csf-bos-det",
+    "gameNumber": 1,
+    "date": "1991-05-07",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 75,
+    "awayScore": 86,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-east-csf-bos-det",
+    "gameNumber": 2,
+    "date": "1991-05-09",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 109,
+    "awayScore": 103,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1991-east-csf-bos-det",
+    "gameNumber": 3,
+    "date": "1991-05-11",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 83,
+    "awayScore": 115,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1991-east-csf-bos-det",
+    "gameNumber": 4,
+    "date": "1991-05-13",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-east-csf-bos-det",
+    "gameNumber": 5,
+    "date": "1991-05-15",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 111,
+    "awayScore": 116,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-east-csf-bos-det",
+    "gameNumber": 6,
+    "date": "1991-05-17",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 117,
+    "awayScore": 113,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-west-csf-lal-gsw",
+    "gameNumber": 1,
+    "date": "1991-05-05",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 126,
+    "awayScore": 116,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-csf-lal-gsw",
+    "gameNumber": 2,
+    "date": "1991-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 124,
+    "awayScore": 125,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1991-west-csf-lal-gsw",
+    "gameNumber": 3,
+    "date": "1991-05-10",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 112,
+    "awayScore": 115,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-csf-lal-gsw",
+    "gameNumber": 4,
+    "date": "1991-05-12",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 107,
+    "awayScore": 123,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-csf-lal-gsw",
+    "gameNumber": 5,
+    "date": "1991-05-14",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 124,
+    "awayScore": 119,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-csf-por-uta",
+    "gameNumber": 1,
+    "date": "1991-05-07",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 117,
+    "awayScore": 97,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-csf-por-uta",
+    "gameNumber": 2,
+    "date": "1991-05-09",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 118,
+    "awayScore": 116,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-csf-por-uta",
+    "gameNumber": 3,
+    "date": "1991-05-11",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 107,
+    "awayScore": 101,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1991-west-csf-por-uta",
+    "gameNumber": 4,
+    "date": "1991-05-12",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 101,
+    "awayScore": 104,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-csf-por-uta",
+    "gameNumber": 5,
+    "date": "1991-05-14",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 103,
+    "awayScore": 96,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-east-r1-bos-ind",
+    "gameNumber": 1,
+    "date": "1991-04-26",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 127,
+    "awayScore": 120,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1991-east-r1-bos-ind",
+    "gameNumber": 2,
+    "date": "1991-04-28",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 118,
+    "awayScore": 130,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1991-east-r1-bos-ind",
+    "gameNumber": 3,
+    "date": "1991-05-01",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 105,
+    "awayScore": 112,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1991-east-r1-bos-ind",
+    "gameNumber": 4,
+    "date": "1991-05-03",
+    "homeTeam": "IND",
+    "awayTeam": "BOS",
+    "homeScore": 116,
+    "awayScore": 113,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1991-east-r1-bos-ind",
+    "gameNumber": 5,
+    "date": "1991-05-05",
+    "homeTeam": "BOS",
+    "awayTeam": "IND",
+    "homeScore": 124,
+    "awayScore": 121,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1991-east-r1-chi-nyk",
+    "gameNumber": 1,
+    "date": "1991-04-25",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 126,
+    "awayScore": 85,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-r1-chi-nyk",
+    "gameNumber": 2,
+    "date": "1991-04-28",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 89,
+    "awayScore": 79,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-r1-chi-nyk",
+    "gameNumber": 3,
+    "date": "1991-04-30",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 94,
+    "awayScore": 103,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1991-east-r1-det-atl",
+    "gameNumber": 1,
+    "date": "1991-04-26",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 98,
+    "awayScore": 103,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1991-east-r1-det-atl",
+    "gameNumber": 2,
+    "date": "1991-04-28",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 101,
+    "awayScore": 88,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-east-r1-det-atl",
+    "gameNumber": 3,
+    "date": "1991-04-30",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 91,
+    "awayScore": 103,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-east-r1-det-atl",
+    "gameNumber": 4,
+    "date": "1991-05-02",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 123,
+    "awayScore": 111,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1991-east-r1-det-atl",
+    "gameNumber": 5,
+    "date": "1991-05-05",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 113,
+    "awayScore": 81,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1991-east-r1-mil-phi",
+    "gameNumber": 1,
+    "date": "1991-04-25",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 90,
+    "awayScore": 99,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1991-east-r1-mil-phi",
+    "gameNumber": 2,
+    "date": "1991-04-27",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 112,
+    "awayScore": 116,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1991-east-r1-mil-phi",
+    "gameNumber": 3,
+    "date": "1991-04-30",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 121,
+    "awayScore": 100,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1991-west-r1-sas-gsw",
+    "gameNumber": 1,
+    "date": "1991-04-25",
+    "homeTeam": "SAS",
+    "awayTeam": "GSW",
+    "homeScore": 130,
+    "awayScore": 121,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1991-west-r1-sas-gsw",
+    "gameNumber": 2,
+    "date": "1991-04-27",
+    "homeTeam": "SAS",
+    "awayTeam": "GSW",
+    "homeScore": 98,
+    "awayScore": 111,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1991-west-r1-sas-gsw",
+    "gameNumber": 3,
+    "date": "1991-05-01",
+    "homeTeam": "GSW",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 106,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1991-west-r1-sas-gsw",
+    "gameNumber": 4,
+    "date": "1991-05-03",
+    "homeTeam": "GSW",
+    "awayTeam": "SAS",
+    "homeScore": 110,
+    "awayScore": 97,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1991-west-r1-lal-hou",
+    "gameNumber": 1,
+    "date": "1991-04-25",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 94,
+    "awayScore": 92,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-r1-lal-hou",
+    "gameNumber": 2,
+    "date": "1991-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 109,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-r1-lal-hou",
+    "gameNumber": 3,
+    "date": "1991-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 90,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1991-west-r1-por-sea",
+    "gameNumber": 1,
+    "date": "1991-04-26",
+    "homeTeam": "POR",
+    "awayTeam": "SEA",
+    "homeScore": 110,
+    "awayScore": 102,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-r1-por-sea",
+    "gameNumber": 2,
+    "date": "1991-04-28",
+    "homeTeam": "POR",
+    "awayTeam": "SEA",
+    "homeScore": 115,
+    "awayScore": 106,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-r1-por-sea",
+    "gameNumber": 3,
+    "date": "1991-04-30",
+    "homeTeam": "SEA",
+    "awayTeam": "POR",
+    "homeScore": 102,
+    "awayScore": 99,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1991-west-r1-por-sea",
+    "gameNumber": 4,
+    "date": "1991-05-02",
+    "homeTeam": "SEA",
+    "awayTeam": "POR",
+    "homeScore": 101,
+    "awayScore": 89,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1991-west-r1-por-sea",
+    "gameNumber": 5,
+    "date": "1991-05-04",
+    "homeTeam": "POR",
+    "awayTeam": "SEA",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1991-west-r1-pho-uta",
+    "gameNumber": 1,
+    "date": "1991-04-25",
+    "homeTeam": "PHO",
+    "awayTeam": "UTA",
+    "homeScore": 90,
+    "awayScore": 129,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1991-west-r1-pho-uta",
+    "gameNumber": 2,
+    "date": "1991-04-27",
+    "homeTeam": "PHO",
+    "awayTeam": "UTA",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1991-west-r1-pho-uta",
+    "gameNumber": 3,
+    "date": "1991-04-30",
+    "homeTeam": "UTA",
+    "awayTeam": "PHO",
+    "homeScore": 107,
+    "awayScore": 98,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1991-west-r1-pho-uta",
+    "gameNumber": 4,
+    "date": "1991-05-02",
+    "homeTeam": "UTA",
+    "awayTeam": "PHO",
+    "homeScore": 101,
+    "awayScore": 93,
+    "winner": "UTA"
+  }
+]

@@ -1,0 +1,662 @@
+[
+  {
+    "seriesId": "1999-finals-finals-sas-nyk",
+    "gameNumber": 1,
+    "date": "1999-06-16",
+    "homeTeam": "SAS",
+    "awayTeam": "NYK",
+    "homeScore": 89,
+    "awayScore": 77,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-finals-finals-sas-nyk",
+    "gameNumber": 2,
+    "date": "1999-06-18",
+    "homeTeam": "SAS",
+    "awayTeam": "NYK",
+    "homeScore": 80,
+    "awayScore": 67,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-finals-finals-sas-nyk",
+    "gameNumber": 3,
+    "date": "1999-06-21",
+    "homeTeam": "NYK",
+    "awayTeam": "SAS",
+    "homeScore": 89,
+    "awayScore": 81,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-finals-finals-sas-nyk",
+    "gameNumber": 4,
+    "date": "1999-06-23",
+    "homeTeam": "NYK",
+    "awayTeam": "SAS",
+    "homeScore": 89,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-finals-finals-sas-nyk",
+    "gameNumber": 5,
+    "date": "1999-06-25",
+    "homeTeam": "NYK",
+    "awayTeam": "SAS",
+    "homeScore": 77,
+    "awayScore": 78,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-east-cf-ind-nyk",
+    "gameNumber": 1,
+    "date": "1999-05-30",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 90,
+    "awayScore": 93,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-cf-ind-nyk",
+    "gameNumber": 2,
+    "date": "1999-06-01",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 88,
+    "awayScore": 86,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-cf-ind-nyk",
+    "gameNumber": 3,
+    "date": "1999-06-05",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 92,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-cf-ind-nyk",
+    "gameNumber": 4,
+    "date": "1999-06-07",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 78,
+    "awayScore": 90,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-cf-ind-nyk",
+    "gameNumber": 5,
+    "date": "1999-06-09",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 94,
+    "awayScore": 101,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-cf-ind-nyk",
+    "gameNumber": 6,
+    "date": "1999-06-11",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 90,
+    "awayScore": 82,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-west-cf-sas-por",
+    "gameNumber": 1,
+    "date": "1999-05-29",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 80,
+    "awayScore": 76,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-cf-sas-por",
+    "gameNumber": 2,
+    "date": "1999-05-31",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 86,
+    "awayScore": 85,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-cf-sas-por",
+    "gameNumber": 3,
+    "date": "1999-06-04",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 63,
+    "awayScore": 85,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-cf-sas-por",
+    "gameNumber": 4,
+    "date": "1999-06-06",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 80,
+    "awayScore": 94,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-east-csf-ind-phi",
+    "gameNumber": 1,
+    "date": "1999-05-17",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 94,
+    "awayScore": 90,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-csf-ind-phi",
+    "gameNumber": 2,
+    "date": "1999-05-19",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 85,
+    "awayScore": 82,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-csf-ind-phi",
+    "gameNumber": 3,
+    "date": "1999-05-21",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 86,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-csf-ind-phi",
+    "gameNumber": 4,
+    "date": "1999-05-23",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 86,
+    "awayScore": 89,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-csf-atl-nyk",
+    "gameNumber": 1,
+    "date": "1999-05-18",
+    "homeTeam": "ATL",
+    "awayTeam": "NYK",
+    "homeScore": 92,
+    "awayScore": 100,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-csf-atl-nyk",
+    "gameNumber": 2,
+    "date": "1999-05-20",
+    "homeTeam": "ATL",
+    "awayTeam": "NYK",
+    "homeScore": 70,
+    "awayScore": 77,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-csf-atl-nyk",
+    "gameNumber": 3,
+    "date": "1999-05-23",
+    "homeTeam": "NYK",
+    "awayTeam": "ATL",
+    "homeScore": 90,
+    "awayScore": 78,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-csf-atl-nyk",
+    "gameNumber": 4,
+    "date": "1999-05-24",
+    "homeTeam": "NYK",
+    "awayTeam": "ATL",
+    "homeScore": 79,
+    "awayScore": 66,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-west-csf-uta-por",
+    "gameNumber": 1,
+    "date": "1999-05-18",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 93,
+    "awayScore": 83,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1999-west-csf-uta-por",
+    "gameNumber": 2,
+    "date": "1999-05-20",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 81,
+    "awayScore": 84,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-csf-uta-por",
+    "gameNumber": 3,
+    "date": "1999-05-22",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-csf-uta-por",
+    "gameNumber": 4,
+    "date": "1999-05-23",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 81,
+    "awayScore": 75,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-csf-uta-por",
+    "gameNumber": 5,
+    "date": "1999-05-25",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 88,
+    "awayScore": 71,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1999-west-csf-uta-por",
+    "gameNumber": 6,
+    "date": "1999-05-27",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 92,
+    "awayScore": 80,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-csf-sas-lal",
+    "gameNumber": 1,
+    "date": "1999-05-17",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 87,
+    "awayScore": 81,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-csf-sas-lal",
+    "gameNumber": 2,
+    "date": "1999-05-19",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 79,
+    "awayScore": 76,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-csf-sas-lal",
+    "gameNumber": 3,
+    "date": "1999-05-22",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 91,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-csf-sas-lal",
+    "gameNumber": 4,
+    "date": "1999-05-23",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 118,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-east-r1-atl-det",
+    "gameNumber": 1,
+    "date": "1999-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 90,
+    "awayScore": 70,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1999-east-r1-atl-det",
+    "gameNumber": 2,
+    "date": "1999-05-10",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 89,
+    "awayScore": 69,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1999-east-r1-atl-det",
+    "gameNumber": 3,
+    "date": "1999-05-12",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 79,
+    "awayScore": 63,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1999-east-r1-atl-det",
+    "gameNumber": 4,
+    "date": "1999-05-14",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 103,
+    "awayScore": 82,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1999-east-r1-atl-det",
+    "gameNumber": 5,
+    "date": "1999-05-16",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 87,
+    "awayScore": 75,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1999-east-r1-ind-mil",
+    "gameNumber": 1,
+    "date": "1999-05-09",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 110,
+    "awayScore": 88,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-r1-ind-mil",
+    "gameNumber": 2,
+    "date": "1999-05-11",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 108,
+    "awayScore": 107,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-r1-ind-mil",
+    "gameNumber": 3,
+    "date": "1999-05-13",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 91,
+    "awayScore": 99,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1999-east-r1-mia-nyk",
+    "gameNumber": 1,
+    "date": "1999-05-08",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 75,
+    "awayScore": 95,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-r1-mia-nyk",
+    "gameNumber": 2,
+    "date": "1999-05-10",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 83,
+    "awayScore": 73,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1999-east-r1-mia-nyk",
+    "gameNumber": 3,
+    "date": "1999-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 97,
+    "awayScore": 73,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-r1-mia-nyk",
+    "gameNumber": 4,
+    "date": "1999-05-14",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 72,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1999-east-r1-mia-nyk",
+    "gameNumber": 5,
+    "date": "1999-05-16",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 77,
+    "awayScore": 78,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1999-east-r1-orl-phi",
+    "gameNumber": 1,
+    "date": "1999-05-09",
+    "homeTeam": "ORL",
+    "awayTeam": "PHI",
+    "homeScore": 90,
+    "awayScore": 104,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1999-east-r1-orl-phi",
+    "gameNumber": 2,
+    "date": "1999-05-11",
+    "homeTeam": "ORL",
+    "awayTeam": "PHI",
+    "homeScore": 79,
+    "awayScore": 68,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1999-east-r1-orl-phi",
+    "gameNumber": 3,
+    "date": "1999-05-13",
+    "homeTeam": "PHI",
+    "awayTeam": "ORL",
+    "homeScore": 97,
+    "awayScore": 85,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1999-east-r1-orl-phi",
+    "gameNumber": 4,
+    "date": "1999-05-15",
+    "homeTeam": "PHI",
+    "awayTeam": "ORL",
+    "homeScore": 101,
+    "awayScore": 91,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1999-west-r1-lal-hou",
+    "gameNumber": 1,
+    "date": "1999-05-09",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 101,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1999-west-r1-lal-hou",
+    "gameNumber": 2,
+    "date": "1999-05-11",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 110,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1999-west-r1-lal-hou",
+    "gameNumber": 3,
+    "date": "1999-05-13",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 102,
+    "awayScore": 88,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1999-west-r1-lal-hou",
+    "gameNumber": 4,
+    "date": "1999-05-15",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1999-west-r1-por-pho",
+    "gameNumber": 1,
+    "date": "1999-05-08",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 95,
+    "awayScore": 85,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-r1-por-pho",
+    "gameNumber": 2,
+    "date": "1999-05-10",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 110,
+    "awayScore": 99,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-r1-por-pho",
+    "gameNumber": 3,
+    "date": "1999-05-12",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 93,
+    "awayScore": 103,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1999-west-r1-sas-min",
+    "gameNumber": 1,
+    "date": "1999-05-09",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 99,
+    "awayScore": 86,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-r1-sas-min",
+    "gameNumber": 2,
+    "date": "1999-05-11",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 71,
+    "awayScore": 80,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "1999-west-r1-sas-min",
+    "gameNumber": 3,
+    "date": "1999-05-13",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 71,
+    "awayScore": 85,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-r1-sas-min",
+    "gameNumber": 4,
+    "date": "1999-05-15",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 85,
+    "awayScore": 92,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1999-west-r1-uta-sac",
+    "gameNumber": 1,
+    "date": "1999-05-08",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 117,
+    "awayScore": 87,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1999-west-r1-uta-sac",
+    "gameNumber": 2,
+    "date": "1999-05-10",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 90,
+    "awayScore": 101,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "1999-west-r1-uta-sac",
+    "gameNumber": 3,
+    "date": "1999-05-12",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 84,
+    "awayScore": 81,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "1999-west-r1-uta-sac",
+    "gameNumber": 4,
+    "date": "1999-05-14",
+    "homeTeam": "SAC",
+    "awayTeam": "UTA",
+    "homeScore": 89,
+    "awayScore": 90,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1999-west-r1-uta-sac",
+    "gameNumber": 5,
+    "date": "1999-05-16",
+    "homeTeam": "UTA",
+    "awayTeam": "SAC",
+    "homeScore": 99,
+    "awayScore": 92,
+    "winner": "UTA"
+  }
+]

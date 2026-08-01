@@ -1,0 +1,722 @@
+[
+  {
+    "seriesId": "1990-finals-finals-det-por",
+    "gameNumber": 1,
+    "date": "1990-06-05",
+    "homeTeam": "DET",
+    "awayTeam": "POR",
+    "homeScore": 105,
+    "awayScore": 99,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-finals-finals-det-por",
+    "gameNumber": 2,
+    "date": "1990-06-07",
+    "homeTeam": "DET",
+    "awayTeam": "POR",
+    "homeScore": 105,
+    "awayScore": 106,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-finals-finals-det-por",
+    "gameNumber": 3,
+    "date": "1990-06-10",
+    "homeTeam": "POR",
+    "awayTeam": "DET",
+    "homeScore": 106,
+    "awayScore": 121,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-finals-finals-det-por",
+    "gameNumber": 4,
+    "date": "1990-06-12",
+    "homeTeam": "POR",
+    "awayTeam": "DET",
+    "homeScore": 109,
+    "awayScore": 112,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-finals-finals-det-por",
+    "gameNumber": 5,
+    "date": "1990-06-14",
+    "homeTeam": "POR",
+    "awayTeam": "DET",
+    "homeScore": 90,
+    "awayScore": 92,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 1,
+    "date": "1990-05-20",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 86,
+    "awayScore": 77,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 2,
+    "date": "1990-05-22",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 102,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 3,
+    "date": "1990-05-26",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 107,
+    "awayScore": 102,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 4,
+    "date": "1990-05-28",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 108,
+    "awayScore": 101,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 5,
+    "date": "1990-05-30",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 97,
+    "awayScore": 83,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 6,
+    "date": "1990-06-01",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 109,
+    "awayScore": 91,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-cf-det-chi",
+    "gameNumber": 7,
+    "date": "1990-06-03",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 93,
+    "awayScore": 74,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-west-cf-por-pho",
+    "gameNumber": 1,
+    "date": "1990-05-21",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 100,
+    "awayScore": 98,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-cf-por-pho",
+    "gameNumber": 2,
+    "date": "1990-05-23",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 108,
+    "awayScore": 107,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-cf-por-pho",
+    "gameNumber": 3,
+    "date": "1990-05-25",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 123,
+    "awayScore": 89,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-cf-por-pho",
+    "gameNumber": 4,
+    "date": "1990-05-27",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-cf-por-pho",
+    "gameNumber": 5,
+    "date": "1990-05-29",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 120,
+    "awayScore": 114,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-cf-por-pho",
+    "gameNumber": 6,
+    "date": "1990-05-31",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 109,
+    "awayScore": 112,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-east-csf-chi-phi",
+    "gameNumber": 1,
+    "date": "1990-05-07",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 96,
+    "awayScore": 85,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-csf-chi-phi",
+    "gameNumber": 2,
+    "date": "1990-05-09",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 101,
+    "awayScore": 96,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-csf-chi-phi",
+    "gameNumber": 3,
+    "date": "1990-05-11",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 118,
+    "awayScore": 112,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1990-east-csf-chi-phi",
+    "gameNumber": 4,
+    "date": "1990-05-13",
+    "homeTeam": "PHI",
+    "awayTeam": "CHI",
+    "homeScore": 101,
+    "awayScore": 111,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-csf-chi-phi",
+    "gameNumber": 5,
+    "date": "1990-05-16",
+    "homeTeam": "CHI",
+    "awayTeam": "PHI",
+    "homeScore": 117,
+    "awayScore": 99,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-csf-det-nyk",
+    "gameNumber": 1,
+    "date": "1990-05-08",
+    "homeTeam": "DET",
+    "awayTeam": "NYK",
+    "homeScore": 112,
+    "awayScore": 77,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-csf-det-nyk",
+    "gameNumber": 2,
+    "date": "1990-05-10",
+    "homeTeam": "DET",
+    "awayTeam": "NYK",
+    "homeScore": 104,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-csf-det-nyk",
+    "gameNumber": 3,
+    "date": "1990-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "DET",
+    "homeScore": 111,
+    "awayScore": 103,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1990-east-csf-det-nyk",
+    "gameNumber": 4,
+    "date": "1990-05-13",
+    "homeTeam": "NYK",
+    "awayTeam": "DET",
+    "homeScore": 90,
+    "awayScore": 102,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-csf-det-nyk",
+    "gameNumber": 5,
+    "date": "1990-05-15",
+    "homeTeam": "DET",
+    "awayTeam": "NYK",
+    "homeScore": 95,
+    "awayScore": 84,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-west-csf-lal-pho",
+    "gameNumber": 1,
+    "date": "1990-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 102,
+    "awayScore": 104,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-csf-lal-pho",
+    "gameNumber": 2,
+    "date": "1990-05-10",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 124,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1990-west-csf-lal-pho",
+    "gameNumber": 3,
+    "date": "1990-05-12",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 117,
+    "awayScore": 103,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-csf-lal-pho",
+    "gameNumber": 4,
+    "date": "1990-05-13",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 114,
+    "awayScore": 101,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-csf-lal-pho",
+    "gameNumber": 5,
+    "date": "1990-05-15",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 103,
+    "awayScore": 106,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 1,
+    "date": "1990-05-05",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 107,
+    "awayScore": 94,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 2,
+    "date": "1990-05-08",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 122,
+    "awayScore": 112,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 3,
+    "date": "1990-05-10",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 121,
+    "awayScore": 98,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 4,
+    "date": "1990-05-12",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 115,
+    "awayScore": 105,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 5,
+    "date": "1990-05-15",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 138,
+    "awayScore": 132,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 6,
+    "date": "1990-05-17",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 112,
+    "awayScore": 97,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1990-west-csf-por-sas",
+    "gameNumber": 7,
+    "date": "1990-05-19",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 108,
+    "awayScore": 105,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-east-r1-chi-mil",
+    "gameNumber": 1,
+    "date": "1990-04-27",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 111,
+    "awayScore": 97,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-r1-chi-mil",
+    "gameNumber": 2,
+    "date": "1990-04-29",
+    "homeTeam": "CHI",
+    "awayTeam": "MIL",
+    "homeScore": 109,
+    "awayScore": 102,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-r1-chi-mil",
+    "gameNumber": 3,
+    "date": "1990-05-01",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 119,
+    "awayScore": 112,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1990-east-r1-chi-mil",
+    "gameNumber": 4,
+    "date": "1990-05-03",
+    "homeTeam": "MIL",
+    "awayTeam": "CHI",
+    "homeScore": 86,
+    "awayScore": 110,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1990-east-r1-det-ind",
+    "gameNumber": 1,
+    "date": "1990-04-26",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 104,
+    "awayScore": 92,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-r1-det-ind",
+    "gameNumber": 2,
+    "date": "1990-04-28",
+    "homeTeam": "DET",
+    "awayTeam": "IND",
+    "homeScore": 100,
+    "awayScore": 87,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-r1-det-ind",
+    "gameNumber": 3,
+    "date": "1990-05-01",
+    "homeTeam": "IND",
+    "awayTeam": "DET",
+    "homeScore": 96,
+    "awayScore": 108,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1990-east-r1-bos-nyk",
+    "gameNumber": 1,
+    "date": "1990-04-26",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 116,
+    "awayScore": 105,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1990-east-r1-bos-nyk",
+    "gameNumber": 2,
+    "date": "1990-04-28",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 157,
+    "awayScore": 128,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1990-east-r1-bos-nyk",
+    "gameNumber": 3,
+    "date": "1990-05-02",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 102,
+    "awayScore": 99,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1990-east-r1-bos-nyk",
+    "gameNumber": 4,
+    "date": "1990-05-04",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 135,
+    "awayScore": 108,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1990-east-r1-bos-nyk",
+    "gameNumber": 5,
+    "date": "1990-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 114,
+    "awayScore": 121,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1990-east-r1-phi-cle",
+    "gameNumber": 1,
+    "date": "1990-04-26",
+    "homeTeam": "PHI",
+    "awayTeam": "CLE",
+    "homeScore": 111,
+    "awayScore": 106,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1990-east-r1-phi-cle",
+    "gameNumber": 2,
+    "date": "1990-04-29",
+    "homeTeam": "PHI",
+    "awayTeam": "CLE",
+    "homeScore": 107,
+    "awayScore": 101,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1990-east-r1-phi-cle",
+    "gameNumber": 3,
+    "date": "1990-05-01",
+    "homeTeam": "CLE",
+    "awayTeam": "PHI",
+    "homeScore": 122,
+    "awayScore": 95,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1990-east-r1-phi-cle",
+    "gameNumber": 4,
+    "date": "1990-05-03",
+    "homeTeam": "CLE",
+    "awayTeam": "PHI",
+    "homeScore": 108,
+    "awayScore": 96,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1990-east-r1-phi-cle",
+    "gameNumber": 5,
+    "date": "1990-05-05",
+    "homeTeam": "PHI",
+    "awayTeam": "CLE",
+    "homeScore": 113,
+    "awayScore": 97,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1990-west-r1-lal-hou",
+    "gameNumber": 1,
+    "date": "1990-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 101,
+    "awayScore": 89,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1990-west-r1-lal-hou",
+    "gameNumber": 2,
+    "date": "1990-04-29",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1990-west-r1-lal-hou",
+    "gameNumber": 3,
+    "date": "1990-05-01",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 114,
+    "awayScore": 108,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1990-west-r1-lal-hou",
+    "gameNumber": 4,
+    "date": "1990-05-03",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 88,
+    "awayScore": 109,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1990-west-r1-uta-pho",
+    "gameNumber": 1,
+    "date": "1990-04-27",
+    "homeTeam": "UTA",
+    "awayTeam": "PHO",
+    "homeScore": 113,
+    "awayScore": 96,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1990-west-r1-uta-pho",
+    "gameNumber": 2,
+    "date": "1990-04-29",
+    "homeTeam": "UTA",
+    "awayTeam": "PHO",
+    "homeScore": 87,
+    "awayScore": 105,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-r1-uta-pho",
+    "gameNumber": 3,
+    "date": "1990-05-02",
+    "homeTeam": "PHO",
+    "awayTeam": "UTA",
+    "homeScore": 120,
+    "awayScore": 105,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-r1-uta-pho",
+    "gameNumber": 4,
+    "date": "1990-05-04",
+    "homeTeam": "PHO",
+    "awayTeam": "UTA",
+    "homeScore": 94,
+    "awayScore": 105,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1990-west-r1-uta-pho",
+    "gameNumber": 5,
+    "date": "1990-05-06",
+    "homeTeam": "UTA",
+    "awayTeam": "PHO",
+    "homeScore": 102,
+    "awayScore": 104,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1990-west-r1-por-dal",
+    "gameNumber": 1,
+    "date": "1990-04-26",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 109,
+    "awayScore": 102,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-r1-por-dal",
+    "gameNumber": 2,
+    "date": "1990-04-28",
+    "homeTeam": "POR",
+    "awayTeam": "DAL",
+    "homeScore": 114,
+    "awayScore": 107,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-r1-por-dal",
+    "gameNumber": 3,
+    "date": "1990-05-01",
+    "homeTeam": "DAL",
+    "awayTeam": "POR",
+    "homeScore": 92,
+    "awayScore": 106,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1990-west-r1-sas-den",
+    "gameNumber": 1,
+    "date": "1990-04-26",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 119,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1990-west-r1-sas-den",
+    "gameNumber": 2,
+    "date": "1990-04-28",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 129,
+    "awayScore": 120,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1990-west-r1-sas-den",
+    "gameNumber": 3,
+    "date": "1990-05-01",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 120,
+    "awayScore": 131,
+    "winner": "SAS"
+  }
+]

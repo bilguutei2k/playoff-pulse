@@ -1,0 +1,732 @@
+[
+  {
+    "seriesId": "1995-finals-finals-orl-hou",
+    "gameNumber": 1,
+    "date": "1995-06-07",
+    "homeTeam": "ORL",
+    "awayTeam": "HOU",
+    "homeScore": 118,
+    "awayScore": 120,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-finals-finals-orl-hou",
+    "gameNumber": 2,
+    "date": "1995-06-09",
+    "homeTeam": "ORL",
+    "awayTeam": "HOU",
+    "homeScore": 106,
+    "awayScore": 117,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-finals-finals-orl-hou",
+    "gameNumber": 3,
+    "date": "1995-06-11",
+    "homeTeam": "HOU",
+    "awayTeam": "ORL",
+    "homeScore": 106,
+    "awayScore": 103,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-finals-finals-orl-hou",
+    "gameNumber": 4,
+    "date": "1995-06-14",
+    "homeTeam": "HOU",
+    "awayTeam": "ORL",
+    "homeScore": 113,
+    "awayScore": 101,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 1,
+    "date": "1995-05-23",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 105,
+    "awayScore": 101,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 2,
+    "date": "1995-05-25",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 119,
+    "awayScore": 114,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 3,
+    "date": "1995-05-27",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 105,
+    "awayScore": 100,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 4,
+    "date": "1995-05-29",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 94,
+    "awayScore": 93,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 5,
+    "date": "1995-05-31",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 108,
+    "awayScore": 106,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 6,
+    "date": "1995-06-02",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 123,
+    "awayScore": 96,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-cf-orl-ind",
+    "gameNumber": 7,
+    "date": "1995-06-04",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 105,
+    "awayScore": 81,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-west-cf-sas-hou",
+    "gameNumber": 1,
+    "date": "1995-05-22",
+    "homeTeam": "SAS",
+    "awayTeam": "HOU",
+    "homeScore": 93,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-cf-sas-hou",
+    "gameNumber": 2,
+    "date": "1995-05-24",
+    "homeTeam": "SAS",
+    "awayTeam": "HOU",
+    "homeScore": 96,
+    "awayScore": 106,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-cf-sas-hou",
+    "gameNumber": 3,
+    "date": "1995-05-26",
+    "homeTeam": "HOU",
+    "awayTeam": "SAS",
+    "homeScore": 102,
+    "awayScore": 107,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-cf-sas-hou",
+    "gameNumber": 4,
+    "date": "1995-05-28",
+    "homeTeam": "HOU",
+    "awayTeam": "SAS",
+    "homeScore": 81,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-cf-sas-hou",
+    "gameNumber": 5,
+    "date": "1995-05-30",
+    "homeTeam": "SAS",
+    "awayTeam": "HOU",
+    "homeScore": 90,
+    "awayScore": 111,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-cf-sas-hou",
+    "gameNumber": 6,
+    "date": "1995-06-01",
+    "homeTeam": "HOU",
+    "awayTeam": "SAS",
+    "homeScore": 100,
+    "awayScore": 95,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 1,
+    "date": "1995-05-07",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 105,
+    "awayScore": 107,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 2,
+    "date": "1995-05-09",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 96,
+    "awayScore": 77,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 3,
+    "date": "1995-05-11",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 97,
+    "awayScore": 95,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 4,
+    "date": "1995-05-13",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 98,
+    "awayScore": 84,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 5,
+    "date": "1995-05-17",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 96,
+    "awayScore": 95,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 6,
+    "date": "1995-05-19",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 82,
+    "awayScore": 92,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1995-east-csf-nyk-ind",
+    "gameNumber": 7,
+    "date": "1995-05-21",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 95,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-csf-orl-chi",
+    "gameNumber": 1,
+    "date": "1995-05-07",
+    "homeTeam": "ORL",
+    "awayTeam": "CHI",
+    "homeScore": 94,
+    "awayScore": 91,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-csf-orl-chi",
+    "gameNumber": 2,
+    "date": "1995-05-10",
+    "homeTeam": "ORL",
+    "awayTeam": "CHI",
+    "homeScore": 94,
+    "awayScore": 104,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1995-east-csf-orl-chi",
+    "gameNumber": 3,
+    "date": "1995-05-12",
+    "homeTeam": "CHI",
+    "awayTeam": "ORL",
+    "homeScore": 101,
+    "awayScore": 110,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-csf-orl-chi",
+    "gameNumber": 4,
+    "date": "1995-05-14",
+    "homeTeam": "CHI",
+    "awayTeam": "ORL",
+    "homeScore": 106,
+    "awayScore": 95,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1995-east-csf-orl-chi",
+    "gameNumber": 5,
+    "date": "1995-05-16",
+    "homeTeam": "ORL",
+    "awayTeam": "CHI",
+    "homeScore": 103,
+    "awayScore": 95,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-csf-orl-chi",
+    "gameNumber": 6,
+    "date": "1995-05-18",
+    "homeTeam": "CHI",
+    "awayTeam": "ORL",
+    "homeScore": 102,
+    "awayScore": 108,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 1,
+    "date": "1995-05-09",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 130,
+    "awayScore": 108,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 2,
+    "date": "1995-05-11",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 118,
+    "awayScore": 94,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 3,
+    "date": "1995-05-13",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 118,
+    "awayScore": 85,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 4,
+    "date": "1995-05-14",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 110,
+    "awayScore": 114,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 5,
+    "date": "1995-05-16",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 97,
+    "awayScore": 103,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 6,
+    "date": "1995-05-18",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 116,
+    "awayScore": 103,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-csf-pho-hou",
+    "gameNumber": 7,
+    "date": "1995-05-20",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 114,
+    "awayScore": 115,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-csf-sas-lal",
+    "gameNumber": 1,
+    "date": "1995-05-06",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 110,
+    "awayScore": 94,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-csf-sas-lal",
+    "gameNumber": 2,
+    "date": "1995-05-08",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 97,
+    "awayScore": 90,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-csf-sas-lal",
+    "gameNumber": 3,
+    "date": "1995-05-12",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 92,
+    "awayScore": 85,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1995-west-csf-sas-lal",
+    "gameNumber": 4,
+    "date": "1995-05-14",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 71,
+    "awayScore": 80,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-csf-sas-lal",
+    "gameNumber": 5,
+    "date": "1995-05-16",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1995-west-csf-sas-lal",
+    "gameNumber": 6,
+    "date": "1995-05-18",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 88,
+    "awayScore": 100,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-east-r1-chh-chi",
+    "gameNumber": 1,
+    "date": "1995-04-28",
+    "homeTeam": "CHH",
+    "awayTeam": "CHI",
+    "homeScore": 100,
+    "awayScore": 108,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1995-east-r1-chh-chi",
+    "gameNumber": 2,
+    "date": "1995-04-30",
+    "homeTeam": "CHH",
+    "awayTeam": "CHI",
+    "homeScore": 106,
+    "awayScore": 89,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "1995-east-r1-chh-chi",
+    "gameNumber": 3,
+    "date": "1995-05-02",
+    "homeTeam": "CHI",
+    "awayTeam": "CHH",
+    "homeScore": 103,
+    "awayScore": 80,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1995-east-r1-chh-chi",
+    "gameNumber": 4,
+    "date": "1995-05-04",
+    "homeTeam": "CHI",
+    "awayTeam": "CHH",
+    "homeScore": 85,
+    "awayScore": 84,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1995-east-r1-ind-atl",
+    "gameNumber": 1,
+    "date": "1995-04-27",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 90,
+    "awayScore": 82,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-r1-ind-atl",
+    "gameNumber": 2,
+    "date": "1995-04-29",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 105,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-r1-ind-atl",
+    "gameNumber": 3,
+    "date": "1995-05-02",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 89,
+    "awayScore": 105,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1995-east-r1-nyk-cle",
+    "gameNumber": 1,
+    "date": "1995-04-27",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 103,
+    "awayScore": 79,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1995-east-r1-nyk-cle",
+    "gameNumber": 2,
+    "date": "1995-04-29",
+    "homeTeam": "NYK",
+    "awayTeam": "CLE",
+    "homeScore": 84,
+    "awayScore": 90,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1995-east-r1-nyk-cle",
+    "gameNumber": 3,
+    "date": "1995-05-01",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 81,
+    "awayScore": 83,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1995-east-r1-nyk-cle",
+    "gameNumber": 4,
+    "date": "1995-05-04",
+    "homeTeam": "CLE",
+    "awayTeam": "NYK",
+    "homeScore": 80,
+    "awayScore": 93,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1995-east-r1-orl-bos",
+    "gameNumber": 1,
+    "date": "1995-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 124,
+    "awayScore": 77,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-r1-orl-bos",
+    "gameNumber": 2,
+    "date": "1995-04-30",
+    "homeTeam": "ORL",
+    "awayTeam": "BOS",
+    "homeScore": 92,
+    "awayScore": 99,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1995-east-r1-orl-bos",
+    "gameNumber": 3,
+    "date": "1995-05-03",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 77,
+    "awayScore": 82,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-east-r1-orl-bos",
+    "gameNumber": 4,
+    "date": "1995-05-05",
+    "homeTeam": "BOS",
+    "awayTeam": "ORL",
+    "homeScore": 92,
+    "awayScore": 95,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1995-west-r1-uta-hou",
+    "gameNumber": 1,
+    "date": "1995-04-27",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 102,
+    "awayScore": 100,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1995-west-r1-uta-hou",
+    "gameNumber": 2,
+    "date": "1995-04-29",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 126,
+    "awayScore": 140,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-r1-uta-hou",
+    "gameNumber": 3,
+    "date": "1995-05-03",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 82,
+    "awayScore": 95,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1995-west-r1-uta-hou",
+    "gameNumber": 4,
+    "date": "1995-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 123,
+    "awayScore": 106,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-r1-uta-hou",
+    "gameNumber": 5,
+    "date": "1995-05-07",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 91,
+    "awayScore": 95,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1995-west-r1-sea-lal",
+    "gameNumber": 1,
+    "date": "1995-04-27",
+    "homeTeam": "SEA",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 71,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1995-west-r1-sea-lal",
+    "gameNumber": 2,
+    "date": "1995-04-29",
+    "homeTeam": "SEA",
+    "awayTeam": "LAL",
+    "homeScore": 82,
+    "awayScore": 84,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1995-west-r1-sea-lal",
+    "gameNumber": 3,
+    "date": "1995-05-01",
+    "homeTeam": "LAL",
+    "awayTeam": "SEA",
+    "homeScore": 105,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1995-west-r1-sea-lal",
+    "gameNumber": 4,
+    "date": "1995-05-04",
+    "homeTeam": "LAL",
+    "awayTeam": "SEA",
+    "homeScore": 114,
+    "awayScore": 110,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1995-west-r1-pho-por",
+    "gameNumber": 1,
+    "date": "1995-04-28",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 129,
+    "awayScore": 102,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1995-west-r1-pho-por",
+    "gameNumber": 2,
+    "date": "1995-04-30",
+    "homeTeam": "PHO",
+    "awayTeam": "POR",
+    "homeScore": 103,
+    "awayScore": 94,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1995-west-r1-pho-por",
+    "gameNumber": 3,
+    "date": "1995-05-02",
+    "homeTeam": "POR",
+    "awayTeam": "PHO",
+    "homeScore": 109,
+    "awayScore": 117,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1995-west-r1-sas-den",
+    "gameNumber": 1,
+    "date": "1995-04-28",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 104,
+    "awayScore": 88,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-r1-sas-den",
+    "gameNumber": 2,
+    "date": "1995-04-30",
+    "homeTeam": "SAS",
+    "awayTeam": "DEN",
+    "homeScore": 122,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1995-west-r1-sas-den",
+    "gameNumber": 3,
+    "date": "1995-05-02",
+    "homeTeam": "DEN",
+    "awayTeam": "SAS",
+    "homeScore": 95,
+    "awayScore": 99,
+    "winner": "SAS"
+  }
+]

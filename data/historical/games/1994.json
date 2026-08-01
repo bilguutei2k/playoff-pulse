@@ -1,0 +1,772 @@
+[
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 1,
+    "date": "1994-06-08",
+    "homeTeam": "HOU",
+    "awayTeam": "NYK",
+    "homeScore": 85,
+    "awayScore": 78,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 2,
+    "date": "1994-06-10",
+    "homeTeam": "HOU",
+    "awayTeam": "NYK",
+    "homeScore": 83,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 3,
+    "date": "1994-06-12",
+    "homeTeam": "NYK",
+    "awayTeam": "HOU",
+    "homeScore": 89,
+    "awayScore": 93,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 4,
+    "date": "1994-06-15",
+    "homeTeam": "NYK",
+    "awayTeam": "HOU",
+    "homeScore": 91,
+    "awayScore": 82,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 5,
+    "date": "1994-06-17",
+    "homeTeam": "NYK",
+    "awayTeam": "HOU",
+    "homeScore": 91,
+    "awayScore": 84,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 6,
+    "date": "1994-06-19",
+    "homeTeam": "HOU",
+    "awayTeam": "NYK",
+    "homeScore": 86,
+    "awayScore": 84,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-finals-finals-nyk-hou",
+    "gameNumber": 7,
+    "date": "1994-06-22",
+    "homeTeam": "HOU",
+    "awayTeam": "NYK",
+    "homeScore": 90,
+    "awayScore": 84,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 1,
+    "date": "1994-05-24",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 100,
+    "awayScore": 89,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 2,
+    "date": "1994-05-26",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 89,
+    "awayScore": 78,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 3,
+    "date": "1994-05-28",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 88,
+    "awayScore": 68,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 4,
+    "date": "1994-05-30",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 83,
+    "awayScore": 77,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 5,
+    "date": "1994-06-01",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 86,
+    "awayScore": 93,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 6,
+    "date": "1994-06-03",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 91,
+    "awayScore": 98,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-cf-nyk-ind",
+    "gameNumber": 7,
+    "date": "1994-06-05",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 94,
+    "awayScore": 90,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-west-cf-hou-uta",
+    "gameNumber": 1,
+    "date": "1994-05-23",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 100,
+    "awayScore": 88,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-cf-hou-uta",
+    "gameNumber": 2,
+    "date": "1994-05-25",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 104,
+    "awayScore": 99,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-cf-hou-uta",
+    "gameNumber": 3,
+    "date": "1994-05-27",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 95,
+    "awayScore": 86,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-west-cf-hou-uta",
+    "gameNumber": 4,
+    "date": "1994-05-29",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 78,
+    "awayScore": 80,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-cf-hou-uta",
+    "gameNumber": 5,
+    "date": "1994-05-31",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 94,
+    "awayScore": 83,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-east-csf-atl-ind",
+    "gameNumber": 1,
+    "date": "1994-05-10",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 85,
+    "awayScore": 96,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-csf-atl-ind",
+    "gameNumber": 2,
+    "date": "1994-05-12",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 92,
+    "awayScore": 69,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1994-east-csf-atl-ind",
+    "gameNumber": 3,
+    "date": "1994-05-14",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 101,
+    "awayScore": 81,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-csf-atl-ind",
+    "gameNumber": 4,
+    "date": "1994-05-15",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 102,
+    "awayScore": 86,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-csf-atl-ind",
+    "gameNumber": 5,
+    "date": "1994-05-17",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 88,
+    "awayScore": 76,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1994-east-csf-atl-ind",
+    "gameNumber": 6,
+    "date": "1994-05-19",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 98,
+    "awayScore": 79,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 1,
+    "date": "1994-05-08",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 90,
+    "awayScore": 86,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 2,
+    "date": "1994-05-11",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 3,
+    "date": "1994-05-13",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 104,
+    "awayScore": 102,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 4,
+    "date": "1994-05-15",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 95,
+    "awayScore": 83,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 5,
+    "date": "1994-05-18",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 87,
+    "awayScore": 86,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 6,
+    "date": "1994-05-20",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 93,
+    "awayScore": 79,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1994-east-csf-nyk-chi",
+    "gameNumber": 7,
+    "date": "1994-05-22",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 87,
+    "awayScore": 77,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 1,
+    "date": "1994-05-08",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 87,
+    "awayScore": 91,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 2,
+    "date": "1994-05-11",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 117,
+    "awayScore": 124,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 3,
+    "date": "1994-05-13",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 102,
+    "awayScore": 118,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 4,
+    "date": "1994-05-15",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 96,
+    "awayScore": 107,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 5,
+    "date": "1994-05-17",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 109,
+    "awayScore": 86,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 6,
+    "date": "1994-05-19",
+    "homeTeam": "PHO",
+    "awayTeam": "HOU",
+    "homeScore": 103,
+    "awayScore": 89,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1994-west-csf-hou-pho",
+    "gameNumber": 7,
+    "date": "1994-05-21",
+    "homeTeam": "HOU",
+    "awayTeam": "PHO",
+    "homeScore": 104,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 1,
+    "date": "1994-05-10",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 100,
+    "awayScore": 91,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 2,
+    "date": "1994-05-12",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 104,
+    "awayScore": 94,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 3,
+    "date": "1994-05-14",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 109,
+    "awayScore": 111,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 4,
+    "date": "1994-05-15",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 83,
+    "awayScore": 82,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 5,
+    "date": "1994-05-17",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 101,
+    "awayScore": 109,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 6,
+    "date": "1994-05-19",
+    "homeTeam": "DEN",
+    "awayTeam": "UTA",
+    "homeScore": 94,
+    "awayScore": 91,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1994-west-csf-uta-den",
+    "gameNumber": 7,
+    "date": "1994-05-21",
+    "homeTeam": "UTA",
+    "awayTeam": "DEN",
+    "homeScore": 91,
+    "awayScore": 81,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-east-r1-atl-mia",
+    "gameNumber": 1,
+    "date": "1994-04-28",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 88,
+    "awayScore": 93,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1994-east-r1-atl-mia",
+    "gameNumber": 2,
+    "date": "1994-04-30",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 104,
+    "awayScore": 86,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1994-east-r1-atl-mia",
+    "gameNumber": 3,
+    "date": "1994-05-03",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 90,
+    "awayScore": 86,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1994-east-r1-atl-mia",
+    "gameNumber": 4,
+    "date": "1994-05-05",
+    "homeTeam": "MIA",
+    "awayTeam": "ATL",
+    "homeScore": 89,
+    "awayScore": 103,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1994-east-r1-atl-mia",
+    "gameNumber": 5,
+    "date": "1994-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "MIA",
+    "homeScore": 102,
+    "awayScore": 91,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1994-east-r1-chi-cle",
+    "gameNumber": 1,
+    "date": "1994-04-29",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 96,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1994-east-r1-chi-cle",
+    "gameNumber": 2,
+    "date": "1994-05-01",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 105,
+    "awayScore": 96,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1994-east-r1-chi-cle",
+    "gameNumber": 3,
+    "date": "1994-05-03",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 92,
+    "awayScore": 95,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1994-east-r1-orl-ind",
+    "gameNumber": 1,
+    "date": "1994-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 88,
+    "awayScore": 89,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-r1-orl-ind",
+    "gameNumber": 2,
+    "date": "1994-04-30",
+    "homeTeam": "ORL",
+    "awayTeam": "IND",
+    "homeScore": 101,
+    "awayScore": 103,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-r1-orl-ind",
+    "gameNumber": 3,
+    "date": "1994-05-02",
+    "homeTeam": "IND",
+    "awayTeam": "ORL",
+    "homeScore": 99,
+    "awayScore": 86,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1994-east-r1-nyk-njn",
+    "gameNumber": 1,
+    "date": "1994-04-29",
+    "homeTeam": "NYK",
+    "awayTeam": "NJN",
+    "homeScore": 91,
+    "awayScore": 80,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-r1-nyk-njn",
+    "gameNumber": 2,
+    "date": "1994-05-01",
+    "homeTeam": "NYK",
+    "awayTeam": "NJN",
+    "homeScore": 90,
+    "awayScore": 81,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-east-r1-nyk-njn",
+    "gameNumber": 3,
+    "date": "1994-05-04",
+    "homeTeam": "NJN",
+    "awayTeam": "NYK",
+    "homeScore": 93,
+    "awayScore": 92,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "1994-east-r1-nyk-njn",
+    "gameNumber": 4,
+    "date": "1994-05-06",
+    "homeTeam": "NJN",
+    "awayTeam": "NYK",
+    "homeScore": 92,
+    "awayScore": 102,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1994-west-r1-sea-den",
+    "gameNumber": 1,
+    "date": "1994-04-28",
+    "homeTeam": "SEA",
+    "awayTeam": "DEN",
+    "homeScore": 106,
+    "awayScore": 82,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1994-west-r1-sea-den",
+    "gameNumber": 2,
+    "date": "1994-04-30",
+    "homeTeam": "SEA",
+    "awayTeam": "DEN",
+    "homeScore": 97,
+    "awayScore": 87,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1994-west-r1-sea-den",
+    "gameNumber": 3,
+    "date": "1994-05-02",
+    "homeTeam": "DEN",
+    "awayTeam": "SEA",
+    "homeScore": 110,
+    "awayScore": 93,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1994-west-r1-sea-den",
+    "gameNumber": 4,
+    "date": "1994-05-05",
+    "homeTeam": "DEN",
+    "awayTeam": "SEA",
+    "homeScore": 94,
+    "awayScore": 85,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1994-west-r1-sea-den",
+    "gameNumber": 5,
+    "date": "1994-05-07",
+    "homeTeam": "SEA",
+    "awayTeam": "DEN",
+    "homeScore": 94,
+    "awayScore": 98,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1994-west-r1-hou-por",
+    "gameNumber": 1,
+    "date": "1994-04-29",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 114,
+    "awayScore": 104,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-r1-hou-por",
+    "gameNumber": 2,
+    "date": "1994-05-01",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 115,
+    "awayScore": 104,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-r1-hou-por",
+    "gameNumber": 3,
+    "date": "1994-05-03",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 118,
+    "awayScore": 115,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1994-west-r1-hou-por",
+    "gameNumber": 4,
+    "date": "1994-05-06",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 89,
+    "awayScore": 92,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1994-west-r1-pho-gsw",
+    "gameNumber": 1,
+    "date": "1994-04-29",
+    "homeTeam": "PHO",
+    "awayTeam": "GSW",
+    "homeScore": 111,
+    "awayScore": 104,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1994-west-r1-pho-gsw",
+    "gameNumber": 2,
+    "date": "1994-05-01",
+    "homeTeam": "PHO",
+    "awayTeam": "GSW",
+    "homeScore": 117,
+    "awayScore": 111,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1994-west-r1-pho-gsw",
+    "gameNumber": 3,
+    "date": "1994-05-04",
+    "homeTeam": "GSW",
+    "awayTeam": "PHO",
+    "homeScore": 133,
+    "awayScore": 140,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1994-west-r1-sas-uta",
+    "gameNumber": 1,
+    "date": "1994-04-28",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 106,
+    "awayScore": 89,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1994-west-r1-sas-uta",
+    "gameNumber": 2,
+    "date": "1994-04-30",
+    "homeTeam": "SAS",
+    "awayTeam": "UTA",
+    "homeScore": 84,
+    "awayScore": 96,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-west-r1-sas-uta",
+    "gameNumber": 3,
+    "date": "1994-05-03",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 72,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1994-west-r1-sas-uta",
+    "gameNumber": 4,
+    "date": "1994-05-05",
+    "homeTeam": "UTA",
+    "awayTeam": "SAS",
+    "homeScore": 95,
+    "awayScore": 90,
+    "winner": "UTA"
+  }
+]

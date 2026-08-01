@@ -1,0 +1,1778 @@
+[
+  {
+    "teamId": "ATL",
+    "teamName": "Atlanta Hawks",
+    "season": 1996,
+    "conference": "East",
+    "seed": 6,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1544.8,
+    "netRating": 1.39,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Grant Long",
+        "bpm": 0.7,
+        "mpg": 36.68292682926829,
+        "gamesPlayed": 82,
+        "impact": 0.7,
+        "projectedMinutes": 34.254925,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Mookie Blaylock",
+        "bpm": 5.3,
+        "mpg": 35.71604938271605,
+        "gamesPlayed": 81,
+        "impact": 5.3,
+        "projectedMinutes": 33.352044,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Steve Smith",
+        "bpm": 1,
+        "mpg": 35.7,
+        "gamesPlayed": 80,
+        "impact": 1,
+        "projectedMinutes": 33.337057,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Christian Laettner",
+        "bpm": -0.3,
+        "mpg": 32.56666666666667,
+        "gamesPlayed": 30,
+        "impact": -0.3,
+        "projectedMinutes": 30.411115,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Stacey Augmon",
+        "bpm": 0.4,
+        "mpg": 29.792207792207794,
+        "gamesPlayed": 77,
+        "impact": 0.4,
+        "projectedMinutes": 27.820295,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Ken Norman",
+        "bpm": -1,
+        "mpg": 22.647058823529413,
+        "gamesPlayed": 34,
+        "impact": -1,
+        "projectedMinutes": 21.148075,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Craig Ehlo",
+        "bpm": 0.2,
+        "mpg": 22.253164556962027,
+        "gamesPlayed": 79,
+        "impact": 0.2,
+        "projectedMinutes": 20.780252,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Alan Henderson",
+        "bpm": -4.1,
+        "mpg": 17.924050632911392,
+        "gamesPlayed": 79,
+        "impact": -4.1,
+        "projectedMinutes": 16.737678,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Sean Rooks",
+        "bpm": -4.9,
+        "mpg": 13.4375,
+        "gamesPlayed": 16,
+        "impact": -4.9,
+        "projectedMinutes": 12.548087,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Reggie Jordan",
+        "bpm": 1.4,
+        "mpg": 10.291666666666666,
+        "gamesPlayed": 24,
+        "impact": 1.4,
+        "projectedMinutes": 9.610473,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 1.28,
+    "ortg": 110.17,
+    "drtg": 108.78,
+    "wins": 46,
+    "losses": 36,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "CHI",
+    "teamName": "Chicago Bulls",
+    "season": 1996,
+    "conference": "East",
+    "seed": 1,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1913,
+    "netRating": 13.49,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Michael Jordan",
+        "bpm": 10.5,
+        "mpg": 37.68292682926829,
+        "gamesPlayed": 82,
+        "impact": 10.5,
+        "projectedMinutes": 37.056617,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Scottie Pippen",
+        "bpm": 6.3,
+        "mpg": 36.688311688311686,
+        "gamesPlayed": 77,
+        "impact": 6.3,
+        "projectedMinutes": 36.078533,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Dennis Rodman",
+        "bpm": 0,
+        "mpg": 32.625,
+        "gamesPlayed": 64,
+        "impact": 0,
+        "projectedMinutes": 32.082756,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Luc Longley",
+        "bpm": -1.6,
+        "mpg": 26.467741935483872,
+        "gamesPlayed": 62,
+        "impact": -1.6,
+        "projectedMinutes": 26.027834,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Toni Kukoč",
+        "bpm": 5.4,
+        "mpg": 25.962962962962962,
+        "gamesPlayed": 81,
+        "impact": 5.4,
+        "projectedMinutes": 25.531445,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Ron Harper",
+        "bpm": 2.6,
+        "mpg": 23.575,
+        "gamesPlayed": 80,
+        "impact": 2.6,
+        "projectedMinutes": 23.183171,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Steve Kerr",
+        "bpm": 3.4,
+        "mpg": 23.402439024390244,
+        "gamesPlayed": 82,
+        "impact": 3.4,
+        "projectedMinutes": 23.013478,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Bill Wennington",
+        "bpm": -3.2,
+        "mpg": 15,
+        "gamesPlayed": 71,
+        "impact": -3.2,
+        "projectedMinutes": 14.750692,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Dickey Simpkins",
+        "bpm": -3.7,
+        "mpg": 11.416666666666666,
+        "gamesPlayed": 60,
+        "impact": -3.7,
+        "projectedMinutes": 11.226916,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "John Salley",
+        "bpm": -2.8,
+        "mpg": 11.235294117647058,
+        "gamesPlayed": 17,
+        "impact": -2.8,
+        "projectedMinutes": 11.048558,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 11.8,
+    "ortg": 116,
+    "drtg": 102.51,
+    "wins": 72,
+    "losses": 10,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "CLE",
+    "teamName": "Cleveland Cavaliers",
+    "season": 1996,
+    "conference": "East",
+    "seed": 4,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1587.15,
+    "netRating": 3.1,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Chris Mills",
+        "bpm": -0.1,
+        "mpg": 38.25,
+        "gamesPlayed": 80,
+        "impact": -0.1,
+        "projectedMinutes": 35.260466,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Bobby Phills",
+        "bpm": 1.7,
+        "mpg": 35.138888888888886,
+        "gamesPlayed": 72,
+        "impact": 1.7,
+        "projectedMinutes": 32.392512,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Terrell Brandon",
+        "bpm": 7.5,
+        "mpg": 34.266666666666666,
+        "gamesPlayed": 75,
+        "impact": 7.5,
+        "projectedMinutes": 31.588461,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Danny Ferry",
+        "bpm": -0.1,
+        "mpg": 32.68292682926829,
+        "gamesPlayed": 82,
+        "impact": -0.1,
+        "projectedMinutes": 30.128503,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Michael Cage",
+        "bpm": -0.2,
+        "mpg": 32.08536585365854,
+        "gamesPlayed": 82,
+        "impact": -0.2,
+        "projectedMinutes": 29.577646,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Dan Majerle",
+        "bpm": 1.9,
+        "mpg": 28.865853658536587,
+        "gamesPlayed": 82,
+        "impact": 1.9,
+        "projectedMinutes": 26.609764,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Tyrone Hill",
+        "bpm": -4.3,
+        "mpg": 21.113636363636363,
+        "gamesPlayed": 44,
+        "impact": -4.3,
+        "projectedMinutes": 19.463442,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Bob Sura",
+        "bpm": 0.1,
+        "mpg": 14.556962025316455,
+        "gamesPlayed": 79,
+        "impact": 0.1,
+        "projectedMinutes": 13.419223,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "John Amaechi",
+        "bpm": -9.1,
+        "mpg": 12.75,
+        "gamesPlayed": 28,
+        "impact": -9.1,
+        "projectedMinutes": 11.753489,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "John Crotty",
+        "bpm": -1.3,
+        "mpg": 10.637931034482758,
+        "gamesPlayed": 58,
+        "impact": -1.3,
+        "projectedMinutes": 9.806494,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 2.49,
+    "ortg": 110.82,
+    "drtg": 107.72,
+    "wins": 47,
+    "losses": 35,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "DET",
+    "teamName": "Detroit Pistons",
+    "season": 1996,
+    "conference": "East",
+    "seed": 7,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1585.75,
+    "netRating": 2.98,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Grant Hill",
+        "bpm": 4.8,
+        "mpg": 40.75,
+        "gamesPlayed": 80,
+        "impact": 4.8,
+        "projectedMinutes": 38.033841,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Allan Houston",
+        "bpm": 1,
+        "mpg": 37.46341463414634,
+        "gamesPlayed": 82,
+        "impact": 1,
+        "projectedMinutes": 34.96632,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Otis Thorpe",
+        "bpm": -0.4,
+        "mpg": 34.646341463414636,
+        "gamesPlayed": 82,
+        "impact": -0.4,
+        "projectedMinutes": 32.337017,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Joe Dumars",
+        "bpm": 1.1,
+        "mpg": 32.73134328358209,
+        "gamesPlayed": 67,
+        "impact": 1.1,
+        "projectedMinutes": 30.549661,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Lindsey Hunter",
+        "bpm": 0.3,
+        "mpg": 26.725,
+        "gamesPlayed": 80,
+        "impact": 0.3,
+        "projectedMinutes": 24.943666,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Terry Mills",
+        "bpm": 0,
+        "mpg": 20.195121951219512,
+        "gamesPlayed": 82,
+        "impact": 0,
+        "projectedMinutes": 18.849032,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Michael Curry",
+        "bpm": -1.5,
+        "mpg": 18.26829268292683,
+        "gamesPlayed": 41,
+        "impact": -1.5,
+        "projectedMinutes": 17.050634,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Theo Ratliff",
+        "bpm": 0.6,
+        "mpg": 17.4,
+        "gamesPlayed": 75,
+        "impact": 0.6,
+        "projectedMinutes": 16.240217,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Mark West",
+        "bpm": -4.8,
+        "mpg": 14.51063829787234,
+        "gamesPlayed": 47,
+        "impact": -4.8,
+        "projectedMinutes": 13.543443,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Don Reid",
+        "bpm": -0.6,
+        "mpg": 14.44927536231884,
+        "gamesPlayed": 69,
+        "impact": -0.6,
+        "projectedMinutes": 13.48617,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 2.45,
+    "ortg": 108.88,
+    "drtg": 105.9,
+    "wins": 46,
+    "losses": 36,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "HOU",
+    "teamName": "Houston Rockets",
+    "season": 1996,
+    "conference": "West",
+    "seed": 5,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1557.05,
+    "netRating": 1.78,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Hakeem Olajuwon",
+        "bpm": 4.9,
+        "mpg": 38.84722222222222,
+        "gamesPlayed": 72,
+        "impact": 4.9,
+        "projectedMinutes": 31.962853,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Clyde Drexler",
+        "bpm": 4,
+        "mpg": 38.40384615384615,
+        "gamesPlayed": 52,
+        "impact": 4,
+        "projectedMinutes": 31.59805,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Robert Horry",
+        "bpm": 2.3,
+        "mpg": 37.098591549295776,
+        "gamesPlayed": 71,
+        "impact": 2.3,
+        "projectedMinutes": 30.524108,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Mario Elie",
+        "bpm": 1.3,
+        "mpg": 30.77777777777778,
+        "gamesPlayed": 45,
+        "impact": 1.3,
+        "projectedMinutes": 25.323447,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Sam Mack",
+        "bpm": -1.6,
+        "mpg": 28,
+        "gamesPlayed": 31,
+        "impact": -1.6,
+        "projectedMinutes": 23.037937,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Sam Cassell",
+        "bpm": 0.3,
+        "mpg": 27.57377049180328,
+        "gamesPlayed": 61,
+        "impact": 0.3,
+        "projectedMinutes": 22.687243,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Chucky Brown",
+        "bpm": -1.6,
+        "mpg": 24.621951219512194,
+        "gamesPlayed": 82,
+        "impact": -1.6,
+        "projectedMinutes": 20.258535,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Kenny Smith",
+        "bpm": -1.6,
+        "mpg": 23.779411764705884,
+        "gamesPlayed": 68,
+        "impact": -1.6,
+        "projectedMinutes": 19.565307,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Mark Bryant",
+        "bpm": -3.7,
+        "mpg": 22.35211267605634,
+        "gamesPlayed": 71,
+        "impact": -3.7,
+        "projectedMinutes": 18.390949,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Eldridge Recasner",
+        "bpm": -0.7,
+        "mpg": 20.238095238095237,
+        "gamesPlayed": 63,
+        "impact": -0.7,
+        "projectedMinutes": 16.65157,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 1.63,
+    "ortg": 109.86,
+    "drtg": 108.08,
+    "wins": 48,
+    "losses": 34,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "IND",
+    "teamName": "Indiana Pacers",
+    "season": 1996,
+    "conference": "East",
+    "seed": 3,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1608.5,
+    "netRating": 3.58,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Reggie Miller",
+        "bpm": 4.7,
+        "mpg": 34.48684210526316,
+        "gamesPlayed": 76,
+        "impact": 4.7,
+        "projectedMinutes": 33.162526,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Dale Davis",
+        "bpm": 0.4,
+        "mpg": 33.55128205128205,
+        "gamesPlayed": 78,
+        "impact": 0.4,
+        "projectedMinutes": 32.262892,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Mark Jackson",
+        "bpm": 2.7,
+        "mpg": 32.629629629629626,
+        "gamesPlayed": 81,
+        "impact": 2.7,
+        "projectedMinutes": 31.376632,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Derrick McKey",
+        "bpm": 1.9,
+        "mpg": 32.53333333333333,
+        "gamesPlayed": 75,
+        "impact": 1.9,
+        "projectedMinutes": 31.284033,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Rik Smits",
+        "bpm": 0.5,
+        "mpg": 30.174603174603174,
+        "gamesPlayed": 63,
+        "impact": 0.5,
+        "projectedMinutes": 29.01588,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Antonio Davis",
+        "bpm": -1.1,
+        "mpg": 25.51219512195122,
+        "gamesPlayed": 82,
+        "impact": -1.1,
+        "projectedMinutes": 24.532511,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Ricky Pierce",
+        "bpm": -0.6,
+        "mpg": 18.473684210526315,
+        "gamesPlayed": 76,
+        "impact": -0.6,
+        "projectedMinutes": 17.764283,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Eddie Johnson",
+        "bpm": -1.2,
+        "mpg": 16.161290322580644,
+        "gamesPlayed": 62,
+        "impact": -1.2,
+        "projectedMinutes": 15.540687,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Haywoode Workman",
+        "bpm": -1,
+        "mpg": 15.116883116883116,
+        "gamesPlayed": 77,
+        "impact": -1,
+        "projectedMinutes": 14.536385,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Duane Ferrell",
+        "bpm": -2.1,
+        "mpg": 10.944444444444445,
+        "gamesPlayed": 54,
+        "impact": -2.1,
+        "projectedMinutes": 10.524171,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 3.1,
+    "ortg": 111.64,
+    "drtg": 108.06,
+    "wins": 52,
+    "losses": 30,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "season": 1996,
+    "conference": "West",
+    "seed": 4,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1647.35,
+    "netRating": 4.63,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Nick Van Exel",
+        "bpm": 0.6,
+        "mpg": 33.95945945945946,
+        "gamesPlayed": 74,
+        "impact": 0.6,
+        "projectedMinutes": 31.175734,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Cedric Ceballos",
+        "bpm": 2.6,
+        "mpg": 33.69230769230769,
+        "gamesPlayed": 78,
+        "impact": 2.6,
+        "projectedMinutes": 30.930481,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Elden Campbell",
+        "bpm": 1.7,
+        "mpg": 32.91463414634146,
+        "gamesPlayed": 82,
+        "impact": 1.7,
+        "projectedMinutes": 30.216555,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Vlade Divac",
+        "bpm": 1.4,
+        "mpg": 31.265822784810126,
+        "gamesPlayed": 79,
+        "impact": 1.4,
+        "projectedMinutes": 28.7029,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Eddie Jones",
+        "bpm": 3.3,
+        "mpg": 31.2,
+        "gamesPlayed": 70,
+        "impact": 3.3,
+        "projectedMinutes": 28.642473,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Magic Johnson",
+        "bpm": 5.2,
+        "mpg": 29.9375,
+        "gamesPlayed": 32,
+        "impact": 5.2,
+        "projectedMinutes": 27.483463,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Anthony Peeler",
+        "bpm": 0.1,
+        "mpg": 22.027397260273972,
+        "gamesPlayed": 73,
+        "impact": 0.1,
+        "projectedMinutes": 20.221767,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Sedale Threatt",
+        "bpm": -0.7,
+        "mpg": 20.573170731707318,
+        "gamesPlayed": 82,
+        "impact": -0.7,
+        "projectedMinutes": 18.886746,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "George Lynch",
+        "bpm": -2.1,
+        "mpg": 13.31578947368421,
+        "gamesPlayed": 76,
+        "impact": -2.1,
+        "projectedMinutes": 12.224267,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Corie Blount",
+        "bpm": -2.7,
+        "mpg": 12.543859649122806,
+        "gamesPlayed": 57,
+        "impact": -2.7,
+        "projectedMinutes": 11.515614,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 4.21,
+    "ortg": 112.06,
+    "drtg": 107.43,
+    "wins": 53,
+    "losses": 29,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "season": 1996,
+    "conference": "East",
+    "seed": 8,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1550.75,
+    "netRating": 1.47,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Alonzo Mourning",
+        "bpm": 4.2,
+        "mpg": 38.15714285714286,
+        "gamesPlayed": 70,
+        "impact": 4.2,
+        "projectedMinutes": 34.016547,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Tim Hardaway",
+        "bpm": 4,
+        "mpg": 37.392857142857146,
+        "gamesPlayed": 28,
+        "impact": 4,
+        "projectedMinutes": 33.335197,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Rex Chapman",
+        "bpm": 0.8,
+        "mpg": 33.30357142857143,
+        "gamesPlayed": 56,
+        "impact": 0.8,
+        "projectedMinutes": 29.689657,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Sasha Danilović",
+        "bpm": 0.4,
+        "mpg": 28.526315789473685,
+        "gamesPlayed": 19,
+        "impact": 0.4,
+        "projectedMinutes": 25.430802,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Walt Williams",
+        "bpm": 2.6,
+        "mpg": 28.142857142857142,
+        "gamesPlayed": 28,
+        "impact": 2.6,
+        "projectedMinutes": 25.088955,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Keith Askins",
+        "bpm": 1,
+        "mpg": 25.293333333333333,
+        "gamesPlayed": 75,
+        "impact": 1,
+        "projectedMinutes": 22.548645,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Chris Gatling",
+        "bpm": 3.4,
+        "mpg": 23.541666666666668,
+        "gamesPlayed": 24,
+        "impact": 3.4,
+        "projectedMinutes": 20.987059,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Kurt Thomas",
+        "bpm": -1.8,
+        "mpg": 22.364864864864863,
+        "gamesPlayed": 74,
+        "impact": -1.8,
+        "projectedMinutes": 19.937957,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Tony Smith",
+        "bpm": -0.9,
+        "mpg": 16.4,
+        "gamesPlayed": 25,
+        "impact": -0.9,
+        "projectedMinutes": 14.620365,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Tyrone Corbin",
+        "bpm": -1.7,
+        "mpg": 16.09090909090909,
+        "gamesPlayed": 22,
+        "impact": -1.7,
+        "projectedMinutes": 14.344815,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 1.45,
+    "ortg": 105.99,
+    "drtg": 104.52,
+    "wins": 42,
+    "losses": 40,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "NYK",
+    "teamName": "New York Knicks",
+    "season": 1996,
+    "conference": "East",
+    "seed": 5,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1578.4,
+    "netRating": 2.46,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Anthony Mason",
+        "bpm": 1.9,
+        "mpg": 42.15853658536585,
+        "gamesPlayed": 82,
+        "impact": 1.9,
+        "projectedMinutes": 37.788044,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Patrick Ewing",
+        "bpm": 1.6,
+        "mpg": 36.61842105263158,
+        "gamesPlayed": 76,
+        "impact": 1.6,
+        "projectedMinutes": 32.822261,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Derek Harper",
+        "bpm": 0.5,
+        "mpg": 35.28048780487805,
+        "gamesPlayed": 82,
+        "impact": 0.5,
+        "projectedMinutes": 31.623029,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Charles Oakley",
+        "bpm": 0.9,
+        "mpg": 33.490566037735846,
+        "gamesPlayed": 53,
+        "impact": 0.9,
+        "projectedMinutes": 30.018665,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "John Starks",
+        "bpm": 1,
+        "mpg": 30.753086419753085,
+        "gamesPlayed": 81,
+        "impact": 1,
+        "projectedMinutes": 27.564974,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Hubert Davis",
+        "bpm": 1.7,
+        "mpg": 23.95945945945946,
+        "gamesPlayed": 74,
+        "impact": 1.7,
+        "projectedMinutes": 21.475629,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "J.R. Reid",
+        "bpm": -1.9,
+        "mpg": 20.303030303030305,
+        "gamesPlayed": 33,
+        "impact": -1.9,
+        "projectedMinutes": 18.198255,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Willie Anderson",
+        "bpm": -2.4,
+        "mpg": 18.37037037037037,
+        "gamesPlayed": 27,
+        "impact": -2.4,
+        "projectedMinutes": 16.46595,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Brad Lohaus",
+        "bpm": 1.5,
+        "mpg": 14.130434782608695,
+        "gamesPlayed": 23,
+        "impact": 1.5,
+        "projectedMinutes": 12.66556,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Charlie Ward",
+        "bpm": 0,
+        "mpg": 12.693548387096774,
+        "gamesPlayed": 62,
+        "impact": 0,
+        "projectedMinutes": 11.377633,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 2.24,
+    "ortg": 106.75,
+    "drtg": 104.29,
+    "wins": 47,
+    "losses": 35,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "ORL",
+    "teamName": "Orlando Magic",
+    "season": 1996,
+    "conference": "East",
+    "seed": 2,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1688.65,
+    "netRating": 5.81,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Dennis Scott",
+        "bpm": 2.3,
+        "mpg": 37.08536585365854,
+        "gamesPlayed": 82,
+        "impact": 2.3,
+        "projectedMinutes": 33.02497,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Anfernee Hardaway",
+        "bpm": 7.2,
+        "mpg": 36.76829268292683,
+        "gamesPlayed": 82,
+        "impact": 7.2,
+        "projectedMinutes": 32.742612,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Horace Grant",
+        "bpm": 2.3,
+        "mpg": 36.285714285714285,
+        "gamesPlayed": 63,
+        "impact": 2.3,
+        "projectedMinutes": 32.31287,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Shaquille O'Neal",
+        "bpm": 3.7,
+        "mpg": 36.03703703703704,
+        "gamesPlayed": 54,
+        "impact": 3.7,
+        "projectedMinutes": 32.09142,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Nick Anderson",
+        "bpm": 2.9,
+        "mpg": 35.285714285714285,
+        "gamesPlayed": 77,
+        "impact": 2.9,
+        "projectedMinutes": 31.422358,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Brian Shaw",
+        "bpm": -3.1,
+        "mpg": 22.386666666666667,
+        "gamesPlayed": 75,
+        "impact": -3.1,
+        "projectedMinutes": 19.935599,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Jon Koncak",
+        "bpm": -3.5,
+        "mpg": 19.223880597014926,
+        "gamesPlayed": 67,
+        "impact": -3.5,
+        "projectedMinutes": 17.1191,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Joe Wolf",
+        "bpm": -4.8,
+        "mpg": 16.61904761904762,
+        "gamesPlayed": 63,
+        "impact": -4.8,
+        "projectedMinutes": 14.799464,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Donald Royal",
+        "bpm": -2.4,
+        "mpg": 15.046875,
+        "gamesPlayed": 64,
+        "impact": -2.4,
+        "projectedMinutes": 13.399425,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Jeff Turner",
+        "bpm": -8.2,
+        "mpg": 14.76923076923077,
+        "gamesPlayed": 13,
+        "impact": -8.2,
+        "projectedMinutes": 13.15218,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 5.39,
+    "ortg": 113.57,
+    "drtg": 107.76,
+    "wins": 60,
+    "losses": 22,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "PHO",
+    "teamName": "Phoenix Suns",
+    "season": 1996,
+    "conference": "West",
+    "seed": 7,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1509.8,
+    "netRating": 0.22,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Michael Finley",
+        "bpm": -0.2,
+        "mpg": 39.170731707317074,
+        "gamesPlayed": 82,
+        "impact": -0.2,
+        "projectedMinutes": 34.559639,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Charles Barkley",
+        "bpm": 5.7,
+        "mpg": 37.070422535211264,
+        "gamesPlayed": 71,
+        "impact": 5.7,
+        "projectedMinutes": 32.706574,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Kevin Johnson",
+        "bpm": 4.7,
+        "mpg": 35.839285714285715,
+        "gamesPlayed": 56,
+        "impact": 4.7,
+        "projectedMinutes": 31.620364,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Wesley Person",
+        "bpm": -1.2,
+        "mpg": 31.817073170731707,
+        "gamesPlayed": 82,
+        "impact": -1.2,
+        "projectedMinutes": 28.071637,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Hot Rod Williams",
+        "bpm": -1.6,
+        "mpg": 26.64516129032258,
+        "gamesPlayed": 62,
+        "impact": -1.6,
+        "projectedMinutes": 23.508551,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "A.C. Green",
+        "bpm": -1.3,
+        "mpg": 25.76829268292683,
+        "gamesPlayed": 82,
+        "impact": -1.3,
+        "projectedMinutes": 22.734906,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Danny Manning",
+        "bpm": -2.6,
+        "mpg": 24.727272727272727,
+        "gamesPlayed": 33,
+        "impact": -2.6,
+        "projectedMinutes": 21.816433,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Elliot Perry",
+        "bpm": -0.2,
+        "mpg": 20.59259259259259,
+        "gamesPlayed": 81,
+        "impact": -0.2,
+        "projectedMinutes": 18.168478,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Wayman Tisdale",
+        "bpm": -2.6,
+        "mpg": 18.285714285714285,
+        "gamesPlayed": 63,
+        "impact": -2.6,
+        "projectedMinutes": 16.13316,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Mario Bennett",
+        "bpm": -2.6,
+        "mpg": 12.105263157894736,
+        "gamesPlayed": 19,
+        "impact": -2.6,
+        "projectedMinutes": 10.680258,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 0.28,
+    "ortg": 110.74,
+    "drtg": 110.52,
+    "wins": 41,
+    "losses": 41,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "POR",
+    "teamName": "Portland Trail Blazers",
+    "season": 1996,
+    "conference": "West",
+    "seed": 6,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1577.35,
+    "netRating": 2.47,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Clifford Robinson",
+        "bpm": 2.1,
+        "mpg": 38.205128205128204,
+        "gamesPlayed": 78,
+        "impact": 2.1,
+        "projectedMinutes": 34.903701,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Rod Strickland",
+        "bpm": 3.1,
+        "mpg": 37.701492537313435,
+        "gamesPlayed": 67,
+        "impact": 3.1,
+        "projectedMinutes": 34.443586,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Harvey Grant",
+        "bpm": -0.9,
+        "mpg": 31.5,
+        "gamesPlayed": 76,
+        "impact": -0.9,
+        "projectedMinutes": 28.777985,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Aaron McKie",
+        "bpm": 0.4,
+        "mpg": 27.88888888888889,
+        "gamesPlayed": 81,
+        "impact": 0.4,
+        "projectedMinutes": 25.478921,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Chris Dudley",
+        "bpm": -1.3,
+        "mpg": 24.05,
+        "gamesPlayed": 80,
+        "impact": -1.3,
+        "projectedMinutes": 21.971763,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Buck Williams",
+        "bpm": -1.4,
+        "mpg": 23.885714285714286,
+        "gamesPlayed": 70,
+        "impact": -1.4,
+        "projectedMinutes": 21.821674,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Arvydas Sabonis",
+        "bpm": 6.7,
+        "mpg": 23.767123287671232,
+        "gamesPlayed": 73,
+        "impact": 6.7,
+        "projectedMinutes": 21.71333,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "James Robinson",
+        "bpm": -1.4,
+        "mpg": 21.407894736842106,
+        "gamesPlayed": 76,
+        "impact": -1.4,
+        "projectedMinutes": 19.55797,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Gary Trent",
+        "bpm": -2.9,
+        "mpg": 17.666666666666668,
+        "gamesPlayed": 69,
+        "impact": -2.9,
+        "projectedMinutes": 16.140034,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Rumeal Robinson",
+        "bpm": -1.1,
+        "mpg": 16.627906976744185,
+        "gamesPlayed": 43,
+        "impact": -1.1,
+        "projectedMinutes": 15.191036,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 2.21,
+    "ortg": 106.65,
+    "drtg": 104.18,
+    "wins": 44,
+    "losses": 38,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "SAC",
+    "teamName": "Sacramento Kings",
+    "season": 1996,
+    "conference": "West",
+    "seed": 8,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1408.3,
+    "netRating": -2.88,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Mitch Richmond",
+        "bpm": 3.5,
+        "mpg": 36.370370370370374,
+        "gamesPlayed": 81,
+        "impact": 3.5,
+        "projectedMinutes": 36.344922,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Tyus Edney",
+        "bpm": -1.8,
+        "mpg": 31.0125,
+        "gamesPlayed": 80,
+        "impact": -1.8,
+        "projectedMinutes": 30.9908,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Brian Grant",
+        "bpm": -0.9,
+        "mpg": 30.743589743589745,
+        "gamesPlayed": 78,
+        "impact": -0.9,
+        "projectedMinutes": 30.722078,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Olden Polynice",
+        "bpm": -1.7,
+        "mpg": 30.135802469135804,
+        "gamesPlayed": 81,
+        "impact": -1.7,
+        "projectedMinutes": 30.114716,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Billy Owens",
+        "bpm": -0.9,
+        "mpg": 27,
+        "gamesPlayed": 22,
+        "impact": -0.9,
+        "projectedMinutes": 26.981108,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Michael Smith",
+        "bpm": 0.8,
+        "mpg": 21.29230769230769,
+        "gamesPlayed": 65,
+        "impact": 0.8,
+        "projectedMinutes": 21.277409,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Šarūnas Marčiulionis",
+        "bpm": 1.3,
+        "mpg": 19.60377358490566,
+        "gamesPlayed": 53,
+        "impact": 1.3,
+        "projectedMinutes": 19.590057,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Lionel Simmons",
+        "bpm": -0.3,
+        "mpg": 15,
+        "gamesPlayed": 54,
+        "impact": -0.3,
+        "projectedMinutes": 14.989504,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Bobby Hurley",
+        "bpm": -5.9,
+        "mpg": 14.708333333333334,
+        "gamesPlayed": 72,
+        "impact": -5.9,
+        "projectedMinutes": 14.698042,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Duane Causwell",
+        "bpm": -3.2,
+        "mpg": 14.301369863013699,
+        "gamesPlayed": 73,
+        "impact": -3.2,
+        "projectedMinutes": 14.291363,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": -2.62,
+    "ortg": 106.92,
+    "drtg": 109.8,
+    "wins": 39,
+    "losses": 43,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "SAS",
+    "teamName": "San Antonio Spurs",
+    "season": 1996,
+    "conference": "West",
+    "seed": 2,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1708.95,
+    "netRating": 6.76,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Sean Elliott",
+        "bpm": 1.7,
+        "mpg": 37.675324675324674,
+        "gamesPlayed": 77,
+        "impact": 1.7,
+        "projectedMinutes": 36.192583,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Avery Johnson",
+        "bpm": 1.7,
+        "mpg": 37.609756097560975,
+        "gamesPlayed": 82,
+        "impact": 1.7,
+        "projectedMinutes": 36.129595,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "David Robinson",
+        "bpm": 8.9,
+        "mpg": 36.81707317073171,
+        "gamesPlayed": 82,
+        "impact": 8.9,
+        "projectedMinutes": 35.368109,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Vinny Del Negro",
+        "bpm": 1.1,
+        "mpg": 33.73170731707317,
+        "gamesPlayed": 82,
+        "impact": 1.1,
+        "projectedMinutes": 32.40417,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Chuck Person",
+        "bpm": 1.5,
+        "mpg": 26.6375,
+        "gamesPlayed": 80,
+        "impact": 1.5,
+        "projectedMinutes": 25.58916,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Charles Smith",
+        "bpm": -1.9,
+        "mpg": 25.8125,
+        "gamesPlayed": 32,
+        "impact": -1.9,
+        "projectedMinutes": 24.796629,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Will Perdue",
+        "bpm": -1.7,
+        "mpg": 17.45,
+        "gamesPlayed": 80,
+        "impact": -1.7,
+        "projectedMinutes": 16.763242,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Doc Rivers",
+        "bpm": 0.2,
+        "mpg": 15.833333333333334,
+        "gamesPlayed": 78,
+        "impact": 0.2,
+        "projectedMinutes": 15.2102,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Cory Alexander",
+        "bpm": -4.3,
+        "mpg": 9.333333333333334,
+        "gamesPlayed": 60,
+        "impact": -4.3,
+        "projectedMinutes": 8.966013,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Carl Herrera",
+        "bpm": -7.2,
+        "mpg": 8.931818181818182,
+        "gamesPlayed": 44,
+        "impact": -7.2,
+        "projectedMinutes": 8.5803,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 5.97,
+    "ortg": 110.86,
+    "drtg": 104.1,
+    "wins": 59,
+    "losses": 23,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "SEA",
+    "teamName": "Seattle SuperSonics",
+    "season": 1996,
+    "conference": "West",
+    "seed": 1,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1758.65,
+    "netRating": 8.17,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Gary Payton",
+        "bpm": 4.6,
+        "mpg": 39.03703703703704,
+        "gamesPlayed": 81,
+        "impact": 4.6,
+        "projectedMinutes": 35.751749,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Detlef Schrempf",
+        "bpm": 2.5,
+        "mpg": 34.92063492063492,
+        "gamesPlayed": 63,
+        "impact": 2.5,
+        "projectedMinutes": 31.981776,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Hersey Hawkins",
+        "bpm": 2.8,
+        "mpg": 34.426829268292686,
+        "gamesPlayed": 82,
+        "impact": 2.8,
+        "projectedMinutes": 31.529528,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Shawn Kemp",
+        "bpm": 2.8,
+        "mpg": 33.30379746835443,
+        "gamesPlayed": 79,
+        "impact": 2.8,
+        "projectedMinutes": 30.501008,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Sam Perkins",
+        "bpm": 2,
+        "mpg": 26.451219512195124,
+        "gamesPlayed": 82,
+        "impact": 2,
+        "projectedMinutes": 24.225131,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Vincent Askew",
+        "bpm": -0.1,
+        "mpg": 25,
+        "gamesPlayed": 69,
+        "impact": -0.1,
+        "projectedMinutes": 22.896044,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Nate McMillan",
+        "bpm": 3.7,
+        "mpg": 22.927272727272726,
+        "gamesPlayed": 55,
+        "impact": 3.7,
+        "projectedMinutes": 20.997754,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Ervin Johnson",
+        "bpm": -1.1,
+        "mpg": 18.753086419753085,
+        "gamesPlayed": 81,
+        "impact": -1.1,
+        "projectedMinutes": 17.17486,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Frank Brickowski",
+        "bpm": -3.8,
+        "mpg": 15.65079365079365,
+        "gamesPlayed": 63,
+        "impact": -3.8,
+        "projectedMinutes": 14.33365,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "David Wingate",
+        "bpm": -3.8,
+        "mpg": 11.583333333333334,
+        "gamesPlayed": 60,
+        "impact": -3.8,
+        "projectedMinutes": 10.6085,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 7.39,
+    "ortg": 111.19,
+    "drtg": 103.02,
+    "wins": 64,
+    "losses": 18,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  },
+  {
+    "teamId": "UTA",
+    "teamName": "Utah Jazz",
+    "season": 1996,
+    "conference": "West",
+    "seed": 3,
+    "snapshot_as_of": "1996-04-21",
+    "eloRating": 1718.4,
+    "netRating": 7.36,
+    "manualAdjustment": 0,
+    "players": [
+      {
+        "name": "Karl Malone",
+        "bpm": 7,
+        "mpg": 37.96341463414634,
+        "gamesPlayed": 82,
+        "impact": 7,
+        "projectedMinutes": 38.439056,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "John Stockton",
+        "bpm": 6.8,
+        "mpg": 35.548780487804876,
+        "gamesPlayed": 82,
+        "impact": 6.8,
+        "projectedMinutes": 35.994169,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Jeff Hornacek",
+        "bpm": 4.4,
+        "mpg": 31.5609756097561,
+        "gamesPlayed": 82,
+        "impact": 4.4,
+        "projectedMinutes": 31.956402,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "David Benoit",
+        "bpm": -0.2,
+        "mpg": 24.209876543209877,
+        "gamesPlayed": 81,
+        "impact": -0.2,
+        "projectedMinutes": 24.513201,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Chris Morris",
+        "bpm": 0.8,
+        "mpg": 21.575757575757574,
+        "gamesPlayed": 66,
+        "impact": 0.8,
+        "projectedMinutes": 21.846079,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Adam Keefe",
+        "bpm": -0.6,
+        "mpg": 20.829268292682926,
+        "gamesPlayed": 82,
+        "impact": -0.6,
+        "projectedMinutes": 21.090237,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Antoine Carr",
+        "bpm": -3.5,
+        "mpg": 19.15,
+        "gamesPlayed": 80,
+        "impact": -3.5,
+        "projectedMinutes": 19.389929,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Felton Spencer",
+        "bpm": -4.5,
+        "mpg": 17.845070422535212,
+        "gamesPlayed": 71,
+        "impact": -4.5,
+        "projectedMinutes": 18.06865,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Howard Eisley",
+        "bpm": -3.4,
+        "mpg": 14.784615384615385,
+        "gamesPlayed": 65,
+        "impact": -3.4,
+        "projectedMinutes": 14.969851,
+        "availabilityStatus": "unknown_assumed_available"
+      },
+      {
+        "name": "Jamie Watson",
+        "bpm": -2.9,
+        "mpg": 13.5625,
+        "gamesPlayed": 16,
+        "impact": -2.9,
+        "projectedMinutes": 13.732424,
+        "availabilityStatus": "unknown_assumed_available"
+      }
+    ],
+    "srs": 6.24,
+    "ortg": 114,
+    "drtg": 106.64,
+    "wins": 55,
+    "losses": 27,
+    "ratingSource": "srs_point_proxy",
+    "playerImpactSource": "bpm_proxy",
+    "rotationSource": "normalized_regular_season_mpg"
+  }
+]

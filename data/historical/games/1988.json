@@ -1,0 +1,802 @@
+[
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 1,
+    "date": "1988-06-07",
+    "homeTeam": "LAL",
+    "awayTeam": "DET",
+    "homeScore": 93,
+    "awayScore": 105,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 2,
+    "date": "1988-06-09",
+    "homeTeam": "LAL",
+    "awayTeam": "DET",
+    "homeScore": 108,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 3,
+    "date": "1988-06-12",
+    "homeTeam": "DET",
+    "awayTeam": "LAL",
+    "homeScore": 86,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 4,
+    "date": "1988-06-14",
+    "homeTeam": "DET",
+    "awayTeam": "LAL",
+    "homeScore": 111,
+    "awayScore": 86,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 5,
+    "date": "1988-06-16",
+    "homeTeam": "DET",
+    "awayTeam": "LAL",
+    "homeScore": 104,
+    "awayScore": 94,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 6,
+    "date": "1988-06-19",
+    "homeTeam": "LAL",
+    "awayTeam": "DET",
+    "homeScore": 103,
+    "awayScore": 102,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-finals-finals-lal-det",
+    "gameNumber": 7,
+    "date": "1988-06-21",
+    "homeTeam": "LAL",
+    "awayTeam": "DET",
+    "homeScore": 108,
+    "awayScore": 105,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-east-cf-bos-det",
+    "gameNumber": 1,
+    "date": "1988-05-25",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 96,
+    "awayScore": 104,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-cf-bos-det",
+    "gameNumber": 2,
+    "date": "1988-05-26",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 119,
+    "awayScore": 115,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-cf-bos-det",
+    "gameNumber": 3,
+    "date": "1988-05-28",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 98,
+    "awayScore": 94,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-cf-bos-det",
+    "gameNumber": 4,
+    "date": "1988-05-30",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 78,
+    "awayScore": 79,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-cf-bos-det",
+    "gameNumber": 5,
+    "date": "1988-06-01",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 96,
+    "awayScore": 102,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-cf-bos-det",
+    "gameNumber": 6,
+    "date": "1988-06-03",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 95,
+    "awayScore": 90,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 1,
+    "date": "1988-05-23",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 113,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 2,
+    "date": "1988-05-25",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 123,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 3,
+    "date": "1988-05-27",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 106,
+    "awayScore": 94,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 4,
+    "date": "1988-05-29",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 118,
+    "awayScore": 104,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 5,
+    "date": "1988-05-31",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 119,
+    "awayScore": 102,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 6,
+    "date": "1988-06-02",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 105,
+    "awayScore": 103,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-cf-lal-dal",
+    "gameNumber": 7,
+    "date": "1988-06-04",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 117,
+    "awayScore": 102,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 1,
+    "date": "1988-05-11",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 110,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 2,
+    "date": "1988-05-13",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 108,
+    "awayScore": 97,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 3,
+    "date": "1988-05-15",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 110,
+    "awayScore": 92,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 4,
+    "date": "1988-05-16",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 118,
+    "awayScore": 109,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 5,
+    "date": "1988-05-18",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 104,
+    "awayScore": 112,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 6,
+    "date": "1988-05-20",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 100,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-csf-bos-atl",
+    "gameNumber": 7,
+    "date": "1988-05-22",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 118,
+    "awayScore": 116,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-csf-det-chi",
+    "gameNumber": 1,
+    "date": "1988-05-10",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 93,
+    "awayScore": 82,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-csf-det-chi",
+    "gameNumber": 2,
+    "date": "1988-05-12",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 95,
+    "awayScore": 105,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1988-east-csf-det-chi",
+    "gameNumber": 3,
+    "date": "1988-05-14",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 79,
+    "awayScore": 101,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-csf-det-chi",
+    "gameNumber": 4,
+    "date": "1988-05-15",
+    "homeTeam": "CHI",
+    "awayTeam": "DET",
+    "homeScore": 77,
+    "awayScore": 96,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-csf-det-chi",
+    "gameNumber": 5,
+    "date": "1988-05-18",
+    "homeTeam": "DET",
+    "awayTeam": "CHI",
+    "homeScore": 102,
+    "awayScore": 95,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-west-csf-den-dal",
+    "gameNumber": 1,
+    "date": "1988-05-10",
+    "homeTeam": "DEN",
+    "awayTeam": "DAL",
+    "homeScore": 126,
+    "awayScore": 115,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1988-west-csf-den-dal",
+    "gameNumber": 2,
+    "date": "1988-05-12",
+    "homeTeam": "DEN",
+    "awayTeam": "DAL",
+    "homeScore": 108,
+    "awayScore": 112,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-csf-den-dal",
+    "gameNumber": 3,
+    "date": "1988-05-14",
+    "homeTeam": "DAL",
+    "awayTeam": "DEN",
+    "homeScore": 105,
+    "awayScore": 107,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1988-west-csf-den-dal",
+    "gameNumber": 4,
+    "date": "1988-05-15",
+    "homeTeam": "DAL",
+    "awayTeam": "DEN",
+    "homeScore": 124,
+    "awayScore": 103,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-csf-den-dal",
+    "gameNumber": 5,
+    "date": "1988-05-17",
+    "homeTeam": "DEN",
+    "awayTeam": "DAL",
+    "homeScore": 106,
+    "awayScore": 110,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-csf-den-dal",
+    "gameNumber": 6,
+    "date": "1988-05-19",
+    "homeTeam": "DAL",
+    "awayTeam": "DEN",
+    "homeScore": 108,
+    "awayScore": 95,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 1,
+    "date": "1988-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 110,
+    "awayScore": 91,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 2,
+    "date": "1988-05-10",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 97,
+    "awayScore": 101,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 3,
+    "date": "1988-05-13",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 89,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 4,
+    "date": "1988-05-15",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 100,
+    "awayScore": 113,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 5,
+    "date": "1988-05-17",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 111,
+    "awayScore": 109,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 6,
+    "date": "1988-05-19",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 80,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1988-west-csf-lal-uta",
+    "gameNumber": 7,
+    "date": "1988-05-21",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 109,
+    "awayScore": 98,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-east-r1-atl-mil",
+    "gameNumber": 1,
+    "date": "1988-04-29",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 110,
+    "awayScore": 107,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1988-east-r1-atl-mil",
+    "gameNumber": 2,
+    "date": "1988-05-01",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 104,
+    "awayScore": 97,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1988-east-r1-atl-mil",
+    "gameNumber": 3,
+    "date": "1988-05-04",
+    "homeTeam": "MIL",
+    "awayTeam": "ATL",
+    "homeScore": 123,
+    "awayScore": 115,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1988-east-r1-atl-mil",
+    "gameNumber": 4,
+    "date": "1988-05-06",
+    "homeTeam": "MIL",
+    "awayTeam": "ATL",
+    "homeScore": 105,
+    "awayScore": 99,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1988-east-r1-atl-mil",
+    "gameNumber": 5,
+    "date": "1988-05-08",
+    "homeTeam": "ATL",
+    "awayTeam": "MIL",
+    "homeScore": 121,
+    "awayScore": 111,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1988-east-r1-bos-nyk",
+    "gameNumber": 1,
+    "date": "1988-04-29",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 112,
+    "awayScore": 92,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-r1-bos-nyk",
+    "gameNumber": 2,
+    "date": "1988-05-01",
+    "homeTeam": "BOS",
+    "awayTeam": "NYK",
+    "homeScore": 128,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-r1-bos-nyk",
+    "gameNumber": 3,
+    "date": "1988-05-04",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 109,
+    "awayScore": 100,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1988-east-r1-bos-nyk",
+    "gameNumber": 4,
+    "date": "1988-05-06",
+    "homeTeam": "NYK",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 102,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1988-east-r1-chi-cle",
+    "gameNumber": 1,
+    "date": "1988-04-28",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1988-east-r1-chi-cle",
+    "gameNumber": 2,
+    "date": "1988-05-01",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 106,
+    "awayScore": 101,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1988-east-r1-chi-cle",
+    "gameNumber": 3,
+    "date": "1988-05-03",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 110,
+    "awayScore": 102,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1988-east-r1-chi-cle",
+    "gameNumber": 4,
+    "date": "1988-05-05",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 97,
+    "awayScore": 91,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1988-east-r1-chi-cle",
+    "gameNumber": 5,
+    "date": "1988-05-08",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 107,
+    "awayScore": 101,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1988-east-r1-det-wsb",
+    "gameNumber": 1,
+    "date": "1988-04-28",
+    "homeTeam": "DET",
+    "awayTeam": "WSB",
+    "homeScore": 96,
+    "awayScore": 87,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-r1-det-wsb",
+    "gameNumber": 2,
+    "date": "1988-04-30",
+    "homeTeam": "DET",
+    "awayTeam": "WSB",
+    "homeScore": 102,
+    "awayScore": 101,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-east-r1-det-wsb",
+    "gameNumber": 3,
+    "date": "1988-05-02",
+    "homeTeam": "WSB",
+    "awayTeam": "DET",
+    "homeScore": 114,
+    "awayScore": 106,
+    "winner": "WSB"
+  },
+  {
+    "seriesId": "1988-east-r1-det-wsb",
+    "gameNumber": 4,
+    "date": "1988-05-04",
+    "homeTeam": "WSB",
+    "awayTeam": "DET",
+    "homeScore": 106,
+    "awayScore": 103,
+    "winner": "WSB"
+  },
+  {
+    "seriesId": "1988-east-r1-det-wsb",
+    "gameNumber": 5,
+    "date": "1988-05-08",
+    "homeTeam": "DET",
+    "awayTeam": "WSB",
+    "homeScore": 99,
+    "awayScore": 78,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1988-west-r1-dal-hou",
+    "gameNumber": 1,
+    "date": "1988-04-28",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 120,
+    "awayScore": 110,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-r1-dal-hou",
+    "gameNumber": 2,
+    "date": "1988-04-30",
+    "homeTeam": "DAL",
+    "awayTeam": "HOU",
+    "homeScore": 108,
+    "awayScore": 119,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1988-west-r1-dal-hou",
+    "gameNumber": 3,
+    "date": "1988-05-03",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 92,
+    "awayScore": 93,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-r1-dal-hou",
+    "gameNumber": 4,
+    "date": "1988-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "DAL",
+    "homeScore": 97,
+    "awayScore": 107,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1988-west-r1-den-sea",
+    "gameNumber": 1,
+    "date": "1988-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "SEA",
+    "homeScore": 126,
+    "awayScore": 123,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1988-west-r1-den-sea",
+    "gameNumber": 2,
+    "date": "1988-05-01",
+    "homeTeam": "DEN",
+    "awayTeam": "SEA",
+    "homeScore": 91,
+    "awayScore": 111,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1988-west-r1-den-sea",
+    "gameNumber": 3,
+    "date": "1988-05-03",
+    "homeTeam": "SEA",
+    "awayTeam": "DEN",
+    "homeScore": 114,
+    "awayScore": 125,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1988-west-r1-den-sea",
+    "gameNumber": 4,
+    "date": "1988-05-05",
+    "homeTeam": "SEA",
+    "awayTeam": "DEN",
+    "homeScore": 127,
+    "awayScore": 117,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1988-west-r1-den-sea",
+    "gameNumber": 5,
+    "date": "1988-05-07",
+    "homeTeam": "DEN",
+    "awayTeam": "SEA",
+    "homeScore": 115,
+    "awayScore": 96,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1988-west-r1-lal-sas",
+    "gameNumber": 1,
+    "date": "1988-04-29",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 122,
+    "awayScore": 110,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-r1-lal-sas",
+    "gameNumber": 2,
+    "date": "1988-05-01",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 130,
+    "awayScore": 112,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-r1-lal-sas",
+    "gameNumber": 3,
+    "date": "1988-05-03",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 107,
+    "awayScore": 109,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1988-west-r1-por-uta",
+    "gameNumber": 1,
+    "date": "1988-04-28",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 108,
+    "awayScore": 96,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1988-west-r1-por-uta",
+    "gameNumber": 2,
+    "date": "1988-04-30",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 105,
+    "awayScore": 114,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1988-west-r1-por-uta",
+    "gameNumber": 3,
+    "date": "1988-05-04",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 113,
+    "awayScore": 108,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1988-west-r1-por-uta",
+    "gameNumber": 4,
+    "date": "1988-05-06",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 111,
+    "awayScore": 96,
+    "winner": "UTA"
+  }
+]

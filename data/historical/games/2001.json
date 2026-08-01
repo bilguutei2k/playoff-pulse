@@ -1,0 +1,712 @@
+[
+  {
+    "seriesId": "2001-finals-finals-phi-lal",
+    "gameNumber": 1,
+    "date": "2001-06-06",
+    "homeTeam": "LAL",
+    "awayTeam": "PHI",
+    "homeScore": 101,
+    "awayScore": 107,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-finals-finals-phi-lal",
+    "gameNumber": 2,
+    "date": "2001-06-08",
+    "homeTeam": "LAL",
+    "awayTeam": "PHI",
+    "homeScore": 98,
+    "awayScore": 89,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-finals-finals-phi-lal",
+    "gameNumber": 3,
+    "date": "2001-06-10",
+    "homeTeam": "PHI",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-finals-finals-phi-lal",
+    "gameNumber": 4,
+    "date": "2001-06-13",
+    "homeTeam": "PHI",
+    "awayTeam": "LAL",
+    "homeScore": 86,
+    "awayScore": 100,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-finals-finals-phi-lal",
+    "gameNumber": 5,
+    "date": "2001-06-15",
+    "homeTeam": "PHI",
+    "awayTeam": "LAL",
+    "homeScore": 96,
+    "awayScore": 108,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 1,
+    "date": "2001-05-22",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 93,
+    "awayScore": 85,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 2,
+    "date": "2001-05-24",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 78,
+    "awayScore": 92,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 3,
+    "date": "2001-05-26",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 80,
+    "awayScore": 74,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 4,
+    "date": "2001-05-28",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 83,
+    "awayScore": 89,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 5,
+    "date": "2001-05-30",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 89,
+    "awayScore": 88,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 6,
+    "date": "2001-06-01",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 110,
+    "awayScore": 100,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-cf-phi-mil",
+    "gameNumber": 7,
+    "date": "2001-06-03",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 108,
+    "awayScore": 91,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-west-cf-sas-lal",
+    "gameNumber": 1,
+    "date": "2001-05-19",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 90,
+    "awayScore": 104,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-cf-sas-lal",
+    "gameNumber": 2,
+    "date": "2001-05-21",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 81,
+    "awayScore": 88,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-cf-sas-lal",
+    "gameNumber": 3,
+    "date": "2001-05-25",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 111,
+    "awayScore": 72,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-cf-sas-lal",
+    "gameNumber": 4,
+    "date": "2001-05-27",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 111,
+    "awayScore": 82,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 1,
+    "date": "2001-05-06",
+    "homeTeam": "MIL",
+    "awayTeam": "CHH",
+    "homeScore": 104,
+    "awayScore": 92,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 2,
+    "date": "2001-05-08",
+    "homeTeam": "MIL",
+    "awayTeam": "CHH",
+    "homeScore": 91,
+    "awayScore": 90,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 3,
+    "date": "2001-05-10",
+    "homeTeam": "CHH",
+    "awayTeam": "MIL",
+    "homeScore": 102,
+    "awayScore": 92,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 4,
+    "date": "2001-05-13",
+    "homeTeam": "CHH",
+    "awayTeam": "MIL",
+    "homeScore": 85,
+    "awayScore": 78,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 5,
+    "date": "2001-05-15",
+    "homeTeam": "MIL",
+    "awayTeam": "CHH",
+    "homeScore": 86,
+    "awayScore": 94,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 6,
+    "date": "2001-05-17",
+    "homeTeam": "CHH",
+    "awayTeam": "MIL",
+    "homeScore": 97,
+    "awayScore": 104,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-csf-mil-chh",
+    "gameNumber": 7,
+    "date": "2001-05-20",
+    "homeTeam": "MIL",
+    "awayTeam": "CHH",
+    "homeScore": 104,
+    "awayScore": 95,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 1,
+    "date": "2001-05-06",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 93,
+    "awayScore": 96,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 2,
+    "date": "2001-05-09",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 97,
+    "awayScore": 92,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 3,
+    "date": "2001-05-11",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 102,
+    "awayScore": 78,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 4,
+    "date": "2001-05-13",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 79,
+    "awayScore": 84,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 5,
+    "date": "2001-05-16",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 121,
+    "awayScore": 88,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 6,
+    "date": "2001-05-18",
+    "homeTeam": "TOR",
+    "awayTeam": "PHI",
+    "homeScore": 101,
+    "awayScore": 89,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2001-east-csf-phi-tor",
+    "gameNumber": 7,
+    "date": "2001-05-20",
+    "homeTeam": "PHI",
+    "awayTeam": "TOR",
+    "homeScore": 88,
+    "awayScore": 87,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-west-csf-lal-sac",
+    "gameNumber": 1,
+    "date": "2001-05-06",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 108,
+    "awayScore": 105,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-csf-lal-sac",
+    "gameNumber": 2,
+    "date": "2001-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 96,
+    "awayScore": 90,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-csf-lal-sac",
+    "gameNumber": 3,
+    "date": "2001-05-11",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 81,
+    "awayScore": 103,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-csf-lal-sac",
+    "gameNumber": 4,
+    "date": "2001-05-13",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 113,
+    "awayScore": 119,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-csf-sas-dal",
+    "gameNumber": 1,
+    "date": "2001-05-05",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 94,
+    "awayScore": 78,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2001-west-csf-sas-dal",
+    "gameNumber": 2,
+    "date": "2001-05-07",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 100,
+    "awayScore": 86,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2001-west-csf-sas-dal",
+    "gameNumber": 3,
+    "date": "2001-05-09",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 90,
+    "awayScore": 104,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2001-west-csf-sas-dal",
+    "gameNumber": 4,
+    "date": "2001-05-12",
+    "homeTeam": "DAL",
+    "awayTeam": "SAS",
+    "homeScore": 112,
+    "awayScore": 108,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2001-west-csf-sas-dal",
+    "gameNumber": 5,
+    "date": "2001-05-14",
+    "homeTeam": "SAS",
+    "awayTeam": "DAL",
+    "homeScore": 105,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2001-east-r1-mia-chh",
+    "gameNumber": 1,
+    "date": "2001-04-21",
+    "homeTeam": "MIA",
+    "awayTeam": "CHH",
+    "homeScore": 80,
+    "awayScore": 106,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2001-east-r1-mia-chh",
+    "gameNumber": 2,
+    "date": "2001-04-23",
+    "homeTeam": "MIA",
+    "awayTeam": "CHH",
+    "homeScore": 76,
+    "awayScore": 102,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2001-east-r1-mia-chh",
+    "gameNumber": 3,
+    "date": "2001-04-27",
+    "homeTeam": "CHH",
+    "awayTeam": "MIA",
+    "homeScore": 94,
+    "awayScore": 79,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2001-east-r1-mil-orl",
+    "gameNumber": 1,
+    "date": "2001-04-22",
+    "homeTeam": "MIL",
+    "awayTeam": "ORL",
+    "homeScore": 103,
+    "awayScore": 90,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-r1-mil-orl",
+    "gameNumber": 2,
+    "date": "2001-04-25",
+    "homeTeam": "MIL",
+    "awayTeam": "ORL",
+    "homeScore": 103,
+    "awayScore": 96,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-r1-mil-orl",
+    "gameNumber": 3,
+    "date": "2001-04-28",
+    "homeTeam": "ORL",
+    "awayTeam": "MIL",
+    "homeScore": 121,
+    "awayScore": 116,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "2001-east-r1-mil-orl",
+    "gameNumber": 4,
+    "date": "2001-05-01",
+    "homeTeam": "ORL",
+    "awayTeam": "MIL",
+    "homeScore": 104,
+    "awayScore": 112,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2001-east-r1-phi-ind",
+    "gameNumber": 1,
+    "date": "2001-04-21",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 78,
+    "awayScore": 79,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2001-east-r1-phi-ind",
+    "gameNumber": 2,
+    "date": "2001-04-24",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 116,
+    "awayScore": 98,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-r1-phi-ind",
+    "gameNumber": 3,
+    "date": "2001-04-28",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 87,
+    "awayScore": 92,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-r1-phi-ind",
+    "gameNumber": 4,
+    "date": "2001-05-02",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 85,
+    "awayScore": 88,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2001-east-r1-nyk-tor",
+    "gameNumber": 1,
+    "date": "2001-04-22",
+    "homeTeam": "NYK",
+    "awayTeam": "TOR",
+    "homeScore": 92,
+    "awayScore": 85,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2001-east-r1-nyk-tor",
+    "gameNumber": 2,
+    "date": "2001-04-26",
+    "homeTeam": "NYK",
+    "awayTeam": "TOR",
+    "homeScore": 74,
+    "awayScore": 94,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2001-east-r1-nyk-tor",
+    "gameNumber": 3,
+    "date": "2001-04-29",
+    "homeTeam": "TOR",
+    "awayTeam": "NYK",
+    "homeScore": 89,
+    "awayScore": 97,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2001-east-r1-nyk-tor",
+    "gameNumber": 4,
+    "date": "2001-05-02",
+    "homeTeam": "TOR",
+    "awayTeam": "NYK",
+    "homeScore": 100,
+    "awayScore": 93,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2001-east-r1-nyk-tor",
+    "gameNumber": 5,
+    "date": "2001-05-04",
+    "homeTeam": "NYK",
+    "awayTeam": "TOR",
+    "homeScore": 89,
+    "awayScore": 93,
+    "winner": "TOR"
+  },
+  {
+    "seriesId": "2001-west-r1-uta-dal",
+    "gameNumber": 1,
+    "date": "2001-04-21",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 88,
+    "awayScore": 86,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2001-west-r1-uta-dal",
+    "gameNumber": 2,
+    "date": "2001-04-24",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 109,
+    "awayScore": 98,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2001-west-r1-uta-dal",
+    "gameNumber": 3,
+    "date": "2001-04-28",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 94,
+    "awayScore": 91,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2001-west-r1-uta-dal",
+    "gameNumber": 4,
+    "date": "2001-05-01",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 107,
+    "awayScore": 77,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2001-west-r1-uta-dal",
+    "gameNumber": 5,
+    "date": "2001-05-03",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 83,
+    "awayScore": 84,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "2001-west-r1-lal-por",
+    "gameNumber": 1,
+    "date": "2001-04-22",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 106,
+    "awayScore": 93,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-r1-lal-por",
+    "gameNumber": 2,
+    "date": "2001-04-26",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 106,
+    "awayScore": 88,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-r1-lal-por",
+    "gameNumber": 3,
+    "date": "2001-04-29",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 86,
+    "awayScore": 99,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2001-west-r1-sac-pho",
+    "gameNumber": 1,
+    "date": "2001-04-22",
+    "homeTeam": "SAC",
+    "awayTeam": "PHO",
+    "homeScore": 83,
+    "awayScore": 86,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2001-west-r1-sac-pho",
+    "gameNumber": 2,
+    "date": "2001-04-25",
+    "homeTeam": "SAC",
+    "awayTeam": "PHO",
+    "homeScore": 116,
+    "awayScore": 90,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2001-west-r1-sac-pho",
+    "gameNumber": 3,
+    "date": "2001-04-29",
+    "homeTeam": "PHO",
+    "awayTeam": "SAC",
+    "homeScore": 96,
+    "awayScore": 104,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2001-west-r1-sac-pho",
+    "gameNumber": 4,
+    "date": "2001-05-02",
+    "homeTeam": "PHO",
+    "awayTeam": "SAC",
+    "homeScore": 82,
+    "awayScore": 89,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2001-west-r1-sas-min",
+    "gameNumber": 1,
+    "date": "2001-04-21",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 87,
+    "awayScore": 82,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2001-west-r1-sas-min",
+    "gameNumber": 2,
+    "date": "2001-04-23",
+    "homeTeam": "SAS",
+    "awayTeam": "MIN",
+    "homeScore": 86,
+    "awayScore": 69,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2001-west-r1-sas-min",
+    "gameNumber": 3,
+    "date": "2001-04-28",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 93,
+    "awayScore": 84,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2001-west-r1-sas-min",
+    "gameNumber": 4,
+    "date": "2001-04-30",
+    "homeTeam": "MIN",
+    "awayTeam": "SAS",
+    "homeScore": 84,
+    "awayScore": 97,
+    "winner": "SAS"
+  }
+]

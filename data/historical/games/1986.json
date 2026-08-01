@@ -1,0 +1,682 @@
+[
+  {
+    "seriesId": "1986-finals-finals-bos-hou",
+    "gameNumber": 1,
+    "date": "1986-05-26",
+    "homeTeam": "BOS",
+    "awayTeam": "HOU",
+    "homeScore": 112,
+    "awayScore": 100,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-finals-finals-bos-hou",
+    "gameNumber": 2,
+    "date": "1986-05-29",
+    "homeTeam": "BOS",
+    "awayTeam": "HOU",
+    "homeScore": 117,
+    "awayScore": 95,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-finals-finals-bos-hou",
+    "gameNumber": 3,
+    "date": "1986-06-01",
+    "homeTeam": "HOU",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 104,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-finals-finals-bos-hou",
+    "gameNumber": 4,
+    "date": "1986-06-03",
+    "homeTeam": "HOU",
+    "awayTeam": "BOS",
+    "homeScore": 103,
+    "awayScore": 106,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-finals-finals-bos-hou",
+    "gameNumber": 5,
+    "date": "1986-06-05",
+    "homeTeam": "HOU",
+    "awayTeam": "BOS",
+    "homeScore": 111,
+    "awayScore": 96,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-finals-finals-bos-hou",
+    "gameNumber": 6,
+    "date": "1986-06-08",
+    "homeTeam": "BOS",
+    "awayTeam": "HOU",
+    "homeScore": 114,
+    "awayScore": 97,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-cf-bos-mil",
+    "gameNumber": 1,
+    "date": "1986-05-13",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 128,
+    "awayScore": 96,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-cf-bos-mil",
+    "gameNumber": 2,
+    "date": "1986-05-15",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 122,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-cf-bos-mil",
+    "gameNumber": 3,
+    "date": "1986-05-17",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 107,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-cf-bos-mil",
+    "gameNumber": 4,
+    "date": "1986-05-18",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 98,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-west-cf-lal-hou",
+    "gameNumber": 1,
+    "date": "1986-05-10",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-west-cf-lal-hou",
+    "gameNumber": 2,
+    "date": "1986-05-13",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 102,
+    "awayScore": 112,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-cf-lal-hou",
+    "gameNumber": 3,
+    "date": "1986-05-16",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 117,
+    "awayScore": 109,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-cf-lal-hou",
+    "gameNumber": 4,
+    "date": "1986-05-18",
+    "homeTeam": "HOU",
+    "awayTeam": "LAL",
+    "homeScore": 105,
+    "awayScore": 95,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-cf-lal-hou",
+    "gameNumber": 5,
+    "date": "1986-05-21",
+    "homeTeam": "LAL",
+    "awayTeam": "HOU",
+    "homeScore": 112,
+    "awayScore": 114,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-east-csf-bos-atl",
+    "gameNumber": 1,
+    "date": "1986-04-27",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 103,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-csf-bos-atl",
+    "gameNumber": 2,
+    "date": "1986-04-29",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 119,
+    "awayScore": 108,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-csf-bos-atl",
+    "gameNumber": 3,
+    "date": "1986-05-02",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 107,
+    "awayScore": 111,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-csf-bos-atl",
+    "gameNumber": 4,
+    "date": "1986-05-04",
+    "homeTeam": "ATL",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 94,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1986-east-csf-bos-atl",
+    "gameNumber": 5,
+    "date": "1986-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "ATL",
+    "homeScore": 132,
+    "awayScore": 99,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 1,
+    "date": "1986-04-29",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 112,
+    "awayScore": 118,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 2,
+    "date": "1986-05-01",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 3,
+    "date": "1986-05-03",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 107,
+    "awayScore": 103,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 4,
+    "date": "1986-05-05",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 104,
+    "awayScore": 109,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 5,
+    "date": "1986-05-07",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 113,
+    "awayScore": 108,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 6,
+    "date": "1986-05-09",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 126,
+    "awayScore": 108,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1986-east-csf-mil-phi",
+    "gameNumber": 7,
+    "date": "1986-05-11",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 113,
+    "awayScore": 112,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-west-csf-hou-den",
+    "gameNumber": 1,
+    "date": "1986-04-26",
+    "homeTeam": "HOU",
+    "awayTeam": "DEN",
+    "homeScore": 126,
+    "awayScore": 119,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-csf-hou-den",
+    "gameNumber": 2,
+    "date": "1986-04-29",
+    "homeTeam": "HOU",
+    "awayTeam": "DEN",
+    "homeScore": 119,
+    "awayScore": 101,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-csf-hou-den",
+    "gameNumber": 3,
+    "date": "1986-05-02",
+    "homeTeam": "DEN",
+    "awayTeam": "HOU",
+    "homeScore": 116,
+    "awayScore": 115,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1986-west-csf-hou-den",
+    "gameNumber": 4,
+    "date": "1986-05-04",
+    "homeTeam": "DEN",
+    "awayTeam": "HOU",
+    "homeScore": 114,
+    "awayScore": 111,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1986-west-csf-hou-den",
+    "gameNumber": 5,
+    "date": "1986-05-06",
+    "homeTeam": "HOU",
+    "awayTeam": "DEN",
+    "homeScore": 131,
+    "awayScore": 103,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-csf-hou-den",
+    "gameNumber": 6,
+    "date": "1986-05-08",
+    "homeTeam": "DEN",
+    "awayTeam": "HOU",
+    "homeScore": 122,
+    "awayScore": 126,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-csf-lal-dal",
+    "gameNumber": 1,
+    "date": "1986-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 130,
+    "awayScore": 116,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-west-csf-lal-dal",
+    "gameNumber": 2,
+    "date": "1986-04-30",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 117,
+    "awayScore": 113,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-west-csf-lal-dal",
+    "gameNumber": 3,
+    "date": "1986-05-02",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 110,
+    "awayScore": 108,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1986-west-csf-lal-dal",
+    "gameNumber": 4,
+    "date": "1986-05-04",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 120,
+    "awayScore": 118,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1986-west-csf-lal-dal",
+    "gameNumber": 5,
+    "date": "1986-05-06",
+    "homeTeam": "LAL",
+    "awayTeam": "DAL",
+    "homeScore": 116,
+    "awayScore": 113,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-west-csf-lal-dal",
+    "gameNumber": 6,
+    "date": "1986-05-08",
+    "homeTeam": "DAL",
+    "awayTeam": "LAL",
+    "homeScore": 107,
+    "awayScore": 120,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-east-r1-atl-det",
+    "gameNumber": 1,
+    "date": "1986-04-17",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 140,
+    "awayScore": 122,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1986-east-r1-atl-det",
+    "gameNumber": 2,
+    "date": "1986-04-19",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 137,
+    "awayScore": 125,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1986-east-r1-atl-det",
+    "gameNumber": 3,
+    "date": "1986-04-22",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 106,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1986-east-r1-atl-det",
+    "gameNumber": 4,
+    "date": "1986-04-25",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 113,
+    "awayScore": 114,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1986-east-r1-bos-chi",
+    "gameNumber": 1,
+    "date": "1986-04-17",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 123,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-r1-bos-chi",
+    "gameNumber": 2,
+    "date": "1986-04-20",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 135,
+    "awayScore": 131,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-r1-bos-chi",
+    "gameNumber": 3,
+    "date": "1986-04-22",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 122,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1986-east-r1-mil-njn",
+    "gameNumber": 1,
+    "date": "1986-04-18",
+    "homeTeam": "MIL",
+    "awayTeam": "NJN",
+    "homeScore": 119,
+    "awayScore": 107,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-east-r1-mil-njn",
+    "gameNumber": 2,
+    "date": "1986-04-20",
+    "homeTeam": "MIL",
+    "awayTeam": "NJN",
+    "homeScore": 111,
+    "awayScore": 97,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-east-r1-mil-njn",
+    "gameNumber": 3,
+    "date": "1986-04-22",
+    "homeTeam": "NJN",
+    "awayTeam": "MIL",
+    "homeScore": 113,
+    "awayScore": 118,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1986-east-r1-phi-wsb",
+    "gameNumber": 1,
+    "date": "1986-04-18",
+    "homeTeam": "PHI",
+    "awayTeam": "WSB",
+    "homeScore": 94,
+    "awayScore": 95,
+    "winner": "WSB"
+  },
+  {
+    "seriesId": "1986-east-r1-phi-wsb",
+    "gameNumber": 2,
+    "date": "1986-04-20",
+    "homeTeam": "PHI",
+    "awayTeam": "WSB",
+    "homeScore": 102,
+    "awayScore": 97,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1986-east-r1-phi-wsb",
+    "gameNumber": 3,
+    "date": "1986-04-22",
+    "homeTeam": "WSB",
+    "awayTeam": "PHI",
+    "homeScore": 86,
+    "awayScore": 91,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1986-east-r1-phi-wsb",
+    "gameNumber": 4,
+    "date": "1986-04-24",
+    "homeTeam": "WSB",
+    "awayTeam": "PHI",
+    "homeScore": 116,
+    "awayScore": 111,
+    "winner": "WSB"
+  },
+  {
+    "seriesId": "1986-east-r1-phi-wsb",
+    "gameNumber": 5,
+    "date": "1986-04-27",
+    "homeTeam": "PHI",
+    "awayTeam": "WSB",
+    "homeScore": 134,
+    "awayScore": 109,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1986-west-r1-dal-uta",
+    "gameNumber": 1,
+    "date": "1986-04-18",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 101,
+    "awayScore": 93,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1986-west-r1-dal-uta",
+    "gameNumber": 2,
+    "date": "1986-04-20",
+    "homeTeam": "DAL",
+    "awayTeam": "UTA",
+    "homeScore": 113,
+    "awayScore": 106,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1986-west-r1-dal-uta",
+    "gameNumber": 3,
+    "date": "1986-04-23",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 100,
+    "awayScore": 98,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1986-west-r1-dal-uta",
+    "gameNumber": 4,
+    "date": "1986-04-25",
+    "homeTeam": "UTA",
+    "awayTeam": "DAL",
+    "homeScore": 113,
+    "awayScore": 117,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1986-west-r1-den-por",
+    "gameNumber": 1,
+    "date": "1986-04-18",
+    "homeTeam": "DEN",
+    "awayTeam": "POR",
+    "homeScore": 133,
+    "awayScore": 126,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1986-west-r1-den-por",
+    "gameNumber": 2,
+    "date": "1986-04-20",
+    "homeTeam": "DEN",
+    "awayTeam": "POR",
+    "homeScore": 106,
+    "awayScore": 108,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1986-west-r1-den-por",
+    "gameNumber": 3,
+    "date": "1986-04-22",
+    "homeTeam": "POR",
+    "awayTeam": "DEN",
+    "homeScore": 104,
+    "awayScore": 115,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1986-west-r1-den-por",
+    "gameNumber": 4,
+    "date": "1986-04-24",
+    "homeTeam": "POR",
+    "awayTeam": "DEN",
+    "homeScore": 112,
+    "awayScore": 116,
+    "winner": "DEN"
+  },
+  {
+    "seriesId": "1986-west-r1-hou-sac",
+    "gameNumber": 1,
+    "date": "1986-04-17",
+    "homeTeam": "HOU",
+    "awayTeam": "SAC",
+    "homeScore": 107,
+    "awayScore": 87,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-r1-hou-sac",
+    "gameNumber": 2,
+    "date": "1986-04-19",
+    "homeTeam": "HOU",
+    "awayTeam": "SAC",
+    "homeScore": 111,
+    "awayScore": 103,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-r1-hou-sac",
+    "gameNumber": 3,
+    "date": "1986-04-22",
+    "homeTeam": "SAC",
+    "awayTeam": "HOU",
+    "homeScore": 98,
+    "awayScore": 113,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1986-west-r1-lal-sas",
+    "gameNumber": 1,
+    "date": "1986-04-17",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 135,
+    "awayScore": 88,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-west-r1-lal-sas",
+    "gameNumber": 2,
+    "date": "1986-04-19",
+    "homeTeam": "LAL",
+    "awayTeam": "SAS",
+    "homeScore": 122,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1986-west-r1-lal-sas",
+    "gameNumber": 3,
+    "date": "1986-04-23",
+    "homeTeam": "SAS",
+    "awayTeam": "LAL",
+    "homeScore": 94,
+    "awayScore": 114,
+    "winner": "LAL"
+  }
+]

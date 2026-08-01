@@ -1,0 +1,752 @@
+[
+  {
+    "seriesId": "2000-finals-finals-ind-lal",
+    "gameNumber": 1,
+    "date": "2000-06-07",
+    "homeTeam": "LAL",
+    "awayTeam": "IND",
+    "homeScore": 104,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-finals-finals-ind-lal",
+    "gameNumber": 2,
+    "date": "2000-06-09",
+    "homeTeam": "LAL",
+    "awayTeam": "IND",
+    "homeScore": 111,
+    "awayScore": 104,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-finals-finals-ind-lal",
+    "gameNumber": 3,
+    "date": "2000-06-11",
+    "homeTeam": "IND",
+    "awayTeam": "LAL",
+    "homeScore": 100,
+    "awayScore": 91,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-finals-finals-ind-lal",
+    "gameNumber": 4,
+    "date": "2000-06-14",
+    "homeTeam": "IND",
+    "awayTeam": "LAL",
+    "homeScore": 118,
+    "awayScore": 120,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-finals-finals-ind-lal",
+    "gameNumber": 5,
+    "date": "2000-06-16",
+    "homeTeam": "IND",
+    "awayTeam": "LAL",
+    "homeScore": 120,
+    "awayScore": 87,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-finals-finals-ind-lal",
+    "gameNumber": 6,
+    "date": "2000-06-19",
+    "homeTeam": "LAL",
+    "awayTeam": "IND",
+    "homeScore": 116,
+    "awayScore": 111,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-east-cf-ind-nyk",
+    "gameNumber": 1,
+    "date": "2000-05-23",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 102,
+    "awayScore": 88,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-cf-ind-nyk",
+    "gameNumber": 2,
+    "date": "2000-05-25",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 88,
+    "awayScore": 84,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-cf-ind-nyk",
+    "gameNumber": 3,
+    "date": "2000-05-27",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 98,
+    "awayScore": 95,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-cf-ind-nyk",
+    "gameNumber": 4,
+    "date": "2000-05-29",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 91,
+    "awayScore": 89,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-cf-ind-nyk",
+    "gameNumber": 5,
+    "date": "2000-05-31",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 88,
+    "awayScore": 79,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-cf-ind-nyk",
+    "gameNumber": 6,
+    "date": "2000-06-02",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 80,
+    "awayScore": 93,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 1,
+    "date": "2000-05-20",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 109,
+    "awayScore": 94,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 2,
+    "date": "2000-05-22",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 77,
+    "awayScore": 106,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 3,
+    "date": "2000-05-26",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 93,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 4,
+    "date": "2000-05-28",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 103,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 5,
+    "date": "2000-05-30",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 88,
+    "awayScore": 96,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 6,
+    "date": "2000-06-02",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 93,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-cf-lal-por",
+    "gameNumber": 7,
+    "date": "2000-06-04",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 89,
+    "awayScore": 84,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-east-csf-ind-phi",
+    "gameNumber": 1,
+    "date": "2000-05-06",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 108,
+    "awayScore": 91,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-csf-ind-phi",
+    "gameNumber": 2,
+    "date": "2000-05-08",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 103,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-csf-ind-phi",
+    "gameNumber": 3,
+    "date": "2000-05-10",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 89,
+    "awayScore": 97,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-csf-ind-phi",
+    "gameNumber": 4,
+    "date": "2000-05-13",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 92,
+    "awayScore": 90,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2000-east-csf-ind-phi",
+    "gameNumber": 5,
+    "date": "2000-05-15",
+    "homeTeam": "IND",
+    "awayTeam": "PHI",
+    "homeScore": 86,
+    "awayScore": 107,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2000-east-csf-ind-phi",
+    "gameNumber": 6,
+    "date": "2000-05-19",
+    "homeTeam": "PHI",
+    "awayTeam": "IND",
+    "homeScore": 90,
+    "awayScore": 106,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 1,
+    "date": "2000-05-07",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 87,
+    "awayScore": 83,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 2,
+    "date": "2000-05-09",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 76,
+    "awayScore": 82,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 3,
+    "date": "2000-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 76,
+    "awayScore": 77,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 4,
+    "date": "2000-05-14",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 91,
+    "awayScore": 83,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 5,
+    "date": "2000-05-17",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 87,
+    "awayScore": 81,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 6,
+    "date": "2000-05-19",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 72,
+    "awayScore": 70,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-csf-mia-nyk",
+    "gameNumber": 7,
+    "date": "2000-05-21",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 82,
+    "awayScore": 83,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-west-csf-lal-pho",
+    "gameNumber": 1,
+    "date": "2000-05-07",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 105,
+    "awayScore": 77,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-csf-lal-pho",
+    "gameNumber": 2,
+    "date": "2000-05-10",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 97,
+    "awayScore": 96,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-csf-lal-pho",
+    "gameNumber": 3,
+    "date": "2000-05-12",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 99,
+    "awayScore": 105,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-csf-lal-pho",
+    "gameNumber": 4,
+    "date": "2000-05-14",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 117,
+    "awayScore": 98,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2000-west-csf-lal-pho",
+    "gameNumber": 5,
+    "date": "2000-05-16",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 87,
+    "awayScore": 65,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-csf-por-uta",
+    "gameNumber": 1,
+    "date": "2000-05-07",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 94,
+    "awayScore": 75,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-csf-por-uta",
+    "gameNumber": 2,
+    "date": "2000-05-09",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 103,
+    "awayScore": 85,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-csf-por-uta",
+    "gameNumber": 3,
+    "date": "2000-05-11",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 84,
+    "awayScore": 103,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-csf-por-uta",
+    "gameNumber": 4,
+    "date": "2000-05-14",
+    "homeTeam": "UTA",
+    "awayTeam": "POR",
+    "homeScore": 88,
+    "awayScore": 85,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2000-west-csf-por-uta",
+    "gameNumber": 5,
+    "date": "2000-05-16",
+    "homeTeam": "POR",
+    "awayTeam": "UTA",
+    "homeScore": 81,
+    "awayScore": 79,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-east-r1-ind-mil",
+    "gameNumber": 1,
+    "date": "2000-04-23",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 88,
+    "awayScore": 85,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-r1-ind-mil",
+    "gameNumber": 2,
+    "date": "2000-04-27",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 91,
+    "awayScore": 104,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2000-east-r1-ind-mil",
+    "gameNumber": 3,
+    "date": "2000-04-29",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 96,
+    "awayScore": 109,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-r1-ind-mil",
+    "gameNumber": 4,
+    "date": "2000-05-01",
+    "homeTeam": "MIL",
+    "awayTeam": "IND",
+    "homeScore": 100,
+    "awayScore": 87,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "2000-east-r1-ind-mil",
+    "gameNumber": 5,
+    "date": "2000-05-04",
+    "homeTeam": "IND",
+    "awayTeam": "MIL",
+    "homeScore": 96,
+    "awayScore": 95,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "2000-east-r1-mia-det",
+    "gameNumber": 1,
+    "date": "2000-04-22",
+    "homeTeam": "MIA",
+    "awayTeam": "DET",
+    "homeScore": 95,
+    "awayScore": 85,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2000-east-r1-mia-det",
+    "gameNumber": 2,
+    "date": "2000-04-25",
+    "homeTeam": "MIA",
+    "awayTeam": "DET",
+    "homeScore": 84,
+    "awayScore": 82,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2000-east-r1-mia-det",
+    "gameNumber": 3,
+    "date": "2000-04-29",
+    "homeTeam": "DET",
+    "awayTeam": "MIA",
+    "homeScore": 72,
+    "awayScore": 91,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "2000-east-r1-nyk-tor",
+    "gameNumber": 1,
+    "date": "2000-04-23",
+    "homeTeam": "NYK",
+    "awayTeam": "TOR",
+    "homeScore": 92,
+    "awayScore": 88,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-r1-nyk-tor",
+    "gameNumber": 2,
+    "date": "2000-04-26",
+    "homeTeam": "NYK",
+    "awayTeam": "TOR",
+    "homeScore": 84,
+    "awayScore": 83,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-r1-nyk-tor",
+    "gameNumber": 3,
+    "date": "2000-04-30",
+    "homeTeam": "TOR",
+    "awayTeam": "NYK",
+    "homeScore": 80,
+    "awayScore": 87,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "2000-east-r1-chh-phi",
+    "gameNumber": 1,
+    "date": "2000-04-22",
+    "homeTeam": "CHH",
+    "awayTeam": "PHI",
+    "homeScore": 82,
+    "awayScore": 92,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2000-east-r1-chh-phi",
+    "gameNumber": 2,
+    "date": "2000-04-24",
+    "homeTeam": "CHH",
+    "awayTeam": "PHI",
+    "homeScore": 108,
+    "awayScore": 98,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "2000-east-r1-chh-phi",
+    "gameNumber": 3,
+    "date": "2000-04-28",
+    "homeTeam": "PHI",
+    "awayTeam": "CHH",
+    "homeScore": 81,
+    "awayScore": 76,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2000-east-r1-chh-phi",
+    "gameNumber": 4,
+    "date": "2000-05-01",
+    "homeTeam": "PHI",
+    "awayTeam": "CHH",
+    "homeScore": 105,
+    "awayScore": 99,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "2000-west-r1-lal-sac",
+    "gameNumber": 1,
+    "date": "2000-04-23",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 117,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-r1-lal-sac",
+    "gameNumber": 2,
+    "date": "2000-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 113,
+    "awayScore": 89,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-r1-lal-sac",
+    "gameNumber": 3,
+    "date": "2000-04-30",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2000-west-r1-lal-sac",
+    "gameNumber": 4,
+    "date": "2000-05-02",
+    "homeTeam": "SAC",
+    "awayTeam": "LAL",
+    "homeScore": 101,
+    "awayScore": 88,
+    "winner": "SAC"
+  },
+  {
+    "seriesId": "2000-west-r1-lal-sac",
+    "gameNumber": 5,
+    "date": "2000-05-05",
+    "homeTeam": "LAL",
+    "awayTeam": "SAC",
+    "homeScore": 113,
+    "awayScore": 86,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "2000-west-r1-sas-pho",
+    "gameNumber": 1,
+    "date": "2000-04-22",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 70,
+    "awayScore": 72,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2000-west-r1-sas-pho",
+    "gameNumber": 2,
+    "date": "2000-04-25",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 85,
+    "awayScore": 70,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "2000-west-r1-sas-pho",
+    "gameNumber": 3,
+    "date": "2000-04-29",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 101,
+    "awayScore": 94,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2000-west-r1-sas-pho",
+    "gameNumber": 4,
+    "date": "2000-05-02",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 89,
+    "awayScore": 78,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "2000-west-r1-por-min",
+    "gameNumber": 1,
+    "date": "2000-04-23",
+    "homeTeam": "POR",
+    "awayTeam": "MIN",
+    "homeScore": 91,
+    "awayScore": 88,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-r1-por-min",
+    "gameNumber": 2,
+    "date": "2000-04-26",
+    "homeTeam": "POR",
+    "awayTeam": "MIN",
+    "homeScore": 86,
+    "awayScore": 82,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-r1-por-min",
+    "gameNumber": 3,
+    "date": "2000-04-30",
+    "homeTeam": "MIN",
+    "awayTeam": "POR",
+    "homeScore": 94,
+    "awayScore": 87,
+    "winner": "MIN"
+  },
+  {
+    "seriesId": "2000-west-r1-por-min",
+    "gameNumber": 4,
+    "date": "2000-05-02",
+    "homeTeam": "MIN",
+    "awayTeam": "POR",
+    "homeScore": 77,
+    "awayScore": 85,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "2000-west-r1-uta-sea",
+    "gameNumber": 1,
+    "date": "2000-04-22",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2000-west-r1-uta-sea",
+    "gameNumber": 2,
+    "date": "2000-04-24",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 101,
+    "awayScore": 87,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "2000-west-r1-uta-sea",
+    "gameNumber": 3,
+    "date": "2000-04-29",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 89,
+    "awayScore": 78,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2000-west-r1-uta-sea",
+    "gameNumber": 4,
+    "date": "2000-05-03",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "2000-west-r1-uta-sea",
+    "gameNumber": 5,
+    "date": "2000-05-05",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 96,
+    "awayScore": 93,
+    "winner": "UTA"
+  }
+]

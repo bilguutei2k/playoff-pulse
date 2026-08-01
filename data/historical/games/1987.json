@@ -1,0 +1,712 @@
+[
+  {
+    "seriesId": "1987-finals-finals-bos-lal",
+    "gameNumber": 1,
+    "date": "1987-06-02",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 126,
+    "awayScore": 113,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-finals-finals-bos-lal",
+    "gameNumber": 2,
+    "date": "1987-06-04",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 141,
+    "awayScore": 122,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-finals-finals-bos-lal",
+    "gameNumber": 3,
+    "date": "1987-06-07",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 109,
+    "awayScore": 103,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-finals-finals-bos-lal",
+    "gameNumber": 4,
+    "date": "1987-06-09",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 106,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-finals-finals-bos-lal",
+    "gameNumber": 5,
+    "date": "1987-06-11",
+    "homeTeam": "BOS",
+    "awayTeam": "LAL",
+    "homeScore": 123,
+    "awayScore": 108,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-finals-finals-bos-lal",
+    "gameNumber": 6,
+    "date": "1987-06-14",
+    "homeTeam": "LAL",
+    "awayTeam": "BOS",
+    "homeScore": 106,
+    "awayScore": 93,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 1,
+    "date": "1987-05-19",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 104,
+    "awayScore": 91,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 2,
+    "date": "1987-05-21",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 110,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 3,
+    "date": "1987-05-23",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 122,
+    "awayScore": 104,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 4,
+    "date": "1987-05-24",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 145,
+    "awayScore": 119,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 5,
+    "date": "1987-05-26",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 108,
+    "awayScore": 107,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 6,
+    "date": "1987-05-28",
+    "homeTeam": "DET",
+    "awayTeam": "BOS",
+    "homeScore": 113,
+    "awayScore": 105,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-cf-bos-det",
+    "gameNumber": 7,
+    "date": "1987-05-30",
+    "homeTeam": "BOS",
+    "awayTeam": "DET",
+    "homeScore": 117,
+    "awayScore": 114,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-west-cf-lal-sea",
+    "gameNumber": 1,
+    "date": "1987-05-16",
+    "homeTeam": "LAL",
+    "awayTeam": "SEA",
+    "homeScore": 92,
+    "awayScore": 87,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-cf-lal-sea",
+    "gameNumber": 2,
+    "date": "1987-05-19",
+    "homeTeam": "LAL",
+    "awayTeam": "SEA",
+    "homeScore": 112,
+    "awayScore": 104,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-cf-lal-sea",
+    "gameNumber": 3,
+    "date": "1987-05-23",
+    "homeTeam": "SEA",
+    "awayTeam": "LAL",
+    "homeScore": 121,
+    "awayScore": 122,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-cf-lal-sea",
+    "gameNumber": 4,
+    "date": "1987-05-25",
+    "homeTeam": "SEA",
+    "awayTeam": "LAL",
+    "homeScore": 102,
+    "awayScore": 133,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 1,
+    "date": "1987-05-05",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 111,
+    "awayScore": 98,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 2,
+    "date": "1987-05-06",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 126,
+    "awayScore": 124,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 3,
+    "date": "1987-05-08",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 126,
+    "awayScore": 121,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 4,
+    "date": "1987-05-10",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 137,
+    "awayScore": 138,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 5,
+    "date": "1987-05-13",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 124,
+    "awayScore": 129,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 6,
+    "date": "1987-05-15",
+    "homeTeam": "MIL",
+    "awayTeam": "BOS",
+    "homeScore": 121,
+    "awayScore": 111,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1987-east-csf-bos-mil",
+    "gameNumber": 7,
+    "date": "1987-05-17",
+    "homeTeam": "BOS",
+    "awayTeam": "MIL",
+    "homeScore": 119,
+    "awayScore": 113,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-csf-atl-det",
+    "gameNumber": 1,
+    "date": "1987-05-03",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 111,
+    "awayScore": 112,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-csf-atl-det",
+    "gameNumber": 2,
+    "date": "1987-05-05",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 115,
+    "awayScore": 102,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1987-east-csf-atl-det",
+    "gameNumber": 3,
+    "date": "1987-05-08",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 108,
+    "awayScore": 99,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-csf-atl-det",
+    "gameNumber": 4,
+    "date": "1987-05-10",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 89,
+    "awayScore": 88,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-csf-atl-det",
+    "gameNumber": 5,
+    "date": "1987-05-13",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 96,
+    "awayScore": 104,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-west-csf-lal-gsw",
+    "gameNumber": 1,
+    "date": "1987-05-05",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 125,
+    "awayScore": 116,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-csf-lal-gsw",
+    "gameNumber": 2,
+    "date": "1987-05-07",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 116,
+    "awayScore": 101,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-csf-lal-gsw",
+    "gameNumber": 3,
+    "date": "1987-05-09",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 108,
+    "awayScore": 133,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-csf-lal-gsw",
+    "gameNumber": 4,
+    "date": "1987-05-10",
+    "homeTeam": "GSW",
+    "awayTeam": "LAL",
+    "homeScore": 129,
+    "awayScore": 121,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1987-west-csf-lal-gsw",
+    "gameNumber": 5,
+    "date": "1987-05-12",
+    "homeTeam": "LAL",
+    "awayTeam": "GSW",
+    "homeScore": 118,
+    "awayScore": 106,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-csf-hou-sea",
+    "gameNumber": 1,
+    "date": "1987-05-02",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 106,
+    "awayScore": 111,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1987-west-csf-hou-sea",
+    "gameNumber": 2,
+    "date": "1987-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 97,
+    "awayScore": 99,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1987-west-csf-hou-sea",
+    "gameNumber": 3,
+    "date": "1987-05-07",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 84,
+    "awayScore": 102,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1987-west-csf-hou-sea",
+    "gameNumber": 4,
+    "date": "1987-05-09",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 117,
+    "awayScore": 102,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1987-west-csf-hou-sea",
+    "gameNumber": 5,
+    "date": "1987-05-12",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 112,
+    "awayScore": 107,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1987-west-csf-hou-sea",
+    "gameNumber": 6,
+    "date": "1987-05-14",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 128,
+    "awayScore": 125,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1987-east-r1-atl-ind",
+    "gameNumber": 1,
+    "date": "1987-04-24",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 110,
+    "awayScore": 94,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1987-east-r1-atl-ind",
+    "gameNumber": 2,
+    "date": "1987-04-26",
+    "homeTeam": "ATL",
+    "awayTeam": "IND",
+    "homeScore": 94,
+    "awayScore": 93,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1987-east-r1-atl-ind",
+    "gameNumber": 3,
+    "date": "1987-04-29",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 96,
+    "awayScore": 87,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1987-east-r1-atl-ind",
+    "gameNumber": 4,
+    "date": "1987-05-01",
+    "homeTeam": "IND",
+    "awayTeam": "ATL",
+    "homeScore": 97,
+    "awayScore": 101,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1987-east-r1-bos-chi",
+    "gameNumber": 1,
+    "date": "1987-04-23",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 108,
+    "awayScore": 104,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-r1-bos-chi",
+    "gameNumber": 2,
+    "date": "1987-04-26",
+    "homeTeam": "BOS",
+    "awayTeam": "CHI",
+    "homeScore": 105,
+    "awayScore": 96,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-r1-bos-chi",
+    "gameNumber": 3,
+    "date": "1987-04-28",
+    "homeTeam": "CHI",
+    "awayTeam": "BOS",
+    "homeScore": 94,
+    "awayScore": 105,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1987-east-r1-det-wsb",
+    "gameNumber": 1,
+    "date": "1987-04-24",
+    "homeTeam": "DET",
+    "awayTeam": "WSB",
+    "homeScore": 106,
+    "awayScore": 92,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-r1-det-wsb",
+    "gameNumber": 2,
+    "date": "1987-04-26",
+    "homeTeam": "DET",
+    "awayTeam": "WSB",
+    "homeScore": 128,
+    "awayScore": 85,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-r1-det-wsb",
+    "gameNumber": 3,
+    "date": "1987-04-29",
+    "homeTeam": "WSB",
+    "awayTeam": "DET",
+    "homeScore": 96,
+    "awayScore": 97,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1987-east-r1-mil-phi",
+    "gameNumber": 1,
+    "date": "1987-04-24",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 107,
+    "awayScore": 104,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1987-east-r1-mil-phi",
+    "gameNumber": 2,
+    "date": "1987-04-26",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 122,
+    "awayScore": 125,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1987-east-r1-mil-phi",
+    "gameNumber": 3,
+    "date": "1987-04-29",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 120,
+    "awayScore": 121,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1987-east-r1-mil-phi",
+    "gameNumber": 4,
+    "date": "1987-05-01",
+    "homeTeam": "PHI",
+    "awayTeam": "MIL",
+    "homeScore": 124,
+    "awayScore": 118,
+    "winner": "PHI"
+  },
+  {
+    "seriesId": "1987-east-r1-mil-phi",
+    "gameNumber": 5,
+    "date": "1987-05-03",
+    "homeTeam": "MIL",
+    "awayTeam": "PHI",
+    "homeScore": 102,
+    "awayScore": 89,
+    "winner": "MIL"
+  },
+  {
+    "seriesId": "1987-west-r1-uta-gsw",
+    "gameNumber": 1,
+    "date": "1987-04-23",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 99,
+    "awayScore": 85,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1987-west-r1-uta-gsw",
+    "gameNumber": 2,
+    "date": "1987-04-25",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 103,
+    "awayScore": 100,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1987-west-r1-uta-gsw",
+    "gameNumber": 3,
+    "date": "1987-04-29",
+    "homeTeam": "GSW",
+    "awayTeam": "UTA",
+    "homeScore": 110,
+    "awayScore": 95,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1987-west-r1-uta-gsw",
+    "gameNumber": 4,
+    "date": "1987-05-01",
+    "homeTeam": "GSW",
+    "awayTeam": "UTA",
+    "homeScore": 98,
+    "awayScore": 94,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1987-west-r1-uta-gsw",
+    "gameNumber": 5,
+    "date": "1987-05-03",
+    "homeTeam": "UTA",
+    "awayTeam": "GSW",
+    "homeScore": 113,
+    "awayScore": 118,
+    "winner": "GSW"
+  },
+  {
+    "seriesId": "1987-west-r1-por-hou",
+    "gameNumber": 1,
+    "date": "1987-04-24",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 115,
+    "awayScore": 125,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1987-west-r1-por-hou",
+    "gameNumber": 2,
+    "date": "1987-04-26",
+    "homeTeam": "POR",
+    "awayTeam": "HOU",
+    "homeScore": 111,
+    "awayScore": 98,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1987-west-r1-por-hou",
+    "gameNumber": 3,
+    "date": "1987-04-28",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 117,
+    "awayScore": 108,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1987-west-r1-por-hou",
+    "gameNumber": 4,
+    "date": "1987-04-30",
+    "homeTeam": "HOU",
+    "awayTeam": "POR",
+    "homeScore": 113,
+    "awayScore": 101,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1987-west-r1-lal-den",
+    "gameNumber": 1,
+    "date": "1987-04-23",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 128,
+    "awayScore": 95,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-r1-lal-den",
+    "gameNumber": 2,
+    "date": "1987-04-25",
+    "homeTeam": "LAL",
+    "awayTeam": "DEN",
+    "homeScore": 139,
+    "awayScore": 127,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-r1-lal-den",
+    "gameNumber": 3,
+    "date": "1987-04-29",
+    "homeTeam": "DEN",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 140,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1987-west-r1-dal-sea",
+    "gameNumber": 1,
+    "date": "1987-04-23",
+    "homeTeam": "DAL",
+    "awayTeam": "SEA",
+    "homeScore": 151,
+    "awayScore": 129,
+    "winner": "DAL"
+  },
+  {
+    "seriesId": "1987-west-r1-dal-sea",
+    "gameNumber": 2,
+    "date": "1987-04-25",
+    "homeTeam": "DAL",
+    "awayTeam": "SEA",
+    "homeScore": 110,
+    "awayScore": 112,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1987-west-r1-dal-sea",
+    "gameNumber": 3,
+    "date": "1987-04-28",
+    "homeTeam": "SEA",
+    "awayTeam": "DAL",
+    "homeScore": 117,
+    "awayScore": 107,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1987-west-r1-dal-sea",
+    "gameNumber": 4,
+    "date": "1987-04-30",
+    "homeTeam": "SEA",
+    "awayTeam": "DAL",
+    "homeScore": 124,
+    "awayScore": 98,
+    "winner": "SEA"
+  }
+]

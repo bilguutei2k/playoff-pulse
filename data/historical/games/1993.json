@@ -1,0 +1,762 @@
+[
+  {
+    "seriesId": "1993-finals-finals-pho-chi",
+    "gameNumber": 1,
+    "date": "1993-06-09",
+    "homeTeam": "PHO",
+    "awayTeam": "CHI",
+    "homeScore": 92,
+    "awayScore": 100,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-finals-finals-pho-chi",
+    "gameNumber": 2,
+    "date": "1993-06-11",
+    "homeTeam": "PHO",
+    "awayTeam": "CHI",
+    "homeScore": 108,
+    "awayScore": 111,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-finals-finals-pho-chi",
+    "gameNumber": 3,
+    "date": "1993-06-13",
+    "homeTeam": "CHI",
+    "awayTeam": "PHO",
+    "homeScore": 121,
+    "awayScore": 129,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-finals-finals-pho-chi",
+    "gameNumber": 4,
+    "date": "1993-06-16",
+    "homeTeam": "CHI",
+    "awayTeam": "PHO",
+    "homeScore": 111,
+    "awayScore": 105,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-finals-finals-pho-chi",
+    "gameNumber": 5,
+    "date": "1993-06-18",
+    "homeTeam": "CHI",
+    "awayTeam": "PHO",
+    "homeScore": 98,
+    "awayScore": 108,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-finals-finals-pho-chi",
+    "gameNumber": 6,
+    "date": "1993-06-20",
+    "homeTeam": "PHO",
+    "awayTeam": "CHI",
+    "homeScore": 98,
+    "awayScore": 99,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-cf-nyk-chi",
+    "gameNumber": 1,
+    "date": "1993-05-23",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-cf-nyk-chi",
+    "gameNumber": 2,
+    "date": "1993-05-25",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-cf-nyk-chi",
+    "gameNumber": 3,
+    "date": "1993-05-29",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 103,
+    "awayScore": 83,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-cf-nyk-chi",
+    "gameNumber": 4,
+    "date": "1993-05-31",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 105,
+    "awayScore": 95,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-cf-nyk-chi",
+    "gameNumber": 5,
+    "date": "1993-06-02",
+    "homeTeam": "NYK",
+    "awayTeam": "CHI",
+    "homeScore": 94,
+    "awayScore": 97,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-cf-nyk-chi",
+    "gameNumber": 6,
+    "date": "1993-06-04",
+    "homeTeam": "CHI",
+    "awayTeam": "NYK",
+    "homeScore": 96,
+    "awayScore": 88,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 1,
+    "date": "1993-05-24",
+    "homeTeam": "PHO",
+    "awayTeam": "SEA",
+    "homeScore": 105,
+    "awayScore": 91,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 2,
+    "date": "1993-05-26",
+    "homeTeam": "PHO",
+    "awayTeam": "SEA",
+    "homeScore": 99,
+    "awayScore": 103,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 3,
+    "date": "1993-05-28",
+    "homeTeam": "SEA",
+    "awayTeam": "PHO",
+    "homeScore": 97,
+    "awayScore": 104,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 4,
+    "date": "1993-05-30",
+    "homeTeam": "SEA",
+    "awayTeam": "PHO",
+    "homeScore": 120,
+    "awayScore": 101,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 5,
+    "date": "1993-06-01",
+    "homeTeam": "PHO",
+    "awayTeam": "SEA",
+    "homeScore": 120,
+    "awayScore": 114,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 6,
+    "date": "1993-06-03",
+    "homeTeam": "SEA",
+    "awayTeam": "PHO",
+    "homeScore": 118,
+    "awayScore": 102,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-cf-pho-sea",
+    "gameNumber": 7,
+    "date": "1993-06-05",
+    "homeTeam": "PHO",
+    "awayTeam": "SEA",
+    "homeScore": 123,
+    "awayScore": 110,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-east-csf-chi-cle",
+    "gameNumber": 1,
+    "date": "1993-05-11",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 91,
+    "awayScore": 84,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-csf-chi-cle",
+    "gameNumber": 2,
+    "date": "1993-05-13",
+    "homeTeam": "CHI",
+    "awayTeam": "CLE",
+    "homeScore": 104,
+    "awayScore": 85,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-csf-chi-cle",
+    "gameNumber": 3,
+    "date": "1993-05-15",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 90,
+    "awayScore": 96,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-csf-chi-cle",
+    "gameNumber": 4,
+    "date": "1993-05-17",
+    "homeTeam": "CLE",
+    "awayTeam": "CHI",
+    "homeScore": 101,
+    "awayScore": 103,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-csf-nyk-chh",
+    "gameNumber": 1,
+    "date": "1993-05-09",
+    "homeTeam": "NYK",
+    "awayTeam": "CHH",
+    "homeScore": 111,
+    "awayScore": 95,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-csf-nyk-chh",
+    "gameNumber": 2,
+    "date": "1993-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "CHH",
+    "homeScore": 105,
+    "awayScore": 101,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-csf-nyk-chh",
+    "gameNumber": 3,
+    "date": "1993-05-14",
+    "homeTeam": "CHH",
+    "awayTeam": "NYK",
+    "homeScore": 110,
+    "awayScore": 106,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "1993-east-csf-nyk-chh",
+    "gameNumber": 4,
+    "date": "1993-05-16",
+    "homeTeam": "CHH",
+    "awayTeam": "NYK",
+    "homeScore": 92,
+    "awayScore": 94,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-csf-nyk-chh",
+    "gameNumber": 5,
+    "date": "1993-05-18",
+    "homeTeam": "NYK",
+    "awayTeam": "CHH",
+    "homeScore": 105,
+    "awayScore": 101,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-west-csf-pho-sas",
+    "gameNumber": 1,
+    "date": "1993-05-11",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 98,
+    "awayScore": 89,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-csf-pho-sas",
+    "gameNumber": 2,
+    "date": "1993-05-13",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 103,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-csf-pho-sas",
+    "gameNumber": 3,
+    "date": "1993-05-15",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 111,
+    "awayScore": 96,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1993-west-csf-pho-sas",
+    "gameNumber": 4,
+    "date": "1993-05-16",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 117,
+    "awayScore": 103,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1993-west-csf-pho-sas",
+    "gameNumber": 5,
+    "date": "1993-05-18",
+    "homeTeam": "PHO",
+    "awayTeam": "SAS",
+    "homeScore": 109,
+    "awayScore": 97,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-csf-pho-sas",
+    "gameNumber": 6,
+    "date": "1993-05-20",
+    "homeTeam": "SAS",
+    "awayTeam": "PHO",
+    "homeScore": 100,
+    "awayScore": 102,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 1,
+    "date": "1993-05-10",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 99,
+    "awayScore": 90,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 2,
+    "date": "1993-05-12",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 111,
+    "awayScore": 100,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 3,
+    "date": "1993-05-15",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 97,
+    "awayScore": 79,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 4,
+    "date": "1993-05-16",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 103,
+    "awayScore": 92,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 5,
+    "date": "1993-05-18",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 120,
+    "awayScore": 95,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 6,
+    "date": "1993-05-20",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 103,
+    "awayScore": 90,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1993-west-csf-sea-hou",
+    "gameNumber": 7,
+    "date": "1993-05-22",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 103,
+    "awayScore": 100,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-east-r1-bos-chh",
+    "gameNumber": 1,
+    "date": "1993-04-29",
+    "homeTeam": "BOS",
+    "awayTeam": "CHH",
+    "homeScore": 112,
+    "awayScore": 101,
+    "winner": "BOS"
+  },
+  {
+    "seriesId": "1993-east-r1-bos-chh",
+    "gameNumber": 2,
+    "date": "1993-05-01",
+    "homeTeam": "BOS",
+    "awayTeam": "CHH",
+    "homeScore": 98,
+    "awayScore": 99,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "1993-east-r1-bos-chh",
+    "gameNumber": 3,
+    "date": "1993-05-03",
+    "homeTeam": "CHH",
+    "awayTeam": "BOS",
+    "homeScore": 119,
+    "awayScore": 89,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "1993-east-r1-bos-chh",
+    "gameNumber": 4,
+    "date": "1993-05-05",
+    "homeTeam": "CHH",
+    "awayTeam": "BOS",
+    "homeScore": 104,
+    "awayScore": 103,
+    "winner": "CHH"
+  },
+  {
+    "seriesId": "1993-east-r1-chi-atl",
+    "gameNumber": 1,
+    "date": "1993-04-30",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 114,
+    "awayScore": 90,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-r1-chi-atl",
+    "gameNumber": 2,
+    "date": "1993-05-02",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 117,
+    "awayScore": 102,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-r1-chi-atl",
+    "gameNumber": 3,
+    "date": "1993-05-04",
+    "homeTeam": "ATL",
+    "awayTeam": "CHI",
+    "homeScore": 88,
+    "awayScore": 98,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1993-east-r1-cle-njn",
+    "gameNumber": 1,
+    "date": "1993-04-29",
+    "homeTeam": "CLE",
+    "awayTeam": "NJN",
+    "homeScore": 114,
+    "awayScore": 98,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1993-east-r1-cle-njn",
+    "gameNumber": 2,
+    "date": "1993-05-01",
+    "homeTeam": "CLE",
+    "awayTeam": "NJN",
+    "homeScore": 99,
+    "awayScore": 101,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "1993-east-r1-cle-njn",
+    "gameNumber": 3,
+    "date": "1993-05-05",
+    "homeTeam": "NJN",
+    "awayTeam": "CLE",
+    "homeScore": 84,
+    "awayScore": 93,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1993-east-r1-cle-njn",
+    "gameNumber": 4,
+    "date": "1993-05-07",
+    "homeTeam": "NJN",
+    "awayTeam": "CLE",
+    "homeScore": 96,
+    "awayScore": 79,
+    "winner": "NJN"
+  },
+  {
+    "seriesId": "1993-east-r1-cle-njn",
+    "gameNumber": 5,
+    "date": "1993-05-09",
+    "homeTeam": "CLE",
+    "awayTeam": "NJN",
+    "homeScore": 99,
+    "awayScore": 89,
+    "winner": "CLE"
+  },
+  {
+    "seriesId": "1993-east-r1-nyk-ind",
+    "gameNumber": 1,
+    "date": "1993-04-30",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 107,
+    "awayScore": 104,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-r1-nyk-ind",
+    "gameNumber": 2,
+    "date": "1993-05-02",
+    "homeTeam": "NYK",
+    "awayTeam": "IND",
+    "homeScore": 101,
+    "awayScore": 91,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-east-r1-nyk-ind",
+    "gameNumber": 3,
+    "date": "1993-05-04",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 116,
+    "awayScore": 93,
+    "winner": "IND"
+  },
+  {
+    "seriesId": "1993-east-r1-nyk-ind",
+    "gameNumber": 4,
+    "date": "1993-05-06",
+    "homeTeam": "IND",
+    "awayTeam": "NYK",
+    "homeScore": 100,
+    "awayScore": 109,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1993-west-r1-hou-lac",
+    "gameNumber": 1,
+    "date": "1993-04-29",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 117,
+    "awayScore": 94,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1993-west-r1-hou-lac",
+    "gameNumber": 2,
+    "date": "1993-05-01",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 83,
+    "awayScore": 95,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "1993-west-r1-hou-lac",
+    "gameNumber": 3,
+    "date": "1993-05-03",
+    "homeTeam": "LAC",
+    "awayTeam": "HOU",
+    "homeScore": 99,
+    "awayScore": 111,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1993-west-r1-hou-lac",
+    "gameNumber": 4,
+    "date": "1993-05-05",
+    "homeTeam": "LAC",
+    "awayTeam": "HOU",
+    "homeScore": 93,
+    "awayScore": 90,
+    "winner": "LAC"
+  },
+  {
+    "seriesId": "1993-west-r1-hou-lac",
+    "gameNumber": 5,
+    "date": "1993-05-08",
+    "homeTeam": "HOU",
+    "awayTeam": "LAC",
+    "homeScore": 84,
+    "awayScore": 80,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1993-west-r1-pho-lal",
+    "gameNumber": 1,
+    "date": "1993-04-30",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 107,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1993-west-r1-pho-lal",
+    "gameNumber": 2,
+    "date": "1993-05-02",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 81,
+    "awayScore": 86,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1993-west-r1-pho-lal",
+    "gameNumber": 3,
+    "date": "1993-05-04",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 102,
+    "awayScore": 107,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-r1-pho-lal",
+    "gameNumber": 4,
+    "date": "1993-05-06",
+    "homeTeam": "LAL",
+    "awayTeam": "PHO",
+    "homeScore": 86,
+    "awayScore": 101,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-r1-pho-lal",
+    "gameNumber": 5,
+    "date": "1993-05-09",
+    "homeTeam": "PHO",
+    "awayTeam": "LAL",
+    "homeScore": 112,
+    "awayScore": 104,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1993-west-r1-por-sas",
+    "gameNumber": 1,
+    "date": "1993-04-29",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 86,
+    "awayScore": 87,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1993-west-r1-por-sas",
+    "gameNumber": 2,
+    "date": "1993-05-01",
+    "homeTeam": "POR",
+    "awayTeam": "SAS",
+    "homeScore": 105,
+    "awayScore": 96,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1993-west-r1-por-sas",
+    "gameNumber": 3,
+    "date": "1993-05-05",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 107,
+    "awayScore": 101,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1993-west-r1-por-sas",
+    "gameNumber": 4,
+    "date": "1993-05-07",
+    "homeTeam": "SAS",
+    "awayTeam": "POR",
+    "homeScore": 100,
+    "awayScore": 97,
+    "winner": "SAS"
+  },
+  {
+    "seriesId": "1993-west-r1-sea-uta",
+    "gameNumber": 1,
+    "date": "1993-04-30",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 99,
+    "awayScore": 85,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-r1-sea-uta",
+    "gameNumber": 2,
+    "date": "1993-05-02",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 85,
+    "awayScore": 89,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1993-west-r1-sea-uta",
+    "gameNumber": 3,
+    "date": "1993-05-04",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 90,
+    "awayScore": 80,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1993-west-r1-sea-uta",
+    "gameNumber": 4,
+    "date": "1993-05-06",
+    "homeTeam": "UTA",
+    "awayTeam": "SEA",
+    "homeScore": 80,
+    "awayScore": 93,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1993-west-r1-sea-uta",
+    "gameNumber": 5,
+    "date": "1993-05-08",
+    "homeTeam": "SEA",
+    "awayTeam": "UTA",
+    "homeScore": 100,
+    "awayScore": 92,
+    "winner": "SEA"
+  }
+]

@@ -1,0 +1,722 @@
+[
+  {
+    "seriesId": "1997-finals-finals-chi-uta",
+    "gameNumber": 1,
+    "date": "1997-06-01",
+    "homeTeam": "CHI",
+    "awayTeam": "UTA",
+    "homeScore": 84,
+    "awayScore": 82,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-finals-finals-chi-uta",
+    "gameNumber": 2,
+    "date": "1997-06-04",
+    "homeTeam": "CHI",
+    "awayTeam": "UTA",
+    "homeScore": 97,
+    "awayScore": 85,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-finals-finals-chi-uta",
+    "gameNumber": 3,
+    "date": "1997-06-06",
+    "homeTeam": "UTA",
+    "awayTeam": "CHI",
+    "homeScore": 104,
+    "awayScore": 93,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-finals-finals-chi-uta",
+    "gameNumber": 4,
+    "date": "1997-06-08",
+    "homeTeam": "UTA",
+    "awayTeam": "CHI",
+    "homeScore": 78,
+    "awayScore": 73,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-finals-finals-chi-uta",
+    "gameNumber": 5,
+    "date": "1997-06-11",
+    "homeTeam": "UTA",
+    "awayTeam": "CHI",
+    "homeScore": 88,
+    "awayScore": 90,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-finals-finals-chi-uta",
+    "gameNumber": 6,
+    "date": "1997-06-13",
+    "homeTeam": "CHI",
+    "awayTeam": "UTA",
+    "homeScore": 90,
+    "awayScore": 86,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-cf-chi-mia",
+    "gameNumber": 1,
+    "date": "1997-05-20",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 84,
+    "awayScore": 77,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-cf-chi-mia",
+    "gameNumber": 2,
+    "date": "1997-05-22",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 75,
+    "awayScore": 68,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-cf-chi-mia",
+    "gameNumber": 3,
+    "date": "1997-05-24",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 74,
+    "awayScore": 98,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-cf-chi-mia",
+    "gameNumber": 4,
+    "date": "1997-05-26",
+    "homeTeam": "MIA",
+    "awayTeam": "CHI",
+    "homeScore": 87,
+    "awayScore": 80,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-cf-chi-mia",
+    "gameNumber": 5,
+    "date": "1997-05-28",
+    "homeTeam": "CHI",
+    "awayTeam": "MIA",
+    "homeScore": 100,
+    "awayScore": 87,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-west-cf-uta-hou",
+    "gameNumber": 1,
+    "date": "1997-05-19",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 101,
+    "awayScore": 86,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-cf-uta-hou",
+    "gameNumber": 2,
+    "date": "1997-05-21",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 104,
+    "awayScore": 92,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-cf-uta-hou",
+    "gameNumber": 3,
+    "date": "1997-05-23",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 118,
+    "awayScore": 100,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-cf-uta-hou",
+    "gameNumber": 4,
+    "date": "1997-05-25",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 95,
+    "awayScore": 92,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-cf-uta-hou",
+    "gameNumber": 5,
+    "date": "1997-05-27",
+    "homeTeam": "UTA",
+    "awayTeam": "HOU",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-cf-uta-hou",
+    "gameNumber": 6,
+    "date": "1997-05-29",
+    "homeTeam": "HOU",
+    "awayTeam": "UTA",
+    "homeScore": 100,
+    "awayScore": 103,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-east-csf-chi-atl",
+    "gameNumber": 1,
+    "date": "1997-05-06",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 100,
+    "awayScore": 97,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-csf-chi-atl",
+    "gameNumber": 2,
+    "date": "1997-05-08",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 95,
+    "awayScore": 103,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1997-east-csf-chi-atl",
+    "gameNumber": 3,
+    "date": "1997-05-10",
+    "homeTeam": "ATL",
+    "awayTeam": "CHI",
+    "homeScore": 80,
+    "awayScore": 100,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-csf-chi-atl",
+    "gameNumber": 4,
+    "date": "1997-05-11",
+    "homeTeam": "ATL",
+    "awayTeam": "CHI",
+    "homeScore": 80,
+    "awayScore": 89,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-csf-chi-atl",
+    "gameNumber": 5,
+    "date": "1997-05-13",
+    "homeTeam": "CHI",
+    "awayTeam": "ATL",
+    "homeScore": 107,
+    "awayScore": 92,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 1,
+    "date": "1997-05-07",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 79,
+    "awayScore": 88,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 2,
+    "date": "1997-05-09",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 88,
+    "awayScore": 84,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 3,
+    "date": "1997-05-11",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 77,
+    "awayScore": 73,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 4,
+    "date": "1997-05-12",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 89,
+    "awayScore": 76,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 5,
+    "date": "1997-05-14",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 96,
+    "awayScore": 81,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 6,
+    "date": "1997-05-16",
+    "homeTeam": "NYK",
+    "awayTeam": "MIA",
+    "homeScore": 90,
+    "awayScore": 95,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-csf-mia-nyk",
+    "gameNumber": 7,
+    "date": "1997-05-18",
+    "homeTeam": "MIA",
+    "awayTeam": "NYK",
+    "homeScore": 101,
+    "awayScore": 90,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 1,
+    "date": "1997-05-05",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 112,
+    "awayScore": 102,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 2,
+    "date": "1997-05-07",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 101,
+    "awayScore": 106,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 3,
+    "date": "1997-05-09",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 93,
+    "awayScore": 97,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 4,
+    "date": "1997-05-11",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 106,
+    "awayScore": 110,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 5,
+    "date": "1997-05-13",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 94,
+    "awayScore": 100,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 6,
+    "date": "1997-05-15",
+    "homeTeam": "SEA",
+    "awayTeam": "HOU",
+    "homeScore": 99,
+    "awayScore": 96,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1997-west-csf-sea-hou",
+    "gameNumber": 7,
+    "date": "1997-05-17",
+    "homeTeam": "HOU",
+    "awayTeam": "SEA",
+    "homeScore": 96,
+    "awayScore": 91,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-csf-uta-lal",
+    "gameNumber": 1,
+    "date": "1997-05-04",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 93,
+    "awayScore": 77,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-csf-uta-lal",
+    "gameNumber": 2,
+    "date": "1997-05-06",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 103,
+    "awayScore": 101,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-csf-uta-lal",
+    "gameNumber": 3,
+    "date": "1997-05-08",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 104,
+    "awayScore": 84,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1997-west-csf-uta-lal",
+    "gameNumber": 4,
+    "date": "1997-05-10",
+    "homeTeam": "LAL",
+    "awayTeam": "UTA",
+    "homeScore": 95,
+    "awayScore": 110,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-csf-uta-lal",
+    "gameNumber": 5,
+    "date": "1997-05-12",
+    "homeTeam": "UTA",
+    "awayTeam": "LAL",
+    "homeScore": 98,
+    "awayScore": 93,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-east-r1-atl-det",
+    "gameNumber": 1,
+    "date": "1997-04-25",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 89,
+    "awayScore": 75,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1997-east-r1-atl-det",
+    "gameNumber": 2,
+    "date": "1997-04-27",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 80,
+    "awayScore": 93,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1997-east-r1-atl-det",
+    "gameNumber": 3,
+    "date": "1997-04-29",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "DET"
+  },
+  {
+    "seriesId": "1997-east-r1-atl-det",
+    "gameNumber": 4,
+    "date": "1997-05-02",
+    "homeTeam": "DET",
+    "awayTeam": "ATL",
+    "homeScore": 82,
+    "awayScore": 94,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1997-east-r1-atl-det",
+    "gameNumber": 5,
+    "date": "1997-05-04",
+    "homeTeam": "ATL",
+    "awayTeam": "DET",
+    "homeScore": 84,
+    "awayScore": 79,
+    "winner": "ATL"
+  },
+  {
+    "seriesId": "1997-east-r1-chi-wsb",
+    "gameNumber": 1,
+    "date": "1997-04-25",
+    "homeTeam": "CHI",
+    "awayTeam": "WSB",
+    "homeScore": 98,
+    "awayScore": 86,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-r1-chi-wsb",
+    "gameNumber": 2,
+    "date": "1997-04-27",
+    "homeTeam": "CHI",
+    "awayTeam": "WSB",
+    "homeScore": 109,
+    "awayScore": 104,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-r1-chi-wsb",
+    "gameNumber": 3,
+    "date": "1997-04-30",
+    "homeTeam": "WSB",
+    "awayTeam": "CHI",
+    "homeScore": 95,
+    "awayScore": 96,
+    "winner": "CHI"
+  },
+  {
+    "seriesId": "1997-east-r1-mia-orl",
+    "gameNumber": 1,
+    "date": "1997-04-24",
+    "homeTeam": "MIA",
+    "awayTeam": "ORL",
+    "homeScore": 99,
+    "awayScore": 64,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-r1-mia-orl",
+    "gameNumber": 2,
+    "date": "1997-04-27",
+    "homeTeam": "MIA",
+    "awayTeam": "ORL",
+    "homeScore": 104,
+    "awayScore": 87,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-r1-mia-orl",
+    "gameNumber": 3,
+    "date": "1997-04-29",
+    "homeTeam": "ORL",
+    "awayTeam": "MIA",
+    "homeScore": 88,
+    "awayScore": 75,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1997-east-r1-mia-orl",
+    "gameNumber": 4,
+    "date": "1997-05-01",
+    "homeTeam": "ORL",
+    "awayTeam": "MIA",
+    "homeScore": 99,
+    "awayScore": 91,
+    "winner": "ORL"
+  },
+  {
+    "seriesId": "1997-east-r1-mia-orl",
+    "gameNumber": 5,
+    "date": "1997-05-04",
+    "homeTeam": "MIA",
+    "awayTeam": "ORL",
+    "homeScore": 91,
+    "awayScore": 83,
+    "winner": "MIA"
+  },
+  {
+    "seriesId": "1997-east-r1-nyk-chh",
+    "gameNumber": 1,
+    "date": "1997-04-24",
+    "homeTeam": "NYK",
+    "awayTeam": "CHH",
+    "homeScore": 109,
+    "awayScore": 99,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1997-east-r1-nyk-chh",
+    "gameNumber": 2,
+    "date": "1997-04-26",
+    "homeTeam": "NYK",
+    "awayTeam": "CHH",
+    "homeScore": 100,
+    "awayScore": 93,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1997-east-r1-nyk-chh",
+    "gameNumber": 3,
+    "date": "1997-04-28",
+    "homeTeam": "CHH",
+    "awayTeam": "NYK",
+    "homeScore": 95,
+    "awayScore": 104,
+    "winner": "NYK"
+  },
+  {
+    "seriesId": "1997-west-r1-hou-min",
+    "gameNumber": 1,
+    "date": "1997-04-24",
+    "homeTeam": "HOU",
+    "awayTeam": "MIN",
+    "homeScore": 112,
+    "awayScore": 95,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-r1-hou-min",
+    "gameNumber": 2,
+    "date": "1997-04-26",
+    "homeTeam": "HOU",
+    "awayTeam": "MIN",
+    "homeScore": 96,
+    "awayScore": 84,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-r1-hou-min",
+    "gameNumber": 3,
+    "date": "1997-04-29",
+    "homeTeam": "MIN",
+    "awayTeam": "HOU",
+    "homeScore": 120,
+    "awayScore": 125,
+    "winner": "HOU"
+  },
+  {
+    "seriesId": "1997-west-r1-lal-por",
+    "gameNumber": 1,
+    "date": "1997-04-25",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 95,
+    "awayScore": 77,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1997-west-r1-lal-por",
+    "gameNumber": 2,
+    "date": "1997-04-27",
+    "homeTeam": "LAL",
+    "awayTeam": "POR",
+    "homeScore": 107,
+    "awayScore": 93,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1997-west-r1-lal-por",
+    "gameNumber": 3,
+    "date": "1997-04-30",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 98,
+    "awayScore": 90,
+    "winner": "POR"
+  },
+  {
+    "seriesId": "1997-west-r1-lal-por",
+    "gameNumber": 4,
+    "date": "1997-05-02",
+    "homeTeam": "POR",
+    "awayTeam": "LAL",
+    "homeScore": 91,
+    "awayScore": 95,
+    "winner": "LAL"
+  },
+  {
+    "seriesId": "1997-west-r1-sea-pho",
+    "gameNumber": 1,
+    "date": "1997-04-25",
+    "homeTeam": "SEA",
+    "awayTeam": "PHO",
+    "homeScore": 101,
+    "awayScore": 106,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1997-west-r1-sea-pho",
+    "gameNumber": 2,
+    "date": "1997-04-27",
+    "homeTeam": "SEA",
+    "awayTeam": "PHO",
+    "homeScore": 122,
+    "awayScore": 78,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1997-west-r1-sea-pho",
+    "gameNumber": 3,
+    "date": "1997-04-29",
+    "homeTeam": "PHO",
+    "awayTeam": "SEA",
+    "homeScore": 110,
+    "awayScore": 103,
+    "winner": "PHO"
+  },
+  {
+    "seriesId": "1997-west-r1-sea-pho",
+    "gameNumber": 4,
+    "date": "1997-05-01",
+    "homeTeam": "PHO",
+    "awayTeam": "SEA",
+    "homeScore": 115,
+    "awayScore": 122,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1997-west-r1-sea-pho",
+    "gameNumber": 5,
+    "date": "1997-05-03",
+    "homeTeam": "SEA",
+    "awayTeam": "PHO",
+    "homeScore": 116,
+    "awayScore": 92,
+    "winner": "SEA"
+  },
+  {
+    "seriesId": "1997-west-r1-uta-lac",
+    "gameNumber": 1,
+    "date": "1997-04-24",
+    "homeTeam": "UTA",
+    "awayTeam": "LAC",
+    "homeScore": 106,
+    "awayScore": 86,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-r1-uta-lac",
+    "gameNumber": 2,
+    "date": "1997-04-26",
+    "homeTeam": "UTA",
+    "awayTeam": "LAC",
+    "homeScore": 105,
+    "awayScore": 99,
+    "winner": "UTA"
+  },
+  {
+    "seriesId": "1997-west-r1-uta-lac",
+    "gameNumber": 3,
+    "date": "1997-04-28",
+    "homeTeam": "LAC",
+    "awayTeam": "UTA",
+    "homeScore": 92,
+    "awayScore": 104,
+    "winner": "UTA"
+  }
+]
