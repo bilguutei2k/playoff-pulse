@@ -3,6 +3,7 @@ import * as path from "node:path";
 import {
   auditExternalBenchmarks,
   auditLaggedRotations,
+  diagnoseLaggedRotationRejections,
   type ExternalSeriesBenchmark,
   type LaggedRotationObservation,
 } from "../../src/lib/backtest/input-observations";
@@ -40,6 +41,11 @@ export function buildInputAudit() {
     rotations.map((row) => row.seriesId),
   ).size;
   const benchmarkSeries = new Set(benchmarks.map((row) => row.seriesId)).size;
+  const rotationRejections = diagnoseLaggedRotationRejections(
+    rotations,
+    series,
+    snapshots,
+  );
   return {
     generatedAt: new Date().toISOString(),
     conservativeDeadline:
@@ -62,6 +68,30 @@ export function buildInputAudit() {
           : "eligible_after_complete-pair-coverage-review",
       rule:
         "Do not infer a pre-series rotation from games played after the deadline. Only named, sourced, lagged observations totaling 240 minutes are eligible.",
+      sourceInventory: {
+        file: "data/historical/lagged-rotation-observations.json",
+        candidateObservations: rotations.length,
+        playerRows: rotations.reduce((sum, row) => sum + row.players.length, 0),
+        timestampedPlayerGameLogsPresent: rotations.length > 0,
+      },
+      clauseRejections: rotationRejections,
+      exact240Hypothesis: {
+        contractLevel:
+          "One team-level projected rotation for one regulation game; never a ten-game minute aggregate.",
+        observationsRejectedByClause:
+          rotationRejections.rejectionCounts.projectedMinutesTotal240,
+        overtimeOrPeriodRowsAvailable: 0,
+        result:
+          rotations.length === 0
+            ? "not_responsible_no_candidate_observations"
+            : rotationRejections.rejectionCounts.projectedMinutesTotal240 > 0
+              ? "requires_observation_level_review"
+              : "not_responsible_no_rejections",
+      },
+      diagnosis:
+        rotations.length === 0
+          ? "Genuine source-coverage failure: the repository contains no timestamped player-level pre-series game-log observations. No contract clause eliminated a candidate."
+          : "Candidate observations exist; consult clauseRejections before estimating coverage.",
     },
     externalBenchmarks: {
       observations: benchmarks.length,

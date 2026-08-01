@@ -127,8 +127,11 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 - Performance on immutable, contemporaneously issued 2027+ forecasts.
 - Historical injury/absence effects until sourced point-in-time coverage is
   material.
-- Production-equivalent lagged-rotation effects: zero eligible timestamped
-  rotation observations and zero completely covered series.
+- Production-equivalent lagged-rotation effects: zero candidate or eligible
+  timestamped player-game-log observations and zero completely covered series.
+  Clause-level instrumentation records zero rejections for every clause; the
+  240-minute, timestamp, and six-player rules did not eliminate anything
+  because the required source rows do not exist.
 - Individual latent-probability interval coverage, which is not identifiable
   from one binary series result.
 - External forecast or market benchmark comparisons: the schema and audit
