@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T21:25:25.653Z",
+  "generatedAt": "2026-08-01T21:30:05.912Z",
   "productionLabel": "Manual production forecast",
   "researchLabel": "Historical rolling-origin research",
   "researchProtocol": "Rolling origin: train only on seasons before each evaluation season; 1987-2026 evaluated after a three-season initialization window.",
@@ -141458,6 +141458,126 @@
         ],
         "probabilityCandidateBetter": 0.7275
       }
+    }
+  },
+  "ratingUncertaintyCandidate": {
+    "registration": {
+      "id": "srs_rating_uncertainty_v1",
+      "registeredAt": "2026-08-01",
+      "status": "research_only_not_promotion_eligible",
+      "samplesPerPrediction": 512,
+      "distribution": "For each target season, fit the sample standard deviation of SRS minus net rating using only earlier team-season snapshots. Sample independent normal team-strength errors once per simulation run and average the resulting game or exact-series probability.",
+      "purpose": "Triggered because the predeclared grouped series reliability term was at least 0.002; evaluate whether integrating over rating uncertainty reduces reliability loss."
+    },
+    "decisionRule": {
+      "threshold": 0.002,
+      "baselineSeriesReliability": 0.0026960172148003244,
+      "triggered": true
+    },
+    "fittedStandardDeviationBySeason": {
+      "1987": 0.3581985562139508,
+      "1988": 0.35740244534209326,
+      "1989": 0.4087637854292881,
+      "1990": 0.42544955583641586,
+      "1991": 0.42800740583147556,
+      "1992": 0.41223989652078136,
+      "1993": 0.4066358024036074,
+      "1994": 0.40276695803439094,
+      "1995": 0.39725381987162506,
+      "1996": 0.40267405900639314,
+      "1997": 0.41538480355467367,
+      "1998": 0.44056792222122443,
+      "1999": 0.4619033733261727,
+      "2000": 0.4876683705599613,
+      "2001": 0.4780963067435417,
+      "2002": 0.47907672993267875,
+      "2003": 0.4705820192230574,
+      "2004": 0.4714996989447772,
+      "2005": 0.48223427230983074,
+      "2006": 0.4828702995674421,
+      "2007": 0.4825334695069432,
+      "2008": 0.4829645812801446,
+      "2009": 0.49103287130471657,
+      "2010": 0.49230753591285703,
+      "2011": 0.48765454988112694,
+      "2012": 0.4907317733528939,
+      "2013": 0.49987198731797394,
+      "2014": 0.5005944622027197,
+      "2015": 0.5021319418717536,
+      "2016": 0.5003390908484874,
+      "2017": 0.4978819114786019,
+      "2018": 0.494336124117396,
+      "2019": 0.48927053374164603,
+      "2020": 0.4857175465475326,
+      "2021": 0.4852514986630872,
+      "2022": 0.4803293376405361,
+      "2023": 0.4761603624671739,
+      "2024": 0.47205463745353976,
+      "2025": 0.469959386132106,
+      "2026": 0.46986650757690346
+    },
+    "metrics": {
+      "game": {
+        "n": 3160,
+        "brier": 0.2148252755261913,
+        "logLoss": 0.6194897254890824,
+        "calibrationFit": {
+          "intercept": -0.11826479198259048,
+          "slope": 0.9690720790414675
+        },
+        "decomposition": {
+          "n": 3160,
+          "bins": 10,
+          "baseRate": 0.6351265822784811,
+          "brier": 0.2148252755261913,
+          "uncertainty": 0.2317408067617369,
+          "resolution": 0.017555379746835444,
+          "reliability": 0.00144430840631579,
+          "groupedEstimate": 0.21562973542121724,
+          "residual": -0.0008044598950259496,
+          "note": "Murphy decomposition using equal-count probability groups. The residual records within-group forecast variation, so components should be read as a grouped diagnostic."
+        }
+      },
+      "series": {
+        "n": 600,
+        "brier": 0.1764637378092728,
+        "logLoss": 0.5271562646433714,
+        "calibrationFit": {
+          "intercept": -0.01778874079888129,
+          "slope": 0.9441131175064776
+        },
+        "decomposition": {
+          "n": 600,
+          "bins": 10,
+          "baseRate": 0.725,
+          "brier": 0.1764637378092728,
+          "uncertainty": 0.199375,
+          "resolution": 0.023736111111111104,
+          "reliability": 0.0035272623214649174,
+          "groupedEstimate": 0.1791661512103538,
+          "residual": -0.0027024134010810164,
+          "note": "Murphy decomposition using equal-count probability groups. The residual records within-group forecast variation, so components should be read as a grouped diagnostic."
+        }
+      }
+    },
+    "comparisonToSrsHome": {
+      "game": {
+        "candidateMinusBaselineBrier": -0.000002490149770415528,
+        "ci95": [
+          -0.000039594536751956034,
+          0.000035239819850598935
+        ],
+        "probabilityCandidateBetter": 0.5526
+      },
+      "series": {
+        "candidateMinusBaselineBrier": -0.00011970259516262287,
+        "ci95": [
+          -0.0003019444388780297,
+          0.000060433442653788524
+        ],
+        "probabilityCandidateBetter": 0.8999
+      },
+      "reliabilityChange": 0.0008312451066645929
     }
   },
   "modelSelectionGate": {

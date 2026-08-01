@@ -20,6 +20,7 @@ import { solveSeriesExactly } from "../../src/lib/model/series-solver";
 import { historicalSeriesFormat } from "../../src/lib/backtest/series-formats";
 import { SEASONS } from "./scrape-bbref";
 import { ratingGapPlayerMultiplier } from "../../src/lib/backtest/research-candidates";
+import { createSeededRandom, type RandomSource } from "../../src/lib/model/random";
 
 const EVALUATION_SEASONS = SEASONS.slice(3);
 const LAMBDAS = [0.01, 0.1, 1, 10, 100];
@@ -887,6 +888,177 @@ const TEMPORAL_WINDOW_CANDIDATE = {
     "Fit the unchanged SRS + home expected-margin model using at most the ten completed seasons immediately before each target season.",
 } as const;
 
+const RATING_UNCERTAINTY_CANDIDATE = {
+  id: "srs_rating_uncertainty_v1",
+  registeredAt: "2026-08-01",
+  status: "research_only_not_promotion_eligible",
+  samplesPerPrediction: 512,
+  distribution:
+    "For each target season, fit the sample standard deviation of SRS minus net rating using only earlier team-season snapshots. Sample independent normal team-strength errors once per simulation run and average the resulting game or exact-series probability.",
+  purpose:
+    "Triggered because the predeclared grouped series reliability term was at least 0.002; evaluate whether integrating over rating uncertainty reduces reliability loss.",
+} as const;
+
+export function fitRatingUncertaintyStandardDeviation(
+  snapshots: Array<{ season: number; srs: number; netRating: number }>,
+  targetSeason: number,
+): number {
+  if (snapshots.some((row) => row.season >= targetSeason)) {
+    throw new Error(`Rating-uncertainty fit received a row from ${targetSeason} or later.`);
+  }
+  if (snapshots.length < 2) {
+    throw new Error(`Rating-uncertainty fit for ${targetSeason} needs at least two prior rows.`);
+  }
+  const residuals = snapshots.map((row) => row.srs - row.netRating);
+  const residualMean = mean(residuals);
+  const variance = residuals.reduce(
+    (sum, residual) => sum + (residual - residualMean) ** 2,
+    0,
+  ) / (residuals.length - 1);
+  const standardDeviation = Math.sqrt(variance);
+  if (!Number.isFinite(standardDeviation) || standardDeviation <= 0) {
+    throw new Error(`Rating-uncertainty fit for ${targetSeason} is degenerate.`);
+  }
+  return standardDeviation;
+}
+
+function standardNormal(random: RandomSource): number {
+  const u = Math.max(Number.EPSILON, random());
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * random());
+}
+
+function evaluateRatingUncertaintyCandidate(
+  allGames: GameRow[],
+  baseline: ReturnType<typeof evaluateSpec>,
+) {
+  const allSnapshots = SEASONS.flatMap((season) => loadSnapshots(season));
+  const gamePredictions: ProbabilityRow[] = [];
+  const seriesPredictions: ProbabilityRow[] = [];
+  const fittedStandardDeviationBySeason: Record<number, number> = {};
+  const spec: FeatureSpec = { id: "srs_home", features: ["srsDiff", "homeCourt"] };
+
+  for (const season of EVALUATION_SEASONS) {
+    const trainingGames = allGames.filter((row) => row.season < season);
+    if (trainingGames.some((row) => row.season >= season)) {
+      throw new Error(`Rating-uncertainty game fit received target-season rows for ${season}.`);
+    }
+    const model = fitGameModel(trainingGames, spec);
+    const ratingStandardDeviation = fitRatingUncertaintyStandardDeviation(
+      allSnapshots.filter((row) => row.season < season),
+      season,
+    );
+    fittedStandardDeviationBySeason[season] = ratingStandardDeviation;
+    const snapshots = Object.fromEntries(
+      loadSnapshots(season).map((row) => [row.teamId, row]),
+    );
+
+    for (const row of allGames.filter((game) => game.season === season)) {
+      const random = createSeededRandom(
+        `${RATING_UNCERTAINTY_CANDIDATE.id}:game:${row.seriesId}:${row.gameNumber}`,
+      );
+      let probabilityTotal = 0;
+      for (
+        let sample = 0;
+        sample < RATING_UNCERTAINTY_CANDIDATE.samplesPerPrediction;
+        sample += 1
+      ) {
+        const features = { ...row.features };
+        features.srsDiff +=
+          (standardNormal(random) - standardNormal(random)) * ratingStandardDeviation;
+        probabilityTotal += logisticProbability(
+          predictRidge(model.regression, vector({ ...row, features }, spec)),
+          model.logisticScale,
+        );
+      }
+      gamePredictions.push({
+        id: `${row.seriesId}:game-${row.gameNumber}`,
+        season,
+        p: probabilityTotal / RATING_UNCERTAINTY_CANDIDATE.samplesPerPrediction,
+        y: row.homeWon,
+      });
+    }
+
+    for (const series of loadSeries(season)) {
+      const random = createSeededRandom(
+        `${RATING_UNCERTAINTY_CANDIDATE.id}:series:${series.id}`,
+      );
+      const pattern = fullHomePattern(series);
+      let probabilityTotal = 0;
+      for (
+        let sample = 0;
+        sample < RATING_UNCERTAINTY_CANDIDATE.samplesPerPrediction;
+        sample += 1
+      ) {
+        const sampledTeamAError = standardNormal(random) * ratingStandardDeviation;
+        const sampledTeamBError = standardNormal(random) * ratingStandardDeviation;
+        probabilityTotal += solveSeriesExactly(
+          0,
+          0,
+          (gameNumber) => {
+            const homeId = pattern[gameNumber - 1];
+            const awayId = homeId === series.teamA ? series.teamB : series.teamA;
+            const features = featuresForMatchup(
+              homeId,
+              awayId,
+              snapshots,
+              series.bubble,
+            );
+            features.srsDiff +=
+              homeId === series.teamA
+                ? sampledTeamAError - sampledTeamBError
+                : sampledTeamBError - sampledTeamAError;
+            const homeProbability = logisticProbability(
+              predictRidge(model.regression, spec.features.map((name) => features[name])),
+              model.logisticScale,
+            );
+            return homeId === series.teamA ? homeProbability : 1 - homeProbability;
+          },
+          winsRequiredForHistoricalSeries(series),
+        ).teamAWinProbability;
+      }
+      seriesPredictions.push({
+        id: series.id,
+        season,
+        p: probabilityTotal / RATING_UNCERTAINTY_CANDIDATE.samplesPerPrediction,
+        y: series.winner === series.teamA ? 1 : 0,
+      });
+    }
+  }
+
+  const baselineSeriesDecomposition = brierDecomposition(
+    baseline.rollingPredictions.series,
+  );
+  const candidateSeriesDecomposition = brierDecomposition(seriesPredictions);
+  return {
+    registration: RATING_UNCERTAINTY_CANDIDATE,
+    decisionRule: {
+      threshold: 0.002,
+      baselineSeriesReliability: baselineSeriesDecomposition.reliability,
+      triggered: baselineSeriesDecomposition.reliability >= 0.002,
+    },
+    fittedStandardDeviationBySeason,
+    metrics: {
+      game: {
+        ...probabilityMetrics(gamePredictions),
+        calibrationFit: calibrationFit(gamePredictions),
+        decomposition: brierDecomposition(gamePredictions),
+      },
+      series: {
+        ...probabilityMetrics(seriesPredictions),
+        calibrationFit: calibrationFit(seriesPredictions),
+        decomposition: candidateSeriesDecomposition,
+      },
+    },
+    comparisonToSrsHome: {
+      game: bootstrapDifference(gamePredictions, baseline.rollingPredictions.game),
+      series: bootstrapDifference(seriesPredictions, baseline.rollingPredictions.series),
+      reliabilityChange:
+        candidateSeriesDecomposition.reliability -
+        baselineSeriesDecomposition.reliability,
+    },
+  };
+}
+
 function evaluateTemporalWindowCandidate(allGames: GameRow[]) {
   const spec: FeatureSpec = {
     id: TEMPORAL_WINDOW_CANDIDATE.id,
@@ -1050,6 +1222,10 @@ export function runResearchModel() {
   const calibratedSeries = nestedGameCalibrationThroughSeries(games, baseline);
   const primarySeriesChallenger = evaluatePrimarySeriesChallenger(baseline);
   const temporalWindowCandidate = evaluateTemporalWindowCandidate(games);
+  const ratingUncertaintyCandidate = evaluateRatingUncertaintyCandidate(
+    games,
+    baseline,
+  );
   const modelRetirementDecision = evaluateModelRetirementGate();
   const archive = JSON.parse(
     fs.readFileSync(
@@ -1126,6 +1302,7 @@ export function runResearchModel() {
         ),
       },
     },
+    ratingUncertaintyCandidate,
     modelSelectionGate: {
       frozenAt: "2026-07-26",
       primaryChallenger: PRIMARY_SERIES_CHALLENGER.id,

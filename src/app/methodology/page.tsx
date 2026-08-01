@@ -178,6 +178,14 @@ const sections: MethodologySection[] = [
     ],
   },
   {
+    title: "Rating Uncertainty Read",
+    body: [
+      `The decision rule was fixed before reading the expanded result: skip uncertainty work if grouped series reliability was below 0.002. The rolling SRS + home model's game reliability is ${evidence.brierDecomposition.game.reference.reliability.toFixed(6)} Brier and its series reliability is ${evidence.brierDecomposition.series.reference.reliability.toFixed(6)}, so the series threshold triggered the experiment.`,
+      `The research-only uncertainty candidate fits the standard deviation of SRS-minus-net-rating residuals on prior seasons only, samples independent team-strength errors once per run, and averages 512 exact-solver probabilities. Its series Brier is ${evidence.ratingUncertaintyCandidate.metrics.series.brier.toFixed(6)} versus ${evidence.brierDecomposition.series.reference.brier.toFixed(6)} for the point estimate, while grouped reliability changes by ${formatSigned(evidence.ratingUncertaintyCandidate.comparisonToSrsHome.reliabilityChange, 6)} to ${evidence.ratingUncertaintyCandidate.metrics.series.decomposition.reliability.toFixed(6)}.`,
+      "Because grouped reliability worsened, the candidate is not promoted. Its tiny Brier improvement has a paired interval crossing zero and does not override the reliability-specific objective that triggered the test.",
+    ],
+  },
+  {
     title: "External Model Benchmark",
     body: [
       `On ${externalBenchmark538.coverage.matchedSeries} matched series from 2016–2022, the rating-only Playoff Pulse reconstruction scores Brier ${externalBenchmark538.metrics.playoffPulse.brier.toFixed(4)} and log loss ${externalBenchmark538.metrics.playoffPulse.logLoss.toFixed(4)}, versus FiveThirtyEight at Brier ${externalBenchmark538.metrics.fiveThirtyEight.brier.toFixed(4)} and log loss ${externalBenchmark538.metrics.fiveThirtyEight.logLoss.toFixed(4)}. Playoff Pulse minus FiveThirtyEight Brier is ${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.pointEstimate, 4)} with a season-clustered 95% interval [${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.ci95[0], 4)}, ${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.ci95[1], 4)}].`,

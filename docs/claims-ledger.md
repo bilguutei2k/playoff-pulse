@@ -76,6 +76,11 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
     FiveThirtyEight; the paired Playoff-Pulse-minus-538 difference is +0.0124
     with season-clustered 95% interval [−0.0010, +0.0253]. This is a model
     benchmark spanning CARM-Elo/CARMELO and RAPTOR eras, not a market benchmark.
+16. Grouped Murphy reliability is 0.001454 Brier for games and 0.002696 for
+    series. The predeclared 0.002 series threshold therefore triggered a
+    rating-uncertainty candidate. It slightly improves series Brier by 0.000120
+    with an interval crossing zero, but worsens grouped series reliability by
+    +0.000831 to 0.003527; it remains research-only and is not promoted.
 
 ## Supported with qualification
 
@@ -106,6 +111,7 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 - Ten-season training-window challenger.
 - Game calibration propagated through the exact series solver.
 - Player/minutes/injury/manual scenario overlay.
+- SRS rating-uncertainty candidate.
 
 ## Rejected or not promoted
 

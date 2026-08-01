@@ -70,6 +70,7 @@ type ResearchArtifact = {
     metrics: unknown;
     comparisonToSrsHome: unknown;
   };
+  ratingUncertaintyCandidate: unknown;
   modelSelectionGate: unknown;
 };
 
@@ -224,6 +225,7 @@ export function buildEvidenceArtifact() {
     inputAudit,
     primarySeriesChallenger: research.primarySeriesChallenger,
     temporalWindowCandidate: research.preregisteredTemporalWindowCandidate,
+    ratingUncertaintyCandidate: research.ratingUncertaintyCandidate,
     modelSelectionGate: research.modelSelectionGate,
     dynamicCandidate: {
       registration: research.preregisteredDynamicRatingCandidate.registration,
