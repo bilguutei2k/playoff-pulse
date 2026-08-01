@@ -17,7 +17,7 @@ claim. Input leakage control and parameter provenance are separate questions.
 `git log --follow -- src/lib/data/model-settings.ts` shows the production
 parameters were fixed before the original harness and have not been changed
 after any backtest result. No recorded process fit them to the original 150,
-the frozen 345, or the pooled 360 series.
+the frozen 345, or the pooled 645 series.
 
 ## Production model
 
@@ -46,7 +46,8 @@ model/input regimes and do not justify a blind production scale change.
 | Historical adjustment | 0 | Prevents hindsight overrides |
 | Availability | `unknown_assumed_available` | No eligible point-in-time observations are present |
 | Finals home format through 2013 | 2–3–2 | Era-specific NBA series structure |
-| Other covered series | 2–2–1–1–1 | Era-specific NBA series structure |
+| First round, 1984–2002 | Best-of-5, 2–2–1 | Era-specific NBA series structure |
+| Other covered series | Best-of-7, 2–2–1–1–1 | Era-specific NBA series structure |
 | 2020 bubble HCA | 0 | Neutral-site structural treatment |
 
 Historical `eloWeight` is therefore literally a 0.2 × SRS contribution. The
@@ -56,11 +57,11 @@ manual production impact values.
 ## Baseline parameters
 
 `higher_seed` and `home_team` use a fixed 0.65 directional prior. Team A won
-71.4% of the pooled reconstructed series; an in-sample constant at that rate
+73.0% of the pooled reconstructed series; an in-sample constant at that rate
 would be an invalid hindsight fit. It is not used as a headline
 baseline because fitting it on all evaluated outcomes would leak the evaluation
 period. The rolling climatology instead estimates its rate only from seasons
-before each evaluated season and scores 0.2049.
+before each evaluated season and scores series Brier 0.2005.
 
 Rating-only comparisons reuse the same logistic scale, home-court treatment,
 and exact series solver as the fixed blend. They isolate the input blend while
@@ -69,13 +70,14 @@ holding the probability mapping constant.
 ## Rolling-origin fitted parameters
 
 All regression weights, ridge strengths, and logistic scales are fitted inside
-each rolling fold using only earlier seasons. Evaluation begins in 2006 after
-a 2003–2005 initialization window and continues through 2026.
+each rolling fold using only earlier seasons. Evaluation begins in 1987 after
+a 1984–1986 initialization window and continues through 2026.
 
 Nested calibration is likewise fitted only on earlier rolling predictions. In
-the expanded evaluation, game and series calibration both improve Brier and
-log loss and are retained for research. Neither mapping is transferred to
-production.
+the expanded evaluation, direct series calibration worsens both Brier and log
+loss; coherent game calibration propagated through the exact solver also
+worsens series Brier. Both lines are CLOSED and neither mapping is transferred
+to production.
 
 ## Frozen candidates
 
@@ -84,23 +86,25 @@ production.
 - Frozen: 2026-07-15.
 - Rule: split 12% of game-margin residual between opponents and cap carried
   postseason adjustment at ±4 points.
-- Historical game Brier: 0.21858 versus 0.21928 static.
-- Difference: −0.00070; season-clustered 95% interval includes zero.
+- Historical game Brier: 0.215266 versus 0.214828 static.
+- Difference: +0.000445; season-clustered 95% interval
+  [−0.001529, +0.002404].
 - First promotion-eligible season: 2027.
 
 ### `rating_gap_player_shrinkage_v1`
 
 - Frozen: 2026-07-26 before executing its expanded rolling comparison.
 - Rule: `shrunkPlayerDiff = playerDiff × exp(-abs(srsDiff) / 5)`.
-- Historical game difference versus SRS + home: +0.00004, interval includes
-  zero.
-- Historical series difference: −0.00104, interval includes zero.
+- Historical game difference versus SRS + home: −0.000075, interval
+  [−0.000541, +0.000411].
+- Historical series difference: −0.000453, interval
+  [−0.002065, +0.001143].
 - First promotion-eligible season: 2027.
 
 Both registrations are research-only. The pooled history through 2026 cannot
 promote them; 2026 is contaminated because registration followed the season.
 
-## Classification of the 360-series baseline reconstruction
+## Classification of the 645-series baseline reconstruction
 
 The reconstruction is a descriptive evaluation of the rating-only baseline:
 
@@ -117,7 +121,7 @@ The reconstruction is a descriptive evaluation of the rating-only baseline:
   series and every pregame state contains only previously completed games.
 
 The permitted statement is: “The visible rating-only baseline scored Brier
-0.1900 on 360 reconstructed 2003–2026 series; this descriptive number does not
+0.1855 on 645 reconstructed 1984–2026 series; this descriptive number does not
 validate the separate scenario overlay.” The frozen pre-2026 record remains
 Brier 0.1825 on 345 reconstructed 2003–2025 series and is not regenerated.
 
@@ -125,13 +129,13 @@ Brier 0.1825 on 345 reconstructed 2003–2025 series and is not regenerated.
 
 | Contrast | Difference | Series-resampled 95% CI | Season-resampled 95% CI | Conclusive |
 |---|---:|---|---|---|
-| vs coin flip | −0.0600 | [−0.0731, −0.0469] | [−0.0699, −0.0495] | Yes |
-| vs home team | −0.0195 | [−0.0288, −0.0101] | [−0.0274, −0.0118] | Yes |
-| vs higher seed | −0.0183 | [−0.0275, −0.0090] | [−0.0261, −0.0108] | Yes |
-| vs net rating | +0.0048 | [−0.0054, +0.0146] | [−0.0047, +0.0139] | No |
-| vs SRS | +0.0067 | [−0.0022, +0.0154] | [−0.0019, +0.0147] | No |
+| vs coin flip | −0.064520 | [−0.073978, −0.054968] | [−0.073411, −0.055497] | Yes |
+| vs home team | −0.018589 | [−0.025399, −0.012039] | [−0.024482, −0.013034] | Yes |
+| vs higher seed | −0.017950 | [−0.024587, −0.011436] | [−0.023882, −0.012264] | Yes |
+| vs net rating | +0.010242 | [+0.002964, +0.017229] | [+0.002730, +0.017589] | Yes, baseline worse |
+| vs SRS | +0.011750 | [+0.005491, +0.017772] | [+0.005311, +0.017992] | Yes, baseline worse |
 
 Negative favors the Playoff Pulse baseline. It conclusively beats naive
-directional baselines but does not beat simple rating models. The SRS point
-deficit exceeds the 0.005 retirement threshold, but the interval crosses zero,
-so the symmetric retirement gate still does not fire.
+directional baselines and conclusively trails both simple rating models. The
+deficits exceed the 0.005 threshold, both season-clustered intervals are above
+zero, and the symmetric retirement gate fires against both comparators.

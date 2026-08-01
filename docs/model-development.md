@@ -23,8 +23,8 @@ on the same scale as the manually assigned current player and rating inputs.
 
 ## Phase 1 — evaluation protocol
 
-The research harness evaluates 2006–2026 with rolling origin after a
-three-season 2003–2005 initialization window:
+The research harness evaluates 1987–2026 with rolling origin after a
+three-season 1984–1986 initialization window:
 
 1. Train only on seasons strictly earlier than the evaluation season.
 2. Select ridge strength using season-held-out folds within the available
@@ -44,7 +44,7 @@ Raw results and rolling predictions are committed in
 
 The research model is regularized linear expected margin followed by a fitted
 logistic probability scale. The parsimonious `srs_home` specification is the
-reference model. It evaluates 1,760 games and 315 series from 2006–2026.
+reference model. It evaluates 3,160 games and 600 series from 1987–2026.
 
 Production series probabilities no longer use Monte Carlo for their central
 estimate. Dynamic programming enumerates every possible remaining path and
@@ -69,7 +69,8 @@ calibrated coverage guarantees:
 
 These intervals describe sensitivity to the stated assumptions. A grouped
 reliability diagnostic places observed rates inside the mean sensitivity band
-for eight of ten equal-count groups; this is not individual interval coverage,
+for zero of ten equal-count groups after the evidenced baseline was isolated;
+this is not individual interval coverage,
 because one binary outcome does not identify a series' latent probability.
 
 ## Phase 4 — feature ablation decision
@@ -134,27 +135,26 @@ provenance, 240-minute replacement allocation, 834 leakage-safe reconstructed
 pregame forecasts in its original release, nested calibration evaluation, and
 the preregistered `dynamic_margin_update_v1` candidate.
 
-The frozen 2026-07-26 extension expanded the archive to 1,929 pregame forecasts
-across 2003–2025. The 2026 fold brings the pooled archive to 2,014 pregame
-forecasts across 2003–2026, adds rolling climatology and grouped Murphy
-decomposition, records
-zero historical availability coverage rather than imputing injuries, and
-freezes `rating_gap_player_shrinkage_v1` for 2027. In the expanded sample, game
-calibration improves and is retained for research; series calibration now also
-improves slightly and is retained inside research. Neither mapping is applied
-to manual production inputs. See
+The immutable July 26 record remains 1,929 pregame forecasts across 2003–2025.
+The current pooled archive contains 3,375 pregame forecasts across 1984–2026,
+adds rolling climatology and grouped Murphy decomposition, records zero
+historical availability coverage rather than imputing injuries, and freezes
+`rating_gap_player_shrinkage_v1` for 2027. Direct series calibration worsens;
+the coherent nested game-to-series calibration also worsens the series point
+estimate. Both calibration research lines are CLOSED. See
 `docs/point-in-time-implementation.md` for the complete record.
 
 The subsequent rigor pass adds three high-return tests:
 
 1. Nested game calibration is propagated through every possible future game
-   and then through the exact series solver. The series point estimate improves
-   0.1888 → 0.1877, but its interval includes zero.
+   and then through the exact series solver. The series point estimate worsens
+   0.1769 → 0.1773; its interval includes zero and the line is CLOSED.
 2. The single primary challenger combines the exact SRS-series logit and seed
-   difference. It improves the matched point estimate 0.1888 → 0.1826, but its
-   interval [−0.0133, +0.0010] does not establish improvement.
+   difference. It improves the matched point estimate 0.1769 → 0.1735, but its
+   interval [−0.0085, +0.0022] does not establish improvement.
 3. A fixed ten-season training window improves historical game Brier by
-   0.0010, with an interval below zero. It remains frozen research until a
+   0.000759, with an interval below zero. Its series interval crosses zero,
+   and it remains frozen research until a
    future 2027 evaluation.
 
 The isolated 2026 artifact uses only models fit on 2003–2025. After the
@@ -169,7 +169,7 @@ Player impact, projected minutes, injuries, and manual adjustment are not
 scored in this artifact. They are an unvalidated scenario overlay and must
 always be shown beside the rating-only baseline with a delta.
 
-Timestamped lagged-rotation and external-benchmark schemas now fail closed:
-zero coverage produces `not_estimable` artifacts. No rotation is inferred from
-later playoff participation, and no external price is added without a
-point-in-time citation.
+Timestamped lagged rotations still fail closed at zero coverage because no
+player-level pre-series logs exist. The FiveThirtyEight model benchmark covers
+105 series under a frozen mapping rule; it does not satisfy the distinct
+timestamped no-vig market contract, whose coverage remains zero.

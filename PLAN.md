@@ -1,5 +1,8 @@
 # Playoff Pulse — Backtesting & Evaluation Harness
 
+> Archived initial implementation plan. Its 2016–2025 ranges describe the
+> original build target, not the current 1984–2026 evaluation scope.
+
 ## Overview
 
 Build two coupled systems:

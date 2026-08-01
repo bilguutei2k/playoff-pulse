@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T21:33:07.094Z",
+  "generatedAt": "2026-08-01T21:35:52.925Z",
   "protocol": "Rolling origin: train only on seasons before each evaluation season; 1987-2026 evaluated after a three-season initialization window.",
   "totalGames": 3375,
   "evaluationSeasons": [

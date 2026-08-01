@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T21:34:37.179Z",
+  "generatedAt": "2026-08-01T21:37:20.944Z",
   "productionLabel": "Manual production forecast",
   "researchLabel": "Historical rolling-origin research",
   "researchProtocol": "Rolling origin: train only on seasons before each evaluation season; 1987-2026 evaluated after a three-season initialization window.",
@@ -108892,7 +108892,7 @@
     "interpretation": "Grouped reliability diagnostic only. A binary outcome cannot validate an individual probability interval, and these sensitivity bands are not prediction-interval coverage guarantees."
   },
   "availability": {
-    "generatedAt": "2026-08-01T21:11:07.550Z",
+    "generatedAt": "2026-08-01T21:35:22.298Z",
     "protocol": "Only sourced observations timestamped strictly before a series begins are eligible. No status is inferred from game outcomes or retrospective participation.",
     "seasons": [
       1984,
@@ -108953,7 +108953,7 @@
     ]
   },
   "inputAudit": {
-    "generatedAt": "2026-08-01T21:25:25.202Z",
+    "generatedAt": "2026-08-01T21:35:22.778Z",
     "conservativeDeadline": "Inputs must be timestamped before 00:00 UTC on seriesStartDate because historical tip times are not retained.",
     "laggedRotations": {
       "method": "last_10_team_games_before_deadline",

@@ -299,13 +299,13 @@ export function EvidenceExplorer() {
                 <td className="px-2 py-2 font-bold">Historical reconstruction</td>
                 <td className="pp-number px-2 py-2">{backtestSummary.totalSeries} series / {evidence.timeline.length} pregame snapshots, {backtestSummary.firstSeason}–{backtestSummary.lastSeason}</td>
                 <td className="px-2 py-2">Rating-only baseline; leakage-checked point-in-time inputs; scenario overlay excluded</td>
-                <td className="px-2 py-2">Descriptive baseline performance: Brier {formatNumber(backtestSummary.models.playoff_pulse.brierScore, 4)}, conclusively better than naive baselines, statistically indistinguishable from SRS-only and net-rating-only; no validation claim for the overlay</td>
+                <td className="px-2 py-2">Descriptive baseline performance: Brier {formatNumber(backtestSummary.models.playoff_pulse.brierScore, 4)}, conclusively better than naive baselines but conclusively worse than SRS-only and net-rating-only; the retirement gate fires and the overlay is not validated</td>
               </tr>
               <tr className="border-b border-[var(--color-border-subtle)] align-top">
                 <td className="px-2 py-2 font-bold">Rolling origin</td>
                 <td className="pp-number px-2 py-2">{evidence.modelComparison[0].series.n} series / {evidence.modelComparison[0].game.n} games, {evidence.evaluationSeasons[0]}–{evidence.evaluationSeasons.at(-1)}</td>
                 <td className="px-2 py-2">Models fitted only on seasons before each evaluated season</td>
-                <td className="px-2 py-2">Out-of-period model comparison: no candidate conclusively beat SRS + home court (reference series Brier {formatNumber(evidence.modelComparison[0].series.brier, 4)})</td>
+                <td className="px-2 py-2">Out-of-period comparison: no richer candidate conclusively improved the game endpoint versus SRS + home court. The exploratory SRS-plus-player series interval is barely below zero, but its game interval crosses zero and its BPM input is not production-equivalent (reference series Brier {formatNumber(evidence.modelComparison[0].series.brier, 4)})</td>
               </tr>
             </tbody>
           </table>
@@ -384,9 +384,10 @@ export function EvidenceExplorer() {
           {formatNumber(evidence.modelComparison[0].series.calibrationFit.slope, 2)} for
           series and {formatNumber(evidence.modelComparison[0].game.calibrationFit.slope, 2)} for
           games (a slope of 1 would be perfectly calibrated). With the expanded
-          history, nested game and series calibration both improve Brier and log
-          loss and are retained inside research. Neither mapping is transferred
-          to manual production inputs.
+          history, direct series calibration worsens Brier and log loss. Game
+          calibration propagated through the exact solver also worsens series
+          Brier, with an interval crossing zero. Both calibration lines are
+          CLOSED and neither mapping is transferred to manual production inputs.
         </p>
       </section>
 

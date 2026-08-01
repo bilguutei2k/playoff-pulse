@@ -105,6 +105,7 @@ export default function Home() {
                 "2026 season complete: Knicks beat Spurs 4–1",
                 "No forecasts were issued during the 2026 postseason",
                 "2026 holdout scored separately; challenger registrations are contaminated",
+                "Retirement gate fired: former production blend is research-only",
                 "Historical evaluation is reconstructed, and labeled as such",
               ].map((label) => (
                 <span key={label} className="pp-pill border-[rgba(201,150,31,0.45)] text-[var(--color-accent)]">
@@ -157,8 +158,9 @@ export default function Home() {
                 </tbody>
               </table>
               <p className="mt-3 text-xs leading-5 text-[var(--color-text-muted)]">
-                No richer feature set conclusively beat SRS + home court. The
-                best candidate changed the series point estimate by{" "}
+                No richer feature set conclusively improved the game-level
+                comparison against SRS + home court. The displayed rich
+                candidate changed the series point estimate by{" "}
                 {richestComparison
                   ? formatNumber(richestComparison.series.candidateMinusBaselineBrier, 4)
                   : "—"}{" "}
@@ -217,8 +219,9 @@ export default function Home() {
                     backtestSummary.models.srs_proxy_only.brierScore,
                   4,
                 )}{" "}
-                Brier, but the difference is not statistically distinguishable
-                from zero. Series accuracy is {formatPercent(pulse.accuracy)}{" "}
+                Brier. Its season-clustered interval is entirely above zero,
+                so the former production blend conclusively trails SRS-only
+                and the retirement gate fires. Series accuracy is {formatPercent(pulse.accuracy)}{" "}
                 versus{" "}
                 {formatPercent(backtestSummary.models.higher_seed.accuracy)}
                 for the higher-seed baseline.
@@ -226,7 +229,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-[var(--color-border-subtle)] p-4">
-            <h3 className="pp-kicker text-[var(--color-text-primary)]">Evaluated / promoted only within research</h3>
+            <h3 className="pp-kicker text-[var(--color-text-primary)]">Evaluated research decisions</h3>
             <ul className="mt-2 grid gap-3 text-xs leading-5 text-[var(--color-text-muted)] sm:grid-cols-2 xl:grid-cols-5">
               <li>
                 Coherent game calibration through the exact solver: series
@@ -242,7 +245,8 @@ export default function Home() {
                     .calibrated.brier,
                   4,
                 )}
-                . Interval includes zero; not promoted.
+                . The point estimate worsened and the interval includes zero;
+                this calibration line is CLOSED.
               </li>
               <li>
                 Primary exact-SRS + seed challenger: matched series Brier{" "}
@@ -422,9 +426,12 @@ corepack pnpm backtest:all`}
               <ul className="mt-2 grid gap-1 text-xs leading-5 text-[var(--color-text-muted)]">
                 <li>Reconstructed forecasts were not issued contemporaneously.</li>
                 <li>Production inputs are manual, subjective estimates.</li>
-                <li>Sensitivity bands pass 8 of 10 grouped reliability checks, but are not individual probability-interval coverage guarantees.</li>
-                <li>Historical availability coverage is 0%; injury effects remain unvalidated rather than inferred from outcomes.</li>
-                <li>No official NBA data; no betting use.</li>
+                <li>Sensitivity bands contain 0 of 10 grouped observed rates after the evidenced baseline was isolated; they are not individual probability-interval coverage guarantees.</li>
+                <li>Historical availability and paired rotation coverage are 0%; injury effects remain unvalidated rather than inferred from outcomes.</li>
+                <li>The 2026 holdout baseline scored 0.2195 series Brier; both challenger registrations are CONTAMINATED_2026.</li>
+                <li>The retirement gate fired against SRS-only and net-rating-only; the former production blend is research-only.</li>
+                <li>FiveThirtyEight is a 105-series model benchmark; no-vig market coverage is zero.</li>
+                <li>No official NBA data; this is not a betting product.</li>
               </ul>
               <div className="mt-3 flex flex-wrap gap-2">
                 <Link href="/methodology" className="pp-button">

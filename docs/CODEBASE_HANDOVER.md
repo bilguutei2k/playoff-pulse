@@ -3,6 +3,11 @@
 Audit date: 2026-07-12. Auditor: incoming technical maintainer (AI-assisted audit).
 Branch audited: `feature/setup` at `4eb8872` ("Update Finals after Game 3").
 
+> **Historical audit record:** every date, scope, metric, branch statement, and
+> deployment finding below is intentionally preserved as observed on July 12,
+> 2026. It is not current product documentation. Current claims are governed by
+> `docs/claims-ledger.md` and the generated `docs/backtest/` artifacts.
+
 > **Remediation, 2026-07-12 (same day, after the audit):** the five most serious
 > findings were fixed in the working tree — see §0 "Remediation Log" below.
 > Sections 1–20 preserve the audit as performed; findings that have since been

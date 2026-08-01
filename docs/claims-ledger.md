@@ -1,6 +1,6 @@
 # Claims Ledger
 
-Generated: 2026-07-27. This ledger gates all public copy. A claim may appear
+Generated: 2026-08-01. This ledger gates all public copy. A claim may appear
 on the site only in the category listed here, with the required qualification
 attached at the point of use. Sources: `docs/backtest/summary.json`,
 `docs/backtest/significance.json`, `docs/backtest/research.json`,
@@ -16,23 +16,23 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 | 2026 preserved scenario | Counterfactual reset using July roster assumptions | Not an issued Finals forecast |
 | Frozen 2003–2025 reconstruction | The immutable pre-2026 record under `docs/backtest/frozen-2003-2025/` | Must never be regenerated |
 | 2026 isolated holdout | Models fit only on 2003–2025; 85 games and 15 series scored separately | Not prospective candidate evidence: both challengers were registered after the postseason began |
-| 2003–2026 reconstruction | Point-in-time forecasts built after the fact under leakage controls | Not contemporaneously issued predictions |
-| 2006–2026 rolling origin | Models fitted only on prior seasons after a three-season initialization window | Temporally held out, but not a preregistered prospective track record |
+| 1984–2026 reconstruction | Point-in-time forecasts built after the fact under leakage controls | Not contemporaneously issued predictions |
+| 1987–2026 rolling origin | Models fitted only on prior seasons after a three-season initialization window | Temporally held out, but not a preregistered prospective track record |
 | 2027+ prospective issuance | Immutable forecasts issued before a declared game start | No observations exist yet |
 
 ## Supported (may be stated plainly)
 
-1. The rating-only baseline displayed by the product scored **Brier 0.1900**
-   on 360 reconstructed 2003–2026 playoff series. The baseline/overlay boundary
+1. The rating-only baseline displayed by the product scored **Brier 0.1855**
+   on 645 reconstructed 1984–2026 playoff series. The baseline/overlay boundary
    was defined after historical results existed, so this is descriptive, not
    prospective evidence.
 2. That baseline conclusively outperforms the naive baselines—coin flip
-   (difference −0.0600), directional home-team (−0.0195), and directional
-   higher-seed (−0.0183)—with paired 95% bootstrap intervals excluding zero
+   (difference −0.064520), directional home-team (−0.018589), and directional
+   higher-seed (−0.017950)—with paired 95% bootstrap intervals excluding zero
    under both series and season resampling.
-3. The rating-only baseline does **not** outperform the simple rating
-   baselines. Its point estimate trails SRS-only by +0.0067 Brier and
-   net-rating-only by +0.0048; both intervals include zero.
+3. The rating-only baseline conclusively trails the simple rating baselines:
+   SRS-only by +0.011750 Brier and net-rating-only by +0.010242. Both paired
+   season-clustered intervals are entirely above zero; the retirement gate fires.
 4. The published Brier validates only the rating-only baseline. Player impact,
    projected minutes, injury status, and manual adjustment form a separate
    scenario overlay that defaults to zero, is always shown beside the baseline,
@@ -40,14 +40,17 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
    The live baseline executes the same probability path as the backtest, but
    current rating values remain manual inputs and are not individually certified
    by the aggregate historical score.
-5. In rolling-origin evaluation (2006–2026, 1,760 games, 315 series), no
-   richer feature set conclusively beat SRS + home court.
-6. Rolling-origin forecasts remain overconfident, especially for series:
-   calibration slopes are approximately 0.72 (series) and 0.88 (games).
+5. In rolling-origin evaluation (1987–2026, 3,160 games, 600 series), no
+   richer feature set conclusively improved the game-level primary comparison
+   against SRS + home court. The exploratory SRS-plus-player series interval is
+   barely below zero, but its game interval crosses zero and its BPM proxy is
+   not production-equivalent.
+6. Rolling-origin forecasts remain overconfident: calibration slopes are
+   approximately 0.94 (series) and 0.97 (games).
 7. Nested game calibration changes Brier from 0.2161 to 0.2159 across 3,009
    predictions, but direct series-output calibration worsens Brier from 0.1769
    to 0.1785 across 570 series. The direct line is **CLOSED**.
-8. A rolling prior-only climatology scores series Brier 0.2049 versus 0.1879
+8. A rolling prior-only climatology scores series Brier 0.2006 versus 0.1766
    for SRS + home. The difference is conclusive under season resampling.
 9. Grouped Murphy decomposition attributes the reference model's advantage
    over climatology mainly to greater resolution. Components are equal-count
@@ -64,12 +67,12 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
     candidate-minus-raw difference is +0.000392 with season-clustered interval
     [−0.000269, +0.001047]. The nested line is **CLOSED**.
 13. The registered `exact_srs_logit_plus_seed_v1` primary challenger improves
-    the matched historical point estimate from 0.1888 to 0.1826 (difference
-    −0.0063), but its 95% interval [−0.0133, +0.0010] includes zero. It is not
+    the matched historical point estimate from 0.1769 to 0.1735 (difference
+    −0.0034), but its 95% interval [−0.0085, +0.0022] includes zero. It is not
     promoted.
 14. The frozen ten-season training-window candidate improves historical game
-    Brier by −0.0010 with a season-clustered 95% interval
-    [−0.0017, −0.0003]. This is retrospective research, not prospective
+    Brier by −0.000759 with a season-clustered 95% interval
+    [−0.001425, −0.000128]. This is retrospective research, not prospective
     validation, and it is first promotion-eligible in 2027.
 15. The frozen FiveThirtyEight mapping covers all 105 eligible series from
     2016–2022. Playoff Pulse scores Brier 0.1843 versus 0.1719 for
@@ -86,22 +89,22 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 
 | Claim | Required qualification |
 |---|---|
-| "Baseline Brier 0.1900 vs 0.1833 SRS-only" | The visible rating-only baseline is worse by +0.0067, with a 95% interval including zero; the score does not validate the overlay |
+| "Baseline Brier 0.1855 vs 0.1737 SRS-only" | The visible rating-only baseline is conclusively worse by +0.011750; the retirement gate fires and the score does not validate the overlay |
 | "Traceable" | Define on first use: every probability links to the code, data snapshot, and evaluation artifact that produced it |
-| Series accuracy 72.5% | Higher-seed baseline is 71.4%; Brier/log loss remain the primary proper scoring rules |
+| Series accuracy 74.0% | Higher-seed baseline is 73.0%; Brier/log loss remain the primary proper scoring rules |
 | Game calibration point estimate | A negligible game-only change (0.2161 → 0.2159); both direct and propagated series calibration lines are CLOSED |
 | 2026 scenario lab results | Counterfactual under preserved July roster assumptions; not an issued forecast |
-| Sensitivity reliability | Eight of ten grouped observed rates lie inside mean bands; this is not individual probability-interval coverage |
+| Sensitivity reliability | Zero of ten grouped observed rates lie inside mean bands after baseline isolation; this is not individual probability-interval coverage |
 | Historical injury effects | Not estimable: zero eligible point-in-time availability observations across 12,900 player-series opportunities |
 | FiveThirtyEight comparison | Model benchmark on 105 matched 2016–2022 series; 538 has the better point estimate, while the paired season-clustered interval crosses zero |
-| Coherent game-to-series calibration helps | Historical point estimate only; the paired interval includes zero and the mapping is not transferred to manual production inputs |
-| Exact-SRS-plus-seed challenger helps | The pooled historical point estimate exceeds the threshold, but its interval includes zero; its 2026 registration is contaminated and the isolated 2026 result is low-powered |
+| "Coherent game-to-series calibration helps" | Not permitted: the expanded point estimate worsens, its interval includes zero, and the line is CLOSED |
+| Exact-SRS-plus-seed challenger helps | The pooled historical improvement is below the 0.005 threshold, its interval includes zero, its 2026 registration is contaminated, and the isolated 2026 result is low-powered |
 | Ten-season training window helps | Historical game interval excludes zero; the candidate is frozen for a future 2027 check and is not promoted on retrospective evidence |
 | 2026 isolated holdout | Baseline series Brier is 0.2195; both challengers are worse on point estimate, all paired intervals cross zero, and both registrations are `CONTAMINATED_2026`; the overlay is not scored |
 
 ## Research-only (never in production claims)
 
-- Rolling-origin fitted models and calibration mapping.
+- Rolling-origin fitted models and calibration diagnostics.
 - Rolling climatology and fitted seed baselines.
 - Murphy Brier decomposition.
 - Grouped sensitivity reliability diagnostic.

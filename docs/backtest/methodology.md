@@ -1,6 +1,6 @@
 # Playoff Pulse Backtest Methodology
 
-Generated: 2026-08-01T21:14:49.257Z
+Generated: 2026-08-01T21:35:18.762Z
 
 ## Scope
 
