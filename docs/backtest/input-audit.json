@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T09:35:20.294Z",
+  "generatedAt": "2026-08-01T04:03:30.908Z",
   "conservativeDeadline": "Inputs must be timestamped before 00:00 UTC on seriesStartDate because historical tip times are not retained.",
   "laggedRotations": {
     "method": "last_10_team_games_before_deadline",

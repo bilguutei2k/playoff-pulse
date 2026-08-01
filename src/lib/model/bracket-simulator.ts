@@ -13,9 +13,15 @@ import type {
 } from "@/lib/model/types";
 import {
   createSeededRandom,
+  simulateBaselineSeriesOutcome,
   simulateSeriesOutcome,
 } from "@/lib/model/simulator";
-import { clampProbability, teamStrength } from "@/lib/model/probability";
+import {
+  baselineTeamStrength,
+  clampProbability,
+  teamStrength,
+} from "@/lib/model/probability";
+import type { RandomSource } from "@/lib/model/random";
 import { sampleUncertainModelInputs } from "@/lib/model/uncertainty";
 
 const CONFERENCES: Conference[] = ["East", "West"];
@@ -32,6 +38,35 @@ const EXPECTED_SERIES_BY_ROUND: Record<PlayoffRound, number> = {
 const NBA_FINALS_HOME_PATTERN = ["A", "A", "B", "B", "A", "B", "A"];
 
 type Counter = Record<string, number>;
+type StrengthEstimator = (team: Team, settings: ModelSettings) => number;
+type SeriesSimulator = typeof simulateSeriesOutcome;
+type InputSampler = (
+  teams: Team[],
+  settings: ModelSettings,
+  random: RandomSource,
+) => { teams: Team[]; settings: ModelSettings };
+type TeamSeedSerializer = (team: Team) => string;
+
+function serializeBaselineTeam(team: Team): string {
+  return [team.id, team.seed, team.eloRating, team.netRating].join(":");
+}
+
+function serializeScenarioTeam(team: Team): string {
+  return [
+    serializeBaselineTeam(team),
+    team.manualAdjustment,
+    team.players
+      .map((player) =>
+        [
+          player.id,
+          player.impact,
+          player.projectedMinutes,
+          player.injuryStatus,
+        ].join(":"),
+      )
+      .join("|"),
+  ].join(";");
+}
 
 function increment(counter: Counter, teamId: string): void {
   counter[teamId] = (counter[teamId] ?? 0) + 1;
@@ -41,7 +76,11 @@ function byBracketOrder(seriesA: Series, seriesB: Series): number {
   return seriesA.bracketOrder - seriesB.bracketOrder;
 }
 
-function bySeedThenStrength(teamsById: Record<string, Team>, settings: ModelSettings) {
+function bySeedThenStrength(
+  teamsById: Record<string, Team>,
+  settings: ModelSettings,
+  strength: StrengthEstimator,
+) {
   return (teamAId: string, teamBId: string) => {
     const teamA = teamsById[teamAId];
     const teamB = teamsById[teamBId];
@@ -50,7 +89,7 @@ function bySeedThenStrength(teamsById: Record<string, Team>, settings: ModelSett
       return teamA.seed - teamB.seed;
     }
 
-    return teamStrength(teamB, settings) - teamStrength(teamA, settings);
+    return strength(teamB, settings) - strength(teamA, settings);
   };
 }
 
@@ -69,9 +108,10 @@ function createFutureSeries(
   teamBId: string,
   teamsById: Record<string, Team>,
   settings: ModelSettings,
+  strength: StrengthEstimator,
 ): Series {
   const [teamA, teamB] = [teamAId, teamBId].sort(
-    bySeedThenStrength(teamsById, settings),
+    bySeedThenStrength(teamsById, settings, strength),
   );
 
   return {
@@ -134,6 +174,7 @@ function pairFutureRound(
   incomingTeamIds: string[],
   teamsById: Record<string, Team>,
   settings: ModelSettings,
+  strength: StrengthEstimator,
 ): Series[] {
   const seriesList: Series[] = [];
 
@@ -155,6 +196,7 @@ function pairFutureRound(
         teamBId,
         teamsById,
         settings,
+        strength,
       ),
     );
   }
@@ -210,6 +252,7 @@ function selectRoundSeries(
   round: PlayoffRound,
   teamsById: Record<string, Team>,
   settings: ModelSettings,
+  strength: StrengthEstimator,
   notes: Set<string>,
 ): Series[] {
   if (!incomingTeamIds) {
@@ -226,7 +269,14 @@ function selectRoundSeries(
     );
   }
 
-  return pairFutureRound(conference, round, incomingTeamIds, teamsById, settings);
+  return pairFutureRound(
+    conference,
+    round,
+    incomingTeamIds,
+    teamsById,
+    settings,
+    strength,
+  );
 }
 
 function selectFinalsSeries(
@@ -234,6 +284,7 @@ function selectFinalsSeries(
   conferenceChampions: string[],
   teamsById: Record<string, Team>,
   settings: ModelSettings,
+  strength: StrengthEstimator,
   notes: Set<string>,
 ): Series {
   if (configuredFinals && hasSameTeamPair(configuredFinals, conferenceChampions)) {
@@ -255,6 +306,7 @@ function selectFinalsSeries(
     conferenceChampions[1],
     teamsById,
     settings,
+    strength,
   );
 }
 
@@ -264,6 +316,8 @@ function simulateConferencePath(
   teamsById: Record<string, Team>,
   settings: ModelSettings,
   random: () => number,
+  simulate: SeriesSimulator,
+  strength: StrengthEstimator,
   reachConferenceFinals: Counter,
   notes: Set<string>,
 ): string | null {
@@ -280,6 +334,7 @@ function simulateConferencePath(
       round,
       teamsById,
       settings,
+      strength,
       notes,
     );
 
@@ -298,7 +353,7 @@ function simulateConferencePath(
     const winners: string[] = [];
 
     for (const series of roundSeries) {
-      const outcome = simulateSeriesOutcome(series, teamsById, settings, random);
+      const outcome = simulate(series, teamsById, settings, random);
 
       if (round === "Conference Semifinal") {
         increment(reachConferenceFinals, outcome.winnerId);
@@ -313,11 +368,15 @@ function simulateConferencePath(
   return incomingTeamIds?.[0] ?? null;
 }
 
-export function estimateBracketForecast(
+function estimateBracketForecastWithModel(
   config: PlayoffConfig,
   settings: ModelSettings,
-  teams = config.teams,
-  iterations = settings.simulationIterations,
+  teams: Team[],
+  iterations: number,
+  simulate: SeriesSimulator,
+  strength: StrengthEstimator,
+  sampleInputs: InputSampler,
+  serializeTeam: TeamSeedSerializer,
 ): BracketForecast {
   const simulationCount = Math.max(1, Math.floor(iterations));
   const teamsById = Object.fromEntries(teams.map((team) => [team.id, team]));
@@ -333,26 +392,9 @@ export function estimateBracketForecast(
       simulationCount,
       settings.homeCourtAdvantage,
       settings.logisticScale,
-      teams
-        .map((team) =>
-          [
-            team.id,
-            team.eloRating,
-            team.netRating,
-            team.manualAdjustment,
-            team.players
-              .map((player) =>
-                [
-                  player.id,
-                  player.impact,
-                  player.projectedMinutes,
-                  player.injuryStatus,
-                ].join(":"),
-              )
-              .join("|"),
-          ].join(";"),
-        )
-        .join("#"),
+      settings.netRatingWeight,
+      settings.eloWeight,
+      teams.map(serializeTeam).join("#"),
       config.series
         .map((series) =>
           [
@@ -371,7 +413,7 @@ export function estimateBracketForecast(
   );
 
   for (let iteration = 0; iteration < simulationCount; iteration += 1) {
-    const sampled = sampleUncertainModelInputs(teams, settings, random);
+    const sampled = sampleInputs(teams, settings, random);
     const sampledTeamsById = Object.fromEntries(
       sampled.teams.map((team) => [team.id, team]),
     );
@@ -382,6 +424,8 @@ export function estimateBracketForecast(
         sampledTeamsById,
         sampled.settings,
         random,
+        simulate,
+        strength,
         reachConferenceFinals,
         notes,
       ),
@@ -397,9 +441,15 @@ export function estimateBracketForecast(
         conferenceChampions,
         sampledTeamsById,
         sampled.settings,
+        strength,
         notes,
       );
-      const outcome = simulateSeriesOutcome(finals, sampledTeamsById, sampled.settings, random);
+      const outcome = simulate(
+        finals,
+        sampledTeamsById,
+        sampled.settings,
+        random,
+      );
       increment(championships, outcome.winnerId);
     }
   }
@@ -455,4 +505,43 @@ export function estimateBracketForecast(
     structurallyComplete: coverage.complete,
     notes: Array.from(notes),
   };
+}
+
+export function estimateBracketForecast(
+  config: PlayoffConfig,
+  settings: ModelSettings,
+  teams = config.teams,
+  iterations = settings.simulationIterations,
+): BracketForecast {
+  return estimateBracketForecastWithModel(
+    config,
+    settings,
+    teams,
+    iterations,
+    simulateSeriesOutcome,
+    teamStrength,
+    sampleUncertainModelInputs,
+    serializeScenarioTeam,
+  );
+}
+
+export function estimateBaselineBracketForecast(
+  config: PlayoffConfig,
+  settings: ModelSettings,
+  teams = config.teams,
+  iterations = settings.simulationIterations,
+): BracketForecast {
+  return estimateBracketForecastWithModel(
+    config,
+    settings,
+    teams,
+    iterations,
+    simulateBaselineSeriesOutcome,
+    baselineTeamStrength,
+    (baselineTeams, baselineSettings) => ({
+      teams: baselineTeams,
+      settings: baselineSettings,
+    }),
+    serializeBaselineTeam,
+  );
 }

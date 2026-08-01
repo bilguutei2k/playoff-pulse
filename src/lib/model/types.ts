@@ -151,6 +151,8 @@ export type TeamForecast = {
   netRating: number;
   eloPointValue: number;
   manualAdjustment: number;
+  baselineStrength: number;
+  scenarioAdjustment: number;
   finalStrength: number;
 };
 

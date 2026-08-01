@@ -36,6 +36,68 @@ import {
 } from "../backtest/fit-isolation";
 
 export function runBacktestIntegrityChecks(): void {
+  const baselineBacktestSources = [
+    "scripts/backtest/baselines.ts",
+    "scripts/backtest/run-backtest.ts",
+    "scripts/backtest/build-pregame-archive.ts",
+  ];
+  for (const sourcePath of baselineBacktestSources) {
+    const source = fs.readFileSync(path.join(process.cwd(), sourcePath), "utf-8");
+    assert(
+      source.includes("estimateBaselineSeriesProbability"),
+      `${sourcePath} must call the evidenced baseline series path.`,
+    );
+    assert(
+      !source.includes("estimateSeries" + "Probability("),
+      `${sourcePath} must not call the scenario-adjusted series path.`,
+    );
+    assert(
+      !source.includes("scenario" + "Adjustment("),
+      `${sourcePath} must not call the scenario overlay.`,
+    );
+  }
+  const holdoutSource = fs.readFileSync(
+    path.join(process.cwd(), "scripts/backtest/evaluate-2026-holdout.ts"),
+    "utf-8",
+  );
+  assert(
+    holdoutSource.includes("baselineProbability("),
+    "The 2026 production game holdout must use baselineProbability.",
+  );
+  assert(
+    !holdoutSource.includes("gameWin" + "Probability("),
+    "The 2026 production game holdout must not use the scenario-adjusted game path.",
+  );
+  const publishedForecastSource = fs.readFileSync(
+    path.join(process.cwd(), "src/lib/model/forecast.ts"),
+    "utf-8",
+  );
+  assert(
+    publishedForecastSource.includes("estimateBaselineSeriesProbability") &&
+      publishedForecastSource.includes("estimateBaselineBracketForecast"),
+    "Published snapshot probabilities must use baseline series and bracket paths.",
+  );
+  assert(
+    !publishedForecastSource.includes("estimateSeries" + "Probability("),
+    "Published snapshot probabilities must not call the scenario-adjusted series path.",
+  );
+  assert(
+    !publishedForecastSource.includes("estimateBracket" + "Forecast("),
+    "Published snapshot probabilities must not call the scenario-adjusted bracket path.",
+  );
+  const homepageSource = fs.readFileSync(
+    path.join(process.cwd(), "src/app/page.tsx"),
+    "utf-8",
+  );
+  assert(
+    homepageSource.includes("estimateBaselineSeriesProbability"),
+    "The homepage preserved probability must use the evidenced baseline.",
+  );
+  assert(
+    !homepageSource.includes("estimateSeries" + "Probability("),
+    "The homepage must not display a scenario-adjusted probability by itself.",
+  );
+
   assert.doesNotThrow(() =>
     assertFitRowsPrecedeHoldout(
       [{ season: 2003 }, { season: 2025 }],

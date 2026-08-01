@@ -17,9 +17,10 @@ export function MethodologyNote() {
           What the model can&apos;t see
         </h3>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
-          Playoff Pulse converts assumed player availability, projected minutes,
-          net rating, Elo, manual adjustments, and home court into game-level win
-          probabilities. Remaining games are simulated as a best-of-seven series.
+          Published probabilities use the rating-only baseline. Player
+          availability, projected minutes, injuries, and manual adjustments are
+          isolated in an unvalidated scenario overlay that must be read beside
+          the baseline and its delta.
         </p>
       </div>
 

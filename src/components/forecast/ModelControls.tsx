@@ -26,7 +26,7 @@ export function ModelControls({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-[var(--color-border-subtle)] px-4 py-3">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-[var(--color-accent)]" aria-hidden />
-          <h3 className="pp-kicker text-[var(--color-text-primary)]">Assumptions / Controls</h3>
+          <h3 className="pp-kicker text-[var(--color-text-primary)]">Unvalidated overlay controls</h3>
         </div>
         <button
           type="button"
@@ -84,7 +84,7 @@ export function ModelControls({
         </div>
 
         <div className="p-4">
-          <div className="mb-3 pp-kicker">Manual team adjustments</div>
+          <div className="mb-3 pp-kicker">Manual scenario adjustments</div>
           <div className="grid gap-3 sm:grid-cols-2">
             {teams.map((team) => (
               <label

@@ -12,7 +12,7 @@ export function BacktestSummaryCard() {
     <div className="grid gap-4 p-4">
       <div>
         <div className="pp-number mt-3 text-3xl font-bold text-[var(--color-text-primary)]">
-          Brier {formatNumber(models.playoff_pulse.brierScore, 3)}
+          Baseline Brier {formatNumber(models.playoff_pulse.brierScore, 3)}
         </div>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
           Conclusively beats coinflip ({formatNumber(models.coinflip.brierScore, 3)}),
@@ -20,9 +20,10 @@ export function BacktestSummaryCard() {
           home-team-wins ({formatNumber(models.home_team.brierScore, 3)}) on{" "}
           {totalSeries} reconstructed historical series, {firstSeason}–{lastSeason}.
           Its point estimate trails SRS-only ({formatNumber(models.srs_proxy_only.brierScore, 3)})
-          and leads net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)}),
+          and net-rating-only ({formatNumber(models.net_rating_only.brierScore, 3)}),
           but neither difference is statistically distinguishable from zero.
-          Results were expanded and regenerated in July 2026.
+          This score validates only the visible rating baseline—not the player,
+          minutes, injury, or manual-adjustment overlay.
         </p>
       </div>
 

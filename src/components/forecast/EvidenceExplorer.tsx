@@ -232,7 +232,7 @@ export function EvidenceExplorer() {
           </table>
           <div className="mt-3 grid gap-2 text-xs leading-5 text-[var(--color-text-muted)]">
             <p>
-              Production scored 0.2182 series Brier in 2026. Both challenger
+              The evidenced baseline scored 0.2195 series Brier in 2026. Both challenger
               point estimates were worse, and every paired
               challenger-versus-production interval crossed zero. The gate
               decision is <span className="font-bold">not promoted</span>.
@@ -298,8 +298,8 @@ export function EvidenceExplorer() {
               <tr className="border-b border-[var(--color-border-subtle)] align-top">
                 <td className="px-2 py-2 font-bold">Historical reconstruction</td>
                 <td className="pp-number px-2 py-2">{backtestSummary.totalSeries} series / {evidence.timeline.length} pregame snapshots, {backtestSummary.firstSeason}–{backtestSummary.lastSeason}</td>
-                <td className="px-2 py-2">Fixed configuration (never refit); leakage-checked point-in-time inputs</td>
-                <td className="px-2 py-2">Descriptive performance on reconstructed history: Brier {formatNumber(backtestSummary.models.playoff_pulse.brierScore, 4)}, conclusively better than naive baselines, statistically indistinguishable from SRS-only and net-rating-only</td>
+                <td className="px-2 py-2">Rating-only baseline; leakage-checked point-in-time inputs; scenario overlay excluded</td>
+                <td className="px-2 py-2">Descriptive baseline performance: Brier {formatNumber(backtestSummary.models.playoff_pulse.brierScore, 4)}, conclusively better than naive baselines, statistically indistinguishable from SRS-only and net-rating-only; no validation claim for the overlay</td>
               </tr>
               <tr className="border-b border-[var(--color-border-subtle)] align-top">
                 <td className="px-2 py-2 font-bold">Rolling origin</td>
@@ -311,7 +311,7 @@ export function EvidenceExplorer() {
           </table>
           <p className="mt-3 max-w-4xl text-xs leading-5 text-[var(--color-text-muted)]">
             The two Brier levels are not directly comparable: the reconstruction
-            evaluates a fixed configuration on all seasons, while rolling
+            evaluates the fixed-coefficient rating baseline on all seasons, while rolling
             origin reserves the first three seasons for initialization and
             refits its parameters before every later season. Bootstrap
             intervals for every headline difference live in

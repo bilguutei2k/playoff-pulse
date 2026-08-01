@@ -100,32 +100,38 @@ production.
 Both registrations are research-only. The pooled history through 2026 cannot
 promote them; 2026 is contaminated because registration followed the season.
 
-## Classification of the 360-series reconstruction
+## Classification of the 360-series baseline reconstruction
 
-The reconstruction is a descriptive evaluation of a fixed configuration:
+The reconstruction is a descriptive evaluation of the rating-only baseline:
 
-- **Not fitted by the harness:** production parameters predate the original
-  evaluation code and were never changed afterward.
+- **Not refit at separation:** the existing 0.25 net-rating, 0.20 rating-proxy,
+  2.2 home-court, and 6.5 logistic-scale coefficients were preserved when the
+  player/minutes/injury/manual terms were moved to the scenario overlay.
+- **Post-hoc boundary:** the baseline/overlay separation was defined after the
+  historical results existed. It cannot be represented as preregistered or
+  genuinely prospective.
 - **Not genuinely prospective:** the parameters were selected in 2026 with
   ordinary knowledge of historical NBA results, and the 2003–2015 extension
   was added after the model existed.
 - **Leakage-controlled inputs:** every regular-season snapshot predates its
   series and every pregame state contains only previously completed games.
 
-The permitted statement is: “A fixed configuration, specified before the
-original evaluation harness and never refit, scored Brier 0.1840 on 360
-reconstructed 2003–2026 series.” The frozen pre-2026 record remains Brier
-0.1825 on 345 reconstructed 2003–2025 series.
+The permitted statement is: “The visible rating-only baseline scored Brier
+0.1900 on 360 reconstructed 2003–2026 series; this descriptive number does not
+validate the separate scenario overlay.” The frozen pre-2026 record remains
+Brier 0.1825 on 345 reconstructed 2003–2025 series and is not regenerated.
 
 ## Paired bootstrap comparisons
 
 | Contrast | Difference | Series-resampled 95% CI | Season-resampled 95% CI | Conclusive |
 |---|---:|---|---|---|
-| vs coin flip | −0.0660 | [−0.0813, −0.0509] | [−0.0782, −0.0533] | Yes |
-| vs home team | −0.0255 | [−0.0359, −0.0149] | [−0.0343, −0.0165] | Yes |
-| vs higher seed | −0.0244 | [−0.0346, −0.0139] | [−0.0333, −0.0155] | Yes |
-| vs net rating | −0.0013 | [−0.0093, +0.0066] | [−0.0085, +0.0058] | No |
-| vs SRS | +0.0006 | [−0.0062, +0.0072] | [−0.0058, +0.0067] | No |
+| vs coin flip | −0.0600 | [−0.0731, −0.0469] | [−0.0699, −0.0495] | Yes |
+| vs home team | −0.0195 | [−0.0288, −0.0101] | [−0.0274, −0.0118] | Yes |
+| vs higher seed | −0.0183 | [−0.0275, −0.0090] | [−0.0261, −0.0108] | Yes |
+| vs net rating | +0.0048 | [−0.0054, +0.0146] | [−0.0047, +0.0139] | No |
+| vs SRS | +0.0067 | [−0.0022, +0.0154] | [−0.0019, +0.0147] | No |
 
-Negative favors Playoff Pulse. The full blend conclusively beats naive
-directional baselines but does not beat simple rating models.
+Negative favors the Playoff Pulse baseline. It conclusively beats naive
+directional baselines but does not beat simple rating models. The SRS point
+deficit exceeds the 0.005 retirement threshold, but the interval crosses zero,
+so the symmetric retirement gate still does not fire.

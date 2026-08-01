@@ -7,7 +7,7 @@ import evidence from "../../docs/backtest/evidence.json";
 import research from "../../docs/backtest/research.json";
 import { playoffConfig, dataLastUpdatedTimestamp } from "@/lib/data/playoff-config";
 import { defaultModelSettings } from "@/lib/data/model-settings";
-import { estimateSeriesProbability } from "@/lib/model/simulator";
+import { estimateBaselineSeriesProbability } from "@/lib/model/simulator";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 
 export const metadata: Metadata = {
@@ -43,9 +43,8 @@ const BASELINE_ORDER = [
 const REPO_URL = "https://github.com/bilguutei2k/playoff-pulse";
 
 // Preserved 2026 counterfactual: the configured (completed) Finals reset to
-// 0-0 under the frozen July roster assumptions. Identical to the /lab
-// baseline; deterministic because the simulator is seeded.
-function preservedScenario() {
+// 0-0 through the same evidenced baseline used by the backtest and /snapshot.
+function preservedBaseline() {
   const finals = playoffConfig.series.find((series) => series.round === "NBA Finals");
   if (!finals) {
     return null;
@@ -54,7 +53,7 @@ function preservedScenario() {
   const teamsById = Object.fromEntries(playoffConfig.teams.map((team) => [team.id, team]));
   const teamA = teamsById[finals.teamA];
   const teamB = teamsById[finals.teamB];
-  const forecast = estimateSeriesProbability(
+  const forecast = estimateBaselineSeriesProbability(
     { ...finals, id: `${finals.id}-preserved-demo`, winsA: 0, winsB: 0 },
     { [teamA.id]: teamA, [teamB.id]: teamB },
     defaultModelSettings,
@@ -81,7 +80,7 @@ export default function Home() {
     significance.comparisons.find((row) => row.baseline === baseline),
   ).filter((row) => row !== undefined);
   const worstSeries = evidence.worstForecasts.series.slice(0, 5);
-  const scenario = preservedScenario();
+  const scenario = preservedBaseline();
   const pulse = backtestSummary.models.playoff_pulse;
 
   return (
@@ -175,8 +174,8 @@ export default function Home() {
                 {backtestSummary.totalSeries}-series reconstruction (descriptive)
               </h2>
               <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
-                A fixed configuration — specified before the evaluation harness
-                existed and never refit — scored Brier{" "}
+                The visible rating-only baseline — with the player/minutes/injury
+                overlay excluded — scored Brier{" "}
                 <span className="pp-number font-bold text-[var(--color-text-primary)]">
                   {formatNumber(pulse.brierScore, 4)}
                 </span>{" "}
@@ -348,18 +347,17 @@ export default function Home() {
                       {formatPercent(scenario.forecast.teamASeriesWinProbability)}
                     </span>
                   </div>
-                  <div className="mt-2 text-xs text-[var(--color-text-muted)]">
-                    Sensitivity {formatPercent(scenario.forecast.uncertainty.lower)}–
-                    {formatPercent(scenario.forecast.uncertainty.upper)}
+                  <div className="mt-2 pp-kicker text-[var(--color-success)]">
+                    Backtested baseline
                   </div>
                 </div>
                 <p className="max-w-2xl text-xs leading-5 text-[var(--color-text-muted)]">
                   The completed 2026 Finals ({scenario.teamA.abbreviation} vs{" "}
                   {scenario.teamB.abbreviation}) reset to 0–0 under the frozen{" "}
-                  {dataLastUpdatedTimestamp} roster assumptions. This is a
-                  counterfactual sensitivity analysis — availability and minute
-                  changes propagate through a 240-minute rotation into exact
-                  series paths. It is not an issued Finals forecast.
+                  {dataLastUpdatedTimestamp} rating snapshot. This is the
+                  rating-only baseline, not an issued Finals forecast. The lab
+                  shows any player, minute, or injury adjustment beside this
+                  value with a delta and an unvalidated label.
                 </p>
                 <Link
                   href="/lab"

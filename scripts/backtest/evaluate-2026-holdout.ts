@@ -13,7 +13,7 @@ import type {
   TeamSeasonSnapshot,
 } from "../../src/lib/backtest/types";
 import { defaultModelSettings } from "../../src/lib/data/model-settings";
-import { gameWinProbability } from "../../src/lib/model/probability";
+import { baselineProbability } from "../../src/lib/model/probability";
 import { solveSeriesExactly } from "../../src/lib/model/series-solver";
 import {
   NET_RATING_ONLY_SETTINGS,
@@ -363,7 +363,7 @@ function fixedGameProbability(
   const home = snapshotToTeam(homeSnapshot, game.seriesId);
   const away = snapshotToTeam(awaySnapshot, game.seriesId);
   return boundProbability(
-    gameWinProbability(home, away, home.id, settings),
+    baselineProbability(home, away, home.id, settings),
     `${game.seriesId}:game-${game.gameNumber}`,
   );
 }
@@ -590,7 +590,8 @@ function main() {
         "Slope/intercept are estimated after forecasts are fixed using 2026 outcomes; diagnostics never feed a prediction.",
     },
     modelDefinitions: {
-      production: "Fixed Playoff Pulse configuration.",
+      production:
+        "Evidenced rating-only baseline: fixed net-rating, rating-proxy, home-court, and logistic-scale terms; scenario overlay excluded.",
       exact_srs_logit_plus_seed_v1: {
         game:
           "Frozen underlying exact SRS + home game model; the registered seed adjustment is series-only.",

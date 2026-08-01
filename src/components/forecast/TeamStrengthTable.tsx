@@ -42,7 +42,9 @@ export function TeamStrengthTable({
             <th className="num">Net rating</th>
             <th className="num">Elo conv</th>
             <th className="num">Manual</th>
-            <th className="num">Strength</th>
+            <th className="num">Baseline</th>
+            <th className="num">Overlay</th>
+            <th className="num">Adjusted</th>
             <th>Scale</th>
           </tr>
         </thead>
@@ -103,6 +105,16 @@ export function TeamStrengthTable({
                     }`}
                   >
                     {formatSigned(forecast.manualAdjustment)}
+                  </span>
+                </td>
+                <td className="num pp-number font-bold">
+                  <span className={`pp-heat ${heatClass(forecast.baselineStrength)}`}>
+                    {formatSigned(forecast.baselineStrength)}
+                  </span>
+                </td>
+                <td className="num pp-number">
+                  <span className={`pp-heat ${heatClass(forecast.scenarioAdjustment)}`}>
+                    {formatSigned(forecast.scenarioAdjustment)}
                   </span>
                 </td>
                 <td className="num pp-number font-bold">

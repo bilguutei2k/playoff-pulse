@@ -42,11 +42,11 @@
       "n": 360,
       "production": {
         "n": 360,
-        "brier": 0.18395756906204833,
-        "logLoss": 0.5477582013393535,
+        "brier": 0.19000329064588325,
+        "logLoss": 0.564132839930624,
         "calibrationFit": {
-          "intercept": -0.009852114812530054,
-          "slope": 1.4671936761261684
+          "intercept": -0.014435437022865556,
+          "slope": 1.7987408389486321
         }
       },
       "comparatorMetrics": {
@@ -58,13 +58,13 @@
           "slope": 0.8147298915125344
         }
       },
-      "productionMinusComparatorBrier": 0.0006159252608555628,
+      "productionMinusComparatorBrier": 0.006661646844690367,
       "seasonClusteredBrierDifferenceCi95": [
-        -0.0057568891790516314,
-        0.006654909967985419
+        -0.0018942229978144197,
+        0.014664855909139102
       ],
       "checks": {
-        "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
+        "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": true,
         "brierIntervalLowerBoundAboveZero": false,
         "comparatorLogLossNoWorse": true,
         "comparatorCalibrationSlopeNotFartherFromOne": true
@@ -76,11 +76,11 @@
       "n": 360,
       "production": {
         "n": 360,
-        "brier": 0.18395756906204833,
-        "logLoss": 0.5477582013393535,
+        "brier": 0.19000329064588325,
+        "logLoss": 0.564132839930624,
         "calibrationFit": {
-          "intercept": -0.009852114812530054,
-          "slope": 1.4671936761261684
+          "intercept": -0.014435437022865556,
+          "slope": 1.7987408389486321
         }
       },
       "comparatorMetrics": {
@@ -92,15 +92,15 @@
           "slope": 0.7345439757227883
         }
       },
-      "productionMinusComparatorBrier": -0.0012678954512069889,
+      "productionMinusComparatorBrier": 0.004777826132627821,
       "seasonClusteredBrierDifferenceCi95": [
-        -0.008536095669310562,
-        0.0057911624578572685
+        -0.004659568655293819,
+        0.013944105364276566
       ],
       "checks": {
         "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
         "brierIntervalLowerBoundAboveZero": false,
-        "comparatorLogLossNoWorse": false,
+        "comparatorLogLossNoWorse": true,
         "comparatorCalibrationSlopeNotFartherFromOne": true
       },
       "retirementGateMet": false

@@ -6,7 +6,11 @@ import { playoffConfig, dataLastUpdatedTimestamp } from "@/lib/data/playoff-conf
 import { defaultModelSettings } from "@/lib/data/model-settings";
 import type { InjuryStatus, Series, Team } from "@/lib/model/types";
 import { allocateScenarioRotation, type PlayerScenarioOverride } from "@/lib/model/rotation";
-import { estimateSeriesProbability } from "@/lib/model/simulator";
+import { scenarioTeamAdjustment } from "@/lib/model/probability";
+import {
+  estimateBaselineSeriesProbability,
+  estimateSeriesProbability,
+} from "@/lib/model/simulator";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 
 type Overrides = Record<string, PlayerScenarioOverride>;
@@ -87,22 +91,48 @@ export function ScenarioLab() {
   const baseA = baseTeams[demoSeries.teamA];
   const baseB = baseTeams[demoSeries.teamB];
   const baseline = useMemo(
-    () => estimateSeriesProbability(demoSeries, { [baseA.id]: baseA, [baseB.id]: baseB }, defaultModelSettings),
+    () => estimateBaselineSeriesProbability(demoSeries, { [baseA.id]: baseA, [baseB.id]: baseB }, defaultModelSettings),
     [baseA, baseB],
   );
   const allocationA = useMemo(() => allocateScenarioRotation(baseA, { overrides }), [baseA, overrides]);
   const allocationB = useMemo(() => allocateScenarioRotation(baseB, { overrides }), [baseB, overrides]);
+  const scenarioA = useMemo(
+    () => ({
+      ...baseA,
+      players: [],
+      manualAdjustment:
+        scenarioTeamAdjustment(allocationA.team, defaultModelSettings) -
+        scenarioTeamAdjustment(baseA, defaultModelSettings),
+    }),
+    [allocationA.team, baseA],
+  );
+  const scenarioB = useMemo(
+    () => ({
+      ...baseB,
+      players: [],
+      manualAdjustment:
+        scenarioTeamAdjustment(allocationB.team, defaultModelSettings) -
+        scenarioTeamAdjustment(baseB, defaultModelSettings),
+    }),
+    [allocationB.team, baseB],
+  );
   const scenario = useMemo(
     () => estimateSeriesProbability(
       demoSeries,
-      { [baseA.id]: allocationA.team, [baseB.id]: allocationB.team },
+      { [baseA.id]: scenarioA, [baseB.id]: scenarioB },
       defaultModelSettings,
     ),
-    [allocationA.team, allocationB.team, baseA.id, baseB.id],
+    [baseA.id, baseB.id, scenarioA, scenarioB],
   );
   const replay = evidence.timeline.filter((row) => row.seriesId === replaySeriesId);
   const replayMeta = evidence.seriesIndex.find((row) => row.seriesId === replaySeriesId);
-  const scoreRows = Object.entries(scenario.finalScoreProbabilities).sort((a, b) => b[1] - a[1]);
+  const scoreRows = Object.entries(baseline.finalScoreProbabilities)
+    .map(([score, probability]) => ({
+      score,
+      baseline: probability,
+      adjusted: scenario.finalScoreProbabilities[score] ?? 0,
+    }))
+    .sort((a, b) => b.adjusted - a.adjusted);
 
   return (
     <div className="grid gap-[18px]">
@@ -128,13 +158,23 @@ export function ScenarioLab() {
 
       <section className="pp-card">
         <div className="pp-section-head">
-          <div className="pp-kicker">Central estimate versus sensitivity</div>
+          <div className="pp-kicker">Evidenced baseline versus unvalidated overlay</div>
         </div>
         <div className="grid gap-4 p-4 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="grid gap-3">
-            <div className="flex items-end justify-between">
-              <span className="pp-team-badge" data-team={baseA.abbreviation}>{baseA.abbreviation}</span>
-              <span className="pp-number text-3xl font-bold">{formatPercent(scenario.teamASeriesWinProbability)}</span>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-[var(--color-panel-secondary)] p-3">
+                <div className="pp-kicker">Backtested baseline</div>
+                <div className="pp-number mt-2 text-2xl font-bold">
+                  {formatPercent(baseline.teamASeriesWinProbability)}
+                </div>
+              </div>
+              <div className="bg-[var(--overlay-accent-soft)] p-3">
+                <div className="pp-kicker text-[var(--color-accent)]">Adjusted / unvalidated</div>
+                <div className="pp-number mt-2 text-2xl font-bold">
+                  {formatPercent(scenario.teamASeriesWinProbability)}
+                </div>
+              </div>
             </div>
             <div className="relative h-4 bg-[var(--color-panel-secondary)]">
               <span className="absolute top-0 h-4 bg-[var(--color-accent)] opacity-60" style={{ left: `${scenario.uncertainty.lower * 100}%`, width: `${(scenario.uncertainty.upper - scenario.uncertainty.lower) * 100}%` }} />
@@ -150,12 +190,16 @@ export function ScenarioLab() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-            {scoreRows.map(([score, probability]) => (
-              <div key={score} className="grid grid-cols-[32px_1fr_52px] items-center gap-2 text-xs">
-                <span className="pp-number font-bold">{score}</span>
-                <span className="pp-probbar"><span className="pp-probbar-fill" style={{ width: `${probability * 100}%` }} /></span>
-                <span className="pp-number text-right">{formatPercent(probability)}</span>
+          <div className="grid gap-2">
+            <div className="grid grid-cols-[32px_1fr_60px_60px] gap-2 pp-kicker">
+              <span>Score</span><span /><span className="text-right">Base</span><span className="text-right">Adjusted</span>
+            </div>
+            {scoreRows.map((row) => (
+              <div key={row.score} className="grid grid-cols-[32px_1fr_60px_60px] items-center gap-2 text-xs">
+                <span className="pp-number font-bold">{row.score}</span>
+                <span className="pp-probbar"><span className="pp-probbar-fill" style={{ width: `${row.adjusted * 100}%` }} /></span>
+                <span className="pp-number text-right">{formatPercent(row.baseline)}</span>
+                <span className="pp-number text-right">{formatPercent(row.adjusted)}</span>
               </div>
             ))}
           </div>
@@ -186,7 +230,7 @@ export function ScenarioLab() {
             ))}
           </div>
           <p className="text-xs leading-5 text-[var(--color-text-muted)]">
-            {replayMeta?.teamA} probability reconstructed immediately before each game. These were not forecasts issued at the time. Historical BPM/SRS inputs are visually and semantically separate from the production scenario above.
+            {replayMeta?.teamA} probability reconstructed immediately before each game. These were not forecasts issued at the time. The published Brier describes the rating-only baseline shown above, not the player/minutes/injury overlay.
           </p>
         </div>
       </section>

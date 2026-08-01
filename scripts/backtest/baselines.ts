@@ -4,7 +4,7 @@
 
 import type { HistoricalSeries, ModelName, TeamSeasonSnapshot } from "./types";
 import { defaultModelSettings } from "../../src/lib/data/model-settings";
-import { estimateSeriesProbability } from "../../src/lib/model/simulator";
+import { estimateBaselineSeriesProbability } from "../../src/lib/model/simulator";
 import type { ModelSettings, Series, Team } from "../../src/lib/model/types";
 
 export const DIRECTIONAL_PRIOR = 0.65;
@@ -84,7 +84,7 @@ function modelPrediction(
 ): number {
   const teamA = snapshotToTeam(teamASnapshot, series.id);
   const teamB = snapshotToTeam(teamBSnapshot, series.id);
-  const forecast = estimateSeriesProbability(
+  const forecast = estimateBaselineSeriesProbability(
     historicalSeriesToModelSeries(series),
     {
       [teamA.id]: teamA,

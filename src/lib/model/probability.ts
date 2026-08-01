@@ -36,22 +36,57 @@ export function eloToPointScale(eloRating: number): number {
   return (eloRating - 1500) / ELO_POINTS_PER_POINT;
 }
 
-export function teamStrength(team: Team, settings: ModelSettings): number {
+export function baselineTeamStrength(
+  team: Team,
+  settings: ModelSettings,
+): number {
+  return (
+    settings.netRatingWeight * team.netRating +
+    settings.eloWeight * eloToPointScale(team.eloRating)
+  );
+}
+
+export function scenarioTeamAdjustment(
+  team: Team,
+  settings: ModelSettings,
+): number {
   return (
     settings.playerWeight * playerMinuteWeightedImpact(team) +
-    settings.netRatingWeight * team.netRating +
-    settings.eloWeight * eloToPointScale(team.eloRating) +
     team.manualAdjustment
   );
 }
 
-export function expectedMargin(
+export function scenarioAdjustment(
+  teamA?: Team,
+  teamB?: Team,
+  settings?: ModelSettings,
+): number {
+  if (!teamA || !teamB || !settings) {
+    return 0;
+  }
+
+  return (
+    scenarioTeamAdjustment(teamA, settings) -
+    scenarioTeamAdjustment(teamB, settings)
+  );
+}
+
+export function teamStrength(team: Team, settings: ModelSettings): number {
+  return (
+    baselineTeamStrength(team, settings) +
+    scenarioTeamAdjustment(team, settings)
+  );
+}
+
+export function baselineExpectedMargin(
   teamA: Team,
   teamB: Team,
   homeTeamId: string | null,
   settings: ModelSettings,
 ): number {
-  const baseMargin = teamStrength(teamA, settings) - teamStrength(teamB, settings);
+  const baseMargin =
+    baselineTeamStrength(teamA, settings) -
+    baselineTeamStrength(teamB, settings);
 
   if (homeTeamId === teamA.id) {
     return baseMargin + settings.homeCourtAdvantage;
@@ -62,6 +97,18 @@ export function expectedMargin(
   }
 
   return baseMargin;
+}
+
+export function expectedMargin(
+  teamA: Team,
+  teamB: Team,
+  homeTeamId: string | null,
+  settings: ModelSettings,
+): number {
+  return (
+    baselineExpectedMargin(teamA, teamB, homeTeamId, settings) +
+    scenarioAdjustment(teamA, teamB, settings)
+  );
 }
 
 export function marginToWinProbability(
@@ -88,6 +135,18 @@ export function gameWinProbability(
 ): number {
   return marginToWinProbability(
     expectedMargin(teamA, teamB, homeTeamId, settings),
+    settings.logisticScale,
+  );
+}
+
+export function baselineProbability(
+  teamA: Team,
+  teamB: Team,
+  homeTeamId: string | null,
+  settings: ModelSettings,
+): number {
+  return marginToWinProbability(
+    baselineExpectedMargin(teamA, teamB, homeTeamId, settings),
     settings.logisticScale,
   );
 }

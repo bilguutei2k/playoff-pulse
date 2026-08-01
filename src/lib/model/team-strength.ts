@@ -1,7 +1,9 @@
 import type { ModelSettings, Team, TeamForecast } from "@/lib/model/types";
 import {
+  baselineTeamStrength,
   eloToPointScale,
   playerMinuteWeightedImpact,
+  scenarioTeamAdjustment,
   teamStrength,
 } from "@/lib/model/probability";
 
@@ -15,6 +17,8 @@ export function estimateTeamForecast(
     netRating: team.netRating,
     eloPointValue: eloToPointScale(team.eloRating),
     manualAdjustment: team.manualAdjustment,
+    baselineStrength: baselineTeamStrength(team, settings),
+    scenarioAdjustment: scenarioTeamAdjustment(team, settings),
     finalStrength: teamStrength(team, settings),
   };
 }

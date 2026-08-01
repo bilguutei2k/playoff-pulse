@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T09:35:07.369Z",
+  "generatedAt": "2026-08-01T04:09:31.370Z",
   "candidate": "playoff_pulse",
   "n": 360,
   "iterations": 10000,
@@ -7,56 +7,56 @@
   "comparisons": [
     {
       "baseline": "srs_proxy_only",
-      "candidateMinusBaselineBrier": 0.0006159252608555628,
+      "candidateMinusBaselineBrier": 0.006661646844690367,
       "seriesResampled": {
         "ci95": [
-          -0.006177819641492784,
-          0.007210203945231828
+          -0.0022159595866383577,
+          0.015363605050745096
         ],
-        "probabilityCandidateBetter": 0.4219
+        "probabilityCandidateBetter": 0.069
       },
       "seasonResampled": {
         "ci95": [
-          -0.0057568891790516314,
-          0.006654909967985419
+          -0.0018942229978144197,
+          0.014664855909139102
         ],
-        "probabilityCandidateBetter": 0.4103
+        "probabilityCandidateBetter": 0.0598
       },
       "conclusive": false
     },
     {
       "baseline": "net_rating_only",
-      "candidateMinusBaselineBrier": -0.0012678954512069889,
+      "candidateMinusBaselineBrier": 0.004777826132627821,
       "seriesResampled": {
         "ci95": [
-          -0.009342518974857574,
-          0.006623565582228418
+          -0.005420557620702173,
+          0.014625926002710609
         ],
-        "probabilityCandidateBetter": 0.6103
+        "probabilityCandidateBetter": 0.175
       },
       "seasonResampled": {
         "ci95": [
-          -0.008536095669310562,
-          0.0057911624578572685
+          -0.004659568655293819,
+          0.013944105364276566
         ],
-        "probabilityCandidateBetter": 0.6358
+        "probabilityCandidateBetter": 0.1563
       },
       "conclusive": false
     },
     {
       "baseline": "higher_seed",
-      "candidateMinusBaselineBrier": -0.024375764271284996,
+      "candidateMinusBaselineBrier": -0.018330042687450178,
       "seriesResampled": {
         "ci95": [
-          -0.03459251690506834,
-          -0.013878408740240277
+          -0.027497593516908964,
+          -0.009002301984188528
         ],
-        "probabilityCandidateBetter": 1
+        "probabilityCandidateBetter": 0.9999
       },
       "seasonResampled": {
         "ci95": [
-          -0.033258602236767736,
-          -0.015514117445186503
+          -0.026139373348839125,
+          -0.010845588406382861
         ],
         "probabilityCandidateBetter": 1
       },
@@ -64,18 +64,18 @@
     },
     {
       "baseline": "home_team",
-      "candidateMinusBaselineBrier": -0.025521597604618324,
+      "candidateMinusBaselineBrier": -0.01947587602078351,
       "seriesResampled": {
         "ci95": [
-          -0.035908895057698155,
-          -0.01488550870709147
+          -0.028833598603421887,
+          -0.010097680363140224
         ],
         "probabilityCandidateBetter": 1
       },
       "seasonResampled": {
         "ci95": [
-          -0.034280053236892455,
-          -0.01650584855846906
+          -0.02735049259822547,
+          -0.011769546600134021
         ],
         "probabilityCandidateBetter": 1
       },
@@ -83,18 +83,18 @@
     },
     {
       "baseline": "coinflip",
-      "candidateMinusBaselineBrier": -0.06604243093795167,
+      "candidateMinusBaselineBrier": -0.059996709354116905,
       "seriesResampled": {
         "ci95": [
-          -0.08134744976639946,
-          -0.05088009062914401
+          -0.07305787205399905,
+          -0.04691422152810797
         ],
         "probabilityCandidateBetter": 1
       },
       "seasonResampled": {
         "ci95": [
-          -0.07824445857496329,
-          -0.05325785028938447
+          -0.06990190624865945,
+          -0.04949815572789145
         ],
         "probabilityCandidateBetter": 1
       },

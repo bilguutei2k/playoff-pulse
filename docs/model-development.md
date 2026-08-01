@@ -157,12 +157,17 @@ The subsequent rigor pass adds three high-return tests:
    0.0010, with an interval below zero. It remains frozen research until a
    future 2027 evaluation.
 
-The isolated 2026 artifact uses only models fit on 2003–2025. It records
-production series Brier 0.2182, primary-challenger Brier 0.2304, and
+The isolated 2026 artifact uses only models fit on 2003–2025. After the
+baseline/overlay separation, it records rating-only baseline series Brier
+0.2195, primary-challenger Brier 0.2304, and
 ten-season-challenger Brier 0.2408. Both challenger registrations are
 `CONTAMINATED_2026`, all paired production comparisons include zero, and the
 gate decision remains not promoted. A single archived season is necessary but
 cannot supply a season-clustered interval by itself.
+
+Player impact, projected minutes, injuries, and manual adjustment are not
+scored in this artifact. They are an unvalidated scenario overlay and must
+always be shown beside the rating-only baseline with a delta.
 
 Timestamped lagged-rotation and external-benchmark schemas now fail closed:
 zero coverage produces `not_estimable` artifacts. No rotation is inferred from

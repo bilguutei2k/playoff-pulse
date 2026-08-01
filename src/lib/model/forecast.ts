@@ -6,8 +6,8 @@ import type {
   Team,
   TeamForecast,
 } from "@/lib/model/types";
-import { estimateBracketForecast } from "@/lib/model/bracket-simulator";
-import { estimateSeriesProbability } from "@/lib/model/simulator";
+import { estimateBaselineBracketForecast } from "@/lib/model/bracket-simulator";
+import { estimateBaselineSeriesProbability } from "@/lib/model/simulator";
 import { estimateTeamForecasts } from "@/lib/model/team-strength";
 import { MODEL_VERSION, RESEARCH_PROTOCOL_VERSION } from "@/lib/model/version";
 
@@ -41,14 +41,14 @@ export function buildForecastSnapshot(
   const teamsById = Object.fromEntries(teams.map((team) => [team.id, team]));
   const teamForecasts = estimateTeamForecasts(teams, settings);
   const seriesForecasts = config.series.map((series) =>
-    estimateSeriesProbability(
+    estimateBaselineSeriesProbability(
       series,
       teamsById,
       settings,
       settings.simulationIterations,
     ),
   );
-  const bracketForecast = estimateBracketForecast(
+  const bracketForecast = estimateBaselineBracketForecast(
     { ...config, teams },
     settings,
     teams,

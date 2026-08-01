@@ -8,27 +8,18 @@ import {
   playoffConfig,
 } from "@/lib/data/playoff-config";
 import { defaultModelSettings } from "@/lib/data/model-settings";
-import type { ModelSettings } from "@/lib/model/types";
-import {
-  applyManualAdjustments,
-  buildForecastSnapshot,
-} from "@/lib/model/forecast";
+import { buildForecastSnapshot } from "@/lib/model/forecast";
 import { validateConfig } from "@/lib/model/validation";
 import { Section } from "@/components/layout/Section";
 import { BacktestSummaryCard } from "@/components/forecast/BacktestSummaryCard";
 import { MethodologyNote } from "@/components/forecast/MethodologyNote";
 import { LiveDataPanel } from "@/components/forecast/LiveDataPanel";
-import { ModelControls } from "@/components/forecast/ModelControls";
 import { ProbabilityTable } from "@/components/forecast/ProbabilityTable";
 import { SeriesCard } from "@/components/forecast/SeriesCard";
 import { SimulationSummary } from "@/components/forecast/SimulationSummary";
 import { TeamDetailDrawer } from "@/components/forecast/TeamDetailDrawer";
 import { TeamStrengthTable } from "@/components/forecast/TeamStrengthTable";
 import { formatPercent } from "@/lib/utils/format";
-
-const initialAdjustments = Object.fromEntries(
-  playoffConfig.teams.map((team) => [team.id, team.manualAdjustment]),
-);
 
 // Mirrors DEFAULT_STALE_DAYS in scripts/refresh-data.ts: active playoff series
 // never pause this long, so an older snapshot means the data pipeline broke.
@@ -50,9 +41,6 @@ function getSnapshotAgeDays(): number {
 }
 
 export function ForecastDashboard() {
-  const [settings, setSettings] = useState<ModelSettings>(defaultModelSettings);
-  const [manualAdjustments, setManualAdjustments] =
-    useState<Record<string, number>>(initialAdjustments);
   const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);
   const snapshotAgeDays = useSyncExternalStore<number | null>(
     emptySubscribe,
@@ -60,23 +48,18 @@ export function ForecastDashboard() {
     () => null,
   );
 
-  const adjustedTeams = useMemo(
-    () => applyManualAdjustments(playoffConfig.teams, manualAdjustments),
-    [manualAdjustments],
-  );
-
   const snapshot = useMemo(
-    () => buildForecastSnapshot(playoffConfig, settings, adjustedTeams),
-    [settings, adjustedTeams],
+    () => buildForecastSnapshot(playoffConfig, defaultModelSettings),
+    [],
   );
 
   const validation = useMemo(
     () =>
       validateConfig(
-        { ...playoffConfig, teams: adjustedTeams },
-        settings,
+        playoffConfig,
+        defaultModelSettings,
       ),
-    [settings, adjustedTeams],
+    [],
   );
   const activeSeries = playoffConfig.series.filter(
     (series) => series.winsA < 4 && series.winsB < 4,
@@ -160,7 +143,7 @@ export function ForecastDashboard() {
           "Manual data snapshot",
           `Last updated ${dataLastUpdatedTimestamp}`,
           "Read-only live scoreboard probe",
-          "Probabilities are model estimates",
+          "Probabilities are evidenced-baseline estimates",
           `Model ${snapshot.metadata.modelVersion}`,
           validationStatus,
         ].map((label) => (
@@ -191,7 +174,7 @@ export function ForecastDashboard() {
 
       <Section
         title="Championship Estimate"
-        description="Terminal title probabilities of the completed bracket from the frozen manual input set. With a finished Finals these are accounting, not forecasts."
+        description="Backtested rating-only baseline probabilities. With a finished Finals these terminal values are accounting, not forecasts; player and injury scenarios live in the clearly labeled lab overlay."
       >
         <div className={championshipGridClass}>
           {championshipRows.map((row) => {
@@ -231,7 +214,7 @@ export function ForecastDashboard() {
 
       <Section
         title="Active Series"
-        description="Each card shows the current manual series state, next-game estimate, series probability, and main model drivers."
+        description="Each card shows the evidenced rating-only baseline. Player, minutes, injury, and manual assumptions are excluded from these published probabilities and appear only as a labeled scenario overlay in the lab."
       >
         {activeSeries.length === 0 ? (
           <div className="p-4 text-sm leading-6 text-[var(--color-text-muted)]">
@@ -272,7 +255,7 @@ export function ForecastDashboard() {
       <div className="grid gap-[18px] xl:grid-cols-[1.4fr_1fr]">
         <Section
           title="Probability Table"
-          description="Current title-path probabilities. Eliminated teams are shown as inactive rather than active future paths."
+          description="Backtested baseline title paths. Eliminated teams are shown as inactive rather than active future paths."
         >
           <ProbabilityTable
             seriesForecasts={snapshot.seriesForecasts}
@@ -284,7 +267,7 @@ export function ForecastDashboard() {
 
         <Section
           title="Team Strength"
-          description="Point-scale estimate from player-minute impact, net rating, Elo, and manual adjustment."
+          description="The rating-only baseline and the separately identified unvalidated scenario contribution."
         >
           <TeamStrengthTable
             teamsById={snapshot.teamsById}
@@ -294,26 +277,7 @@ export function ForecastDashboard() {
         </Section>
       </div>
 
-      <div className="grid gap-[18px] xl:grid-cols-2">
-        <Section
-          title="Controls"
-          description="Changes are local to this browser session. No account, database, or write-back API is used in this MVP."
-        >
-          <ModelControls
-            settings={settings}
-            teams={snapshot.teams}
-            manualAdjustments={manualAdjustments}
-            onSettingsChange={setSettings}
-            onManualAdjustmentChange={(teamId, value) =>
-              setManualAdjustments((current) => ({ ...current, [teamId]: value }))
-            }
-            onReset={() => {
-              setSettings(defaultModelSettings);
-              setManualAdjustments(initialAdjustments);
-            }}
-          />
-        </Section>
-
+      <div className="grid gap-[18px]">
         <Section title="What The Model Can't See">
           <MethodologyNote />
         </Section>

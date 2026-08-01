@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-27T09:35:05.876Z",
+  "generatedAt": "2026-08-01T04:09:29.900Z",
   "firstSeason": 2003,
   "lastSeason": 2026,
   "totalSeries": 360,
   "models": {
     "playoff_pulse": {
-      "brierScore": 0.183958,
-      "logLoss": 0.547758,
-      "accuracy": 0.719444,
+      "brierScore": 0.190003,
+      "logLoss": 0.564133,
+      "accuracy": 0.725,
       "n": 360
     },
     "coinflip": {

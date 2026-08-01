@@ -24,7 +24,7 @@ import {
 } from "./baselines";
 import { assertNoLeakage } from "../../src/lib/backtest/leakage-check";
 import { defaultModelSettings } from "../../src/lib/data/model-settings";
-import { estimateSeriesProbability } from "../../src/lib/model/simulator";
+import { estimateBaselineSeriesProbability } from "../../src/lib/model/simulator";
 
 const MODEL_NAMES: ModelName[] = [
   "playoff_pulse",
@@ -49,7 +49,7 @@ export function playoffPulsePrediction(
 ): number {
   const teamA = snapshotToTeam(teamASnapshot, series.id);
   const teamB = snapshotToTeam(teamBSnapshot, series.id);
-  const forecast = estimateSeriesProbability(
+  const forecast = estimateBaselineSeriesProbability(
     historicalSeriesToModelSeries(series),
     {
       [teamA.id]: teamA,

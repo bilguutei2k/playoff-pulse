@@ -6,7 +6,7 @@ import type {
   HistoricalPregameForecast,
 } from "../../src/lib/backtest/point-in-time-types";
 import { assertPregameArchiveHasNoLeakage } from "../../src/lib/backtest/point-in-time-types";
-import { estimateSeriesProbability } from "../../src/lib/model/simulator";
+import { estimateBaselineSeriesProbability } from "../../src/lib/model/simulator";
 import { MODEL_VERSION, RESEARCH_PROTOCOL_VERSION } from "../../src/lib/model/version";
 import {
   historicalSeriesToModelSeries,
@@ -39,7 +39,7 @@ export function buildPregameArchive(): HistoricalPregameArchive {
           winsA,
           winsB,
         };
-        const forecast = estimateSeriesProbability(
+        const forecast = estimateBaselineSeriesProbability(
           series,
           { [teamA.id]: teamA, [teamB.id]: teamB },
           settingsForSeries(historicalSeries, defaultModelSettings),

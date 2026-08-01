@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T09:26:11.297Z",
+  "generatedAt": "2026-08-01T04:09:31.999Z",
   "season": 2026,
   "scope": {
     "games": 85,
@@ -56,7 +56,7 @@
     "calibrationDiagnostics": "Slope/intercept are estimated after forecasts are fixed using 2026 outcomes; diagnostics never feed a prediction."
   },
   "modelDefinitions": {
-    "production": "Fixed Playoff Pulse configuration.",
+    "production": "Evidenced rating-only baseline: fixed net-rating, rating-proxy, home-court, and logistic-scale terms; scenario overlay excluded.",
     "exact_srs_logit_plus_seed_v1": {
       "game": "Frozen underlying exact SRS + home game model; the registered seed adjustment is series-only.",
       "series": "Frozen exact SRS-series logit plus seed-difference mapping."
@@ -72,21 +72,21 @@
     "production": {
       "game": {
         "n": 85,
-        "brier": 0.22893766786877148,
-        "logLoss": 0.6503493441452501,
+        "brier": 0.2317424677792823,
+        "logLoss": 0.6560890664038508,
         "calibration": {
-          "intercept": -0.24360931649775242,
-          "slope": 1.2695653787940995,
+          "intercept": -0.31967548933286827,
+          "slope": 1.4968088762720542,
           "status": "estimated"
         }
       },
       "series": {
         "n": 15,
-        "brier": 0.21815270757703256,
-        "logLoss": 0.6189368193444691,
+        "brier": 0.21946861727827943,
+        "logLoss": 0.6239534266224139,
         "calibration": {
-          "intercept": -0.02774599781453653,
-          "slope": 0.7556735418897306,
+          "intercept": 0.14353789009586881,
+          "slope": 0.7061320167694508,
           "status": "estimated"
         }
       }
@@ -250,20 +250,20 @@
     "exact_srs_logit_plus_seed_v1": {
       "game": {
         "direction": "challenger_minus_production_brier",
-        "pointEstimate": 0.005553290726982885,
+        "pointEstimate": 0.0027484908164719436,
         "pairedObservationBootstrapCi95": [
-          -0.008989422127717743,
-          0.020620863440910773
+          -0.014642933824235673,
+          0.0209641353746865
         ],
         "iterations": 10000,
         "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
       },
       "series": {
         "direction": "challenger_minus_production_brier",
-        "pointEstimate": 0.01220989923141653,
+        "pointEstimate": 0.010893989530169757,
         "pairedObservationBootstrapCi95": [
-          -0.017697371116893713,
-          0.04436258586389262
+          -0.023289850295347626,
+          0.05180169338294663
         ],
         "iterations": 10000,
         "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
@@ -272,20 +272,20 @@
     "ten_season_training_window_v1": {
       "game": {
         "direction": "challenger_minus_production_brier",
-        "pointEstimate": 0.0028472907113219884,
+        "pointEstimate": 0.00004249080081104502,
         "pairedObservationBootstrapCi95": [
-          -0.0064219517030957305,
-          0.012609147664810529
+          -0.012008213946160105,
+          0.012759559543639021
         ],
         "iterations": 10000,
         "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."
       },
       "series": {
         "direction": "challenger_minus_production_brier",
-        "pointEstimate": 0.02260473337043237,
+        "pointEstimate": 0.02128882366918559,
         "pairedObservationBootstrapCi95": [
-          -0.0037584163314406996,
-          0.05162857611511672
+          -0.015721589239368127,
+          0.06312328302534835
         ],
         "iterations": 10000,
         "powerWarning": "Single-season observation bootstrap; low-powered and not a substitute for a season-clustered interval."

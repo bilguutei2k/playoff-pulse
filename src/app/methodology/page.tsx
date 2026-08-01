@@ -42,19 +42,19 @@ const fixedHigherSeed = backtestResults.results.find(
 const sections: MethodologySection[] = [
   {
     title: "Purpose",
-    body: "Playoff Pulse is a retrospective forecasting experiment and a preserved scenario engine for NBA playoff series. It turns disclosed manual assumptions into game, series, Finals, and championship estimates, then separates those production-style outputs from reconstructed and rolling-origin research evidence. It is not a betting product and does not make wagering recommendations.",
+    body: "Playoff Pulse is a retrospective forecasting experiment with an evidenced rating baseline and a preserved, unvalidated scenario overlay. Published game, series, Finals, and championship probabilities use the baseline only. It is not a betting product and does not make wagering recommendations.",
   },
   {
-    title: "Team Strength Formula",
-    body: "The MVP uses teamStrength = playerWeight * playerMinuteWeightedImpact + netRatingWeight * netRating + eloWeight * eloToPointScale + manualAdjustment. Default weights are 0.55, 0.25, and 0.20, with manual adjustment added as a point-scale override.",
+    title: "Baseline and Overlay Formula",
+    body: "The published baseline uses baselineStrength = 0.25 × netRating + 0.20 × ratingProxy, plus the fixed home-court term before logistic conversion. The separate scenario overlay is 0.55 × playerMinuteWeightedImpact + manualAdjustment. The baseline coefficients were preserved rather than refit when this boundary was introduced; the overlay defaults to zero and never enters the backtest path.",
   },
   {
     title: "Player-Minute Weighting",
-    body: "Each player's manual impact rating is weighted by projected playoff minutes and divided by a 240-minute team game. This creates a point-scale rotation estimate that can move when minutes, injuries, or availability change.",
+    body: "Each player's manual impact rating is weighted by projected playoff minutes and divided by a 240-minute team game. This creates an explicitly unvalidated scenario adjustment. It is shown only beside the baseline with its delta and never as the published probability by itself.",
   },
   {
     title: "Injury Handling",
-    body: "Players marked out are excluded from the central player-minute estimate. Limited and questionable players receive disclosed central multipliers. The uncertainty layer samples questionable availability and exposes available-versus-out scenarios; these are model assumptions, not medical forecasts.",
+    body: "Players marked out are excluded from the scenario rotation. Limited and questionable players receive disclosed scenario multipliers. These are user-driven assumptions, not medical forecasts, and they have zero point-in-time historical support under the current availability contract.",
   },
   {
     title: "Home Court",
@@ -66,7 +66,7 @@ const sections: MethodologySection[] = [
   },
   {
     title: "Full Bracket Simulation",
-    body: "The bracket simulation repeatedly resolves configured rounds and creates future series from winners. Each path draws shared team-strength and parameter uncertainty, so a team's latent strength is correlated across its games. The 10th–90th percentile series ranges are sensitivity intervals under disclosed assumptions, not empirically validated coverage guarantees. A configured Finals score and home pattern are always respected.",
+    body: "The published bracket simulation repeatedly resolves configured rounds with baseline probabilities and creates future series from winners. The scenario laboratory separately samples disclosed assumptions; its 10th–90th percentile range is sensitivity analysis, not validated coverage. A configured Finals score and home pattern are always respected.",
   },
   {
     title: "Manual and Static Inputs",
@@ -75,10 +75,10 @@ const sections: MethodologySection[] = [
   {
     title: "Backtest Results",
     body: [
-      `Across ${backtestSummary.totalSeries} playoff series from ${backtestSummary.firstSeason} through ${backtestSummary.lastSeason}, the fixed Playoff Pulse configuration posts Brier ${backtestSummary.models.playoff_pulse.brierScore.toFixed(4)}. It conclusively beats coin flip (${backtestSummary.models.coinflip.brierScore.toFixed(4)}), directional higher-seed (${backtestSummary.models.higher_seed.brierScore.toFixed(4)}), and directional home-team (${backtestSummary.models.home_team.brierScore.toFixed(4)}) baselines.`,
-      `The expanded result does not conclusively beat the simple rating models: its point estimate trails SRS-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.srs_proxy_only.brierScore).toFixed(4)} Brier and leads net-rating-only by ${(backtestSummary.models.net_rating_only.brierScore - backtestSummary.models.playoff_pulse.brierScore).toFixed(4)}. Both paired 95% intervals include zero. The reconstruction evaluates a fixed configuration whose parameters predate the harness and were never refit; docs/parameter-provenance.md records why this result is descriptive rather than prospective.`,
+      `Across ${backtestSummary.totalSeries} playoff series from ${backtestSummary.firstSeason} through ${backtestSummary.lastSeason}, the rating-only Playoff Pulse baseline posts Brier ${backtestSummary.models.playoff_pulse.brierScore.toFixed(4)}. It conclusively beats coin flip (${backtestSummary.models.coinflip.brierScore.toFixed(4)}), directional higher-seed (${backtestSummary.models.higher_seed.brierScore.toFixed(4)}), and directional home-team (${backtestSummary.models.home_team.brierScore.toFixed(4)}) baselines. This number does not validate the scenario overlay.`,
+      `The result does not conclusively beat the simple rating models: its point estimate trails SRS-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.srs_proxy_only.brierScore).toFixed(4)} Brier and net-rating-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.net_rating_only.brierScore).toFixed(4)}. Both paired 95% intervals include zero. The baseline/overlay boundary was defined after historical results existed, so this evaluation is descriptive rather than prospective.`,
       "The aggregate edge does not establish dominant superiority over rating-only models. Rolling-origin game evaluation and season-clustered intervals are shown above; feature additions remain excluded when their interval includes harm.",
-      "Revision history: July 12 corrected a minutes parser and truncated home patterns. The July 26 extension added 2003–2015 and the era-correct 2–3–2 NBA Finals pattern through 2013. The July 27 fold added the separately scored 2026 holdout and regenerated the pooled 2003–2026 archive without changing the frozen pre-2026 record.",
+      "Revision history: July 12 corrected a minutes parser and truncated home patterns. The July 26 extension added 2003–2015 and the era-correct 2–3–2 NBA Finals pattern through 2013. The July 27 fold added the separately scored 2026 holdout. The July 31 separation made the rating-only baseline identical in the UI and backtest while moving player, minutes, injury, and manual inputs into an unvalidated overlay; the frozen pre-2026 record was not changed.",
     ],
   },
   {
@@ -173,7 +173,8 @@ const sections: MethodologySection[] = [
     title: "Limitations",
     body: [
       "The current numbers should be read as model estimates from assumed inputs. They are not official data or certainties. Historical calibration evidence applies to the SRS-based research model; it does not automatically calibrate subjective production player ratings. The bracket is structurally complete, but team ratings, player impacts, and injury statuses remain manual assumptions.",
-      "Historical validation does not perfectly match the live model inputs. The backtest uses season-long BPM as the player-impact proxy, while the live product uses manually configured per-player impact ratings. That gap matters: the backtest validates the model structure and broad weighting approach, but it does not prove the current manual player ratings are calibrated at the same scale. Roster recency checks reduce a data-staleness risk; they do not validate the subjective impact ratings.",
+      "The published Brier describes exactly the rating-only baseline used by the site. It does not validate player impact, projected minutes, injury handling, manual adjustments, or the adjusted scenario probability. Those inputs are isolated in the overlay precisely because historical BPM was not equivalent to the manual production scale.",
+      "The probability function is now identical between the historical baseline and the displayed baseline. Current team rating values are still manually entered, while historical ratings come from Basketball-Reference; the Brier does not certify the accuracy or freshness of a particular manual snapshot.",
       `Historical availability has ${evidence.availability.observations} eligible point-in-time observations across ${evidence.availability.playerSeriesOpportunities} player-series opportunities. Injury effects are therefore not estimable. Participation after a forecast deadline is deliberately not backfilled as availability evidence.`,
       `Production-equivalent lagged rotations are not estimable yet: the timestamped rotation contract has ${evidence.inputAudit.laggedRotations.observations} observations and ${evidence.inputAudit.laggedRotations.completePairedSeries} completely covered series. External benchmark comparison is also unestimated (${evidence.inputAudit.externalBenchmarks.observations} eligible observations). Empty coverage is surfaced as a failed prerequisite, not replaced with hindsight-derived participation or unsourced prices.`,
       `Sensitivity bands are evaluated only as a grouped reliability diagnostic: ${evidence.sensitivityReliability.groupsWithinBand} of ${evidence.sensitivityReliability.totalGroups} equal-count groups contain the observed group rate. This is not individual probability-interval coverage because one binary outcome cannot identify a series' true latent probability.`,

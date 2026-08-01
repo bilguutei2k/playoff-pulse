@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T00:49:16.023Z",
+  "generatedAt": "2026-08-01T04:03:36.644Z",
   "protocol": "Rolling origin: train only on seasons before each evaluation season; 2006-2026 evaluated after a three-season initialization window.",
   "totalGames": 2014,
   "evaluationSeasons": [
@@ -144212,11 +144212,11 @@
         "n": 360,
         "production": {
           "n": 360,
-          "brier": 0.18395756906204833,
-          "logLoss": 0.5477582013393535,
+          "brier": 0.19000329064588325,
+          "logLoss": 0.564132839930624,
           "calibrationFit": {
-            "intercept": -0.009852114812530054,
-            "slope": 1.4671936761261684
+            "intercept": -0.014435437022865556,
+            "slope": 1.7987408389486321
           }
         },
         "comparatorMetrics": {
@@ -144228,13 +144228,13 @@
             "slope": 0.8147298915125344
           }
         },
-        "productionMinusComparatorBrier": 0.0006159252608555628,
+        "productionMinusComparatorBrier": 0.006661646844690367,
         "seasonClusteredBrierDifferenceCi95": [
-          -0.0057568891790516314,
-          0.006654909967985419
+          -0.0018942229978144197,
+          0.014664855909139102
         ],
         "checks": {
-          "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
+          "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": true,
           "brierIntervalLowerBoundAboveZero": false,
           "comparatorLogLossNoWorse": true,
           "comparatorCalibrationSlopeNotFartherFromOne": true
@@ -144246,11 +144246,11 @@
         "n": 360,
         "production": {
           "n": 360,
-          "brier": 0.18395756906204833,
-          "logLoss": 0.5477582013393535,
+          "brier": 0.19000329064588325,
+          "logLoss": 0.564132839930624,
           "calibrationFit": {
-            "intercept": -0.009852114812530054,
-            "slope": 1.4671936761261684
+            "intercept": -0.014435437022865556,
+            "slope": 1.7987408389486321
           }
         },
         "comparatorMetrics": {
@@ -144262,15 +144262,15 @@
             "slope": 0.7345439757227883
           }
         },
-        "productionMinusComparatorBrier": -0.0012678954512069889,
+        "productionMinusComparatorBrier": 0.004777826132627821,
         "seasonClusteredBrierDifferenceCi95": [
-          -0.008536095669310562,
-          0.0057911624578572685
+          -0.004659568655293819,
+          0.013944105364276566
         ],
         "checks": {
           "productionMinusComparatorPointEstimateAtLeastPositiveThreshold": false,
           "brierIntervalLowerBoundAboveZero": false,
-          "comparatorLogLossNoWorse": false,
+          "comparatorLogLossNoWorse": true,
           "comparatorCalibrationSlopeNotFartherFromOne": true
         },
         "retirementGateMet": false
@@ -176347,95 +176347,95 @@
       {
         "bin": 1,
         "n": 36,
-        "centralMean": 0.44682367125992006,
-        "lowerMean": 0.3401421340346134,
-        "upperMean": 0.558460621427391,
-        "observed": 0.4444444444444444,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.4602554362379534,
+        "lowerMean": 0.4602554362379534,
+        "upperMean": 0.4602554362379534,
+        "observed": 0.4722222222222222,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 2,
         "n": 36,
-        "centralMean": 0.5317215365500092,
-        "lowerMean": 0.4191917429456553,
-        "upperMean": 0.6410835769580842,
-        "observed": 0.5,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.5301862773124704,
+        "lowerMean": 0.5301862773124704,
+        "upperMean": 0.5301862773124704,
+        "observed": 0.5555555555555556,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 3,
         "n": 36,
-        "centralMean": 0.574594645241516,
-        "lowerMean": 0.4614555374829579,
-        "upperMean": 0.6825039891387913,
-        "observed": 0.6666666666666666,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.5652430368746074,
+        "lowerMean": 0.5652430368746074,
+        "upperMean": 0.5652430368746074,
+        "observed": 0.6111111111111112,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 4,
         "n": 36,
-        "centralMean": 0.614043647896337,
-        "lowerMean": 0.5035063000311496,
-        "upperMean": 0.7170546228422182,
+        "centralMean": 0.5953769444678146,
+        "lowerMean": 0.5953769444678146,
+        "upperMean": 0.5953769444678146,
         "observed": 0.6666666666666666,
-        "observedWithinMeanSensitivityBand": true
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 5,
         "n": 36,
-        "centralMean": 0.6479508456816572,
-        "lowerMean": 0.5391454851110248,
-        "upperMean": 0.7485312470720608,
-        "observed": 0.7222222222222222,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.6238356122267381,
+        "lowerMean": 0.6238356122267381,
+        "upperMean": 0.6238356122267381,
+        "observed": 0.6666666666666666,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 6,
         "n": 36,
-        "centralMean": 0.6756942132008388,
-        "lowerMean": 0.5688621512772122,
-        "upperMean": 0.7713605064226637,
-        "observed": 0.6388888888888888,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.6460265246428385,
+        "lowerMean": 0.6460265246428385,
+        "upperMean": 0.6460265246428385,
+        "observed": 0.7222222222222222,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 7,
         "n": 36,
-        "centralMean": 0.7116762862840617,
-        "lowerMean": 0.6092922038732803,
-        "upperMean": 0.8017702877718862,
-        "observed": 0.75,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.673011478633958,
+        "lowerMean": 0.673011478633958,
+        "upperMean": 0.673011478633958,
+        "observed": 0.7222222222222222,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 8,
         "n": 36,
-        "centralMean": 0.7501051612544283,
-        "lowerMean": 0.653290101894457,
-        "upperMean": 0.8329676792470901,
-        "observed": 0.9444444444444444,
+        "centralMean": 0.7076474277748521,
+        "lowerMean": 0.7076474277748521,
+        "upperMean": 0.7076474277748521,
+        "observed": 0.9166666666666666,
         "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 9,
         "n": 36,
-        "centralMean": 0.8055454204079564,
-        "lowerMean": 0.7190995836948573,
-        "upperMean": 0.8762583961974207,
-        "observed": 0.8333333333333334,
-        "observedWithinMeanSensitivityBand": true
+        "centralMean": 0.7554652571753873,
+        "lowerMean": 0.7554652571753873,
+        "upperMean": 0.7554652571753873,
+        "observed": 0.8611111111111112,
+        "observedWithinMeanSensitivityBand": false
       },
       {
         "bin": 10,
         "n": 36,
-        "centralMean": 0.8753805957054409,
-        "lowerMean": 0.8079502423697148,
-        "upperMean": 0.9263888185028422,
-        "observed": 0.9722222222222222,
+        "centralMean": 0.8207075969188251,
+        "lowerMean": 0.8207075969188251,
+        "upperMean": 0.8207075969188251,
+        "observed": 0.9444444444444444,
         "observedWithinMeanSensitivityBand": false
       }
     ],
-    "groupsWithinBand": 8,
+    "groupsWithinBand": 0,
     "totalGroups": 10,
     "interpretation": "Grouped reliability diagnostic only. A binary outcome cannot validate an individual probability interval, and these sensitivity bands are not prediction-interval coverage guarantees."
   }

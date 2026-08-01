@@ -45,8 +45,8 @@ export function SimulationSummary({
     {
       icon: LineChart,
       label: "Probabilities",
-      value: "Model estimates",
-      subtext: "Forecast probabilities, not certainties or recommendations.",
+      value: "Baseline estimates",
+      subtext: "Published values exclude the unvalidated scenario overlay.",
     },
     {
       icon: ShieldCheck,
