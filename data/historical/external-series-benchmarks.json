@@ -1,1 +1,947 @@
-[]
+[
+  {
+    "season": 2016,
+    "seriesId": "2016-finals-finals-cle-gsw",
+    "observedAt": "2016-05-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.31344
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-cf-cle-tor",
+    "observedAt": "2016-05-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.74016
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-cf-gsw-okc",
+    "observedAt": "2016-05-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6896631033689663
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-csf-cle-atl",
+    "observedAt": "2016-05-01T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6658133418665813
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-csf-tor-mia",
+    "observedAt": "2016-05-02T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.54988
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-csf-gsw-por",
+    "observedAt": "2016-04-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.917480825191748
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-csf-sas-okc",
+    "observedAt": "2016-04-29T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.70414
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-r1-atl-bos",
+    "observedAt": "2016-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.61917
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-r1-cle-det",
+    "observedAt": "2016-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.8551
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-r1-mia-cho",
+    "observedAt": "2016-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.51941
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-east-r1-tor-ind",
+    "observedAt": "2016-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.83621
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-r1-gsw-hou",
+    "observedAt": "2016-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.9454
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-r1-okc-dal",
+    "observedAt": "2016-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.87011
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-r1-lac-por",
+    "observedAt": "2016-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.69569
+  },
+  {
+    "season": 2016,
+    "seriesId": "2016-west-r1-sas-mem",
+    "observedAt": "2016-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.98425
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-finals-finals-gsw-cle",
+    "observedAt": "2017-05-25T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.89596
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-cf-bos-cle",
+    "observedAt": "2017-05-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.52121
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-cf-gsw-sas",
+    "observedAt": "2017-05-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.86794
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-csf-bos-was",
+    "observedAt": "2017-04-28T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.61927
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-csf-tor-cle",
+    "observedAt": "2017-04-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.53615
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-csf-gsw-uta",
+    "observedAt": "2017-05-01T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.8845
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-csf-sas-hou",
+    "observedAt": "2017-04-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.62341
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-r1-bos-chi",
+    "observedAt": "2017-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.69746
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-r1-cle-ind",
+    "observedAt": "2017-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.59339
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-r1-tor-mil",
+    "observedAt": "2017-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.7732
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-east-r1-was-atl",
+    "observedAt": "2017-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.79168
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-r1-gsw-por",
+    "observedAt": "2017-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.94045
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-r1-hou-okc",
+    "observedAt": "2017-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.69245
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-r1-sas-mem",
+    "observedAt": "2017-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.89815
+  },
+  {
+    "season": 2017,
+    "seriesId": "2017-west-r1-lac-uta",
+    "observedAt": "2017-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.57791
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-finals-finals-gsw-cle",
+    "observedAt": "2018-05-28T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.77419
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-cf-bos-cle",
+    "observedAt": "2018-05-09T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.404
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-cf-hou-gsw",
+    "observedAt": "2018-05-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.79769
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-csf-bos-phi",
+    "observedAt": "2018-04-29T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.28881
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-csf-tor-cle",
+    "observedAt": "2018-04-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.71546
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-csf-gsw-nop",
+    "observedAt": "2018-04-27T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.60332
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-csf-hou-uta",
+    "observedAt": "2018-04-28T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.75919
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-r1-bos-mil",
+    "observedAt": "2018-04-14T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.72635
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-r1-cle-ind",
+    "observedAt": "2018-04-14T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.72559
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-r1-phi-mia",
+    "observedAt": "2018-04-11T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.88366
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-east-r1-tor-was",
+    "observedAt": "2018-04-11T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.91207
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-r1-gsw-sas",
+    "observedAt": "2018-04-11T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.55547
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-r1-hou-min",
+    "observedAt": "2018-04-14T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.92515
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-r1-por-nop",
+    "observedAt": "2018-04-11T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.58364
+  },
+  {
+    "season": 2018,
+    "seriesId": "2018-west-r1-okc-uta",
+    "observedAt": "2018-04-14T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.52569
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-finals-finals-gsw-tor",
+    "observedAt": "2019-05-29T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.4595
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-cf-mil-tor",
+    "observedAt": "2019-05-14T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.44249
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-cf-gsw-por",
+    "observedAt": "2019-05-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.8934210657893422
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-csf-mil-bos",
+    "observedAt": "2019-04-27T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.79962
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-csf-tor-phi",
+    "observedAt": "2019-04-26T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.80373
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-csf-gsw-hou",
+    "observedAt": "2019-04-27T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6337936620633794
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-csf-den-por",
+    "observedAt": "2019-04-28T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.7481
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-r1-bos-ind",
+    "observedAt": "2019-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.78821
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-r1-mil-det",
+    "observedAt": "2019-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.93775
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-r1-phi-brk",
+    "observedAt": "2019-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.93746
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-east-r1-tor-orl",
+    "observedAt": "2019-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.973
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-r1-den-sas",
+    "observedAt": "2019-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.88632
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-r1-gsw-lac",
+    "observedAt": "2019-04-12T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.9973
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-r1-hou-uta",
+    "observedAt": "2019-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.63582
+  },
+  {
+    "season": 2019,
+    "seriesId": "2019-west-r1-por-okc",
+    "observedAt": "2019-04-13T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight CARM_ELO_CARMELO next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.23683
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-finals-finals-lal-mia",
+    "observedAt": "2020-09-28T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.2724672753272467
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-cf-bos-mia",
+    "observedAt": "2020-09-14T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.7445025549744502
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-cf-lal-den",
+    "observedAt": "2020-09-17T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.55602
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-csf-tor-bos",
+    "observedAt": "2020-08-29T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.43865
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-csf-mil-mia",
+    "observedAt": "2020-08-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6286137138628612
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-csf-lac-den",
+    "observedAt": "2020-09-02T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.81993
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-csf-lal-hou",
+    "observedAt": "2020-09-03T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.34851
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-r1-bos-phi",
+    "observedAt": "2020-08-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.7093829061709382
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-r1-ind-mia",
+    "observedAt": "2020-08-17T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.4296457035429645
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-r1-mil-orl",
+    "observedAt": "2020-08-17T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.97765
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-east-r1-tor-brk",
+    "observedAt": "2020-08-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.99273
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-r1-den-uta",
+    "observedAt": "2020-08-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6689633103668963
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-r1-hou-okc",
+    "observedAt": "2020-08-17T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.83013
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-r1-lac-dal",
+    "observedAt": "2020-08-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.87055
+  },
+  {
+    "season": 2020,
+    "seriesId": "2020-west-r1-lal-por",
+    "observedAt": "2020-08-17T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.90956
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-finals-finals-pho-mil",
+    "observedAt": "2021-07-05T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.68843
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-cf-mil-atl",
+    "observedAt": "2021-06-22T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.78214
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-cf-pho-lac",
+    "observedAt": "2021-06-19T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6707732922670774
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-csf-phi-atl",
+    "observedAt": "2021-06-05T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6121838781612183
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-csf-brk-mil",
+    "observedAt": "2021-06-04T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.64073
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-csf-uta-lac",
+    "observedAt": "2021-06-07T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.5391346086539134
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-csf-pho-den",
+    "observedAt": "2021-06-06T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.57652
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-r1-nyk-atl",
+    "observedAt": "2021-05-22T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.2852371476285237
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-r1-brk-bos",
+    "observedAt": "2021-05-21T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.838191618083819
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-r1-mil-mia",
+    "observedAt": "2021-05-21T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.7691423085769142
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-east-r1-phi-was",
+    "observedAt": "2021-05-22T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.9546004539954599
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-r1-den-por",
+    "observedAt": "2021-05-21T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.6506934930650693
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-r1-lac-dal",
+    "observedAt": "2021-05-21T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.89383
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-r1-pho-lal",
+    "observedAt": "2021-05-22T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.3610463895361046
+  },
+  {
+    "season": 2021,
+    "seriesId": "2021-west-r1-uta-mem",
+    "observedAt": "2021-05-22T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.953710462895371
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-finals-finals-bos-gsw",
+    "observedAt": "2022-06-01T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.80049
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-cf-mia-bos",
+    "observedAt": "2022-05-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.32611
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-cf-gsw-dal",
+    "observedAt": "2022-05-17T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.46203
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-csf-bos-mil",
+    "observedAt": "2022-04-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.74593
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-csf-mia-phi",
+    "observedAt": "2022-05-01T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.54597
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-csf-pho-dal",
+    "observedAt": "2022-05-01T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.79407
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-csf-mem-gsw",
+    "observedAt": "2022-04-30T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.47713
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-r1-bos-brk",
+    "observedAt": "2022-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.823
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-r1-mia-atl",
+    "observedAt": "2022-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.67574
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-r1-mil-chi",
+    "observedAt": "2022-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.95472
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-east-r1-phi-tor",
+    "observedAt": "2022-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.76062
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-r1-dal-uta",
+    "observedAt": "2022-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.372
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-r1-gsw-den",
+    "observedAt": "2022-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.7569
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-r1-mem-min",
+    "observedAt": "2022-04-15T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.66507
+  },
+  {
+    "season": 2022,
+    "seriesId": "2022-west-r1-pho-nop",
+    "observedAt": "2022-04-16T00:00:00Z",
+    "sourceUrl": "https://raw.githubusercontent.com/fivethirtyeight/checking-our-work-data/f6d5b2e1d6da2889345d381c41431f9a4ee208dd/nba_playoffs.csv",
+    "sourceLabel": "FiveThirtyEight RAPTOR next-round pair normalization",
+    "method": "public_probability",
+    "teamAWinProbability": 0.85621
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T21:17:45.515Z",
+  "generatedAt": "2026-08-01T21:25:25.202Z",
   "conservativeDeadline": "Inputs must be timestamped before 00:00 UTC on seriesStartDate because historical tip times are not retained.",
   "laggedRotations": {
     "method": "last_10_team_games_before_deadline",
@@ -43,10 +43,24 @@
     "diagnosis": "Genuine source-coverage failure: the repository contains no timestamped player-level pre-series game-log observations. No contract clause eliminated a candidate."
   },
   "externalBenchmarks": {
+    "observations": 105,
+    "coveredSeries": 105,
+    "totalSeries": 645,
+    "status": "eligible_for_matched-series-comparison",
+    "rule": "Only timestamped public probabilities or explicitly no-vig two-sided series prices are eligible. Closing prices observed after the deadline are excluded."
+  },
+  "externalModelBenchmarks": {
+    "observations": 105,
+    "coveredSeries": 105,
+    "totalSeries": 645,
+    "status": "eligible_for_matched-series-model-comparison",
+    "rule": "Public forecast probabilities must be timestamped strictly before the series deadline and mapped under a rule frozen before scoring."
+  },
+  "marketBenchmarks": {
     "observations": 0,
     "coveredSeries": 0,
     "totalSeries": 645,
-    "status": "not_estimable_no_timestamped_external_probabilities",
-    "rule": "Only timestamped public probabilities or explicitly no-vig two-sided series prices are eligible. Closing prices observed after the deadline are excluded."
+    "status": "not_estimable_no_timestamped_no_vig_market_prices",
+    "rule": "Only timestamped, explicitly no-vig two-sided series prices observed before the deadline are eligible; public model probabilities do not satisfy this contract."
   }
 }

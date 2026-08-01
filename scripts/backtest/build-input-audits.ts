@@ -41,6 +41,12 @@ export function buildInputAudit() {
     rotations.map((row) => row.seriesId),
   ).size;
   const benchmarkSeries = new Set(benchmarks.map((row) => row.seriesId)).size;
+  const externalModelBenchmarks = benchmarks.filter(
+    (row) => row.method === "public_probability",
+  );
+  const marketBenchmarks = benchmarks.filter(
+    (row) => row.method === "no_vig_two_sided_series_price",
+  );
   const rotationRejections = diagnoseLaggedRotationRejections(
     rotations,
     series,
@@ -103,6 +109,29 @@ export function buildInputAudit() {
           : "eligible_for_matched-series-comparison",
       rule:
         "Only timestamped public probabilities or explicitly no-vig two-sided series prices are eligible. Closing prices observed after the deadline are excluded.",
+    },
+    externalModelBenchmarks: {
+      observations: externalModelBenchmarks.length,
+      coveredSeries: new Set(externalModelBenchmarks.map((row) => row.seriesId))
+        .size,
+      totalSeries: series.length,
+      status:
+        externalModelBenchmarks.length === 0
+          ? "not_estimable_no_timestamped_external_model_probabilities"
+          : "eligible_for_matched-series-model-comparison",
+      rule:
+        "Public forecast probabilities must be timestamped strictly before the series deadline and mapped under a rule frozen before scoring.",
+    },
+    marketBenchmarks: {
+      observations: marketBenchmarks.length,
+      coveredSeries: new Set(marketBenchmarks.map((row) => row.seriesId)).size,
+      totalSeries: series.length,
+      status:
+        marketBenchmarks.length === 0
+          ? "not_estimable_no_timestamped_no_vig_market_prices"
+          : "eligible_for_matched-series-market-comparison",
+      rule:
+        "Only timestamped, explicitly no-vig two-sided series prices observed before the deadline are eligible; public model probabilities do not satisfy this contract.",
     },
   };
 }

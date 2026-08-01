@@ -4,6 +4,7 @@ import backtestSummary from "../../../docs/backtest/summary.json";
 import backtestResults from "../../../docs/backtest/results.json";
 import evidence from "../../../docs/backtest/evidence.json";
 import retirementDecision from "../../../docs/backtest/retirement-decision.json";
+import externalBenchmark538 from "../../../docs/backtest/external-benchmark-538.json";
 import { formatNumber, formatSigned } from "@/lib/utils/format";
 import { ResearchEvidence } from "@/components/forecast/ResearchEvidence";
 
@@ -177,13 +178,21 @@ const sections: MethodologySection[] = [
     ],
   },
   {
+    title: "External Model Benchmark",
+    body: [
+      `On ${externalBenchmark538.coverage.matchedSeries} matched series from 2016–2022, the rating-only Playoff Pulse reconstruction scores Brier ${externalBenchmark538.metrics.playoffPulse.brier.toFixed(4)} and log loss ${externalBenchmark538.metrics.playoffPulse.logLoss.toFixed(4)}, versus FiveThirtyEight at Brier ${externalBenchmark538.metrics.fiveThirtyEight.brier.toFixed(4)} and log loss ${externalBenchmark538.metrics.fiveThirtyEight.logLoss.toFixed(4)}. Playoff Pulse minus FiveThirtyEight Brier is ${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.pointEstimate, 4)} with a season-clustered 95% interval [${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.ci95[0], 4)}, ${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.ci95[1], 4)}].`,
+      "The mapping rule was committed before scoring: take the latest common forecast date strictly before series start, use the round-specific advancement field, and normalize the two teams' positive probabilities. Coverage is 105 of 105 eligible series.",
+      "This comparison spans two FiveThirtyEight generations—CARM-Elo/CARMELO in 2016–2019 and RAPTOR in 2020–2022—and the archive ends before FiveThirtyEight stopped sports forecasts in 2023. It is a model benchmark, not a betting-market benchmark. The separate timestamped no-vig market contract still has zero observations.",
+    ],
+  },
+  {
     title: "Limitations",
     body: [
       "The current numbers should be read as model estimates from assumed inputs. They are not official data or certainties. Historical calibration evidence applies to the SRS-based research model; it does not automatically calibrate subjective production player ratings. The bracket is structurally complete, but team ratings, player impacts, and injury statuses remain manual assumptions.",
       "The published Brier describes exactly the rating-only baseline used by the site. It does not validate player impact, projected minutes, injury handling, manual adjustments, or the adjusted scenario probability. Those inputs are isolated in the overlay precisely because historical BPM was not equivalent to the manual production scale.",
       "The probability function is now identical between the historical baseline and the displayed baseline. Current team rating values are still manually entered, while historical ratings come from Basketball-Reference; the Brier does not certify the accuracy or freshness of a particular manual snapshot.",
       `Historical availability has ${evidence.availability.observations} eligible point-in-time observations across ${evidence.availability.playerSeriesOpportunities} player-series opportunities. Injury effects are therefore not estimable. Participation after a forecast deadline is deliberately not backfilled as availability evidence.`,
-      `Production-equivalent lagged rotations are not estimable: the source file contains ${evidence.inputAudit.laggedRotations.sourceInventory.candidateObservations} candidate observations and ${evidence.inputAudit.laggedRotations.completePairedSeries} completely covered series. Every clause—including exactly 240 regulation minutes, a strictly pre-deadline timestamp, and at least six named players—therefore rejected zero candidates; the failure is missing timestamped player-level game logs, not an over-restrictive clause. External benchmark comparison is also unestimated (${evidence.inputAudit.externalBenchmarks.observations} eligible observations). Empty coverage is surfaced as a failed prerequisite, not replaced with hindsight-derived participation or unsourced prices.`,
+      `Production-equivalent lagged rotations are not estimable: the source file contains ${evidence.inputAudit.laggedRotations.sourceInventory.candidateObservations} candidate observations and ${evidence.inputAudit.laggedRotations.completePairedSeries} completely covered series. Every clause—including exactly 240 regulation minutes, a strictly pre-deadline timestamp, and at least six named players—therefore rejected zero candidates; the failure is missing timestamped player-level game logs, not an over-restrictive clause. The external model benchmark has ${evidence.inputAudit.externalModelBenchmarks.observations} eligible observations, while the distinct no-vig market contract remains unestimated at ${evidence.inputAudit.marketBenchmarks.observations}. Empty market coverage is surfaced as a failed prerequisite, not replaced with unsourced prices.`,
       `Sensitivity bands are evaluated only as a grouped reliability diagnostic: ${evidence.sensitivityReliability.groupsWithinBand} of ${evidence.sensitivityReliability.totalGroups} equal-count groups contain the observed group rate. This is not individual probability-interval coverage because one binary outcome cannot identify a series' true latent probability.`,
     ],
   },

@@ -71,6 +71,11 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
     Brier by −0.0010 with a season-clustered 95% interval
     [−0.0017, −0.0003]. This is retrospective research, not prospective
     validation, and it is first promotion-eligible in 2027.
+15. The frozen FiveThirtyEight mapping covers all 105 eligible series from
+    2016–2022. Playoff Pulse scores Brier 0.1843 versus 0.1719 for
+    FiveThirtyEight; the paired Playoff-Pulse-minus-538 difference is +0.0124
+    with season-clustered 95% interval [−0.0010, +0.0253]. This is a model
+    benchmark spanning CARM-Elo/CARMELO and RAPTOR eras, not a market benchmark.
 
 ## Supported with qualification
 
@@ -82,7 +87,8 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 | Game calibration helps | Nested historical research only; not transferred to production because input scales differ |
 | 2026 scenario lab results | Counterfactual under preserved July roster assumptions; not an issued forecast |
 | Sensitivity reliability | Eight of ten grouped observed rates lie inside mean bands; this is not individual probability-interval coverage |
-| Historical injury effects | Not estimable: zero eligible point-in-time availability observations across 7,200 player-series opportunities |
+| Historical injury effects | Not estimable: zero eligible point-in-time availability observations across 12,900 player-series opportunities |
+| FiveThirtyEight comparison | Model benchmark on 105 matched 2016–2022 series; 538 has the better point estimate, while the paired season-clustered interval crosses zero |
 | Coherent game-to-series calibration helps | Historical point estimate only; the paired interval includes zero and the mapping is not transferred to manual production inputs |
 | Exact-SRS-plus-seed challenger helps | The pooled historical point estimate exceeds the threshold, but its interval includes zero; its 2026 registration is contaminated and the isolated 2026 result is low-powered |
 | Ten-season training window helps | Historical game interval excludes zero; the candidate is frozen for a future 2027 check and is not promoted on retrospective evidence |
@@ -134,8 +140,9 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
   because the required source rows do not exist.
 - Individual latent-probability interval coverage, which is not identifiable
   from one binary series result.
-- External forecast or market benchmark comparisons: the schema and audit
-  exist, but there are zero eligible timestamped observations.
+- Timestamped no-vig market comparisons: the market contract remains at zero
+  eligible observations. The separate FiveThirtyEight model benchmark has 105
+  matched observations and does not satisfy the market contract.
 
 ## Mechanical content-selection rules
 
