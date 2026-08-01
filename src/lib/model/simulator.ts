@@ -27,6 +27,10 @@ function getGameNumber(winsA: number, winsB: number): number {
   return winsA + winsB + 1;
 }
 
+function winsRequiredForSeries(series: Series): 3 | 4 {
+  return series.winsRequired ?? 4;
+}
+
 type GameProbability = (
   teamA: Team,
   teamB: Team,
@@ -41,7 +45,8 @@ function nextGameForecastFor(
   probability: GameProbability,
   margin: typeof expectedMargin,
 ): GameForecast | null {
-  if (series.winsA >= 4 || series.winsB >= 4) {
+  const winsRequired = winsRequiredForSeries(series);
+  if (series.winsA >= winsRequired || series.winsB >= winsRequired) {
     return null;
   }
 
@@ -93,7 +98,8 @@ export function nextGameForecast(
   teamsById: Record<string, Team>,
   settings: ModelSettings,
 ): GameForecast | null {
-  if (series.winsA >= 4 || series.winsB >= 4) {
+  const winsRequired = winsRequiredForSeries(series);
+  if (series.winsA >= winsRequired || series.winsB >= winsRequired) {
     return null;
   }
 
@@ -179,8 +185,9 @@ export function simulateBaselineSeriesOutcome(
   let winsA = series.winsA;
   let winsB = series.winsB;
   let gamesPlayed = 0;
+  const winsRequired = winsRequiredForSeries(series);
 
-  while (winsA < 4 && winsB < 4) {
+  while (winsA < winsRequired && winsB < winsRequired) {
     const gameNumber = getGameNumber(winsA, winsB);
     const homeTeamId = series.homePattern[gameNumber - 1] ?? null;
     const probabilityA = clampProbability(
@@ -197,8 +204,8 @@ export function simulateBaselineSeriesOutcome(
   }
 
   return {
-    winnerId: winsA === 4 ? series.teamA : series.teamB,
-    loserId: winsA === 4 ? series.teamB : series.teamA,
+    winnerId: winsA === winsRequired ? series.teamA : series.teamB,
+    loserId: winsA === winsRequired ? series.teamB : series.teamA,
     winsA,
     winsB,
     gamesPlayed,
@@ -221,8 +228,9 @@ export function simulateSeriesOutcome(
   let winsA = series.winsA;
   let winsB = series.winsB;
   let gamesPlayed = 0;
+  const winsRequired = winsRequiredForSeries(series);
 
-  while (winsA < 4 && winsB < 4) {
+  while (winsA < winsRequired && winsB < winsRequired) {
     const gameNumber = getGameNumber(winsA, winsB);
     const homeTeamId = series.homePattern[gameNumber - 1] ?? null;
     const probabilityA = clampProbability(
@@ -239,8 +247,8 @@ export function simulateSeriesOutcome(
   }
 
   return {
-    winnerId: winsA === 4 ? series.teamA : series.teamB,
-    loserId: winsA === 4 ? series.teamB : series.teamA,
+    winnerId: winsA === winsRequired ? series.teamA : series.teamB,
+    loserId: winsA === winsRequired ? series.teamB : series.teamA,
     winsA,
     winsB,
     gamesPlayed,
@@ -271,6 +279,7 @@ export function estimateSeriesProbability(
         series.homePattern[gameNumber - 1] ?? null,
         settings,
       ),
+    winsRequiredForSeries(series),
   );
   const teamASeriesWinProbability = solution.teamAWinProbability;
 
@@ -318,6 +327,7 @@ export function estimateBaselineSeriesProbability(
         series.homePattern[gameNumber - 1] ?? null,
         settings,
       ),
+    winsRequiredForSeries(series),
   );
   const teamASeriesWinProbability = solution.teamAWinProbability;
 

@@ -2,7 +2,11 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { loadGames, loadSeries, loadSnapshots } from "./build-snapshots";
 import { fullHomePattern } from "./baselines";
-import type { HistoricalGame, TeamSeasonSnapshot } from "./types";
+import type {
+  HistoricalGame,
+  HistoricalSeries,
+  TeamSeasonSnapshot,
+} from "./types";
 import {
   fitRidgeModel,
   fitLogisticModel,
@@ -13,6 +17,7 @@ import {
   type RidgeModel,
 } from "../../src/lib/backtest/regression";
 import { solveSeriesExactly } from "../../src/lib/model/series-solver";
+import { historicalSeriesFormat } from "../../src/lib/backtest/series-formats";
 import { SEASONS } from "./scrape-bbref";
 import { ratingGapPlayerMultiplier } from "../../src/lib/backtest/research-candidates";
 
@@ -27,6 +32,10 @@ const RETIREMENT_DECISION_OUTPUT = path.join(
   "backtest",
   "retirement-decision.json",
 );
+
+function winsRequiredForHistoricalSeries(series: HistoricalSeries): 3 | 4 {
+  return historicalSeriesFormat(series.season, series.round).winsRequired;
+}
 
 type FeatureName =
   | "srsDiff"
@@ -468,8 +477,19 @@ function evaluateSpec(allGames: GameRow[], spec: FeatureSpec) {
     const snapshots = Object.fromEntries(loadSnapshots(season).map((row) => [row.teamId, row]));
     for (const series of loadSeries(season)) {
       const pattern = fullHomePattern(series);
-      const solution = solveSeriesExactly(0, 0, (gameNumber) =>
-        probabilityA(model, series.teamA, series.teamB, pattern[gameNumber - 1], snapshots, series.bubble),
+      const solution = solveSeriesExactly(
+        0,
+        0,
+        (gameNumber) =>
+          probabilityA(
+            model,
+            series.teamA,
+            series.teamB,
+            pattern[gameNumber - 1],
+            snapshots,
+            series.bubble,
+          ),
+        winsRequiredForHistoricalSeries(series),
       );
       seriesPredictions.push({ id: series.id, season, p: solution.teamAWinProbability, y: series.winner === series.teamA ? 1 : 0 });
     }
@@ -551,30 +571,39 @@ function nestedGameCalibrationThroughSeries(
     );
     for (const series of loadSeries(season)) {
       const pattern = fullHomePattern(series);
-      const raw = solveSeriesExactly(0, 0, (gameNumber) =>
-        probabilityA(
-          gameModel,
-          series.teamA,
-          series.teamB,
-          pattern[gameNumber - 1],
-          snapshots,
-          series.bubble,
-        ),
+      const raw = solveSeriesExactly(
+        0,
+        0,
+        (gameNumber) =>
+          probabilityA(
+            gameModel,
+            series.teamA,
+            series.teamB,
+            pattern[gameNumber - 1],
+            snapshots,
+            series.bubble,
+          ),
+        winsRequiredForHistoricalSeries(series),
       ).teamAWinProbability;
-      const calibrated = solveSeriesExactly(0, 0, (gameNumber) => {
-        const homeId = pattern[gameNumber - 1];
-        const rawTeamA = probabilityA(
-          gameModel,
-          series.teamA,
-          series.teamB,
-          homeId,
-          snapshots,
-          series.bubble,
-        );
-        const rawHome = homeId === series.teamA ? rawTeamA : 1 - rawTeamA;
-        const calibratedHome = predictLogistic(calibrator, [logit(rawHome)]);
-        return homeId === series.teamA ? calibratedHome : 1 - calibratedHome;
-      }).teamAWinProbability;
+      const calibrated = solveSeriesExactly(
+        0,
+        0,
+        (gameNumber) => {
+          const homeId = pattern[gameNumber - 1];
+          const rawTeamA = probabilityA(
+            gameModel,
+            series.teamA,
+            series.teamB,
+            homeId,
+            snapshots,
+            series.bubble,
+          );
+          const rawHome = homeId === series.teamA ? rawTeamA : 1 - rawTeamA;
+          const calibratedHome = predictLogistic(calibrator, [logit(rawHome)]);
+          return homeId === series.teamA ? calibratedHome : 1 - calibratedHome;
+        },
+        winsRequiredForHistoricalSeries(series),
+      ).teamAWinProbability;
       predictions.push({
         id: series.id,
         season,
@@ -900,15 +929,19 @@ function evaluateTemporalWindowCandidate(allGames: GameRow[]) {
     );
     for (const series of loadSeries(season)) {
       const pattern = fullHomePattern(series);
-      const solution = solveSeriesExactly(0, 0, (gameNumber) =>
-        probabilityA(
-          model,
-          series.teamA,
-          series.teamB,
-          pattern[gameNumber - 1],
-          snapshots,
-          series.bubble,
-        ),
+      const solution = solveSeriesExactly(
+        0,
+        0,
+        (gameNumber) =>
+          probabilityA(
+            model,
+            series.teamA,
+            series.teamB,
+            pattern[gameNumber - 1],
+            snapshots,
+            series.bubble,
+          ),
+        winsRequiredForHistoricalSeries(series),
       );
       seriesPredictions.push({
         id: series.id,

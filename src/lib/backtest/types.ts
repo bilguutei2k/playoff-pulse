@@ -23,7 +23,7 @@ export type HistoricalSeries = {
   winsA: number;                 // final wins for teamA
   winsB: number;
   winner: string;                // abbreviation of the series winner
-  gamesPlayed: number;           // 4–7
+  gamesPlayed: number;           // 3–7, depending on the registered series format
   seriesStartDate: string;       // ISO "YYYY-MM-DD"
   seriesEndDate: string;
   homePattern: string[];         // abbreviation of home team for each game slot

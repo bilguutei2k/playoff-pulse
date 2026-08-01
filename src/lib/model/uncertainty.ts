@@ -66,13 +66,17 @@ function seriesProbability(
   teamB: Team,
   settings: ModelSettings,
 ): number {
-  return solveSeriesExactly(series.winsA, series.winsB, (gameNumber) =>
-    gameWinProbability(
-      teamA,
-      teamB,
-      series.homePattern[gameNumber - 1] ?? null,
-      settings,
-    ),
+  return solveSeriesExactly(
+    series.winsA,
+    series.winsB,
+    (gameNumber) =>
+      gameWinProbability(
+        teamA,
+        teamB,
+        series.homePattern[gameNumber - 1] ?? null,
+        settings,
+      ),
+    series.winsRequired ?? 4,
   ).teamAWinProbability;
 }
 
@@ -90,8 +94,9 @@ export function estimateSeriesUncertainty(
   settings: ModelSettings,
   samples = UNCERTAINTY_SAMPLES,
 ): ProbabilityInterval {
-  if (series.winsA >= 4 || series.winsB >= 4) {
-    const probability = series.winsA >= 4 ? 1 : 0;
+  const winsRequired = series.winsRequired ?? 4;
+  if (series.winsA >= winsRequired || series.winsB >= winsRequired) {
+    const probability = series.winsA >= winsRequired ? 1 : 0;
     return { lower: probability, median: probability, upper: probability, samples: 0 };
   }
   const random = createSeededRandom(`uncertainty:${series.id}:${series.winsA}:${series.winsB}`);

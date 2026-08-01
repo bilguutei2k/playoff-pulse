@@ -43,6 +43,7 @@ export type Series = {
   winsA: number;
   winsB: number;
   homePattern: string[];
+  winsRequired?: 3 | 4;
 };
 
 export type ModelSettings = {

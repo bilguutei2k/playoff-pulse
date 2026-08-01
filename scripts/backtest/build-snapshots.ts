@@ -9,6 +9,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { historicalSeriesFormat } from "../../src/lib/backtest/series-formats";
 import type {
   HistoricalConference,
   HistoricalGame,
@@ -232,20 +233,29 @@ export function normalizeSeries(
   return raw.map((row) => {
     const round = normalizeRound(row.round);
     const conference = normalizeConference(row.conference);
+    const format = historicalSeriesFormat(season, round);
+    const minimumGames = format.winsRequired;
+    const maximumGames = format.winsRequired * 2 - 1;
     const parsedGames = sortSeriesGames(
       games.filter((game) => game.season === season && sameTeams(game, row.teamA, row.teamB)),
     );
 
-    if (parsedGames.length < 4 || parsedGames.length > 7) {
+    if (parsedGames.length < minimumGames || parsedGames.length > maximumGames) {
       throw new Error(
-        `Expected 4-7 games for ${season} ${row.teamA}-${row.teamB}, found ${parsedGames.length}.`,
+        `Expected ${minimumGames}-${maximumGames} games for ${season} ${round} ${row.teamA}-${row.teamB}, found ${parsedGames.length}.`,
       );
     }
 
     const rawWinner =
-      row.winsA === 4 ? row.teamA : row.winsB === 4 ? row.teamB : null;
+      row.winsA === format.winsRequired
+        ? row.teamA
+        : row.winsB === format.winsRequired
+          ? row.teamB
+          : null;
     if (!rawWinner) {
-      throw new Error(`No 4-win team for ${season} ${row.teamA}-${row.teamB}.`);
+      throw new Error(
+        `No ${format.winsRequired}-win team for ${season} ${round} ${row.teamA}-${row.teamB}.`,
+      );
     }
 
     const rowTeamA =
@@ -391,21 +401,25 @@ export function validateSeries(series: HistoricalSeries[]): ValidationAnomaly[] 
   const anomalies: ValidationAnomaly[] = [];
 
   for (const row of series) {
-    if (row.gamesPlayed < 4 || row.gamesPlayed > 7) {
+    const format = historicalSeriesFormat(row.season, row.round);
+    const minimumGames = format.winsRequired;
+    const maximumGames = format.winsRequired * 2 - 1;
+
+    if (row.gamesPlayed < minimumGames || row.gamesPlayed > maximumGames) {
       anomalies.push({
         season: row.season,
         entityId: row.id,
-        issue: `gamesPlayed must be 4-7, got ${row.gamesPlayed}.`,
+        issue: `gamesPlayed must be ${minimumGames}-${maximumGames} for ${format.label}, got ${row.gamesPlayed}.`,
       });
     }
 
     const winnerWins =
       row.winner === row.teamA ? row.winsA : row.winner === row.teamB ? row.winsB : null;
-    if (winnerWins !== 4) {
+    if (winnerWins !== format.winsRequired) {
       anomalies.push({
         season: row.season,
         entityId: row.id,
-        issue: `winner ${row.winner} must have exactly 4 wins, got ${winnerWins ?? "none"}.`,
+        issue: `winner ${row.winner} must have exactly ${format.winsRequired} wins for ${format.label}, got ${winnerWins ?? "none"}.`,
       });
     }
 

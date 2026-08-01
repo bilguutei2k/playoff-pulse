@@ -37,6 +37,12 @@ export function validateConfig(
   }
 
   for (const series of config.series) {
+    const winsRequired = series.winsRequired ?? 4;
+    const maximumGames = winsRequired * 2 - 1;
+
+    if (winsRequired !== 3 && winsRequired !== 4) {
+      errors.push(`${series.id} must require either three or four wins.`);
+    }
     if (series.round === "NBA Finals" && series.conference !== "Finals") {
       errors.push(`${series.id} must use conference "Finals" for NBA Finals.`);
     }
@@ -63,8 +69,10 @@ export function validateConfig(
       }
     }
 
-    if (series.homePattern.length !== 7) {
-      warnings.push(`${series.id} should include seven possible home games.`);
+    if (series.homePattern.length !== maximumGames) {
+      warnings.push(
+        `${series.id} should include ${maximumGames} possible home games.`,
+      );
     }
 
     if (!Number.isInteger(series.winsA) || !Number.isInteger(series.winsB)) {
@@ -75,16 +83,20 @@ export function validateConfig(
       errors.push(`${series.id} has a negative series score.`);
     }
 
-    if (series.winsA > 4 || series.winsB > 4) {
-      errors.push(`${series.id} has a series score above four wins.`);
+    if (series.winsA > winsRequired || series.winsB > winsRequired) {
+      errors.push(`${series.id} has a series score above ${winsRequired} wins.`);
     }
 
-    if (series.winsA === 4 && series.winsB === 4) {
-      errors.push(`${series.id} cannot have both teams at four wins.`);
+    if (series.winsA === winsRequired && series.winsB === winsRequired) {
+      errors.push(
+        `${series.id} cannot have both teams at ${winsRequired} wins.`,
+      );
     }
 
-    if (series.winsA + series.winsB > 7) {
-      errors.push(`${series.id} has more than seven completed games.`);
+    if (series.winsA + series.winsB > maximumGames) {
+      errors.push(
+        `${series.id} has more than ${maximumGames} completed games.`,
+      );
     }
 
     if (teamIds.has(series.teamA) && teamIds.has(series.teamB)) {

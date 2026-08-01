@@ -167,7 +167,7 @@ export function renderMethodologyMarkdown(report: BacktestReport): string {
     "- Player impact, projected minutes, injuries, and manual adjustments are excluded from every published baseline prediction and from this backtest path.",
     "- Those manual inputs are available only through a visibly separate scenario overlay. The overlay defaults to zero, is always shown beside the baseline with a delta, and has no point-in-time historical validation.",
     "- Player BPM and normalized regular-season MPG remain in the archive for explicitly labeled research candidates. They do not enter the published baseline Brier.",
-    "- Simulated series reconstruct the full seven-game home pattern from the actual Game 1 host: 2-3-2 for NBA Finals through 2013 and 2-2-1-1-1 otherwise. Games beyond the realized series length therefore keep the era-correct home court instead of defaulting to neutral.",
+    "- Simulated series reconstruct the complete season-and-round-specific home pattern from the actual Game 1 host: Best-of-5, 2-2-1 for first rounds through 2002; Best-of-7, 2-3-2 for Finals from 1985 through 2013; and Best-of-7, 2-2-1-1-1 otherwise. Games beyond the realized series length therefore keep the era-correct home court instead of defaulting to neutral.",
     "",
     "## Leakage Controls",
     "",

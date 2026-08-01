@@ -87,6 +87,7 @@ describe.each([
         winsA: gamesPlayed - winsB,
         winsB,
         homePattern: expectedHosts,
+        winsRequired: winsRequired as 3 | 4,
       };
 
       const forecast = nextGameForecast(series, teams, settings);

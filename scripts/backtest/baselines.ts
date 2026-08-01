@@ -3,6 +3,10 @@
 // teamA is the higher seed in the normalized historical series.
 
 import type { HistoricalSeries, ModelName, TeamSeasonSnapshot } from "./types";
+import {
+  historicalSeriesFormat,
+  homePatternForHistoricalFormat,
+} from "../../src/lib/backtest/series-formats";
 import { defaultModelSettings } from "../../src/lib/data/model-settings";
 import { estimateBaselineSeriesProbability } from "../../src/lib/model/simulator";
 import type { ModelSettings, Series, Team } from "../../src/lib/model/types";
@@ -28,9 +32,8 @@ function settingsForSeries(series: HistoricalSeries, settings: ModelSettings): M
 // Historical homePattern only covers games actually played (a sweep records
 // four entries). Simulating from 0-0 with the truncated pattern would place
 // unplayed games 5-7 on neutral court, understating home-court advantage in
-// series that ended early. Reconstruct the full seven-slot pattern from the
-// Game 1 host. NBA Finals used 2-3-2 through 2013; all other covered rounds
-// and Finals from 2014 onward use 2-2-1-1-1.
+// series that ended early. Reconstruct the complete registered pattern from
+// the Game 1 host using the season-and-round format registry.
 export function fullHomePattern(series: HistoricalSeries): string[] {
   const hostTeam = series.homePattern[0];
   if (hostTeam !== series.teamA && hostTeam !== series.teamB) {
@@ -40,17 +43,17 @@ export function fullHomePattern(series: HistoricalSeries): string[] {
   }
 
   const otherTeam = hostTeam === series.teamA ? series.teamB : series.teamA;
-  const usesLegacyFinalsPattern =
-    series.round === "NBA Finals" && series.season <= 2013;
-  const pattern = usesLegacyFinalsPattern
-    ? [hostTeam, hostTeam, otherTeam, otherTeam, otherTeam, hostTeam, hostTeam]
-    : [hostTeam, hostTeam, otherTeam, otherTeam, hostTeam, otherTeam, hostTeam];
-  const format = usesLegacyFinalsPattern ? "2-3-2" : "2-2-1-1-1";
+  const format = historicalSeriesFormat(series.season, series.round);
+  const pattern = homePatternForHistoricalFormat(
+    format,
+    hostTeam,
+    otherTeam,
+  );
 
   series.homePattern.forEach((homeTeam, index) => {
     if (pattern[index] !== homeTeam) {
       throw new Error(
-        `${series.id} game ${index + 1} was hosted by ${homeTeam}, which breaks the ${format} pattern (expected ${pattern[index]}). Extend fullHomePattern before backtesting this series.`,
+        `${series.id} game ${index + 1} was hosted by ${homeTeam}, which breaks the ${format.label} pattern (expected ${pattern[index]}). Correct the data or the sourced format registry before backtesting this series.`,
       );
     }
   });
@@ -59,6 +62,7 @@ export function fullHomePattern(series: HistoricalSeries): string[] {
 }
 
 function historicalSeriesToModelSeries(series: HistoricalSeries): Series {
+  const format = historicalSeriesFormat(series.season, series.round);
   return {
     id: series.id,
     round: series.round === "First Round"
@@ -73,6 +77,7 @@ function historicalSeriesToModelSeries(series: HistoricalSeries): Series {
     winsA: 0,
     winsB: 0,
     homePattern: fullHomePattern(series),
+    winsRequired: format.winsRequired,
   };
 }
 

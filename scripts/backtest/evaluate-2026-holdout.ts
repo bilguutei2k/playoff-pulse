@@ -15,6 +15,7 @@ import type {
 import { defaultModelSettings } from "../../src/lib/data/model-settings";
 import { baselineProbability } from "../../src/lib/model/probability";
 import { solveSeriesExactly } from "../../src/lib/model/series-solver";
+import { historicalSeriesFormat } from "../../src/lib/backtest/series-formats";
 import {
   NET_RATING_ONLY_SETTINGS,
   SRS_PROXY_ONLY_SETTINGS,
@@ -333,19 +334,24 @@ function fittedSeriesProbability(
 ): number {
   const pattern = fullHomePattern(series);
   return boundProbability(
-    solveSeriesExactly(0, 0, (gameNumber) => {
-      const homeId = pattern[gameNumber - 1];
-      const awayId = homeId === series.teamA ? series.teamB : series.teamA;
-      const home = snapshots.get(homeId);
-      const away = snapshots.get(awayId);
-      if (!home || !away) {
-        throw new Error(`Missing series snapshot for ${series.id}.`);
-      }
-      const homeProbability = fittedHomeProbability(model, home, away);
-      return homeId === series.teamA
-        ? homeProbability
-        : 1 - homeProbability;
-    }).teamAWinProbability,
+    solveSeriesExactly(
+      0,
+      0,
+      (gameNumber) => {
+        const homeId = pattern[gameNumber - 1];
+        const awayId = homeId === series.teamA ? series.teamB : series.teamA;
+        const home = snapshots.get(homeId);
+        const away = snapshots.get(awayId);
+        if (!home || !away) {
+          throw new Error(`Missing series snapshot for ${series.id}.`);
+        }
+        const homeProbability = fittedHomeProbability(model, home, away);
+        return homeId === series.teamA
+          ? homeProbability
+          : 1 - homeProbability;
+      },
+      historicalSeriesFormat(series.season, series.round).winsRequired,
+    ).teamAWinProbability,
     `${series.id} fitted series model`,
   );
 }
