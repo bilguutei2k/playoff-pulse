@@ -37,6 +37,7 @@ Raw HTML is cached under `data/historical/raw/` and normalized JSON is written u
 - The SRS point proxy is not a possession-by-possession Elo history; its legacy storage field is retained only for model compatibility.
 - The baseline/overlay split was defined after historical results existed. Its Brier is descriptive, not prospective evidence for that design decision.
 - Historical injuries, absences, and minute changes are not modeled; therefore the scenario overlay is unvalidated.
+- The pooled 1984-2026 fit spans materially different home-court, pace, and scoring environments without an explicit era term. This makes the registered ten-season training-window candidate a substantive recency test, not a marginal sensitivity check.
 - 2020 bubble series are tagged and model home-court advantage is set to zero, but BBRef still supplies nominal home/away designations.
 - This is an evaluation harness, not a calibrated production forecast or betting model.
 

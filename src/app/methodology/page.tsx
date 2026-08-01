@@ -76,9 +76,9 @@ const sections: MethodologySection[] = [
     title: "Backtest Results",
     body: [
       `Across ${backtestSummary.totalSeries} playoff series from ${backtestSummary.firstSeason} through ${backtestSummary.lastSeason}, the rating-only Playoff Pulse baseline posts Brier ${backtestSummary.models.playoff_pulse.brierScore.toFixed(4)}. It conclusively beats coin flip (${backtestSummary.models.coinflip.brierScore.toFixed(4)}), directional higher-seed (${backtestSummary.models.higher_seed.brierScore.toFixed(4)}), and directional home-team (${backtestSummary.models.home_team.brierScore.toFixed(4)}) baselines. This number does not validate the scenario overlay.`,
-      `The result does not conclusively beat the simple rating models: its point estimate trails SRS-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.srs_proxy_only.brierScore).toFixed(4)} Brier and net-rating-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.net_rating_only.brierScore).toFixed(4)}. Both paired 95% intervals include zero. The baseline/overlay boundary was defined after historical results existed, so this evaluation is descriptive rather than prospective.`,
-      "The aggregate edge does not establish dominant superiority over rating-only models. Rolling-origin game evaluation and season-clustered intervals are shown above; feature additions remain excluded when their interval includes harm.",
-      "Revision history: July 12 corrected a minutes parser and truncated home patterns. The July 26 extension added 2003–2015 and the era-correct 2–3–2 NBA Finals pattern through 2013. The July 27 fold added the separately scored 2026 holdout. The July 31 separation made the rating-only baseline identical in the UI and backtest while moving player, minutes, injury, and manual inputs into an unvalidated overlay; the frozen pre-2026 record was not changed.",
+      `The baseline conclusively trails SRS-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.srs_proxy_only.brierScore).toFixed(4)} Brier and net-rating-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.net_rating_only.brierScore).toFixed(4)}. Both paired season-clustered 95% intervals are above zero, so the precommitted retirement gate now fires. The baseline/overlay boundary was defined after historical results existed, so this evaluation remains descriptive rather than prospective.`,
+      "The expanded result supports demoting the former production blend to research-only; it does not retroactively validate a replacement as prospective. Rolling-origin comparisons and the separately frozen 2026 holdout retain their own scopes.",
+      "Revision history: July 12 corrected a minutes parser and truncated home patterns. The July 26 extension added 2003–2015 and the era-correct 2–3–2 NBA Finals pattern through 2013. The July 27 fold added the separately scored 2026 holdout. The July 31 separation made the rating-only baseline identical in the UI and backtest while moving player, minutes, injury, and manual inputs into an unvalidated overlay. The August 1 extension added 1984–2002, including era-correct Best-of-5 opening rounds; the frozen pre-2026 record was not changed.",
     ],
   },
   {
@@ -121,7 +121,9 @@ const sections: MethodologySection[] = [
         (comparison) =>
           `Against ${comparison.comparator === "srs_proxy_only" ? "SRS-only" : "net-rating-only"}, production-minus-comparator series Brier is ${formatSigned(comparison.productionMinusComparatorBrier, 6)} with season-clustered 95% interval [${formatSigned(comparison.seasonClusteredBrierDifferenceCi95[0], 6)}, ${formatSigned(comparison.seasonClusteredBrierDifferenceCi95[1], 6)}]. The retirement gate is ${comparison.retirementGateMet ? "met" : "not met"} for this comparison.`,
       ),
-      "The retained verdict does not establish that the full model is better than either rating-only comparator. It means only that neither comparator cleared every precommitted condition required to demote the incumbent.",
+      retirementDecision.decision === "retain_production_gate_not_met"
+        ? "A retained verdict would mean only that no comparator cleared every precommitted condition; it would not establish that the incumbent was better."
+        : "The retirement verdict means the former production blend cleared every precommitted demotion condition against at least one simple comparator. It is evidence for demotion, not permission to portray the replacement as prospectively proven.",
     ],
   },
   {
@@ -141,6 +143,11 @@ const sections: MethodologySection[] = [
         type: "subsection",
         label: "Sample size",
         text: `The smallest fixed-model calibration buckets should not be read as stable signal: the 0.2–0.3 and 0.3–0.4 groups contain only ${fixedModel?.calibrationBuckets.find((bucket) => bucket.bucketMin === 0.2)?.count ?? 0} and ${fixedModel?.calibrationBuckets.find((bucket) => bucket.bucketMin === 0.3)?.count ?? 0} series. Even the expanded Finals subset is only ${fixedModel?.breakdown.byRound["NBA Finals"]?.n ?? 0} series.`,
+      },
+      {
+        type: "subsection",
+        label: "Era pooling",
+        text: "The 1984–2026 pool spans materially different home-court, pace, and scoring environments without an explicit era term. That limitation makes the frozen ten-season training-window candidate a substantive recency test rather than a marginal sensitivity check.",
       },
     ],
   },
@@ -164,8 +171,8 @@ const sections: MethodologySection[] = [
     body: [
       `Nested calibration is trained only on earlier rolling-origin predictions. Across the expanded eligible sample, game calibration improves Brier ${evidence.calibration.game.raw.brier.toFixed(4)} → ${evidence.calibration.game.calibrated.brier.toFixed(4)}, while series calibration improves ${evidence.calibration.series.raw.brier.toFixed(4)} → ${evidence.calibration.series.calibrated.brier.toFixed(4)}. Both improve log loss and remain research-only. Neither mapping is applied to production because historical BPM/SRS inputs and subjective manual inputs are not interchangeable.`,
       `The coherent alternative calibrates each possible future game's probability and then reruns the exact series solver. It improves the eligible series point estimate from ${evidence.calibration.gamePropagatedThroughExactSeries.raw.brier.toFixed(4)} to ${evidence.calibration.gamePropagatedThroughExactSeries.calibrated.brier.toFixed(4)}, but its season-clustered comparison interval includes zero, so it remains research-only.`,
-      `The single primary challenger combines the exact SRS-series logit with seed difference. On ${evidence.primarySeriesChallenger.metrics.n} matched rolling series it changes Brier ${evidence.primarySeriesChallenger.baselineMetrics.brier.toFixed(4)} → ${evidence.primarySeriesChallenger.metrics.brier.toFixed(4)}; the point improvement exceeds the declared 0.005 threshold, but the 95% interval still crosses zero. The 2026 result cannot promote it because registration followed the postseason and a single season cannot supply the required season-clustered interval.`,
-      `A frozen ten-season training-window challenger improves historical game Brier by ${Math.abs(evidence.temporalWindowCandidate.comparisonToSrsHome.game.candidateMinusBaselineBrier).toFixed(4)}, with its historical season-clustered interval below zero. This is encouraging but retrospective: it remains ineligible for promotion until 2027 because the window was selected before, not during, that future evaluation.`,
+      `The single primary challenger combines the exact SRS-series logit with seed difference. On ${evidence.primarySeriesChallenger.metrics.n} matched rolling series it changes Brier ${evidence.primarySeriesChallenger.baselineMetrics.brier.toFixed(4)} → ${evidence.primarySeriesChallenger.metrics.brier.toFixed(4)}. Its ${Math.abs(evidence.primarySeriesChallenger.comparisonToSrsHome.candidateMinusBaselineBrier).toFixed(4)} point improvement is below the declared 0.005 threshold and its 95% interval crosses zero. The contaminated 2026 result cannot promote it.`,
+      `The frozen ten-season training-window challenger improves rolling game Brier ${evidence.modelComparison[0].game.brier.toFixed(4)} → ${evidence.temporalWindowCandidate.metrics.game.brier.toFixed(4)}, a ${Math.abs(evidence.temporalWindowCandidate.comparisonToSrsHome.game.candidateMinusBaselineBrier).toFixed(6)} improvement with season-clustered interval [${formatSigned(evidence.temporalWindowCandidate.comparisonToSrsHome.game.ci95[0], 6)}, ${formatSigned(evidence.temporalWindowCandidate.comparisonToSrsHome.game.ci95[1], 6)}]. Its series improvement is only ${Math.abs(evidence.temporalWindowCandidate.comparisonToSrsHome.series.candidateMinusBaselineBrier).toFixed(6)} and that interval crosses zero. This is encouraging retrospective evidence for recency, not promotion evidence before 2027.`,
       "The dynamic_margin_update_v1 and rating_gap_player_shrinkage_v1 candidates are frozen for 2027. Their pooled historical comparison intervals include zero; results through 2026 are descriptive and cannot qualify either for promotion.",
     ],
   },
