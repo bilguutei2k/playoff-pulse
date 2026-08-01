@@ -607,6 +607,38 @@ const PRIMARY_SERIES_CHALLENGER = {
     "logit(P(team A wins series)) = intercept + beta1 × exact SRS-series logit + beta2 × seed difference",
 } as const;
 
+export const MODEL_RETIREMENT_GATE = {
+  definedAt: "2026-07-31",
+  incumbent: "playoff_pulse",
+  primaryEndpoint: "paired fixed-model series Brier over the full committed reconstruction",
+  simpleComparators: ["srs_proxy_only", "net_rating_only"],
+  minimumMeaningfulDeficit: 0.005,
+  thresholdJustification:
+    "The retirement threshold is symmetric with the preregistered 0.005 challenger-promotion threshold: production is not demoted for a deficit too small to justify promoting a replacement.",
+  uncertaintyMethod:
+    "Paired season-clustered bootstrap with 10,000 deterministic resamples over matched series losses.",
+  differenceDirection:
+    "productionMinusComparatorBrier; positive values mean production is worse.",
+  retirementRule: {
+    comparatorPolicy:
+      "Demote production to research-only if every required check passes against at least one named simple comparator on identical series.",
+    requiredChecks: {
+      productionMinusComparatorPointEstimateAtLeastPositiveThreshold:
+        "productionMinusComparatorBrier >= 0.005",
+      brierIntervalLowerBoundAboveZero:
+        "The paired season-clustered 95% interval for productionMinusComparatorBrier has lower bound > 0.",
+      comparatorLogLossNoWorse:
+        "comparator log loss <= production log loss on the same series.",
+      comparatorCalibrationSlopeNotFartherFromOne:
+        "abs(comparator calibration slope - 1) <= abs(production calibration slope - 1) on the same series.",
+    },
+  },
+  possibleDecisions: [
+    "retire_production_to_research_only",
+    "retain_production_gate_not_met",
+  ],
+} as const;
+
 function evaluatePrimarySeriesChallenger(
   baseline: ReturnType<typeof evaluateSpec>,
 ) {
@@ -958,6 +990,7 @@ export function runResearchModel() {
           "First durable main-branch registration was 2026-07-27, after the 2026 playoffs began on 2026-04-18.",
       },
     },
+    modelRetirementGate: MODEL_RETIREMENT_GATE,
     preregisteredDynamicRatingCandidate: (() => {
       const candidate = evaluateDynamicRatingCandidate(games, {
         id: "srs_home",
