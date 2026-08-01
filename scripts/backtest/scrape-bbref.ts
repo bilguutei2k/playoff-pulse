@@ -12,14 +12,19 @@ import * as cheerio from "cheerio";
 
 // -- Constants ---------------------------------------------------------------
 
+export const LEGACY_INGESTION_SEASONS = [
+  1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994,
+  1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+] as const;
 export const SEASONS = [
   2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
   2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024,
   2025, 2026,
 ] as const;
 export const HOLDOUT_SEASON = 2026 as const;
+export type LegacyIngestionSeason = (typeof LEGACY_INGESTION_SEASONS)[number];
 export type ArchivedSeason = (typeof SEASONS)[number];
-export type Season = ArchivedSeason | typeof HOLDOUT_SEASON;
+export type Season = LegacyIngestionSeason | ArchivedSeason;
 
 const RAW_DIR = path.join(process.cwd(), "data", "historical", "raw");
 // Basketball-Reference asks crawlers to stay under 20 requests/minute.
@@ -219,11 +224,35 @@ function normalizeConference(value: string): "East" | "West" | "Finals" {
   throw new Error(`Unknown playoff conference from round label "${value}".`);
 }
 
-type ParsedSeriesRow = RawSeriesResult & {
+/**
+ * NBA membership by completed season. This is deliberately independent of
+ * playoff-bracket size: the 1984-2026 playoff bracket has eight teams per
+ * conference even while the league itself expands from 23 to 30 teams.
+ */
+export function expectedLeagueTeamCount(season: number): number {
+  if (season >= 1984 && season <= 1988) {
+    return 23;
+  }
+  if (season === 1989) {
+    return 25;
+  }
+  if (season >= 1990 && season <= 1995) {
+    return 27;
+  }
+  if (season >= 1996 && season <= 2004) {
+    return 29;
+  }
+  if (season >= 2005 && season <= HOLDOUT_SEASON) {
+    return 30;
+  }
+  throw new Error(`No NBA league-size contract is registered for ${season}.`);
+}
+
+export type ParsedSeriesRow = RawSeriesResult & {
   game1HomeTeam: string;
 };
 
-function inferSeedMap(
+export function inferSeedMap(
   rows: ParsedSeriesRow[],
   ratings: RawTeamRating[],
   season: number,
@@ -576,7 +605,7 @@ export function parseTeamRatings(html: string, season: number): RawTeamRating[] 
     });
   });
 
-  const expectedTeamCount = season <= 2004 ? 29 : 30;
+  const expectedTeamCount = expectedLeagueTeamCount(season);
   if (ratings.length !== expectedTeamCount) {
     throw new Error(
       `Expected ${expectedTeamCount} team ratings for ${season}, parsed ${ratings.length}.`,

@@ -29,7 +29,31 @@ import {
 
 // -- Known regular-season end dates -----------------------------------------
 
+// Each 1984-2002 cutoff was mechanically verified from Basketball-Reference's
+// season schedule: it is the latest schedule date strictly before the first
+// date in that season's NBA playoff game log. The source URLs follow
+// https://www.basketball-reference.com/leagues/NBA_{year}_games-{month}.html
+// and https://www.basketball-reference.com/playoffs/NBA_{year}_games.html.
 export const REGULAR_SEASON_END_DATES: Record<Season, string> = {
+  1984: "1984-04-15",
+  1985: "1985-04-14",
+  1986: "1986-04-13",
+  1987: "1987-04-19",
+  1988: "1988-04-24",
+  1989: "1989-04-23",
+  1990: "1990-04-22",
+  1991: "1991-04-21",
+  1992: "1992-04-19",
+  1993: "1993-04-25",
+  1994: "1994-04-24",
+  1995: "1995-04-23",
+  1996: "1996-04-21",
+  1997: "1997-04-20",
+  1998: "1998-04-19",
+  1999: "1999-05-05",
+  2000: "2000-04-19",
+  2001: "2001-04-18",
+  2002: "2002-04-17",
   2003: "2003-04-16",
   2004: "2004-04-14",
   2005: "2005-04-20",
