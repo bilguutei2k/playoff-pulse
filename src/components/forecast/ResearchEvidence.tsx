@@ -68,7 +68,7 @@ export function ResearchEvidence() {
 
       <div className="grid gap-4 border-t-2 border-[var(--color-border-subtle)] p-4 lg:grid-cols-2">
         <div className="bg-[var(--color-panel-secondary)] p-3">
-          <div className="pp-kicker">Coherent calibration experiment</div>
+          <div className="pp-kicker">Calibration line — closed</div>
           <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
             Game probabilities were calibrated using earlier seasons, then
             propagated through the exact series solver—not calibrated again at
@@ -91,8 +91,9 @@ export function ResearchEvidence() {
             </span>
           </div>
           <p className="mt-2 text-[11px] leading-5 text-[var(--color-text-muted)]">
-            Point estimate improved, but the paired interval includes zero;
-            research-only.
+            The propagated series point estimate worsened and the paired
+            interval includes zero. This line is closed, not queued for later
+            promotion.
           </p>
         </div>
 

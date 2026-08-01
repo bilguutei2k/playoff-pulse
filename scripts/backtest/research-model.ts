@@ -1273,10 +1273,20 @@ export function runResearchModel() {
       },
     },
     nestedCalibration: {
+      researchStatus: "CLOSED",
+      closedAt: "2026-08-01",
+      closureReason:
+        "Direct series-output calibration worsens Brier and log loss. Nested game calibration has a negligible game-only improvement, but propagation through the exact series solver worsens the series point estimate and its paired interval includes zero. Do not revisit without materially new data or a new preregistered hypothesis.",
       game: nestedCalibration(baseline.rollingPredictions.game),
-      series: nestedCalibration(baseline.rollingPredictions.series),
+      series: {
+        ...nestedCalibration(baseline.rollingPredictions.series),
+        researchStatus: "CLOSED",
+        line: "direct_series_output_calibration",
+      },
       gamePropagatedThroughExactSeries: {
         ...calibratedSeries,
+        researchStatus: "CLOSED",
+        line: "nested_game_calibration_propagated_through_exact_series",
         comparisonToRaw: bootstrapDifference(
           calibratedSeries.predictions,
           calibratedSeries.predictions.map((row) => ({

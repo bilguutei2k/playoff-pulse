@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T21:28:36.643Z",
+  "generatedAt": "2026-08-01T21:33:07.094Z",
   "protocol": "Rolling origin: train only on seasons before each evaluation season; 1987-2026 evaluated after a three-season initialization window.",
   "totalGames": 3375,
   "evaluationSeasons": [
@@ -191468,6 +191468,9 @@
     }
   },
   "nestedCalibration": {
+    "researchStatus": "CLOSED",
+    "closedAt": "2026-08-01",
+    "closureReason": "Direct series-output calibration worsens Brier and log loss. Nested game calibration has a negligible game-only improvement, but propagation through the exact series solver worsens the series point estimate and its paired interval includes zero. Do not revisit without materially new data or a new preregistered hypothesis.",
     "game": {
       "protocol": "For each season 1989-2026, fit logistic calibration only on earlier rolling-origin predictions.",
       "raw": {
@@ -225762,7 +225765,9 @@
           "rawP": 0.9576184927499246
         }
       ],
-      "retained": false
+      "retained": false,
+      "researchStatus": "CLOSED",
+      "line": "direct_series_output_calibration"
     },
     "gamePropagatedThroughExactSeries": {
       "protocol": "For each eligible season, fit the game calibrator only on earlier rolling-origin game predictions, calibrate each possible future game's home-win probability, then recompute the pre-series probability with the exact series solver.",
@@ -229851,6 +229856,8 @@
         }
       ],
       "retained": false,
+      "researchStatus": "CLOSED",
+      "line": "nested_game_calibration_propagated_through_exact_series",
       "comparisonToRaw": {
         "candidateMinusBaselineBrier": 0.0003917561877034478,
         "ci95": [

@@ -28,6 +28,9 @@ type ResearchArtifact = {
   evaluationSeasons: number[];
   results: ResearchResult[];
   nestedCalibration: {
+    researchStatus: "CLOSED";
+    closedAt: string;
+    closureReason: string;
     game: CalibrationArtifact;
     series: CalibrationArtifact;
     gamePropagatedThroughExactSeries: CalibrationArtifact & {
@@ -190,6 +193,9 @@ export function buildEvidenceArtifact() {
     timeline,
     versions,
     calibration: {
+      researchStatus: research.nestedCalibration.researchStatus,
+      closedAt: research.nestedCalibration.closedAt,
+      closureReason: research.nestedCalibration.closureReason,
       game: {
         protocol: research.nestedCalibration.game.protocol,
         raw: research.nestedCalibration.game.raw,
