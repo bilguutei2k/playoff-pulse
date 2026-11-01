@@ -102,4 +102,12 @@ series. No improvement claim unless the interval excludes zero.
 
 ## Amendments
 
-None at registration.
+**2026-11-01, G3 result.** On gate seasons the calibration slope was 0.860, outside
+[0.90, 1.10], while grouped reliability was 0.000489, inside the 0.002 limit. Forecasts
+are therefore mildly overconfident: a stated 80% has historically been about 77%. The
+permitted fix was applied (`scripts/live/refit-sigma.ts`, `sigma` alone on 2010-2015 regular
+seasons, every other parameter held) and it returned the registered value, 10.5, so nothing
+changed. G3 is not a hard blocker under the ship rule. No further tuning was done, because
+anything else would be fitted on validation seasons. The deficit is recorded in
+`docs/claims-ledger.md` and on `/live/methodology`. Any correction must be a new version
+chosen on prospective data.

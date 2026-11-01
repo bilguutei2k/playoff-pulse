@@ -218,6 +218,8 @@ const kalmanSeries: ScoredGame[] = [];
 const referenceSeries: ScoredGame[] = [];
 let unmatched = 0;
 for (const row of reference.rollingPredictions.series) {
+  // The reference covers older seasons and team codes outside this store.
+  if (row.season < 2006) continue;
   const parts = row.id.split("-");
   const teamA = teamIdFromRepoCode(parts[parts.length - 2]);
   const teamB = teamIdFromRepoCode(parts[parts.length - 1]);
@@ -225,7 +227,7 @@ for (const row of reference.rollingPredictions.series) {
   const start = seriesStarts.get(key);
   const wins = finalWins.get(key);
   if (!start || !wins) {
-    unmatched += row.season >= 2006 ? 1 : 0;
+    unmatched += 1;
     continue;
   }
   const seriesId = `${row.season}-${key}`;

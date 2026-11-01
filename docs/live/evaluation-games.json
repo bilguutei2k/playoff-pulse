@@ -1,0 +1,273 @@
+{
+  "modelVersion": "live-2026.27-v1",
+  "params": {
+    "sigma": 10.5,
+    "q": 0.05,
+    "qHca": 0.0002,
+    "rho": 0.85,
+    "tau": 4.5,
+    "hca0": 1,
+    "hcaVar0": 1,
+    "b2b": 1.5,
+    "marginCap": 30,
+    "hcaPlayoffDelta": 1.5,
+    "playoffSpread": 1.1
+  },
+  "gameLevel": {
+    "gateSeasons": {
+      "seasons": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "kalman": {
+        "n": 8289,
+        "brier": 0.215302,
+        "logLoss": 0.619724,
+        "accuracy": 0.656171
+      },
+      "elo": {
+        "n": 8289,
+        "brier": 0.216533,
+        "logLoss": 0.622239,
+        "accuracy": 0.65231
+      },
+      "srs": {
+        "n": 8289,
+        "brier": 0.22071,
+        "logLoss": 0.631907,
+        "accuracy": 0.644227
+      },
+      "homeRate": {
+        "n": 8289,
+        "brier": 0.245768,
+        "logLoss": 0.684691,
+        "accuracy": 0.568826
+      },
+      "againstHomeRate": {
+        "difference": -0.030466,
+        "lower": -0.035343,
+        "upper": -0.026642,
+        "clusters": 7
+      },
+      "againstElo": {
+        "difference": -0.001231,
+        "lower": -0.002314,
+        "upper": -0.000305,
+        "clusters": 7
+      },
+      "againstSrs": {
+        "difference": -0.005408,
+        "lower": -0.007032,
+        "upper": -0.00417,
+        "clusters": 7
+      },
+      "calibrationSlope": 0.8596,
+      "calibrationIntercept": 0.0284,
+      "reliability": 0.000489
+    },
+    "reportedSeparately": {
+      "label": "model form chosen with sight of these seasons",
+      "seasons": [
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "kalman": {
+        "n": 4920,
+        "brier": 0.212453,
+        "logLoss": 0.613262,
+        "accuracy": 0.663415
+      },
+      "elo": {
+        "n": 4920,
+        "brier": 0.215773,
+        "logLoss": 0.620539,
+        "accuracy": 0.656504
+      },
+      "srs": {
+        "n": 4920,
+        "brier": 0.217218,
+        "logLoss": 0.623911,
+        "accuracy": 0.654878
+      },
+      "homeRate": {
+        "n": 4920,
+        "brier": 0.247903,
+        "logLoss": 0.68899,
+        "accuracy": 0.555691
+      },
+      "againstHomeRate": {
+        "difference": -0.03545,
+        "lower": -0.04308,
+        "upper": -0.022238,
+        "clusters": 4
+      },
+      "againstElo": {
+        "difference": -0.00332,
+        "lower": -0.0052,
+        "upper": -0.001416,
+        "clusters": 4
+      },
+      "againstSrs": {
+        "difference": -0.004765,
+        "lower": -0.00726,
+        "upper": -0.002271,
+        "clusters": 4
+      },
+      "calibrationSlope": 0.8682,
+      "calibrationIntercept": 0.0121,
+      "reliability": 0.000928
+    },
+    "perSeason": [
+      {
+        "season": 2016,
+        "n": 1230,
+        "brier": 0.199003,
+        "accuracy": 0.689431,
+        "earlyBrier": 0.206821,
+        "eloBrier": 0.199138,
+        "srsBrier": 0.203723
+      },
+      {
+        "season": 2017,
+        "n": 1230,
+        "brier": 0.217403,
+        "accuracy": 0.658537,
+        "earlyBrier": 0.21264,
+        "eloBrier": 0.218501,
+        "srsBrier": 0.223694
+      },
+      {
+        "season": 2018,
+        "n": 1230,
+        "brier": 0.214173,
+        "accuracy": 0.649593,
+        "earlyBrier": 0.227576,
+        "eloBrier": 0.21371,
+        "srsBrier": 0.218883
+      },
+      {
+        "season": 2019,
+        "n": 1230,
+        "brier": 0.212692,
+        "accuracy": 0.657724,
+        "earlyBrier": 0.221646,
+        "eloBrier": 0.213257,
+        "srsBrier": 0.216188
+      },
+      {
+        "season": 2020,
+        "n": 1059,
+        "brier": 0.217842,
+        "accuracy": 0.649669,
+        "earlyBrier": 0.20771,
+        "eloBrier": 0.21969,
+        "srsBrier": 0.221612
+      },
+      {
+        "season": 2021,
+        "n": 1080,
+        "brier": 0.227818,
+        "accuracy": 0.619444,
+        "earlyBrier": 0.270603,
+        "eloBrier": 0.229668,
+        "srsBrier": 0.2327
+      },
+      {
+        "season": 2022,
+        "n": 1230,
+        "brier": 0.220062,
+        "accuracy": 0.663415,
+        "earlyBrier": 0.230677,
+        "eloBrier": 0.223811,
+        "srsBrier": 0.229757
+      },
+      {
+        "season": 2023,
+        "n": 1230,
+        "brier": 0.227772,
+        "accuracy": 0.630081,
+        "earlyBrier": 0.234387,
+        "eloBrier": 0.227965,
+        "srsBrier": 0.230841
+      },
+      {
+        "season": 2024,
+        "n": 1230,
+        "brier": 0.209877,
+        "accuracy": 0.65935,
+        "earlyBrier": 0.204983,
+        "eloBrier": 0.214961,
+        "srsBrier": 0.217603
+      },
+      {
+        "season": 2025,
+        "n": 1230,
+        "brier": 0.20814,
+        "accuracy": 0.674797,
+        "earlyBrier": 0.210471,
+        "eloBrier": 0.213455,
+        "srsBrier": 0.214933
+      },
+      {
+        "season": 2026,
+        "n": 1230,
+        "brier": 0.204024,
+        "accuracy": 0.689431,
+        "earlyBrier": 0.21785,
+        "eloBrier": 0.206709,
+        "srsBrier": 0.205496
+      }
+    ],
+    "verdicts": {
+      "G1": true,
+      "G2": true,
+      "G3": {
+        "slopeInRange": false,
+        "reliabilityUnderLimit": true
+      }
+    }
+  },
+  "playoffs": {
+    "games": {
+      "gateSeasons": {
+        "n": 584,
+        "brier": 0.21946,
+        "logLoss": 0.628805,
+        "accuracy": 0.657534
+      },
+      "reportedSeparately": {
+        "n": 335,
+        "brier": 0.230568,
+        "logLoss": 0.657797,
+        "accuracy": 0.635821
+      }
+    },
+    "seriesAgainstSrsHome": {
+      "gateSeasons": {
+        "n": 105,
+        "kalmanBrier": 0.183719,
+        "srsHomeBrier": 0.171246,
+        "difference": 0.012473,
+        "lower": -0.00565,
+        "upper": 0.028114
+      },
+      "reportedSeparately": {
+        "n": 60,
+        "kalmanBrier": 0.224482,
+        "srsHomeBrier": 0.247807,
+        "difference": -0.023325,
+        "lower": -0.032514,
+        "upper": -0.014649
+      },
+      "unmatchedReferenceSeries": 0
+    }
+  },
+  "finalHomeCourtState": 1.639
+}

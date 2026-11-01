@@ -278,7 +278,6 @@ function simulateBracket(
 function resolvePlayIn(
   conference: Conference,
   order: number[],
-  table: StandingsTable,
   strengths: Float64Array,
   params: ModelParams,
   random: RandomSource,
@@ -297,7 +296,6 @@ function resolvePlayIn(
   const nineTenWinner = results?.nineTenWinner ?? playGame(s9, s10);
   // The 7v8 loser always hosts the 9v10 winner.
   const eight = playGame(sevenEightLoser, nineTenWinner);
-  void table;
   return { seven: sevenEightWinner, eight };
 }
 
@@ -411,7 +409,6 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
         const { seven, eight } = resolvePlayIn(
           conference,
           order,
-          table,
           strengths,
           params,
           random,
@@ -564,4 +561,3 @@ export function assertForecastSums(forecast: SeasonForecast): void {
   }
 }
 
-export { createStandingsTable, type StandingsTable };
