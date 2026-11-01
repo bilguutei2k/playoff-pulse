@@ -190,7 +190,7 @@ function winProbability(
 }
 
 /** Plays a series to the end from any score, returning the winner. */
-function playSeries(
+export function playSeries(
   homeCourt: number,
   other: number,
   startHomeCourtWins: number,
