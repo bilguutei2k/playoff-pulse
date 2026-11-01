@@ -244,6 +244,8 @@ export type LiveState = {
   paramsHash: string;
   /** The authoritative timestamp for the live path. */
   generatedAt: string;
+  /** ET slate on which the full schedule was last refreshed. */
+  scheduleRefreshedEtDate: string;
   /** Latest final game included in ratings. */
   ratingsThroughUtc: string | null;
   ratingsHash: string;
@@ -257,12 +259,26 @@ export type LiveState = {
   /** Slate context: today and neighbouring dates. */
   slateEtDate: string;
   nextSlateEtDate: string | null;
+  /** When the first forecast was sealed. Earlier games predate the record. */
+  ledgerStartedAt: string | null;
   /** Seals for the recent window, keyed by game ID. */
   seals: Record<string, SealRow>;
   forecast: SeasonForecast;
   record: RecordSummary;
   history: TeamHistoryPoint[];
   notes: HealthNote[];
+};
+
+/** A scoreboard game with live detail, as the adapter normalizes it. */
+export type ScoreboardRow = {
+  game: SeasonGame;
+  live: LiveStatus | null;
+  statusDetail: string;
+  market: MarketReference | null;
+  /** Points by completed period, when ESPN provides linescores. */
+  homeLinescores: number[];
+  awayLinescores: number[];
+  seriesSummary: string | null;
 };
 
 export type InjuryRow = {

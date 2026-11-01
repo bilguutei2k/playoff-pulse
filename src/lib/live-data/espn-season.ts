@@ -13,10 +13,10 @@ import type {
   GameKind,
   GameStatus,
   InjuryRow,
-  LiveStatus,
   MarketReference,
   PlayInStage,
   PlayoffRound,
+  ScoreboardRow,
   SeasonGame,
 } from "@/lib/season/types";
 
@@ -242,16 +242,7 @@ export function parseEvents(
 // Fast-path scoreboard rows (live score, clock, odds)
 // ---------------------------------------------------------------------------
 
-export type ScoreboardRow = {
-  game: SeasonGame;
-  live: LiveStatus | null;
-  statusDetail: string;
-  market: MarketReference | null;
-  /** Home score by completed period, when ESPN provides linescores. */
-  homeLinescores: number[];
-  awayLinescores: number[];
-  seriesSummary: string | null;
-};
+export type { ScoreboardRow };
 
 function parseLinescores(competitor: Json | null): number[] {
   return asArray(competitor?.linescores)

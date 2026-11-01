@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Camera, ChartNoAxesCombined, FileText, FlaskConical, ScrollText } from "lucide-react";
+import { Camera, ChartNoAxesCombined, FileText, FlaskConical, RadioTower, ScrollText } from "lucide-react";
 
 const navItems = [
+  { href: "/live", label: "Live", Icon: RadioTower },
   { href: "/", label: "Retrospective", Icon: ScrollText },
   { href: "/evidence", label: "Evidence", Icon: ChartNoAxesCombined },
   { href: "/methodology", label: "Methodology", Icon: FileText },

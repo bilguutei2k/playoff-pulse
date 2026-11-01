@@ -1,33 +1,43 @@
 # AGENTS.md
 
 ## Project Identity
-- Playoff Pulse is a transparent, manually configured NBA playoff forecasting system, repositioned in July 2026 as a portfolio retrospective ("a traceable NBA playoff forecasting experiment") after the configured 2026 postseason completed.
-- It is deployed at https://548-sable.vercel.app. The homepage (`/`) is a five-section retrospective narrative; the frozen completed-season dashboard lives at `/snapshot`; `/case-study` permanently redirects to `/`.
+- Playoff Pulse has two parts. **The live forecast** (`/live`, since November 2026) gives a win probability for every NBA game on the day, plus playoff and title odds, updated automatically and scored against a public sealed ledger. **The 2026 retrospective** ("a traceable NBA playoff forecasting experiment") is a frozen archive of the manually configured 2026 postseason. Rules below name which part they cover where it matters.
+- It is deployed at https://548-sable.vercel.app. `/live` is the live forecast and `/live/methodology` explains it. The homepage (`/`) is the retrospective narrative; the frozen completed-season dashboard lives at `/snapshot`; `/case-study` permanently redirects to `/`.
+- Live model: `src/lib/season/`, frozen in `src/lib/season/params.ts` as `LIVE_MODEL_VERSION`. Gates, ship rule and every amendment are in `docs/live/registration.md`; results are in `docs/live/evaluation-*.json`. Changing a parameter requires a new version, and the public record is reported per version. Never refit on all history or tune against validation seasons.
 - All public claims are gated by `docs/claims-ledger.md`. Statistical significance for the pooled 360-series backtest lives in `docs/backtest/significance.json` (regenerate with `pnpm exec tsx scripts/backtest/significance.ts`); the immutable pre-2026 record lives in `docs/backtest/frozen-2003-2025/`; parameter provenance is recorded in `docs/parameter-provenance.md`. Do not add performance claims that are not supported by those documents — in particular, the full model does NOT conclusively outperform SRS-only or net-rating-only baselines and must never be framed that way.
 - Research promotion is gated by `research.json → modelSelectionGate`: exactly one primary challenger (`exact_srs_logit_plus_seed_v1`), series Brier as the primary endpoint, a 0.005 minimum meaningful improvement, a season-clustered interval below zero, no-worse log loss/calibration, production-equivalent inputs, and a genuinely future archived season. Historical point improvements alone are never sufficient.
 - Featured content (replay series, failure examples) is selected by the mechanical rules in the claims ledger, never editorially.
-- It is not a betting product. Modeling inputs — team ratings, player impact, projected minutes, injury statuses, and model weights — remain manual configuration; the model itself does not consume live data at runtime. The pooled reconstruction covers 645 playoff series and 3,375 pregame states (1984–2026), including era-correct series formats. Rolling-origin evaluation covers 3,160 games and 600 series (1987–2026). The separately scored 2026 holdout covers 85 games and 15 series; both challenger registrations are `CONTAMINATED_2026`. Historical availability coverage is zero and injury effects are not claimed. A 105-series FiveThirtyEight comparison is an external model benchmark, not a market benchmark; timestamped no-vig market coverage remains zero. See docs/backtest/methodology.md and docs/claims-ledger.md. It is not production-grade for unsupervised public use.
-- Series scores and the snapshot timestamp are updated via a PR-gated GitHub Actions workflow that fetches finalized game results from the ESPN public scoreboard daily (`.github/workflows/refresh-data.yml` + `scripts/refresh-data.ts`). The workflow opens a pull request; a human reviewer merges or rejects before any change reaches `src/lib/data/playoff-config.ts` on the default branch. No other model inputs are auto-fetched.
-- The repo includes a read-only live scoreboard probe for display only: `src/app/api/live-scoreboard/route.ts`, `src/lib/live-data/espn-scoreboard.ts`.
-- The scoreboard MUST NOT feed model inputs. Team ratings, player impact, projected minutes, and injuries remain manual in `src/lib/data/`.
+- It is not a betting product. For the 2026 archive, modeling inputs — team ratings, player impact, projected minutes, injury statuses, and model weights — remain manual configuration. The pooled reconstruction covers 645 playoff series and 3,375 pregame states (1984–2026), including era-correct series formats. Rolling-origin evaluation covers 3,160 games and 600 series (1987–2026). The separately scored 2026 holdout covers 85 games and 15 series; both challenger registrations are `CONTAMINATED_2026`. Historical availability coverage is zero and injury effects are not claimed. A 105-series FiveThirtyEight comparison is an external model benchmark, not a market benchmark; timestamped no-vig market coverage remains zero. See docs/backtest/methodology.md and docs/claims-ledger.md. It is not production-grade for unsupervised public use.
+- Live data updates automatically through `.github/workflows/live-forecast.yml` + `scripts/live/pipeline.ts`, which commits `data/live/**` to `main`; each commit deploys. Publication fails closed: any validation failure publishes nothing and fails the job. There is no PR gate on this path, because a human gate cannot keep up with a daily slate. Humans do not edit `data/live/**`.
+- `src/lib/data/playoff-config.ts` is the frozen 2026 archive, with no automated updates. `scripts/refresh-data.ts` remains only as history; its workflow has been removed.
+- Finalized results enter the live model only through the validated pipeline. Live, in-progress scores reach only the in-game estimator (`src/lib/season/in-game.ts`) and never change ratings or a sealed forecast. Injury reports and market odds are captured for study and displayed or stored as described in `/live/methodology`; they are never model inputs.
 
 ## Hard Model-Correctness Rules
 - Probabilities MUST be bounded between 0 and 1. Validate at output boundaries.
-- Series simulation MUST respect current series score from config.
+- Series simulation MUST respect the current series score: from config in the 2026 archive, from observed games in the live model.
 - Home-court pattern MUST apply to the correct remaining games, not arbitrary games.
-- Injured or out players MUST affect projected minutes or impact; out means 0 contribution.
+- In the 2026 archive, injured or out players MUST affect projected minutes or impact; out means 0 contribution. The live model does not model injuries, and the UI MUST say so.
 - Stronger teams MUST win more often in simulation. This is a verifier invariant.
 - Equal teams on neutral court MUST be near 50/50.
 - Random number generation MUST be seeded; same inputs must produce same outputs.
 - Historical backtests MUST NOT use future data. Check available-at-time-of-prediction.
 - Historical rotations and external benchmarks MUST fail closed when timestamped pre-deadline coverage is absent. Never infer a rotation from later participation or invent an external probability.
 - UI probabilities MUST NOT use fake precision. One decimal point is enough.
-- New probability outputs MUST add or reuse invariants in `scripts/verify/invariants.ts` (generic) or `scripts/verify/data-snapshot.ts` (current-snapshot assertions).
+- New probability outputs MUST add or reuse invariants in `scripts/verify/invariants.ts` (generic), `scripts/verify/data-snapshot.ts` (2026 archive assertions), or `scripts/verify/live-checks.ts` (live path).
+
+## Live Forecast Rules
+- The forecast ledger (`data/live/ledger/*.jsonl`) is append-only. Committed rows are never edited or removed. `pnpm verify:ledger` enforces this.
+- A sealed forecast uses only results from before its ET date. Never backfill a seal. A game that tips unsealed is recorded as missed and counted publicly.
+- Slates and all date logic use `America/New_York`, never the UTC date. The engine keys on ESPN numeric team IDs; repo team codes go through the fail-closed map in `src/lib/season/teams.ts`.
+- Provisional forecasts exist only so every game has a number when the job runs late. They MUST be labeled, and MUST NEVER enter the ledger or the record.
+- Performance claims follow the live section of `docs/claims-ledger.md`. Results are labeled small-sample below 500 scored games, and missed and incomplete seals are always shown.
+- Season, tiebreak and format rules live in `src/lib/season/formats.ts` and `standings.ts`. A new season fails closed until it is registered in `formats.ts`.
 
 ## Never Do
 - Never put forecasting math in UI components.
-- Never import from `src/lib/live-data/` inside `src/lib/model/`. Never pass scoreboard-derived values into model functions. The scoreboard is display-only.
-- Never claim official NBA data sources. Current model data is manually configured; the authoritative snapshot time is `dataLastUpdatedTimestamp` in `src/lib/data/playoff-config.ts`.
+- Never import from `src/lib/live-data/` inside `src/lib/model/` or `src/lib/season/`. The dependency runs one way: the adapter may use engine types, never the reverse.
+- Never pass live, unfinished scores into anything except the in-game estimator.
+- Never claim official NBA data sources. The live path uses ESPN's unofficial public feeds, and its authoritative timestamp is `generatedAt` in `data/live/state.json`. The 2026 archive is manually configured, and its snapshot time is `dataLastUpdatedTimestamp` in `src/lib/data/playoff-config.ts`.
 - Never hide placeholder or manual-data caveats. Keep caveats visible in the UI.
 - Never make betting recommendations or use betting framing. Market odds, if added later, are comparison only.
 - Never present model output as authoritative beyond what has been validated.
@@ -39,11 +49,13 @@
 
 ## Architectural Layers
 - Data/config layer: `src/lib/data/` owns manual teams, players, ratings, injuries, projected minutes, series state, home patterns, and model settings. Do not put forecasting math here.
-- Live-data display layer: `src/lib/live-data/` and `/api/live-scoreboard` normalize external scoreboard data for display only. Do not feed this into model inputs.
+- Live-data adapter: `src/lib/live-data/` fetches and strictly validates ESPN payloads. `espn-season.ts` feeds the pipeline and `/api/live/today`. `/api/live-scoreboard` remains the 2026 dashboard's display probe.
+- Season engine: `src/lib/season/` holds pure functions for ratings, game forecasts, the in-game estimate, standings, season simulation, sealing rules and the slate view. No React, no fetch, no file access apart from the published-state import.
+- Pipeline: `scripts/live/` runs ingestion, fitting, evaluation and the scheduled job. Only `pipeline.ts` writes `data/live/**`.
 - Model engine layer: `src/lib/model/` contains pure reusable TypeScript functions for player-minute impact, team strength, expected margin, win probability, series simulation, and bracket Monte Carlo.
 - Model modules MUST NOT import React or UI code.
 - UI layer: `src/components/` and `src/app/` display model outputs and controls. They MUST NOT contain Monte Carlo logic, probability formulas, or rating math.
-- Methodology layer: `src/app/methodology/page.tsx` explains formulas, assumptions, manual sources, and limitations.
+- Methodology layer: `src/app/methodology/page.tsx` covers the 2026 archive; `src/app/live/methodology/page.tsx` covers the live forecast. Both state assumptions and limitations.
 - Evaluation layer: `scripts/` contains verification now and may contain backtesting or calibration later.
 
 ## Workflow Rules
@@ -61,8 +73,10 @@ When claiming a task is done, include the actual output or summary of the verify
 ## Verification Expectations
 - `corepack pnpm verify` runs `scripts/verify-model.ts`, which runs both halves of the verifier:
   - `scripts/verify/invariants.ts` (`pnpm verify:invariants`) — generic model invariants that must hold for any valid config: equal teams near 50/50, stronger teams/home court/adjustments/injuries move probabilities the right way, series terminate at 4 wins and respect the home pattern, a 3-0 lead massively improves series probability, title probabilities sum to ~100%, no reach probability exceeds 1.0, and live scoreboard normalization (display-only) maps games, scores, and ESPN abbreviation aliases.
-  - `scripts/verify/data-snapshot.ts` (`pnpm verify:data`) — assertions describing the current manual snapshot (rosters, series scores, bracket state). Update this file in the same commit as any manual data change.
-- The automated refresh workflow runs ONLY `pnpm verify:invariants`, because the refresh changes series scores by design and snapshot assertions would block every legitimate update.
+  - `scripts/verify/data-snapshot.ts` (`pnpm verify:data`) — assertions describing the frozen 2026 snapshot (rosters, series scores, bracket state).
+  - `scripts/verify/live-checks.ts` (`pnpm verify:live`) — published state, forecast sums, seeding against five real seasons, and ledger validity.
+- `pnpm verify:ledger [baseRef]` checks that the ledger only grew. CI runs it against `origin/main`.
+- The live-forecast workflow runs `verify:ledger` and `verify:live` before every commit. Its pushes use `GITHUB_TOKEN`, so they do not trigger `ci.yml`.
 - New model features should add focused invariants before UI polish.
 
 ## Tech Stack and Project Map
@@ -80,3 +94,4 @@ When claiming a task is done, include the actual output or summary of the verify
 - Model weights/config: `src/lib/data/model-settings.ts`; team/player/series state: `src/lib/data/playoff-config.ts`.
 - Win probability math: `src/lib/model/probability.ts`; series simulation: `src/lib/model/simulator.ts`; bracket simulation: `src/lib/model/bracket-simulator.ts`.
 - Live scoreboard display probe: `src/lib/live-data/espn-scoreboard.ts` and `src/app/api/live-scoreboard/route.ts`; verifier: `scripts/verify-model.ts`.
+- Live forecast: parameters `src/lib/season/params.ts`; ratings `ratings.ts`; simulation `simulate.ts`; sealing and record `live-state.ts`; page view `slate.ts`; job `scripts/live/pipeline.ts`; plan and binding decisions `docs/live-forecast-plan.md`.
