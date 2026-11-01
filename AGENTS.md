@@ -32,6 +32,7 @@
 - Provisional forecasts exist only so every game has a number when the job runs late. They MUST be labeled, and MUST NEVER enter the ledger or the record.
 - Performance claims follow the live section of `docs/claims-ledger.md`. Results are labeled small-sample below 500 scored games, and missed and incomplete seals are always shown.
 - Season, tiebreak and format rules live in `src/lib/season/formats.ts` and `standings.ts`. A new season fails closed until it is registered in `formats.ts`.
+- Team logos are 56px copies of ESPN's default logos, downloaded 2026-11-01, in `public/logos/nba/{espnTeamId}.png`. They are NBA and team trademarks, used without a license by the owner's decision. Show them only through `src/components/live/TeamLogo.tsx`, small and unaltered, always beside the team's name or abbreviation. `SHOW_TEAM_LOGOS` there turns them all off. Keep the "not affiliated" notice on `/live`.
 
 ## Never Do
 - Never put forecasting math in UI components.

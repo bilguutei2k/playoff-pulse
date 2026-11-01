@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useRouter } from "next/navigation";
 import { AlertTriangle, CheckCircle2, CircleDot, Clock, XCircle } from "lucide-react";
+import { TeamLogo } from "@/components/live/TeamLogo";
 import { teamById } from "@/lib/season/teams";
 import type { SlateGameView, SlateView } from "@/lib/season/slate";
 import type { PlayoffRound } from "@/lib/season/types";
@@ -151,6 +153,7 @@ function TeamRow({
         className="inline-block h-2.5 w-2.5 shrink-0 rounded-[2px]"
         style={{ background: color }}
       />
+      <TeamLogo teamId={teamId} size={28} />
       <span
         className={`min-w-0 flex-1 truncate ${
           isWinner
@@ -352,6 +355,8 @@ export function LiveDashboard({ initial }: { initial: SlateView }) {
   const [view, setView] = useState(initial);
   const [pollFailed, setPollFailed] = useState(false);
   const isClient = useIsClient();
+  const router = useRouter();
+  const publishedAt = useRef(initial.generatedAt);
   const anyLive = view.games.some((game) => game.status === "in-progress");
 
   useEffect(() => {
@@ -364,6 +369,11 @@ export function LiveDashboard({ initial }: { initial: SlateView }) {
         if (!cancelled) {
           setView(next);
           setPollFailed(false);
+          // A new publish also changes the season odds, which this poll does not carry.
+          if (next.generatedAt !== publishedAt.current) {
+            publishedAt.current = next.generatedAt;
+            router.refresh();
+          }
         }
       } catch {
         if (!cancelled) setPollFailed(true);
@@ -374,7 +384,7 @@ export function LiveDashboard({ initial }: { initial: SlateView }) {
       cancelled = true;
       clearInterval(timer);
     };
-  }, [anyLive]);
+  }, [anyLive, router]);
 
   return (
     <section aria-labelledby="today-title">

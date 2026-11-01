@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { TeamLogo } from "@/components/live/TeamLogo";
 import { teamById } from "@/lib/season/teams";
 import type { Conference, TeamForecast } from "@/lib/season/types";
 import { formatPercent } from "@/lib/utils/format";
@@ -43,16 +44,26 @@ function ProbabilityCell({ value }: { value: number }) {
   );
 }
 
+function formatChange(value: number): string {
+  const points = value * 100;
+  if (Math.abs(points) < 0.05) return "0.0";
+  return `${points > 0 ? "+" : "\u2212"}${Math.abs(points).toFixed(1)}`;
+}
+
 function ConferenceTable({
   conference,
   rows,
   sortKey,
   onSort,
+  change,
+  changeTitle,
 }: {
   conference: Conference;
   rows: TeamForecast[];
   sortKey: SortKey;
   onSort: (key: SortKey) => void;
+  change: Record<string, number> | null;
+  changeTitle: string;
 }) {
   const sorted = useMemo(
     () => [...rows].sort((a, b) => b[sortKey] - a[sortKey]),
@@ -92,6 +103,11 @@ function ConferenceTable({
                   </button>
                 </th>
               ))}
+              {change ? (
+                <th scope="col" className="num" title={changeTitle}>
+                  Change
+                </th>
+              ) : null}
             </tr>
           </thead>
           <tbody>
@@ -104,7 +120,10 @@ function ConferenceTable({
                     className="!font-[inherit] !text-[13px] !normal-case !tracking-normal"
                     title={team.name}
                   >
-                    {team.abbreviation}
+                    <span className="flex items-center gap-2">
+                      <TeamLogo teamId={row.teamId} />
+                      {team.abbreviation}
+                    </span>
                   </th>
                   <td className="num">
                     {row.wins}-{row.losses}
@@ -125,6 +144,11 @@ function ConferenceTable({
                   <ProbabilityCell value={row.reachConferenceFinals} />
                   <ProbabilityCell value={row.reachFinals} />
                   <ProbabilityCell value={row.champion} />
+                  {change ? (
+                    <td className="num">
+                      {change[row.teamId] === undefined ? "n/a" : formatChange(change[row.teamId])}
+                    </td>
+                  ) : null}
                 </tr>
               );
             })}
@@ -135,14 +159,38 @@ function ConferenceTable({
   );
 }
 
-export function SeasonTable({ teams }: { teams: TeamForecast[] }) {
+export function SeasonTable({
+  teams,
+  change,
+  changeSince,
+}: {
+  teams: TeamForecast[];
+  /** Change in title odds by team, or null before there is anything to compare. */
+  change: Record<string, number> | null;
+  changeSince: string | null;
+}) {
+  const changeTitle = `Change in title odds, in percentage points, since ${changeSince ?? "the last update"}`;
   const [sortKey, setSortKey] = useState<SortKey>("champion");
   const east = teams.filter((row) => teamById(row.teamId).conference === "East");
   const west = teams.filter((row) => teamById(row.teamId).conference === "West");
   return (
     <div className="grid gap-3">
-      <ConferenceTable conference="East" rows={east} sortKey={sortKey} onSort={setSortKey} />
-      <ConferenceTable conference="West" rows={west} sortKey={sortKey} onSort={setSortKey} />
+      <ConferenceTable
+        conference="East"
+        rows={east}
+        sortKey={sortKey}
+        onSort={setSortKey}
+        change={change}
+        changeTitle={changeTitle}
+      />
+      <ConferenceTable
+        conference="West"
+        rows={west}
+        sortKey={sortKey}
+        onSort={setSortKey}
+        change={change}
+        changeTitle={changeTitle}
+      />
     </div>
   );
 }

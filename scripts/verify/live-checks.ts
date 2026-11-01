@@ -70,6 +70,13 @@ export function runLiveChecks(): void {
     "Home court must raise the home team's chance.",
   );
 
+  for (const team of SEASON_TEAMS) {
+    assert.ok(
+      fs.existsSync(path.join(process.cwd(), "public/logos/nba", `${team.id}.png`)),
+      `${team.abbreviation} has no logo file.`,
+    );
+  }
+
   const seeding = runSeedingCheck();
   assert.deepEqual(seeding.mismatches, [], "Computed seeds must match real seasons.");
   assert.equal(seeding.checked, 100, "Seeding check must cover five seasons of seeds 1-10.");

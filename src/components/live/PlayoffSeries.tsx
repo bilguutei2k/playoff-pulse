@@ -1,3 +1,4 @@
+import { TeamLogo } from "@/components/live/TeamLogo";
 import { teamById } from "@/lib/season/teams";
 import type { PlayoffRound, SeriesForecast } from "@/lib/season/types";
 import { formatPercent } from "@/lib/utils/format";
@@ -20,11 +21,13 @@ function SeriesRow({ series }: { series: SeriesForecast }) {
     : 1 - series.homeCourtSeriesProbability;
   return (
     <li className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[var(--color-border-subtle)] py-2 text-sm">
-      <span className="text-[var(--color-text-secondary)]">
-        {homeCourt.abbreviation}{" "}
+      <span className="flex items-center gap-1.5 text-[var(--color-text-secondary)]">
+        <TeamLogo teamId={series.homeCourtId} />
+        {homeCourt.abbreviation}
         <span className="pp-number font-bold text-[var(--color-text-primary)]">
           {series.homeCourtWins}-{series.otherWins}
-        </span>{" "}
+        </span>
+        <TeamLogo teamId={series.otherId} />
         {other.abbreviation}
       </span>
       <span className="pp-number text-xs text-[var(--color-text-muted)]">
