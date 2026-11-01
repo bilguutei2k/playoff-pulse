@@ -262,6 +262,26 @@ function titleSummary(rows: Row[]) {
   );
 }
 
+// Development-only scan used by the one permitted uncertainty refit. Touches no
+// validation season and writes nothing under docs/.
+if (process.argv[3] === "dev") {
+  const devRows = simulateSeasons(DEVELOPMENT_SEASONS);
+  const score = (rows: Row[]) => brierOf(rows.map((row) => [row.pMake, row.made]));
+  console.log(
+    JSON.stringify({
+      uncertaintyScale,
+      makePlayoffsBrier: round(score(devRows), 5),
+      byCheckpoint: Object.fromEntries(
+        CHECKPOINTS.map((checkpoint) => [
+          checkpoint,
+          round(score(devRows.filter((row) => row.checkpoint === checkpoint)), 5),
+        ]),
+      ),
+    }),
+  );
+  process.exit(0);
+}
+
 const gateRows = simulateSeasons(GATE_SEASONS);
 const separateRows = simulateSeasons(SEPARATE_SEASONS);
 const report = {

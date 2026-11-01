@@ -1,0 +1,930 @@
+{
+  "uncertaintyScale": 1,
+  "iterations": 4000,
+  "gateSeasons": {
+    "seasons": [
+      2016,
+      2017,
+      2018,
+      2019,
+      2022
+    ],
+    "byCheckpoint": {
+      "opening": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.1656,
+        "baselineBrier": null,
+        "winTotalRmse": 9.07,
+        "extrapolationRmse": null,
+        "s1": null,
+        "s2": false,
+        "s3": null,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 18,
+            "predicted": 0.041,
+            "observed": 0,
+            "gap": 0.041
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 15,
+            "predicted": 0.156,
+            "observed": 0.267,
+            "gap": 0.111
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 11,
+            "predicted": 0.251,
+            "observed": 0.273,
+            "gap": 0.022
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 5,
+            "predicted": 0.35,
+            "observed": 0.2,
+            "gap": 0.15
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 11,
+            "predicted": 0.437,
+            "observed": 0.545,
+            "gap": 0.108
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 19,
+            "predicted": 0.552,
+            "observed": 0.526,
+            "gap": 0.025
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 18,
+            "predicted": 0.648,
+            "observed": 0.667,
+            "gap": 0.018
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 20,
+            "predicted": 0.748,
+            "observed": 0.75,
+            "gap": 0.002
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 13,
+            "predicted": 0.858,
+            "observed": 0.769,
+            "gap": 0.089
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 20,
+            "predicted": 0.967,
+            "observed": 0.95,
+            "gap": 0.017
+          }
+        ]
+      },
+      "dec1": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.1306,
+        "baselineBrier": 0.1485,
+        "winTotalRmse": 6.23,
+        "extrapolationRmse": 8.1,
+        "s1": true,
+        "s2": false,
+        "s3": true,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 29,
+            "predicted": 0.027,
+            "observed": 0.034,
+            "gap": 0.007
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 13,
+            "predicted": 0.157,
+            "observed": 0.231,
+            "gap": 0.074
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 8,
+            "predicted": 0.27,
+            "observed": 0.25,
+            "gap": 0.02
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 9,
+            "predicted": 0.349,
+            "observed": 0.111,
+            "gap": 0.238
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 13,
+            "predicted": 0.457,
+            "observed": 0.462,
+            "gap": 0.005
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 9,
+            "predicted": 0.548,
+            "observed": 0.778,
+            "gap": 0.23
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 6,
+            "predicted": 0.637,
+            "observed": 0.833,
+            "gap": 0.196
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 11,
+            "predicted": 0.761,
+            "observed": 0.909,
+            "gap": 0.148
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 16,
+            "predicted": 0.858,
+            "observed": 0.625,
+            "gap": 0.233
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 36,
+            "predicted": 0.974,
+            "observed": 0.972,
+            "gap": 0.002
+          }
+        ]
+      },
+      "feb1": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.0742,
+        "baselineBrier": 0.0925,
+        "winTotalRmse": 3.4,
+        "extrapolationRmse": 3.83,
+        "s1": true,
+        "s2": true,
+        "s3": true,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 42,
+            "predicted": 0.017,
+            "observed": 0.024,
+            "gap": 0.007
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 9,
+            "predicted": 0.128,
+            "observed": 0.111,
+            "gap": 0.017
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 7,
+            "predicted": 0.228,
+            "observed": 0,
+            "gap": 0.228
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 4,
+            "predicted": 0.352,
+            "observed": 0.5,
+            "gap": 0.148
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 9,
+            "predicted": 0.445,
+            "observed": 0.778,
+            "gap": 0.333
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 5,
+            "predicted": 0.565,
+            "observed": 0,
+            "gap": 0.565
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 5,
+            "predicted": 0.628,
+            "observed": 0.6,
+            "gap": 0.028
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 4,
+            "predicted": 0.745,
+            "observed": 0.75,
+            "gap": 0.005
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 13,
+            "predicted": 0.848,
+            "observed": 0.923,
+            "gap": 0.075
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 52,
+            "predicted": 0.984,
+            "observed": 0.981,
+            "gap": 0.003
+          }
+        ]
+      },
+      "apr1": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.0285,
+        "baselineBrier": 0.0607,
+        "winTotalRmse": 1.22,
+        "extrapolationRmse": 1.29,
+        "s1": true,
+        "s2": true,
+        "s3": true,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 60,
+            "predicted": 0.003,
+            "observed": 0,
+            "gap": 0.003
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 1,
+            "predicted": 0.153,
+            "observed": 0,
+            "gap": 0.153
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 2,
+            "predicted": 0.234,
+            "observed": 0,
+            "gap": 0.234
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 2,
+            "predicted": 0.34,
+            "observed": 0.5,
+            "gap": 0.16
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 3,
+            "predicted": 0.457,
+            "observed": 0.667,
+            "gap": 0.21
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 5,
+            "predicted": 0.527,
+            "observed": 0.4,
+            "gap": 0.127
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 1,
+            "predicted": 0.698,
+            "observed": 0,
+            "gap": 0.698
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 2,
+            "predicted": 0.712,
+            "observed": 1,
+            "gap": 0.288
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 7,
+            "predicted": 0.828,
+            "observed": 0.857,
+            "gap": 0.029
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 67,
+            "predicted": 0.994,
+            "observed": 1,
+            "gap": 0.006
+          }
+        ]
+      }
+    },
+    "title": {
+      "opening": {
+        "seasons": 5,
+        "meanChampionProbability": 0.178,
+        "meanChampionLogLoss": 2.31,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2016,
+            "teamId": "5",
+            "probability": 0.13
+          },
+          {
+            "season": 2017,
+            "teamId": "9",
+            "probability": 0.157
+          },
+          {
+            "season": 2018,
+            "teamId": "9",
+            "probability": 0.536
+          },
+          {
+            "season": 2019,
+            "teamId": "28",
+            "probability": 0.052
+          },
+          {
+            "season": 2022,
+            "teamId": "9",
+            "probability": 0.017
+          }
+        ]
+      },
+      "dec1": {
+        "seasons": 5,
+        "meanChampionProbability": 0.248,
+        "meanChampionLogLoss": 1.523,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2016,
+            "teamId": "5",
+            "probability": 0.082
+          },
+          {
+            "season": 2017,
+            "teamId": "9",
+            "probability": 0.338
+          },
+          {
+            "season": 2018,
+            "teamId": "9",
+            "probability": 0.359
+          },
+          {
+            "season": 2019,
+            "teamId": "28",
+            "probability": 0.17
+          },
+          {
+            "season": 2022,
+            "teamId": "9",
+            "probability": 0.291
+          }
+        ]
+      },
+      "feb1": {
+        "seasons": 5,
+        "meanChampionProbability": 0.246,
+        "meanChampionLogLoss": 1.782,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2016,
+            "teamId": "5",
+            "probability": 0.077
+          },
+          {
+            "season": 2017,
+            "teamId": "9",
+            "probability": 0.627
+          },
+          {
+            "season": 2018,
+            "teamId": "9",
+            "probability": 0.299
+          },
+          {
+            "season": 2019,
+            "teamId": "28",
+            "probability": 0.053
+          },
+          {
+            "season": 2022,
+            "teamId": "9",
+            "probability": 0.173
+          }
+        ]
+      },
+      "apr1": {
+        "seasons": 5,
+        "meanChampionProbability": 0.169,
+        "meanChampionLogLoss": 2.82,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2016,
+            "teamId": "5",
+            "probability": 0.086
+          },
+          {
+            "season": 2017,
+            "teamId": "9",
+            "probability": 0.627
+          },
+          {
+            "season": 2018,
+            "teamId": "9",
+            "probability": 0.045
+          },
+          {
+            "season": 2019,
+            "teamId": "28",
+            "probability": 0.083
+          },
+          {
+            "season": 2022,
+            "teamId": "9",
+            "probability": 0.004
+          }
+        ]
+      }
+    }
+  },
+  "reportedSeparately": {
+    "label": "model form chosen with sight of these seasons",
+    "seasons": [
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "byCheckpoint": {
+      "opening": {
+        "teamSeasons": 120,
+        "makePlayoffsBrier": 0.2144,
+        "baselineBrier": null,
+        "winTotalRmse": 11.75,
+        "extrapolationRmse": null,
+        "s1": null,
+        "s2": false,
+        "s3": null,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 22,
+            "predicted": 0.041,
+            "observed": 0.136,
+            "gap": 0.095
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 8,
+            "predicted": 0.15,
+            "observed": 0.5,
+            "gap": 0.35
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 7,
+            "predicted": 0.246,
+            "observed": 0.429,
+            "gap": 0.182
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 3,
+            "predicted": 0.351,
+            "observed": 0.333,
+            "gap": 0.018
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 8,
+            "predicted": 0.458,
+            "observed": 0.625,
+            "gap": 0.167
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 8,
+            "predicted": 0.563,
+            "observed": 0.375,
+            "gap": 0.188
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 16,
+            "predicted": 0.655,
+            "observed": 0.5,
+            "gap": 0.155
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 18,
+            "predicted": 0.753,
+            "observed": 0.722,
+            "gap": 0.031
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 16,
+            "predicted": 0.847,
+            "observed": 0.688,
+            "gap": 0.159
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 14,
+            "predicted": 0.955,
+            "observed": 0.929,
+            "gap": 0.026
+          }
+        ]
+      },
+      "dec1": {
+        "teamSeasons": 120,
+        "makePlayoffsBrier": 0.1294,
+        "baselineBrier": 0.1277,
+        "winTotalRmse": 6.57,
+        "extrapolationRmse": 7.59,
+        "s1": false,
+        "s2": false,
+        "s3": true,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 28,
+            "predicted": 0.021,
+            "observed": 0,
+            "gap": 0.021
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 4,
+            "predicted": 0.138,
+            "observed": 0.25,
+            "gap": 0.112
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 7,
+            "predicted": 0.26,
+            "observed": 0.286,
+            "gap": 0.026
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 6,
+            "predicted": 0.357,
+            "observed": 0.5,
+            "gap": 0.143
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 6,
+            "predicted": 0.435,
+            "observed": 0.5,
+            "gap": 0.065
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 10,
+            "predicted": 0.555,
+            "observed": 0.4,
+            "gap": 0.155
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 11,
+            "predicted": 0.653,
+            "observed": 0.818,
+            "gap": 0.165
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 7,
+            "predicted": 0.769,
+            "observed": 0.714,
+            "gap": 0.055
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 12,
+            "predicted": 0.843,
+            "observed": 0.917,
+            "gap": 0.074
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 29,
+            "predicted": 0.967,
+            "observed": 0.897,
+            "gap": 0.071
+          }
+        ]
+      },
+      "feb1": {
+        "teamSeasons": 120,
+        "makePlayoffsBrier": 0.0956,
+        "baselineBrier": 0.0913,
+        "winTotalRmse": 4.14,
+        "extrapolationRmse": 3.97,
+        "s1": false,
+        "s2": true,
+        "s3": false,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 28,
+            "predicted": 0.009,
+            "observed": 0,
+            "gap": 0.009
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 6,
+            "predicted": 0.154,
+            "observed": 0.167,
+            "gap": 0.013
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 9,
+            "predicted": 0.246,
+            "observed": 0.333,
+            "gap": 0.087
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 7,
+            "predicted": 0.343,
+            "observed": 0.429,
+            "gap": 0.085
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 5,
+            "predicted": 0.426,
+            "observed": 0.2,
+            "gap": 0.226
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 8,
+            "predicted": 0.538,
+            "observed": 0.5,
+            "gap": 0.038
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 7,
+            "predicted": 0.648,
+            "observed": 0.714,
+            "gap": 0.067
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 5,
+            "predicted": 0.767,
+            "observed": 0.8,
+            "gap": 0.033
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 7,
+            "predicted": 0.852,
+            "observed": 0.714,
+            "gap": 0.138
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 38,
+            "predicted": 0.985,
+            "observed": 1,
+            "gap": 0.015
+          }
+        ]
+      },
+      "apr1": {
+        "teamSeasons": 120,
+        "makePlayoffsBrier": 0.0496,
+        "baselineBrier": 0.0745,
+        "winTotalRmse": 1.15,
+        "extrapolationRmse": 1.26,
+        "s1": true,
+        "s2": true,
+        "s3": true,
+        "reliabilityBins": [
+          {
+            "bin": "0.0-0.1",
+            "n": 39,
+            "predicted": 0.002,
+            "observed": 0,
+            "gap": 0.002
+          },
+          {
+            "bin": "0.1-0.2",
+            "n": 6,
+            "predicted": 0.132,
+            "observed": 0,
+            "gap": 0.132
+          },
+          {
+            "bin": "0.2-0.3",
+            "n": 2,
+            "predicted": 0.267,
+            "observed": 0,
+            "gap": 0.267
+          },
+          {
+            "bin": "0.3-0.4",
+            "n": 5,
+            "predicted": 0.377,
+            "observed": 0.8,
+            "gap": 0.423
+          },
+          {
+            "bin": "0.4-0.5",
+            "n": 4,
+            "predicted": 0.448,
+            "observed": 0.25,
+            "gap": 0.198
+          },
+          {
+            "bin": "0.5-0.6",
+            "n": 2,
+            "predicted": 0.594,
+            "observed": 1,
+            "gap": 0.406
+          },
+          {
+            "bin": "0.6-0.7",
+            "n": 6,
+            "predicted": 0.636,
+            "observed": 0.333,
+            "gap": 0.303
+          },
+          {
+            "bin": "0.7-0.8",
+            "n": 4,
+            "predicted": 0.726,
+            "observed": 0.75,
+            "gap": 0.024
+          },
+          {
+            "bin": "0.8-0.9",
+            "n": 3,
+            "predicted": 0.868,
+            "observed": 1,
+            "gap": 0.132
+          },
+          {
+            "bin": "0.9-1.0",
+            "n": 49,
+            "predicted": 0.988,
+            "observed": 1,
+            "gap": 0.012
+          }
+        ]
+      }
+    },
+    "title": {
+      "opening": {
+        "seasons": 4,
+        "meanChampionProbability": 0.075,
+        "meanChampionLogLoss": 2.972,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2023,
+            "teamId": "7",
+            "probability": 0.015
+          },
+          {
+            "season": 2024,
+            "teamId": "2",
+            "probability": 0.119
+          },
+          {
+            "season": 2025,
+            "teamId": "25",
+            "probability": 0.136
+          },
+          {
+            "season": 2026,
+            "teamId": "18",
+            "probability": 0.028
+          }
+        ]
+      },
+      "dec1": {
+        "seasons": 4,
+        "meanChampionProbability": 0.164,
+        "meanChampionLogLoss": 2.358,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2023,
+            "teamId": "7",
+            "probability": 0.018
+          },
+          {
+            "season": 2024,
+            "teamId": "2",
+            "probability": 0.261
+          },
+          {
+            "season": 2025,
+            "teamId": "25",
+            "probability": 0.324
+          },
+          {
+            "season": 2026,
+            "teamId": "18",
+            "probability": 0.052
+          }
+        ]
+      },
+      "feb1": {
+        "seasons": 4,
+        "meanChampionProbability": 0.239,
+        "meanChampionLogLoss": 1.764,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2023,
+            "teamId": "7",
+            "probability": 0.139
+          },
+          {
+            "season": 2024,
+            "teamId": "2",
+            "probability": 0.361
+          },
+          {
+            "season": 2025,
+            "teamId": "25",
+            "probability": 0.415
+          },
+          {
+            "season": 2026,
+            "teamId": "18",
+            "probability": 0.042
+          }
+        ]
+      },
+      "apr1": {
+        "seasons": 4,
+        "meanChampionProbability": 0.392,
+        "meanChampionLogLoss": 1.658,
+        "uniformLogLoss": 3.401,
+        "perSeason": [
+          {
+            "season": 2023,
+            "teamId": "7",
+            "probability": 0.092
+          },
+          {
+            "season": 2024,
+            "teamId": "2",
+            "probability": 0.703
+          },
+          {
+            "season": 2025,
+            "teamId": "25",
+            "probability": 0.747
+          },
+          {
+            "season": 2026,
+            "teamId": "18",
+            "probability": 0.027
+          }
+        ]
+      }
+    }
+  }
+}
