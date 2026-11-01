@@ -44,6 +44,13 @@ const WINS_NEEDED = 4;
 // Home pattern from the higher seed's view: 2-2-1-1-1.
 const HOME_GAMES = [true, true, false, false, true, false, true];
 const CONFERENCES: Conference[] = ["East", "West"];
+// Seed positions, zero-based: 1v8, 4v5, 3v6, 2v7.
+const FIRST_ROUND_SLOTS = [
+  [0, 7],
+  [3, 4],
+  [2, 5],
+  [1, 6],
+] as const;
 
 type PendingGame = {
   home: number;
@@ -67,6 +74,8 @@ export type ObservedSeries = {
   teamB: number;
   winsA: number;
   winsB: number;
+  /** The team that hosted game 1, as observed. */
+  homeCourt: number;
 };
 
 /** Facts about the postseason so far, derived from real games. */
@@ -239,10 +248,10 @@ function simulateBracket(
   seriesWins: Map<string, number>,
 ): number {
   const play = (a: number, b: number): number => {
-    const aHasCourt = hasHomeCourt(a, b, table);
+    const seen = lookup.get(seriesKey(a, b));
+    const aHasCourt = seen ? seen.homeCourt === a : hasHomeCourt(a, b, table);
     const homeCourt = aHasCourt ? a : b;
     const other = aHasCourt ? b : a;
-    const seen = lookup.get(seriesKey(a, b));
     const homeCourtWins = seen ? (seen.teamA === homeCourt ? seen.winsA : seen.winsB) : 0;
     const otherWins = seen ? (seen.teamA === homeCourt ? seen.winsB : seen.winsA) : 0;
     const winner = playSeries(
@@ -326,6 +335,12 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
   const noise = new Float64Array(STATE_SIZE);
   const lookup = observedSeriesLookup(observed);
   const seriesWins = new Map<string, number>();
+  const firstRoundOpponent = new Map<number, number>();
+  for (const series of observed?.series ?? []) {
+    if (series.round !== "first-round") continue;
+    firstRoundOpponent.set(series.teamA, series.teamB);
+    firstRoundOpponent.set(series.teamB, series.teamA);
+  }
   const random = createSeededRandom(
     fingerprint(
       JSON.stringify({
@@ -335,7 +350,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
         params,
         mean: Array.from(state.mean).map((value) => value.toFixed(8)),
         games: input.games.length,
-        observed: observed?.series ?? [],
+        observed: observed ?? null,
       }),
     ),
   );
@@ -419,6 +434,11 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
         for (let seed = 0; seed < 6; seed += 1) counters.topSix[order[seed]] += 1;
         seeded = order.slice(0, 8);
       }
+      // Observed first-round pairings override anything simulated.
+      for (const [high, low] of FIRST_ROUND_SLOTS) {
+        const opponent = firstRoundOpponent.get(seeded[high]);
+        if (opponent !== undefined) seeded[low] = opponent;
+      }
       for (const team of seeded) counters.makePlayoffs[team] += 1;
       champions.push(
         simulateBracket(
@@ -435,10 +455,10 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
     }
     const finalsWinner = (() => {
       const [east, west] = champions;
-      const eastHasCourt = hasHomeCourt(east, west, table);
+      const seen = lookup.get(seriesKey(east, west));
+      const eastHasCourt = seen ? seen.homeCourt === east : hasHomeCourt(east, west, table);
       const homeCourt = eastHasCourt ? east : west;
       const other = eastHasCourt ? west : east;
-      const seen = lookup.get(seriesKey(east, west));
       const homeCourtWins = seen ? (seen.teamA === homeCourt ? seen.winsA : seen.winsB) : 0;
       const otherWins = seen ? (seen.teamA === homeCourt ? seen.winsB : seen.winsA) : 0;
       const winner = playSeries(
@@ -479,7 +499,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
   }));
 
   const series: SeriesForecast[] = (observed?.series ?? []).map((row) => {
-    const homeCourtIsA = hasHomeCourt(row.teamA, row.teamB, base);
+    const homeCourtIsA = row.homeCourt === row.teamA;
     const homeCourt = homeCourtIsA ? row.teamA : row.teamB;
     const other = homeCourtIsA ? row.teamB : row.teamA;
     const key = seriesKey(row.teamA, row.teamB);

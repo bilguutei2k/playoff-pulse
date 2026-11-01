@@ -14,6 +14,7 @@ import type {
   GameStatus,
   InjuryRow,
   LiveState,
+  PlayoffRound,
   ScoreboardRow,
 } from "@/lib/season/types";
 
@@ -41,6 +42,9 @@ export type SlateGameView = {
   homeScore: number | null;
   awayScore: number | null;
   seriesSummary: string | null;
+  round: PlayoffRound | null;
+  /** Current playoff series odds, from the latest season forecast. */
+  series: { homeWins: number; awayWins: number; homeWinsSeries: number } | null;
   forecast: GameForecastView | null;
   inGameHomeProbability: number | null;
   /** Tipped without a seal after the record began, so it counts as a miss. */
@@ -129,6 +133,28 @@ function gameView(
     });
   }
 
+  const seriesRow =
+    game.kind === "playoff"
+      ? state.forecast.series?.find(
+          (row) =>
+            (row.homeCourtId === game.homeId && row.otherId === game.awayId) ||
+            (row.homeCourtId === game.awayId && row.otherId === game.homeId),
+        )
+      : undefined;
+  const series = seriesRow
+    ? seriesRow.homeCourtId === game.homeId
+      ? {
+          homeWins: seriesRow.homeCourtWins,
+          awayWins: seriesRow.otherWins,
+          homeWinsSeries: seriesRow.homeCourtSeriesProbability,
+        }
+      : {
+          homeWins: seriesRow.otherWins,
+          awayWins: seriesRow.homeCourtWins,
+          homeWinsSeries: 1 - seriesRow.homeCourtSeriesProbability,
+        }
+    : null;
+
   const tipped = game.status === "in-progress" || game.status === "final";
   const beforeRecord =
     !seal &&
@@ -159,6 +185,8 @@ function gameView(
     homeScore: game.homeScore,
     awayScore: game.awayScore,
     seriesSummary: row.seriesSummary,
+    round: game.round ?? null,
+    series,
     forecast,
     inGameHomeProbability: inGame,
     missed: !seal && tipped && !beforeRecord,

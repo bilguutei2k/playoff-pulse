@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LiveDashboard } from "@/components/live/LiveDashboard";
+import { PlayoffSeries } from "@/components/live/PlayoffSeries";
 import { SeasonTable } from "@/components/live/SeasonTable";
 import { loadSlateView } from "@/lib/live-data/live-slate";
 import { liveState } from "@/lib/season/published";
 import { teamById } from "@/lib/season/teams";
+import type { SeasonPhase } from "@/lib/season/types";
 import { formatPercent } from "@/lib/utils/format";
 
 export const metadata: Metadata = {
@@ -15,6 +17,13 @@ export const metadata: Metadata = {
 
 // Re-rendered about once a minute; the client also polls for live scores.
 export const revalidate = 60;
+
+const PHASE_LABELS: Record<SeasonPhase, string> = {
+  "regular-season": "Regular season",
+  "play-in": "Play-in",
+  playoffs: "Playoffs",
+  complete: "Season complete",
+};
 
 function formatStamp(iso: string): string {
   return new Intl.DateTimeFormat("en-US", {
@@ -79,7 +88,9 @@ export default async function LivePage() {
     <main className="min-h-screen bg-[var(--color-bg-primary)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-3 py-4 md:px-[18px] md:py-6">
         <header>
-          <div className="pp-kicker">{liveState.seasonLabel} season</div>
+          <div className="pp-kicker">
+            {liveState.seasonLabel} season · {PHASE_LABELS[liveState.forecast.phase]}
+          </div>
           <h1 className="mt-2 text-2xl font-bold text-[var(--color-text-primary)]">
             Live NBA forecasts
           </h1>
@@ -106,6 +117,10 @@ export default async function LivePage() {
         </header>
 
         <LiveDashboard initial={initial} />
+
+        {liveState.forecast.series.length > 0 ? (
+          <PlayoffSeries series={liveState.forecast.series} />
+        ) : null}
 
         <section aria-labelledby="season-title">
           <div className="mb-3 flex flex-wrap items-end justify-between gap-2">

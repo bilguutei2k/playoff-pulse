@@ -29,6 +29,11 @@ import {
   teamGameDatesAround,
 } from "../../src/lib/season/live-state";
 import {
+  buildObservedPostseason,
+  crossCheckSeeds,
+  detectPhase,
+} from "../../src/lib/season/postseason";
+import {
   LIVE_MODEL_VERSION,
   LIVE_PARAMS,
   LIVE_SIMULATION_ITERATIONS,
@@ -220,16 +225,21 @@ async function main(): Promise<void> {
   const seasonGames = [...games.values()].sort(compareGames);
   assertPlausibleSchedule(seasonGames);
 
-  // Phase B guard: real play-in or playoff results must not be ignored.
-  const postseason = seasonGames.filter(
+  const phase = detectPhase(seasonGames, SEASON);
+  const observed = phase === "regular-season" ? undefined : buildObservedPostseason(seasonGames);
+  const postseasonStarted = seasonGames.some(
     (game) =>
       (game.kind === "play-in" || game.kind === "playoff") &&
       (game.status === "final" || game.status === "in-progress"),
   );
-  if (postseason.length > 0) {
-    throw new Error(
-      `${postseason.length} postseason game(s) have started, and postseason handling is not active.`,
-    );
+  log(`phase: ${phase}`);
+  // Once the regular season ends and before the play-in changes ESPN's seeds, ours
+  // must match exactly.
+  if (phase !== "regular-season" && !postseasonStarted) {
+    const seedProblems = crossCheckSeeds(standings, seasonGames);
+    if (seedProblems.length > 0) {
+      throw new Error(`Seed cross-check failed: ${seedProblems.join("; ")}`);
+    }
   }
 
   const crossCheck = crossCheckStandings(standings, seasonGames, slate);
@@ -273,7 +283,8 @@ async function main(): Promise<void> {
   const forecast = roundForecast(
     simulateSeason({
       season: SEASON,
-      phase: "regular-season",
+      phase,
+      observed,
       games: seasonGames,
       state: display.state,
       params: LIVE_PARAMS,

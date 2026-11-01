@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { AlertTriangle, CheckCircle2, CircleDot, Clock, XCircle } from "lucide-react";
 import { teamById } from "@/lib/season/teams";
 import type { SlateGameView, SlateView } from "@/lib/season/slate";
+import type { PlayoffRound } from "@/lib/season/types";
 import { formatPercent } from "@/lib/utils/format";
 
 const POLL_LIVE_MS = 60_000;
@@ -171,6 +172,20 @@ function TeamRow({
   );
 }
 
+const ROUND_LABELS: Record<PlayoffRound, string> = {
+  "first-round": "First round",
+  "conference-semifinal": "Conference semifinal",
+  "conference-final": "Conference final",
+  finals: "NBA Finals",
+};
+
+function gameLabel(game: SlateGameView): string | null {
+  if (game.kind === "play-in") return "Play-in";
+  if (game.kind === "cup-final") return "NBA Cup final (not in standings)";
+  if (game.round) return ROUND_LABELS[game.round];
+  return null;
+}
+
 function statusLabel(game: SlateGameView, isClient: boolean): string {
   if (game.status === "scheduled") return formatTime(game.tipUtc, isClient);
   if (game.status === "postponed") return "Postponed";
@@ -237,6 +252,9 @@ function GameCard({ game }: { game: SlateGameView }) {
             <CircleDot size={13} aria-hidden className="text-[var(--color-danger)]" />
           ) : null}
           {statusLabel(game, isClient)}
+          {gameLabel(game) ? (
+            <span className="font-normal text-[var(--color-text-muted)]">· {gameLabel(game)}</span>
+          ) : null}
         </span>
         <ForecastBadge game={game} />
       </header>
@@ -294,7 +312,17 @@ function GameCard({ game }: { game: SlateGameView }) {
             <dd>Neutral site</dd>
           </div>
         ) : null}
-        {game.seriesSummary ? (
+        {game.series ? (
+          <div className="flex justify-between gap-3">
+            <dt>
+              Series {home.abbreviation} {game.series.homeWins}-{game.series.awayWins} {away.abbreviation}
+            </dt>
+            <dd className="pp-number">
+              {game.series.homeWinsSeries >= 0.5 ? home.abbreviation : away.abbreviation} wins it{" "}
+              {formatPercent(Math.max(game.series.homeWinsSeries, 1 - game.series.homeWinsSeries))}
+            </dd>
+          </div>
+        ) : game.seriesSummary ? (
           <div className="flex justify-between gap-3">
             <dt>Series</dt>
             <dd>{game.seriesSummary}</dd>
