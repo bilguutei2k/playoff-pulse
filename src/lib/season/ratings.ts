@@ -220,6 +220,8 @@ export function replayRatings(
     collectPredictions?: boolean;
     /** Advance time to this ET date after the last game. */
     asOfEtDate?: string;
+    /** Sees the state a game would be forecast from, before its result. */
+    onBeforeGame?: (game: SeasonGame, state: FilterState) => void;
   } = {},
 ): ReplayResult {
   const state = createFilterState(params);
@@ -251,6 +253,7 @@ export function replayRatings(
       homeOnBackToBack: isBackToBack(lastGameEtDate[game.homeId], game.etDate),
       awayOnBackToBack: isBackToBack(lastGameEtDate[game.awayId], game.etDate),
     };
+    options.onBeforeGame?.(game, state);
     const homeMargin = (game.homeScore as number) - (game.awayScore as number);
     const prediction = updateWithResult(state, context, homeMargin, params);
     if (options.collectPredictions) {
