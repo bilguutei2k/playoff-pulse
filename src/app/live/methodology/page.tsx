@@ -144,6 +144,13 @@ export default function LiveMethodologyPage() {
             need. Games the league has not scheduled yet, such as NBA Cup knockout slots, are played
             against an average opponent on a neutral floor until the real game appears.
           </p>
+          <p>
+            Once the regular season ends, the page switches on its own to the play-in and then the
+            playoffs. Real results replace simulation as they happen: finished play-in games, the
+            actual bracket and the current score of each series. Eliminated teams drop to zero, and
+            each series shows the chance of the favorite winning it from its current score. This logic
+            was replayed over the real 2021-22 to 2025-26 postseasons.
+          </p>
         </Section>
 
         <Section title="How it tested">

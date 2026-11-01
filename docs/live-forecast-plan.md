@@ -1,6 +1,6 @@
 # Live NBA forecast plan (draft for review)
 
-Author: Claude Opus 5.5, 2026-11-01. Status: reviewed by Fable. **Section 15 is the binding final decision and overrides anything above it where they differ.**
+Author: Claude Opus 5.5, 2026-11-01. Status: reviewed by Fable; Phase A and Phase B shipped. **Section 15 is the binding final decision and overrides anything above it where they differ.**
 
 ## 1. Goal
 
