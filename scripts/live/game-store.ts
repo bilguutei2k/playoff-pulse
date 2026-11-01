@@ -7,7 +7,14 @@ import type { SeasonGame } from "../../src/lib/season/types";
 
 export const GAMES_DIRECTORY = path.join(process.cwd(), "data", "season", "games");
 
+/** The season in progress is written by the bot, which only touches data/live. */
+export const LIVE_SEASON = 2027;
+export const LIVE_DIRECTORY = path.join(process.cwd(), "data", "live");
+
 export function gamesPath(season: number): string {
+  if (season >= LIVE_SEASON) {
+    return path.join(LIVE_DIRECTORY, "games", `${season}.json`);
+  }
   return path.join(GAMES_DIRECTORY, `${season}.json`);
 }
 

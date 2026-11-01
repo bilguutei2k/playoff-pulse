@@ -250,8 +250,8 @@ export type LiveState = {
   /** Team IDs in state order; `ratings` follows this order then home court. */
   teamOrder: string[];
   ratings: RatingState;
-  /** ET date of each team's most recent final game. */
-  lastGameEtDate: Record<string, string | null>;
+  /** Each team's scheduled ET dates around the slate, for back-to-back checks. */
+  teamGameDates: Record<string, string[]>;
   /** The model parameters needed to price a game at request time. */
   params: ModelParams;
   /** Slate context: today and neighbouring dates. */
@@ -259,8 +259,6 @@ export type LiveState = {
   nextSlateEtDate: string | null;
   /** Seals for the recent window, keyed by game ID. */
   seals: Record<string, SealRow>;
-  /** Reported availability at seal, keyed by team ID. */
-  injuries: Record<string, InjuryRow[]>;
   forecast: SeasonForecast;
   record: RecordSummary;
   history: TeamHistoryPoint[];

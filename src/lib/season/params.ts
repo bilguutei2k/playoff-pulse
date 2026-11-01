@@ -22,13 +22,17 @@ export const LIVE_PARAMS: ModelParams = {
 };
 
 /**
- * In-game noise SD, in points. Defaults to `sigma` and may change only through
- * the disclosed refit rule in docs/live/registration.md.
+ * In-game noise SD, in points. The registered default (`sigma`) failed at quarter
+ * ends, so this is the one permitted refit: fitted on 2025 states and validated on
+ * 2026 only. See docs/live/registration.md.
  */
-export const IN_GAME_SIGMA = LIVE_PARAMS.sigma;
+export const IN_GAME_SIGMA = 18;
 
 /** Published simulation size. Monte Carlo error on a 10% chance is about 0.2 points. */
 export const LIVE_SIMULATION_ITERATIONS = 20_000;
 
-/** Multiplier on rating uncertainty in the simulator; 1 means none. */
-export const SIMULATOR_UNCERTAINTY_SCALE = 1;
+/**
+ * Multiplier on rating uncertainty in the simulator. The one permitted refit after
+ * gate S2 failed, chosen on development seasons. See docs/live/registration.md.
+ */
+export const SIMULATOR_UNCERTAINTY_SCALE = 1.5;

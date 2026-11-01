@@ -111,3 +111,53 @@ changed. G3 is not a hard blocker under the ship rule. No further tuning was don
 anything else would be fitted on validation seasons. The deficit is recorded in
 `docs/claims-ledger.md` and on `/live/methodology`. Any correction must be a new version
 chosen on prospective data.
+
+**2026-11-01, in-game result.** At the registered default `sigma_g` = 10.5 the estimate
+failed at every quarter end on 2025-2026 (slopes 0.557, 0.562, 0.604; reliability 0.0098,
+0.0078, 0.0077). The permitted refit on 2025 states alone chose `sigma_g` = 18
+(`scripts/live/evaluate-in-game.ts --refit`). On 2026 alone, unused by that fit, it passes:
+
+| Quarter end | n | Brier | Slope | Reliability |
+|---|---:|---:|---:|---:|
+| Q1 | 1,230 | 0.1918 | 1.007 | 0.001332 |
+| Q2 | 1,230 | 0.1567 | 1.004 | 0.000655 |
+| Q3 | 1,230 | 0.1191 | 0.963 | 0.000786 |
+
+Mid-quarter values, and the final minutes in particular, are interpolation and unvalidated.
+
+**2026-11-01, season-level result.** With the simulator at scale 1, on gate seasons 2016-2019
+and 2022:
+
+- **S1 and S3 passed** at every checkpoint (make-playoffs Brier 0.1306, 0.0742, 0.0285 against
+  baseline 0.1485, 0.0925, 0.0607; win RMSE 6.23, 3.40, 1.22 against 8.10, 3.83, 1.29).
+- **S2 failed** at opening night and Dec 1.
+- **S4 passed:** 100 of 100 seeds matched across 2022-2026, without the skipped criteria.
+
+The permitted refit scanned the uncertainty scale on development seasons only and chose 1.5
+(make-playoffs Brier 0.10036 against 0.10122 at scale 1). The gate seasons were then re-run once:
+
+| Checkpoint | Make-playoffs Brier | Baseline | S1 | Win RMSE | Extrapolation | S3 | S2 |
+|---|---:|---:|---|---:|---:|---|---|
+| Opening night | 0.1660 | n/a | n/a | 8.98 | n/a | n/a | fail |
+| Dec 1 | 0.1303 | 0.1485 | pass | 6.22 | 8.10 | pass | fail |
+| Feb 1 | 0.0748 | 0.0925 | pass | 3.40 | 3.83 | pass | fail |
+| Apr 1 | 0.0283 | 0.0607 | pass | 1.22 | 1.29 | pass | pass |
+
+S2 remains failed, and also now fails at Feb 1. Its populated bins hold only 10-16 team-seasons,
+where the sampling error alone is 10-16 points, so this says more about the test's power than a
+clear miscalibration, but the registered result stands: **mid-season playoff odds are not claimed
+to be well calibrated.** No further change was made.
+
+On 2023-2026, reported separately, S1 fails at Dec 1 and Feb 1 (0.1292 against 0.1277 and 0.0948
+against 0.0913) and S3 fails at Feb 1 (4.13 against 3.97). Early-season and midseason playoff odds
+in recent seasons have not beaten simple win-percentage reads.
+
+**Title odds, descriptive only.** Mean probability given to the eventual champion on gate seasons:
+15.2% at opening night, 22.2% on Dec 1, 23.4% on Feb 1, 16.5% on Apr 1. On 2023-2026: 7.0%, 14.6%,
+21.8%, 36.6%. Nine champions are far too few to measure skill, and none is claimed.
+
+**Playoffs, reported only.** Series Brier against the rolling SRS + home reference: 0.1837 against
+0.1712 on gate seasons (n = 105, interval +0.0125 [-0.0057, +0.0281], crossing zero), and 0.2245
+against 0.2478 on 2023-2026 (n = 60, interval -0.0233 [-0.0325, -0.0146], in seasons that informed
+model form). No improvement is claimed.
+
