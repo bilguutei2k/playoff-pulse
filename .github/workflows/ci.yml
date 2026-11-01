@@ -2,14 +2,10 @@ name: CI
 
 # Lint, full verification, and build on every push and pull request.
 #
-# Note: `corepack pnpm verify` includes scripts/verify/data-snapshot.ts, which
-# pins the current manual series scores and rosters. An automated data-refresh
-# PR (branch data-refresh/auto) changes scores without updating those pins, so
-# it will fail this workflow until a human updates
-# scripts/verify/data-snapshot.ts on the PR branch. That is intentional: data
-# changes and their pinned expectations must land together. The refresh
-# workflow itself gates only on verify:invariants + verify:refresh so the PR
-# still gets created.
+# `corepack pnpm verify` includes scripts/verify/data-snapshot.ts, which pins the
+# frozen 2026 archive. Live data commits (data/live/**) are pushed by the
+# live-forecast workflow with GITHUB_TOKEN, which does not trigger this workflow;
+# they are validated by that job instead.
 
 on:
   push:
@@ -23,6 +19,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -40,6 +38,11 @@ jobs:
 
       - name: Verify (invariants + refresh checks + data snapshot)
         run: corepack pnpm verify
+
+      - name: Ledger is append-only against main
+        run: |
+          git fetch --no-tags origin main
+          corepack pnpm verify:ledger origin/main
 
       - name: Build
         run: corepack pnpm build

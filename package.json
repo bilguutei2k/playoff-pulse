@@ -29,7 +29,10 @@
     "backtest:all": "pnpm backtest:fixed && pnpm backtest:pregame && pnpm backtest:availability && pnpm backtest:inputs && pnpm backtest:research && pnpm backtest:evidence",
     "archive:forecast": "tsx scripts/archive-forecast.ts",
     "archive:issue": "tsx scripts/archive-forecast.ts --prospective",
-    "refresh-data": "tsx scripts/refresh-data.ts"
+    "refresh-data": "tsx scripts/refresh-data.ts",
+    "live:pipeline": "tsx scripts/live/pipeline.ts",
+    "verify:ledger": "tsx scripts/live/verify-ledger.ts",
+    "verify:live": "tsx scripts/verify/live-checks.ts"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

@@ -19,6 +19,8 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 | 1984–2026 reconstruction | Point-in-time forecasts built after the fact under leakage controls | Not contemporaneously issued predictions |
 | 1987–2026 rolling origin | Models fitted only on prior seasons after a three-season initialization window | Temporally held out, but not a preregistered prospective track record |
 | 2027+ prospective issuance | Immutable forecasts issued before a declared game start | No observations exist yet |
+| Live model validation (2016-2022, 2023-2026) | Walk-forward reconstruction of regular-season games with frozen parameters; 2023-2026 informed the choice of model form | Not a prospective record |
+| Live sealed ledger (2026-27 on) | Forecasts sealed before tip and scored afterward | The only prospective record; small-sample below 500 scored games |
 
 ## Supported (may be stated plainly)
 
@@ -164,3 +166,41 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
    `evidence.json → worstForecasts.game`, top N as computed.
 4. **Failure narratives**: only inputs recorded in the pregame snapshot may be
    cited; no retrospective storylines.
+
+## Live forecast (model `live-2026.27-v1`)
+
+Sources: `docs/live/registration.md`, `docs/live/evaluation-games.json`,
+`docs/live/evaluation-season.json`, and `data/live/ledger/`.
+
+**May be stated plainly, with the numbers:**
+
+- Walk-forward on 2016-2022 regular seasons, Brier is 0.2153 against 0.2458 for a prior
+  home-win rate (paired interval -0.0353 to -0.0266, season-clustered), and it was better than
+  Elo with margin (0.2165, interval -0.0023 to -0.0003) and season-to-date SRS (0.2207, interval
+  -0.0070 to -0.0042).
+- Regular-season 2023-2026 results must carry the label "model form chosen with sight of these
+  seasons": Brier 0.2125.
+- The tiebreak code reproduced all 100 actual seeds, 2021-22 to 2025-26.
+- In-game estimates passed reliability and slope checks at Q1, Q2 and Q3 ends on 2025-26 games not
+  used to fit them.
+
+**Required disclosures:**
+
+- The model does not account for injuries.
+- Game forecasts are mildly overconfident: calibration slope 0.860, outside the registered 0.90 to
+  1.10 range. The permitted fix changed nothing. No further correction was tuned on test seasons.
+- Midseason playoff odds failed the registered reliability check at opening night, Dec 1 and Feb 1,
+  in small bins, and are not claimed to be well calibrated. On 2023-2026 they did not beat a
+  win-percentage baseline on Dec 1 and Feb 1.
+- In-game values between quarter ends, including the final minutes, are unvalidated interpolation.
+- The ledger must always show missed seals and seals with incomplete inputs. Results below 500 scored
+  games carry a small-sample label.
+
+**Never claim:**
+
+- Title-odds skill. Too few champions exist to measure it.
+- A playoff edge over the SRS + home reference. Series Brier on 2016-2022 was 0.1837 against 0.1712,
+  with the interval crossing zero.
+- Any market comparison until a large prospective sample exists. Market data is captured at seal for
+  later aggregate comparison only and is not displayed per game.
+- Betting value of any kind, or official NBA data.

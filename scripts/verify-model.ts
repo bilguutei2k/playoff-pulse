@@ -16,10 +16,12 @@ import { runRefreshChecks } from "./verify/refresh-checks";
 import { runDataSnapshotChecks } from "./verify/data-snapshot";
 import { runBacktestIntegrityChecks } from "./verify/backtest-integrity";
 import { runHoldoutDataChecks } from "./verify/holdout-data";
+import { runLiveChecks } from "./verify/live-checks";
 
 runInvariantChecks();
 runRefreshChecks();
 runDataSnapshotChecks();
 runBacktestIntegrityChecks();
 runHoldoutDataChecks();
+runLiveChecks();
 console.log("Model verification passed.");
