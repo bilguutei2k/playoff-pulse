@@ -1,9 +1,11 @@
 name: Live forecast
 
-# Every 30 minutes at off-peak minutes, because GitHub often runs schedules late
-# and top-of-the-hour runs are the most delayed. Each run refreshes results, seals
-# today's forecasts, re-simulates the season, and commits data/live/** only when
-# something really changed. Each commit deploys to production through Vercel.
+# An outside scheduler calls workflow_dispatch every 10 minutes, because GitHub's own
+# schedule proved far too unreliable: 2 of about 27 slots ran in the first 13 hours.
+# The schedule below stays as a backup, at off-peak minutes. Each run refreshes
+# results, seals today's forecasts, re-simulates the season, and commits data/live/**
+# only when something changed. Commits touching more than data/live/games deploy to
+# production through Vercel (see vercel.json).
 #
 # A failure publishes nothing, leaves the last good state up, and fails the job,
 # which makes GitHub email the owner. Pushes made with GITHUB_TOKEN do not trigger

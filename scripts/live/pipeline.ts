@@ -23,10 +23,12 @@ import {
   decideResults,
   decideSeals,
   sealGames,
+  shouldPublishState,
   slateDateAt,
   stuckGames,
   summarizeRecord,
   teamGameDatesAround,
+  withoutLiveScores,
 } from "../../src/lib/season/live-state";
 import {
   buildObservedPostseason,
@@ -156,13 +158,17 @@ function roundForecast(forecast: SeasonForecast): SeasonForecast {
   };
 }
 
-/** Writes state only if something other than its timestamp changed. */
+/** Writes state when its content changed, or when the last write is getting old. */
 function publishState(state: LiveState): boolean {
   const existing = readJson<LiveState>(STATE_PATH);
   const comparable = (value: LiveState) => JSON.stringify({ ...value, generatedAt: "" });
-  if (existing && comparable(existing) === comparable(state)) return false;
-  writeText(STATE_PATH, `${JSON.stringify(state)}\n`);
-  return true;
+  const publish = shouldPublishState({
+    previousGeneratedAt: existing?.generatedAt ?? null,
+    contentChanged: !existing || comparable(existing) !== comparable(state),
+    nowIso: state.generatedAt,
+  });
+  if (publish) writeText(STATE_PATH, `${JSON.stringify(state)}\n`);
+  return publish;
 }
 
 function loadHistoryPoints(forecast: SeasonForecast, slate: string): TeamHistoryPoint[] {
@@ -363,7 +369,7 @@ async function main(): Promise<void> {
   };
 
   // Everything validated. Only now does anything get written.
-  writeText(gamesPath(SEASON), `${JSON.stringify(seasonGames)}\n`);
+  writeText(gamesPath(SEASON), `${JSON.stringify(seasonGames.map(withoutLiveScores))}\n`);
   if (newRows.length > 0) {
     fs.mkdirSync(path.dirname(LEDGER_PATH), { recursive: true });
     fs.appendFileSync(

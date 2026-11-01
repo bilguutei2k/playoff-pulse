@@ -31,6 +31,12 @@ const SEAL_FALLBACK_MS = 6 * 3_600_000;
 /** A game this many days old stops blocking seals. */
 const STUCK_AFTER_DAYS = 3;
 const SMALL_SAMPLE_GAMES = 500;
+/**
+ * A quiet run still republishes after this long. Nothing changes between a morning
+ * seal and the first final of the night, and freshness is judged from `generatedAt`,
+ * so without this a healthy job would look stale every evening.
+ */
+export const STATE_REFRESH_HOURS = 2;
 
 export function slateDateAt(now: string | number | Date): string {
   const time = new Date(now).getTime();
@@ -95,6 +101,27 @@ export function decideSeals(
     }
   }
   return decisions;
+}
+
+/** Whether to write new state. A run with nothing new only refreshes the timestamp. */
+export function shouldPublishState(input: {
+  /** Null when no state has been published yet. */
+  previousGeneratedAt: string | null;
+  contentChanged: boolean;
+  nowIso: string;
+}): boolean {
+  if (input.previousGeneratedAt === null || input.contentChanged) return true;
+  const ageHours =
+    (Date.parse(input.nowIso) - Date.parse(input.previousGeneratedAt)) / 3_600_000;
+  return ageHours >= STATE_REFRESH_HOURS;
+}
+
+/**
+ * The stored form of a game. Live scores never leave the run that fetched them: they
+ * have no use in stored data, and they would make every run during a game a new commit.
+ */
+export function withoutLiveScores(game: SeasonGame): SeasonGame {
+  return game.status === "in-progress" ? { ...game, homeScore: null, awayScore: null } : game;
 }
 
 /** ET dates each team plays in a window around `etDate`, from the schedule. */

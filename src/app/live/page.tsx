@@ -3,7 +3,9 @@ import Link from "next/link";
 import { LiveDashboard } from "@/components/live/LiveDashboard";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
 import { SeasonTable } from "@/components/live/SeasonTable";
+import { UpdatedAgo } from "@/components/live/UpdatedAgo";
 import { loadSlateView } from "@/lib/live-data/live-slate";
+import { titleOddsChange } from "@/lib/season/history";
 import { liveState } from "@/lib/season/published";
 import { teamById } from "@/lib/season/teams";
 import type { SeasonPhase } from "@/lib/season/types";
@@ -34,6 +36,14 @@ function formatStamp(iso: string): string {
     timeZoneName: "short",
     timeZone: "America/New_York",
   }).format(new Date(iso));
+}
+
+function formatDay(etDate: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${etDate}T12:00:00Z`));
 }
 
 function RecordPanel() {
@@ -84,6 +94,7 @@ function RecordPanel() {
 export default async function LivePage() {
   const initial = await loadSlateView();
   const favorite = [...liveState.forecast.teams].sort((a, b) => b.champion - a.champion)[0];
+  const oddsChange = titleOddsChange(liveState.history);
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-3 py-4 md:px-[18px] md:py-6">
@@ -134,7 +145,7 @@ export default async function LivePage() {
               </h2>
             </div>
             <p className="pp-number text-xs text-[var(--color-text-muted)]">
-              Updated {formatStamp(liveState.generatedAt)} ·{" "}
+              <UpdatedAgo iso={liveState.generatedAt} stamp={formatStamp(liveState.generatedAt)} /> ·{" "}
               {liveState.forecast.iterations.toLocaleString("en-US")} simulated seasons
             </p>
           </div>
@@ -143,10 +154,24 @@ export default async function LivePage() {
             scores update about once a minute. Early and midseason playoff odds are not claimed to
             be well calibrated, and no title-odds skill is claimed.
           </p>
-          <SeasonTable teams={liveState.forecast.teams} />
+          <SeasonTable
+            teams={liveState.forecast.teams}
+            change={oddsChange?.change ?? null}
+            changeSince={oddsChange ? formatDay(oddsChange.since) : null}
+          />
+          {oddsChange ? (
+            <p className="mt-2 text-xs leading-5 text-[var(--color-text-muted)]">
+              Change is in percentage points of title odds since {formatDay(oddsChange.since)}.
+            </p>
+          ) : null}
         </section>
 
         <RecordPanel />
+
+        <p className="text-xs leading-5 text-[var(--color-text-muted)]">
+          Team names and logos are trademarks of the NBA and its teams. Playoff Pulse is an independent
+          project, not affiliated with or endorsed by them.
+        </p>
       </div>
     </main>
   );

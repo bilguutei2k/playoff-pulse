@@ -11,7 +11,11 @@ import {
   stuckGames,
   summarizeRecord,
   sealGames,
+  shouldPublishState,
+  withoutLiveScores,
 } from "@/lib/season/live-state";
+import { titleOddsChange } from "@/lib/season/history";
+import { formatAge } from "@/lib/utils/format";
 import { LIVE_MODEL_VERSION, LIVE_PARAMS } from "@/lib/season/params";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import type { LedgerRow, SealRow, SeasonGame } from "@/lib/season/types";
@@ -320,5 +324,89 @@ describe("in-game estimate", () => {
     const overtime = inGameHomeProbability({ ...input, homeMargin: 3, period: 5, clockSeconds: 120 });
     expect(overtime).toBeGreaterThan(0.7);
     expect(overtime).toBeLessThan(0.995);
+  });
+});
+
+describe("publishing state", () => {
+  const published = "2026-11-01T11:00:00Z";
+
+  it("always writes when there is no state yet or the content changed", () => {
+    const nowIso = "2026-11-01T11:10:00Z";
+    expect(shouldPublishState({ previousGeneratedAt: null, contentChanged: false, nowIso })).toBe(true);
+    expect(shouldPublishState({ previousGeneratedAt: published, contentChanged: true, nowIso })).toBe(true);
+  });
+
+  it("skips a quiet run until the last write is two hours old", () => {
+    const quiet = (nowIso: string) =>
+      shouldPublishState({ previousGeneratedAt: published, contentChanged: false, nowIso });
+    expect(quiet("2026-11-01T12:59:00Z")).toBe(false);
+    expect(quiet("2026-11-01T13:00:00Z")).toBe(true);
+  });
+
+  it("keeps a quiet day from reaching the 12-hour stale limit", () => {
+    // Morning seal, then nothing changes until the first final 14 hours later.
+    let last = published;
+    let oldest = 0;
+    for (let hour = 1; hour <= 14; hour += 1) {
+      const nowIso = new Date(Date.parse(published) + hour * 3_600_000).toISOString();
+      oldest = Math.max(oldest, (Date.parse(nowIso) - Date.parse(last)) / 3_600_000);
+      if (shouldPublishState({ previousGeneratedAt: last, contentChanged: false, nowIso })) {
+        last = nowIso;
+      }
+    }
+    expect(oldest).toBeLessThan(12);
+  });
+});
+
+describe("stored games", () => {
+  it("drops live scores but keeps the status", () => {
+    const stored = withoutLiveScores(
+      game({ id: "1", tipUtc: "2026-11-01T23:00:00Z", status: "in-progress", homeScore: 50, awayScore: 44 }),
+    );
+    expect(stored.status).toBe("in-progress");
+    expect(stored.homeScore).toBeNull();
+    expect(stored.awayScore).toBeNull();
+  });
+
+  it("keeps final scores", () => {
+    const final = game({ id: "1", tipUtc: "2026-11-01T23:00:00Z", status: "final", homeScore: 101, awayScore: 99 });
+    expect(withoutLiveScores(final)).toEqual(final);
+  });
+});
+
+describe("title odds change", () => {
+  const point = (date: string, value: number) => ({ date, champion: { [A]: value, [B]: 1 - value } });
+
+  it("compares with the previous day when the numbers moved", () => {
+    const result = titleOddsChange([point("2026-11-01", 0.2), point("2026-11-02", 0.23)]);
+    expect(result?.since).toBe("2026-11-01");
+    expect(result?.change[A]).toBeCloseTo(0.03);
+  });
+
+  it("skips back past days with the same numbers, so a morning is not all zeros", () => {
+    const result = titleOddsChange([
+      point("2026-11-01", 0.2),
+      point("2026-11-02", 0.25),
+      point("2026-11-03", 0.25),
+    ]);
+    expect(result?.since).toBe("2026-11-01");
+    expect(result?.change[A]).toBeCloseTo(0.05);
+  });
+
+  it("returns null when there is nothing to compare", () => {
+    expect(titleOddsChange([])).toBeNull();
+    expect(titleOddsChange([point("2026-11-01", 0.2)])).toBeNull();
+    expect(titleOddsChange([point("2026-11-01", 0.2), point("2026-11-02", 0.2)])).toBeNull();
+  });
+});
+
+describe("age label", () => {
+  it("reads naturally at each scale", () => {
+    expect(formatAge(20_000)).toBe("just now");
+    expect(formatAge(60_000)).toBe("1 minute ago");
+    expect(formatAge(12 * 60_000)).toBe("12 minutes ago");
+    expect(formatAge(3 * 3_600_000)).toBe("3 hours ago");
+    expect(formatAge(72 * 3_600_000)).toBe("3 days ago");
+    expect(formatAge(-5_000)).toBe("just now");
   });
 });
