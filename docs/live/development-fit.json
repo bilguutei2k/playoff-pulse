@@ -1,0 +1,88 @@
+{
+  "fixedQHca": 0.0002,
+  "qHcaSensitivity": [
+    {
+      "qHca": 0,
+      "regularLogLoss": 0.594523
+    },
+    {
+      "qHca": 0.0001,
+      "regularLogLoss": 0.594497
+    },
+    {
+      "qHca": 0.0002,
+      "regularLogLoss": 0.594511
+    },
+    {
+      "qHca": 0.0005,
+      "regularLogLoss": 0.594542
+    },
+    {
+      "qHca": 0.001,
+      "regularLogLoss": 0.594574
+    },
+    {
+      "qHca": 0.002,
+      "regularLogLoss": 0.594611
+    }
+  ],
+  "developmentSeasons": "2005-2015 (2005 is warm-up, not scored)",
+  "params": {
+    "sigma": 10.5,
+    "q": 0.05,
+    "qHca": 0.0002,
+    "rho": 0.85,
+    "tau": 4.5,
+    "hca0": 1,
+    "hcaVar0": 1,
+    "b2b": 1.5,
+    "marginCap": 30,
+    "hcaPlayoffDelta": 1.5,
+    "playoffSpread": 1.1
+  },
+  "spreadMultiplierKept": true,
+  "comparatorParams": {
+    "elo": {
+      "k": 20,
+      "hca": 80,
+      "carry": 0.7
+    },
+    "srs": {
+      "ridge": 6,
+      "hca": 3,
+      "scale": 6.5
+    }
+  },
+  "developmentScores": {
+    "kalmanRegular": {
+      "n": 12059,
+      "brier": 0.204575,
+      "logLoss": 0.594511,
+      "accuracy": 0.677917
+    },
+    "kalmanPlayoff": {
+      "n": 841,
+      "brier": 0.209931,
+      "logLoss": 0.607767,
+      "accuracy": 0.671819
+    },
+    "eloRegular": {
+      "n": 12059,
+      "brier": 0.205884,
+      "logLoss": 0.597729,
+      "accuracy": 0.675097
+    },
+    "srsRegular": {
+      "n": 12059,
+      "brier": 0.208362,
+      "logLoss": 0.603238,
+      "accuracy": 0.669293
+    },
+    "homeRateRegular": {
+      "n": 12059,
+      "brier": 0.240902,
+      "logLoss": 0.674843,
+      "accuracy": 0.595821
+    }
+  }
+}
