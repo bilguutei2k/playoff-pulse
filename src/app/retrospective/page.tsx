@@ -11,7 +11,7 @@ import { estimateBaselineSeriesProbability } from "@/lib/model/simulator";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 
 export const metadata: Metadata = {
-  title: "Playoff Pulse — A Traceable NBA Playoff Forecasting Experiment",
+  title: "The 2026 retrospective: a traceable NBA playoff forecasting experiment",
   description:
     "A retrospective on building and evaluating an NBA playoff forecasting system: rolling-origin evaluation, bootstrap comparisons, overconfidence analysis, and rejected model changes.",
 };

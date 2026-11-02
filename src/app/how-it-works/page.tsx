@@ -14,7 +14,7 @@ import {
 } from "@/lib/season/params";
 
 export const metadata: Metadata = {
-  title: "How the live forecast works | Playoff Pulse",
+  title: "How it works",
   description:
     "The rating model, the injury adjustment from the NBA injury report, the two seals per game, the market reference and the validation results behind the live NBA forecasts, including what failed.",
 };

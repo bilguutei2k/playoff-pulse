@@ -13,7 +13,7 @@ import type { SeasonPhase } from "@/lib/season/types";
 import { formatShortDay, formatStampEt } from "@/lib/utils/dates";
 
 export const metadata: Metadata = {
-  title: "NBA playoff and title odds | Playoff Pulse",
+  title: "NBA playoff and title odds",
   description:
     "Playoff, conference and championship chances for all 30 NBA teams from 20,000 simulated seasons that carry current injuries, updated after games finish and as the NBA injury report changes.",
 };

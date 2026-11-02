@@ -8,6 +8,8 @@ import externalBenchmark538 from "../../../docs/backtest/external-benchmark-538.
 import { formatNumber, formatSigned } from "@/lib/utils/format";
 import { ResearchEvidence } from "@/components/forecast/ResearchEvidence";
 
+export const metadata = { title: "2026 methodology" };
+
 type SectionTable = {
   type: "table";
   headers: string[];
