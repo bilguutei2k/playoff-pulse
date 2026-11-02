@@ -1,5 +1,7 @@
 import { ScenarioLab } from "@/components/forecast/ScenarioLab";
 
+export const metadata = { title: "2026 scenario lab" };
+
 export default function LabPage() {
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">

@@ -1,7 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { LIVE_MODEL_VERSION, LIVE_PARAMS } from "@/lib/season/params";
+import {
+  INJURY_PARAMS,
+  INJURY_STATUS_TABLE,
+  INJURY_SURVIVAL,
+  LIVE_MODEL_VERSION,
+  LIVE_PARAMS,
+  REFERENCE_MODEL_VERSION,
+} from "@/lib/season/params";
 import { createFilterState, toRatingState } from "@/lib/season/ratings";
 import { buildSlateView } from "@/lib/season/slate";
+import { upgradeLiveState } from "@/lib/season/state-schema";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import type { LiveState, ScoreboardRow, SealRow, SeasonForecast, SeasonGame } from "@/lib/season/types";
 
@@ -11,10 +19,11 @@ const DATE = "2026-11-01";
 
 function state(seals: Record<string, SealRow> = {}, generatedAt = "2026-11-01T20:00:00Z"): LiveState {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     season: 2027,
     seasonLabel: "2026-27",
     modelVersion: LIVE_MODEL_VERSION,
+    referenceModelVersion: REFERENCE_MODEL_VERSION,
     paramsHash: "p",
     generatedAt,
     scheduleRefreshedEtDate: DATE,
@@ -24,12 +33,18 @@ function state(seals: Record<string, SealRow> = {}, generatedAt = "2026-11-01T20
     ratings: toRatingState(createFilterState(LIVE_PARAMS)),
     teamGameDates: {},
     params: LIVE_PARAMS,
+    injury: { params: INJURY_PARAMS, statusTable: INJURY_STATUS_TABLE, survival: INJURY_SURVIVAL },
+    availability: { reportAt: "2026-11-01T16:45", stale: false, missing: false },
+    absences: [],
+    absencePoints: {},
+    currentRatings: {},
     slateEtDate: DATE,
     nextSlateEtDate: DATE,
     ledgerStartedAt: "2026-11-01T12:00:00Z",
-    seals,
+    seals: Object.fromEntries(Object.entries(seals).map(([id, row]) => [id, [row]])),
     forecast: {} as SeasonForecast,
     record: {} as LiveState["record"],
+    records: {},
     history: [],
     notes: [],
   };
@@ -66,7 +81,7 @@ const seal: SealRow = {
   etDate: DATE,
   tipUtc: "2026-11-01T23:30:00Z",
   issuedAt: "2026-11-01T12:00:00Z",
-  modelVersion: LIVE_MODEL_VERSION,
+  modelVersion: REFERENCE_MODEL_VERSION,
   paramsHash: "p",
   ratingsHash: "r",
   homeId: A,
@@ -237,5 +252,137 @@ describe("slate view", () => {
   it("flags published data older than the stale limit", () => {
     expect(view([row()], false, "2026-11-01T20:00:00Z").stale).toBe(false);
     expect(view([row()], false, "2026-10-31T20:00:00Z").stale).toBe(true);
+  });
+});
+
+const morning: SealRow = {
+  ...seal,
+  modelVersion: LIVE_MODEL_VERSION,
+  sealKind: "morning",
+  homeWinProbability: 0.66,
+  expectedMargin: 4.2,
+  reportAt: "2026-11-01T06:45",
+  availabilityStale: false,
+  availabilityMissing: false,
+  absence: { home: 4, away: 0 },
+  absencePoints: { home: 1.6, away: 0 },
+  drivers: { home: [{ athleteId: "p1", name: "Paolo Banchero", status: "O", points: 1.6 }], away: [] },
+  referenceModelVersion: REFERENCE_MODEL_VERSION,
+  referenceHomeWinProbability: 0.7,
+};
+const final: SealRow = {
+  ...morning,
+  sealKind: "final",
+  issuedAt: "2026-11-01T22:40:00Z",
+  homeWinProbability: 0.61,
+  reportAt: "2026-11-01T17:30",
+  availabilityStale: true,
+};
+
+function withRows(rows: SealRow[], overrides: Partial<LiveState> = {}): LiveState {
+  return { ...state(), seals: { g: rows }, ...overrides };
+}
+
+describe("slate view with two seals", () => {
+  it("shows the morning seal with its absences until a final seal exists", () => {
+    const game = buildSlateView({ state: withRows([seal, morning]), etDate: DATE, nowIso: NOW, rows: [row()], injuries: [] }).games[0];
+    expect(game.forecast?.sealKind).toBe("morning");
+    expect(game.forecast?.modelVersion).toBe(LIVE_MODEL_VERSION);
+    expect(game.forecast?.homeWinProbability).toBe(0.66);
+    expect(game.forecast?.absencePoints).toEqual({ home: 1.6, away: 0 });
+    expect(game.forecast?.drivers?.home[0].name).toBe("Paolo Banchero");
+    expect(game.forecast?.reportAt).toBe("2026-11-01T06:45");
+    expect(game.forecast?.referenceHomeWinProbability).toBe(0.7);
+    expect(game.noFinalSeal).toBe(false);
+  });
+
+  it("prefers the final seal and carries its report flags", () => {
+    const game = buildSlateView({ state: withRows([seal, morning, final]), etDate: DATE, nowIso: NOW, rows: [row()], injuries: [] }).games[0];
+    expect(game.forecast?.sealKind).toBe("final");
+    expect(game.forecast?.homeWinProbability).toBe(0.61);
+    expect(game.forecast?.availabilityStale).toBe(true);
+    expect(game.forecast?.reportAt).toBe("2026-11-01T17:30");
+  });
+
+  it("labels a game that tipped with only a morning seal as having no final seal", () => {
+    const tipped = row({ status: "in-progress", homeScore: 10, awayScore: 8 });
+    const without = buildSlateView({ state: withRows([morning]), etDate: DATE, nowIso: NOW, rows: [tipped], injuries: [] }).games[0];
+    expect(without.noFinalSeal).toBe(true);
+    expect(without.missed).toBe(false);
+    const withFinal = buildSlateView({ state: withRows([morning, final]), etDate: DATE, nowIso: NOW, rows: [tipped], injuries: [] }).games[0];
+    expect(withFinal.noFinalSeal).toBe(false);
+  });
+
+  it("falls back to the v1 seal for a game sealed before v2, without an absence term", () => {
+    const game = view([row()], true).games[0];
+    expect(game.forecast?.modelVersion).toBe(REFERENCE_MODEL_VERSION);
+    expect(game.forecast?.absencePoints).toBeNull();
+    expect(game.forecast?.drivers).toBeNull();
+    expect(game.noFinalSeal).toBe(false);
+  });
+
+  it("applies the published absences to a provisional number and names them", () => {
+    const healthy = buildSlateView({ state: state(), etDate: DATE, nowIso: NOW, rows: [row()], injuries: [] }).games[0];
+    const hurt = buildSlateView({
+      state: {
+        ...state(),
+        absencePoints: { [A]: 3 },
+        absences: [
+          { teamId: A, athleteId: "p2", name: "Second Player", status: "Q" as const, reason: "Ankle", class: "short" as const, gamesMissed: 1, expectedGames: 4.73, points: 1 },
+          { teamId: A, athleteId: "p1", name: "First Player", status: null, reason: null, class: "long" as const, gamesMissed: 9, expectedGames: 20.81, points: 2 },
+        ],
+      },
+      etDate: DATE,
+      nowIso: NOW,
+      rows: [row()],
+      injuries: [],
+    }).games[0];
+    expect(hurt.forecast?.source).toBe("provisional");
+    expect(hurt.forecast?.homeWinProbability).toBeLessThan(healthy.forecast?.homeWinProbability ?? 0);
+    expect(hurt.forecast?.expectedMargin).toBeCloseTo((healthy.forecast?.expectedMargin ?? 0) - 3, 9);
+    expect(hurt.forecast?.absencePoints).toEqual({ home: 3, away: 0 });
+    expect(hurt.forecast?.drivers?.home.map((driver) => driver.name)).toEqual(["First Player", "Second Player"]);
+    expect(hurt.forecast?.reportAt).toBe("2026-11-01T16:45");
+    expect(hurt.forecast?.sealKind).toBeNull();
+  });
+
+  it("keeps the displayed seal when ESPN is unavailable", () => {
+    const result = buildSlateView({ state: withRows([seal, morning, final]), etDate: DATE, nowIso: NOW, rows: null, injuries: null });
+    expect(result.games).toHaveLength(1);
+    expect(result.games[0].forecast?.sealKind).toBe("final");
+    expect(result.modelVersion).toBe(LIVE_MODEL_VERSION);
+  });
+});
+
+describe("reading a state published before v2", () => {
+  const legacy = {
+    ...state(),
+    schemaVersion: 1,
+    modelVersion: REFERENCE_MODEL_VERSION,
+    seals: { g: seal },
+    forecast: { teams: [{ teamId: A, rating: 2.5 }] } as SeasonForecast,
+    record: { modelVersion: REFERENCE_MODEL_VERSION, sealed: 1, scored: 0, pending: 1, missed: 0, incomplete: 0, brier: null, logLoss: null, accuracy: null, baselineBrier: null, smallSample: true },
+  } as unknown;
+
+  it("upgrades it to schema 2 and says it has no injury model", () => {
+    const upgraded = upgradeLiveState(legacy);
+    expect(upgraded.schemaVersion).toBe(2);
+    expect(upgraded.injury).toBeNull();
+    expect(upgraded.availability.missing).toBe(true);
+    expect(upgraded.seals.g).toEqual([seal]);
+    expect(upgraded.records[REFERENCE_MODEL_VERSION].noFinalSeal).toBeNull();
+    expect(upgraded.currentRatings[A]).toBe(2.5);
+  });
+
+  it("gives a provisional number without an absence term", () => {
+    const upgraded = upgradeLiveState(legacy);
+    const game = buildSlateView({ state: { ...upgraded, seals: {} }, etDate: DATE, nowIso: NOW, rows: [row()], injuries: [] }).games[0];
+    expect(game.forecast?.source).toBe("provisional");
+    expect(game.forecast?.absencePoints).toBeNull();
+    expect(game.forecast?.availabilityMissing).toBe(false);
+  });
+
+  it("rejects an unknown schema", () => {
+    expect(() => upgradeLiveState({ schemaVersion: 3 })).toThrow(/schema/);
   });
 });

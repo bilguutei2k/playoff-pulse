@@ -20,7 +20,8 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 | 1987–2026 rolling origin | Models fitted only on prior seasons after a three-season initialization window | Temporally held out, but not a preregistered prospective track record |
 | 2027+ prospective issuance | Immutable forecasts issued before a declared game start | No observations exist yet |
 | Live model validation (2016-2022, 2023-2026) | Walk-forward reconstruction of regular-season games with frozen parameters; 2023-2026 informed the choice of model form | Not a prospective record |
-| Live sealed ledger (2026-27 on) | Forecasts sealed before tip and scored afterward | The only prospective record; small-sample below 500 scored games |
+| Live injury test (2024-25, 2025-26) | The registered, run-once test of the v2 injury adjustment against v1 on identical games; fitted on 2021-22 to 2023-24 | Not prospective: 2025-26 was seen when v1's form was chosen, and two seasons is thin |
+| Live sealed ledger (2026-27 on) | Forecasts sealed before tip and scored afterward, per model version | The only prospective record; small-sample below 500 scored games |
 
 ## Supported (may be stated plainly)
 
@@ -137,14 +138,16 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 - Any claim that the published baseline Brier validates the scenario overlay.
 - Official-NBA-data sourcing or betting utility.
 - Validated individual coverage for sensitivity intervals.
-- Measured historical injury benefit.
+- Measured historical injury benefit for the 2026 archive or its overlay. (The live v2
+  injury test is governed by the live section below.)
 - Prospective performance before 2027 observations exist.
 
 ## Not measured (open gaps)
 
 - Performance on immutable, contemporaneously issued 2027+ forecasts.
-- Historical injury/absence effects until sourced point-in-time coverage is
-  material.
+- Historical injury/absence effects in the 2026 archive until sourced
+  point-in-time coverage is material. (The live model's injury test is in the live
+  section below.)
 - Production-equivalent lagged-rotation effects: zero candidate or eligible
   timestamped player-game-log observations and zero completely covered series.
   Clause-level instrumentation records zero rejections for every clause; the
@@ -167,11 +170,14 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 4. **Failure narratives**: only inputs recorded in the pregame snapshot may be
    cited; no retrospective storylines.
 
-## Live forecast (model `live-2026.27-v1`)
+## Live forecast (model `live-2026.27-v2`; `live-2026.27-v1` continues)
 
 Sources: `docs/live/registration.md`, `docs/live/evaluation-games.json`,
-`docs/live/evaluation-season.json`, and `data/live/ledger/`. These claims appear on `/` (games and
-track record), `/odds` (season forecast) and `/how-it-works` (methodology).
+`docs/live/evaluation-season.json`, `docs/live/injury-fit.json`,
+`docs/live/evaluation-injury.json`, and `data/live/ledger/`. These claims appear on `/` (games and
+track record), `/odds` (season forecast) and `/how-it-works` (methodology). v2 is v1 with the
+injury adjustment; every rating parameter is shared, so the v1 claims below still describe the
+rating model. Each version's sealed record is reported separately.
 
 **May be stated plainly, with the numbers:**
 
@@ -184,25 +190,50 @@ track record), `/odds` (season forecast) and `/how-it-works` (methodology).
 - The tiebreak code reproduced all 100 actual seeds, 2021-22 to 2025-26.
 - In-game estimates passed reliability and slope checks at Q1, Q2 and Q3 ends on 2025-26 games not
   used to fit them.
+- v2 injury test, gated by `docs/live/evaluation-injury.json` (registered before any test-season
+  number, run once): on 2,460 regular-season games in 2024-25 and 2025-26, Brier 0.2009 against
+  0.2061 for v1 on the same games, a paired difference of -0.0051 with a 95% interval of -0.0081 to
+  -0.0022 (bootstrap over 327 game dates), negative in each season (-0.0057 and -0.0046). Log loss
+  0.5856 against 0.5991; calibration slope 0.875 against 0.886, within the registered 0.02. The
+  season simulator stayed within its registered tolerances at Dec 1, Feb 1 and Apr 1. Every use
+  must carry the two disclosures below about 2025-26 and the market.
 
 **Required disclosures:**
 
-- The model does not account for injuries.
-- Game forecasts are mildly overconfident: calibration slope 0.860, outside the registered 0.90 to
-  1.10 range. The permitted fix changed nothing. No further correction was tuned on test seasons.
+- What v2 models and what it does not: listed players on the NBA injury report, by their
+  expected absence weighted by status, with full-strength ratings, a final seal in the hour
+  before tip, and return estimates in the season simulation from the survival table only. It does
+  not simulate unknown future injuries, redistribute minutes, or model matchups. ESPN's return
+  dates are stored and never used. v1 does not account for injuries, and any number from v1 must
+  say so.
+- The v2 test is conservative and thin: 2025-26 was among the seasons seen when v1's form was
+  chosen, which favors v1, and only two test seasons exist. The sealed ledger is the real test.
+- In the test, the market remained ahead on the 978 games with a stored ESPN spread (its timing
+  unknown): market 0.1965, v2 0.2008, v1 0.2070.
+- The test approximated live statuses from stored reports; the live season odds read the latest
+  report every run.
+- Game forecasts are mildly overconfident: v1's calibration slope was 0.860 on its gate seasons,
+  outside the registered 0.90 to 1.10 range, and v2's was 0.875 on the test seasons. The permitted
+  fix changed nothing. No further correction was tuned on test seasons.
 - Midseason playoff odds failed the registered reliability check at opening night, Dec 1 and Feb 1,
   in small bins, and are not claimed to be well calibrated. On 2023-2026 they did not beat a
   win-percentage baseline on Dec 1 and Feb 1.
 - In-game values between quarter ends, including the final minutes, are unvalidated interpolation.
-- The ledger must always show missed seals and seals with incomplete inputs. Results below 500 scored
-  games carry a small-sample label.
+- The ledger must always show missed seals, games with no final seal (scored on their morning
+  seal) and seals with incomplete inputs, and seals made with a stale or missing injury report say
+  so. Results below 500 scored games carry a small-sample label.
 
 **Never claim:**
 
 - Title-odds skill. Too few champions exist to measure it.
 - A playoff edge over the SRS + home reference. Series Brier on 2016-2022 was 0.1837 against 0.1712,
   with the interval crossing zero.
-- Any claim about the model against the market until at least 500 scored games. By the owner's
-  decision of 2026-11-01, the market's vig-free win probability is displayed per game as a reference
-  only, labeled "Market" with its provider named; it is never a model input and is not scored.
-- Betting value of any kind, or official NBA data.
+- Any claim about either model against the market, including that v2 narrows a gap to it, until at
+  least 500 scored games. By the owner's decision of 2026-11-01, the market's vig-free win
+  probability is displayed per game as a reference only, labeled "Market" with its provider named;
+  it is never a model input and is not scored.
+- That v2 beats v1 prospectively, before the sealed ledger shows it on at least 500 scored games
+  with the paired reference stored on each v2 seal.
+- That the injury test is a prospective result, or that return estimates use reported return dates.
+- Betting value of any kind, official NBA data, or any affiliation with the NBA. The injury report
+  PDFs are the NBA's public documents, read unofficially.

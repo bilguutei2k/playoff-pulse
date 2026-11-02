@@ -1,100 +1,137 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. Light theme only for now; every color is a variable so a dark
- * theme can be added later by redefining this block under a theme selector.
- * Text colors are checked for WCAG AA (4.5:1) on the white surface and the page.
+ * 548 design tokens. Light theme only; every color is a variable so a dark theme can
+ * be added later by redefining this block under a theme selector.
+ *
+ * Contrast on the page (#faf9f7) and panels (#ffffff), WCAG 2.1:
+ *   ink 17.5 / 18.5, ink-2 6.5 / 6.9, ink-3 5.3 / 5.6, market 7.2 / 7.6.
+ *   ink-4 (#8a8782) is 3.4: decoration only, never text.
+ *   pulse (#ff5a1f) is 3.0: the brand dot, active marks and the live dot, never text.
+ *   pulse-ink (#b8400f) 5.3: the rare orange word. pulse-ring (#f5521a) 3.3: focus.
+ * Heat steps 1-5 carry ink text (7.9:1 or better); steps 6-8 carry white (4.8:1 or
+ * better). The jump between 5 and 6 sits at 60%, where the text flips.
  */
-:root {
-  color-scheme: light;
+@theme {
+  --color-page: #faf9f7;
+  --color-panel: #ffffff;
+  --color-wash: #f5f3ef;
+  --color-wash-2: #eeebe6;
+  --color-line: #e6e3de;
+  --color-line-strong: #d4d0c9;
 
-  /* Surfaces */
-  --color-bg-primary: #f6f7f9; /* page */
-  --color-bg-secondary: #eef0f3;
-  --color-panel-primary: #ffffff; /* cards, tables */
-  --color-panel-secondary: #f6f7f9;
-  --color-panel-tertiary: #eceef2;
+  --color-ink: #121417;
+  --color-ink-2: #5c5a57;
+  --color-ink-3: #6b6863;
+  --color-ink-4: #8a8782;
 
-  /* Lines */
-  --color-border-subtle: #e4e7ec;
-  --color-border-strong: #d0d5dd;
-  --color-shadow-ink: rgba(16, 24, 40, 0.04);
+  --color-pulse: #ff5a1f;
+  --color-pulse-ink: #b8400f;
+  --color-pulse-ring: #f5521a;
+  --color-pulse-wash: #fff1ea;
 
-  /* Text: 17.8, 10.5, 6.5 and 5.0 to 1 on white */
-  --color-text-primary: #101828;
-  --color-text-secondary: #344054;
-  --color-text-muted: #545f71;
-  --color-text-faint: #667085;
+  --color-market: #4b5563;
+  --color-teal: #0b6e55;
+  --color-good: #0b6e55;
+  --color-bad: #b42318;
+  --color-bad-wash: #fdf0ee;
+  --color-warn: #8a4b00;
+  --color-warn-wash: #fdf3e1;
+  --color-warn-line: #f0d9a8;
 
-  /* One accent for interactive elements: 6.0 to 1 on white */
-  --color-accent: #175cd3;
-  --color-accent-hover: #1849a9;
-  --color-accent-soft: #eff4ff;
-  --color-accent-text: #ffffff;
+  --color-heat-1: #eff4f2;
+  --color-heat-2: #dbe7e2;
+  --color-heat-3: #c2d6ce;
+  --color-heat-4: #a7c5b9;
+  --color-heat-5: #8ab2a3;
+  --color-heat-6: #377f68;
+  --color-heat-7: #25765e;
+  --color-heat-8: #0b6e55;
 
-  /* Status: always paired with an icon or a label */
-  --color-info: #175cd3;
-  --color-info-soft: #eff4ff;
-  --color-success: #067647;
-  --color-success-soft: #067647;
-  --color-success-bg: #ecfdf3;
-  --color-danger: #b42318;
-  --color-danger-soft: #d92d20;
-  --color-danger-bg: #fef3f2;
-  --color-warning: #b54708;
-  --color-warning-bg: #fffaeb;
-  --color-live: #c4320a;
-  --color-live-bg: #fff4ed;
-  --color-live-border: #f9dbaf;
-
-  /*
-   * Sequential heat for probabilities: one blue hue, light to dark, evenly spaced in
-   * OKLCH lightness. Primary text stays at 7:1 or better on every step.
-   */
-  --heat-1: #eef5fe;
-  --heat-2: #d0e1f8;
-  --heat-3: #b2cef1;
-  --heat-4: #95baea;
-  --heat-5: #78a6e1;
-
-  /* Archive-only tokens, kept so the 2026 pages render in the new system */
-  --color-stat-bg: #eef0f3;
-  --color-stat-mid: #d0e1f8;
-  --color-court: #9a6b2f;
-  --color-court-soft: #c9a36a;
-  --overlay-accent-soft: rgba(23, 92, 211, 0.06);
-  --overlay-danger-soft: rgba(180, 35, 24, 0.06);
-  --overlay-info-soft: rgba(23, 92, 211, 0.1);
-  --overlay-row-hover: rgba(16, 24, 40, 0.03);
-  --overlay-selection: rgba(23, 92, 211, 0.18);
-
-  /* Type */
-  --font-sans-stack: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-pixel: var(--font-sans-stack);
-  --font-code-stack: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-
-  /* Shape */
-  --radius-sm-retro: 6px;
-  --radius-md-retro: 10px;
-  --radius-lg-retro: 12px;
-
-  --background: var(--color-bg-primary);
-  --foreground: var(--color-text-primary);
-  --muted: var(--color-text-muted);
-  --panel: var(--color-panel-primary);
-  --line: var(--color-border-subtle);
-  --ink-soft: var(--color-text-secondary);
-  --accent: var(--color-accent);
-  --accent-2: var(--color-danger);
-  --accent-3: var(--color-info);
+  --radius-card: 10px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans-stack);
-  --font-mono: var(--font-code-stack);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+    monospace;
+  --font-display: var(--font-archivo-black), "Archivo Black", var(--font-archivo), sans-serif;
+  --color-background: var(--color-page);
+  --color-foreground: var(--color-ink);
+}
+
+/* Legacy names, kept so the 2026 archive pages render in the new system. */
+:root {
+  color-scheme: light;
+
+  --color-bg-primary: var(--color-page);
+  --color-bg-secondary: var(--color-wash);
+  --color-panel-primary: var(--color-panel);
+  --color-panel-secondary: var(--color-wash);
+  --color-panel-tertiary: var(--color-wash-2);
+  --color-border-subtle: var(--color-line);
+  --color-border-strong: var(--color-line-strong);
+  --color-shadow-ink: rgba(18, 20, 23, 0.04);
+
+  --color-text-primary: var(--color-ink);
+  --color-text-secondary: var(--color-ink-2);
+  --color-text-muted: var(--color-ink-3);
+  --color-text-faint: var(--color-ink-3);
+
+  /* The archive uses its accent as text, so it takes the AA-safe orange. */
+  --color-accent: var(--color-pulse-ink);
+  --color-accent-hover: #963409;
+  --color-accent-soft: var(--color-pulse-wash);
+  --color-accent-text: #ffffff;
+
+  --color-info: var(--color-market);
+  --color-info-soft: var(--color-wash);
+  --color-success: var(--color-good);
+  --color-success-soft: var(--color-good);
+  --color-success-bg: #eaf3ef;
+  --color-danger: var(--color-bad);
+  --color-danger-soft: #d92d20;
+  --color-danger-bg: var(--color-bad-wash);
+  --color-warning: var(--color-warn);
+  --color-warning-bg: var(--color-warn-wash);
+  --color-live: var(--color-pulse-ink);
+  --color-live-bg: var(--color-pulse-wash);
+  --color-live-border: #f6c9b3;
+
+  --heat-1: var(--color-heat-1);
+  --heat-2: var(--color-heat-2);
+  --heat-3: var(--color-heat-3);
+  --heat-4: var(--color-heat-4);
+  --heat-5: var(--color-heat-5);
+
+  --color-stat-bg: var(--color-wash-2);
+  --color-stat-mid: var(--color-heat-2);
+  --color-court: #9a6b2f;
+  --color-court-soft: #c9a36a;
+  --overlay-accent-soft: rgba(255, 90, 31, 0.06);
+  --overlay-danger-soft: rgba(180, 35, 24, 0.06);
+  --overlay-info-soft: rgba(75, 85, 99, 0.08);
+  --overlay-row-hover: rgba(18, 20, 23, 0.025);
+  --overlay-selection: rgba(255, 90, 31, 0.2);
+
+  --font-sans-stack: var(--font-sans);
+  --font-pixel: var(--font-sans);
+  --font-code-stack: var(--font-mono);
+
+  --radius-sm-retro: 6px;
+  --radius-md-retro: 8px;
+  --radius-lg-retro: var(--radius-card);
+
+  --background: var(--color-page);
+  --foreground: var(--color-ink);
+  --muted: var(--color-ink-3);
+  --panel: var(--color-panel);
+  --line: var(--color-line);
+  --ink-soft: var(--color-ink-2);
+  --accent: var(--color-pulse-ink);
+  --accent-2: var(--color-bad);
+  --accent-3: var(--color-market);
 }
 
 @layer base {
@@ -108,36 +145,66 @@
   }
 
   body {
-    background: var(--color-bg-primary);
-    color: var(--color-text-primary);
-    font-family: var(--font-sans-stack);
-    font-feature-settings: "cv11" 1;
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
     text-rendering: optimizeLegibility;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-pulse-ring);
     outline-offset: 2px;
+    border-radius: 3px;
   }
 
   ::selection {
     background: var(--overlay-selection);
-    color: var(--color-text-primary);
+    color: var(--color-ink);
   }
 }
 
 @layer components {
-  /* Figures that line up in columns. */
+  /* Every figure in a column, card or chart: mono with tabular numerals. */
+  .num,
   .tabular,
   .pp-number {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum" 1, "zero" 0;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0;
   }
 
-  /* Page container shared by the header, footer and every page. */
+  /* A large standalone figure: mono, proportional spacing reads tighter at size. */
+  .figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: proportional-nums;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  /* Small-caps mono label above headings, on table heads and on chips. */
+  .kicker {
+    color: var(--color-ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .headline {
+    color: var(--color-ink);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
   .pp-container {
     margin-inline: auto;
-    max-width: 72rem;
+    max-width: 76rem;
     padding-inline: 1rem;
     width: 100%;
   }
@@ -149,79 +216,126 @@
   }
 
   .pp-link {
-    color: var(--color-accent);
+    color: var(--color-ink);
     font-weight: 500;
     text-decoration: underline;
-    text-decoration-color: rgba(23, 92, 211, 0.35);
+    text-decoration-color: var(--color-pulse);
+    text-decoration-thickness: 1.5px;
     text-underline-offset: 3px;
   }
 
   .pp-link:hover {
-    color: var(--color-accent-hover);
-    text-decoration-color: currentColor;
+    text-decoration-thickness: 2.5px;
   }
+
+  .panel {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  /* A notice: stale data, missing scores, an explanation that must stay visible. */
+  .notice {
+    background: var(--color-warn-wash);
+    border: 1px solid var(--color-warn-line);
+    border-radius: 8px;
+    color: var(--color-ink);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px 14px;
+  }
+
+  .notice-quiet {
+    background: var(--color-wash);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    color: var(--color-ink-2);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px 14px;
+  }
+
+  /* Probability heat: the value always prints; the fill repeats it as magnitude. */
+  .heat {
+    border-radius: 4px;
+    color: var(--color-ink);
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    min-width: 3.25rem;
+    padding: 4px 6px;
+    text-align: center;
+  }
+
+  .heat-0 {
+    color: var(--color-ink-3);
+  }
+
+  .heat-1 { background: var(--color-heat-1); }
+  .heat-2 { background: var(--color-heat-2); }
+  .heat-3 { background: var(--color-heat-3); }
+  .heat-4 { background: var(--color-heat-4); }
+  .heat-5 { background: var(--color-heat-5); }
+  .heat-6 { background: var(--color-heat-6); color: #ffffff; }
+  .heat-7 { background: var(--color-heat-7); color: #ffffff; }
+  .heat-8 { background: var(--color-heat-8); color: #ffffff; font-weight: 600; }
 
   /* ------------------------------------------------------------------------- */
   /* Shared component classes. The 2026 archive uses these too.                */
   /* ------------------------------------------------------------------------- */
 
   .pp-card {
-    background: var(--color-panel-primary);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-lg-retro);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
     overflow: hidden;
   }
 
   .pp-section-head {
-    border-bottom: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-line);
     min-height: 44px;
     padding: 12px 16px;
   }
 
-  /* A small label above a heading. Sentence case, never uppercase. */
   .pp-kicker {
-    color: var(--color-text-muted);
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0;
+    color: var(--color-ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     line-height: 1.4;
-    text-transform: none;
+    text-transform: uppercase;
   }
 
   .pp-pill {
     align-items: center;
-    background: var(--color-panel-primary);
-    border: 1px solid var(--color-border-strong);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-strong);
     border-radius: 999px;
-    color: var(--color-text-secondary);
+    color: var(--color-ink-2);
     display: inline-flex;
     font-size: 12px;
     font-weight: 500;
     gap: 4px;
-    letter-spacing: 0;
     line-height: 1.4;
     padding: 2px 8px;
-    text-transform: none;
   }
 
   .pp-button {
     align-items: center;
-    background: var(--color-panel-primary);
-    border: 1px solid var(--color-border-strong);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-strong);
     border-radius: 8px;
-    color: var(--color-text-secondary);
+    color: var(--color-ink-2);
     cursor: pointer;
     display: inline-flex;
     font-size: 14px;
     font-weight: 500;
     gap: 8px;
     justify-content: center;
-    letter-spacing: 0;
     line-height: 1.25;
     min-height: 36px;
     padding: 7px 12px;
-    text-transform: none;
     transition:
       background-color 120ms ease,
       border-color 120ms ease,
@@ -229,40 +343,39 @@
   }
 
   .pp-button:hover {
-    background: var(--color-panel-secondary);
-    border-color: var(--color-border-strong);
-    color: var(--color-text-primary);
+    background: var(--color-wash);
+    color: var(--color-ink);
   }
 
   .pp-button:disabled {
-    color: var(--color-text-faint);
+    color: var(--color-ink-3);
     cursor: not-allowed;
     opacity: 0.6;
   }
 
   .pp-button-primary,
   .pp-button-active {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: var(--color-accent-text);
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #ffffff;
   }
 
   .pp-button-primary:hover,
   .pp-button-active:hover {
-    background: var(--color-accent-hover);
-    border-color: var(--color-accent-hover);
-    color: var(--color-accent-text);
+    background: #2a2d31;
+    border-color: #2a2d31;
+    color: #ffffff;
   }
 
   .pp-button-danger {
     border-color: rgba(180, 35, 24, 0.4);
-    color: var(--color-danger);
+    color: var(--color-bad);
   }
 
   .pp-button-danger:hover {
-    background: var(--color-danger-bg);
-    border-color: var(--color-danger);
-    color: var(--color-danger);
+    background: var(--color-bad-wash);
+    border-color: var(--color-bad);
+    color: var(--color-bad);
   }
 
   .pp-button-compact {
@@ -279,10 +392,10 @@
   }
 
   .pp-select {
-    background: var(--color-panel-primary);
-    border: 1px solid var(--color-border-strong);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-strong);
     border-radius: 8px;
-    color: var(--color-text-primary);
+    color: var(--color-ink);
     font-size: 14px;
     min-height: 36px;
     padding: 6px 10px;
@@ -290,8 +403,8 @@
   }
 
   .pp-action-tile {
-    background: var(--color-panel-primary);
-    border: 1px solid var(--color-border-subtle);
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
     border-radius: 8px;
     cursor: pointer;
     transition:
@@ -300,8 +413,8 @@
   }
 
   .pp-action-tile:hover {
-    background: var(--color-panel-secondary);
-    border-color: var(--color-border-strong);
+    background: var(--color-wash);
+    border-color: var(--color-line-strong);
   }
 
   .pp-table {
@@ -313,33 +426,34 @@
   }
 
   .pp-table th {
-    border-bottom: 1px solid var(--color-border-strong);
-    color: var(--color-text-muted);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0;
+    border-bottom: 1px solid var(--color-line-strong);
+    color: var(--color-ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
     line-height: 1.3;
     padding: 10px 12px;
     text-align: left;
-    text-transform: none;
+    text-transform: uppercase;
     white-space: nowrap;
   }
 
   .pp-table tbody th {
-    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
     font-size: 14px;
     font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .pp-table td {
-    border-bottom: 1px solid var(--color-border-subtle);
-    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink-2);
     padding: 10px 12px;
     vertical-align: middle;
-  }
-
-  .pp-table tbody th {
-    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   .pp-table tbody tr:last-child td,
@@ -357,58 +471,30 @@
     text-align: right;
   }
 
-  /* Probability cells: the value always prints; the tint repeats it as magnitude. */
+  /* Archive heat classes, mapped onto the same ramp. */
   .pp-heat {
-    border-radius: 6px;
-    color: var(--color-text-primary);
+    border-radius: 4px;
+    color: var(--color-ink);
     display: inline-block;
+    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     min-width: 48px;
     padding: 3px 7px;
     text-align: right;
   }
 
-  .pp-heat-zero {
-    color: var(--color-text-faint);
-  }
-
-  .pp-heat-1 {
-    background: var(--heat-1);
-  }
-
-  .pp-heat-2 {
-    background: var(--heat-2);
-  }
-
-  .pp-heat-3 {
-    background: var(--heat-3);
-  }
-
-  .pp-heat-4 {
-    background: var(--heat-4);
-  }
-
-  .pp-heat-5 {
-    background: var(--heat-5);
-    font-weight: 600;
-  }
-
-  /* Archive heat classes map onto the same ramp. */
-  .pp-heat-low {
-    background: var(--heat-1);
-  }
-
-  .pp-heat-mid {
-    background: var(--heat-2);
-  }
-
-  .pp-heat-high {
-    background: var(--heat-4);
-    font-weight: 600;
-  }
+  .pp-heat-zero { color: var(--color-ink-3); }
+  .pp-heat-1 { background: var(--color-heat-1); }
+  .pp-heat-2 { background: var(--color-heat-2); }
+  .pp-heat-3 { background: var(--color-heat-3); }
+  .pp-heat-4 { background: var(--color-heat-4); }
+  .pp-heat-5 { background: var(--color-heat-6); color: #ffffff; font-weight: 600; }
+  .pp-heat-low { background: var(--color-heat-1); }
+  .pp-heat-mid { background: var(--color-heat-3); }
+  .pp-heat-high { background: var(--color-heat-6); color: #ffffff; font-weight: 600; }
 
   .pp-probbar {
-    background: var(--color-panel-tertiary);
+    background: var(--color-wash-2);
     border-radius: 999px;
     display: block;
     height: 8px;
@@ -417,20 +503,21 @@
   }
 
   .pp-probbar-fill {
-    background: var(--color-accent);
+    background: var(--color-ink);
     border-radius: 999px;
     display: block;
     height: 100%;
   }
 
   .pp-team-badge {
-    background: var(--color-panel-secondary);
-    border: 1px solid var(--color-border-strong);
+    background: var(--color-wash);
+    border: 1px solid var(--color-line-strong);
     border-radius: 6px;
-    color: var(--color-text-primary);
+    color: var(--color-ink);
     display: inline-flex;
+    font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
     justify-content: center;
     letter-spacing: 0.02em;
     line-height: 1;
@@ -440,67 +527,65 @@
   }
 
   .pp-team-badge[data-team] {
-    background: var(--team-bg, var(--color-panel-secondary));
-    border-color: var(--team-border, var(--color-border-strong));
-    color: var(--team-ink, var(--color-text-primary));
+    background: var(--team-bg, var(--color-wash));
+    border-color: var(--team-border, var(--color-line-strong));
+    color: var(--team-ink, var(--color-ink));
   }
 
-  .pp-team-badge[data-team="NYK"] {
-    --team-bg: #006bb6;
-    --team-border: #006bb6;
-    --team-ink: #ffffff;
-  }
+  .pp-team-badge[data-team="NYK"] { --team-bg: #006bb6; --team-border: #006bb6; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="DET"] { --team-bg: #1d42ba; --team-border: #1d42ba; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="CLE"] { --team-bg: #6f263d; --team-border: #6f263d; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="PHI"] { --team-bg: #006bb6; --team-border: #006bb6; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="OKC"] { --team-bg: #007ac1; --team-border: #007ac1; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="LAL"] { --team-bg: #552583; --team-border: #552583; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="MIN"] { --team-bg: #0c2340; --team-border: #0c2340; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="SAS"] { --team-bg: #c4ced4; --team-border: #c4ced4; --team-ink: #111111; }
 
-  .pp-team-badge[data-team="DET"] {
-    --team-bg: #1d42ba;
-    --team-border: #1d42ba;
-    --team-ink: #ffffff;
-  }
-
-  .pp-team-badge[data-team="CLE"] {
-    --team-bg: #6f263d;
-    --team-border: #6f263d;
-    --team-ink: #ffffff;
-  }
-
-  .pp-team-badge[data-team="PHI"] {
-    --team-bg: #006bb6;
-    --team-border: #006bb6;
-    --team-ink: #ffffff;
-  }
-
-  .pp-team-badge[data-team="OKC"] {
-    --team-bg: #007ac1;
-    --team-border: #007ac1;
-    --team-ink: #ffffff;
-  }
-
-  .pp-team-badge[data-team="LAL"] {
-    --team-bg: #552583;
-    --team-border: #552583;
-    --team-ink: #ffffff;
-  }
-
-  .pp-team-badge[data-team="MIN"] {
-    --team-bg: #0c2340;
-    --team-border: #0c2340;
-    --team-ink: #ffffff;
-  }
-
-  .pp-team-badge[data-team="SAS"] {
-    --team-bg: #c4ced4;
-    --team-border: #c4ced4;
-    --team-ink: #111111;
-  }
-
-  /* The old scanline texture is retired; the class stays so markup still works. */
   .pp-scan-lite::before {
     content: none;
+  }
+
+  /* Horizontal scroll for wide tables, with the first column pinned. */
+  .table-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sticky-col {
+    background: var(--color-panel);
+    left: 0;
+    position: sticky;
+    z-index: 1;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
 input[type="range"] {
-  accent-color: var(--color-accent);
+  accent-color: var(--color-pulse-ink);
+}
+
+@keyframes pp-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+.pp-live-dot {
+  animation: pp-pulse 1.6s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -511,18 +596,4 @@ input[type="range"] {
   .pp-live-dot {
     animation: none !important;
   }
-}
-
-@keyframes pp-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
-.pp-live-dot {
-  animation: pp-pulse 1.6s ease-in-out infinite;
 }

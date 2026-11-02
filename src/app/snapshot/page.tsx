@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ForecastDashboard } from "@/components/forecast/ForecastDashboard";
 
 export const metadata: Metadata = {
-  title: "Playoff Pulse — 2026 Final Snapshot",
+  title: "Final 2026 snapshot",
   description:
     "Frozen final state of the completed 2026 postseason dashboard. Terminal probabilities are accounting, not forecast skill.",
 };

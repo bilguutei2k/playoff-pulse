@@ -1,366 +1,244 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { TeamLogo } from "@/components/live/TeamLogo";
-import { teamById } from "@/lib/season/teams";
 import { formatShortDay } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
 
-export type ChartSeries = { teamId: string; color: string };
+export type ChartTeam = { teamId: string; code: string; name: string; color: string };
 export type ChartPoint = { date: string; champion: Record<string, number> };
 
-const HEIGHT = 260;
-const MARGIN = { top: 12, right: 16, bottom: 28, left: 44 };
-// Chart chrome: hairline grid one step off the surface, muted axis text.
-const GRID = "#eaecf0";
-const AXIS = "#d0d5dd";
-const AXIS_TEXT = "#545f71";
+const GRID = "#ece9e4";
+const AXIS = "#d4d0c9";
+const AXIS_TEXT = "#6b6863";
+const OTHER = "#d9d5ce";
+const LABEL_GAP = 13;
 
-function niceStep(max: number): number {
-  for (const step of [0.01, 0.02, 0.05, 0.1, 0.2, 0.25]) if (max / step <= 5) return step;
-  return 0.25;
+function niceMax(value: number): { max: number; step: number } {
+  const target = Math.max(value * 1.08, 0.05);
+  for (const step of [0.01, 0.02, 0.05, 0.1, 0.2, 0.25]) {
+    if (target / step <= 5) return { max: Math.ceil(target / step) * step, step };
+  }
+  return { max: 1, step: 0.25 };
 }
 
-function dayNumber(date: string): number {
-  return Math.round(Date.parse(`${date}T12:00:00Z`) / 86_400_000);
-}
-
-function tickIndices(count: number, width: number): number[] {
-  const maxTicks = Math.max(2, Math.floor(width / 72));
-  if (count <= maxTicks) return Array.from({ length: count }, (_, index) => index);
-  const step = Math.ceil((count - 1) / (maxTicks - 1));
-  const ticks: number[] = [];
-  for (let index = 0; index < count; index += step) ticks.push(index);
-  if (ticks.at(-1) !== count - 1) ticks[ticks.length - 1] = count - 1;
-  return ticks;
+/** End labels sorted top to bottom and pushed apart to at least LABEL_GAP pixels. */
+function spreadLabels(items: Array<{ id: string; y: number }>, top: number, bottom: number) {
+  const sorted = [...items].sort((a, b) => a.y - b.y).map((item) => ({ ...item, labelY: item.y }));
+  for (let i = 1; i < sorted.length; i += 1) {
+    sorted[i].labelY = Math.max(sorted[i].labelY, sorted[i - 1].labelY + LABEL_GAP);
+  }
+  const overflow = sorted.length ? sorted[sorted.length - 1].labelY - bottom : 0;
+  if (overflow > 0) {
+    for (const item of sorted) item.labelY -= overflow;
+    for (let i = sorted.length - 2; i >= 0; i -= 1) {
+      sorted[i].labelY = Math.min(sorted[i].labelY, sorted[i + 1].labelY - LABEL_GAP);
+    }
+  }
+  for (const item of sorted) item.labelY = Math.max(top, item.labelY);
+  return new Map(sorted.map((item) => [item.id, item.labelY]));
 }
 
 export function TitleOddsChart({
   points,
-  series,
+  highlighted,
+  others,
 }: {
-  /** Daily title-odds snapshots, oldest first. */
+  /** Daily snapshots, oldest first. */
   points: ChartPoint[];
-  /** The teams to draw, most likely champion first, with colors chosen on the server. */
-  series: ChartSeries[];
+  /** The likeliest champions today, drawn in team colors, most likely first. */
+  highlighted: ChartTeam[];
+  /** Every other team, drawn in gray for context. */
+  others: string[];
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(720);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [highlight, setHighlight] = useState<string | null>(null);
-  const [pinned, setPinned] = useState<string | null>(null);
-  const focusTeam = highlight ?? pinned;
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(760);
+  const [index, setIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const element = containerRef.current;
+    const element = ref.current;
     if (!element) return;
-    const observer = new ResizeObserver(([entry]) => {
-      setWidth(Math.max(280, Math.round(entry.contentRect.width)));
-    });
+    const observer = new ResizeObserver(([entry]) => setWidth(Math.max(300, Math.round(entry.contentRect.width))));
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
 
-  const plotWidth = width - MARGIN.left - MARGIN.right;
-  const plotHeight = HEIGHT - MARGIN.top - MARGIN.bottom;
+  const narrow = width < 520;
+  const height = narrow ? 260 : 320;
+  const margin = { top: 14, right: narrow ? 92 : 112, bottom: 30, left: 42 };
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
 
-  const { yMax, step } = useMemo(() => {
-    let max = 0;
-    for (const point of points) {
-      for (const { teamId } of series) max = Math.max(max, point.champion[teamId] ?? 0);
-    }
-    const chosen = niceStep(Math.max(max * 1.1, 0.05));
-    return { yMax: Math.ceil(Math.max(max * 1.1, 0.05) / chosen) * chosen, step: chosen };
-  }, [points, series]);
+  const { max, step } = useMemo(() => {
+    let top = 0;
+    for (const point of points) for (const value of Object.values(point.champion)) top = Math.max(top, value);
+    return niceMax(top);
+  }, [points]);
 
-  const firstDay = points.length > 0 ? dayNumber(points[0].date) : 0;
-  const lastDay = points.length > 0 ? dayNumber(points[points.length - 1].date) : 0;
-  const x = (date: string) =>
-    lastDay === firstDay
-      ? MARGIN.left + plotWidth / 2
-      : MARGIN.left + ((dayNumber(date) - firstDay) / (lastDay - firstDay)) * plotWidth;
-  const y = (value: number) => MARGIN.top + plotHeight - (value / yMax) * plotHeight;
+  const x = (i: number) => margin.left + (points.length <= 1 ? plotWidth / 2 : (i / (points.length - 1)) * plotWidth);
+  const y = (value: number) => margin.top + plotHeight - (Math.min(value, max) / max) * plotHeight;
+  const path = (teamId: string) =>
+    points.map((point, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(point.champion[teamId] ?? 0).toFixed(1)}`).join("");
 
-  const yTicks: number[] = [];
-  for (let value = 0; value <= yMax + 1e-9; value += step) yTicks.push(value);
-  const xTicks = tickIndices(points.length, plotWidth);
-  const latest = points.at(-1);
-  const activeIndex = hoverIndex;
-  const active = activeIndex === null ? null : points[activeIndex];
+  const last = points.at(-1);
+  const labels = last
+    ? spreadLabels(
+        highlighted.map((team) => ({ id: team.teamId, y: y(last.champion[team.teamId] ?? 0) })),
+        margin.top + 4,
+        margin.top + plotHeight,
+      )
+    : new Map<string, number>();
 
-  const pathFor = (teamId: string) => {
-    let path = "";
-    let drawing = false;
-    for (const point of points) {
-      const value = point.champion[teamId];
-      if (value === undefined) {
-        drawing = false;
-        continue;
-      }
-      path += `${drawing ? "L" : "M"}${x(point.date).toFixed(1)},${y(value).toFixed(1)}`;
-      drawing = true;
-    }
-    return path;
+  const ticks: number[] = [];
+  for (let value = 0; value <= max + 1e-9; value += step) ticks.push(value);
+  const maxDateTicks = Math.max(2, Math.floor(plotWidth / 80));
+  const every = Math.max(1, Math.ceil(points.length / maxDateTicks));
+  const dateTicks = points.map((_, i) => i).filter((i) => i % every === 0 || i === points.length - 1);
+  const shownIndex = index ?? null;
+  const hovered = shownIndex !== null ? points[shownIndex] : null;
+
+  const locate = (clientX: number) => {
+    const box = ref.current?.getBoundingClientRect();
+    if (!box || points.length === 0) return;
+    const relative = clientX - box.left - margin.left;
+    const i = points.length <= 1 ? 0 : Math.round((relative / plotWidth) * (points.length - 1));
+    setIndex(Math.max(0, Math.min(points.length - 1, i)));
   };
 
-  const nearestIndex = (clientX: number) => {
-    const element = containerRef.current;
-    if (!element || points.length === 0) return null;
-    const left = element.getBoundingClientRect().left;
-    const offset = clientX - left;
-    let best = 0;
-    let bestDistance = Number.POSITIVE_INFINITY;
-    points.forEach((point, index) => {
-      const distance = Math.abs(x(point.date) - offset);
-      if (distance < bestDistance) {
-        bestDistance = distance;
-        best = index;
-      }
-    });
-    return best;
-  };
-
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (points.length === 0) return;
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-      event.preventDefault();
-      const current = hoverIndex ?? points.length - 1;
-      const next =
-        event.key === "ArrowLeft" ? Math.max(0, current - 1) : Math.min(points.length - 1, current + 1);
-      setHoverIndex(next);
-    } else if (event.key === "Escape") {
-      setHoverIndex(null);
-    }
-  };
-
-  const tooltipRows = active
-    ? series
-        .map(({ teamId, color }) => ({ teamId, color, value: active.champion[teamId] }))
-        .filter((row): row is { teamId: string; color: string; value: number } => row.value !== undefined)
-        .sort((a, b) => b.value - a.value)
-    : [];
-  const tooltipLeft = active ? x(active.date) : 0;
-  const tooltipOnLeft = tooltipLeft > width * 0.6;
+  const summary = last
+    ? `Title odds over ${points.length} ${points.length === 1 ? "day" : "days"}. Latest: ${highlighted
+        .map((team) => `${team.name} ${formatChance(last.champion[team.teamId] ?? 0)}`)
+        .join(", ")}.`
+    : "No title odds history yet.";
 
   return (
-    <div className="flex flex-col gap-4">
-      <div
-        ref={containerRef}
-        className="relative"
-        tabIndex={0}
-        role="group"
-        aria-label="Title odds by date for the eight likeliest champions. Use the left and right arrow keys to read each date."
-        onKeyDown={onKeyDown}
-        onFocus={() => setHoverIndex((current) => current ?? Math.max(0, points.length - 1))}
-        onBlur={() => setHoverIndex(null)}
-        onPointerMove={(event) => setHoverIndex(nearestIndex(event.clientX))}
-        onPointerDown={(event) => setHoverIndex(nearestIndex(event.clientX))}
-        // A tap ends with pointerleave on touch screens; keep that readout until the next tap.
-        onPointerLeave={(event) => {
-          if (event.pointerType === "mouse") setHoverIndex(null);
-        }}
-      >
-        <svg
-          width={width}
-          height={HEIGHT}
-          viewBox={`0 0 ${width} ${HEIGHT}`}
-          className="block h-auto max-w-full"
-          aria-hidden
-        >
-          {yTicks.map((value) => (
-            <g key={value}>
-              <line
-                x1={MARGIN.left}
-                x2={width - MARGIN.right}
-                y1={y(value)}
-                y2={y(value)}
-                stroke={value === 0 ? AXIS : GRID}
-                strokeWidth={1}
-                shapeRendering="crispEdges"
-              />
-              <text
-                x={MARGIN.left - 8}
-                y={y(value)}
-                dy="0.32em"
-                textAnchor="end"
-                fontSize={11}
-                fill={AXIS_TEXT}
-                style={{ fontVariantNumeric: "tabular-nums" }}
-              >
-                {Math.round(value * 100)}%
+    <div>
+      <div ref={ref} className="relative min-w-0 overflow-hidden">
+        <svg width={width} height={height} role="img" aria-label={summary} className="block select-none">
+          {ticks.map((tick) => (
+            <g key={tick}>
+              <line x1={margin.left} x2={margin.left + plotWidth} y1={y(tick)} y2={y(tick)} stroke={tick === 0 ? AXIS : GRID} />
+              <text x={margin.left - 8} y={y(tick)} dy="0.32em" textAnchor="end" fontSize={11} fill={AXIS_TEXT} className="font-mono">
+                {Math.round(tick * 100)}%
               </text>
             </g>
           ))}
-          {xTicks.map((index) => {
-            const point = points[index];
-            const anchor =
-              points.length === 1 ? "middle" : index === 0 ? "start" : index === points.length - 1 ? "end" : "middle";
-            return (
-              <text
-                key={point.date}
-                x={x(point.date)}
-                y={HEIGHT - 8}
-                textAnchor={anchor}
-                fontSize={11}
-                fill={AXIS_TEXT}
-              >
-                {formatShortDay(point.date)}
-              </text>
-            );
-          })}
-          {active ? (
-            <line
-              x1={x(active.date)}
-              x2={x(active.date)}
-              y1={MARGIN.top}
-              y2={MARGIN.top + plotHeight}
-              stroke={AXIS}
-              strokeWidth={1}
-              shapeRendering="crispEdges"
-            />
+          {dateTicks.map((i) => (
+            <text key={points[i].date} x={x(i)} y={height - 8} textAnchor={points.length > 1 && i === points.length - 1 ? "end" : points.length > 1 && i === 0 ? "start" : "middle"} fontSize={11} fill={AXIS_TEXT} className="font-mono">
+              {formatShortDay(points[i].date)}
+            </text>
+          ))}
+          {others.map((teamId) => (
+            <path key={teamId} d={path(teamId)} fill="none" stroke={OTHER} strokeWidth={1.25} strokeLinejoin="round" strokeLinecap="round" />
+          ))}
+          {[...highlighted].reverse().map((team) => (
+            <path key={team.teamId} d={path(team.teamId)} fill="none" stroke={team.color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+          ))}
+          {last
+            ? highlighted.map((team) => {
+                const endX = x(points.length - 1);
+                const endY = y(last.champion[team.teamId] ?? 0);
+                const labelY = labels.get(team.teamId) ?? endY;
+                return (
+                  <g key={team.teamId}>
+                    <circle cx={endX} cy={endY} r={4} fill={team.color} stroke="#ffffff" strokeWidth={2} />
+                    <path d={`M${endX + 6},${endY} L${endX + 14},${labelY}`} stroke={AXIS} fill="none" />
+                    <rect x={endX + 16} y={labelY - 3} width={10} height={2} fill={team.color} rx={1} />
+                    <text x={endX + 30} y={labelY} dy="0.32em" fontSize={11.5} fill="#121417" className="font-mono">
+                      {team.code} {formatChance(last.champion[team.teamId] ?? 0)}
+                    </text>
+                  </g>
+                );
+              })
+            : null}
+          {hovered && shownIndex !== null ? (
+            <g>
+              <line x1={x(shownIndex)} x2={x(shownIndex)} y1={margin.top} y2={margin.top + plotHeight} stroke="#121417" strokeOpacity={0.35} />
+              {highlighted.map((team) => (
+                <circle key={team.teamId} cx={x(shownIndex)} cy={y(hovered.champion[team.teamId] ?? 0)} r={4} fill={team.color} stroke="#ffffff" strokeWidth={2} />
+              ))}
+            </g>
           ) : null}
-          {[...series].reverse().map(({ teamId, color }) => {
-            const dimmed = focusTeam !== null && focusTeam !== teamId;
-            const last = latest?.champion[teamId];
-            return (
-              <g key={teamId} opacity={dimmed ? 0.15 : 1} style={{ transition: "opacity 120ms" }}>
-                <path
-                  d={pathFor(teamId)}
-                  fill="none"
-                  stroke={color}
-                  strokeWidth={focusTeam === teamId ? 3 : 2}
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-                {points.length <= 3
-                  ? points.map((point) =>
-                      point.champion[teamId] === undefined ? null : (
-                        <circle
-                          key={point.date}
-                          cx={x(point.date)}
-                          cy={y(point.champion[teamId])}
-                          r={4}
-                          fill={color}
-                          stroke="#ffffff"
-                          strokeWidth={2}
-                        />
-                      ),
-                    )
-                  : last !== undefined && latest ? (
-                      <circle cx={x(latest.date)} cy={y(last)} r={4} fill={color} stroke="#ffffff" strokeWidth={2} />
-                    ) : null}
-                {active && active.champion[teamId] !== undefined && points.length > 3 ? (
-                  <circle
-                    cx={x(active.date)}
-                    cy={y(active.champion[teamId])}
-                    r={4}
-                    fill={color}
-                    stroke="#ffffff"
-                    strokeWidth={2}
-                  />
-                ) : null}
-              </g>
-            );
-          })}
+          <rect
+            x={margin.left - 8}
+            y={margin.top}
+            width={plotWidth + 16}
+            height={plotHeight}
+            fill="transparent"
+            tabIndex={0}
+            aria-label="Title odds by date. Use the arrow keys to move between dates."
+            onPointerMove={(event) => locate(event.clientX)}
+            onPointerDown={(event) => locate(event.clientX)}
+            onPointerLeave={() => setIndex(null)}
+            onBlur={() => setIndex(null)}
+            onFocus={() => setIndex(points.length - 1)}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft") setIndex((i) => Math.max(0, (i ?? points.length - 1) - 1));
+              else if (event.key === "ArrowRight") setIndex((i) => Math.min(points.length - 1, (i ?? 0) + 1));
+              else if (event.key === "Escape") setIndex(null);
+              else return;
+              event.preventDefault();
+            }}
+            className="cursor-crosshair outline-none focus-visible:outline-none"
+          />
         </svg>
-        {active ? (
+        {hovered && shownIndex !== null ? (
           <div
             role="status"
-            className="pointer-events-none absolute top-2 z-10 w-48 rounded-lg border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] p-2.5 text-xs shadow-[0_4px_12px_rgba(16,24,40,0.08)]"
-            style={
-              tooltipOnLeft
-                ? { right: width - tooltipLeft + 12 }
-                : { left: Math.min(tooltipLeft + 12, width - 200) }
-            }
+            className="pointer-events-none absolute top-2 z-10 w-44 rounded-lg border border-line bg-panel px-3 py-2 text-[12px] shadow-[0_8px_24px_-12px_rgba(18,20,23,0.35)]"
+            style={{
+              left: x(shownIndex) + 188 < width ? x(shownIndex) + 12 : Math.max(0, x(shownIndex) - 188),
+            }}
           >
-            <p className="mb-1.5 font-semibold text-[var(--color-text-primary)]">
-              Title odds, {formatShortDay(active.date)}
-            </p>
-            <ul className="grid gap-1">
-              {tooltipRows.map((row) => (
-                <li key={row.teamId} className="flex items-center gap-2">
-                  <span aria-hidden className="h-0.5 w-3 rounded-full" style={{ background: row.color }} />
-                  <TeamLogo teamId={row.teamId} size={14} />
-                  <span className="text-[var(--color-text-muted)]">{teamById(row.teamId).abbreviation}</span>
-                  <span className="tabular ml-auto font-semibold text-[var(--color-text-primary)]">
-                    {formatChance(row.value)}
-                  </span>
-                </li>
-              ))}
+            <p className="kicker mb-1.5">{formatShortDay(hovered.date)}</p>
+            <ul className="space-y-1">
+              {[...highlighted]
+                .sort((a, b) => (hovered.champion[b.teamId] ?? 0) - (hovered.champion[a.teamId] ?? 0))
+                .map((team) => (
+                  <li key={team.teamId} className="flex items-center gap-2">
+                    <span aria-hidden className="h-[2px] w-3 rounded-full" style={{ background: team.color }} />
+                    <span className="num font-semibold text-ink">{formatChance(hovered.champion[team.teamId] ?? 0)}</span>
+                    <span className="truncate text-ink-2">{team.name}</span>
+                  </li>
+                ))}
             </ul>
           </div>
         ) : null}
       </div>
-
-      <ul aria-label="Legend" className="flex flex-wrap gap-2">
-        {series.map(({ teamId, color }) => {
-          const team = teamById(teamId);
-          const value = latest?.champion[teamId];
-          const isPinned = pinned === teamId;
-          return (
-            <li key={teamId}>
-              <button
-                type="button"
-                aria-pressed={isPinned}
-                onClick={() => setPinned(isPinned ? null : teamId)}
-                onPointerEnter={() => setHighlight(teamId)}
-                onPointerLeave={() => setHighlight(null)}
-                onFocus={() => setHighlight(teamId)}
-                onBlur={() => setHighlight(null)}
-                className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-xs transition-colors ${
-                  isPinned
-                    ? "border-[var(--color-text-secondary)] bg-[var(--color-panel-secondary)]"
-                    : "border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] hover:border-[var(--color-border-strong)]"
-                }`}
-              >
-                <span aria-hidden className="h-0.5 w-4 rounded-full" style={{ background: color, height: 3 }} />
-                <TeamLogo teamId={teamId} size={16} />
-                <span className="font-medium text-[var(--color-text-primary)]">{team.abbreviation}</span>
-                {value !== undefined ? (
-                  <span className="tabular text-[var(--color-text-muted)]">{formatChance(value)}</span>
-                ) : null}
-                <span className="sr-only">{isPinned ? ", highlighted" : ", highlight this line"}</span>
-              </button>
-            </li>
-          );
-        })}
+      <ul aria-label="Legend" className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[12px] text-ink-2">
+        {highlighted.map((team) => (
+          <li key={team.teamId} className="flex items-center gap-1.5">
+            <span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: team.color }} />
+            {team.name}
+          </li>
+        ))}
+        <li className="flex items-center gap-1.5">
+          <span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: OTHER }} />
+          Other teams
+        </li>
       </ul>
-
-      <details className="text-sm">
-        <summary className="cursor-pointer text-[var(--color-accent)]">Show the data as a table</summary>
-        <div className="mt-3 overflow-x-auto">
-          <table className="pp-table">
-            <caption className="sr-only">Title odds by date</caption>
-            <thead>
-              <tr>
-                <th scope="col">Team</th>
-                {points.map((point) => (
-                  <th key={point.date} scope="col" className="num">
-                    {formatShortDay(point.date)}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {series.map(({ teamId }) => (
-                <tr key={teamId}>
-                  <th scope="row">
-                    <span className="flex items-center gap-2">
-                      <TeamLogo teamId={teamId} size={16} />
-                      {teamById(teamId).abbreviation}
-                    </span>
-                  </th>
-                  {points.map((point) => (
-                    <td key={point.date} className="num">
-                      {point.champion[teamId] === undefined ? "–" : formatChance(point.champion[teamId])}
-                    </td>
-                  ))}
-                </tr>
+      <div className="sr-only">
+      <table>
+        <caption>Title odds by date</caption>
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            {highlighted.map((team) => (
+              <th key={team.teamId} scope="col">{team.name}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {points.map((point) => (
+            <tr key={point.date}>
+              <th scope="row">{formatShortDay(point.date)}</th>
+              {highlighted.map((team) => (
+                <td key={team.teamId}>{formatChance(point.champion[team.teamId] ?? 0)}</td>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
     </div>
   );
 }

@@ -9,10 +9,11 @@ import {
   decideMissed,
   decideResults,
   decideSeals,
+  sealedGameIds,
   sealGames,
   summarizeRecord,
 } from "@/lib/season/live-state";
-import { LIVE_MODEL_VERSION, LIVE_PARAMS } from "@/lib/season/params";
+import { LIVE_PARAMS, REFERENCE_MODEL_VERSION } from "@/lib/season/params";
 import {
   buildObservedPostseason,
   crossCheckSeeds,
@@ -163,16 +164,14 @@ describe("replay of the 2026 postseason", () => {
       // A run at 07:00 ET, then one the next morning to record results.
       const known = seasonAsOf(games, date, { includeSlate: true });
       const nowIso = `${date}T11:00:00Z`;
-      const sealedIds = new Set(
-        ledger.filter((row) => row.type === "seal").map((row) => row.gameId),
-      );
+      const sealedIds = sealedGameIds(ledger, REFERENCE_MODEL_VERSION, "morning");
       const decisions = decideSeals(known, sealedIds, nowIso);
       for (const decision of decisions) expect(decision.inputsIncomplete).toBe(false);
       const seals = sealGames(decisions, {
         history: [],
         seasonGames: known,
         params: LIVE_PARAMS,
-        modelVersion: LIVE_MODEL_VERSION,
+        modelVersion: REFERENCE_MODEL_VERSION,
         runId: "replay",
         nowIso,
         marketFor: () => null,
@@ -180,7 +179,7 @@ describe("replay of the 2026 postseason", () => {
       ledger = [...ledger, ...seals];
       const later = seasonAsOf(games, addDays(date, 1));
       const laterIso = `${addDays(date, 1)}T10:00:00Z`;
-      ledger = [...ledger, ...decideMissed(later, ledger, laterIso)];
+      ledger = [...ledger, ...decideMissed(later, ledger, laterIso, REFERENCE_MODEL_VERSION)];
       ledger = [...ledger, ...decideResults(later, ledger, laterIso)];
     }
     expect(ledgerProblems(ledger)).toEqual([]);
@@ -189,7 +188,7 @@ describe("replay of the 2026 postseason", () => {
       ledger.filter((row) => row.type === "seal").map((row) => row.gameId),
     );
     for (const game of postseasonGames) expect(sealed.has(game.id)).toBe(true);
-    const record = summarizeRecord(ledger, LIVE_MODEL_VERSION, 0.56);
+    const record = summarizeRecord(ledger, REFERENCE_MODEL_VERSION, 0.56);
     expect(record.scored).toBe(postseasonGames.length);
     expect(record.pending).toBe(0);
     expect(record.brier).toBeGreaterThan(0.15);

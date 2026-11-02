@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PlayoffSeries } from "@/components/live/PlayoffSeries";
+import { AbsenceList } from "@/components/live/AbsenceList";
 import { HEAT_BINS } from "@/components/live/heat";
-import { SeasonTable } from "@/components/live/SeasonTable";
+import { OddsTable } from "@/components/live/OddsTable";
+import { PlayoffSeries } from "@/components/live/PlayoffSeries";
+import { SectionHeading } from "@/components/live/SectionHeading";
 import { TitleOddsChart } from "@/components/live/TitleOddsChart";
-import { UpdatedAgo } from "@/components/live/UpdatedAgo";
-import { titleOddsChange } from "@/lib/season/history";
 import { liveState } from "@/lib/season/published";
 import { distinctTeamColors } from "@/lib/season/team-colors";
 import type { SeasonPhase } from "@/lib/season/types";
-import { formatShortDay, formatStampEt } from "@/lib/utils/dates";
+import { formatDateTimeEt, formatShortDay } from "@/lib/utils/dates";
+import { oddsRows } from "@/lib/view/odds";
+import { seasonGames } from "@/lib/view/store";
+import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
 
 export const metadata: Metadata = {
-  title: "NBA playoff and title odds | Playoff Pulse",
+  title: "NBA playoff and title odds",
   description:
-    "Playoff, conference and championship chances for all 30 NBA teams from 20,000 simulated seasons, updated after games finish.",
+    "Playoff, conference and championship chances for all 30 NBA teams from simulated seasons, updated after games finish and as the NBA injury report changes.",
 };
 
 const PHASE_LABELS: Record<SeasonPhase, string> = {
@@ -24,124 +27,118 @@ const PHASE_LABELS: Record<SeasonPhase, string> = {
   complete: "Season complete",
 };
 
-/** How many teams the history chart draws. */
 const CHART_TEAMS = 8;
 
 export default function OddsPage() {
   const { forecast, history, generatedAt, seasonLabel } = liveState;
-  const oddsChange = titleOddsChange(history);
-  const changeSince = oddsChange ? formatShortDay(oddsChange.since) : null;
+  const modeled = liveState.injury !== null;
+  const rows = oddsRows(liveState, seasonGames());
   const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
-  const chartTeams = [...forecast.teams]
-    .sort((a, b) => b.champion - a.champion)
-    .slice(0, CHART_TEAMS)
-    .map((team) => team.teamId);
-  const colors = distinctTeamColors(chartTeams, "#ffffff");
-  const series = chartTeams.map((teamId) => ({ teamId, color: colors[teamId] }));
-  const showSeries = forecast.series.length > 0;
+  const ranked = [...forecast.teams].sort((a, b) => b.champion - a.champion);
+  const top = ranked.slice(0, CHART_TEAMS).map((team) => team.teamId);
+  const colors = distinctTeamColors(top, PANEL_COLOR);
+  const highlighted = top.map((teamId) => ({
+    teamId,
+    code: teamDisplay(teamId).code,
+    name: teamDisplay(teamId).shortName,
+    color: colors[teamId],
+  }));
+  const others = ranked.slice(CHART_TEAMS).map((team) => team.teamId);
 
   return (
-    <main className="pp-container flex flex-col gap-12 py-6 sm:py-10">
-      <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium text-[var(--color-text-muted)]">
-            {seasonLabel} · {PHASE_LABELS[forecast.phase]}
-          </p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-[var(--color-text-primary)] sm:text-3xl">
-            Season odds
-          </h1>
-          <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
-            Playoff and title chances for all 30 teams, from{" "}
-            {forecast.iterations.toLocaleString("en-US")} simulated seasons. Season odds update
-            after games finish.
-          </p>
-        </div>
-        <p className="tabular text-xs text-[var(--color-text-muted)]">
-          <UpdatedAgo iso={generatedAt} stamp={formatStampEt(generatedAt)} />
-        </p>
-      </header>
+    <main className="pp-container py-8 sm:py-10">
+      <SectionHeading
+        as="h1"
+        kicker={`${seasonLabel} · ${PHASE_LABELS[forecast.phase]}`}
+        title="Playoff and title odds"
+        dek={
+          <>
+            Every team&apos;s chances from {forecast.iterations.toLocaleString("en-US")} simulations of the rest
+            of the season, last run {formatDateTimeEt(generatedAt)}.{" "}
+            {modeled
+              ? "They update after games finish and when the NBA injury report changes who is out."
+              : "They update after games finish."}
+          </>
+        }
+      />
 
-      {showSeries ? <PlayoffSeries series={forecast.series} /> : null}
-
-      <section aria-labelledby="history-title" className="flex flex-col gap-4">
-        <div>
-          <h2
-            id="history-title"
-            className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]"
-          >
-            Title odds over time
-          </h2>
-          <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-            The {CHART_TEAMS} likeliest champions today. Hover, tap or use the arrow keys to read a
-            date; select a team to highlight its line.
-          </p>
+      {forecast.series.length > 0 ? (
+        <div className="mt-10">
+          <PlayoffSeries series={forecast.series} />
         </div>
-        <div className="rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] p-4 sm:p-5">
-          {points.length < 4 ? (
-            <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-              History starts {points.length > 0 ? formatShortDay(points[0].date) : "at launch"} and
-              adds a point each day; {points.length} {points.length === 1 ? "day" : "days"} so far.
-            </p>
-          ) : null}
-          <TitleOddsChart points={points} series={series} />
-        </div>
-      </section>
+      ) : null}
 
-      <section aria-labelledby="table-title" className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <section aria-labelledby="standings-title" className="mt-10">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2
-              id="table-title"
-              className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]"
-            >
-              Every team
+            <h2 id="standings-title" className="headline text-[22px] sm:text-[26px]">
+              Standings and odds
             </h2>
-            <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-              Select a column heading to sort. Darker cells are likelier.
-            </p>
+            <p className="mt-1 text-[14px] text-ink-2">Select a column heading to sort. Darker cells are likelier.</p>
           </div>
-          <ul aria-label="Shading key" className="flex flex-wrap items-center gap-1.5 text-xs">
+          <ul aria-label="Shading key" className="flex flex-wrap items-center gap-1">
             {HEAT_BINS.map((bin) => (
               <li key={bin.label}>
-                <span
-                  className={`pp-heat ${bin.className} min-w-0 border border-[var(--color-border-subtle)]`}
-                >
-                  {bin.label}
-                </span>
+                <span className={`heat ${bin.className} min-w-0 border border-line px-1.5 py-0.5 text-[10.5px]`}>{bin.label}</span>
               </li>
             ))}
           </ul>
         </div>
-        <SeasonTable
-          teams={forecast.teams}
-          phase={forecast.phase}
-          change={oddsChange?.change ?? null}
-          changeSince={changeSince}
-        />
-        <div className="grid gap-2 text-xs leading-5 text-[var(--color-text-muted)]">
+        <div className="mt-5">
+          <OddsTable rows={rows} exact={forecast.phase !== "regular-season"} />
+        </div>
+        <div className="mt-4 grid gap-2 text-[13px] leading-5 text-ink-2 md:grid-cols-2 md:gap-x-10">
           <p>
-            <span className="font-semibold text-[var(--color-text-secondary)]">Rating</span> is
-            points per game better or worse than an average team, with one standard deviation of
-            uncertainty. <span className="font-semibold text-[var(--color-text-secondary)]">Proj. wins</span>{" "}
-            is the average final win total, with the 10th to 90th percentile range.{" "}
-            {changeSince ? (
+            <span className="font-semibold text-ink">Rating</span> is points per game better or worse than an
+            average team{modeled ? " at full strength" : ""}. {modeled ? (
               <>
-                <span className="font-semibold text-[var(--color-text-secondary)]">Title change</span>{" "}
-                is in percentage points of title odds since {changeSince}, the last day the odds
-                moved.
+                <span className="font-semibold text-ink">Now</span> takes off the points the team gives up in its
+                next game to players currently out.{" "}
               </>
             ) : null}
+            <span className="font-semibold text-ink">Proj. W–L</span> is the average final record, with the
+            10th to 90th percentile of wins beneath. <span className="font-semibold text-ink">Seed 1–15</span> shows
+            the chance of each finishing position: dark teal is a top-six seed, light teal the play-in.
           </p>
           <p>
-            Early and midseason playoff odds are not claimed to be well calibrated, and no skill is
-            claimed for title odds. The model does not account for injuries.{" "}
-            <Link href="/how-it-works#season-odds" className="pp-link">
-              How the season is simulated
-            </Link>
-            .
+            Early and midseason playoff odds failed their registered reliability check and are not claimed to be
+            well calibrated; no skill is claimed for title odds.{" "}
+            {modeled
+              ? "Known absences are carried for their expected length; injuries that have not happened yet are not simulated."
+              : "This forecast comes from the model without the injury term."}{" "}
+            <Link href="/how-it-works#season-odds" className="pp-link">How the season is simulated</Link>
           </p>
         </div>
       </section>
+
+      <section aria-labelledby="history-title" className="mt-14">
+        <SectionHeading
+          id="history-title"
+          kicker="Title race"
+          title="Title odds over time"
+          dek={`The ${CHART_TEAMS} likeliest champions today in their team colors, everyone else in gray. Hover or use the arrow keys to read a date.`}
+        />
+        <div className="panel mt-5 p-4 sm:p-6">
+          {points.length < 2 ? (
+            <p className="notice-quiet mb-4">
+              The chart adds a point each day; it starts{" "}
+              {points.length > 0 ? formatShortDay(points[0].date) : "with the first published forecast"}, so there is
+              not much of a line yet.
+            </p>
+          ) : null}
+          <TitleOddsChart points={points} highlighted={highlighted} others={others} />
+        </div>
+      </section>
+
+      {modeled ? (
+        <div className="mt-14">
+          <AbsenceList
+            absences={liveState.absences}
+            absencePoints={liveState.absencePoints}
+            reportAt={liveState.availability.reportAt}
+          />
+        </div>
+      ) : null}
     </main>
   );
 }

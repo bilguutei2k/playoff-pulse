@@ -7,6 +7,9 @@ import {
   decideMissed,
   decideResults,
   decideSeals,
+  scoredSeal,
+  sealedGameIds,
+  sealsByGame,
   slateDateAt,
   stuckGames,
   summarizeRecord,
@@ -16,7 +19,7 @@ import {
 } from "@/lib/season/live-state";
 import { titleOddsChange } from "@/lib/season/history";
 import { formatAge } from "@/lib/utils/format";
-import { LIVE_MODEL_VERSION, LIVE_PARAMS } from "@/lib/season/params";
+import { LIVE_MODEL_VERSION, LIVE_PARAMS, REFERENCE_MODEL_VERSION } from "@/lib/season/params";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import type { LedgerRow, SealRow, SeasonGame } from "@/lib/season/types";
 
@@ -37,6 +40,7 @@ function game(overrides: Partial<SeasonGame> & { id: string; tipUtc: string }): 
   };
 }
 
+/** A v1-style row: one morning seal per game, no kind. */
 function seal(gameId: string, overrides: Partial<SealRow> = {}): SealRow {
   return {
     type: "seal",
@@ -44,7 +48,7 @@ function seal(gameId: string, overrides: Partial<SealRow> = {}): SealRow {
     etDate: "2026-11-01",
     tipUtc: "2026-11-01T23:00:00Z",
     issuedAt: "2026-11-01T12:00:00Z",
-    modelVersion: LIVE_MODEL_VERSION,
+    modelVersion: REFERENCE_MODEL_VERSION,
     paramsHash: "p",
     ratingsHash: "r",
     homeId: A,
@@ -142,7 +146,7 @@ describe("sealing rule", () => {
     const context = {
       history: [],
       params: LIVE_PARAMS,
-      modelVersion: LIVE_MODEL_VERSION,
+      modelVersion: REFERENCE_MODEL_VERSION,
       runId: "t",
       nowIso: "2026-11-01T20:00:00Z",
       marketFor: () => null,
@@ -172,7 +176,7 @@ describe("ledger rows", () => {
     const sealed = game({ id: "s", tipUtc: "2026-11-01T23:00:00Z" });
     const unsealed = game({ id: "u", tipUtc: "2026-11-02T23:00:00Z", status: "final", homeScore: 1, awayScore: 0 });
     const ledger: LedgerRow[] = [seal("s")];
-    const rows = decideMissed([sealed, unsealed], ledger, "2026-11-03T01:00:00Z");
+    const rows = decideMissed([sealed, unsealed], ledger, "2026-11-03T01:00:00Z", REFERENCE_MODEL_VERSION);
     expect(rows.map((row) => row.gameId)).toEqual(["u"]);
   });
 
@@ -180,8 +184,8 @@ describe("ledger rows", () => {
     const before = game({ id: "b", tipUtc: "2026-10-31T23:00:00Z", status: "final", homeScore: 1, awayScore: 0 });
     const ghost = game({ id: "g", tipUtc: "2026-11-02T23:00:00Z", status: "postponed" });
     const ledger: LedgerRow[] = [seal("s")];
-    expect(decideMissed([before, ghost], ledger, "2026-11-03T01:00:00Z")).toEqual([]);
-    expect(decideMissed([before], [], "2026-11-03T01:00:00Z")).toEqual([]);
+    expect(decideMissed([before, ghost], ledger, "2026-11-03T01:00:00Z", REFERENCE_MODEL_VERSION)).toEqual([]);
+    expect(decideMissed([before], [], "2026-11-03T01:00:00Z", REFERENCE_MODEL_VERSION)).toEqual([]);
   });
 
   it("appends a result once, and again only if the score is corrected", () => {
@@ -205,7 +209,7 @@ describe("ledger rows", () => {
       { type: "result", gameId: "old", homeScore: 90, awayScore: 100, recordedAt: "x" },
       { type: "missed", gameId: "m", etDate: "x", tipUtc: "x", homeId: A, awayId: B, recordedAt: "x" },
     ];
-    const record = summarizeRecord(ledger, LIVE_MODEL_VERSION, 0.55);
+    const record = summarizeRecord(ledger, REFERENCE_MODEL_VERSION, 0.55);
     expect(record.sealed).toBe(3);
     expect(record.scored).toBe(2);
     expect(record.pending).toBe(1);
@@ -214,6 +218,165 @@ describe("ledger rows", () => {
     expect(record.accuracy).toBe(0.5);
     expect(record.brier).toBeCloseTo((0.04 + 0.36) / 2, 9);
     expect(record.smallSample).toBe(true);
+    expect(record.noFinalSeal).toBeNull();
+    expect(record.morningBrier).toBeNull();
+  });
+});
+
+/** A v2 row: morning or final, with its availability and v1's number. */
+function sealV2(gameId: string, kind: "morning" | "final", overrides: Partial<SealRow> = {}): SealRow {
+  return seal(gameId, {
+    modelVersion: LIVE_MODEL_VERSION,
+    sealKind: kind,
+    issuedAt: kind === "final" ? "2026-11-01T22:20:00Z" : "2026-11-01T12:00:00Z",
+    reportAt: kind === "final" ? "2026-11-01T17:15" : "2026-11-01T06:45",
+    availabilityStale: false,
+    availabilityMissing: false,
+    absence: { home: 2, away: 0 },
+    absencePoints: { home: 0.8, away: 0 },
+    drivers: {
+      home: [{ athleteId: "p1", name: "Player One", status: "O", points: 0.8 }],
+      away: [],
+    },
+    referenceModelVersion: REFERENCE_MODEL_VERSION,
+    referenceHomeWinProbability: 0.62,
+    ...overrides,
+  });
+}
+
+describe("two seals per game", () => {
+  const tip = "2026-11-01T23:00:00Z";
+  const today = game({ id: "today", tipUtc: tip });
+
+  it("keys sealed games on version and kind", () => {
+    const ledger: LedgerRow[] = [seal("a"), sealV2("a", "morning"), sealV2("b", "final")];
+    expect([...sealedGameIds(ledger, REFERENCE_MODEL_VERSION, "morning")]).toEqual(["a"]);
+    expect([...sealedGameIds(ledger, LIVE_MODEL_VERSION, "morning")]).toEqual(["a"]);
+    expect([...sealedGameIds(ledger, LIVE_MODEL_VERSION, "final")]).toEqual(["b"]);
+    expect([...sealedGameIds(ledger, REFERENCE_MODEL_VERSION, "final")]).toEqual([]);
+  });
+
+  it("writes the final seal on the first run inside an hour of tip, once", () => {
+    expect(decideSeals([today], new Set(), "2026-11-01T21:59:00Z", "final")).toEqual([]);
+    const decisions = decideSeals([today], new Set(), "2026-11-01T22:05:00Z", "final");
+    expect(decisions.map((row) => row.game.id)).toEqual(["today"]);
+    expect(decisions[0].inputsIncomplete).toBe(false);
+    expect(decideSeals([today], new Set(["today"]), "2026-11-01T22:30:00Z", "final")).toEqual([]);
+    // Exactly at tip, or after, is too late.
+    expect(decideSeals([today], new Set(), tip, "final")).toEqual([]);
+  });
+
+  it("does not let a morning seal stand in for the final one, or the reverse", () => {
+    const ledger: LedgerRow[] = [sealV2("today", "morning")];
+    const now = "2026-11-01T22:30:00Z";
+    expect(decideSeals([today], sealedGameIds(ledger, LIVE_MODEL_VERSION, "final"), now, "final")).toHaveLength(1);
+    expect(decideSeals([today], sealedGameIds(ledger, LIVE_MODEL_VERSION, "morning"), now)).toEqual([]);
+  });
+
+  it("marks a final seal incomplete when an earlier game is unresolved", () => {
+    const late = game({ id: "late", tipUtc: "2026-11-01T03:00:00Z", status: "in-progress" });
+    const decisions = decideSeals([late, today], new Set(), "2026-11-01T22:30:00Z", "final");
+    expect(decisions).toHaveLength(1);
+    expect(decisions[0].inputsIncomplete).toBe(true);
+    expect(decisions[0].missingGameIds).toEqual(["late"]);
+  });
+
+  it("scores the final seal when there is one, else the morning seal", () => {
+    expect(scoredSeal([sealV2("g", "morning"), sealV2("g", "final", { homeWinProbability: 0.4 })])?.homeWinProbability).toBe(0.4);
+    expect(scoredSeal([sealV2("g", "morning")])?.sealKind).toBe("morning");
+    expect(scoredSeal([seal("g")])?.sealKind).toBeUndefined();
+    expect(scoredSeal([])).toBeNull();
+  });
+
+  it("never records a morning-sealed game as missed, and misses per version", () => {
+    const tipped = game({ id: "m", tipUtc: tip, status: "final", homeScore: 100, awayScore: 90 });
+    const unsealed = game({ id: "u", tipUtc: tip, status: "final", homeScore: 100, awayScore: 90 });
+    const ledger: LedgerRow[] = [
+      seal("m"),
+      sealV2("m", "morning"),
+      seal("u"),
+    ];
+    const now = "2026-11-02T05:00:00Z";
+    expect(decideMissed([tipped, unsealed], ledger, now, LIVE_MODEL_VERSION).map((row) => [row.gameId, row.modelVersion])).toEqual([
+      ["u", LIVE_MODEL_VERSION],
+    ]);
+    expect(decideMissed([tipped, unsealed], ledger, now, REFERENCE_MODEL_VERSION)).toEqual([]);
+  });
+
+  it("does not count games before a version's first seal as its misses", () => {
+    const earlier = game({ id: "e", tipUtc: "2026-11-01T11:00:00Z", status: "final", homeScore: 1, awayScore: 0 });
+    const ledger: LedgerRow[] = [seal("e", { issuedAt: "2026-11-01T10:00:00Z", tipUtc: "2026-11-01T11:00:00Z" }), sealV2("x", "morning")];
+    expect(decideMissed([earlier], ledger, "2026-11-02T05:00:00Z", LIVE_MODEL_VERSION)).toEqual([]);
+  });
+
+  it("treats a missed row without a version as v1's", () => {
+    const old = game({ id: "o", tipUtc: tip, status: "final", homeScore: 1, awayScore: 0 });
+    const ledger: LedgerRow[] = [
+      seal("s"),
+      sealV2("s", "morning"),
+      { type: "missed", gameId: "o", etDate: "2026-11-01", tipUtc: tip, homeId: A, awayId: B, recordedAt: "x" },
+    ];
+    expect(decideMissed([old], ledger, "2026-11-02T05:00:00Z", REFERENCE_MODEL_VERSION)).toEqual([]);
+    expect(decideMissed([old], ledger, "2026-11-02T05:00:00Z", LIVE_MODEL_VERSION)).toHaveLength(1);
+    expect(summarizeRecord(ledger, REFERENCE_MODEL_VERSION, 0.55).missed).toBe(1);
+    expect(summarizeRecord(ledger, LIVE_MODEL_VERSION, 0.55).missed).toBe(0);
+  });
+
+  it("reports v2 by game: final preferred, no-final-seal counted, morning reported apart", () => {
+    const result = (gameId: string, homeScore: number, awayScore: number): LedgerRow => ({
+      type: "result",
+      gameId,
+      homeScore,
+      awayScore,
+      recordedAt: "x",
+    });
+    const ledger: LedgerRow[] = [
+      sealV2("both", "morning", { homeWinProbability: 0.6 }),
+      sealV2("both", "final", { homeWinProbability: 0.8 }),
+      sealV2("morningOnly", "morning", { homeWinProbability: 0.3, inputsIncomplete: true, missingGameIds: ["z"] }),
+      sealV2("open", "morning", { homeWinProbability: 0.5 }),
+      seal("both", { homeWinProbability: 0.55 }),
+      result("both", 100, 90),
+      result("morningOnly", 100, 90),
+      { type: "missed", gameId: "gone", etDate: "x", tipUtc: "x", homeId: A, awayId: B, recordedAt: "x", modelVersion: LIVE_MODEL_VERSION },
+    ];
+    const record = summarizeRecord(ledger, LIVE_MODEL_VERSION, 0.55);
+    expect(record.sealed).toBe(3);
+    expect(record.scored).toBe(2);
+    expect(record.pending).toBe(1);
+    expect(record.missed).toBe(1);
+    expect(record.noFinalSeal).toBe(1);
+    expect(record.incomplete).toBe(1);
+    expect(record.brier).toBeCloseTo((0.2 ** 2 + 0.7 ** 2) / 2, 12);
+    expect(record.morningBrier).toBeCloseTo((0.4 ** 2 + 0.7 ** 2) / 2, 12);
+    expect(record.accuracy).toBe(0.5);
+    // Both scored seals carry v1's number, 0.62: the paired head-to-head.
+    expect(record.referenceBrier).toBeCloseTo((0.38 ** 2 + 0.38 ** 2) / 2, 12);
+    expect(record.referenceModelVersion).toBe(REFERENCE_MODEL_VERSION);
+    const v1 = summarizeRecord(ledger, REFERENCE_MODEL_VERSION, 0.55);
+    expect(v1.referenceBrier).toBeNull();
+    expect(v1.scored).toBe(1);
+    expect(v1.brier).toBeCloseTo(0.45 ** 2, 12);
+    expect(v1.noFinalSeal).toBeNull();
+  });
+
+  it("counts no-final-seal games from the start, before the version has sealed anything", () => {
+    const empty = summarizeRecord([seal("a")], LIVE_MODEL_VERSION, 0.55, { finalSeals: true });
+    expect(empty.sealed).toBe(0);
+    expect(empty.noFinalSeal).toBe(0);
+    expect(summarizeRecord([seal("a")], REFERENCE_MODEL_VERSION, 0.55, { finalSeals: false }).noFinalSeal).toBeNull();
+  });
+
+  it("groups the window's seal rows by game, in ledger order", () => {
+    const ledger: LedgerRow[] = [
+      seal("a"),
+      sealV2("a", "morning"),
+      seal("old", { etDate: "2026-10-20" }),
+      sealV2("a", "final"),
+    ];
+    const grouped = sealsByGame(ledger, "2026-10-31", "2026-11-02");
+    expect(Object.keys(grouped)).toEqual(["a"]);
+    expect(grouped.a.map((row) => row.sealKind ?? "v1")).toEqual(["v1", "morning", "final"]);
   });
 });
 

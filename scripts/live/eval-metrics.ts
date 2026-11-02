@@ -144,6 +144,55 @@ export function pairedSeasonBootstrap(
   };
 }
 
+/**
+ * Paired Brier difference (candidate minus reference), bootstrapping whole game dates.
+ * Used where too few seasons exist to cluster on seasons. Deterministic, like the rest.
+ */
+export function pairedDateBootstrap(
+  candidate: readonly ScoredGame[],
+  reference: readonly ScoredGame[],
+  dateOf: (gameId: string) => string,
+  seed: string,
+  draws = 10_000,
+): PairedInterval {
+  const referenceById = new Map(reference.map((row) => [row.id, row]));
+  const totals = new Map<string, { sum: number; n: number }>();
+  for (const row of candidate) {
+    const match = referenceById.get(row.id);
+    if (!match) continue;
+    const key = dateOf(row.id);
+    const entry = totals.get(key) ?? { sum: 0, n: 0 };
+    entry.sum += (row.p - row.y) ** 2 - (match.p - match.y) ** 2;
+    entry.n += 1;
+    totals.set(key, entry);
+  }
+  const clusters = [...totals.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, value]) => value);
+  const totalSum = clusters.reduce((sum, row) => sum + row.sum, 0);
+  const totalN = clusters.reduce((sum, row) => sum + row.n, 0);
+  const random = createSeededRandom(seed);
+  const samples = new Float64Array(draws);
+  for (let draw = 0; draw < draws; draw += 1) {
+    let sum = 0;
+    let n = 0;
+    for (let pick = 0; pick < clusters.length; pick += 1) {
+      const cluster = clusters[Math.floor(random() * clusters.length)];
+      sum += cluster.sum;
+      n += cluster.n;
+    }
+    samples[draw] = sum / n;
+  }
+  samples.sort();
+  return {
+    difference: totalSum / totalN,
+    lower: samples[Math.floor(0.025 * draws)],
+    upper: samples[Math.floor(0.975 * draws)],
+    draws,
+    clusters: clusters.length,
+  };
+}
+
 export function round(value: number, digits = 6): number {
   return Number(value.toFixed(digits));
 }

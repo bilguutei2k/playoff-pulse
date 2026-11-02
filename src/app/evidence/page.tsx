@@ -2,6 +2,8 @@ import { EvidenceExplorer } from "@/components/forecast/EvidenceExplorer";
 import externalBenchmark538 from "../../../docs/backtest/external-benchmark-538.json";
 import evidence from "../../../docs/backtest/evidence.json";
 
+export const metadata = { title: "Evidence from the 2026 archive" };
+
 export default function EvidencePage() {
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">

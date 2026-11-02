@@ -42,3 +42,13 @@ export function formatPointChange(change: number): string {
   if (Math.abs(points) < 0.05) return "0.0";
   return `${points > 0 ? "+" : "−"}${Math.abs(points).toFixed(1)}`;
 }
+
+/** "just now", "4 min ago", "3 hr ago", "2 days ago": the freshness chip's short form. */
+export function formatAgeShort(ageMs: number): string {
+  const minutes = Math.floor(Math.max(0, ageMs) / 60_000);
+  if (minutes < 1) return "just now";
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 48) return `${hours} hr ago`;
+  return `${Math.floor(hours / 24)} days ago`;
+}

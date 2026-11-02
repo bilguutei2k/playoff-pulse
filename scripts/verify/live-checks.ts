@@ -1,28 +1,372 @@
-// Checks for the live forecast path: published state, NBA seeding rules against
-// real seasons, and the ledger. Runs offline.
+// Checks for the live forecast path: published state, the injury model's invariants,
+// NBA seeding rules against real seasons, and the ledger. Runs offline.
 
 import assert from "node:assert/strict";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { LIVE_MODEL_VERSION, LIVE_PARAMS } from "../../src/lib/season/params";
+import type { StoredLine } from "../../src/lib/season/box-scores";
+import {
+  createTracker,
+  expectedFurtherGames,
+  lostValue,
+  recordPlayerGame,
+  type ReportPoint,
+} from "../../src/lib/season/injury-model";
+import {
+  absenceDetail,
+  injuryModelHash,
+  sealInjuryGames,
+  type InjuryModel,
+} from "../../src/lib/season/live-injury";
+import {
+  INJURY_PARAMS,
+  INJURY_STATUS_TABLE,
+  INJURY_SURVIVAL,
+  LIVE_MODEL_VERSION,
+  LIVE_PARAMS,
+  REFERENCE_MODEL_VERSION,
+} from "../../src/lib/season/params";
 import { impliedHomeProbability } from "../../src/lib/season/market";
-import { paramsHash, predictGame } from "../../src/lib/season/ratings";
-import { assertForecastSums } from "../../src/lib/season/simulate";
-import { SEASON_TEAMS, STATE_SIZE } from "../../src/lib/season/teams";
-import type { LedgerRow, LiveState } from "../../src/lib/season/types";
+import { createFilterState, paramsHash, predictGame } from "../../src/lib/season/ratings";
+import { assertForecastSums, simulateSeason } from "../../src/lib/season/simulate";
+import { SEASON_TEAMS, STATE_SIZE, teamIndex } from "../../src/lib/season/teams";
+import type { LedgerRow, LiveState, SeasonGame } from "../../src/lib/season/types";
 import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
 import { ledgerProblems } from "../live/verify-ledger";
+import { upgradeLiveState } from "../../src/lib/season/state-schema";
+import { marginBreakdown } from "../../src/lib/view/margin";
+import {
+  PROJECTION_LABEL,
+  isProjectable,
+  projectGame,
+  scheduleDates,
+} from "../../src/lib/view/projection";
+
+const MODEL: InjuryModel = {
+  params: LIVE_PARAMS,
+  injury: INJURY_PARAMS,
+  statusTable: INJURY_STATUS_TABLE,
+  survival: INJURY_SURVIVAL,
+};
+
+/** The frozen v2 inputs must equal the registered fit file, and keep their shape rules. */
+function checkFrozenInjuryInputs(): void {
+  const fit = JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), "docs/live/injury-fit.json"), "utf-8"),
+  ) as {
+    fitted: typeof INJURY_PARAMS;
+    statusTable: Record<string, { absent: number }>;
+    survival: { long: number[]; short: number[]; classUsed: boolean };
+  };
+  assert.deepEqual(INJURY_PARAMS, fit.fitted, "Injury parameters differ from injury-fit.json.");
+  assert.deepEqual(
+    INJURY_STATUS_TABLE,
+    Object.fromEntries(Object.entries(fit.statusTable).map(([code, row]) => [code, row.absent])),
+    "Status table differs from injury-fit.json.",
+  );
+  assert.deepEqual(
+    INJURY_SURVIVAL,
+    { long: fit.survival.long, short: fit.survival.short, classUsed: fit.survival.classUsed },
+    "Survival table differs from injury-fit.json.",
+  );
+  const order = [INJURY_STATUS_TABLE.O, INJURY_STATUS_TABLE.D, INJURY_STATUS_TABLE.Q, INJURY_STATUS_TABLE.P, INJURY_STATUS_TABLE.A];
+  for (let index = 0; index < order.length; index += 1) {
+    assert.ok(order[index] >= 0 && order[index] <= 1, "Status shares must be probabilities.");
+    if (index > 0) assert.ok(order[index] <= order[index - 1], "Status table must be monotone, Out to Available.");
+  }
+  assert.ok(
+    expectedFurtherGames(INJURY_SURVIVAL, 0, "long") >= expectedFurtherGames(INJURY_SURVIVAL, 0, "short"),
+    "A long absence must not be expected to end sooner than a short one at bucket 0.",
+  );
+}
+
+/** Item 9 of the injury plan: the adjustment moves the right way, and only when it should. */
+function checkInjuryInvariants(): void {
+  const [A, B, C] = SEASON_TEAMS.map((team) => team.id);
+  // A synthetic season: two evenly matched teams, each with a star, a bench player and
+  // a player below replacement level.
+  const finals: SeasonGame[] = [];
+  const box = new Map<string, Record<string, StoredLine[]>>();
+  for (let day = 0; day < 24; day += 1) {
+    const etDate = new Date(Date.UTC(2026, 9, 21 + day)).toISOString().slice(0, 10);
+    const id = `check-${day}`;
+    const homeFirst = day % 2 === 0;
+    finals.push({
+      id,
+      season: 2027,
+      kind: "regular",
+      tipUtc: `${etDate}T23:30Z`,
+      etDate,
+      homeId: homeFirst ? A : B,
+      awayId: homeFirst ? B : A,
+      neutral: false,
+      status: "final",
+      homeScore: homeFirst ? 110 : 104,
+      awayScore: homeFirst ? 104 : 110,
+    });
+    box.set(id, {
+      [A]: [["a-star", 36, 28], ["a-bench", 24, 9], ["a-scrub", 12, 1]],
+      [B]: [["b-star", 36, 28], ["b-bench", 24, 9], ["b-scrub", 12, 1]],
+    });
+  }
+  const target: SeasonGame = {
+    id: "check-target",
+    season: 2027,
+    kind: "regular",
+    tipUtc: "2026-11-20T00:30Z",
+    etDate: "2026-11-19",
+    homeId: A,
+    awayId: B,
+    neutral: false,
+    status: "scheduled",
+    homeScore: null,
+    awayScore: null,
+  };
+  const point = (rows: Array<[string, string, "O" | "D" | "Q" | "P" | "A"]>): ReportPoint => ({
+    at: "2026-11-19T18:30",
+    notSubmitted: [],
+    rows: rows.map(([teamId, athleteId, status]) => ({ teamId, athleteId, status, reason: "Injury/Illness - Knee" })),
+  });
+  const seal = (report: ReportPoint | null) =>
+    sealInjuryGames([{ game: target, inputsIncomplete: false, missingGameIds: [], kind: "final" }], {
+      history: [],
+      seasonGames: [...finals, target],
+      model: MODEL,
+      modelVersion: LIVE_MODEL_VERSION,
+      referenceModelVersion: REFERENCE_MODEL_VERSION,
+      runId: "check",
+      nowIso: "2026-11-19T23:45:00Z",
+      source: { boxScores: (gameId) => box.get(gameId), availability: () => null },
+      report: { point: report, stale: false, missing: false },
+      nameOf: (athleteId) => athleteId,
+      marketFor: () => null,
+    })[0];
+  const none = seal(null);
+  const homeOut = seal(point([[A, "a-star", "O"]]));
+  const homeQuestionable = seal(point([[A, "a-star", "Q"]]));
+  const homeProbable = seal(point([[A, "a-star", "P"]]));
+  const awayOut = seal(point([[B, "b-star", "O"]]));
+  const homeTwoOut = seal(point([[A, "a-star", "O"], [A, "a-bench", "O"]]));
+  const scrubOut = seal(point([[A, "a-scrub", "O"], [B, "b-scrub", "O"]]));
+  assert.ok(
+    homeTwoOut.homeWinProbability < homeOut.homeWinProbability &&
+      homeOut.homeWinProbability < homeQuestionable.homeWinProbability &&
+      homeQuestionable.homeWinProbability < homeProbable.homeWinProbability &&
+      homeProbable.homeWinProbability < none.homeWinProbability,
+    "More expected absence must lower a team's chance.",
+  );
+  assert.ok(awayOut.homeWinProbability > none.homeWinProbability, "An absent opponent must raise a team's chance.");
+  assert.equal(scrubOut.homeWinProbability, none.homeWinProbability, "A replacement-level absence must change nothing.");
+  assert.deepEqual(scrubOut.absence, { home: 0, away: 0 }, "A replacement-level absence must be zero.");
+  assert.equal(none.referenceHomeWinProbability, homeOut.referenceHomeWinProbability, "The v1 reference must ignore absences.");
+  for (const row of [none, homeOut, homeQuestionable, homeProbable, awayOut, homeTwoOut, scrubOut]) {
+    const { absence, absencePoints } = row;
+    assert.ok(absence && absencePoints, "A v2 seal must carry its absence term.");
+    assert.ok(absence.home >= 0 && absence.away >= 0, "Every absence term must be at least 0.");
+    assert.ok(absencePoints.home >= 0 && absencePoints.away >= 0, "Absence points must be at least 0.");
+    assert.ok(row.homeWinProbability > 0 && row.homeWinProbability < 1, "Seals must be probabilities.");
+  }
+
+  // Equal teams with equal absences stay even, on a neutral floor.
+  const tracker = createTracker();
+  for (let game = 0; game < 30; game += 1) {
+    recordPlayerGame(tracker.book, A, [["a-star", 34, 24]], INJURY_PARAMS);
+    recordPlayerGame(tracker.book, C, [["c-star", 34, 24]], INJURY_PARAMS);
+  }
+  const both = point([[A, "a-star", "O"], [C, "c-star", "O"]]);
+  const home = absenceDetail(both, A, tracker, MODEL, (id) => id).absence;
+  const away = absenceDetail(both, C, tracker, MODEL, (id) => id).absence;
+  assert.ok(home > 0 && Math.abs(home - away) < 1e-12, "Identical absences must be equal.");
+  const even = predictGame(
+    createFilterState(LIVE_PARAMS),
+    { homeId: A, awayId: C, neutral: true, playoff: false, homeOnBackToBack: false, awayOnBackToBack: false },
+    LIVE_PARAMS,
+    -INJURY_PARAMS.beta * (home - away),
+  );
+  assert.ok(Math.abs(even.homeWinProbability - 0.5) < 1e-9, "Equal teams with equal absences must stay even.");
+  assert.ok(lostValue(tracker.book, "nobody", INJURY_PARAMS) === 0, "An unknown player is worth nothing.");
+
+  // In the season simulation, absences cost a team wins and title chances.
+  const schedule: SeasonGame[] = [];
+  for (let round = 0; round < 6; round += 1) {
+    SEASON_TEAMS.forEach((team, index) => {
+      const other = SEASON_TEAMS[(index + 1 + round) % SEASON_TEAMS.length];
+      const etDate = new Date(Date.UTC(2026, 10, 2 + round * 2 + (index % 2))).toISOString().slice(0, 10);
+      schedule.push({
+        id: `sim-${round}-${index}`,
+        season: 2027,
+        kind: "regular",
+        tipUtc: `${etDate}T23:00Z`,
+        etDate,
+        homeId: team.id,
+        awayId: other.id,
+        neutral: false,
+        status: "scheduled",
+        homeScore: null,
+        awayScore: null,
+      });
+    });
+  }
+  const simulate = (points: number) => {
+    const regular: Record<string, number[]> = {};
+    const postseason: Record<string, number> = {};
+    for (const team of SEASON_TEAMS) {
+      const games = schedule.filter((game) => game.homeId === team.id || game.awayId === team.id).length;
+      regular[team.id] = new Array<number>(games).fill(team.id === A ? points : 0);
+      postseason[team.id] = team.id === A ? points : 0;
+    }
+    return simulateSeason({
+      season: 2027,
+      phase: "regular-season",
+      games: schedule,
+      state: createFilterState(LIVE_PARAMS),
+      params: LIVE_PARAMS,
+      asOfEtDate: "2026-11-01",
+      lastGameEtDate: Object.fromEntries(SEASON_TEAMS.map((team) => [team.id, null])),
+      iterations: 3000,
+      absences: { regular, postseason },
+    }).teams[teamIndex(A)];
+  };
+  const healthy = simulate(0);
+  const hurt = simulate(6);
+  assert.ok(hurt.projectedWins < healthy.projectedWins, "Absences must cost simulated wins.");
+  assert.ok(hurt.champion < healthy.champion, "Absences must cost title chances.");
+}
+
+function checkSchemaOneState(state: { modelVersion: string; paramsHash: string }): void {
+  // Published by v1 before this code first ran; the job replaces it on its next run.
+  assert.equal(state.modelVersion, REFERENCE_MODEL_VERSION, "A schema 1 state must come from v1.");
+  assert.equal(state.paramsHash, paramsHash(LIVE_PARAMS), "State comes from other parameters.");
+}
+
+function checkSchemaTwoState(state: LiveState): void {
+  assert.equal(state.modelVersion, LIVE_MODEL_VERSION, "State comes from another model version.");
+  assert.equal(state.referenceModelVersion, REFERENCE_MODEL_VERSION, "Unexpected reference model.");
+  assert.equal(state.paramsHash, injuryModelHash(MODEL), "State comes from other parameters.");
+  assert.deepEqual(state.params, LIVE_PARAMS, "Published rating parameters differ from the frozen ones.");
+  assert.deepEqual(
+    state.injury,
+    { params: INJURY_PARAMS, statusTable: INJURY_STATUS_TABLE, survival: INJURY_SURVIVAL },
+    "Published injury model differs from the frozen one.",
+  );
+  for (const version of [LIVE_MODEL_VERSION, REFERENCE_MODEL_VERSION]) {
+    assert.ok(state.records[version], `No record for ${version}.`);
+    assert.equal(state.records[version].modelVersion, version, `Record for ${version} is mislabeled.`);
+  }
+  assert.deepEqual(state.record, state.records[LIVE_MODEL_VERSION], "The headline record must be v2's.");
+  assert.ok(state.records[LIVE_MODEL_VERSION].noFinalSeal !== null, "v2 must count games with no final seal.");
+  if (state.availability.missing) {
+    assert.equal(state.availability.reportAt, null, "Missing availability cannot name a report.");
+  }
+  for (const team of SEASON_TEAMS) {
+    const points = state.absencePoints[team.id];
+    assert.ok(points >= 0, `${team.abbreviation} absence points must be at least 0.`);
+    const forecastRow = state.forecast.teams.find((row) => row.teamId === team.id);
+    assert.ok(forecastRow, `${team.abbreviation} has no forecast row.`);
+    assert.ok(
+      Math.abs(state.currentRatings[team.id] - (forecastRow.rating - points)) < 0.002,
+      `${team.abbreviation} current rating must be full strength minus absence points.`,
+    );
+  }
+  for (const absence of state.absences) {
+    assert.ok(SEASON_TEAMS.some((team) => team.id === absence.teamId), "Absence for an unknown team.");
+    assert.ok(absence.points > 0, "A published absence must cost something.");
+    assert.ok(absence.expectedGames > 0, "A published absence must have games left to miss.");
+  }
+  for (const [gameId, rows] of Object.entries(state.seals)) {
+    assert.ok(Array.isArray(rows) && rows.every((row) => row.gameId === gameId), "Seals must be grouped by game.");
+  }
+}
+
+/**
+ * Projections: the site's unsealed numbers for games still to come. Every one it can
+ * show must be a probability, pair with its complement, equal `predictGame` over the
+ * published ratings with no injury term, and move the right way with rest and venue.
+ * They are labeled as projections and never enter the ledger or the record.
+ */
+function checkProjections(state: LiveState, games: readonly SeasonGame[]): void {
+  assert.match(PROJECTION_LABEL, /before injuries/, "The projection label must say it is before injuries.");
+  assert.match(PROJECTION_LABEL, /sealed forecast is issued on game day/, "The projection label must point to the seal.");
+  const dates = scheduleDates(state, games);
+  let checked = 0;
+  for (const game of games) {
+    if (!isProjectable(game, state.slateEtDate)) continue;
+    const projection = projectGame(state, game, dates);
+    const p = projection.homeWinProbability;
+    assert.ok(p > 0 && p < 1, `Projection for ${game.id} must be strictly between 0 and 1.`);
+    assert.equal(p + projection.awayWinProbability, 1, `Projection for ${game.id} must sum to 1.`);
+    const direct = predictGame(
+      state.ratings,
+      {
+        homeId: game.homeId,
+        awayId: game.awayId,
+        neutral: game.neutral,
+        playoff: game.kind === "playoff",
+        homeOnBackToBack: projection.homeOnBackToBack,
+        awayOnBackToBack: projection.awayOnBackToBack,
+      },
+      state.params,
+    );
+    assert.equal(p, direct.homeWinProbability, `Projection for ${game.id} must come from the published ratings.`);
+    assert.equal(projection.expectedMargin, direct.expectedMargin, `Projection for ${game.id} must carry no injury term.`);
+    const parts = marginBreakdown({
+      state,
+      context: {
+        homeId: game.homeId,
+        awayId: game.awayId,
+        neutral: game.neutral,
+        playoff: game.kind === "playoff",
+        homeOnBackToBack: projection.homeOnBackToBack,
+        awayOnBackToBack: projection.awayOnBackToBack,
+      },
+      expectedMargin: projection.expectedMargin,
+      absencePoints: null,
+      ratingsHash: null,
+    });
+    assert.ok(parts.separated, `Projection ${game.id} must split into rating and home court.`);
+    const shown = parts.parts.reduce((sum, part) => sum + part.display, 0);
+    assert.ok(
+      Math.abs(shown - Math.round(projection.expectedMargin * 10) / 10) < 1e-9,
+      `Projection ${game.id}: the shown margin parts must add up to the shown margin.`,
+    );
+    checked += 1;
+  }
+  if (state.slateEtDate < (games.at(-1)?.etDate ?? "")) {
+    assert.ok(checked > 0, "A season with games to come must have projections to check.");
+  }
+
+  // Rest and venue move a projection the right way; a neutral swap mirrors it.
+  const [a, b] = [SEASON_TEAMS[0].id, SEASON_TEAMS[1].id];
+  const base = { homeId: a, awayId: b, neutral: false, kind: "regular" as const, etDate: "2027-01-10" };
+  const rested = projectGame(state, base, { [a]: ["2027-01-08"], [b]: ["2027-01-08"] });
+  const tired = projectGame(state, base, { [a]: ["2027-01-09"], [b]: ["2027-01-08"] });
+  assert.ok(tired.homeWinProbability < rested.homeWinProbability, "A home back-to-back must lower the home projection.");
+  const neutral = projectGame(state, { ...base, neutral: true }, {});
+  const swapped = projectGame(state, { ...base, neutral: true, homeId: b, awayId: a }, {});
+  assert.ok(
+    Math.abs(neutral.homeWinProbability + swapped.homeWinProbability - 1) < 1e-12,
+    "Swapping teams on a neutral court must mirror the projection.",
+  );
+  assert.ok(
+    projectGame(state, base, {}).homeWinProbability > neutral.homeWinProbability,
+    "Home court must raise the home team's projection.",
+  );
+}
 
 export function runLiveChecks(): void {
-  const state = JSON.parse(
+  const raw = JSON.parse(
     fs.readFileSync(path.join(process.cwd(), "data/live/state.json"), "utf-8"),
-  ) as LiveState;
+  ) as LiveState | (Omit<LiveState, "schemaVersion"> & { schemaVersion: 1 });
 
-  assert.equal(state.schemaVersion, 1, "Unknown live state schema.");
-  assert.equal(state.modelVersion, LIVE_MODEL_VERSION, "State comes from another model version.");
-  assert.equal(state.paramsHash, paramsHash(LIVE_PARAMS), "State comes from other parameters.");
+  checkFrozenInjuryInputs();
+  checkInjuryInvariants();
+
+  assert.ok(raw.schemaVersion === 1 || raw.schemaVersion === 2, "Unknown live state schema.");
+  if (raw.schemaVersion === 2) checkSchemaTwoState(raw);
+  else checkSchemaOneState(raw);
+  const state = raw;
   assert.equal(state.ratings.mean.length, STATE_SIZE, "Rating vector has the wrong size.");
   assert.equal(state.ratings.cov.length, STATE_SIZE ** 2, "Covariance has the wrong size.");
   assert.equal(state.forecast.teams.length, SEASON_TEAMS.length, "Forecast must cover 30 teams.");
@@ -99,6 +443,14 @@ export function runLiveChecks(): void {
     null,
     "A missing line must give no market number.",
   );
+
+  const gamesPath = path.join(process.cwd(), "data/live/games", `${LIVE_SEASON}.json`);
+  const storedGames = fs.existsSync(gamesPath)
+    ? (JSON.parse(fs.readFileSync(gamesPath, "utf-8")) as SeasonGame[]).sort(
+        (x, y) => Date.parse(x.tipUtc) - Date.parse(y.tipUtc) || x.id.localeCompare(y.id),
+      )
+    : [];
+  checkProjections(upgradeLiveState(state), storedGames);
 
   const seeding = runSeedingCheck();
   assert.deepEqual(seeding.mismatches, [], "Computed seeds must match real seasons.");

@@ -105,6 +105,15 @@ export type SimulationInput = {
   /** Multiplier on rating covariance and drift. 1 unless disclosed otherwise. */
   uncertaintyScale?: number;
   observed?: ObservedPostseason;
+  /** Points each team gives up to known absences. Absent means none. */
+  absences?: SimulationAbsences;
+};
+
+export type SimulationAbsences = {
+  /** By team ID, points lost in each of its next regular-season games, in order. */
+  regular: Record<string, readonly number[]>;
+  /** By team ID, points lost in every postseason game. */
+  postseason: Record<string, number>;
 };
 
 function buildPendingGames(input: SimulationInput): {
@@ -123,9 +132,15 @@ function buildPendingGames(input: SimulationInput): {
 
   const last: Record<string, string | null> = { ...lastGameEtDate };
   const pending: PendingGame[] = [];
+  const teamGamesAhead = new Map<string, number>();
+  const absencePoints = (teamId: string): number => {
+    const ordinal = teamGamesAhead.get(teamId) ?? 0;
+    teamGamesAhead.set(teamId, ordinal + 1);
+    return input.absences?.regular[teamId]?.[ordinal] ?? 0;
+  };
   for (const game of scheduled) {
     const day = Math.max(0, daysBetween(asOfEtDate, game.etDate));
-    let offset = 0;
+    let offset = absencePoints(game.awayId) - absencePoints(game.homeId);
     if (isBackToBack(last[game.awayId] ?? null, game.etDate)) offset += params.b2b;
     if (isBackToBack(last[game.homeId] ?? null, game.etDate)) offset -= params.b2b;
     pending.push({
@@ -402,6 +417,13 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
         if (margin > 0) table.wins[team] += 1;
         else table.losses[team] += 1;
         table.pointDifferential[team] += margin;
+      }
+    }
+    // Absences expected to last past the regular season. Strengths are redrawn each
+    // iteration, so this never compounds.
+    if (input.absences) {
+      for (let team = 0; team < TEAM_COUNT; team += 1) {
+        strengths[team] -= input.absences.postseason[SEASON_TEAMS[team].id] ?? 0;
       }
     }
 
