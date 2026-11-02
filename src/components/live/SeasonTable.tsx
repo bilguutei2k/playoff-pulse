@@ -1,152 +1,261 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { heatClass } from "@/components/live/heat";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { teamById } from "@/lib/season/teams";
-import type { Conference, TeamForecast } from "@/lib/season/types";
-import { formatPercent } from "@/lib/utils/format";
+import type { Conference, SeasonPhase, TeamForecast } from "@/lib/season/types";
+import { formatChance, formatPointChange } from "@/lib/utils/format";
 
-type SortKey =
-  | "champion"
-  | "reachFinals"
-  | "reachConferenceFinals"
-  | "reachSemifinals"
-  | "makePlayoffs"
+type ProbabilityKey =
   | "topSix"
-  | "projectedWins"
-  | "rating";
+  | "makePlayoffs"
+  | "reachSemifinals"
+  | "reachConferenceFinals"
+  | "reachFinals"
+  | "champion";
 
-const COLUMNS: Array<{ key: SortKey; label: string; title: string }> = [
-  { key: "rating", label: "Rating", title: "Points better than an average team, with its uncertainty" },
-  { key: "projectedWins", label: "Proj. wins", title: "Mean projected wins, with the 10th to 90th percentile" },
-  { key: "topSix", label: "Top 6", title: "Chance of a top-6 seed and a direct playoff spot" },
-  { key: "makePlayoffs", label: "Playoffs", title: "Chance of reaching the playoffs, including through the play-in" },
+type SortKey = "team" | "record" | "rating" | "projectedWins" | ProbabilityKey | "change";
+type Direction = "ascending" | "descending";
+
+const PROBABILITY_COLUMNS: Array<{ key: ProbabilityKey; label: string; title: string }> = [
+  { key: "topSix", label: "Top 6", title: "Chance of a top-six seed, which skips the play-in" },
+  {
+    key: "makePlayoffs",
+    label: "Playoffs",
+    title: "Chance of reaching the playoffs, directly or through the play-in",
+  },
   { key: "reachSemifinals", label: "Round 2", title: "Chance of reaching the conference semifinals" },
-  { key: "reachConferenceFinals", label: "Conf. finals", title: "Chance of reaching the conference finals" },
+  {
+    key: "reachConferenceFinals",
+    label: "Conf. finals",
+    title: "Chance of reaching the conference finals",
+  },
   { key: "reachFinals", label: "Finals", title: "Chance of reaching the NBA Finals" },
   { key: "champion", label: "Title", title: "Chance of winning the championship" },
 ];
 
-function heatClass(value: number): string {
-  if (value < 0.0005) return "pp-heat-zero";
-  if (value < 0.1) return "pp-heat-low";
-  if (value < 0.4) return "pp-heat-mid";
-  return "pp-heat-high";
+function winShare(row: TeamForecast): number {
+  const games = row.wins + row.losses;
+  return games === 0 ? 0 : row.wins / games;
 }
 
-function ProbabilityCell({ value }: { value: number }) {
+function sortValue(row: TeamForecast, key: SortKey, change: Record<string, number> | null): number | string {
+  switch (key) {
+    case "team":
+      return teamById(row.teamId).name;
+    case "record":
+      return winShare(row) * 1000 + row.wins;
+    case "change":
+      return change?.[row.teamId] ?? Number.NEGATIVE_INFINITY;
+    default:
+      return row[key];
+  }
+}
+
+function SortHeader({
+  label,
+  sub,
+  title,
+  column,
+  sort,
+  onSort,
+  align = "right",
+  className = "",
+}: {
+  label: string;
+  sub?: string;
+  title: string;
+  column: SortKey;
+  sort: { key: SortKey; direction: Direction };
+  onSort: (key: SortKey) => void;
+  align?: "left" | "right";
+  className?: string;
+}) {
+  const active = sort.key === column;
+  const Icon = sort.direction === "descending" ? ArrowDown : ArrowUp;
   return (
-    <td className="num">
-      <span className={`pp-heat ${heatClass(value)}`}>
-        {value < 0.0005 ? "<0.1%" : formatPercent(value)}
-      </span>
-    </td>
+    <th
+      scope="col"
+      aria-sort={active ? sort.direction : "none"}
+      title={title}
+      className={`sticky top-0 z-20 border-b border-[var(--color-border-strong)] bg-[var(--color-panel-primary)] px-2.5 py-2.5 align-bottom ${
+        align === "right" ? "text-right" : "text-left"
+      } ${className}`}
+    >
+      <button
+        type="button"
+        onClick={() => onSort(column)}
+        className={`inline-flex items-center gap-1 rounded text-xs font-semibold leading-4 ${
+          align === "right" ? "flex-row-reverse text-right" : "text-left"
+        } ${active ? "text-[var(--color-text-primary)]" : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"}`}
+      >
+        <span className="flex flex-col">
+          <span className="whitespace-nowrap">{label}</span>
+          {sub ? <span className="whitespace-nowrap font-normal text-[var(--color-text-muted)]">{sub}</span> : null}
+        </span>
+        {active ? <Icon size={12} aria-hidden className="shrink-0" /> : null}
+      </button>
+    </th>
   );
-}
-
-function formatChange(value: number): string {
-  const points = value * 100;
-  if (Math.abs(points) < 0.05) return "0.0";
-  return `${points > 0 ? "+" : "\u2212"}${Math.abs(points).toFixed(1)}`;
 }
 
 function ConferenceTable({
   conference,
   rows,
-  sortKey,
+  sort,
   onSort,
   change,
-  changeTitle,
+  changeSince,
+  exact,
 }: {
   conference: Conference;
   rows: TeamForecast[];
-  sortKey: SortKey;
+  sort: { key: SortKey; direction: Direction };
   onSort: (key: SortKey) => void;
   change: Record<string, number> | null;
-  changeTitle: string;
+  changeSince: string | null;
+  exact: boolean;
 }) {
-  const sorted = useMemo(
-    () => [...rows].sort((a, b) => b[sortKey] - a[sortKey]),
-    [rows, sortKey],
-  );
+  const sorted = useMemo(() => {
+    const factor = sort.direction === "ascending" ? 1 : -1;
+    return [...rows].sort((a, b) => {
+      const first = sortValue(a, sort.key, change);
+      const second = sortValue(b, sort.key, change);
+      if (typeof first === "string" && typeof second === "string") {
+        return factor * first.localeCompare(second);
+      }
+      return factor * ((first as number) - (second as number)) || b.champion - a.champion;
+    });
+  }, [rows, sort, change]);
+
   return (
-    <div className="pp-card">
-      <div className="pp-section-head">
-        <h3 className="text-sm font-bold text-[var(--color-text-primary)]">{conference}</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="pp-table">
+    <section aria-labelledby={`conference-${conference}`} className="flex flex-col gap-3">
+      <h3
+        id={`conference-${conference}`}
+        className="text-base font-semibold text-[var(--color-text-primary)]"
+      >
+        {conference === "East" ? "Eastern Conference" : "Western Conference"}
+      </h3>
+      <div className="max-h-[75vh] overflow-auto rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] xl:max-h-none xl:overflow-visible">
+        <table className="w-full min-w-[930px] table-fixed border-separate border-spacing-0 text-sm tabular">
+          <caption className="sr-only">
+            {conference === "East" ? "Eastern" : "Western"} Conference season forecast. Column
+            headers sort the table.
+          </caption>
+          {/* Fixed widths keep both conference tables aligned; the team column takes the rest. */}
+          <colgroup>
+            <col />
+            <col className="w-16" />
+            <col className="w-24" />
+            <col className="w-[5.5rem]" />
+            {PROBABILITY_COLUMNS.map((column) => (
+              <col
+                key={column.key}
+                className={column.key === "reachConferenceFinals" ? "w-24" : "w-[4.75rem]"}
+              />
+            ))}
+            {change ? <col className="w-28" /> : null}
+          </colgroup>
           <thead>
             <tr>
-              <th scope="col">Team</th>
-              <th scope="col" className="num">
-                Record
-              </th>
-              {COLUMNS.map((column) => (
-                <th
+              <SortHeader
+                label="Team"
+                title="Sort by team name"
+                column="team"
+                sort={sort}
+                onSort={onSort}
+                align="left"
+                className="left-0 z-30 rounded-tl-xl shadow-[inset_-1px_0_0_var(--color-border-subtle)] xl:shadow-none"
+              />
+              <SortHeader label="Record" title="Wins and losses so far" column="record" sort={sort} onSort={onSort} />
+              <SortHeader
+                label="Rating"
+                sub="± uncertainty"
+                title="Points per game better than an average team, with one standard deviation of uncertainty"
+                column="rating"
+                sort={sort}
+                onSort={onSort}
+              />
+              <SortHeader
+                label="Proj. wins"
+                sub="10th-90th"
+                title="Average projected final wins, with the 10th to 90th percentile range"
+                column="projectedWins"
+                sort={sort}
+                onSort={onSort}
+              />
+              {PROBABILITY_COLUMNS.map((column) => (
+                <SortHeader
                   key={column.key}
-                  scope="col"
-                  className="num"
-                  aria-sort={sortKey === column.key ? "descending" : "none"}
+                  label={column.label}
                   title={column.title}
-                >
-                  <button
-                    type="button"
-                    onClick={() => onSort(column.key)}
-                    className={`uppercase ${
-                      sortKey === column.key
-                        ? "text-[var(--color-text-primary)] underline underline-offset-4"
-                        : ""
-                    }`}
-                  >
-                    {column.label}
-                  </button>
-                </th>
+                  column={column.key}
+                  sort={sort}
+                  onSort={onSort}
+                />
               ))}
               {change ? (
-                <th scope="col" className="num" title={changeTitle}>
-                  Change
-                </th>
+                <SortHeader
+                  label="Title change"
+                  sub={changeSince ? `pts since ${changeSince}` : "pts"}
+                  title={`Change in title odds, in percentage points${changeSince ? `, since ${changeSince}` : ""}`}
+                  column="change"
+                  sort={sort}
+                  onSort={onSort}
+                  className="rounded-tr-xl"
+                />
               ) : null}
             </tr>
           </thead>
           <tbody>
             {sorted.map((row) => {
               const team = teamById(row.teamId);
+              const delta = change?.[row.teamId];
+              const cell = "border-b border-[var(--color-border-subtle)] px-2.5 py-2 text-right";
               return (
-                <tr key={row.teamId}>
+                <tr key={row.teamId} className="group">
                   <th
                     scope="row"
-                    className="!font-[inherit] !text-[13px] !normal-case !tracking-normal"
-                    title={team.name}
+                    className="sticky left-0 z-10 border-b border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] px-2.5 py-2 text-left font-medium text-[var(--color-text-primary)] shadow-[inset_-1px_0_0_var(--color-border-subtle)] group-hover:bg-[#f9fafb] xl:shadow-none"
                   >
-                    <span className="flex items-center gap-2">
-                      <TeamLogo teamId={row.teamId} />
-                      {team.abbreviation}
+                    <span className="flex items-center gap-2.5 whitespace-nowrap" title={team.name}>
+                      <TeamLogo teamId={row.teamId} size={22} />
+                      <span className="xl:hidden">{team.abbreviation}</span>
+                      <span className="hidden xl:inline">{team.name}</span>
                     </span>
                   </th>
-                  <td className="num">
+                  <td className={`${cell} text-[var(--color-text-secondary)] group-hover:bg-[#f9fafb]`}>
                     {row.wins}-{row.losses}
                   </td>
-                  <td className="num">
-                    {row.rating > 0 ? "+" : ""}
-                    {row.rating.toFixed(1)} <span className="text-[var(--color-text-muted)]">±{row.ratingSd.toFixed(1)}</span>
+                  <td className={`${cell} group-hover:bg-[#f9fafb]`}>
+                    <span className="block font-medium text-[var(--color-text-primary)]">
+                      {row.rating > 0 ? "+" : row.rating < 0 ? "−" : ""}
+                      {Math.abs(row.rating).toFixed(1)}
+                    </span>
+                    <span className="block text-xs text-[var(--color-text-muted)]">
+                      ±{row.ratingSd.toFixed(1)}
+                    </span>
                   </td>
-                  <td className="num">
-                    {row.projectedWins.toFixed(1)}{" "}
-                    <span className="text-[var(--color-text-muted)]">
+                  <td className={`${cell} group-hover:bg-[#f9fafb]`}>
+                    <span className="block font-medium text-[var(--color-text-primary)]">
+                      {row.projectedWins.toFixed(1)}
+                    </span>
+                    <span className="block text-xs text-[var(--color-text-muted)]">
                       {row.projectedWinsP10}-{row.projectedWinsP90}
                     </span>
                   </td>
-                  <ProbabilityCell value={row.topSix} />
-                  <ProbabilityCell value={row.makePlayoffs} />
-                  <ProbabilityCell value={row.reachSemifinals} />
-                  <ProbabilityCell value={row.reachConferenceFinals} />
-                  <ProbabilityCell value={row.reachFinals} />
-                  <ProbabilityCell value={row.champion} />
+                  {PROBABILITY_COLUMNS.map((column) => (
+                    <td key={column.key} className={`${cell} group-hover:bg-[#f9fafb]`}>
+                      <span className={`pp-heat ${heatClass(row[column.key])}`}>
+                        {formatChance(row[column.key], { exact })}
+                      </span>
+                    </td>
+                  ))}
                   {change ? (
-                    <td className="num">
-                      {change[row.teamId] === undefined ? "n/a" : formatChange(change[row.teamId])}
+                    <td className={`${cell} text-[var(--color-text-secondary)] group-hover:bg-[#f9fafb]`}>
+                      {delta === undefined ? "–" : formatPointChange(delta)}
                     </td>
                   ) : null}
                 </tr>
@@ -155,42 +264,53 @@ function ConferenceTable({
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   );
 }
 
 export function SeasonTable({
   teams,
+  phase,
   change,
   changeSince,
 }: {
   teams: TeamForecast[];
+  phase: SeasonPhase;
   /** Change in title odds by team, or null before there is anything to compare. */
   change: Record<string, number> | null;
   changeSince: string | null;
 }) {
-  const changeTitle = `Change in title odds, in percentage points, since ${changeSince ?? "the last update"}`;
-  const [sortKey, setSortKey] = useState<SortKey>("champion");
-  const east = teams.filter((row) => teamById(row.teamId).conference === "East");
-  const west = teams.filter((row) => teamById(row.teamId).conference === "West");
+  const [sort, setSort] = useState<{ key: SortKey; direction: Direction }>({
+    key: "champion",
+    direction: "descending",
+  });
+  const onSort = (key: SortKey) =>
+    setSort((current) =>
+      current.key === key
+        ? { key, direction: current.direction === "descending" ? "ascending" : "descending" }
+        : { key, direction: key === "team" ? "ascending" : "descending" },
+    );
+  // Outside the regular season, zeros and ones are settled facts, such as an
+  // eliminated team, so they print as 0% and 100%.
+  const exact = phase !== "regular-season";
+  const conferences: Array<[Conference, TeamForecast[]]> = [
+    ["East", teams.filter((row) => teamById(row.teamId).conference === "East")],
+    ["West", teams.filter((row) => teamById(row.teamId).conference === "West")],
+  ];
   return (
-    <div className="grid gap-3">
-      <ConferenceTable
-        conference="East"
-        rows={east}
-        sortKey={sortKey}
-        onSort={setSortKey}
-        change={change}
-        changeTitle={changeTitle}
-      />
-      <ConferenceTable
-        conference="West"
-        rows={west}
-        sortKey={sortKey}
-        onSort={setSortKey}
-        change={change}
-        changeTitle={changeTitle}
-      />
+    <div className="flex flex-col gap-8">
+      {conferences.map(([conference, rows]) => (
+        <ConferenceTable
+          key={conference}
+          conference={conference}
+          rows={rows}
+          sort={sort}
+          onSort={onSort}
+          change={change}
+          changeSince={changeSince}
+          exact={exact}
+        />
+      ))}
     </div>
   );
 }

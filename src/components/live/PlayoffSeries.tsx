@@ -1,7 +1,8 @@
 import { TeamLogo } from "@/components/live/TeamLogo";
+import { TeamProbabilityBar } from "@/components/live/TeamProbabilityBar";
 import { teamById } from "@/lib/season/teams";
 import type { PlayoffRound, SeriesForecast } from "@/lib/season/types";
-import { formatPercent } from "@/lib/utils/format";
+import { formatChance } from "@/lib/utils/format";
 
 const ROUNDS: Array<{ round: PlayoffRound; label: string }> = [
   { round: "finals", label: "NBA Finals" },
@@ -19,43 +20,61 @@ function SeriesRow({ series }: { series: SeriesForecast }) {
   const favoriteChance = homeCourtLeads
     ? series.homeCourtSeriesProbability
     : 1 - series.homeCourtSeriesProbability;
+  const winner = series.homeCourtWins >= 4 ? homeCourt : other;
   return (
-    <li className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[var(--color-border-subtle)] py-2 text-sm">
-      <span className="flex items-center gap-1.5 text-[var(--color-text-secondary)]">
-        <TeamLogo teamId={series.homeCourtId} />
-        {homeCourt.abbreviation}
-        <span className="pp-number font-bold text-[var(--color-text-primary)]">
-          {series.homeCourtWins}-{series.otherWins}
+    <li className="flex flex-col gap-2 border-b border-[var(--color-border-subtle)] py-3 last:border-b-0">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+        <span className="flex items-center gap-2 font-medium text-[var(--color-text-primary)]">
+          <TeamLogo teamId={series.homeCourtId} size={20} />
+          {homeCourt.abbreviation}
+          <span className="tabular rounded-md bg-[var(--color-panel-secondary)] px-1.5 py-0.5 font-semibold">
+            {series.homeCourtWins}-{series.otherWins}
+          </span>
+          {other.abbreviation}
+          <TeamLogo teamId={series.otherId} size={20} />
         </span>
-        <TeamLogo teamId={series.otherId} />
-        {other.abbreviation}
-      </span>
-      <span className="pp-number text-xs text-[var(--color-text-muted)]">
-        {finished
-          ? `${favorite.abbreviation} won the series`
-          : `${favorite.abbreviation} ${formatPercent(favoriteChance)} to win the series`}
-      </span>
+        <span className="tabular text-xs text-[var(--color-text-muted)]">
+          {finished
+            ? `${winner.abbreviation} won the series`
+            : `${favorite.abbreviation} ${formatChance(favoriteChance, { exact: true })} to win the series`}
+        </span>
+      </div>
+      <TeamProbabilityBar
+        leftId={series.homeCourtId}
+        rightId={series.otherId}
+        leftProbability={series.homeCourtSeriesProbability}
+        label="Chance of winning the series"
+        exact
+      />
     </li>
   );
 }
 
 export function PlayoffSeries({ series }: { series: SeriesForecast[] }) {
   return (
-    <section aria-labelledby="series-title">
-      <div className="pp-kicker">Playoffs</div>
-      <h2 id="series-title" className="mt-1 mb-3 text-xl font-bold text-[var(--color-text-primary)]">
-        Series
-      </h2>
-      <div className="grid gap-3 md:grid-cols-2">
+    <section aria-labelledby="series-title" className="flex flex-col gap-4">
+      <div>
+        <h2
+          id="series-title"
+          className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]"
+        >
+          Playoff series
+        </h2>
+        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+          Each series from its current score. The team listed first has home court.
+        </p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
         {ROUNDS.map(({ round, label }) => {
           const rows = series.filter((row) => row.round === round);
           if (rows.length === 0) return null;
           return (
-            <div key={round} className="pp-card">
-              <div className="pp-section-head">
-                <h3 className="text-sm font-bold text-[var(--color-text-primary)]">{label}</h3>
-              </div>
-              <ul className="px-4 pb-2">
+            <div
+              key={round}
+              className="rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] px-4 pt-3 pb-1"
+            >
+              <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">{label}</h3>
+              <ul>
                 {rows.map((row) => (
                   <SeriesRow key={row.id} series={row} />
                 ))}

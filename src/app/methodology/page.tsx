@@ -304,7 +304,7 @@ export default function MethodologyPage() {
             </div>
             <div className="p-4">
               <Link
-                href="/"
+                href="/retrospective"
                 className="pp-button"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden />
