@@ -17,9 +17,10 @@ import { TeamProbabilityBar } from "@/components/live/TeamProbabilityBar";
 import { useIsClient } from "@/components/live/useIsClient";
 import { teamById } from "@/lib/season/teams";
 import type { SlateGameView } from "@/lib/season/slate";
-import type { InjuryRow, PlayoffRound } from "@/lib/season/types";
-import { formatClock, formatDateTime } from "@/lib/utils/dates";
+import type { AbsenceDriver, InjuryRow, PlayoffRound } from "@/lib/season/types";
+import { formatClock, formatDateTime, formatReportTime } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
+import { driversText, formatPoints } from "@/lib/utils/injuries";
 
 const ROUND_LABELS: Record<PlayoffRound, string> = {
   "first-round": "First round",
@@ -42,7 +43,11 @@ const TONE_CLASSES: Record<Tone, string> = {
 
 type ForecastStatus = { tone: Tone; Icon: LucideIcon; label: string; detail: string };
 
-function forecastStatus(game: SlateGameView, viewerZone: boolean): ForecastStatus | null {
+function forecastStatus(
+  game: SlateGameView,
+  viewerZone: boolean,
+  modelVersion: string,
+): ForecastStatus | null {
   if (game.missed) {
     return {
       tone: "danger",
@@ -70,23 +75,45 @@ function forecastStatus(game: SlateGameView, viewerZone: boolean): ForecastStatu
       Icon: Clock,
       label: "Provisional",
       detail:
-        "Not sealed yet, because the scheduled update is running late. This number comes from the latest ratings, is replaced once the game is sealed, and is never scored.",
+        "Not sealed yet, because the scheduled update is running late. This number comes from the latest ratings and the absences published with them, is replaced once the game is sealed, and is never scored.",
     };
   }
-  const when = forecast.issuedAt ? ` ${formatDateTime(forecast.issuedAt, viewerZone)}` : "";
-  if (forecast.inputsIncomplete) {
+  const time = forecast.issuedAt ? formatClock(forecast.issuedAt, viewerZone) : "";
+  const stamp = forecast.issuedAt ? ` ${formatDateTime(forecast.issuedAt, viewerZone)}` : "";
+  const missingResult = forecast.inputsIncomplete
+    ? " It was sealed before an earlier game had finished, so that result is not in its ratings; it still counts."
+    : "";
+  if (forecast.modelVersion !== modelVersion) {
+    return {
+      tone: forecast.inputsIncomplete ? "warning" : "success",
+      Icon: forecast.inputsIncomplete ? AlertTriangle : ShieldCheck,
+      label: `Sealed ${time}`.trim(),
+      detail: `Sealed${stamp} by the previous model, ${forecast.modelVersion}, which does not account for injuries. It counts in that model's record.${missingResult}`,
+    };
+  }
+  if (game.noFinalSeal) {
     return {
       tone: "warning",
       Icon: AlertTriangle,
-      label: "Sealed, missing a result",
-      detail: `Sealed${when}, before an earlier game had finished, so that result is not in its ratings. It still counts in the track record.`,
+      label: "No final seal",
+      detail: `No final seal was made in the hour before tip, so the morning seal from${stamp} is the one scored, and the game is counted as "no final seal" in the track record.${missingResult}`,
+    };
+  }
+  const tone: Tone = forecast.inputsIncomplete ? "warning" : "success";
+  const Icon = forecast.inputsIncomplete ? AlertTriangle : ShieldCheck;
+  if (forecast.sealKind === "final") {
+    return {
+      tone,
+      Icon,
+      label: `Final seal ${time}`,
+      detail: `Sealed${stamp}, in the hour before tip, with the latest NBA injury report. This is the number scored in the track record.${missingResult}`,
     };
   }
   return {
-    tone: "success",
-    Icon: ShieldCheck,
-    label: "Sealed",
-    detail: `Sealed${when}, before tip. It counts in the track record once the game ends.`,
+    tone,
+    Icon,
+    label: `Morning seal ${time}`,
+    detail: `Sealed${stamp} with the NBA injury report available then. A final seal replaces it in the hour before tip; if none is made, this one is scored and the game counts as "no final seal".${missingResult}`,
   };
 }
 
@@ -234,16 +261,17 @@ function InjuryColumn({ teamId, rows }: { teamId: string; rows: InjuryRow[] }) {
   );
 }
 
-function InjuryReport({ game, available }: { game: SlateGameView; available: boolean }) {
+/** ESPN's list, shown only when the number on the card used no NBA report. */
+function EspnFallback({ game, available }: { game: SlateGameView; available: boolean }) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const total = game.injuries.away.length + game.injuries.home.length;
   return (
-    <div className="border-t border-[var(--color-border-subtle)] pt-3">
+    <div className="mt-2">
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs text-[var(--color-text-muted)]">
-          <span className="font-semibold text-[var(--color-text-secondary)]">Injury report</span>
-          <span> · not in the model</span>
+          <span className="font-medium text-[var(--color-text-secondary)]">ESPN injury list</span>
+          <span> · for context, not in this number</span>
         </p>
         {available && total > 0 ? (
           <button
@@ -264,7 +292,7 @@ function InjuryReport({ game, available }: { game: SlateGameView; available: boo
       </div>
       {!available ? (
         <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-          The injury report could not be loaded just now.
+          The ESPN list could not be loaded just now.
         </p>
       ) : total === 0 ? (
         <p className="mt-1 text-xs text-[var(--color-text-muted)]">None reported for either team.</p>
@@ -277,6 +305,108 @@ function InjuryReport({ game, available }: { game: SlateGameView; available: boo
           <InjuryColumn teamId={game.homeId} rows={game.injuries.home} />
         </div>
       )}
+    </div>
+  );
+}
+
+function SideAbsence({
+  teamId,
+  points,
+  drivers,
+}: {
+  teamId: string;
+  points: number;
+  drivers: AbsenceDriver[];
+}) {
+  const team = teamById(teamId);
+  return (
+    <li className="flex items-start gap-2 text-xs leading-5">
+      <span className="mt-[3px] flex shrink-0">
+        <TeamLogo teamId={teamId} size={14} />
+      </span>
+      <span className="min-w-0 text-[var(--color-text-muted)]">
+        {drivers.length === 0 ? (
+          <>
+            <span className="font-semibold text-[var(--color-text-secondary)]">{team.abbreviation}</span>{" "}
+            no listed absence the model counts
+          </>
+        ) : (
+          <>
+            <span className="font-semibold text-[var(--color-text-secondary)]">
+              {team.abbreviation} gives up {formatPoints(points)}
+            </span>
+            : {driversText(drivers, points)}
+          </>
+        )}
+      </span>
+    </li>
+  );
+}
+
+/** The players behind the number on the card, from the NBA report it used. */
+function ModelInjuries({ game, espnAvailable }: { game: SlateGameView; espnAvailable: boolean }) {
+  const forecast = game.forecast;
+  const header = (detail: React.ReactNode) => (
+    <p className="text-xs text-[var(--color-text-muted)]">
+      <span className="font-semibold text-[var(--color-text-secondary)]">Injuries in the model</span>
+      {detail}
+    </p>
+  );
+  if (!forecast) return null;
+  if (!forecast.absencePoints || !forecast.drivers) {
+    return (
+      <div className="border-t border-[var(--color-border-subtle)] pt-3">
+        {header(
+          <span>
+            {" "}
+            · none in this number: it was sealed by {forecast.modelVersion}, which does not model
+            injuries.
+          </span>,
+        )}
+        <EspnFallback game={game} available={espnAvailable} />
+      </div>
+    );
+  }
+  if (forecast.availabilityMissing) {
+    return (
+      <div className="border-t border-[var(--color-border-subtle)] pt-3">
+        {header(
+          <span className="text-[var(--color-warning)]">
+            {" "}
+            · none: no NBA injury report under 24 hours old could be read, so this number has no
+            absences in it.
+          </span>,
+        )}
+        <EspnFallback game={game} available={espnAvailable} />
+      </div>
+    );
+  }
+  const when = forecast.reportAt ? formatReportTime(forecast.reportAt) : null;
+  return (
+    <div className="border-t border-[var(--color-border-subtle)] pt-3">
+      {header(
+        <>
+          {when ? <span> · NBA report {when}</span> : null}
+          {forecast.availabilityStale ? (
+            <span className="text-[var(--color-warning)]">
+              {" "}
+              · the newest report could not be read, so an earlier one is used
+            </span>
+          ) : null}
+        </>,
+      )}
+      <ul className="mt-1.5 grid gap-1">
+        <SideAbsence
+          teamId={game.awayId}
+          points={forecast.absencePoints.away}
+          drivers={forecast.drivers.away}
+        />
+        <SideAbsence
+          teamId={game.homeId}
+          points={forecast.absencePoints.home}
+          drivers={forecast.drivers.home}
+        />
+      </ul>
     </div>
   );
 }
@@ -312,10 +442,13 @@ export function GameCard({
   game,
   records,
   injuriesAvailable,
+  modelVersion,
 }: {
   game: SlateGameView;
   records: Record<string, string>;
   injuriesAvailable: boolean;
+  /** The published model, so a seal from an older model is labeled as such. */
+  modelVersion: string;
 }) {
   const viewerZone = useIsClient();
   const home = teamById(game.homeId);
@@ -335,7 +468,7 @@ export function GameCard({
     ? `${game.market.provider} line via ESPN, vig removed, for reference`
     : "No market line available";
   const provisional = game.forecast?.source === "provisional";
-  const status = forecastStatus(game, viewerZone);
+  const status = forecastStatus(game, viewerZone, modelVersion);
   const margin = marginText(game);
   const series = seriesText(game);
 
@@ -488,7 +621,7 @@ export function GameCard({
         ) : null}
       </dl>
 
-      <InjuryReport game={game} available={injuriesAvailable} />
+      <ModelInjuries game={game} espnAvailable={injuriesAvailable} />
     </article>
   );
 }

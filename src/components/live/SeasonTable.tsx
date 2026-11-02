@@ -16,7 +16,7 @@ type ProbabilityKey =
   | "reachFinals"
   | "champion";
 
-type SortKey = "team" | "record" | "rating" | "projectedWins" | ProbabilityKey | "change";
+type SortKey = "team" | "record" | "rating" | "now" | "projectedWins" | ProbabilityKey | "change";
 type Direction = "ascending" | "descending";
 
 const PROBABILITY_COLUMNS: Array<{ key: ProbabilityKey; label: string; title: string }> = [
@@ -41,7 +41,12 @@ function winShare(row: TeamForecast): number {
   return games === 0 ? 0 : row.wins / games;
 }
 
-function sortValue(row: TeamForecast, key: SortKey, change: Record<string, number> | null): number | string {
+function sortValue(
+  row: TeamForecast,
+  key: SortKey,
+  change: Record<string, number> | null,
+  currentRatings: Record<string, number>,
+): number | string {
   switch (key) {
     case "team":
       return teamById(row.teamId).name;
@@ -49,6 +54,8 @@ function sortValue(row: TeamForecast, key: SortKey, change: Record<string, numbe
       return winShare(row) * 1000 + row.wins;
     case "change":
       return change?.[row.teamId] ?? Number.NEGATIVE_INFINITY;
+    case "now":
+      return currentRatings[row.teamId] ?? row.rating;
     default:
       return row[key];
   }
@@ -101,6 +108,10 @@ function SortHeader({
   );
 }
 
+function signed(value: number): string {
+  return `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(1)}`;
+}
+
 function ConferenceTable({
   conference,
   rows,
@@ -109,6 +120,7 @@ function ConferenceTable({
   change,
   changeSince,
   exact,
+  currentRatings,
 }: {
   conference: Conference;
   rows: TeamForecast[];
@@ -117,18 +129,20 @@ function ConferenceTable({
   change: Record<string, number> | null;
   changeSince: string | null;
   exact: boolean;
+  /** Rating with current absences, or null when the published state has none. */
+  currentRatings: Record<string, number> | null;
 }) {
   const sorted = useMemo(() => {
     const factor = sort.direction === "ascending" ? 1 : -1;
     return [...rows].sort((a, b) => {
-      const first = sortValue(a, sort.key, change);
-      const second = sortValue(b, sort.key, change);
+      const first = sortValue(a, sort.key, change, currentRatings ?? {});
+      const second = sortValue(b, sort.key, change, currentRatings ?? {});
       if (typeof first === "string" && typeof second === "string") {
         return factor * first.localeCompare(second);
       }
       return factor * ((first as number) - (second as number)) || b.champion - a.champion;
     });
-  }, [rows, sort, change]);
+  }, [rows, sort, change, currentRatings]);
 
   return (
     <section aria-labelledby={`conference-${conference}`} className="flex flex-col gap-3">
@@ -139,7 +153,9 @@ function ConferenceTable({
         {conference === "East" ? "Eastern Conference" : "Western Conference"}
       </h3>
       <div className="max-h-[75vh] overflow-auto rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] xl:max-h-none xl:overflow-visible">
-        <table className="w-full min-w-[930px] table-fixed border-separate border-spacing-0 text-sm tabular">
+        <table
+          className={`w-full ${currentRatings ? "min-w-[1026px]" : "min-w-[930px]"} table-fixed border-separate border-spacing-0 text-sm tabular`}
+        >
           <caption className="sr-only">
             {conference === "East" ? "Eastern" : "Western"} Conference season forecast. Column
             headers sort the table.
@@ -149,6 +165,7 @@ function ConferenceTable({
             <col />
             <col className="w-16" />
             <col className="w-24" />
+            {currentRatings ? <col className="w-24" /> : null}
             <col className="w-[5.5rem]" />
             {PROBABILITY_COLUMNS.map((column) => (
               <col
@@ -173,11 +190,25 @@ function ConferenceTable({
               <SortHeader
                 label="Rating"
                 sub="± uncertainty"
-                title="Points per game better than an average team, with one standard deviation of uncertainty"
+                title={
+                  currentRatings
+                    ? "Full strength: points per game better than an average team with everyone available, with one standard deviation of uncertainty"
+                    : "Points per game better than an average team, with one standard deviation of uncertainty"
+                }
                 column="rating"
                 sort={sort}
                 onSort={onSort}
               />
+              {currentRatings ? (
+                <SortHeader
+                  label="Now"
+                  sub="with absences"
+                  title="The full-strength rating minus the points this team gives up in its next game to players the model currently counts as out. Display only."
+                  column="now"
+                  sort={sort}
+                  onSort={onSort}
+                />
+              ) : null}
               <SortHeader
                 label="Proj. wins"
                 sub="10th-90th"
@@ -231,13 +262,32 @@ function ConferenceTable({
                   </td>
                   <td className={`${cell} group-hover:bg-[#f9fafb]`}>
                     <span className="block font-medium text-[var(--color-text-primary)]">
-                      {row.rating > 0 ? "+" : row.rating < 0 ? "−" : ""}
-                      {Math.abs(row.rating).toFixed(1)}
+                      {signed(row.rating)}
                     </span>
                     <span className="block text-xs text-[var(--color-text-muted)]">
                       ±{row.ratingSd.toFixed(1)}
                     </span>
                   </td>
+                  {currentRatings ? (
+                    <td
+                      className={`${cell} group-hover:bg-[#f9fafb]`}
+                      title={
+                        (currentRatings[row.teamId] ?? row.rating) < row.rating - 0.05
+                          ? `Gives up ${(row.rating - (currentRatings[row.teamId] ?? row.rating)).toFixed(1)} points to current absences`
+                          : "No current absence the model counts"
+                      }
+                    >
+                      <span
+                        className={`block ${
+                          (currentRatings[row.teamId] ?? row.rating) < row.rating - 0.05
+                            ? "font-medium text-[var(--color-text-primary)]"
+                            : "text-[var(--color-text-muted)]"
+                        }`}
+                      >
+                        {signed(currentRatings[row.teamId] ?? row.rating)}
+                      </span>
+                    </td>
+                  ) : null}
                   <td className={`${cell} group-hover:bg-[#f9fafb]`}>
                     <span className="block font-medium text-[var(--color-text-primary)]">
                       {row.projectedWins.toFixed(1)}
@@ -273,12 +323,15 @@ export function SeasonTable({
   phase,
   change,
   changeSince,
+  currentRatings = null,
 }: {
   teams: TeamForecast[];
   phase: SeasonPhase;
   /** Change in title odds by team, or null before there is anything to compare. */
   change: Record<string, number> | null;
   changeSince: string | null;
+  /** Full-strength rating minus current absence points, by team. Null hides the column. */
+  currentRatings?: Record<string, number> | null;
 }) {
   const [sort, setSort] = useState<{ key: SortKey; direction: Direction }>({
     key: "champion",
@@ -309,6 +362,7 @@ export function SeasonTable({
           change={change}
           changeSince={changeSince}
           exact={exact}
+          currentRatings={currentRatings}
         />
       ))}
     </div>

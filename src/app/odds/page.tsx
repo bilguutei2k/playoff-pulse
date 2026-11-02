@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AbsenceList } from "@/components/live/AbsenceList";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
 import { HEAT_BINS } from "@/components/live/heat";
 import { SeasonTable } from "@/components/live/SeasonTable";
@@ -14,7 +15,7 @@ import { formatShortDay, formatStampEt } from "@/lib/utils/dates";
 export const metadata: Metadata = {
   title: "NBA playoff and title odds | Playoff Pulse",
   description:
-    "Playoff, conference and championship chances for all 30 NBA teams from 20,000 simulated seasons, updated after games finish.",
+    "Playoff, conference and championship chances for all 30 NBA teams from 20,000 simulated seasons that carry current injuries, updated after games finish and as the NBA injury report changes.",
 };
 
 const PHASE_LABELS: Record<SeasonPhase, string> = {
@@ -29,6 +30,7 @@ const CHART_TEAMS = 8;
 
 export default function OddsPage() {
   const { forecast, history, generatedAt, seasonLabel } = liveState;
+  const modeled = liveState.injury !== null;
   const oddsChange = titleOddsChange(history);
   const changeSince = oddsChange ? formatShortDay(oddsChange.since) : null;
   const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
@@ -52,8 +54,10 @@ export default function OddsPage() {
           </h1>
           <p className="mt-2 text-sm leading-6 text-[var(--color-text-muted)]">
             Playoff and title chances for all 30 teams, from{" "}
-            {forecast.iterations.toLocaleString("en-US")} simulated seasons. Season odds update
-            after games finish.
+            {forecast.iterations.toLocaleString("en-US")} simulated seasons.{" "}
+            {modeled
+              ? "Season odds update after games finish and when the NBA injury report changes who is out."
+              : "Season odds update after games finish."}
           </p>
         </div>
         <p className="tabular text-xs text-[var(--color-text-muted)]">
@@ -117,12 +121,20 @@ export default function OddsPage() {
           phase={forecast.phase}
           change={oddsChange?.change ?? null}
           changeSince={changeSince}
+          currentRatings={modeled ? liveState.currentRatings : null}
         />
         <div className="grid gap-2 text-xs leading-5 text-[var(--color-text-muted)]">
           <p>
             <span className="font-semibold text-[var(--color-text-secondary)]">Rating</span> is
-            points per game better or worse than an average team, with one standard deviation of
-            uncertainty. <span className="font-semibold text-[var(--color-text-secondary)]">Proj. wins</span>{" "}
+            points per game better or worse than an average team
+            {modeled ? " at full strength" : ""}, with one standard deviation of uncertainty.{" "}
+            {modeled ? (
+              <>
+                <span className="font-semibold text-[var(--color-text-secondary)]">Now</span> is that
+                rating minus the points the team gives up in its next game to players currently out.{" "}
+              </>
+            ) : null}
+            <span className="font-semibold text-[var(--color-text-secondary)]">Proj. wins</span>{" "}
             is the average final win total, with the 10th to 90th percentile range.{" "}
             {changeSince ? (
               <>
@@ -134,7 +146,10 @@ export default function OddsPage() {
           </p>
           <p>
             Early and midseason playoff odds are not claimed to be well calibrated, and no skill is
-            claimed for title odds. The model does not account for injuries.{" "}
+            claimed for title odds.{" "}
+            {modeled
+              ? "Known absences are carried for their expected length; injuries that have not happened yet are not simulated."
+              : "This published state comes from the previous model, which does not account for injuries."}{" "}
             <Link href="/how-it-works#season-odds" className="pp-link">
               How the season is simulated
             </Link>
@@ -142,6 +157,14 @@ export default function OddsPage() {
           </p>
         </div>
       </section>
+
+      {modeled ? (
+        <AbsenceList
+          absences={liveState.absences}
+          absencePoints={liveState.absencePoints}
+          reportAt={liveState.availability.reportAt}
+        />
+      ) : null}
     </main>
   );
 }

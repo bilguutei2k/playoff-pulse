@@ -25,7 +25,8 @@ export function SiteFooter() {
           <p className="mt-2 leading-6 text-[var(--color-text-muted)]">
             An independent project. Team names and logos are trademarks of the NBA and its teams;
             Playoff Pulse is not affiliated with or endorsed by them. Live scores, schedules,
-            injuries and market lines come from ESPN&apos;s unofficial public feeds. Not a betting
+            injuries and market lines come from ESPN&apos;s unofficial public feeds, and injury
+            statuses from the NBA&apos;s public injury report, used unofficially. Not a betting
             product.
           </p>
         </div>

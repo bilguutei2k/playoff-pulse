@@ -12,11 +12,14 @@ function brier(value: number | null): string {
 }
 
 export function trackRecordStats(record: RecordSummary): Stat[] {
-  return [
+  const stats: Stat[] = [
     {
       label: "Games scored",
       value: String(record.scored),
-      note: "Finished games with a sealed forecast.",
+      note:
+        record.noFinalSeal === null
+          ? "Finished games with a sealed forecast."
+          : "Finished games, each scored once: on its final seal, or its morning seal if it had no final one.",
     },
     {
       label: "Model Brier score",
@@ -34,7 +37,7 @@ export function trackRecordStats(record: RecordSummary): Stat[] {
       note: "How often the team the model favored went on to win.",
     },
     {
-      label: "Forecasts sealed",
+      label: "Games sealed",
       value: String(record.sealed),
       note: "Fixed before tip and added to the public ledger.",
     },
@@ -46,18 +49,87 @@ export function trackRecordStats(record: RecordSummary): Stat[] {
     {
       label: "Missed",
       value: String(record.missed),
-      note: "Games that tipped before a forecast was sealed. Counted here, never backfilled.",
-    },
-    {
-      label: "Sealed before a result was in",
-      value: String(record.incomplete),
-      note: "Sealed on time while an earlier game was unfinished, so its ratings miss that result. Still scored.",
+      note: "Games that tipped with no seal at all. Counted here, never backfilled.",
     },
   ];
+  if (record.noFinalSeal !== null) {
+    stats.push({
+      label: "No final seal",
+      value: String(record.noFinalSeal),
+      note: "Scored games that got no seal in the hour before tip, so their morning seal was scored.",
+    });
+  }
+  stats.push({
+    label: "Sealed before a result was in",
+    value: String(record.incomplete),
+    note: "Sealed on time while an earlier game was unfinished, so its ratings miss that result. Still scored.",
+  });
+  return stats;
 }
 
-export function TrackRecord({ record }: { record: RecordSummary }) {
-  const stats = trackRecordStats(record);
+function SmallSample({ record }: { record: RecordSummary }) {
+  if (!record.smallSample) return null;
+  return (
+    <p className="rounded-xl border border-[#fedf89] bg-[var(--color-warning-bg)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+      <span className="font-semibold text-[var(--color-warning)]">Small sample.</span>{" "}
+      {record.scored} scored {record.scored === 1 ? "game" : "games"} so far. These numbers say little
+      until at least {MEANINGFUL_GAMES} games.
+    </p>
+  );
+}
+
+function StatGrid({ stats, compact = false }: { stats: Stat[]; compact?: boolean }) {
+  // Nine stats fill three columns; eight fill four. An odd last cell spans the two-column row.
+  const columns = stats.length % 4 === 0 ? "lg:grid-cols-4" : "lg:grid-cols-3";
+  return (
+    <dl
+      className={`grid gap-px overflow-hidden rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-border-subtle)] sm:grid-cols-2 ${columns} [&>div]:bg-[var(--color-panel-primary)]`}
+    >
+      {stats.map((stat, index) => (
+        <div
+          key={stat.label}
+          className={`flex flex-col gap-1 ${compact ? "p-3" : "p-4"} ${
+            stats.length % 2 === 1 && index === stats.length - 1 ? "sm:col-span-2 lg:col-span-1" : ""
+          }`}
+        >
+          <dt className="text-sm font-medium text-[var(--color-text-secondary)]">{stat.label}</dt>
+          <dd
+            className={`font-semibold tracking-tight text-[var(--color-text-primary)] ${
+              compact ? "text-lg" : "text-2xl"
+            }`}
+          >
+            {stat.value}
+          </dd>
+          {compact ? null : (
+            <dd className="text-xs leading-5 text-[var(--color-text-muted)]">{stat.note}</dd>
+          )}
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+export function TrackRecord({
+  records,
+  modelVersion,
+  referenceModelVersion,
+}: {
+  records: Record<string, RecordSummary>;
+  modelVersion: string;
+  referenceModelVersion: string;
+}) {
+  const record = records[modelVersion];
+  const reference =
+    referenceModelVersion !== modelVersion ? (records[referenceModelVersion] ?? null) : null;
+  if (!record) return null;
+  const headToHead =
+    record.referenceBrier !== null && record.brier !== null
+      ? `On the same ${record.scored} ${record.scored === 1 ? "game" : "games"}, ${
+          record.referenceModelVersion ?? referenceModelVersion
+        }'s number stored with each seal scores ${brier(record.referenceBrier)}${
+          record.morningBrier !== null ? `, and the morning seals alone ${brier(record.morningBrier)}` : ""
+        }.`
+      : null;
   return (
     <section aria-labelledby="record-title" className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -69,32 +141,38 @@ export function TrackRecord({ record }: { record: RecordSummary }) {
             Track record
           </h2>
           <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-            Every sealed forecast this season{record.modelVersion ? `, model ${record.modelVersion}` : ""}.
-            Provisional numbers are never scored.
+            Every sealed forecast this season, model {modelVersion}
+            {record.noFinalSeal !== null ? ", with injuries" : ""}. Provisional numbers are never
+            scored.
           </p>
         </div>
         <Link href="/how-it-works#track-record" className="pp-link text-sm">
           How the record is kept
         </Link>
       </div>
-      {record.smallSample ? (
-        <p className="rounded-xl border border-[#fedf89] bg-[var(--color-warning-bg)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
-          <span className="font-semibold text-[var(--color-warning)]">Small sample.</span>{" "}
-          {record.scored} scored {record.scored === 1 ? "game" : "games"} so far. These numbers say
-          little until at least {MEANINGFUL_GAMES} games.
-        </p>
+      <SmallSample record={record} />
+      <StatGrid stats={trackRecordStats(record)} />
+      {headToHead ? (
+        <p className="text-xs leading-5 text-[var(--color-text-muted)]">{headToHead}</p>
       ) : null}
-      <dl className="grid gap-px overflow-hidden rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-border-subtle)] sm:grid-cols-2 lg:grid-cols-4 [&>div]:bg-[var(--color-panel-primary)]">
-        {stats.map((stat) => (
-          <div key={stat.label} className="flex flex-col gap-1 p-4">
-            <dt className="text-sm font-medium text-[var(--color-text-secondary)]">{stat.label}</dt>
-            <dd className="text-2xl font-semibold tracking-tight text-[var(--color-text-primary)]">
-              {stat.value}
-            </dd>
-            <dd className="text-xs leading-5 text-[var(--color-text-muted)]">{stat.note}</dd>
+
+      {reference ? (
+        <div className="mt-2 flex flex-col gap-3">
+          <div>
+            <h3 className="text-base font-semibold text-[var(--color-text-primary)]">
+              Previous model, {referenceModelVersion}
+            </h3>
+            <p className="mt-1 text-sm text-[var(--color-text-muted)]">
+              It does not account for injuries. It still seals every game each morning, so its record
+              continues on the same games and is shown here in full.
+              {reference.smallSample
+                ? ` Small sample: ${reference.scored} scored ${reference.scored === 1 ? "game" : "games"}.`
+                : ""}
+            </p>
           </div>
-        ))}
-      </dl>
+          <StatGrid stats={trackRecordStats(reference)} compact />
+        </div>
+      ) : null}
     </section>
   );
 }

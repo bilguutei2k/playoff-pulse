@@ -10,7 +10,7 @@ import { liveState } from "@/lib/season/published";
 export const metadata: Metadata = {
   title: "Playoff Pulse: NBA win probabilities for every game today",
   description:
-    "Win probabilities for every NBA game today, with live in-game estimates, a market reference and injury reports. Each pregame forecast is sealed before tip and scored in public.",
+    "Win probabilities for every NBA game today that account for the NBA injury report, with live in-game estimates and a market reference. Each pregame forecast is sealed before tip and scored in public.",
 };
 
 // Re-rendered about once a minute; the client also polls for live scores.
@@ -30,7 +30,11 @@ export default async function HomePage() {
         generatedAt={liveState.generatedAt}
         change={titleOddsChange(liveState.history)}
       />
-      <TrackRecord record={liveState.record} />
+      <TrackRecord
+        records={liveState.records}
+        modelVersion={liveState.modelVersion}
+        referenceModelVersion={liveState.referenceModelVersion}
+      />
       <WhatToKnow />
     </main>
   );

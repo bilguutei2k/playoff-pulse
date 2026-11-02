@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 
 const ITEMS: Array<{ title: string; body: string }> = [
   {
-    title: "Injuries are not in the model.",
-    body: "Reported injuries are listed with each game for context, but the model does not account for them, so a game with a star out can be mispriced.",
+    title: "Injuries are modeled, in part.",
+    body: "Each forecast counts the expected absence of players on the NBA injury report, weighted by status, and season odds use return estimates from a survival table. Unknown future injuries, minutes shifting to teammates and matchups are not modeled.",
   },
   {
     title: "Not a betting product.",
@@ -12,11 +12,11 @@ const ITEMS: Array<{ title: string; body: string }> = [
   },
   {
     title: "Unofficial data.",
-    body: "Scores, schedules, injuries and market lines come from ESPN's unofficial public feeds. No official NBA data is used.",
+    body: "Scores, schedules and market lines come from ESPN's unofficial public feeds, and injury statuses from the NBA's public injury report, used unofficially. Playoff Pulse is not affiliated with the NBA.",
   },
   {
     title: "Every seal counts.",
-    body: "Missed seals and seals made before an earlier result was in are always counted. Provisional numbers are labeled and never scored.",
+    body: "Missed seals, games with no final seal and seals made before an earlier result was in are always counted. Provisional numbers are labeled and never scored.",
   },
   {
     title: "Slightly overconfident.",

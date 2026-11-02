@@ -27,7 +27,7 @@ function Key({ view }: { view: SlateView }) {
   const items: Array<[string, string]> = [
     [
       "Model",
-      "Our chance of each team winning. Sealed numbers are fixed before tip and scored in the track record.",
+      "Our chance of each team winning. Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored.",
     ],
     ["Market", `${marketSourceText(view)}. For reference only.`],
   ];
@@ -39,7 +39,7 @@ function Key({ view }: { view: SlateView }) {
   }
   items.push([
     "Injuries",
-    "Listed with each game. The model does not account for them, so a game with a star out can be mispriced.",
+    "Players on the NBA injury report, weighted by status, cost their team the points shown on each card. New injuries, minutes shifting to teammates and matchups are not modeled.",
   ]);
   return (
     <dl className="grid gap-x-8 gap-y-2 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] px-4 py-3 text-xs leading-5 text-[var(--color-text-muted)] sm:grid-cols-2">
@@ -191,6 +191,7 @@ export function LiveDashboard({
                 game={game}
                 records={records}
                 injuriesAvailable={view.injuriesAvailable}
+                modelVersion={view.modelVersion}
               />
             ))}
           </div>
