@@ -295,7 +295,8 @@ export async function refreshReports(input: {
     day.files[name] = { at: parsed.issuedEt, usable: true };
     day.reports[parsed.issuedEt] = cut.report;
     changed = true;
-    log.push(`report ${name} stored (${parsed.issuedEt}, ${cut.report.rows.length} rows)`);
+    const unlisted = cut.unlisted.length > 0 ? `, nobody listed for team(s) ${cut.unlisted.join(", ")}` : "";
+    log.push(`report ${name} stored (${parsed.issuedEt}, ${cut.report.rows.length} rows${unlisted})`);
     return { day, succeeded: true, changed, downloads, log };
   }
   return { day, succeeded: false, changed, downloads, log };

@@ -173,8 +173,12 @@ export type MarketReference = {
   homeSpread: number | null;
 };
 
-/** A v2 game gets a morning seal and, an hour before tip, a final seal. v1 rows have neither field. */
-export type SealKind = "morning" | "final";
+/**
+ * A v2 game gets a morning seal and, an hour before tip, a final seal. A morning seal made
+ * with no injury report is reissued once a usable report arrives; the original row stays.
+ * v1 rows carry no kind.
+ */
+export type SealKind = "morning" | "reissued" | "final";
 
 /** A listed player behind a team's absence adjustment. */
 export type AbsenceDriver = {

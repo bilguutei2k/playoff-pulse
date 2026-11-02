@@ -382,7 +382,15 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                         {version.role === "published" ? "Published" : version.role === "reference" ? "Reference" : "Earlier"}
                       </span>
                     </th>
-                    <td className="py-3 pr-3"><SealCell row={version.morning} homeId={game.homeId} pending="None" /></td>
+                    <td className="py-3 pr-3">
+                      <SealCell row={version.morning} homeId={game.homeId} pending="None" />
+                      {version.reissued ? (
+                        <span className="mt-1 block">
+                          <SealCell row={version.reissued} homeId={game.homeId} pending="None" />
+                          <span className="block text-[12px] text-ink-3">Reissued with the injury report</span>
+                        </span>
+                      ) : null}
+                    </td>
                     <td className="py-3 pr-3">
                       {twoSeals ? (
                         <SealCell row={version.final} homeId={game.homeId} pending={tipped ? "None" : "Due in the hour before tip"} />
@@ -409,7 +417,8 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
       <p className="mt-4 text-[13px] leading-5 text-ink-3">
         Each game is sealed from the ratings before its date: a morning seal, then a final seal in the hour
         before tip with the latest NBA injury report. The final seal is scored when it exists; otherwise the
-        morning seal is, and the game counts as &quot;no final seal&quot;. Every model version keeps its own record.
+        morning seal is, and the game counts as &quot;no final seal&quot;. A morning seal made before any usable
+        report is reissued once, when one arrives, and both stay in the ledger. Every model version keeps its own record.
       </p>
     </Panel>
   );

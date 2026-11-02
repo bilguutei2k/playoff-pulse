@@ -16,6 +16,8 @@ export type VersionSeals = {
   /** The published model or the reference model beside it. */
   role: "published" | "reference" | "other";
   morning: SealRow | null;
+  /** The same morning seal issued again once a usable report arrived, if it had none. */
+  reissued: SealRow | null;
   final: SealRow | null;
   /** The seal this version is scored on, once the game tips. */
   scored: SealRow | null;
@@ -94,6 +96,7 @@ export function buildGameDetail(input: {
       modelVersion,
       role: role(modelVersion),
       morning: rows.find((row) => sealKindOf(row) === "morning") ?? null,
+      reissued: rows.find((row) => sealKindOf(row) === "reissued") ?? null,
       final: rows.find((row) => sealKindOf(row) === "final") ?? null,
       scored: tipped ? scoredSeal(rows) : null,
     }))

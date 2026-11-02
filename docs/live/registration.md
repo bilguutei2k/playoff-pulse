@@ -303,3 +303,26 @@ shipped. The owner chose to ship rather than leave tonight's 15 games and Wednes
 seals. The other conditions were met: T1-T4 passed, the invariants and docs are in, and it shipped
 by pull request. The measurement continues to about 03:00 UTC on 2026-11-05 and its result will be
 recorded here. Any missed or "no final seal" game that results stays on the public record.
+
+2026-11-02, amendment: which reports are usable, and reissued morning seals. Written before any v2
+game was scored. The engine, frozen tables and registered test are unchanged.
+
+The live job required rows or NOT YET SUBMITTED for both teams of every slate game. A team with
+nobody listed has no section in the PDF, so that rule rejected every report on 2026-11-02 because
+the Bucks were absent, and all 15 morning seals were written with availability missing. The plan
+says "every slate game", not both teams, and the registered test used these games: its `qualifying`
+rule only excludes a final report with a team that has not filed. So the live job was stricter than
+what passed.
+
+1. A report is usable when at least half of the slate's games appear on it. A team or game not on it
+   has nobody listed. Over the five stored seasons, using each game's morning and final report, the
+   old rule voids 11% to 25% of slates a season, requiring every game voids at most 2 slates a season,
+   and this rule voids none. An unknown team name still fails closed.
+2. A morning seal with availability missing is reissued once, with `sealKind: "reissued"`, by the
+   first run that has a usable report and is more than an hour before tip. It is priced like any seal
+   from the same frozen ratings, carries its true issue time, and leaves the original row in place.
+   The issue is decided by a report arriving, never by anything about the game.
+3. A game is scored on its final seal, else its reissued seal, else its morning seal, and without a
+   final seal it still counts as "no final seal". "Morning seals' Brier" uses the reissued number
+   where one exists. Anyone can recompute it from the original rows, which remain in the ledger.
+4. Report problems set `reportProblem` in `health.json` and open one issue per slate.

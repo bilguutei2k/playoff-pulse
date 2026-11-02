@@ -220,8 +220,8 @@ rating model. Each version's sealed record is reported separately.
   win-percentage baseline on Dec 1 and Feb 1.
 - In-game values between quarter ends, including the final minutes, are unvalidated interpolation.
 - The ledger must always show missed seals, games with no final seal (scored on their morning
-  seal) and seals with incomplete inputs, and seals made with a stale or missing injury report say
-  so. Results below 500 scored games carry a small-sample label.
+  seal, as reissued if it was) and seals with incomplete inputs, and seals made with a stale or
+  missing injury report say so. A reissued morning seal shows its true time and keeps the original. Results below 500 scored games carry a small-sample label.
 
 **Never claim:**
 
