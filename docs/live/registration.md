@@ -295,3 +295,11 @@ Implementation choices that the plan did not spell out, made without sight of an
 
 Before merging: the scheduler condition in decision 9 (at least 90% of ten-minute slots over three
 consecutive days) is to be checked and recorded here by the person who merges.
+
+2026-11-02, scheduler condition waived by the owner. At 06:56 UTC, when the owner decided to ship,
+the self-chaining job had hit 23 of 23 ten-minute slots since 03:00 UTC: 3.9 of the required 72
+hours, with no evening game window yet. So decision 9's scheduler condition was not met when v2
+shipped. The owner chose to ship rather than leave tonight's 15 games and Wednesday's 14 without v2
+seals. The other conditions were met: T1-T4 passed, the invariants and docs are in, and it shipped
+by pull request. The measurement continues to about 03:00 UTC on 2026-11-05 and its result will be
+recorded here. Any missed or "no final seal" game that results stays on the public record.
