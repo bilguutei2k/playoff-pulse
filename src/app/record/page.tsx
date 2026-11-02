@@ -235,14 +235,17 @@ export default function RecordPage() {
       <section aria-labelledby="numbers-title" className="mt-10">
         <SectionHeading id="numbers-title" kicker="Per version" title="The numbers" />
         <div className="table-scroll mt-4 rounded-[var(--radius-card)] border border-line bg-panel">
-          <table className="w-full min-w-[34rem] text-[14px]">
+          <table className="w-full text-[14px]">
             <thead>
               <tr className="border-b border-line-strong text-left">
                 <th scope="col" className="kicker py-2.5 pl-4 pr-3 font-medium">Measure</th>
                 {records.map((entry) => (
                   <th key={entry.version} scope="col" className="py-2.5 pr-4 text-right align-bottom">
-                    <span className="kicker block font-medium">{entry.role}</span>
-                    <span className="num block text-[12px] font-normal text-ink-2">{entry.version}</span>
+                    <span className="kicker block font-medium">{entry.role.replace(" model", "")}</span>
+                    <span className="num block text-[12px] font-normal text-ink-2">
+                      <span className="sm:hidden">{entry.version.split("-").at(-1)}</span>
+                      <span className="hidden sm:inline">{entry.version}</span>
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -250,15 +253,15 @@ export default function RecordPage() {
             <tbody>
               {METRICS.map((metric) => (
                 <tr key={metric.label} className="border-b border-line last:border-0">
-                  <th scope="row" className="py-2.5 pl-4 pr-3 text-left font-normal">
+                  <th scope="row" className="py-2.5 pl-4 pr-2 text-left font-normal">
                     <span className="block font-medium text-ink">{metric.label}</span>
                     <span className="block text-[12px] text-ink-3">{metric.note}</span>
                   </th>
                   {records.map((entry) => {
                     const value = entry.record ? metric.value(entry.record) : null;
                     return (
-                      <td key={entry.version} className="num py-2.5 pr-4 text-right text-[15px] text-ink">
-                        {value ?? <span className="text-[12.5px] text-ink-3">No scored games</span>}
+                      <td key={entry.version} className="num py-2.5 pr-4 text-right align-top text-[15px] text-ink">
+                        {value ?? <span className="text-[12.5px] text-ink-3">None yet</span>}
                       </td>
                     );
                   })}

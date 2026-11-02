@@ -104,6 +104,18 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
       detail: `Sealed by ${forecast.modelVersion}, which does not account for injuries.${incomplete}`,
     };
   }
+  // Only a version that seals twice can lack a final seal; v1 rows carry no seal kind.
+  const row = game.sealRows.find(
+    (candidate) => candidate.modelVersion === forecast.modelVersion && candidate.issuedAt === forecast.issuedAt,
+  );
+  const twoSeals = row?.sealKind !== undefined;
+  if (!twoSeals) {
+    return {
+      label: `Sealed ${time}`.trim(),
+      tone: forecast.inputsIncomplete ? "warn" : "good",
+      detail: `Sealed ${time} by ${forecast.modelVersion}, which seals each game once and does not account for injuries. This is the number the record scores.${incomplete}`,
+    };
+  }
   if (game.noFinalSeal) {
     return {
       label: "No final seal",

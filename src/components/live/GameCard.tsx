@@ -128,15 +128,17 @@ export function GameCard({
 
   return (
     <article className="group relative flex w-full flex-col rounded-[var(--radius-card)] border border-line bg-panel transition-[border-color,box-shadow] hover:border-line-strong hover:shadow-[0_10px_30px_-18px_rgba(18,20,23,0.35)]">
-      <header className="flex items-center gap-3 border-b border-line px-4 py-2.5">
+      <header className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line px-4 py-2.5">
         <StatusPill label={status.label} live={status.live} />
-        <p className="num min-w-0 flex-1 truncate text-[12px] text-ink-2">
-          {game.status === "final" ? "" : meta[0]}
-        </p>
+        {game.status === "final" ? null : (
+          <p className="num shrink-0 whitespace-nowrap text-[12px] text-ink-2">{meta[0]}</p>
+        )}
         {badge ? (
-          <Badge tone={badge.tone} title={badge.detail}>
-            {badge.label}
-          </Badge>
+          <span className="ml-auto">
+            <Badge tone={badge.tone} title={badge.detail}>
+              {badge.label}
+            </Badge>
+          </span>
         ) : null}
       </header>
 
