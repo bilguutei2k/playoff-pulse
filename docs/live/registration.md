@@ -253,3 +253,45 @@ and 2025-26: 2,460 qualifying games of 2,469 (`docs/live/evaluation-injury.json`
 The candidate passes. Shipping still requires the rest of decision 9: a scheduler that has
 hit at least 90% of ten-minute slots over three consecutive days, the listed invariants,
 and the documentation, all by pull request.
+
+**2026-11-02, shipped as v2 (pull request; not yet merged).** `live-2026.27-v2` is wired into the
+scheduled job with the frozen inputs above, copied into `src/lib/season/params.ts` and checked
+against `docs/live/injury-fit.json` by `verify:live`. Nothing was refit. What the job now does on
+every run, in order:
+
+1. Stores box scores for newly final 2026-27 games in `data/live/boxscores/2027.json`, up to 12
+   per run, newest first; a failed fetch is retried on later runs with a health note, and until
+   then that game's margin updates ratings unadjusted.
+2. Fetches the newest NBA injury report while the slate has an unfinished game: quarter-hour file
+   names from now backward (8 names, at most 4 downloads, one request at a time with a retry),
+   stopping at the first report whose header timestamp is at or before now and which has rows or
+   NOT YET SUBMITTED for both teams of every slate game not postponed or canceled. Every file it
+   downloads is recorded in `data/live/reports/2026-27/{slate}.json`, so none is downloaded twice;
+   usable reports are stored as parsed rows keyed by header timestamp. If none is confirmed, the
+   last good report under 24 hours old is used and flagged stale; otherwise availability is
+   missing and absences are zero. ESPN's injury list, with its return dates, is also stored, and
+   never used.
+3. Seals. v1 writes its morning seal exactly as before. v2 writes a morning seal and, on the first
+   run with `0 < tip - now <= 60 minutes`, a final seal, both from full-strength ratings frozen at
+   the previous ET date, with the report's expected absences, the top three drivers per side, the
+   flags, and v1's number recomputed from v1's own replay at the same instant.
+4. Misses are per version; a v2 game with a morning seal and no final seal is scored on the
+   morning seal and counted as "no final seal". Records are published per version.
+5. Re-simulates the season with current absences (latest report, survival table) and publishes
+   state schema 2, including who is counted as out and a display-only current rating.
+
+Implementation choices that the plan did not spell out, made without sight of any result:
+
+- In the live replay, a finished 2026-27 game's final point is the latest stored report at or
+  before tip, the closest to what its final seal used. Games before this change have no stored
+  report, so their adjustment uses the rotation only, as the engine does for any game without one.
+- The replay keeps each team's latest report rows across the off-season. The live job ignores rows
+  from an earlier season, so a team's April list is never read as current; its absences come from
+  box scores until a 2026-27 report covers it.
+- Pending regular-season games per team count scheduled and in-progress games, matching the order
+  in which the simulator charges absences.
+- The name index adds the live season's own box scores to the registered 2020-21 to 2025-26 seasons,
+  as decided when shipping; per the 5(i) amendment this can only un-resolve a name.
+
+Before merging: the scheduler condition in decision 9 (at least 90% of ten-minute slots over three
+consecutive days) is to be checked and recorded here by the person who merges.

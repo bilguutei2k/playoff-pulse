@@ -41,8 +41,8 @@ The current forecast model uses static TypeScript data and pure model functions.
 
 ## Routes
 
-- `/`: the live forecast. Today's games with the model's win probability, a market reference, live in-game estimates and injury reports, then title odds and the public track record.
-- `/odds`: playoff and title odds for all 30 teams, with title-odds history.
+- `/`: the live forecast. Today's games with the model's win probability (model `live-2026.27-v2`, which accounts for the NBA injury report), the players behind each injury adjustment, a market reference and live in-game estimates, then title odds and the public track record for v2 and the continuing v1.
+- `/odds`: playoff and title odds for all 30 teams, with title-odds history, full-strength and current ratings, and who the model counts as out.
 - `/how-it-works`: how the live model works, how it tested and where it falls short.
 - `/retrospective`, `/snapshot`, `/evidence`, `/methodology`, `/lab`: the frozen 2026 archive.
 - `/live`, `/live/methodology` and `/case-study` permanently redirect to `/`, `/how-it-works` and `/retrospective`.
