@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   // trace both into every server bundle so ISR re-renders can read them too.
   outputFileTracingIncludes: {
     "/**": ["./data/live/games/*.json", "./data/live/ledger/*.jsonl"],
+    "/teams/**": ["./data/season/games/*.json"],
   },
   async redirects() {
     return [
