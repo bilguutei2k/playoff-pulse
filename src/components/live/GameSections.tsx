@@ -359,7 +359,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
         </p>
       ) : (
         <div className="table-scroll -mx-1">
-          <table className="w-full min-w-[30rem] text-[14px]">
+          <table className="w-full text-[14px]">
             <thead>
               <tr className="border-b border-line-strong text-left">
                 <th scope="col" className="kicker py-2 pr-3 font-medium">Model</th>
@@ -374,9 +374,12 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                 return (
                   <tr key={version.modelVersion} className="border-b border-line last:border-0">
                     <th scope="row" className="py-3 pr-3 text-left font-normal">
-                      <span className="num text-[13px] text-ink">{version.modelVersion}</span>
+                      <span className="num text-[13px] text-ink">
+                        <span className="sm:hidden">{version.modelVersion.split("-").at(-1)}</span>
+                        <span className="hidden sm:inline">{version.modelVersion}</span>
+                      </span>
                       <span className="block text-[12px] text-ink-3">
-                        {version.role === "published" ? "Published model" : version.role === "reference" ? "Reference model" : "Earlier model"}
+                        {version.role === "published" ? "Published" : version.role === "reference" ? "Reference" : "Earlier"}
                       </span>
                     </th>
                     <td className="py-3 pr-3"><SealCell row={version.morning} homeId={game.homeId} pending="None" /></td>
