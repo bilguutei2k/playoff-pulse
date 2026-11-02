@@ -53,7 +53,7 @@ function WinsBand({ row }: { row: OddsRow }) {
   const total = Math.round(row.projectedWins + row.projectedLosses);
   const at = (wins: number) => `${(wins / total) * 100}%`;
   return (
-    <div className="rounded-lg border border-line bg-panel px-4 py-3 sm:col-span-2">
+    <div className="col-span-2 rounded-lg border border-line bg-panel px-4 py-3">
       <dt className="kicker">Projected record</dt>
       <dd className="mt-2">
         <span className="figure text-[24px] font-semibold text-ink">
@@ -123,12 +123,13 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
   const { game } = row;
   return (
     <tr className="group border-b border-line last:border-0 hover:bg-wash">
-      <td className="num whitespace-nowrap py-2.5 pl-4 pr-3 text-[12.5px] text-ink-2">
-        {formatWeekday(game.etDate)} {formatShortDay(game.etDate)}
+      <td className="num whitespace-nowrap py-2.5 pl-3 pr-2 text-[12.5px] text-ink-2 sm:pl-4 sm:pr-3">
+        <span className="hidden sm:inline">{formatWeekday(game.etDate)} </span>
+        {formatShortDay(game.etDate)}
       </td>
       <th scope="row" className="py-2.5 pr-3 text-left font-normal">
         <Link href={`/game/${game.id}`} className="flex items-center gap-2">
-          <span className="w-5 text-[12px] text-ink-3">{row.home ? "vs" : "at"}</span>
+          <span className="w-4 text-[12px] text-ink-3 sm:w-5">{row.home ? "vs" : "at"}</span>
           <TeamLogo teamId={row.opponentId} size={20} />
           <span className="font-medium text-ink group-hover:underline group-hover:decoration-pulse group-hover:underline-offset-4">
             {opponent.shortName}
@@ -149,10 +150,14 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
           <span className="text-ink-2">{formatTimeEt(game.tipUtc)}</span>
         )}
       </td>
-      <td className="py-2.5 pr-4 text-right">
+      <td className="py-2.5 pr-3 text-right sm:pr-4">
         {row.forecast ? (
           <span className="inline-flex items-center gap-2">
-            {row.forecast.source === "projection" ? <Badge tone="quiet">Proj.</Badge> : null}
+            {row.forecast.source === "projection" ? (
+              <span className="hidden sm:inline-flex">
+                <Badge tone="quiet">Proj.</Badge>
+              </span>
+            ) : null}
             <span className={`heat ${heatClass(row.forecast.probability)} min-w-[3rem] px-1.5 py-0.5 text-[12.5px]`}>
               {formatChance(row.forecast.probability)}
             </span>
@@ -160,7 +165,16 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
         ) : row.missed ? (
           <Badge tone="bad">Missed</Badge>
         ) : (
-          <span className="text-[12px] text-ink-3">{row.result ? "Before the record" : "–"}</span>
+          <span className="text-[12px] text-ink-3" title={row.result ? "Played before the record began" : undefined}>
+            {row.result ? (
+              <>
+                <span className="hidden sm:inline">Before the record</span>
+                <span className="sm:hidden">–</span>
+              </>
+            ) : (
+              "–"
+            )}
+          </span>
         )}
       </td>
     </tr>
@@ -170,11 +184,11 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
 function ScheduleTable({ rows, caption }: { rows: TeamGameRow[]; caption: string }) {
   return (
     <div className="table-scroll rounded-[var(--radius-card)] border border-line bg-panel">
-      <table className="w-full min-w-[26rem] text-[14px]">
+      <table className="w-full text-[14px]">
         <caption className="sr-only">{caption}</caption>
         <thead>
           <tr className="border-b border-line-strong text-left">
-            <th scope="col" className="kicker py-2 pl-4 pr-3 font-medium">Date</th>
+            <th scope="col" className="kicker py-2 pl-3 pr-2 font-medium sm:pl-4 sm:pr-3">Date</th>
             <th scope="col" className="kicker py-2 pr-3 font-medium">Opponent</th>
             <th scope="col" className="kicker py-2 pr-3 font-medium">Result</th>
             <th scope="col" className="kicker py-2 pr-4 text-right font-medium">548</th>
