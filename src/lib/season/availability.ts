@@ -49,20 +49,27 @@ export function teamIdFromReportName(name: string): string {
 
 const SUFFIXES = new Set(["jr", "sr", "ii", "iii", "iv", "v"]);
 
-/** Lowercase, no accents or punctuation, no generational suffix. */
+/**
+ * Lowercase, no accents or punctuation, no generational suffix. A hyphen becomes a
+ * space, because the reports wrap hyphenated names as "Hood- Schifino".
+ */
 export function normalizePersonName(name: string): string {
   return name
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
-    .replace(/[.'’`-]/g, "")
+    .replace(/-/g, " ")
+    .replace(/[.'’`]/g, "")
     .split(/\s+/)
     .filter((word) => word && !SUFFIXES.has(word))
     .join(" ");
 }
 
-/** Spellings the reports use for players ESPN names differently, frozen before testing. */
-export const REPORT_NAME_ALIASES: Record<string, string> = {};
+/** Names the reports print differently from ESPN, frozen in the registration commit. */
+export const REPORT_NAME_ALIASES: Record<string, string> = {
+  "kenyon martin": "kj martin",
+  "cameron mcgriff": "cam mcgriff",
+};
 
 /** "Brown Jr., Mikel" becomes the key for "Mikel Brown Jr." */
 export function reportNameKey(printed: string): string {

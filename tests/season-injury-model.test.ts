@@ -295,12 +295,15 @@ describe("names", () => {
     expect(normalizePersonName("Nikola Jokić")).toBe("nikola jokic");
     expect(normalizePersonName("T.J. McConnell")).toBe("tj mcconnell");
     expect(normalizePersonName("Gary Trent Jr.")).toBe("gary trent");
-    expect(normalizePersonName("Kentavious Caldwell-Pope")).toBe("kentavious caldwellpope");
+    expect(normalizePersonName("Kentavious Caldwell-Pope")).toBe("kentavious caldwell pope");
+    expect(normalizePersonName("Jalen Hood- Schifino")).toBe("jalen hood schifino");
   });
 
   it("reads the report's Last, First form", () => {
     expect(reportNameKey("Trent Jr., Gary")).toBe("gary trent");
     expect(reportNameKey("McConnell, T.J.")).toBe("tj mcconnell");
+    expect(reportNameKey("Towns, Karl- Anthony")).toBe("karl anthony towns");
+    expect(reportNameKey("Martin Jr., Kenyon")).toBe("kj martin");
   });
 
   it("prefers the team's roster, then a unique name, then gives up", () => {
