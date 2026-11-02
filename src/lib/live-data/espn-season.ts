@@ -384,7 +384,8 @@ export function parseStandings(payload: unknown): StandingRow[] {
 }
 
 // ---------------------------------------------------------------------------
-// Injuries (context and capture only; never a model input)
+// ESPN injuries (display fallback and capture only; never a model input. The model's
+// availability comes from the NBA's injury report.)
 // ---------------------------------------------------------------------------
 
 export function parseInjuries(payload: unknown): InjuryRow[] {
@@ -403,12 +404,19 @@ export function parseInjuries(payload: unknown): InjuryRow[] {
       const name = athlete?.displayName;
       const status = row?.status;
       if (typeof name !== "string" || typeof status !== "string") continue;
+      const details = asRecord(row?.details);
+      const fantasy = asRecord(details?.fantasyStatus);
+      const fantasyStatus = fantasy?.abbreviation ?? fantasy?.description;
       rows.push({
         teamId,
         athleteId: String(athlete?.id ?? row?.id ?? ""),
         name,
         status,
         date: String(row?.date ?? ""),
+        // Stored for later study only. Return estimates in the model come from the
+        // survival table, never from these.
+        returnDate: typeof details?.returnDate === "string" ? details.returnDate : null,
+        fantasyStatus: typeof fantasyStatus === "string" ? fantasyStatus : null,
       });
     }
   }

@@ -56,3 +56,14 @@ export function formatDateTime(iso: string, viewerZone: boolean): string {
     timeZone: viewerZone ? undefined : ET,
   }).format(new Date(iso));
 }
+
+/**
+ * An injury report's own stamp, already Eastern wall-clock time ("2026-11-01T14:15"),
+ * as "2:15 PM ET". No zone conversion: the stamp is the NBA's, in ET.
+ */
+export function formatReportTime(at: string): string {
+  const hour = Number(at.slice(11, 13));
+  const minute = at.slice(14, 16);
+  const twelve = hour % 12 === 0 ? 12 : hour % 12;
+  return `${twelve}:${minute} ${hour >= 12 ? "PM" : "AM"} ET`;
+}

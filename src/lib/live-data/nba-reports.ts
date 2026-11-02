@@ -5,6 +5,9 @@
 // if the header, the title or any row does not look right, it throws, and the caller
 // keeps its last good report.
 
+import { STATUS_CODES, teamIdFromReportName } from "@/lib/season/availability";
+import type { LiveReport, LiveReportRow } from "@/lib/season/live-reports";
+
 export type ReportStatus = "Out" | "Doubtful" | "Questionable" | "Probable" | "Available";
 
 const STATUSES: readonly string[] = ["Out", "Doubtful", "Questionable", "Probable", "Available"];
@@ -306,4 +309,66 @@ export function reportFileName(
 
 export function reportUrl(fileName: string): string {
   return `https://ak-static.cms.nba.com/referee/injury/Injury-Report_${fileName}.pdf`;
+}
+
+/**
+ * Quarter-hour report names at or before an Eastern wall-clock time, newest first.
+ * Reports have been issued every 15 minutes, around the clock, since 2025-12-22.
+ */
+export function quarterReportNames(nowEt: string, count: number): string[] {
+  // Wall-clock stamps are treated as UTC only to step through them.
+  const now = Date.parse(`${nowEt}:00Z`);
+  if (Number.isNaN(now)) throw new Error(`Bad ET time "${nowEt}".`);
+  const newest = Math.floor(now / 900_000) * 900_000;
+  const names: string[] = [];
+  for (let step = 0; step < count; step += 1) {
+    const iso = new Date(newest - step * 900_000).toISOString();
+    names.push(
+      reportFileName(iso.slice(0, 10), Number(iso.slice(11, 13)), Number(iso.slice(14, 16)), "quarter"),
+    );
+  }
+  return names;
+}
+
+export type SlateGamePair = { homeId: string; awayId: string };
+
+/**
+ * Cuts a parsed report to one slate and validates it: every slate game must have rows,
+ * or NOT YET SUBMITTED, for both teams. Anything else makes the report unusable, and a
+ * team name it cannot place fails closed.
+ */
+export function reportForSlate(
+  report: ParsedReport,
+  file: string,
+  etDate: string,
+  games: readonly SlateGamePair[],
+): { ok: true; report: LiveReport } | { ok: false; problem: string } {
+  const slateTeams = new Set(games.flatMap((game) => [game.homeId, game.awayId]));
+  const seen = new Set<string>();
+  const notSubmitted: string[] = [];
+  const rows: LiveReportRow[] = [];
+  try {
+    for (const row of report.rows) {
+      if (row.gameDate !== etDate) continue;
+      const teamId = teamIdFromReportName(row.team);
+      if (!slateTeams.has(teamId)) continue;
+      seen.add(teamId);
+      if (row.player === null || row.status === null) {
+        if (!notSubmitted.includes(teamId)) notSubmitted.push(teamId);
+      } else {
+        rows.push([teamId, row.player, STATUS_CODES[row.status], row.reason]);
+      }
+    }
+  } catch (error) {
+    return { ok: false, problem: error instanceof Error ? error.message : String(error) };
+  }
+  const absent = [...slateTeams].filter((teamId) => !seen.has(teamId));
+  if (games.length === 0) return { ok: false, problem: "no games on the slate" };
+  if (absent.length > 0) {
+    return {
+      ok: false,
+      problem: `no rows for team(s) ${absent.sort().join(", ")} on ${etDate}`,
+    };
+  }
+  return { ok: true, report: { file, notSubmitted: notSubmitted.sort(), rows } };
 }
