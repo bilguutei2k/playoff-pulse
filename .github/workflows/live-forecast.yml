@@ -1,23 +1,31 @@
 name: Live forecast
 
-# An outside scheduler calls workflow_dispatch every 10 minutes, because GitHub's own
-# schedule proved far too unreliable: 2 of about 27 slots ran in the first 13 hours.
-# The schedule below stays as a backup, at off-peak minutes. Each run refreshes
-# results, seals today's forecasts, re-simulates the season, and commits data/live/**
-# only when something changed. Commits touching more than data/live/games deploy to
-# production through Vercel (see vercel.json).
+# Runs about every ten minutes by starting its own next run: each chained run waits
+# for the next ten-minute mark, refreshes results, seals forecasts, re-simulates the
+# season, commits data/live/** when something changed, and then starts the next run.
+# GitHub's own schedule proved far too unreliable (2 of about 27 slots in the first 13
+# hours), so it stays only as a fallback that restarts the chain if it ever breaks.
 #
-# A failure publishes nothing, leaves the last good state up, and fails the job,
-# which makes GitHub email the owner. Pushes made with GITHUB_TOKEN do not trigger
-# ci.yml, so these commits are checked here instead.
+# A failure publishes nothing, leaves the last good state up, and fails the job, which
+# makes GitHub email the owner. After three failures in a row the chain stops and the
+# fallback schedule takes over, so a persistent bug does not email every ten minutes.
+# Pushes made with GITHUB_TOKEN do not trigger ci.yml, so these commits are checked
+# here. Commits touching more than data/live/games deploy to production through Vercel
+# (see vercel.json).
 
 on:
   schedule:
-    - cron: "11,41 * * * *"
+    - cron: "7,37 * * * *"
   workflow_dispatch:
+    inputs:
+      chain:
+        description: "Started by the previous run: wait for the next ten-minute mark"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: live-forecast
@@ -26,9 +34,17 @@ concurrency:
 jobs:
   forecast:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
+      - name: Wait for the next ten-minute mark
+        if: inputs.chain == true
+        run: |
+          now=$(date +%s)
+          next=$(( (now / 600 + 1) * 600 ))
+          echo "Waiting $((next - now))s, until $(date -u -d "@$next" +%H:%M:%S) UTC."
+          sleep $((next - now))
+
       - name: Check out repository
         uses: actions/checkout@v4
         with:
@@ -72,3 +88,25 @@ jobs:
             sleep 15
           done
           exit 1
+
+      - name: Start the next run
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          THIS_RUN: ${{ github.run_id }}
+          THIS_STATUS: ${{ job.status }}
+        run: |
+          others=$(gh run list --workflow=live-forecast.yml --limit 20 --json databaseId,status \
+            --jq "[.[] | select(.status != \"completed\" and (.databaseId | tostring) != \"$THIS_RUN\")] | length")
+          if [ "$others" != "0" ]; then
+            echo "Another run is already queued or running; it will start the next one."
+            exit 0
+          fi
+          recent=$(gh run list --workflow=live-forecast.yml --limit 2 --status completed --json conclusion \
+            --jq '[.[] | .conclusion] | join(",")')
+          if [ "$THIS_STATUS" != "success" ] && [ "$recent" = "failure,failure" ]; then
+            echo "Three failures in a row; stopping the chain. The schedule will restart it."
+            exit 0
+          fi
+          gh workflow run live-forecast.yml --ref main -f chain=true
+          echo "Next run requested."
