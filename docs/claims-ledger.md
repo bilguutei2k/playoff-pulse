@@ -170,7 +170,8 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 ## Live forecast (model `live-2026.27-v1`)
 
 Sources: `docs/live/registration.md`, `docs/live/evaluation-games.json`,
-`docs/live/evaluation-season.json`, and `data/live/ledger/`.
+`docs/live/evaluation-season.json`, and `data/live/ledger/`. These claims appear on `/` (games and
+track record), `/odds` (season forecast) and `/how-it-works` (methodology).
 
 **May be stated plainly, with the numbers:**
 
@@ -201,6 +202,7 @@ Sources: `docs/live/registration.md`, `docs/live/evaluation-games.json`,
 - Title-odds skill. Too few champions exist to measure it.
 - A playoff edge over the SRS + home reference. Series Brier on 2016-2022 was 0.1837 against 0.1712,
   with the interval crossing zero.
-- Any market comparison until a large prospective sample exists. Market data is captured at seal for
-  later aggregate comparison only and is not displayed per game.
+- Any claim about the model against the market until at least 500 scored games. By the owner's
+  decision of 2026-11-01, the market's vig-free win probability is displayed per game as a reference
+  only, labeled "Market" with its provider named; it is never a model input and is not scored.
 - Betting value of any kind, or official NBA data.
