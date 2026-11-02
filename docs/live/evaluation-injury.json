@@ -1,0 +1,142 @@
+{
+  "note": "Registered test of the injury model. Run once. 2024-25 and 2025-26 regular seasons, final point, v2 against v1 on identical games. T1 is conservative: 2025-26 was seen when v1's form was chosen.",
+  "fitted": {
+    "beta": 0.4,
+    "gRep": 0.2,
+    "k": 1000,
+    "lG": 1000,
+    "lM": 3
+  },
+  "games": 2460,
+  "gates": {
+    "T1": {
+      "passed": true,
+      "difference": -0.005147,
+      "lower": -0.008081,
+      "upper": -0.002185,
+      "clusters": 327,
+      "draws": 10000,
+      "negativeInEachSeason": true
+    },
+    "T2": {
+      "passed": true,
+      "injury": 0.585577,
+      "plain": 0.599091
+    },
+    "T3": {
+      "passed": true,
+      "injury": 0.875,
+      "plain": 0.886,
+      "tolerance": 0.02
+    },
+    "T4": {
+      "passed": true,
+      "checks": [
+        {
+          "checkpoint": "dec1",
+          "makePlayoffsBrier": {
+            "injury": 0.116216,
+            "plain": 0.112454
+          },
+          "winRmse": {
+            "injury": 7.275,
+            "plain": 7.137
+          },
+          "teamSeasons": 60
+        },
+        {
+          "checkpoint": "feb1",
+          "makePlayoffsBrier": {
+            "injury": 0.08685,
+            "plain": 0.091687
+          },
+          "winRmse": {
+            "injury": 4.527,
+            "plain": 4.384
+          },
+          "teamSeasons": 60
+        },
+        {
+          "checkpoint": "apr1",
+          "makePlayoffsBrier": {
+            "injury": 0.058696,
+            "plain": 0.054426
+          },
+          "winRmse": {
+            "injury": 1.128,
+            "plain": 1.182
+          },
+          "teamSeasons": 60
+        }
+      ],
+      "brierTolerance": 0.005,
+      "rmseTolerance": 0.25
+    }
+  },
+  "passed": true,
+  "reportedOnly": {
+    "overall": {
+      "injury": {
+        "brier": 0.200907,
+        "accuracy": 0.689
+      },
+      "plain": {
+        "brier": 0.206054,
+        "accuracy": 0.6809
+      }
+    },
+    "perSeason": [
+      {
+        "season": 2025,
+        "games": 1230,
+        "injury": {
+          "brier": 0.202431,
+          "logLoss": 0.588968,
+          "accuracy": 0.6862
+        },
+        "plain": {
+          "brier": 0.208099,
+          "logLoss": 0.60209,
+          "accuracy": 0.6748
+        },
+        "difference": -0.005668
+      },
+      {
+        "season": 2026,
+        "games": 1230,
+        "injury": {
+          "brier": 0.199383,
+          "logLoss": 0.582185,
+          "accuracy": 0.6919
+        },
+        "plain": {
+          "brier": 0.204009,
+          "logLoss": 0.596092,
+          "accuracy": 0.687
+        },
+        "difference": -0.004627
+      }
+    ],
+    "morningPoint": {
+      "injuryBrier": 0.204497
+    },
+    "largeGap": {
+      "thresholdPoints": 2,
+      "games": 1312,
+      "injuryBrier": 0.187233,
+      "plainBrier": 0.197315
+    },
+    "market": {
+      "note": "ESPN's stored spread, timing unknown, turned into a probability with a scale chosen on fit seasons. Comparison only.",
+      "games": 978,
+      "scale": 13,
+      "marketBrier": 0.196453,
+      "injuryBrier": 0.200804,
+      "plainBrier": 0.207019
+    },
+    "coverage": {
+      "testGames": 2469,
+      "qualifying": 2460
+    }
+  }
+}

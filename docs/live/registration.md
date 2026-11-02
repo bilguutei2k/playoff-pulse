@@ -234,3 +234,22 @@ Disclosure: 2025-26 was among the seasons seen when v1's model form was chosen, 
 favors v1, so T1 is conservative. Two test seasons is thin; the sealed ledger remains the
 real test. The harness was smoke-tested on fit seasons 2022-23 and 2023-24 only, to check
 that it completes; that output is not a result and was not kept.
+
+**2026-11-02, injury test result.** Run once, after the registration commit, on 2024-25
+and 2025-26: 2,460 qualifying games of 2,469 (`docs/live/evaluation-injury.json`).
+
+- **T1 passed:** Brier −0.0051 against v1, 95% interval −0.0081 to −0.0022 over 327 game
+  dates, negative in each season (−0.0057 and −0.0046).
+- **T2 passed:** log loss 0.5856 against 0.5991.
+- **T3 passed:** calibration slope 0.875 against 0.886.
+- **T4 passed:** make-playoffs Brier 0.1162 against 0.1125 at Dec 1, 0.0869 against 0.0917
+  at Feb 1, 0.0587 against 0.0544 at Apr 1; win-total RMSE 7.28 against 7.14, 4.53 against
+  4.38, 1.13 against 1.18. All within the registered tolerances.
+- Reported only: accuracy 68.9% against 68.1%; Brier at the morning point 0.2045 against
+  0.2009 at the final point; the 1,312 games with an absence gap of at least 2 points,
+  0.1872 against 0.1973; on the 978 games with a stored ESPN spread, market 0.1965, v2
+  0.2008, v1 0.2070, so the market remains ahead and no claim is made against it.
+
+The candidate passes. Shipping still requires the rest of decision 9: a scheduler that has
+hit at least 90% of ten-minute slots over three consecutive days, the listed invariants,
+and the documentation, all by pull request.
