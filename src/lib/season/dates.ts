@@ -42,3 +42,25 @@ export function daysBetween(earlier: string, later: string): number {
       86_400_000,
   );
 }
+
+const ET_WALL_CLOCK = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/New_York",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+/** Eastern wall-clock time as YYYY-MM-DDTHH:mm, the form injury reports are stamped in. */
+export function etWallClockOf(instant: string | number | Date): string {
+  const date = new Date(instant);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error(`Invalid timestamp: ${String(instant)}`);
+  }
+  const parts = Object.fromEntries(
+    ET_WALL_CLOCK.formatToParts(date).map((part) => [part.type, part.value]),
+  );
+  return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+}

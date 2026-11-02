@@ -139,8 +139,12 @@ export function predictGame(
   state: { mean: ArrayLike<number>; cov: ArrayLike<number> },
   context: GameContext,
   params: ModelParams,
+  /** Points added to the home margin, such as for expected absences. */
+  marginAdjustment = 0,
 ): GamePrediction {
-  const { expectedMargin, ratingVariance } = predictInto(state, context, params);
+  const predicted = predictInto(state, context, params);
+  const expectedMargin = predicted.expectedMargin + marginAdjustment;
+  const { ratingVariance } = predicted;
   const total = params.sigma * params.sigma + ratingVariance;
   return {
     expectedMargin,

@@ -416,6 +416,132 @@ export function parseInjuries(payload: unknown): InjuryRow[] {
 }
 
 // ---------------------------------------------------------------------------
+// Box scores (player value and who actually played)
+// ---------------------------------------------------------------------------
+
+export type BoxPlayerLine = {
+  athleteId: string;
+  name: string;
+  minutes: number;
+  points: number;
+  fieldGoalsMade: number;
+  fieldGoalsAttempted: number;
+  freeThrowsMade: number;
+  freeThrowsAttempted: number;
+  offensiveRebounds: number;
+  defensiveRebounds: number;
+  assists: number;
+  steals: number;
+  blocks: number;
+  turnovers: number;
+  fouls: number;
+};
+
+/** Players with minutes only, by team ID. Anyone else missed the game. */
+export type BoxScore = Record<string, BoxPlayerLine[]>;
+
+function statNumber(cell: string | undefined, label: string, gameId: string): number {
+  const value = Number(cell);
+  if (cell === undefined || cell === "" || !Number.isFinite(value)) {
+    throw new Error(`ESPN box score ${gameId}: ${label} is not a number ("${String(cell)}").`);
+  }
+  return value;
+}
+
+function madeAttempted(cell: string | undefined, label: string, gameId: string): [number, number] {
+  const match = /^(\d+)-(\d+)$/.exec(cell ?? "");
+  if (!match) {
+    throw new Error(`ESPN box score ${gameId}: ${label} is not made-attempted ("${String(cell)}").`);
+  }
+  return [Number(match[1]), Number(match[2])];
+}
+
+/** Minutes are a whole number, sometimes "MM:SS". A bare dash or blank means none. */
+function parseMinutes(cell: string | undefined, gameId: string): number {
+  if (cell === undefined || cell === "" || /^-+$/.test(cell)) return 0;
+  const clock = /^(\d+):(\d+)$/.exec(cell);
+  if (clock) return Number(clock[1]) + Number(clock[2]) / 60;
+  return statNumber(cell, "MIN", gameId);
+}
+
+/** Strict: a changed layout throws, so a bad box score can never reach player values. */
+export function parseBoxScore(payload: unknown, gameId: string): BoxScore {
+  const blocks = asArray(asRecord(asRecord(payload)?.boxscore)?.players);
+  if (blocks.length !== 2) {
+    throw new Error(`ESPN box score ${gameId}: expected 2 teams, found ${blocks.length}.`);
+  }
+  const output: BoxScore = {};
+  for (const rawBlock of blocks) {
+    const block = asRecord(rawBlock);
+    const teamId = String(asRecord(block?.team)?.id ?? "");
+    if (!isLeagueTeam(teamId)) {
+      throw new Error(`ESPN box score ${gameId}: unknown team ${teamId}.`);
+    }
+    const group = asRecord(asArray(block?.statistics)[0]);
+    const labels = asArray(group?.labels ?? group?.names).map(String);
+    const at = (label: string) => {
+      const index = labels.indexOf(label);
+      if (index < 0) throw new Error(`ESPN box score ${gameId}: no ${label} column.`);
+      return index;
+    };
+    const columns = {
+      minutes: at("MIN"),
+      points: at("PTS"),
+      fieldGoals: at("FG"),
+      freeThrows: at("FT"),
+      assists: at("AST"),
+      turnovers: at("TO"),
+      steals: at("STL"),
+      blocks: at("BLK"),
+      offensiveRebounds: at("OREB"),
+      defensiveRebounds: at("DREB"),
+      fouls: at("PF"),
+    };
+    const lines: BoxPlayerLine[] = [];
+    for (const rawAthlete of asArray(group?.athletes)) {
+      const row = asRecord(rawAthlete);
+      const stats = asArray(row?.stats).map(String);
+      if (stats.length === 0) continue;
+      const minutes = parseMinutes(stats[columns.minutes], gameId);
+      if (minutes <= 0) continue;
+      const athlete = asRecord(row?.athlete);
+      const [fieldGoalsMade, fieldGoalsAttempted] = madeAttempted(
+        stats[columns.fieldGoals],
+        "FG",
+        gameId,
+      );
+      const [freeThrowsMade, freeThrowsAttempted] = madeAttempted(
+        stats[columns.freeThrows],
+        "FT",
+        gameId,
+      );
+      lines.push({
+        athleteId: requireString(athlete, "id", "athlete"),
+        name: requireString(athlete, "displayName", "athlete"),
+        minutes,
+        points: statNumber(stats[columns.points], "PTS", gameId),
+        fieldGoalsMade,
+        fieldGoalsAttempted,
+        freeThrowsMade,
+        freeThrowsAttempted,
+        offensiveRebounds: statNumber(stats[columns.offensiveRebounds], "OREB", gameId),
+        defensiveRebounds: statNumber(stats[columns.defensiveRebounds], "DREB", gameId),
+        assists: statNumber(stats[columns.assists], "AST", gameId),
+        steals: statNumber(stats[columns.steals], "STL", gameId),
+        blocks: statNumber(stats[columns.blocks], "BLK", gameId),
+        turnovers: statNumber(stats[columns.turnovers], "TO", gameId),
+        fouls: statNumber(stats[columns.fouls], "PF", gameId),
+      });
+    }
+    if (lines.length === 0) {
+      throw new Error(`ESPN box score ${gameId}: team ${teamId} has no player with minutes.`);
+    }
+    output[teamId] = lines;
+  }
+  return output;
+}
+
+// ---------------------------------------------------------------------------
 // Fetchers
 // ---------------------------------------------------------------------------
 
@@ -484,4 +610,8 @@ export async function fetchStandings(
 
 export async function fetchInjuries(fetchJson: FetchJson): Promise<InjuryRow[]> {
   return parseInjuries(await fetchJson(`${SITE_API}/injuries`));
+}
+
+export async function fetchBoxScore(fetchJson: FetchJson, gameId: string): Promise<BoxScore> {
+  return parseBoxScore(await fetchJson(`${SITE_API}/summary?event=${gameId}`), gameId);
 }
