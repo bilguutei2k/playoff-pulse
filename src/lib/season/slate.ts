@@ -8,12 +8,14 @@
 import { IN_GAME_SIGMA } from "@/lib/season/params";
 import { inGameHomeProbability } from "@/lib/season/in-game";
 import { backToBackFromDates } from "@/lib/season/live-state";
+import { impliedHomeProbability } from "@/lib/season/market";
 import { predictGame } from "@/lib/season/ratings";
 import type {
   GameKind,
   GameStatus,
   InjuryRow,
   LiveState,
+  MarketReference,
   PlayoffRound,
   ScoreboardRow,
 } from "@/lib/season/types";
@@ -27,6 +29,14 @@ export type GameForecastView = {
   source: "sealed" | "provisional";
   issuedAt: string | null;
   inputsIncomplete: boolean;
+};
+
+/** The market's view of a game, shown beside the model's number for reference only. */
+export type MarketView = {
+  /** Who set the line, as the feed names it, e.g. "DraftKings". */
+  provider: string;
+  /** Home win probability implied by the moneylines, vig removed. */
+  homeWinProbability: number;
 };
 
 export type SlateGameView = {
@@ -53,6 +63,11 @@ export type SlateGameView = {
   beforeRecord: boolean;
   /** Did the sealed favorite win? Null until final, or if nothing was sealed. */
   sealedFavoriteWon: boolean | null;
+  /**
+   * Market reference: the live scoreboard line when present, else the line stored
+   * with the seal, else null. Never a model input and never scored.
+   */
+  market: MarketView | null;
   injuries: { home: InjuryRow[]; away: InjuryRow[] };
 };
 
@@ -93,6 +108,15 @@ function provisionalForecast(
     issuedAt: null,
     inputsIncomplete: false,
   };
+}
+
+function marketView(...sources: Array<MarketReference | null | undefined>): MarketView | null {
+  for (const source of sources) {
+    if (!source) continue;
+    const homeWinProbability = impliedHomeProbability(source);
+    if (homeWinProbability !== null) return { provider: source.provider, homeWinProbability };
+  }
+  return null;
 }
 
 function gameView(
@@ -192,6 +216,7 @@ function gameView(
     missed: !seal && tipped && !beforeRecord,
     beforeRecord,
     sealedFavoriteWon,
+    market: marketView(row.market, seal?.market),
     injuries: {
       home: injuries.filter((entry) => entry.teamId === game.homeId),
       away: injuries.filter((entry) => entry.teamId === game.awayId),

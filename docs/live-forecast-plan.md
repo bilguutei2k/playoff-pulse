@@ -483,3 +483,26 @@ Made after one review and one round of objections. Where a choice existed, this 
     ledger, pipeline, `/live` today and season table, in-game. Phase B, same engagement: phase
     detection, observed-bracket override, replay harness over the 2026 play-in and playoffs,
     playoff-mode UI, series win probabilities.
+
+## Amendment 2026-11-01: UI redesign and per-game market reference (owner's decision)
+
+On 2026-11-01 the owner decided to rebuild the site around the live forecast and to show market odds
+beside the model's numbers for reference. This overrides "Not displayed per game" in section 9, the
+display part of D5, and item 20 ("no per-game display"). Capture at seal is unchanged.
+
+- **Routes.** `/` is the live forecast (was `/live`), `/odds` the full season forecast, `/how-it-works`
+  the live methodology (was `/live/methodology`), and `/retrospective` the 2026 narrative (was `/`).
+  `/live`, `/live/methodology` and `/case-study` redirect permanently. The rest of the 2026 archive keeps
+  its URLs.
+- **Market reference.** Each game shows the market's win probability as "Market" beside the model's
+  number. `src/lib/season/market.ts` converts both American moneylines to implied probabilities and
+  normalizes them to sum to 1, removing the vig. The slate view uses the live scoreboard line when present,
+  else the line stored with the seal, else none. The provider is named in a legend and tooltip
+  ("DraftKings line via ESPN, vig removed, for reference"), and the label is provider-agnostic so a
+  prediction market can be added later. It is never a model input and never scored. No betting framing,
+  no American odds, spreads or payouts on the page, and no claim about the model against the market until
+  at least 500 scored games.
+- **Freshness copy.** Item 17's "typically within a few hours of the final" is replaced on the pages by
+  "Season odds update after games finish" plus the "Updated X ago" stamp from `generatedAt`;
+  `/how-it-works` still explains that scheduled jobs can run hours late.
+

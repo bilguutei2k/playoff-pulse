@@ -14,11 +14,21 @@ const tickNow = () => Math.floor(Date.now() / TICK_MS) * TICK_MS;
 const noTickOnServer = () => null;
 
 /** "Updated 12 minutes ago". Before hydration it shows only the fixed time. */
-export function UpdatedAgo({ iso, stamp }: { iso: string; stamp: string }) {
+export function UpdatedAgo({
+  iso,
+  stamp,
+  lowercase = false,
+}: {
+  iso: string;
+  stamp: string;
+  /** "updated" mid-sentence instead of "Updated". */
+  lowercase?: boolean;
+}) {
   const now = useSyncExternalStore(subscribe, tickNow, noTickOnServer);
+  const word = lowercase ? "updated" : "Updated";
   return (
-    <span title={stamp}>
-      Updated {now === null ? stamp : formatAge(now - Date.parse(iso))}
-    </span>
+    <time dateTime={iso} title={stamp}>
+      {word} {now === null ? stamp : formatAge(now - Date.parse(iso))}
+    </time>
   );
 }
