@@ -376,7 +376,9 @@ export default function HowItWorksPage() {
               update in the hour before tip then writes a final seal from the same ratings with the
               latest NBA injury report. The final seal is the one scored; a game that tips with only
               its morning seal is scored on that and counted as &ldquo;no final seal&rdquo;, never as
-              missed.
+              missed. A morning seal made before any usable injury report had zero absences in it, so
+              the first update with a usable report issues it again under its true time. The original
+              stays in the ledger, and the reissued number stands in for it.
             </p>
             <p>
               <Version>{REFERENCE_MODEL_VERSION}</Version>, the model this one replaced, keeps writing its own morning
@@ -659,6 +661,11 @@ export default function HowItWorksPage() {
               </Term>
               <Term term="Morning seal">
                 The first seal, from 06:00 ET, with the injury report available then.
+              </Term>
+              <Term term="Reissued morning seal">
+                A morning seal issued again, once, because the first one was made before any usable injury
+                report. It carries its real time, the original stays in the ledger, and it stands in for the
+                original from then on.
               </Term>
               <Term term="Final seal">
                 The second seal, written by the first update in the hour before tip with the latest injury

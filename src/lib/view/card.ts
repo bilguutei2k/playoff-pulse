@@ -120,17 +120,26 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
     return {
       label: "No final seal",
       tone: "warn",
-      detail: `No final seal in the hour before tip, so the morning seal from ${time} is scored.${incomplete}`,
+      detail: `No final seal in the hour before tip, so the ${forecast.sealKind === "reissued" ? "reissued " : ""}morning seal from ${time} is scored.${incomplete}`,
     };
   }
-  const kind = forecast.sealKind === "final" ? "Final seal" : forecast.sealKind === "morning" ? "Morning seal" : "Sealed";
+  const kind =
+    forecast.sealKind === "final"
+      ? "Final seal"
+      : forecast.sealKind === "morning"
+        ? "Morning seal"
+        : forecast.sealKind === "reissued"
+          ? "Reissued"
+          : "Sealed";
   return {
     label: `${kind} ${time}`.trim(),
     tone: forecast.inputsIncomplete ? "warn" : "good",
     detail:
-      forecast.sealKind === "morning"
-        ? `Sealed ${time}. A final seal replaces it in the hour before tip.${incomplete}`
-        : `Sealed ${time}. This is the number the record scores.${incomplete}`,
+      forecast.sealKind === "reissued"
+        ? `Reissued ${time}, because the morning seal was made before a usable NBA injury report arrived. A final seal replaces it in the hour before tip.${incomplete}`
+        : forecast.sealKind === "morning"
+          ? `Sealed ${time}. A final seal replaces it in the hour before tip.${incomplete}`
+          : `Sealed ${time}. This is the number the record scores.${incomplete}`,
   };
 }
 

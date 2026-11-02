@@ -147,6 +147,49 @@ export function decideSeals(
   return decisions;
 }
 
+/**
+ * Morning seals to reissue. A morning seal written with no injury report priced every
+ * absence at zero, so the first run holding a usable report seals the game again, once,
+ * under its true issue time. The original row stays in the ledger. A game within the final
+ * seal's window is left to the final seal, and only `slate`'s games qualify because the
+ * report in use is cut to that slate. Callers pass this only when a report is in use.
+ */
+export function decideReissues(
+  games: readonly SeasonGame[],
+  ledger: readonly LedgerRow[],
+  nowIso: string,
+  modelVersion: string,
+  slate: string,
+): SealDecision[] {
+  const now = Date.parse(nowIso);
+  const lacking = new Set(
+    ledger
+      .filter(
+        (row): row is SealRow =>
+          row.type === "seal" &&
+          row.modelVersion === modelVersion &&
+          sealKindOf(row) === "morning" &&
+          row.availabilityMissing === true,
+      )
+      .map((row) => row.gameId),
+  );
+  const reissued = sealedGameIds(ledger, modelVersion, "reissued");
+  const finals = sealedGameIds(ledger, modelVersion, "final");
+  const decisions: SealDecision[] = [];
+  for (const game of games) {
+    if (!lacking.has(game.id) || reissued.has(game.id) || finals.has(game.id)) continue;
+    if (game.status !== "scheduled" || game.etDate !== slate) continue;
+    if (Date.parse(game.tipUtc) - now <= FINAL_SEAL_WINDOW_MS) continue;
+    const blocking = blockingGames(games, game.etDate);
+    decisions.push({
+      game,
+      inputsIncomplete: blocking.length > 0,
+      missingGameIds: blocking.map((row) => row.id),
+    });
+  }
+  return decisions;
+}
+
 /** Whether to write new state. A run with nothing new only refreshes the timestamp. */
 export function shouldPublishState(input: {
   /** Null when no state has been published yet. */
@@ -340,16 +383,21 @@ export function decideResults(
   return rows;
 }
 
-/**
- * The seal a game is scored on: its final seal when one exists, else its morning seal.
- * Input rows must all belong to one game and one version.
- */
-export function scoredSeal(rows: readonly SealRow[]): SealRow | null {
+/** A game's standing morning number: the reissued seal when one exists. Rows of one version. */
+export function morningSeal(rows: readonly SealRow[]): SealRow | null {
   return (
-    rows.find((row) => sealKindOf(row) === "final") ??
+    rows.find((row) => sealKindOf(row) === "reissued") ??
     rows.find((row) => sealKindOf(row) === "morning") ??
     null
   );
+}
+
+/**
+ * The seal a game is scored on: its final seal when one exists, else its morning seal,
+ * as reissued if it was. Input rows must all belong to one game and one version.
+ */
+export function scoredSeal(rows: readonly SealRow[]): SealRow | null {
+  return rows.find((row) => sealKindOf(row) === "final") ?? morningSeal(rows);
 }
 
 /** Seal rows by game ID, in ledger order, for games on ET dates in `[first, last]`. */
@@ -421,7 +469,7 @@ export function summarizeRecord(
     }
     if (twoSeals) {
       if (sealKindOf(seal) !== "final") noFinalSeal += 1;
-      const morning = rows.find((row) => sealKindOf(row) === "morning");
+      const morning = morningSeal(rows);
       if (morning) {
         morningSum += (clampProbability(morning.homeWinProbability) - homeWon) ** 2;
         morningCount += 1;

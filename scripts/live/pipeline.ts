@@ -35,6 +35,7 @@ import {
 } from "../../src/lib/season/live-injury";
 import {
   chooseReport,
+  reportProblem,
   latestReport,
   toReportPoint,
   type ChosenReport,
@@ -44,6 +45,7 @@ import {
   crossCheckStandings,
   decideMissed,
   decideResults,
+  decideReissues,
   decideSeals,
   sealedGameIds,
   sealGames,
@@ -430,6 +432,17 @@ async function main(): Promise<void> {
     }
   }
   const reportInUse = { point: chosen.missing ? null : reportPoint, stale: chosen.stale, missing: chosen.missing };
+  const injuryReportProblem = reportProblem({
+    day: reportDay,
+    chosen,
+    scheduledTips: slateGames.filter((game) => game.status === "scheduled").map((game) => game.tipUtc),
+    nowIso,
+    names: {
+      rows: reportPoint?.rows.length ?? 0,
+      unresolved: reportPoint?.rows.filter((row) => row.athleteId === null).length ?? 0,
+    },
+  });
+  if (injuryReportProblem) log(`report problem: ${injuryReportProblem}`);
 
   // Ledger: seals, then misses, then results. Rows are only ever appended.
   const ledger = readLedger();
@@ -454,6 +467,12 @@ async function main(): Promise<void> {
     ...decideSeals(seasonGames, sealedGameIds(ledger, LIVE_MODEL_VERSION, "morning"), nowIso, "morning").map(
       (decision) => ({ ...decision, kind: "morning" as const }),
     ),
+    ...(reportInUse.point
+      ? decideReissues(seasonGames, ledger, nowIso, LIVE_MODEL_VERSION, slate).map((decision) => ({
+          ...decision,
+          kind: "reissued" as const,
+        }))
+      : []),
     ...decideSeals(seasonGames, sealedGameIds(ledger, LIVE_MODEL_VERSION, "final"), nowIso, "final").map(
       (decision) => ({ ...decision, kind: "final" as const }),
     ),
@@ -643,6 +662,7 @@ async function main(): Promise<void> {
   const healthBody = {
     stuckGames: stuck.map((game) => ({ id: game.id, etDate: game.etDate })),
     standingsLag: crossCheck.lagNotes,
+    reportProblem: injuryReportProblem,
   };
   const previousHealth = readJson<typeof healthBody & { generatedAt: string }>(HEALTH_PATH);
   if (

@@ -8,7 +8,7 @@
 
 import { IN_GAME_SIGMA } from "@/lib/season/params";
 import { inGameHomeProbability } from "@/lib/season/in-game";
-import { backToBackFromDates, sealKindOf } from "@/lib/season/live-state";
+import { backToBackFromDates, morningSeal, sealKindOf } from "@/lib/season/live-state";
 import { impliedHomeProbability } from "@/lib/season/market";
 import { predictGame } from "@/lib/season/ratings";
 import type {
@@ -120,14 +120,15 @@ export type SlateView = {
 
 /**
  * The seal a game page shows: the published model's final seal, else its morning
- * seal, else the reference model's seal (only for games sealed before v2 existed).
+ * seal as reissued if it was, else the reference model's seal (only for games sealed
+ * before v2 existed).
  */
 export function displayedSeal(rows: readonly SealRow[] | undefined, state: LiveState): SealRow | null {
   if (!rows || rows.length === 0) return null;
   const own = rows.filter((row) => row.modelVersion === state.modelVersion);
   return (
     own.find((row) => sealKindOf(row) === "final") ??
-    own.find((row) => sealKindOf(row) === "morning") ??
+    morningSeal(own) ??
     rows.find((row) => row.modelVersion === state.referenceModelVersion) ??
     rows[0]
   );
@@ -312,7 +313,7 @@ function gameView(
       tipped &&
       seal !== null &&
       seal.modelVersion === state.modelVersion &&
-      sealKindOf(seal) === "morning",
+      sealKindOf(seal) !== "final",
     sealedFavoriteWon,
     market: marketView(row.market, seal?.market),
     injuries: {

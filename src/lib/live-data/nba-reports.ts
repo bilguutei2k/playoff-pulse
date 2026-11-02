@@ -333,16 +333,18 @@ export function quarterReportNames(nowEt: string, count: number): string[] {
 export type SlateGamePair = { homeId: string; awayId: string };
 
 /**
- * Cuts a parsed report to one slate and validates it: every slate game must have rows,
- * or NOT YET SUBMITTED, for both teams. Anything else makes the report unusable, and a
- * team name it cannot place fails closed.
+ * Cuts a parsed report to one slate and validates it. A team with nobody listed has no
+ * section in the PDF, so a team, or a whole game, missing from the report means nobody is
+ * listed there. That is routine: one healthy team must never void the report for the other
+ * 29. A report showing under half of the slate's games is unusable, because that points to
+ * a misread or partial file, and a team name it cannot place fails closed.
  */
 export function reportForSlate(
   report: ParsedReport,
   file: string,
   etDate: string,
   games: readonly SlateGamePair[],
-): { ok: true; report: LiveReport } | { ok: false; problem: string } {
+): { ok: true; report: LiveReport; unlisted: string[] } | { ok: false; problem: string } {
   const slateTeams = new Set(games.flatMap((game) => [game.homeId, game.awayId]));
   const seen = new Set<string>();
   const notSubmitted: string[] = [];
@@ -362,13 +364,17 @@ export function reportForSlate(
   } catch (error) {
     return { ok: false, problem: error instanceof Error ? error.message : String(error) };
   }
-  const absent = [...slateTeams].filter((teamId) => !seen.has(teamId));
   if (games.length === 0) return { ok: false, problem: "no games on the slate" };
-  if (absent.length > 0) {
+  const shown = games.filter((game) => seen.has(game.homeId) || seen.has(game.awayId)).length;
+  if (shown * 2 < games.length) {
     return {
       ok: false,
-      problem: `no rows for team(s) ${absent.sort().join(", ")} on ${etDate}`,
+      problem: `only ${shown} of ${games.length} slate games appear on ${etDate}`,
     };
   }
-  return { ok: true, report: { file, notSubmitted: notSubmitted.sort(), rows } };
+  return {
+    ok: true,
+    report: { file, notSubmitted: notSubmitted.sort(), rows },
+    unlisted: [...slateTeams].filter((teamId) => !seen.has(teamId)).sort(),
+  };
 }

@@ -89,6 +89,60 @@ export function chooseReport(
   return { at: null, report: null, stale: false, missing: true };
 }
 
+/** Hours before the first tip at which having no report is a problem by itself. */
+const NO_REPORT_ALERT_HOURS = 3;
+/** Rejected files on one slate, with nothing usable, that count as a problem. */
+const REJECTED_FILES_ALERT = 3;
+/** A report older than this many hours while the job keeps running is a problem. */
+const STALE_ALERT_HOURS = 3;
+/** Under this share of a report's names resolving to players points to a format change. */
+const MIN_MATCHED_SHARE = 0.5;
+const MIN_ROWS_TO_JUDGE_NAMES = 10;
+
+/**
+ * Why injury information is not reaching tonight's forecasts, for a person to look at;
+ * null when it is. Every way the report can fail quietly ends up here: files rejected or
+ * unreadable, the host refusing, a report going stale, and names no longer matching.
+ */
+export function reportProblem(input: {
+  day: LiveReportDay | null;
+  chosen: ChosenReport;
+  /** Tips of the slate's games that have not started. */
+  scheduledTips: readonly string[];
+  nowIso: string;
+  names: { rows: number; unresolved: number };
+}): string | null {
+  const { day, chosen, nowIso, names } = input;
+  if (input.scheduledTips.length === 0) return null;
+  if (chosen.missing) {
+    const rejected = Object.entries(day?.files ?? {})
+      .filter(([, file]) => !file.usable)
+      .sort(([a], [b]) => a.localeCompare(b));
+    if (rejected.length >= REJECTED_FILES_ALERT) {
+      const last = rejected[rejected.length - 1];
+      return `${rejected.length} NBA injury reports were rejected and none is usable. Latest, ${last[0]}: ${last[1].problem ?? "no reason recorded"}.`;
+    }
+    const firstTip = Math.min(...input.scheduledTips.map((tip) => Date.parse(tip)));
+    const hours = (firstTip - Date.parse(nowIso)) / 3_600_000;
+    return hours <= NO_REPORT_ALERT_HOURS
+      ? `No usable NBA injury report, with the first tip ${hours.toFixed(1)} hours away.`
+      : null;
+  }
+  if (chosen.stale && chosen.at) {
+    const age = wallClockHours(chosen.at, etWallClockOf(nowIso));
+    if (age >= STALE_ALERT_HOURS) {
+      return `The newest usable NBA injury report is ${age.toFixed(1)} hours old.`;
+    }
+  }
+  if (
+    names.rows >= MIN_ROWS_TO_JUDGE_NAMES &&
+    (names.rows - names.unresolved) / names.rows < MIN_MATCHED_SHARE
+  ) {
+    return `Only ${names.rows - names.unresolved} of ${names.rows} names on the NBA injury report matched a player.`;
+  }
+  return null;
+}
+
 /** A stored report as the engine reads it, with printed names resolved to athletes. */
 export function toReportPoint(
   report: LiveReport,

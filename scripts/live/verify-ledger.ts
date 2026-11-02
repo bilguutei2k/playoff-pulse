@@ -33,8 +33,9 @@ const MAX_DRIVERS = 3;
 
 /**
  * Row-level rules. Seals key on (game, model version, seal kind): v1 writes one seal
- * per game, v2 a morning and a final seal of different kinds. A miss belongs to one
- * version, and a version cannot both seal and miss the same game.
+ * per game, v2 a morning and a final seal of different kinds, plus a reissued seal when
+ * the morning seal had no report. A miss belongs to one version, and a version cannot both
+ * seal and miss the same game.
  */
 export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
   const problems: string[] = [];
@@ -42,6 +43,7 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
   const sealKeys = new Set<string>();
   const sealedByVersion = new Set<string>();
   const missedByVersion = new Set<string>();
+  const morningWithoutReport = new Set<string>();
   for (const row of rows) {
     if (row.type === "result") {
       if (!games.has(row.gameId)) problems.push(`result for unknown game ${row.gameId}`);
@@ -85,6 +87,18 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
     // v2 rows carry their availability and the reference number.
     if (kind === "final" && tip - issued > FINAL_SEAL_WINDOW_MS) {
       problems.push(`final seal for ${row.gameId} issued more than an hour before tip`);
+    }
+    if (kind === "morning" && row.availabilityMissing) morningWithoutReport.add(versionKey);
+    if (kind === "reissued") {
+      if (!morningWithoutReport.has(versionKey)) {
+        problems.push(`reissued seal for ${row.gameId} without a morning seal that lacked a report`);
+      }
+      if (sealKeys.has(`${versionKey}|final`)) {
+        problems.push(`reissued seal for ${row.gameId} after its final seal`);
+      }
+      if (row.availabilityMissing || (row.reportAt ?? null) === null) {
+        problems.push(`reissued seal for ${row.gameId} has no report`);
+      }
     }
     const reference = row.referenceHomeWinProbability;
     if (reference === undefined || !(reference >= 0 && reference <= 1) || !row.referenceModelVersion) {

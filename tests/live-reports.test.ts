@@ -114,9 +114,30 @@ describe("validating a report against the slate", () => {
     ]);
   });
 
-  it("is unusable when a slate team has neither rows nor NOT YET SUBMITTED", () => {
+  it("keeps the report when one team has nobody listed, as the Bucks did on 2026-11-02", () => {
+    const withoutBrooklyn = { ...parsed, rows: parsed.rows.filter((row) => row.team !== "Brooklyn Nets") };
+    const result = reportForSlate(withoutBrooklyn, "f", "2026-11-01", slate);
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.unlisted).toEqual([BKN]);
+    expect(result.report.rows.map((row) => row[0])).toEqual([BOS, ORL, IND]);
+  });
+
+  it("treats a game with neither team on the report as nobody listed", () => {
     const result = reportForSlate(parsed, "f", "2026-11-01", [...slate, { homeId: "13", awayId: "28" }]);
-    expect(result).toEqual({ ok: false, problem: "no rows for team(s) 13, 28 on 2026-11-01" });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.unlisted).toEqual(["13", "28"]);
+  });
+
+  it("is unusable when under half of the slate's games appear", () => {
+    const result = reportForSlate(parsed, "f", "2026-11-01", [
+      ...slate,
+      { homeId: "13", awayId: "28" },
+      { homeId: "5", awayId: "6" },
+      { homeId: "7", awayId: "9" },
+    ]);
+    expect(result).toEqual({ ok: false, problem: "only 2 of 5 slate games appear on 2026-11-01" });
   });
 
   it("fails closed on a team name it cannot place", () => {
