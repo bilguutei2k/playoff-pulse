@@ -4,3 +4,4 @@
 {"type":"seal","gameId":"401909906","etDate":"2026-11-01","tipUtc":"2026-11-02T02:00Z","issuedAt":"2026-11-01T11:48:00.714Z","modelVersion":"live-2026.27-v1","paramsHash":"7f190d0f59d1d691","ratingsHash":"8d2e84be678fc526","homeId":"13","awayId":"28","homeWinProbability":0.545572,"expectedMargin":1.2779,"inputsIncomplete":false,"missingGameIds":[],"runId":"41303466616","market":{"provider":"DraftKings","homeMoneyline":-192,"awayMoneyline":160,"homeSpread":-4.5}}
 {"type":"result","gameId":"401909903","homeScore":97,"awayScore":108,"recordedAt":"2026-11-02T01:28:34.078Z"}
 {"type":"result","gameId":"401909904","homeScore":90,"awayScore":98,"recordedAt":"2026-11-02T01:28:34.078Z"}
+{"type":"result","gameId":"401909905","homeScore":124,"awayScore":112,"recordedAt":"2026-11-02T04:00:10.784Z"}
