@@ -41,7 +41,15 @@ import { compareGames, loadHistory, loadSeasonGames } from "./game-store";
 
 const WARMUP_SEASON = 2021;
 const FIT_SEASONS = [2022, 2023, 2024];
-const TEST_SEASONS = [2025, 2026];
+/**
+ * The registered test seasons. INJURY_TEST_SEASONS exists only so the harness can be
+ * smoke-tested on fit seasons before registration; such a run writes to /tmp, not docs.
+ */
+const smoke = process.env.INJURY_TEST_SEASONS;
+const TEST_SEASONS = smoke ? smoke.split(",").map(Number) : [2025, 2026];
+if (smoke && TEST_SEASONS.some((season) => season > 2024)) {
+  throw new Error("Smoke runs may only use fit seasons.");
+}
 const FINAL_WINDOW_MS = 3 * 3_600_000;
 const LARGE_GAP_POINTS = 2;
 const ITERATIONS = 4000;
@@ -377,7 +385,7 @@ const output = {
   },
 };
 fs.writeFileSync(
-  path.join(process.cwd(), "docs/live/evaluation-injury.json"),
+  smoke ? "/tmp/pp-injury-smoke.json" : path.join(process.cwd(), "docs/live/evaluation-injury.json"),
   `${JSON.stringify(output, null, 2)}\n`,
   "utf-8",
 );
