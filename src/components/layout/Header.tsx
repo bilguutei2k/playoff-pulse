@@ -11,7 +11,7 @@ export function Header() {
       <div className="pp-container flex h-14 items-center gap-3 sm:h-16 sm:gap-6">
         <Link href="/" className="flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="548, NBA forecasts: today's games">
           <Brand548 size={36} />
-          <span className="kicker hidden whitespace-nowrap text-ink-2 min-[400px]:inline">NBA forecasts</span>
+          <span className="kicker whitespace-nowrap text-ink-2">NBA forecasts</span>
         </Link>
         <div className="hidden min-w-0 flex-1 md:block">
           <NavLinks />
