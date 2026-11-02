@@ -207,7 +207,7 @@ export function WinProbability({ game }: { game: DayGame }) {
       </dl>
       {game.projection ? null : (
         <p className="mt-4 text-[12px] leading-5 text-ink-3">
-          The market is {provider ?? "the sportsbook"}&apos;s moneyline via ESPN with the vig removed, shown for
+          The market is the {provider ?? "sportsbook"} moneyline via ESPN with the vig removed, shown for
           reference. It is never a model input and is not scored.
         </p>
       )}

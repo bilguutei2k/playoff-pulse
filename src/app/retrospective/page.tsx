@@ -223,7 +223,7 @@ export default function Home() {
                 so the former production blend conclusively trails SRS-only
                 and the retirement gate fires. Series accuracy is {formatPercent(pulse.accuracy)}{" "}
                 versus{" "}
-                {formatPercent(backtestSummary.models.higher_seed.accuracy)}
+                {formatPercent(backtestSummary.models.higher_seed.accuracy)}{" "}
                 for the higher-seed baseline.
               </p>
             </div>
