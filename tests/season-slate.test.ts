@@ -180,6 +180,60 @@ describe("slate view", () => {
     expect(result.games.map((game) => game.id)).toEqual(["early", "later"]);
   });
 
+  it("shows the live market line, vig removed, when the scoreboard has one", () => {
+    const withMarket = {
+      ...row(),
+      market: { provider: "DraftKings", homeMoneyline: -166, awayMoneyline: 140, homeSpread: -3.5 },
+    };
+    const game = view([withMarket], true).games[0];
+    expect(game.market?.provider).toBe("DraftKings");
+    expect(game.market?.homeWinProbability).toBeCloseTo(0.5996, 4);
+  });
+
+  it("falls back to the market stored with the seal, then to none", () => {
+    const sealedMarket: SealRow = {
+      ...seal,
+      market: { provider: "DraftKings", homeMoneyline: 210, awayMoneyline: -258, homeSpread: 6.5 },
+    };
+    const live = buildSlateView({
+      state: state({ g: sealedMarket }),
+      etDate: DATE,
+      nowIso: NOW,
+      rows: [row({ status: "in-progress", homeScore: 10, awayScore: 8 })],
+      injuries: [],
+    }).games[0];
+    expect(live.market?.homeWinProbability).toBeCloseTo(0.3092, 4);
+
+    // A scoreboard line without both moneylines does not hide the sealed one.
+    const spreadOnly = { ...row(), market: { provider: "X", homeMoneyline: null, awayMoneyline: null, homeSpread: -2 } };
+    const fallback = buildSlateView({
+      state: state({ g: sealedMarket }),
+      etDate: DATE,
+      nowIso: NOW,
+      rows: [spreadOnly],
+      injuries: [],
+    }).games[0];
+    expect(fallback.market?.provider).toBe("DraftKings");
+
+    expect(view([row()], true).games[0].market).toBeNull();
+    expect(view([row()]).games[0].market).toBeNull();
+  });
+
+  it("keeps the sealed market when ESPN is unavailable", () => {
+    const sealedMarket: SealRow = {
+      ...seal,
+      market: { provider: "DraftKings", homeMoneyline: -110, awayMoneyline: -110, homeSpread: 0 },
+    };
+    const result = buildSlateView({
+      state: state({ g: sealedMarket }),
+      etDate: DATE,
+      nowIso: NOW,
+      rows: null,
+      injuries: null,
+    });
+    expect(result.games[0].market?.homeWinProbability).toBeCloseTo(0.5, 10);
+  });
+
   it("flags published data older than the stale limit", () => {
     expect(view([row()], false, "2026-11-01T20:00:00Z").stale).toBe(false);
     expect(view([row()], false, "2026-10-31T20:00:00Z").stale).toBe(true);

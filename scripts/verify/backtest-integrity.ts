@@ -85,17 +85,19 @@ export function runBacktestIntegrityChecks(): void {
     !publishedForecastSource.includes("estimateBracket" + "Forecast("),
     "Published snapshot probabilities must not call the scenario-adjusted bracket path.",
   );
+  // The 2026 retrospective narrative moved from "/" to "/retrospective" in the
+  // November 2026 redesign; its preserved probability is still checked here.
   const homepageSource = fs.readFileSync(
-    path.join(process.cwd(), "src/app/page.tsx"),
+    path.join(process.cwd(), "src/app/retrospective/page.tsx"),
     "utf-8",
   );
   assert(
     homepageSource.includes("estimateBaselineSeriesProbability"),
-    "The homepage preserved probability must use the evidenced baseline.",
+    "The retrospective preserved probability must use the evidenced baseline.",
   );
   assert(
     !homepageSource.includes("estimateSeries" + "Probability("),
-    "The homepage must not display a scenario-adjusted probability by itself.",
+    "The retrospective must not display a scenario-adjusted probability by itself.",
   );
 
   assert.doesNotThrow(() =>

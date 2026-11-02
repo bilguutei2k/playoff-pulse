@@ -1,8 +1,8 @@
 # AGENTS.md
 
 ## Project Identity
-- Playoff Pulse has two parts. **The live forecast** (`/live`, since November 2026) gives a win probability for every NBA game on the day, plus playoff and title odds, updated automatically and scored against a public sealed ledger. **The 2026 retrospective** ("a traceable NBA playoff forecasting experiment") is a frozen archive of the manually configured 2026 postseason. Rules below name which part they cover where it matters.
-- It is deployed at https://548-sable.vercel.app. `/live` is the live forecast and `/live/methodology` explains it. The homepage (`/`) is the retrospective narrative; the frozen completed-season dashboard lives at `/snapshot`; `/case-study` permanently redirects to `/`.
+- Playoff Pulse has two parts. **The live forecast** (`/`, since November 2026) gives a win probability for every NBA game on the day, plus playoff and title odds, updated automatically and scored against a public sealed ledger. **The 2026 retrospective** ("a traceable NBA playoff forecasting experiment") is a frozen archive of the manually configured 2026 postseason. Rules below name which part they cover where it matters.
+- It is deployed at https://548-sable.vercel.app. The homepage (`/`) is the live forecast: today's games, title odds and the track record. `/odds` is the full season forecast and `/how-it-works` explains the live model. The 2026 retrospective narrative lives at `/retrospective`; the frozen completed-season dashboard lives at `/snapshot`; `/evidence`, `/methodology` and `/lab` complete that archive. `/live` and `/live/methodology` permanently redirect to `/` and `/how-it-works`, and `/case-study` to `/retrospective`.
 - Live model: `src/lib/season/`, frozen in `src/lib/season/params.ts` as `LIVE_MODEL_VERSION`. Gates, ship rule and every amendment are in `docs/live/registration.md`; results are in `docs/live/evaluation-*.json`. Changing a parameter requires a new version, and the public record is reported per version. Never refit on all history or tune against validation seasons.
 - All public claims are gated by `docs/claims-ledger.md`. Statistical significance for the pooled 360-series backtest lives in `docs/backtest/significance.json` (regenerate with `pnpm exec tsx scripts/backtest/significance.ts`); the immutable pre-2026 record lives in `docs/backtest/frozen-2003-2025/`; parameter provenance is recorded in `docs/parameter-provenance.md`. Do not add performance claims that are not supported by those documents — in particular, the full model does NOT conclusively outperform SRS-only or net-rating-only baselines and must never be framed that way.
 - Research promotion is gated by `research.json → modelSelectionGate`: exactly one primary challenger (`exact_srs_logit_plus_seed_v1`), series Brier as the primary endpoint, a 0.005 minimum meaningful improvement, a season-clustered interval below zero, no-worse log loss/calibration, production-equivalent inputs, and a genuinely future archived season. Historical point improvements alone are never sufficient.
@@ -10,7 +10,7 @@
 - It is not a betting product. For the 2026 archive, modeling inputs — team ratings, player impact, projected minutes, injury statuses, and model weights — remain manual configuration. The pooled reconstruction covers 645 playoff series and 3,375 pregame states (1984–2026), including era-correct series formats. Rolling-origin evaluation covers 3,160 games and 600 series (1987–2026). The separately scored 2026 holdout covers 85 games and 15 series; both challenger registrations are `CONTAMINATED_2026`. Historical availability coverage is zero and injury effects are not claimed. A 105-series FiveThirtyEight comparison is an external model benchmark, not a market benchmark; timestamped no-vig market coverage remains zero. See docs/backtest/methodology.md and docs/claims-ledger.md. It is not production-grade for unsupervised public use.
 - Live data updates automatically through `.github/workflows/live-forecast.yml` + `scripts/live/pipeline.ts`, which commits `data/live/**` to `main`; each commit deploys. Publication fails closed: any validation failure publishes nothing and fails the job. There is no PR gate on this path, because a human gate cannot keep up with a daily slate. Humans do not edit `data/live/**`.
 - `src/lib/data/playoff-config.ts` is the frozen 2026 archive, with no automated updates. `scripts/refresh-data.ts` remains only as history; its workflow has been removed.
-- Finalized results enter the live model only through the validated pipeline. Live, in-progress scores reach only the in-game estimator (`src/lib/season/in-game.ts`) and never change ratings or a sealed forecast. Injury reports and market odds are captured for study and displayed or stored as described in `/live/methodology`; they are never model inputs.
+- Finalized results enter the live model only through the validated pipeline. Live, in-progress scores reach only the in-game estimator (`src/lib/season/in-game.ts`) and never change ratings or a sealed forecast. Injury reports and market odds are captured for study and displayed or stored as described in `/how-it-works`; they are never model inputs.
 
 ## Hard Model-Correctness Rules
 - Probabilities MUST be bounded between 0 and 1. Validate at output boundaries.
@@ -32,7 +32,7 @@
 - Provisional forecasts exist only so every game has a number when the job runs late. They MUST be labeled, and MUST NEVER enter the ledger or the record.
 - Performance claims follow the live section of `docs/claims-ledger.md`. Results are labeled small-sample below 500 scored games, and missed and incomplete seals are always shown.
 - Season, tiebreak and format rules live in `src/lib/season/formats.ts` and `standings.ts`. A new season fails closed until it is registered in `formats.ts`.
-- Team logos are 56px copies of ESPN's default logos, downloaded 2026-11-01, in `public/logos/nba/{espnTeamId}.png`. They are NBA and team trademarks, used without a license by the owner's decision. Show them only through `src/components/live/TeamLogo.tsx`, small and unaltered, always beside the team's name or abbreviation. `SHOW_TEAM_LOGOS` there turns them all off. Keep the "not affiliated" notice on `/live`.
+- Team logos are 56px copies of ESPN's default logos, downloaded 2026-11-01, in `public/logos/nba/{espnTeamId}.png`. They are NBA and team trademarks, used without a license by the owner's decision. Show them only through `src/components/live/TeamLogo.tsx`, small and unaltered, always beside the team's name or abbreviation. `SHOW_TEAM_LOGOS` there turns them all off. Keep the "not affiliated" notice on `/` (the site footer carries it on every page).
 
 ## Never Do
 - Never put forecasting math in UI components.
@@ -40,7 +40,7 @@
 - Never pass live, unfinished scores into anything except the in-game estimator.
 - Never claim official NBA data sources. The live path uses ESPN's unofficial public feeds, and its authoritative timestamp is `generatedAt` in `data/live/state.json`. The 2026 archive is manually configured, and its snapshot time is `dataLastUpdatedTimestamp` in `src/lib/data/playoff-config.ts`.
 - Never hide placeholder or manual-data caveats. Keep caveats visible in the UI.
-- Never make betting recommendations or use betting framing. Market odds, if added later, are comparison only.
+- Never make betting recommendations or use betting framing. Market odds are displayed per game as a reference, comparison only.
 - Never present model output as authoritative beyond what has been validated.
 - Never hard-code team IDs inside model functions. Look teams up through config or typed maps.
 - Never use unbounded probability operations that could produce values outside [0, 1].
@@ -56,7 +56,7 @@
 - Model engine layer: `src/lib/model/` contains pure reusable TypeScript functions for player-minute impact, team strength, expected margin, win probability, series simulation, and bracket Monte Carlo.
 - Model modules MUST NOT import React or UI code.
 - UI layer: `src/components/` and `src/app/` display model outputs and controls. They MUST NOT contain Monte Carlo logic, probability formulas, or rating math.
-- Methodology layer: `src/app/methodology/page.tsx` covers the 2026 archive; `src/app/live/methodology/page.tsx` covers the live forecast. Both state assumptions and limitations.
+- Methodology layer: `src/app/methodology/page.tsx` covers the 2026 archive; `src/app/how-it-works/page.tsx` covers the live forecast. Both state assumptions and limitations.
 - Evaluation layer: `scripts/` contains verification now and may contain backtesting or calibration later.
 
 ## Workflow Rules
@@ -95,4 +95,5 @@ When claiming a task is done, include the actual output or summary of the verify
 - Model weights/config: `src/lib/data/model-settings.ts`; team/player/series state: `src/lib/data/playoff-config.ts`.
 - Win probability math: `src/lib/model/probability.ts`; series simulation: `src/lib/model/simulator.ts`; bracket simulation: `src/lib/model/bracket-simulator.ts`.
 - Live scoreboard display probe: `src/lib/live-data/espn-scoreboard.ts` and `src/app/api/live-scoreboard/route.ts`; verifier: `scripts/verify-model.ts`.
-- Live forecast: parameters `src/lib/season/params.ts`; ratings `ratings.ts`; simulation `simulate.ts`; sealing and record `live-state.ts`; page view `slate.ts`; job `scripts/live/pipeline.ts`; plan and binding decisions `docs/live-forecast-plan.md`.
+- Live forecast: parameters `src/lib/season/params.ts`; ratings `ratings.ts`; simulation `simulate.ts`; sealing and record `live-state.ts`; page view `slate.ts`; market reference `market.ts`; team display colors `teams.ts` and `team-colors.ts`; job `scripts/live/pipeline.ts`; plan and binding decisions `docs/live-forecast-plan.md`.
+- Live UI: pages `src/app/page.tsx`, `src/app/odds/page.tsx`, `src/app/how-it-works/page.tsx`; components `src/components/live/`; design tokens in `src/app/globals.css` (light theme only; colors are CSS variables so a dark theme can be added).

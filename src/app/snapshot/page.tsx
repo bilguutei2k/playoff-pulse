@@ -31,7 +31,7 @@ export default function SnapshotPage() {
                 research archive
               </Link>{" "}
               or the{" "}
-              <Link href="/" className="underline decoration-2 underline-offset-2">
+              <Link href="/retrospective" className="underline decoration-2 underline-offset-2">
                 retrospective
               </Link>
               .

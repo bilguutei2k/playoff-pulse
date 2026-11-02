@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { LIVE_MODEL_VERSION, LIVE_PARAMS } from "../../src/lib/season/params";
+import { impliedHomeProbability } from "../../src/lib/season/market";
 import { paramsHash, predictGame } from "../../src/lib/season/ratings";
 import { assertForecastSums } from "../../src/lib/season/simulate";
 import { SEASON_TEAMS, STATE_SIZE } from "../../src/lib/season/teams";
@@ -76,6 +77,28 @@ export function runLiveChecks(): void {
       `${team.abbreviation} has no logo file.`,
     );
   }
+
+  // The market reference shown beside the model must be a probability, favor the
+  // shorter line, and come out even for a pick'em. Comparison only, never an input.
+  const favorite = impliedHomeProbability({
+    provider: "check",
+    homeMoneyline: -200,
+    awayMoneyline: 170,
+    homeSpread: null,
+  });
+  const even = impliedHomeProbability({
+    provider: "check",
+    homeMoneyline: -110,
+    awayMoneyline: -110,
+    homeSpread: null,
+  });
+  assert.ok(favorite !== null && favorite > 0.5 && favorite < 1, "Market favorite must be above even.");
+  assert.ok(even !== null && Math.abs(even - 0.5) < 1e-9, "Equal lines must give an even market.");
+  assert.equal(
+    impliedHomeProbability({ provider: "check", homeMoneyline: null, awayMoneyline: 150, homeSpread: null }),
+    null,
+    "A missing line must give no market number.",
+  );
 
   const seeding = runSeedingCheck();
   assert.deepEqual(seeding.mismatches, [], "Computed seeds must match real seasons.");

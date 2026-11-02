@@ -34,10 +34,18 @@ Expected margins are converted into win probabilities with a logistic function. 
 - `src/lib/model`: probability, team strength, series simulation, bracket simulation, and validation logic
 - `src/lib/live-data`: read-only live scoreboard normalization and provider logic
 - `src/components/forecast`: dashboard, probability tables, series cards, model controls, and team detail drawer
-- `src/app`: public routes for the dashboard, methodology, case study, and live scoreboard API route
+- `src/app`: public routes (see below) and API routes for the live slate and the archived scoreboard probe
 - `scripts/verify-model.ts`: local validation checks for model behavior and bracket consistency
 
 The current forecast model uses static TypeScript data and pure model functions. A read-only server route can fetch and normalize a live NBA scoreboard feed, but that feed does not yet overwrite model inputs. The app does not require a database or auth system.
+
+## Routes
+
+- `/`: the live forecast. Today's games with the model's win probability, a market reference, live in-game estimates and injury reports, then title odds and the public track record.
+- `/odds`: playoff and title odds for all 30 teams, with title-odds history.
+- `/how-it-works`: how the live model works, how it tested and where it falls short.
+- `/retrospective`, `/snapshot`, `/evidence`, `/methodology`, `/lab`: the frozen 2026 archive.
+- `/live`, `/live/methodology` and `/case-study` permanently redirect to `/`, `/how-it-works` and `/retrospective`.
 
 ## Live Data Layer
 
@@ -75,7 +83,7 @@ corepack pnpm archive:forecast -- --issued-at 2026-06-01T19:00:00-07:00
 
 - Team ratings, player impacts, projected minutes, injuries, and series states are manual estimates.
 - Live scoreboard data is observational only and does not drive forecast math yet.
-- No odds feed, market comparison, database, or authentication is active.
+- The live pages show a market win probability per game (DraftKings moneyline via ESPN, vig removed) for reference only. No market comparison is claimed, and there is no database or authentication.
 - Rolling-origin calibration evidence applies to the historical research model, not subjective production inputs or betting edges.
 - Player impact values are subjective and intended for transparent demonstration.
 
