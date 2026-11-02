@@ -67,3 +67,47 @@ export function formatReportTime(at: string): string {
   const twelve = hour % 12 === 0 ? 12 : hour % 12;
   return `${twelve}:${minute} ${hour >= 12 ? "PM" : "AM"} ET`;
 }
+
+const ET_TIME = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: ET });
+const ET_DATE_TIME = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  timeZone: ET,
+});
+
+/** "7:30 PM ET": every time on the live pages is Eastern, labeled the same way. */
+export function formatTimeEt(iso: string): string {
+  return `${ET_TIME.format(new Date(iso))} ET`;
+}
+
+/** "Nov 2, 9:12 AM ET". */
+export function formatDateTimeEt(iso: string): string {
+  return `${ET_DATE_TIME.format(new Date(iso))} ET`;
+}
+
+/** "Mon" for an ET calendar date. */
+export function formatWeekday(etDate: string): string {
+  return new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: "UTC" }).format(
+    new Date(`${etDate}T12:00:00Z`),
+  );
+}
+
+/** "Monday, November 2, 2026" for an ET calendar date. */
+export function formatFullDay(etDate: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${etDate}T12:00:00Z`));
+}
+
+/** True for a real calendar date written as YYYY-MM-DD. */
+export function isEtDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T12:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}

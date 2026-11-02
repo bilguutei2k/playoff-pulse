@@ -35,6 +35,14 @@ import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
 import { ledgerProblems } from "../live/verify-ledger";
+import { upgradeLiveState } from "../../src/lib/season/state-schema";
+import { marginBreakdown } from "../../src/lib/view/margin";
+import {
+  PROJECTION_LABEL,
+  isProjectable,
+  projectGame,
+  scheduleDates,
+} from "../../src/lib/view/projection";
 
 const MODEL: InjuryModel = {
   params: LIVE_PARAMS,
@@ -272,6 +280,81 @@ function checkSchemaTwoState(state: LiveState): void {
   }
 }
 
+/**
+ * Projections: the site's unsealed numbers for games still to come. Every one it can
+ * show must be a probability, pair with its complement, equal `predictGame` over the
+ * published ratings with no injury term, and move the right way with rest and venue.
+ * They are labeled as projections and never enter the ledger or the record.
+ */
+function checkProjections(state: LiveState, games: readonly SeasonGame[]): void {
+  assert.match(PROJECTION_LABEL, /before injuries/, "The projection label must say it is before injuries.");
+  assert.match(PROJECTION_LABEL, /sealed forecast is issued on game day/, "The projection label must point to the seal.");
+  const dates = scheduleDates(state, games);
+  let checked = 0;
+  for (const game of games) {
+    if (!isProjectable(game, state.slateEtDate)) continue;
+    const projection = projectGame(state, game, dates);
+    const p = projection.homeWinProbability;
+    assert.ok(p > 0 && p < 1, `Projection for ${game.id} must be strictly between 0 and 1.`);
+    assert.equal(p + projection.awayWinProbability, 1, `Projection for ${game.id} must sum to 1.`);
+    const direct = predictGame(
+      state.ratings,
+      {
+        homeId: game.homeId,
+        awayId: game.awayId,
+        neutral: game.neutral,
+        playoff: game.kind === "playoff",
+        homeOnBackToBack: projection.homeOnBackToBack,
+        awayOnBackToBack: projection.awayOnBackToBack,
+      },
+      state.params,
+    );
+    assert.equal(p, direct.homeWinProbability, `Projection for ${game.id} must come from the published ratings.`);
+    assert.equal(projection.expectedMargin, direct.expectedMargin, `Projection for ${game.id} must carry no injury term.`);
+    const parts = marginBreakdown({
+      state,
+      context: {
+        homeId: game.homeId,
+        awayId: game.awayId,
+        neutral: game.neutral,
+        playoff: game.kind === "playoff",
+        homeOnBackToBack: projection.homeOnBackToBack,
+        awayOnBackToBack: projection.awayOnBackToBack,
+      },
+      expectedMargin: projection.expectedMargin,
+      absencePoints: null,
+      ratingsHash: null,
+    });
+    assert.ok(parts.separated, `Projection ${game.id} must split into rating and home court.`);
+    const shown = parts.parts.reduce((sum, part) => sum + part.display, 0);
+    assert.ok(
+      Math.abs(shown - Math.round(projection.expectedMargin * 10) / 10) < 1e-9,
+      `Projection ${game.id}: the shown margin parts must add up to the shown margin.`,
+    );
+    checked += 1;
+  }
+  if (state.slateEtDate < (games.at(-1)?.etDate ?? "")) {
+    assert.ok(checked > 0, "A season with games to come must have projections to check.");
+  }
+
+  // Rest and venue move a projection the right way; a neutral swap mirrors it.
+  const [a, b] = [SEASON_TEAMS[0].id, SEASON_TEAMS[1].id];
+  const base = { homeId: a, awayId: b, neutral: false, kind: "regular" as const, etDate: "2027-01-10" };
+  const rested = projectGame(state, base, { [a]: ["2027-01-08"], [b]: ["2027-01-08"] });
+  const tired = projectGame(state, base, { [a]: ["2027-01-09"], [b]: ["2027-01-08"] });
+  assert.ok(tired.homeWinProbability < rested.homeWinProbability, "A home back-to-back must lower the home projection.");
+  const neutral = projectGame(state, { ...base, neutral: true }, {});
+  const swapped = projectGame(state, { ...base, neutral: true, homeId: b, awayId: a }, {});
+  assert.ok(
+    Math.abs(neutral.homeWinProbability + swapped.homeWinProbability - 1) < 1e-12,
+    "Swapping teams on a neutral court must mirror the projection.",
+  );
+  assert.ok(
+    projectGame(state, base, {}).homeWinProbability > neutral.homeWinProbability,
+    "Home court must raise the home team's projection.",
+  );
+}
+
 export function runLiveChecks(): void {
   const raw = JSON.parse(
     fs.readFileSync(path.join(process.cwd(), "data/live/state.json"), "utf-8"),
@@ -360,6 +443,14 @@ export function runLiveChecks(): void {
     null,
     "A missing line must give no market number.",
   );
+
+  const gamesPath = path.join(process.cwd(), "data/live/games", `${LIVE_SEASON}.json`);
+  const storedGames = fs.existsSync(gamesPath)
+    ? (JSON.parse(fs.readFileSync(gamesPath, "utf-8")) as SeasonGame[]).sort(
+        (x, y) => Date.parse(x.tipUtc) - Date.parse(y.tipUtc) || x.id.localeCompare(y.id),
+      )
+    : [];
+  checkProjections(upgradeLiveState(state), storedGames);
 
   const seeding = runSeedingCheck();
   assert.deepEqual(seeding.mismatches, [], "Computed seeds must match real seasons.");

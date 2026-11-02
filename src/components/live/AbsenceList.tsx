@@ -1,15 +1,50 @@
+import Link from "next/link";
+import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import { teamById } from "@/lib/season/teams";
 import type { PublishedAbsence } from "@/lib/season/types";
 import { formatReportTime } from "@/lib/utils/dates";
-import { driverStatus, formatPoints } from "@/lib/utils/injuries";
+import { driverStatus } from "@/lib/utils/injuries";
+import { teamDisplay, teamHref } from "@/lib/view/teams";
 
 function gamesText(value: number): string {
   const rounded = Math.round(value);
-  return `about ${rounded} ${rounded === 1 ? "game" : "games"}`;
+  return `${rounded} ${rounded === 1 ? "game" : "games"}`;
 }
 
-/** Who the season simulation currently counts as out, team by team, folded by default. */
+/** "−1.3 pts", or "0.0 pts" for a replacement-level absence. */
+export function lostPoints(points: number): string {
+  return points >= 0.05 ? `−${points.toFixed(1)} pts` : "0.0 pts";
+}
+
+/** "Out, missed 2 games" or, for a player not on the report, "Missed the last 2 games". */
+function statusText(row: PublishedAbsence): string {
+  if (row.status === null) {
+    return row.gamesMissed > 1 ? `Not listed, missed the last ${row.gamesMissed} games` : "Not listed, missed the last game";
+  }
+  return row.gamesMissed > 0 ? `${driverStatus(row)}, missed ${gamesText(row.gamesMissed)}` : driverStatus(row);
+}
+
+/** One team's current absences as rows: name, status, points and expected games out. */
+export function AbsenceRows({ rows }: { rows: PublishedAbsence[] }) {
+  return (
+    <ul className="divide-y divide-line">
+      {rows.map((row) => (
+        <li key={row.athleteId} className="flex items-baseline justify-between gap-3 py-2 text-[13px]">
+          <span className="min-w-0">
+            <span className="font-medium text-ink">{row.name}</span>{" "}
+            <span className="block text-[12px] text-ink-3">{statusText(row)}</span>
+          </span>
+          <span className="num shrink-0 text-right text-[12px] text-ink-2">
+            {lostPoints(row.points)}
+            <span className="block text-ink-3">about {gamesText(row.expectedGames)} more</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Who the season simulation currently counts as out, team by team. */
 export function AbsenceList({
   absences,
   absencePoints,
@@ -23,62 +58,40 @@ export function AbsenceList({
     (a, b) => (absencePoints[b] ?? 0) - (absencePoints[a] ?? 0),
   );
   return (
-    <section aria-labelledby="absences-title" className="flex flex-col gap-4">
-      <div>
-        <h2
-          id="absences-title"
-          className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]"
-        >
-          Who the model counts as out
-        </h2>
-        <p className="mt-1 text-sm leading-6 text-[var(--color-text-muted)]">
-          Players listed Out or Doubtful{reportAt ? ` on the NBA injury report (latest ${formatReportTime(reportAt)})` : " on the NBA injury report"},
-          or who missed their team&apos;s last game and are not listed as probable. Expected games
-          out come from a survival table fitted on past seasons, never from reported return dates.
-          The season odds above carry these absences for those games, then the team returns to full
-          strength.
-        </p>
-      </div>
+    <section aria-labelledby="absences-title">
+      <SectionHeading
+        id="absences-title"
+        kicker="Injuries in the model"
+        title="Who the model counts as out"
+        dek={
+          <>
+            Players listed out or doubtful on the NBA injury report
+            {reportAt ? ` (latest ${formatReportTime(reportAt)})` : ""}, or who missed their team&apos;s last
+            game and are not listed as probable. Expected games out come from a survival table fitted on past
+            seasons, never from reported return dates.
+          </>
+        }
+      />
       {teams.length === 0 ? (
-        <p className="rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] p-4 text-sm text-[var(--color-text-muted)]">
-          No current absence the model counts.
-        </p>
+        <p className="notice-quiet mt-5">No current absence counts in the model.</p>
       ) : (
-        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {teams.map((teamId) => {
-            const team = teamById(teamId);
-            const rows = absences.filter((row) => row.teamId === teamId);
+            const rows = absences.filter((row) => row.teamId === teamId).sort((a, b) => b.points - a.points);
+            const team = teamDisplay(teamId);
             return (
-              <details
-                key={teamId}
-                className="group rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-panel-primary)] px-4 py-3"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm">
-                  <span className="flex min-w-0 items-center gap-2 font-medium text-[var(--color-text-primary)]">
+              <div key={teamId} className="panel px-4 pb-2 pt-3">
+                <p className="flex items-center justify-between gap-3 border-b border-line pb-2">
+                  <Link href={teamHref(teamId)} className="flex items-center gap-2 font-semibold text-ink hover:underline hover:decoration-pulse hover:underline-offset-4">
                     <TeamLogo teamId={teamId} size={20} />
-                    <span className="truncate">{team.name}</span>
+                    {team.shortName}
+                  </Link>
+                  <span className="num text-[12px] text-ink-2">
+                    next game {lostPoints(absencePoints[teamId] ?? 0)}
                   </span>
-                  <span className="tabular shrink-0 text-xs text-[var(--color-text-muted)]">
-                    {rows.length} out · gives up {formatPoints(absencePoints[teamId] ?? 0)}
-                  </span>
-                </summary>
-                <ul className="mt-2 grid gap-1 border-t border-[var(--color-border-subtle)] pt-2">
-                  {rows.map((row) => (
-                    <li key={row.athleteId} className="flex items-baseline justify-between gap-3 text-xs leading-5">
-                      <span className="min-w-0">
-                        <span className="text-[var(--color-text-primary)]">{row.name}</span>{" "}
-                        <span className="text-[var(--color-text-muted)]">
-                          ({driverStatus(row)}
-                          {row.gamesMissed > 0 ? `, missed ${row.gamesMissed}` : ""})
-                        </span>
-                      </span>
-                      <span className="tabular shrink-0 text-[var(--color-text-muted)]">
-                        {formatPoints(row.points)} · {gamesText(row.expectedGames)} more
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
+                </p>
+                <AbsenceRows rows={rows} />
+              </div>
             );
           })}
         </div>
