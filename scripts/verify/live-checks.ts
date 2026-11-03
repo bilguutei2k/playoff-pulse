@@ -34,6 +34,7 @@ import type { LedgerRow, LiveState, SeasonGame } from "../../src/lib/season/type
 import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
+import { expectedSiteFiles, publishedSiteFiles } from "../live/site-files";
 import { ledgerProblems } from "../live/verify-ledger";
 import { upgradeLiveState } from "../../src/lib/season/state-schema";
 import { marginBreakdown } from "../../src/lib/view/margin";
@@ -385,6 +386,44 @@ function checkProjections(state: LiveState, games: readonly SeasonGame[]): void 
   );
 }
 
+/** The data cache stores items up to 2 MB; warn well before a file the site reads gets there. */
+const SITE_FILE_WARN_BYTES = 1_500_000;
+
+/**
+ * The site files under data/live/site must be exactly what the ledger, state and games
+ * on disk produce: no file missing, extra or different. Skipped until the job first
+ * publishes them.
+ */
+function checkSiteFiles(): void {
+  const liveDirectory = path.join(process.cwd(), "data/live");
+  const published = publishedSiteFiles(liveDirectory);
+  if (published.size === 0) {
+    console.log("Site files not published yet; the next pipeline run writes them.");
+    return;
+  }
+  const expected = expectedSiteFiles(liveDirectory, LIVE_SEASON, seasonLabel(LIVE_SEASON));
+  const missing = [...expected.keys()].filter((file) => !published.has(file));
+  const extra = [...published.keys()].filter((file) => !expected.has(file));
+  const different = [...expected.keys()].filter(
+    (file) => published.has(file) && published.get(file) !== expected.get(file),
+  );
+  assert.deepEqual(missing, [], "Every site file must be published.");
+  assert.deepEqual(extra, [], "No site file may exist that the ledger does not produce.");
+  assert.deepEqual(different, [], "Site files must match the ledger, state and games they were derived from.");
+  const read = [
+    "state.json",
+    `games/${LIVE_SEASON}.json`,
+    ...expected.keys(),
+  ].map((file) => ({ file, bytes: fs.existsSync(path.join(liveDirectory, file)) ? fs.statSync(path.join(liveDirectory, file)).size : 0 }));
+  for (const { file, bytes } of read) {
+    if (bytes > SITE_FILE_WARN_BYTES) {
+      console.warn(`Warning: data/live/${file} is ${(bytes / 1e6).toFixed(2)} MB; the site's data cache stores items up to 2 MB.`);
+    }
+  }
+  const largest = read.reduce((max, entry) => (entry.bytes > max.bytes ? entry : max));
+  console.log(`Site files match the ledger (${expected.size} files; largest read by the site: ${largest.file}, ${(largest.bytes / 1e3).toFixed(0)} KB).`);
+}
+
 export function runLiveChecks(): void {
   const raw = JSON.parse(
     fs.readFileSync(path.join(process.cwd(), "data/live/state.json"), "utf-8"),
@@ -499,6 +538,7 @@ export function runLiveChecks(): void {
       .map((line) => JSON.parse(line) as LedgerRow);
     assert.deepEqual(ledgerProblems(rows), [], "Ledger rows must be valid.");
   }
+  checkSiteFiles();
 }
 
 if (process.argv[1]?.endsWith("live-checks.ts")) {

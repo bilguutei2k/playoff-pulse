@@ -2,10 +2,12 @@ import Link from "next/link";
 import { Brand548 } from "@/components/brand/Brand548";
 import { FreshnessChip } from "@/components/layout/FreshnessChip";
 import { NavLinks } from "@/components/layout/NavLinks";
-import { liveState } from "@/lib/season/published";
+import { getLiveState, getLiveStateSource } from "@/lib/live-data/published";
 import { formatStampEt } from "@/lib/utils/dates";
 
-export function Header() {
+/** The chip shows the age of the state this render read from live-data, or says it is the bundled copy. */
+export async function Header() {
+  const [liveState, source] = await Promise.all([getLiveState(), getLiveStateSource()]);
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-panel/95 backdrop-blur supports-[backdrop-filter]:bg-panel/85">
       <div className="pp-container flex h-14 items-center gap-3 sm:h-16 sm:gap-6">
@@ -21,6 +23,7 @@ export function Header() {
             iso={liveState.generatedAt}
             stamp={formatStampEt(liveState.generatedAt)}
             modelVersion={liveState.modelVersion}
+            stored={source === "bundled"}
           />
         </div>
       </div>

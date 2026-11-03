@@ -6,6 +6,7 @@ import { sealKindOf } from "@/lib/season/live-state";
 import { displayedSeal } from "@/lib/season/slate";
 import type { LedgerRow, LiveState, SealKind, SealRow, SeasonGame } from "@/lib/season/types";
 import { isProjectable, projectGame, scheduleDates } from "@/lib/view/projection";
+import { mergeSealRows } from "@/lib/view/seals";
 
 export type TeamGameRow = {
   game: SeasonGame;
@@ -35,7 +36,8 @@ export function teamSchedule(input: {
   for (const row of ledger) {
     if (row.type === "seal") fromLedger.set(row.gameId, [...(fromLedger.get(row.gameId) ?? []), row]);
   }
-  for (const [gameId, rows] of fromLedger) seals.set(gameId, rows);
+  // The ledger's rows and the state's can be a commit apart; keep every seal from both.
+  for (const [gameId, rows] of fromLedger) seals.set(gameId, mergeSealRows(rows, seals.get(gameId) ?? []));
   const missed = new Set(ledger.flatMap((row) => (row.type === "missed" ? [row.gameId] : [])));
   const dates = scheduleDates(state, games);
 

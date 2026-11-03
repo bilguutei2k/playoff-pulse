@@ -1,14 +1,14 @@
 // Server-side assembly of one ET date for the day and game pages: ESPN's scoreboard
-// (one request gives the engine rows and the venue and broadcast), the games store,
-// the ledger and the published state. ESPN failures degrade to stored data.
+// (one request gives the engine rows and the venue and broadcast), and the published
+// state, games and the date's seal rows read at render time (published.ts). ESPN
+// failures degrade to stored data.
 
 import { parseScoreboardExtras, type GameExtras } from "@/lib/live-data/espn-extras";
 import { createFetchJson, fetchInjuries, parseScoreboard } from "@/lib/live-data/espn-season";
 import { slateDateAt } from "@/lib/season/live-state";
-import { liveState } from "@/lib/season/published";
 import type { InjuryRow, ScoreboardRow } from "@/lib/season/types";
+import { getDaySeals, getLiveState, getReportDay, getSeasonGames } from "@/lib/live-data/published";
 import { buildDayView, type DayView } from "@/lib/view/day";
-import { ledgerRows, reportDay, seasonGames } from "@/lib/view/store";
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
 const TODAY_CACHE_SECONDS = 30;
@@ -24,6 +24,12 @@ export async function loadDayView(etDate: string): Promise<DayView> {
   const nowIso = new Date().toISOString();
   const today = todayEtDate(nowIso);
   const isToday = etDate === today;
+  const [liveState, storeGames, daySeals, reports] = await Promise.all([
+    getLiveState(),
+    getSeasonGames(),
+    getDaySeals(etDate),
+    getReportDay(etDate),
+  ]);
 
   let espnRows: ScoreboardRow[] | null = null;
   let extras: Record<string, GameExtras> = {};
@@ -54,10 +60,10 @@ export async function loadDayView(etDate: string): Promise<DayView> {
     todayEtDate: today,
     nowIso,
     espnRows,
-    storeGames: seasonGames(),
-    ledger: ledgerRows(),
+    storeGames,
+    ledger: daySeals,
     injuries,
     extras,
-    reports: reportDay(etDate),
+    reports,
   });
 }

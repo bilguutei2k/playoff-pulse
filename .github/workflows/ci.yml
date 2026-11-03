@@ -3,9 +3,11 @@ name: CI
 # Lint, full verification, and build on every push and pull request.
 #
 # `corepack pnpm verify` includes scripts/verify/data-snapshot.ts, which pins the
-# frozen 2026 archive. Live data commits (data/live/**) are pushed by the
-# live-forecast workflow with GITHUB_TOKEN, which does not trigger this workflow;
-# they are validated by that job instead.
+# frozen 2026 archive. Live data commits (data/live/**) go to the live-data branch,
+# pushed by the live-forecast workflow with GITHUB_TOKEN, which does not trigger this
+# workflow; that job checks each push against live-data's previous head. Main's
+# data/live stopped at the cutover, and the ledger step below keeps that copy from
+# changing. A pull request cannot change live-data, so it is not checked here.
 
 on:
   push:
@@ -39,7 +41,7 @@ jobs:
       - name: Verify (invariants + refresh checks + data snapshot)
         run: corepack pnpm verify
 
-      - name: Ledger is append-only against main
+      - name: Main's frozen ledger copy is unchanged against main
         run: |
           git fetch --no-tags origin main
           corepack pnpm verify:ledger origin/main

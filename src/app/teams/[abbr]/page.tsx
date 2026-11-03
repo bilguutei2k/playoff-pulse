@@ -7,21 +7,25 @@ import { heatClass } from "@/components/live/heat";
 import { RatingChart, type RatingChartPoint } from "@/components/live/RatingChart";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import { liveState } from "@/lib/season/published";
-import { SEASON_TEAMS, teamById } from "@/lib/season/teams";
+import { getLiveState, getSeasonGames, getSeasonLedger } from "@/lib/live-data/published";
+import { teamById } from "@/lib/season/teams";
 import { formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
 import { formatRating, oddsRows, type OddsRow } from "@/lib/view/odds";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { ratingHistory } from "@/lib/view/rating-history";
-import { ledgerRows, seasonGames } from "@/lib/view/store";
 import { teamSchedule, type TeamGameRow } from "@/lib/view/team";
 import { conferenceOrder, formatRecord, ordinal, teamBySlug, teamColor, teamDisplay } from "@/lib/view/teams";
 
 type Params = { params: Promise<{ abbr: string }> };
 
+// Rendered on demand from main's published data and re-rendered about once a minute
+// (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
+export const revalidate = 60;
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return SEASON_TEAMS.map((team) => ({ abbr: team.abbreviation.toLowerCase() }));
+  return [];
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
@@ -118,7 +122,7 @@ function SeedChart({ row }: { row: OddsRow }) {
   );
 }
 
-function ScheduleRow({ row }: { row: TeamGameRow }) {
+function ScheduleRow({ row, modelVersion }: { row: TeamGameRow; modelVersion: string }) {
   const opponent = teamDisplay(row.opponentId);
   const { game } = row;
   return (
@@ -155,7 +159,7 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
           <span className="inline-flex items-center gap-2">
             {row.forecast.source === "projection" ? (
               <Badge tone="quiet">Proj.</Badge>
-            ) : row.forecast.modelVersion !== null && row.forecast.modelVersion !== liveState.modelVersion ? (
+            ) : row.forecast.modelVersion !== null && row.forecast.modelVersion !== modelVersion ? (
               <span title={`Sealed by ${row.forecast.modelVersion}, which does not account for injuries`}>
                 <Badge tone="quiet">{row.forecast.modelVersion.split("-").at(-1)}</Badge>
               </span>
@@ -183,7 +187,7 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
   );
 }
 
-function ScheduleTable({ rows, caption }: { rows: TeamGameRow[]; caption: string }) {
+function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; caption: string; modelVersion: string }) {
   return (
     <div className="table-scroll rounded-[var(--radius-card)] border border-line bg-panel">
       <table className="w-full text-[14px]">
@@ -198,7 +202,7 @@ function ScheduleTable({ rows, caption }: { rows: TeamGameRow[]; caption: string
         </thead>
         <tbody>
           {rows.map((row) => (
-            <ScheduleRow key={row.game.id} row={row} />
+            <ScheduleRow key={row.game.id} row={row} modelVersion={modelVersion} />
           ))}
         </tbody>
       </table>
@@ -214,17 +218,21 @@ export default async function TeamPage({ params }: Params) {
   if (!team) notFound();
   if (team.slug !== abbr) permanentRedirect(`/teams/${team.slug}`);
 
-  const games = seasonGames();
+  const [liveState, games, ledger, history] = await Promise.all([
+    getLiveState(),
+    getSeasonGames(),
+    getSeasonLedger(),
+    ratingHistory(),
+  ]);
   const rows = oddsRows(liveState, games);
   const row = rows.find((candidate) => candidate.teamId === team.id);
   if (!row) notFound();
   const division = teamById(team.id).division;
   const standing = conferenceOrder(liveState.forecast.teams, team.conference).findIndex((t) => t.teamId === team.id) + 1;
-  const schedule = teamSchedule({ state: liveState, games, ledger: ledgerRows(), teamId: team.id });
+  const schedule = teamSchedule({ state: liveState, games, ledger, teamId: team.id });
   const played = schedule.filter((game) => game.result !== null).reverse();
   const upcoming = schedule.filter((game) => game.result === null);
   const anySealed = played.some((game) => game.forecast?.source === "sealed");
-  const history = ratingHistory();
   const chartPoints: RatingChartPoint[] = history.map((point) => {
     const values = Object.values(point.ratings).sort((a, b) => a - b);
     const quantile = (q: number) => values[Math.round(q * (values.length - 1))];
@@ -331,7 +339,7 @@ export default async function TeamPage({ params }: Params) {
             <p className="notice-quiet">No games left on the schedule.</p>
           ) : (
             <>
-              <ScheduleTable rows={upcoming.slice(0, UPCOMING_SHOWN)} caption={`${team.shortName} upcoming games`} />
+              <ScheduleTable modelVersion={liveState.modelVersion} rows={upcoming.slice(0, UPCOMING_SHOWN)} caption={`${team.shortName} upcoming games`} />
               {upcoming.length > UPCOMING_SHOWN ? (
                 <details className="group mt-3">
                   <summary className="pp-button cursor-pointer list-none">
@@ -339,7 +347,7 @@ export default async function TeamPage({ params }: Params) {
                     <span className="hidden group-open:inline">Hide the rest of the schedule</span>
                   </summary>
                   <div className="mt-3">
-                    <ScheduleTable rows={upcoming.slice(UPCOMING_SHOWN)} caption={`${team.shortName} later games`} />
+                    <ScheduleTable modelVersion={liveState.modelVersion} rows={upcoming.slice(UPCOMING_SHOWN)} caption={`${team.shortName} later games`} />
                   </div>
                 </details>
               ) : null}
@@ -365,7 +373,7 @@ export default async function TeamPage({ params }: Params) {
           ) : (
             <>
               {!anySealed ? <p className="notice-quiet mb-3">No {team.shortName} game has been sealed and played yet.</p> : null}
-              <ScheduleTable rows={played} caption={`${team.shortName} results`} />
+              <ScheduleTable modelVersion={liveState.modelVersion} rows={played} caption={`${team.shortName} results`} />
             </>
           )}
         </div>

@@ -1,4 +1,5 @@
-// Server-side assembly of the live slate: ESPN scoreboard plus published state.
+// Server-side assembly of the live slate: ESPN scoreboard plus the published state,
+// read at request time (published.ts).
 // ESPN failures degrade to sealed numbers instead of breaking the page.
 
 import {
@@ -7,7 +8,7 @@ import {
   fetchScoreboardRows,
 } from "@/lib/live-data/espn-season";
 import { slateDateAt } from "@/lib/season/live-state";
-import { liveState } from "@/lib/season/published";
+import { getLiveState } from "@/lib/live-data/published";
 import { buildSlateView, type SlateView } from "@/lib/season/slate";
 import type { InjuryRow, ScoreboardRow } from "@/lib/season/types";
 
@@ -17,6 +18,7 @@ const INJURY_CACHE_SECONDS = 900;
 export async function loadSlateView(): Promise<SlateView> {
   const nowIso = new Date().toISOString();
   const etDate = slateDateAt(nowIso);
+  const liveState = await getLiveState();
 
   let rows: ScoreboardRow[] | null = null;
   try {
