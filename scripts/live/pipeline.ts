@@ -97,6 +97,7 @@ import {
   reportDayPath,
 } from "./live-availability";
 import { parseReportPdf } from "./report-pdf";
+import { expectedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
 
 const SEASON = LIVE_SEASON;
@@ -225,6 +226,21 @@ function publishState(state: LiveState): boolean {
   });
   if (publish) writeText(STATE_PATH, `${JSON.stringify(state)}\n`);
   return publish;
+}
+
+/**
+ * The compact copies of the ledger the site fetches at request time, and the manifest
+ * of content hashes it keys its cache on (src/lib/season/site-files.ts). Rewritten from
+ * the files on disk after everything else, so they always match this run's ledger,
+ * state and games; unchanged files are rewritten byte for byte and commit nothing.
+ */
+function publishSiteFiles(): void {
+  const files = expectedSiteFiles(LIVE_DIRECTORY, SEASON, LABEL);
+  for (const [relative, content] of files) {
+    const file = path.join(LIVE_DIRECTORY, relative);
+    if (!fs.existsSync(file) || fs.readFileSync(file, "utf-8") !== content) writeText(file, content);
+  }
+  log(`site files: ${files.size - 1} derived from the ledger, manifest updated`);
 }
 
 /** Every stored report day for the live season, by ET date. */
@@ -658,6 +674,7 @@ async function main(): Promise<void> {
   writeText(path.join(SNAPSHOT_DIRECTORY, `${slate}.json`), `${JSON.stringify(forecast)}\n`);
   const changed = publishState(state);
   log(changed ? "state published" : "state unchanged");
+  publishSiteFiles();
 
   const healthBody = {
     stuckGames: stuck.map((game) => ({ id: game.id, etDate: game.etDate })),

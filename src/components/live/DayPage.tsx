@@ -3,11 +3,10 @@ import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { DateStrip, dayHref } from "@/components/live/DateStrip";
 import { GameCard } from "@/components/live/GameCard";
 import { RecordGlance, TitleRace } from "@/components/live/HomePanels";
-import { liveState } from "@/lib/season/published";
+import { getGameCountsByDate, getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import { formatLongDay } from "@/lib/utils/dates";
 import type { DayView } from "@/lib/view/day";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
-import { gameCountsByDate, seasonGames } from "@/lib/view/store";
 import { recordsThrough, teamLines } from "@/lib/view/teams";
 
 const KICKERS = { past: "Results", today: "Today's games", future: "Schedule" } as const;
@@ -56,13 +55,13 @@ function nearestGameDay(counts: Record<string, number>, from: string, direction:
   return [...days].reverse().find((day) => day < from) ?? null;
 }
 
-export function DayPage({ view, home }: { view: DayView; home: boolean }) {
-  const counts = gameCountsByDate();
+export async function DayPage({ view, home }: { view: DayView; home: boolean }) {
+  const [liveState, games, counts] = await Promise.all([getLiveState(), getSeasonGames(), getGameCountsByDate()]);
   const known = Object.keys(counts).sort();
   const first = known[0] && known[0] < view.etDate ? known[0] : view.etDate;
   const last = known.at(-1) && known.at(-1)! > view.etDate ? known.at(-1)! : view.etDate;
   // Past days show records through that date; ranks then are not published.
-  const lines = view.kind === "past" ? recordsThrough(seasonGames(), view.etDate) : teamLines(liveState);
+  const lines = view.kind === "past" ? recordsThrough(games, view.etDate) : teamLines(liveState);
   const today = view.todayEtDate;
   const anyLive = view.games.some((game) => game.status === "in-progress");
   const forecasts = view.games.flatMap((game) => (game.forecast ? [game.forecast] : []));

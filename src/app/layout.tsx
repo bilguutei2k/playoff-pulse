@@ -5,6 +5,11 @@ import { Header } from "@/components/layout/Header";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
 const SITE_URL = "https://548-sable.vercel.app";
+
+// Every page carries the header's "Updated N min ago" chip, read from main's published
+// state at render time (src/lib/live-data/published.ts), so every page re-renders about
+// once a minute. Data commits do not deploy.
+export const revalidate = 60;
 const TAGLINE = "NBA forecasts, updated through the day.";
 
 export const metadata: Metadata = {

@@ -10,8 +10,10 @@ name: Live forecast
 # makes GitHub email the owner. After three failures in a row the chain stops and the
 # fallback schedule takes over, so a persistent bug does not email every ten minutes.
 # Pushes made with GITHUB_TOKEN do not trigger ci.yml, so these commits are checked
-# here. Commits touching more than data/live/games deploy to production through Vercel
-# (see vercel.json).
+# here. Data commits do not deploy: the site reads data/live from main at request time
+# (src/lib/live-data/published.ts), and vercel.json skips every commit that touches only
+# data/live/. The pipeline also publishes data/live/site/, compact copies of the ledger
+# the site reads instead of the full ledger.
 
 on:
   schedule:
@@ -96,24 +98,7 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          problem=$(jq -r '.reportProblem // empty' data/live/health.json)
-          if [ -z "$problem" ]; then
-            exit 0
-          fi
-          slate=$(jq -r '.slateEtDate' data/live/state.json)
-          title="Injury report problem on $slate"
-          seen=$(gh issue list --state all --search "\"$title\" in:title" --json title \
-            --jq "[.[] | select(.title == \"$title\")] | length")
-          if [ "$seen" != "0" ]; then
-            echo "Already reported: $title"
-            exit 0
-          fi
-          gh issue create --title "$title" --body "$problem
-
-          Until this clears, forecasts on $slate may not reflect injuries. The site says so on each game, and morning seals are reissued automatically once a usable report arrives.
-
-          cc @bilguutei2k"
+        run: bash scripts/live/report-alert.sh "Injury report problem"
 
       - name: Start the next run
         if: always()

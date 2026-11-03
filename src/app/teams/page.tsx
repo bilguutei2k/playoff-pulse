@@ -3,11 +3,10 @@ import Link from "next/link";
 import { heatClass } from "@/components/live/heat";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import { liveState } from "@/lib/season/published";
+import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import type { Conference } from "@/lib/season/types";
 import { formatChance } from "@/lib/utils/format";
 import { formatRating, oddsRows } from "@/lib/view/odds";
-import { seasonGames } from "@/lib/view/store";
 import { formatRecord } from "@/lib/view/teams";
 
 export const metadata: Metadata = {
@@ -17,8 +16,12 @@ export const metadata: Metadata = {
 
 const CONFERENCES: Conference[] = ["East", "West"];
 
-export default function TeamsPage() {
-  const rows = oddsRows(liveState, seasonGames());
+// Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
+export const revalidate = 60;
+
+export default async function TeamsPage() {
+  const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
+  const rows = oddsRows(liveState, seasonGames);
   return (
     <main className="pp-container py-8 sm:py-10">
       <SectionHeading

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Brand548 } from "@/components/brand/Brand548";
-import { liveState } from "@/lib/season/published";
+import { getLiveState } from "@/lib/live-data/published";
 
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/main/data/live/ledger";
 
@@ -43,7 +43,8 @@ function LinkColumn({ title, links }: { title: string; links: Array<{ href: stri
   );
 }
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const liveState = await getLiveState();
   const sameModel = liveState.referenceModelVersion === liveState.modelVersion;
   return (
     <footer className="mt-20 border-t border-line bg-panel">
