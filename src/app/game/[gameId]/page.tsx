@@ -62,7 +62,7 @@ export default async function GamePage({ params }: Params) {
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="flex min-w-0 flex-col gap-6">
           <WinProbability game={game} />
-          {detail.breakdown ? <WhatMoves game={game} breakdown={detail.breakdown} detail={detail} /> : null}
+          {detail.breakdown ? <WhatMoves game={game} breakdown={detail.breakdown} detail={detail} today={day.kind === "today"} /> : null}
           <Result game={game} detail={detail} />
           <Seals game={game} detail={detail} />
         </div>

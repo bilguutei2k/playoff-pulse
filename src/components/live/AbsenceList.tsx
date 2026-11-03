@@ -6,9 +6,9 @@ import { formatReportTime } from "@/lib/utils/dates";
 import { driverStatus } from "@/lib/utils/injuries";
 import { teamDisplay, teamHref } from "@/lib/view/teams";
 
-function gamesText(value: number): string {
+function gamesText(value: number, more = false): string {
   const rounded = Math.round(value);
-  return `${rounded} ${rounded === 1 ? "game" : "games"}`;
+  return `${rounded} ${more ? "more " : ""}${rounded === 1 ? "game" : "games"}`;
 }
 
 /** "−1.3 pts", or "0.0 pts" for a replacement-level absence. */
@@ -36,7 +36,7 @@ export function AbsenceRows({ rows }: { rows: PublishedAbsence[] }) {
           </span>
           <span className="num shrink-0 text-right text-[12px] text-ink-2">
             {lostPoints(row.points)}
-            <span className="block text-ink-3">about {gamesText(row.expectedGames)} more</span>
+            <span className="block text-ink-3">about {gamesText(row.expectedGames, true)}</span>
           </span>
         </li>
       ))}
@@ -49,10 +49,13 @@ export function AbsenceList({
   absences,
   absencePoints,
   reportAt,
+  slateEtDate,
 }: {
   absences: PublishedAbsence[];
   absencePoints: Record<string, number>;
   reportAt: string | null;
+  /** The published slate, so a report from another day shows its date. */
+  slateEtDate?: string;
 }) {
   const teams = [...new Set(absences.map((row) => row.teamId))].sort(
     (a, b) => (absencePoints[b] ?? 0) - (absencePoints[a] ?? 0),
@@ -66,9 +69,11 @@ export function AbsenceList({
         dek={
           <>
             Players listed out or doubtful on the NBA injury report
-            {reportAt ? ` (latest ${formatReportTime(reportAt)})` : ""}, or who missed their team&apos;s last
-            game and are not listed as probable. Expected games out come from a survival table fitted on past
-            seasons, never from reported return dates.
+            {reportAt ? ` (latest ${formatReportTime(reportAt, slateEtDate)})` : ""}, or who missed their
+            team&apos;s last game and are not listed as probable or available. A team that has not filed yet
+            keeps only the players who missed its last game. Expected games out come from a survival table fitted
+            on past seasons, never from reported return dates. A game&apos;s sealed number counts the report in use
+            at its seal instead, weighted by status; its game page lists those players.
           </>
         }
       />

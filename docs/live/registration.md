@@ -326,3 +326,48 @@ what passed.
    final seal it still counts as "no final seal". "Morning seals' Brier" uses the reissued number
    where one exists. Anyone can recompute it from the original rows, which remain in the ledger.
 4. Report problems set `reportProblem` in `health.json` and open one issue per slate.
+
+2026-11-03, amendment: teams that have not filed, and complete driver lists. Written before any
+2026-11-04 seal. The engine (`src/lib/season/injury-model.ts`), the frozen tables in `params.ts`,
+`docs/live/injury-fit.json`, `docs/live/evaluation-injury.json` and the model version are unchanged.
+
+A team the NBA report marks NOT YET SUBMITTED has no rows, so every seal counted nobody for it until
+it filed, usually in the evening. On 2026-11-02 the 11:30 report had eight slate teams unfiled. The
+Pacers sat at 43% all day and fell to 12% at the final seal; the Warriors went from 72% to 44% and the
+Magic from 76% to 63%. The season simulation was already counting those teams' current absences, so
+the odds page knew what the seals ignored.
+
+1. When the report in use marks a team NOT YET SUBMITTED, that side's expected absence is the team's
+   expected absence for this game from current absences, the same quantity the season simulation
+   charges the team for its next game. It is computed with the engine's exported functions on a copy
+   of the seal's frozen tracker: the report in use becomes the team's latest word, as it does for the
+   published state, `currentAbsences` gives the players, and `simulationAbsences` with one pending game
+   gives each player's charge. In practice this counts the players who missed the team's last game. It
+   applies to morning, reissued and final seals alike. Rows record it as
+   `unfiled: { home, away }`, and that side's drivers are those players, with no status. A side the
+   report covers keeps the existing rule exactly. A team that is simply not on the report still has
+   nobody listed, and a seal with availability missing still has no absences.
+2. New v2 seal rows store every listed or counted player with positive points per side, largest
+   first, and carry `driversComplete: true`. For flagged rows `verify:ledger` drops the three-driver
+   cap and requires each side's drivers to add up to that side's `absencePoints` within 0.01, sorted
+   largest first, with a status on every driver of a side the report covers. Unflagged rows keep the
+   old rule. Drivers are stored beside the number and never feed it; a test checks that the number is
+   the engine's from the absence terms alone.
+
+The registered test is unaffected. Its `qualifying` rule excluded every game whose final-point report
+had a team that had not filed, and in the stored 2024-25 and 2025-26 reports no final point did. So
+no tested behaviour changes. Unfiled teams appear only at the morning point, which the test reported
+but did not gate on.
+
+Evidence, report only (`scripts/live/evaluate-unfiled.ts`, the registered replay harness, nothing
+refit). On the 745 games of 2024-25 and 2025-26 with a team unfiled at the morning point, all regular
+season, the morning number's Brier is 0.2199 under the old rule and 0.2093 under this one, a paired
+difference of -0.0105 with a 95% interval of -0.0195 to -0.0014 (bootstrap over 246 game dates). By
+season the difference is -0.0125 (interval -0.0241 to -0.0007) and -0.0085 (interval -0.0222 to
+0.0051). The same games' final-point Brier is 0.2094. Against the final-point number, the mean
+absolute gap falls from 0.116 to 0.051, and 600 games move closer to it while 142 move farther. The
+unfiled sides now count 4.6 points on average, against 5.2 at the final point.
+
+Rows written before this change keep their rule and stay in the record as written; nothing is
+backfilled. Their game pages rebuild the rest of the list from the report the seal used, giving those
+players only their combined points.

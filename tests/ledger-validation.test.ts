@@ -110,6 +110,58 @@ describe("ledger validation", () => {
   });
 });
 
+describe("complete drivers and unfiled sides", () => {
+  const player = (id: string, points: number, status: "O" | "Q" | null = "O") => ({
+    athleteId: id,
+    name: `Player ${id}`,
+    status,
+    points,
+  });
+  const many = [player("1", 2.653), player("2", 2.359), player("3", 1.643), player("4", 1.2), player("5", 0.9), player("6", 0.5)];
+  const total = Number(many.reduce((sum, row) => sum + row.points, 0).toFixed(3));
+
+  it("lets a flagged row list every driver, and requires them to add up to its points", () => {
+    const row = v2("g", "final", {
+      absence: { home: total / 0.4, away: 0 },
+      absencePoints: { home: total, away: 0 },
+      drivers: { home: many, away: [] },
+      driversComplete: true,
+      unfiled: { home: false, away: false },
+    });
+    expect(ledgerProblems([row])).toEqual([]);
+    expect(ledgerProblems([{ ...row, absencePoints: { home: total + 0.02, away: 0 } }])).toEqual([
+      `seal for g: home drivers add to ${total.toFixed(3)}, absence points ${total + 0.02}`,
+    ]);
+    // Rounding of each driver is allowed for.
+    expect(ledgerProblems([{ ...row, absencePoints: { home: total + 0.009, away: 0 } }])).toEqual([]);
+    expect(
+      ledgerProblems([{ ...row, drivers: { home: [...many].reverse(), away: [] } }]),
+    ).toEqual(["seal for g: home drivers are not sorted largest first"]);
+  });
+
+  it("keeps the three-driver cap, and no sum rule, on rows without the flag", () => {
+    const old = v2("g", "final", { drivers: { home: many.slice(0, 3), away: [] }, absencePoints: { home: 12.2, away: 0 } });
+    expect(ledgerProblems([old])).toEqual([]);
+    expect(ledgerProblems([{ ...old, drivers: { home: many, away: [] } }])).toEqual(["seal for g has too many drivers"]);
+    expect(ledgerProblems([{ ...old, drivers: undefined }])).toEqual(["seal for g has no drivers"]);
+  });
+
+  it("allows drivers without a status only on an unfiled side, and an unfiled side only with a report", () => {
+    const unfiled = v2("g", "morning", {
+      absence: { home: 1.5 / 0.4, away: 0 },
+      absencePoints: { home: 1.5, away: 0 },
+      drivers: { home: [player("1", 1.5, null)], away: [] },
+      driversComplete: true,
+      unfiled: { home: true, away: false },
+    });
+    expect(ledgerProblems([unfiled])).toEqual([]);
+    expect(ledgerProblems([{ ...unfiled, unfiled: { home: false, away: false } }])).toEqual([
+      "seal for g: a home driver has no status on a side the report covers",
+    ]);
+    expect(ledgerProblems([{ ...unfiled, reportAt: null }])).toEqual(["seal for g has an unfiled side but no report"]);
+  });
+});
+
 describe("append-only history", () => {
   const committed = `${JSON.stringify(v1("a"))}\n${JSON.stringify(v1("b"))}\n`;
 

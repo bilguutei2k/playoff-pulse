@@ -1,9 +1,10 @@
 // Server-side reads of the job's stored files: the season's games and the forecast
-// ledger. The site is rebuilt on every publishing commit, so a build-time read is
-// current; `next.config.ts` traces both files into the server bundle for ISR.
+// ledger, and the NBA reports older seals need. The site is rebuilt on every publishing commit, so a build-time read is
+// current; `next.config.ts` traces these files into the server bundle for ISR.
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import type { LiveReportDay } from "@/lib/season/live-reports";
 import { liveState } from "@/lib/season/published";
 import type { LedgerRow, SeasonGame } from "@/lib/season/types";
 
@@ -54,4 +55,24 @@ export function gameCountsByDate(): Record<string, number> {
     counts[game.etDate] = (counts[game.etDate] ?? 0) + 1;
   }
   return counts;
+}
+
+const reportCache = new Map<string, LiveReportDay | null>();
+
+/**
+ * The NBA reports the job stored for one ET date, or null. Pages need them only for
+ * seals written before `driversComplete`, which kept three drivers a side, so only early
+ * November's files are traced into the server bundle (see `next.config.ts`).
+ */
+export function reportDay(etDate: string): LiveReportDay | null {
+  if (reportCache.has(etDate)) return reportCache.get(etDate) ?? null;
+  const file = path.join(LIVE_DIRECTORY, "reports", liveState.seasonLabel, `${etDate}.json`);
+  let day: LiveReportDay | null = null;
+  try {
+    if (existsSync(file)) day = JSON.parse(readFileSync(file, "utf8")) as LiveReportDay;
+  } catch (error) {
+    console.error(`[store] reports unavailable for ${etDate}`, error);
+  }
+  reportCache.set(etDate, day);
+  return day;
 }

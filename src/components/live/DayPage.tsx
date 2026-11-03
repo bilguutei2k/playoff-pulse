@@ -30,7 +30,7 @@ function HowToRead({ view }: { view: DayView }) {
     ["548", "Our chance of each team winning. Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored."],
     ["Market", `${provider} moneyline via ESPN, vig removed. Shown beside the model for reference, never as advice. (+3) is 548's number minus the market's, in percentage points.`],
     ["#3", "The team's rank in the 548 rating, out of 30."],
-    ["Injuries", "Players on the NBA injury report, weighted by status, and the points of margin their team gives up. Unknown future injuries, minutes shifting to teammates and matchups are not modeled."],
+    ["Injuries", "Players on the NBA injury report, weighted by status, and the points of margin their team gives up. A card names up to three players listed out, doubtful or questionable, largest first, then how many more, for a team whose absences move the line by a point or more; the game page lists everyone. A team that has not filed its report counts the players who missed its last game. Unknown future injuries, minutes shifting to teammates and matchups are not modeled."],
   ];
   return (
     <section aria-labelledby="how-to-read" className="mt-10 border-t border-line pt-6">

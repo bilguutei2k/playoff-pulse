@@ -5,8 +5,10 @@
 // provisional number, which exists only for today's late-running job.
 
 import type { GameExtras } from "@/lib/live-data/espn-extras";
+import type { LiveReportDay } from "@/lib/season/live-reports";
 import { sealsByGame } from "@/lib/season/live-state";
-import { buildSlateView, type SlateGameView, type SlateView } from "@/lib/season/slate";
+import { providerName } from "@/lib/season/market";
+import { buildSlateView, displayedSeal, type SlateGameView, type SlateView } from "@/lib/season/slate";
 import type {
   InjuryRow,
   LedgerRow,
@@ -16,6 +18,7 @@ import type {
   SealRow,
   SeasonGame,
 } from "@/lib/season/types";
+import { absenceSides, type AbsenceSides } from "@/lib/view/injuries";
 import { projectGame, scheduleDates, type Projection } from "@/lib/view/projection";
 
 export type DayKind = "past" | "today" | "future";
@@ -28,6 +31,8 @@ export type DayGame = SlateGameView & {
   marketLine: MarketReference | null;
   /** Every seal row for this game, all versions, in ledger order. */
   sealRows: SealRow[];
+  /** Everyone behind each side's absence term in the shown number; null without the injury term. */
+  absences: AbsenceSides | null;
 };
 
 export type DayView = Omit<SlateView, "games"> & {
@@ -62,6 +67,8 @@ export function buildDayView(input: {
   ledger: readonly LedgerRow[];
   injuries: readonly InjuryRow[] | null;
   extras: Record<string, GameExtras>;
+  /** The date's stored NBA reports, for seals that kept only three drivers a side. */
+  reports?: LiveReportDay | null;
 }): DayView {
   const { state, etDate, todayEtDate, nowIso, espnRows, storeGames, ledger, extras } = input;
   const kind: DayKind = etDate < todayEtDate ? "past" : etDate > todayEtDate ? "future" : "today";
@@ -90,14 +97,22 @@ export function buildDayView(input: {
       }
     }
     const sealRows = seals[game.id] ?? [];
-    const storedLine = sealRows.find((row) => row.market)?.market ?? null;
+    // The shown seal's own line first, so the spread matches the market probability beside it.
+    const storedLine =
+      displayedSeal(sealRows, state)?.market ?? sealRows.find((row) => row.market)?.market ?? null;
+    const line = rowById.get(game.id)?.market ?? storedLine;
+    const report =
+      forecast && !forecast.driversComplete && forecast.reportAt
+        ? (input.reports?.reports[forecast.reportAt] ?? null)
+        : null;
     return {
       ...game,
       forecast,
       projection,
       extras: extras[game.id] ?? null,
-      marketLine: rowById.get(game.id)?.market ?? storedLine,
+      marketLine: line ? { ...line, provider: providerName(line.provider) } : null,
       sealRows,
+      absences: absenceSides({ forecast, homeId: game.homeId, awayId: game.awayId, report }),
     };
   });
 

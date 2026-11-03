@@ -237,8 +237,9 @@ export default function HowItWorksPage() {
               2023-24: Out {share(INJURY_STATUS_TABLE.O)}, Doubtful {share(INJURY_STATUS_TABLE.D)},
               Questionable {share(INJURY_STATUS_TABLE.Q)}, Probable and Available{" "}
               {share(INJURY_STATUS_TABLE.P)}. A team&apos;s expected absence is the sum, and every unit
-              of Game Score costs {INJURY_PARAMS.beta} points of margin. Each game card names the
-              players behind the points its team gives up.
+              of Game Score costs {INJURY_PARAMS.beta} points of margin. Every seal stores each player
+              behind those points; the game page lists them all by status, and a game card names up to
+              three listed out, doubtful or questionable, largest first, and says how many more.
             </p>
             <p>
               <strong className="text-ink">Full-strength ratings.</strong>{" "}
@@ -254,7 +255,12 @@ export default function HowItWorksPage() {
               the first update in the hour before tip, from the same frozen ratings with the latest
               report. The final seal is scored. If the report cannot be read, a seal uses the last
               good one when it is under 24 hours old and says so; otherwise it has no absences and is
-              marked as missing them.
+              marked as missing them. A team that the report in use marks &ldquo;NOT YET
+              SUBMITTED&rdquo; (teams often file only in the evening) is not counted as healthy:
+              its side of the seal counts the team&apos;s current absences, the players who missed its
+              last game, exactly as the season odds charge its next game, and the seal records that it
+              did. Seals written before this rule, in early November 2026, counted nobody for such a team. A team that is
+              simply not on the report has nobody listed.
             </p>
             <p>
               <strong className="text-ink">Return estimates.</strong> In
@@ -378,7 +384,9 @@ export default function HowItWorksPage() {
               its morning seal is scored on that and counted as &ldquo;no final seal&rdquo;, never as
               missed. A morning seal made before any usable injury report had zero absences in it, so
               the first update with a usable report issues it again under its true time. The original
-              stays in the ledger, and the reissued number stands in for it.
+              stays in the ledger, and the reissued number stands in for it. Every seal, morning,
+              reissued or final, treats a team that has not filed yet the same way: it counts the
+              players who missed the team&apos;s last game.
             </p>
             <p>
               <Version>{REFERENCE_MODEL_VERSION}</Version>, the model this one replaced, keeps writing its own morning
@@ -434,7 +442,7 @@ export default function HowItWorksPage() {
             </p>
             <p>
               Players the model currently counts as out (listed Out or Doubtful on the latest
-              report, or out of the team&apos;s last game and not listed as probable) cost their team
+              report, or out of the team&apos;s last game and not listed as probable or available) cost their team
               points in each simulated game for as long as the survival table expects them to miss,
               playoff games included, and then return. Injuries that have not happened yet are not
               simulated: every team will have some, and they mostly cancel out.{" "}
@@ -643,8 +651,8 @@ export default function HowItWorksPage() {
             <dl>
               <Term term="548">
                 Our chance of each team winning, from full-strength team ratings, home court, rest and the players
-                on the NBA injury report. Probabilities are shown as whole percents, with &ldquo;&lt;1%&rdquo; and
-                &ldquo;&gt;99%&rdquo; at the ends.
+                on the NBA injury report. A game&apos;s chances are shown as whole percents from 1% to 99%; season
+                odds use &ldquo;&lt;1%&rdquo; and &ldquo;&gt;99%&rdquo; at the ends.
               </Term>
               <Term term="Rating">
                 A team&apos;s strength in points per game better or worse than an average team, at full strength.
@@ -666,6 +674,10 @@ export default function HowItWorksPage() {
                 A morning seal issued again, once, because the first one was made before any usable injury
                 report. It carries its real time, the original stays in the ledger, and it stands in for the
                 original from then on.
+              </Term>
+              <Term term="Not yet submitted">
+                How the NBA injury report marks a team that has not filed for the day. A seal counts such a team&apos;s
+                current absences, the players who missed its last game, and the game page says so.
               </Term>
               <Term term="Final seal">
                 The second seal, written by the first update in the hour before tip with the latest injury
