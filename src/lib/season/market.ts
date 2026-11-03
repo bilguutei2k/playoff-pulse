@@ -29,3 +29,18 @@ export function impliedHomeProbability(market: MarketReference): number | null {
   if (!(total > 0)) return null;
   return Math.min(1, Math.max(0, home / total));
 }
+
+/** Display names for sportsbooks ESPN spells more than one way, keyed by a squashed form. */
+const PROVIDER_NAMES: Record<string, string> = {
+  draftkings: "DraftKings",
+  fanduel: "FanDuel",
+  betmgm: "BetMGM",
+  caesars: "Caesars",
+  espnbet: "ESPN BET",
+};
+
+/** One display name per sportsbook: ESPN sends both "DraftKings" and "Draft Kings". */
+export function providerName(provider: string): string {
+  const key = provider.toLowerCase().replace(/[^a-z]/g, "");
+  return PROVIDER_NAMES[key] ?? provider.trim();
+}

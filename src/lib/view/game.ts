@@ -21,6 +21,8 @@ export type VersionSeals = {
   final: SealRow | null;
   /** The seal this version is scored on, once the game tips. */
   scored: SealRow | null;
+  /** The version seals twice (morning and final), as v2 does; v1 rows carry no kind. */
+  twoSeals: boolean;
 };
 
 export type VersionResult = {
@@ -99,6 +101,7 @@ export function buildGameDetail(input: {
       reissued: rows.find((row) => sealKindOf(row) === "reissued") ?? null,
       final: rows.find((row) => sealKindOf(row) === "final") ?? null,
       scored: tipped ? scoredSeal(rows) : null,
+      twoSeals: rows.some((row) => row.sealKind !== undefined),
     }))
     .sort((a, b) => order[a.role] - order[b.role]);
 
@@ -121,18 +124,25 @@ export function buildGameDetail(input: {
   return { breakdown, homeOnBackToBack, awayOnBackToBack, versions, results, homeWon };
 }
 
-/** The next scheduled game for a team after a given tip, from the store. */
+/**
+ * A team's next game from the store: the first that tips after both the given game and
+ * now, so a past game's page never offers a game already played. Postponed and canceled
+ * games are skipped.
+ */
 export function nextGameFor(
   games: readonly SeasonGame[],
   teamId: string,
   afterTipUtc: string,
+  nowIso: string = new Date().toISOString(),
 ): SeasonGame | null {
+  const after = Math.max(Date.parse(afterTipUtc), Date.parse(nowIso));
   return (
     games.find(
       (game) =>
         (game.homeId === teamId || game.awayId === teamId) &&
-        Date.parse(game.tipUtc) > Date.parse(afterTipUtc) &&
-        game.status !== "canceled",
+        Date.parse(game.tipUtc) > after &&
+        game.status !== "canceled" &&
+        game.status !== "postponed",
     ) ?? null
   );
 }

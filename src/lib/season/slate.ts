@@ -9,7 +9,7 @@
 import { IN_GAME_SIGMA } from "@/lib/season/params";
 import { inGameHomeProbability } from "@/lib/season/in-game";
 import { backToBackFromDates, morningSeal, sealKindOf } from "@/lib/season/live-state";
-import { impliedHomeProbability } from "@/lib/season/market";
+import { impliedHomeProbability, providerName } from "@/lib/season/market";
 import { predictGame } from "@/lib/season/ratings";
 import type {
   AbsenceDriver,
@@ -27,9 +27,6 @@ import type {
 /** Beyond this, the page says its season numbers are stale. */
 export const STALE_AFTER_HOURS = 12;
 
-/** Drivers shown per side for a provisional number. */
-const PROVISIONAL_DRIVERS = 3;
-
 export type GameForecastView = {
   homeWinProbability: number;
   expectedMargin: number;
@@ -45,8 +42,15 @@ export type GameForecastView = {
    * number comes from a model without the injury term.
    */
   absencePoints: { home: number; away: number } | null;
-  /** The listed players behind those points, largest first. */
+  /** The players behind those points, largest first. */
   drivers: { home: AbsenceDriver[]; away: AbsenceDriver[] } | null;
+  /**
+   * False for a seal written before `driversComplete` existed, which stored only its three largest
+   * drivers a side; the rest of the list has to come from the report it used.
+   */
+  driversComplete: boolean;
+  /** Sides the report in use marked NOT YET SUBMITTED, when the seal records it. */
+  unfiled: { home: boolean; away: boolean } | null;
   /** Header time of the NBA injury report used, ET wall clock. */
   reportAt: string | null;
   availabilityStale: boolean;
@@ -146,6 +150,8 @@ function sealedForecast(seal: SealRow): GameForecastView {
     sealKind: sealKindOf(seal),
     absencePoints: modeled ? (seal.absencePoints ?? null) : null,
     drivers: modeled ? (seal.drivers ?? { home: [], away: [] }) : null,
+    driversComplete: seal.driversComplete === true,
+    unfiled: seal.unfiled ?? null,
     reportAt: seal.reportAt ?? null,
     availabilityStale: seal.availabilityStale ?? false,
     availabilityMissing: modeled ? (seal.availabilityMissing ?? false) : false,
@@ -157,8 +163,7 @@ function sealedForecast(seal: SealRow): GameForecastView {
 function provisionalDrivers(state: LiveState, teamId: string): AbsenceDriver[] {
   return state.absences
     .filter((row) => row.teamId === teamId)
-    .sort((a, b) => b.points - a.points)
-    .slice(0, PROVISIONAL_DRIVERS)
+    .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name))
     .map((row) => ({
       athleteId: row.athleteId,
       name: row.name,
@@ -201,6 +206,9 @@ function provisionalForecast(
     drivers: modeled
       ? { home: provisionalDrivers(state, game.homeId), away: provisionalDrivers(state, game.awayId) }
       : null,
+    // Every published absence is listed, so the drivers are the whole of each side.
+    driversComplete: true,
+    unfiled: null,
     reportAt: state.availability.reportAt,
     availabilityStale: state.availability.stale,
     availabilityMissing: modeled && state.availability.missing,
@@ -213,7 +221,7 @@ function marketView(...sources: Array<MarketReference | null | undefined>): Mark
   for (const source of sources) {
     if (!source) continue;
     const homeWinProbability = impliedHomeProbability(source);
-    if (homeWinProbability !== null) return { provider: source.provider, homeWinProbability };
+    if (homeWinProbability !== null) return { provider: providerName(source.provider), homeWinProbability };
   }
   return null;
 }

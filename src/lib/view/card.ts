@@ -2,9 +2,9 @@
 // Formatting only: every probability and margin comes from a seal, a provisional
 // number, a projection or the in-game estimate already computed upstream.
 
-import { STATUS_LABELS, surname } from "@/lib/utils/injuries";
 import { formatTimeEt } from "@/lib/utils/dates";
 import type { DayGame } from "@/lib/view/day";
+import { cardInjuryLines } from "@/lib/view/injuries";
 import { teamDisplay } from "@/lib/view/teams";
 
 export type Tone = "good" | "warn" | "bad" | "quiet";
@@ -29,6 +29,12 @@ export function marginText(expectedMargin: number, homeId: string, awayId: strin
   if (Math.abs(expectedMargin) < 0.05) return "548 has it even";
   const favorite = teamDisplay(expectedMargin > 0 ? homeId : awayId).code;
   return `548 favors ${favorite} by ${Math.abs(expectedMargin).toFixed(1)}`;
+}
+
+/** "548 favors CLE by 2.0 points", or "548 has it even". */
+export function marginSentence(expectedMargin: number, homeId: string, awayId: string): string {
+  const text = marginText(expectedMargin, homeId, awayId);
+  return Math.abs(expectedMargin) < 0.05 ? text : `${text} points`;
 }
 
 /** "CLE −4.5" from the market's home spread, or "Pick'em". */
@@ -129,7 +135,7 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
       : forecast.sealKind === "morning"
         ? "Morning seal"
         : forecast.sealKind === "reissued"
-          ? "Reissued"
+          ? "Reissued seal"
           : "Sealed";
   return {
     label: `${kind} ${time}`.trim(),
@@ -143,32 +149,12 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
   };
 }
 
-const STATUS_WORDS: Record<string, string> = {
-  O: "out",
-  D: "doubtful",
-  Q: "questionable",
-  P: "probable",
-  A: "available",
-};
-
 /**
- * "BOS −3.1: Tatum out, Brown doubtful" for each side whose expected absences move
- * the line by at least a point. Null for a number without the injury term.
+ * "IND −12.2: Haliburton, Siakam, Nembhard out +7 more" for each side whose expected
+ * absences move the line by at least a point. Null for a number without the injury term.
  */
-export function injuryNotes(game: Pick<DayGame, "forecast" | "homeId" | "awayId">, threshold = 1): string[] | null {
-  const forecast = game.forecast;
-  if (!forecast || !forecast.absencePoints || !forecast.drivers) return null;
-  const notes: string[] = [];
-  for (const side of ["away", "home"] as const) {
-    const points = forecast.absencePoints[side];
-    if (points < threshold) continue;
-    const teamId = side === "home" ? game.homeId : game.awayId;
-    const names = forecast.drivers[side]
-      .map((driver) => `${surname(driver.name)} ${driver.status ? STATUS_WORDS[driver.status] ?? STATUS_LABELS[driver.status].toLowerCase() : "missed last game"}`)
-      .join(", ");
-    notes.push(`${teamDisplay(teamId).code} −${points.toFixed(1)}${names ? `: ${names}` : ""}`);
-  }
-  return notes;
+export function injuryNotes(game: Pick<DayGame, "absences">, threshold = 1): string[] | null {
+  return cardInjuryLines(game.absences, threshold);
 }
 
 /** "Cavaliers won 112–104. 548 gave them 57%." for a final with a sealed number. */

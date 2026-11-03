@@ -129,7 +129,7 @@ function checkInjuryInvariants(): void {
     notSubmitted: [],
     rows: rows.map(([teamId, athleteId, status]) => ({ teamId, athleteId, status, reason: "Injury/Illness - Knee" })),
   });
-  const seal = (report: ReportPoint | null) =>
+  const seal = (report: ReportPoint | null, boxes = box) =>
     sealInjuryGames([{ game: target, inputsIncomplete: false, missingGameIds: [], kind: "final" }], {
       history: [],
       seasonGames: [...finals, target],
@@ -138,7 +138,7 @@ function checkInjuryInvariants(): void {
       referenceModelVersion: REFERENCE_MODEL_VERSION,
       runId: "check",
       nowIso: "2026-11-19T23:45:00Z",
-      source: { boxScores: (gameId) => box.get(gameId), availability: () => null },
+      source: { boxScores: (gameId) => boxes.get(gameId), availability: () => null },
       report: { point: report, stale: false, missing: false },
       nameOf: (athleteId) => athleteId,
       marketFor: () => null,
@@ -167,6 +167,36 @@ function checkInjuryInvariants(): void {
     assert.ok(absence.home >= 0 && absence.away >= 0, "Every absence term must be at least 0.");
     assert.ok(absencePoints.home >= 0 && absencePoints.away >= 0, "Absence points must be at least 0.");
     assert.ok(row.homeWinProbability > 0 && row.homeWinProbability < 1, "Seals must be probabilities.");
+  }
+
+  // A team the report marks NOT YET SUBMITTED counts its current absences: here A's star
+  // sat out its last two games. A team with nobody missing counts nothing, and a team
+  // simply absent from the report has nobody listed.
+  const starSat = new Map(box);
+  for (const day of [22, 23]) {
+    const lines = box.get(`check-${day}`) as Record<string, StoredLine[]>;
+    starSat.set(`check-${day}`, { ...lines, [A]: lines[A].filter(([athleteId]) => athleteId !== "a-star") });
+  }
+  const unfiled = (teamIds: string[]): ReportPoint => ({ ...point([]), notSubmitted: teamIds });
+  const homeUnfiled = seal(unfiled([A]), starSat);
+  const homeAbsent = seal(point([]), starSat);
+  const awayUnfiled = seal(unfiled([B]), starSat);
+  assert.ok(
+    homeUnfiled.unfiled?.home === true && (homeUnfiled.absence?.home ?? 0) > 0,
+    "An unfiled side must count its current absences.",
+  );
+  assert.ok(
+    homeUnfiled.homeWinProbability < homeAbsent.homeWinProbability,
+    "Counting an unfiled team's current absences must lower its chance.",
+  );
+  assert.deepEqual(homeAbsent.absence, { home: 0, away: 0 }, "A team absent from the report has nobody listed.");
+  assert.equal(awayUnfiled.homeWinProbability, homeAbsent.homeWinProbability, "An unfiled team with nobody out changes nothing.");
+  for (const row of [none, homeOut, homeQuestionable, homeProbable, awayOut, homeTwoOut, scrubOut, homeUnfiled, awayUnfiled]) {
+    assert.equal(row.driversComplete, true, "A new v2 seal must list every driver.");
+    for (const side of ["home", "away"] as const) {
+      const total = (row.drivers?.[side] ?? []).reduce((sum, driver) => sum + driver.points, 0);
+      assert.ok(Math.abs(total - (row.absencePoints?.[side] ?? 0)) <= 0.01, "Drivers must add up to the side's points.");
+    }
   }
 
   // Equal teams with equal absences stay even, on a neutral floor.

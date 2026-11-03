@@ -8,7 +8,7 @@ import { slateDateAt } from "@/lib/season/live-state";
 import { liveState } from "@/lib/season/published";
 import type { InjuryRow, ScoreboardRow } from "@/lib/season/types";
 import { buildDayView, type DayView } from "@/lib/view/day";
-import { ledgerRows, seasonGames } from "@/lib/view/store";
+import { ledgerRows, reportDay, seasonGames } from "@/lib/view/store";
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
 const TODAY_CACHE_SECONDS = 30;
@@ -58,5 +58,6 @@ export async function loadDayView(etDate: string): Promise<DayView> {
     ledger: ledgerRows(),
     injuries,
     extras,
+    reports: reportDay(etDate),
   });
 }

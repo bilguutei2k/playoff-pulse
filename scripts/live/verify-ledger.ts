@@ -13,7 +13,7 @@ import {
   missedVersionOf,
   sealKindOf,
 } from "../../src/lib/season/live-state";
-import type { LedgerRow } from "../../src/lib/season/types";
+import type { LedgerRow, SealRow } from "../../src/lib/season/types";
 import { LIVE_SEASON } from "./game-store";
 
 const RELATIVE_PATH = `data/live/ledger/${seasonLabel(LIVE_SEASON)}.jsonl`;
@@ -28,8 +28,40 @@ export function historyIntact(committed: string, current: string): boolean {
   return current.startsWith(committed);
 }
 
-/** Drivers stored per side on a v2 seal, at most. */
+/** Drivers stored per side on a v2 seal written before `driversComplete`, at most. */
 const MAX_DRIVERS = 3;
+/** How far a complete side's drivers may sum from its absence points: rounding only. */
+export const DRIVER_SUM_TOLERANCE = 0.01;
+
+/** Problems with a row's drivers. Rows with `driversComplete` list every player. */
+function driverProblems(row: SealRow): string[] {
+  const drivers = row.drivers;
+  if (!drivers) return [`seal for ${row.gameId} has no drivers`];
+  if (row.driversComplete === undefined) {
+    return drivers.home.length > MAX_DRIVERS || drivers.away.length > MAX_DRIVERS
+      ? [`seal for ${row.gameId} has too many drivers`]
+      : [];
+  }
+  if (row.driversComplete !== true) return [`seal for ${row.gameId} has an invalid driversComplete flag`];
+  const problems: string[] = [];
+  for (const side of ["home", "away"] as const) {
+    const list = drivers[side];
+    const total = list.reduce((sum, driver) => sum + driver.points, 0);
+    const points = row.absencePoints?.[side] ?? 0;
+    if (Math.abs(total - points) > DRIVER_SUM_TOLERANCE) {
+      problems.push(
+        `seal for ${row.gameId}: ${side} drivers add to ${total.toFixed(3)}, absence points ${points}`,
+      );
+    }
+    if (list.some((driver, index) => !(driver.points >= 0) || (index > 0 && driver.points > list[index - 1].points))) {
+      problems.push(`seal for ${row.gameId}: ${side} drivers are not sorted largest first`);
+    }
+    if (!row.unfiled?.[side] && list.some((driver) => driver.status === null)) {
+      problems.push(`seal for ${row.gameId}: a ${side} driver has no status on a side the report covers`);
+    }
+  }
+  return problems;
+}
 
 /**
  * Row-level rules. Seals key on (game, model version, seal kind): v1 writes one seal
@@ -118,12 +150,13 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
     ) {
       problems.push(`seal for ${row.gameId} says availability is missing but uses a report`);
     }
+    problems.push(...driverProblems(row));
     if (
-      !row.drivers ||
-      row.drivers.home.length > MAX_DRIVERS ||
-      row.drivers.away.length > MAX_DRIVERS
+      row.unfiled &&
+      (row.unfiled.home || row.unfiled.away) &&
+      (row.availabilityMissing || (row.reportAt ?? null) === null)
     ) {
-      problems.push(`seal for ${row.gameId} has no drivers or too many`);
+      problems.push(`seal for ${row.gameId} has an unfiled side but no report`);
     }
   }
   return problems;

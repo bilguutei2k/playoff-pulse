@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import { createFilterState, toRatingState } from "@/lib/season/ratings";
 import { LIVE_PARAMS } from "@/lib/season/params";
 import type { SeasonGame } from "@/lib/season/types";
-import { formatDiff, liveClock, marginText, splitPercents, statusLabel } from "@/lib/view/card";
+import { formatReportTime } from "@/lib/utils/dates";
+import { formatDiff, liveClock, marginSentence, marginText, splitPercents, statusLabel } from "@/lib/view/card";
+import { nextGameFor } from "@/lib/view/game";
 import { marginBreakdown } from "@/lib/view/margin";
 import { projectGame } from "@/lib/view/projection";
 import { calibrationBins, gameBrier } from "@/lib/view/record";
@@ -27,6 +29,28 @@ describe("card wording", () => {
     expect(marginText(4.53, "2", "10")).toBe("548 favors BOS by 4.5");
     expect(marginText(-2, "2", "10")).toBe("548 favors HOU by 2.0");
     expect(marginText(0.01, "2", "10")).toBe("548 has it even");
+    expect(marginSentence(4.53, "2", "10")).toBe("548 favors BOS by 4.5 points");
+    expect(marginSentence(0.01, "2", "10")).toBe("548 has it even");
+  });
+  it("dates a report from another day", () => {
+    expect(formatReportTime("2026-11-02T18:30", "2026-11-02")).toBe("6:30 PM ET");
+    expect(formatReportTime("2026-11-01T17:30", "2026-11-02")).toBe("Nov 1, 5:30 PM ET");
+    expect(formatReportTime("2026-11-01T00:15")).toBe("12:15 AM ET");
+  });
+  it("finds a team's next game after both the game shown and now, skipping postponed games", () => {
+    const game = (id: string, tipUtc: string, status: SeasonGame["status"] = "scheduled"): SeasonGame => ({
+      id, season: 2027, kind: "regular", tipUtc, etDate: tipUtc.slice(0, 10),
+      homeId: "2", awayId: "10", neutral: false, status, homeScore: null, awayScore: null,
+    });
+    const games = [
+      game("a", "2026-11-02T23:00:00Z", "final"),
+      game("b", "2026-11-04T23:00:00Z", "postponed"),
+      game("c", "2026-11-06T23:00:00Z"),
+      game("d", "2026-11-08T23:00:00Z"),
+    ];
+    expect(nextGameFor(games, "2", "2026-11-02T23:00:00Z", "2026-11-03T00:00:00Z")?.id).toBe("c");
+    // On a past game's page, a game played since is not offered.
+    expect(nextGameFor(games, "2", "2026-11-02T23:00:00Z", "2026-11-07T00:00:00Z")?.id).toBe("d");
   });
   it("reads ESPN's clock and final details", () => {
     expect(liveClock("9:56 - 3rd")).toBe("3rd 9:56");

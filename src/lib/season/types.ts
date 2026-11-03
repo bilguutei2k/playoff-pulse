@@ -185,8 +185,9 @@ export type AbsenceDriver = {
   athleteId: string;
   name: string;
   /**
-   * Report status. Always set on a seal; null only in a provisional number, for a
-   * player counted out because he missed the team's last game and is not listed.
+   * Report status. Null for a player counted out because he missed the team's last game
+   * and is not listed: in a provisional number, or on a seal's unfiled side. Always set
+   * on a side the report covers.
    */
   status: StatusCode | null;
   /** Points of margin the team gives up for him, already weighted by status. */
@@ -222,8 +223,23 @@ export type SealRow = {
   absence?: { home: number; away: number };
   /** The same in points of margin: `beta` times `absence`. */
   absencePoints?: { home: number; away: number };
-  /** Up to three listed players per side, largest first. */
+  /**
+   * Players behind each side's absence term, largest first. Every one with positive
+   * points when `driversComplete` is set; at most three on rows written before it.
+   */
   drivers?: { home: AbsenceDriver[]; away: AbsenceDriver[] };
+  /**
+   * Set on rows written under the 2026-11-03 amendment to `docs/live/registration.md`:
+   * `drivers` lists everyone behind each side's term, and each side's drivers add up to
+   * its `absencePoints` (to rounding).
+   */
+  driversComplete?: boolean;
+  /**
+   * Sides whose team the report in use marked NOT YET SUBMITTED. Such a side's term is the
+   * team's expected absence for this game from current absences, as the season simulation
+   * charges it. Absent on rows written before that amendment, when such a side counted nobody.
+   */
+  unfiled?: { home: boolean; away: boolean };
   /** The reference model's number for the same game, recomputed at the same instant. */
   referenceModelVersion?: string;
   referenceHomeWinProbability?: number;

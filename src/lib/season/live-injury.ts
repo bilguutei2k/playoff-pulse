@@ -47,9 +47,6 @@ import type {
   SeasonGame,
 } from "@/lib/season/types";
 
-/** Drivers stored per side on a seal. */
-export const DRIVERS_PER_SIDE = 3;
-
 export type InjuryModel = {
   params: ModelParams;
   injury: InjuryParams;
@@ -165,6 +162,44 @@ export function absenceDetail(
   return { absence, drivers };
 }
 
+/**
+ * A team's expected absence for its next game from current absences: exactly what the
+ * season simulation charges it for that game. The report in use becomes the team's
+ * latest word, as `applyLatestReport` makes it for the published state, so a team that
+ * has not filed counts everyone `currentAbsences` carries for it (chiefly players who
+ * missed its last game), each weighted by the share of the next game the survival table
+ * expects him to miss. The tracker is not changed.
+ */
+export function nextGameAbsenceDetail(
+  point: ReportPoint | null,
+  teamId: string,
+  tracker: AvailabilityTracker,
+  model: InjuryModel,
+  nameOf: (athleteId: string) => string | undefined,
+): AbsenceDetail {
+  const view: AvailabilityTracker = { ...tracker, latestRows: new Map(tracker.latestRows) };
+  applyLatestReport(view, point, [teamId]);
+  const rows = view.latestRows.get(teamId) ?? [];
+  const current = currentAbsences(view, model.injury, model.survival).filter(
+    (absence) => absence.teamId === teamId,
+  );
+  // One pending game: its charge is the simulation's charge for the team's next game,
+  // regular season or postseason alike.
+  const nextGame = (absences: readonly CurrentAbsence[]) =>
+    simulationAbsences(absences, { [teamId]: 1 }).regular[teamId][0];
+  const drivers: AbsenceDriver[] = current
+    .map((absence) => ({
+      athleteId: absence.athleteId,
+      name: nameOf(absence.athleteId) ?? absence.athleteId,
+      status: rows.find((row) => row.athleteId === absence.athleteId)?.status ?? null,
+      points: nextGame([absence]),
+    }))
+    .filter((driver) => driver.points > 0)
+    .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
+  const points = nextGame(current);
+  return { absence: model.injury.beta > 0 ? points / model.injury.beta : 0, drivers };
+}
+
 export type ReportInUse = {
   point: ReportPoint | null;
   stale: boolean;
@@ -191,6 +226,14 @@ export type InjurySealContext = {
 
 const round = (value: number, digits: number) => Number(value.toFixed(digits));
 
+/**
+ * Whether the report in use marks this team NOT YET SUBMITTED. A team that is simply
+ * not on the report is not unfiled: it has nobody listed.
+ */
+export function unfiledOn(point: ReportPoint | null, teamId: string): boolean {
+  return point !== null && point.notSubmitted.includes(teamId);
+}
+
 function sealContext(game: SeasonGame, seasonGames: readonly SeasonGame[]): GameContext {
   const dates = teamGameDatesAround(seasonGames, game.etDate);
   return {
@@ -205,8 +248,11 @@ function sealContext(game: SeasonGame, seasonGames: readonly SeasonGame[]): Game
 
 /**
  * Prices v2 seals from full-strength ratings frozen at the end of the previous ET date,
- * with the expected absences from the report in use. Each row also carries v1's number,
- * recomputed from v1's own plain replay at the same instant, never copied from a v1 row.
+ * with the expected absences from the report in use. A side whose team the report marks
+ * NOT YET SUBMITTED takes its expected absence for this game from current absences, the
+ * charge the season simulation makes for the team's next game. Each row stores every
+ * player behind either side's term, and also carries v1's number, recomputed from v1's
+ * own plain replay at the same instant, never copied from a v1 row.
  */
 export function sealInjuryGames(
   decisions: readonly InjurySealDecision[],
@@ -231,9 +277,22 @@ export function sealInjuryGames(
       byDate.set(game.etDate, frozen);
     }
     const point = report.missing ? null : report.point;
-    const home = absenceDetail(point, game.homeId, frozen.full.tracker, model, context.nameOf);
-    const away = absenceDetail(point, game.awayId, frozen.full.tracker, model, context.nameOf);
+    const unfiled = {
+      home: unfiledOn(point, game.homeId),
+      away: unfiledOn(point, game.awayId),
+    };
+    const sideDetail = (teamId: string, notFiled: boolean) =>
+      (notFiled ? nextGameAbsenceDetail : absenceDetail)(
+        point,
+        teamId,
+        frozen.full.tracker,
+        model,
+        context.nameOf,
+      );
+    const home = sideDetail(game.homeId, unfiled.home);
+    const away = sideDetail(game.awayId, unfiled.away);
     const gameContext = sealContext(game, context.seasonGames);
+    // The number comes from the absence terms alone; drivers are only stored beside it.
     const prediction = predictGame(
       frozen.full.state,
       gameContext,
@@ -241,10 +300,8 @@ export function sealInjuryGames(
       -model.injury.beta * (home.absence - away.absence),
     );
     const reference = predictGame(frozen.plain, gameContext, model.params);
-    const top = (detail: AbsenceDetail) =>
-      detail.drivers
-        .slice(0, DRIVERS_PER_SIDE)
-        .map((driver) => ({ ...driver, points: round(driver.points, 3) }));
+    const all = (detail: AbsenceDetail) =>
+      detail.drivers.map((driver) => ({ ...driver, points: round(driver.points, 3) }));
     rows.push({
       type: "seal",
       gameId: game.id,
@@ -271,7 +328,9 @@ export function sealInjuryGames(
         home: round(model.injury.beta * home.absence, 3),
         away: round(model.injury.beta * away.absence, 3),
       },
-      drivers: { home: top(home), away: top(away) },
+      drivers: { home: all(home), away: all(away) },
+      driversComplete: true,
+      unfiled,
       referenceModelVersion: context.referenceModelVersion,
       referenceHomeWinProbability: round(reference.homeWinProbability, 6),
     });

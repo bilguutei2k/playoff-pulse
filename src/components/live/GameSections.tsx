@@ -4,12 +4,11 @@ import { SplitBar } from "@/components/live/SplitBar";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import type { SealRow, SeasonGame, TeamForecast } from "@/lib/season/types";
 import { formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
-import { driverStatus } from "@/lib/utils/injuries";
 import { formatChance } from "@/lib/utils/format";
 import {
   forecastBadge,
   formatDiff,
-  marginText,
+  marginSentence,
   metaLine,
   spreadText,
   splitPercents,
@@ -17,6 +16,7 @@ import {
 } from "@/lib/view/card";
 import type { DayGame } from "@/lib/view/day";
 import type { GameDetail } from "@/lib/view/game";
+import { filingNote, othersNote, playerPoints } from "@/lib/view/injuries";
 import type { MarginBreakdown, MarginPart } from "@/lib/view/margin";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { formatRecord, ordinal, pairColors, teamDisplay, teamHref, type TeamLine } from "@/lib/view/teams";
@@ -192,7 +192,7 @@ export function WinProbability({ game }: { game: DayGame }) {
         ) : null}
         <div>
           <dt className="kicker">Predicted margin</dt>
-          <dd className="mt-1 text-ink">{marginText(margin, game.homeId, game.awayId)} points</dd>
+          <dd className="mt-1 text-ink">{marginSentence(margin, game.homeId, game.awayId)}</dd>
         </div>
         {game.projection ? null : (
           <div>
@@ -254,38 +254,57 @@ function DivergingRow({ label, points, scale, homeId, awayId, total = false }: {
   );
 }
 
-function Drivers({ game }: { game: DayGame }) {
-  const forecast = game.forecast;
-  if (!forecast?.drivers || !forecast.absencePoints) return null;
+function PlayerRow({ name, points }: { name: string; points: number | null }) {
+  return (
+    <li className="flex justify-between gap-3">
+      <span>{name}</span>
+      <span className="num text-ink-3">{points === null ? "" : playerPoints(points)}</span>
+    </li>
+  );
+}
+
+function AbsenceLists({ game, today }: { game: DayGame; today: boolean }) {
+  const sides = game.absences;
+  if (!sides) return null;
   return (
     <div className="mt-5 grid gap-4 sm:grid-cols-2">
-      {(["away", "home"] as const).map((side) => {
-        const id = side === "home" ? game.homeId : game.awayId;
-        const drivers = forecast.drivers![side];
-        const points = forecast.absencePoints![side];
+      {(["away", "home"] as const).map((key) => {
+        const side = sides[key];
+        const filing = filingNote(side, today);
+        const others = othersNote(side);
         return (
-          <div key={side} className="rounded-lg bg-wash px-4 py-3">
+          <div key={key} className="rounded-lg bg-wash px-4 py-3">
             <p className="flex items-center justify-between gap-3 text-[13px] font-semibold text-ink">
               <span className="flex items-center gap-2">
-                <TeamLogo teamId={id} size={18} />
-                {teamDisplay(id).shortName}
+                <TeamLogo teamId={side.teamId} size={18} />
+                {teamDisplay(side.teamId).shortName}
               </span>
-              <span className="num font-medium text-ink-2">{points >= 0.05 ? `−${points.toFixed(1)}` : "0.0"} pts</span>
+              <span className="num font-medium text-ink-2">{side.points >= 0.05 ? `−${side.points.toFixed(1)}` : "0.0"} pts</span>
             </p>
-            {drivers.length === 0 ? (
-              <p className="mt-2 text-[13px] text-ink-3">No listed absences.</p>
+            {filing ? <p className="mt-2 text-[12px] leading-5 text-ink-2">{filing}</p> : null}
+            {side.players.length === 0 ? (
+              <p className="mt-2 text-[13px] text-ink-3">
+                {game.forecast?.availabilityMissing
+                  ? "No injury report was in use, so nobody is counted."
+                  : side.filing === "unfiled-counted"
+                    ? "Nobody missed its last game."
+                    : "No listed absences."}
+              </p>
             ) : (
-              <ul className="mt-2 space-y-1 text-[13px] text-ink-2">
-                {drivers.map((driver) => (
-                  <li key={driver.athleteId} className="flex justify-between gap-3">
-                    <span>
-                      {driver.name} <span className="text-ink-3">({driverStatus(driver)})</span>
-                    </span>
-                    <span className="num">{driver.points.toFixed(1)}</span>
-                  </li>
-                ))}
-              </ul>
+              side.groups.map((group) => (
+                <div key={group.key} className="mt-3">
+                  <p className="kicker text-[10px]">
+                    {group.label} <span className="num">({group.players.length})</span>
+                  </p>
+                  <ul className="mt-1 space-y-1 text-[13px] text-ink-2">
+                    {group.players.map((player, index) => (
+                      <PlayerRow key={`${player.name}-${index}`} name={player.name} points={player.points} />
+                    ))}
+                  </ul>
+                </div>
+              ))
             )}
+            {others ? <p className="mt-3 text-[12px] leading-5 text-ink-3">{others}</p> : null}
           </div>
         );
       })}
@@ -293,7 +312,7 @@ function Drivers({ game }: { game: DayGame }) {
   );
 }
 
-export function WhatMoves({ game, breakdown, detail }: { game: DayGame; breakdown: MarginBreakdown; detail: GameDetail }) {
+export function WhatMoves({ game, breakdown, detail, today }: { game: DayGame; breakdown: MarginBreakdown; detail: GameDetail; today: boolean }) {
   const scale = Math.max(4, ...breakdown.parts.map((part) => Math.abs(part.display)), Math.abs(breakdown.total));
   const forecast = game.forecast;
   const restWho = detail.homeOnBackToBack && detail.awayOnBackToBack
@@ -325,14 +344,28 @@ export function WhatMoves({ game, breakdown, detail }: { game: DayGame; breakdow
         ) : null}
         {forecast?.availabilityMissing ? <p>No NBA injury report under 24 hours old was available, so absences are zero.</p> : null}
         {forecast?.availabilityStale && forecast.reportAt ? (
-          <p>The latest report could not be read, so the last good one, from {formatReportTime(forecast.reportAt)}, was used.</p>
+          <p>The latest report could not be read, so the last good one, from {formatReportTime(forecast.reportAt, game.etDate)}, was used.</p>
         ) : null}
-        {forecast?.reportAt && !forecast.availabilityStale ? <p>Injury report used: the NBA&apos;s of {formatReportTime(forecast.reportAt)}.</p> : null}
+        {forecast?.reportAt && !forecast.availabilityStale ? (
+          <p>Injury report used: the NBA&apos;s report of {formatReportTime(forecast.reportAt, game.etDate)}.</p>
+        ) : null}
+        {game.absences ? (
+          <p>
+            A seal counts every player on the report in use, weighted by status. Team pages and the season odds
+            list current absences instead, which is who the season simulation counts as out.
+          </p>
+        ) : null}
       </div>
-      <Drivers game={game} />
+      <AbsenceLists game={game} today={today} />
     </Panel>
   );
 }
+
+const ROLE_LABELS: Record<GameDetail["versions"][number]["role"], string> = {
+  published: "Published",
+  reference: "Reference",
+  other: "Earlier",
+};
 
 function SealCell({ row, homeId, pending }: { row: SealRow | null; homeId: string; pending: string }) {
   if (!row) return <span className="text-ink-3">{pending}</span>;
@@ -370,7 +403,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
             </thead>
             <tbody>
               {detail.versions.map((version) => {
-                const twoSeals = version.morning?.sealKind !== undefined;
+                const twoSeals = version.twoSeals;
                 return (
                   <tr key={version.modelVersion} className="border-b border-line last:border-0">
                     <th scope="row" className="py-3 pr-3 text-left font-normal">
@@ -379,7 +412,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                         <span className="hidden sm:inline">{version.modelVersion}</span>
                       </span>
                       <span className="block text-[12px] text-ink-3">
-                        {version.role === "published" ? "Published" : version.role === "reference" ? "Reference" : "Earlier"}
+                        {ROLE_LABELS[version.role]}
                       </span>
                     </th>
                     <td className="py-3 pr-3">
@@ -442,7 +475,7 @@ export function Result({ game, detail }: { game: DayGame; detail: GameDetail }) 
             <div key={result.modelVersion} className="rounded-lg bg-wash px-4 py-3">
               <dt className="flex items-center justify-between gap-2">
                 <span className="num text-[12px] text-ink-2">{result.modelVersion}</span>
-                <span className="kicker text-[10px]">{result.role === "published" ? "Published" : "Reference"}</span>
+                <span className="kicker text-[10px]">{ROLE_LABELS[result.role]}</span>
               </dt>
               <dd className="mt-2 text-[14px] text-ink-2">
                 Gave {winner.shortName}{" "}

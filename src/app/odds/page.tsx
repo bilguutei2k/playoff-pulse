@@ -136,6 +136,7 @@ export default function OddsPage() {
             absences={liveState.absences}
             absencePoints={liveState.absencePoints}
             reportAt={liveState.availability.reportAt}
+            slateEtDate={liveState.slateEtDate}
           />
         </div>
       ) : null}

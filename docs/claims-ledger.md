@@ -201,8 +201,10 @@ rating model. Each version's sealed record is reported separately.
 **Required disclosures:**
 
 - What v2 models and what it does not: listed players on the NBA injury report, by their
-  expected absence weighted by status, with full-strength ratings, a final seal in the hour
-  before tip, and return estimates in the season simulation from the survival table only. It does
+  expected absence weighted by status (a team that has not filed yet counts its current
+  absences, chiefly players who missed its last game), with full-strength ratings, a final seal
+  in the hour before tip, and return estimates in the season simulation from the survival table
+  only. It does
   not simulate unknown future injuries, redistribute minutes, or model matchups. ESPN's return
   dates are stored and never used. v1 does not account for injuries, and any number from v1 must
   say so.

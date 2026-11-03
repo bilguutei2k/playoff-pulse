@@ -154,8 +154,10 @@ function ScheduleRow({ row }: { row: TeamGameRow }) {
         {row.forecast ? (
           <span className="inline-flex items-center gap-2">
             {row.forecast.source === "projection" ? (
-              <span className="hidden sm:inline-flex">
-                <Badge tone="quiet">Proj.</Badge>
+              <Badge tone="quiet">Proj.</Badge>
+            ) : row.forecast.modelVersion !== null && row.forecast.modelVersion !== liveState.modelVersion ? (
+              <span title={`Sealed by ${row.forecast.modelVersion}, which does not account for injuries`}>
+                <Badge tone="quiet">{row.forecast.modelVersion.split("-").at(-1)}</Badge>
               </span>
             ) : null}
             <span className={`heat ${heatClass(row.forecast.probability)} min-w-[3rem] px-1.5 py-0.5 text-[12.5px]`}>
@@ -305,7 +307,7 @@ export default async function TeamPage({ params }: Params) {
             title="Current absences"
             dek={
               absences.length > 0
-                ? `In the next game these cost the ${team.shortName} ${(liveState.absencePoints[team.id] ?? 0).toFixed(1)} points of margin.`
+                ? `In the next game these cost the ${team.shortName} ${(liveState.absencePoints[team.id] ?? 0).toFixed(1)} points of margin in the season odds. A game's sealed number counts the injury report in use at its seal instead, weighted by status; its game page lists those players.`
                 : undefined
             }
           />

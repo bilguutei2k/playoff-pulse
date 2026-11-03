@@ -5,6 +5,7 @@ import { createTracker, expectedAbsence, recordPlayerGame, type ReportPoint } fr
 import {
   absenceDetail,
   applyLatestReport,
+  nextGameAbsenceDetail,
   forgetEarlierSeasonReports,
   injuryModelHash,
   pendingRegularGames,
@@ -24,7 +25,7 @@ import {
   LIVE_PARAMS,
   REFERENCE_MODEL_VERSION,
 } from "@/lib/season/params";
-import { replayRatings, toRatingState } from "@/lib/season/ratings";
+import { predictGame, replayRatings, toRatingState } from "@/lib/season/ratings";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import type { SeasonGame } from "@/lib/season/types";
 
@@ -178,7 +179,7 @@ describe("v2 seals", () => {
     expect(row.modelVersion).toBe(LIVE_MODEL_VERSION);
   });
 
-  it("stores the kind, the report, the absence term and at most three drivers a side", () => {
+  it("stores the kind, the report, the absence term and every driver", () => {
     const base = context({ seasonGames: [...context().seasonGames, target] });
     const report = point([[A, "a-star", "O"], [A, "a-wing", "Q"], [A, "a-sub", "D"], [A, "nobody", "O"], [B, "b-star", "D"]]);
     const healthy = sealInjuryGames([decision], base)[0];
@@ -189,7 +190,9 @@ describe("v2 seals", () => {
     expect(row.availabilityMissing).toBe(false);
     expect(row.absence?.home).toBeGreaterThan(row.absence?.away ?? Infinity);
     expect(row.absencePoints?.home).toBeCloseTo(INJURY_PARAMS.beta * (row.absence?.home ?? 0), 2);
-    expect(row.drivers?.home.length).toBeLessThanOrEqual(3);
+    expect(row.driversComplete).toBe(true);
+    expect(row.unfiled).toEqual({ home: false, away: false });
+    expect(row.drivers?.home.map((driver) => driver.athleteId)).toEqual(["a-star", "a-wing", "a-sub"]);
     expect(row.drivers?.home[0].name).toBe("Name a-star");
     expect(row.drivers?.away.map((driver) => driver.status)).toEqual(["D"]);
     expect(row.homeWinProbability).toBeLessThan(healthy.homeWinProbability);
@@ -205,6 +208,7 @@ describe("v2 seals", () => {
     expect(row.reportAt).toBeNull();
     expect(row.absence).toEqual({ home: 0, away: 0 });
     expect(row.drivers).toEqual({ home: [], away: [] });
+    expect(row.unfiled).toEqual({ home: false, away: false });
   });
 
   it("changes its parameter hash with any frozen input", () => {
@@ -274,5 +278,133 @@ describe("reports from an earlier season", () => {
     });
     expect(tracker.latestRows.has(A)).toBe(true);
     expect(tracker.latestRows.has(C)).toBe(false);
+  });
+});
+
+describe("unfiled sides", () => {
+  const target = game({ id: "target", tipUtc: "2026-11-13T00:30:00Z" });
+  const decision = (kind: "morning" | "reissued" | "final") => ({
+    game: target,
+    inputsIncomplete: false,
+    missingGameIds: [],
+    kind,
+  });
+  // A has not filed; B has, listing its star doubtful.
+  const unfiledA: ReportPoint = { ...point([[B, "b-star", "D"]]), notSubmitted: [A] };
+
+  it("charge the team's current absences, exactly as the season simulation charges its next game", () => {
+    const base = context({ seasonGames: [...context().seasonGames, target] });
+    const row = sealInjuryGames([decision("final")], { ...base, report: { point: unfiledA, stale: false, missing: false } })[0];
+    expect(row.unfiled).toEqual({ home: true, away: false });
+    // A's star missed the last five games and A has not said otherwise.
+    expect(row.drivers?.home.map((driver) => [driver.athleteId, driver.status])).toEqual([["a-star", null]]);
+    // What the published state would charge A for this game, from the same report.
+    const { games, box } = season();
+    const source = { boxScores: (id: string) => box.get(id), availability: () => null };
+    const frozen = replayFullStrength([...games, target], MODEL, source, { throughEtDate: target.etDate });
+    applyLatestReport(frozen.tracker, unfiledA, [A, B]);
+    const charged = seasonAvailability(frozen.tracker, MODEL, [...games, target]).absencePoints[A];
+    expect(charged).toBeGreaterThan(1);
+    expect(row.absencePoints?.home).toBeCloseTo(charged, 3);
+    expect(row.absence?.home).toBeCloseTo(charged / INJURY_PARAMS.beta, 4);
+    // B's side keeps the report rule.
+    const filed = expectedAbsence(unfiledA, B, frozen.tracker.book, INJURY_STATUS_TABLE, INJURY_PARAMS);
+    expect(row.absence?.away).toBeCloseTo(filed, 4);
+  });
+
+  it("apply to morning, reissued and final seals alike", () => {
+    const base = context({ seasonGames: [...context().seasonGames, target] });
+    const report = { point: unfiledA, stale: false, missing: false };
+    const rows = (["morning", "reissued", "final"] as const).map(
+      (kind) => sealInjuryGames([decision(kind)], { ...base, report })[0],
+    );
+    for (const row of rows) {
+      expect(row.unfiled).toEqual({ home: true, away: false });
+      expect(row.absencePoints).toEqual(rows[2].absencePoints);
+      expect(row.homeWinProbability).toBe(rows[2].homeWinProbability);
+    }
+    expect(rows.map((row) => row.sealKind)).toEqual(["morning", "reissued", "final"]);
+  });
+
+  it("are not a team that is simply absent from the report, which has nobody listed", () => {
+    const base = context({ seasonGames: [...context().seasonGames, target] });
+    const absent = sealInjuryGames([decision("final")], {
+      ...base,
+      report: { point: point([[B, "b-star", "D"]]), stale: false, missing: false },
+    })[0];
+    expect(absent.unfiled).toEqual({ home: false, away: false });
+    expect(absent.absence?.home).toBe(0);
+    expect(absent.drivers?.home).toEqual([]);
+    const unfiled = sealInjuryGames([decision("final")], { ...base, report: { point: unfiledA, stale: false, missing: false } })[0];
+    expect(unfiled.homeWinProbability).toBeLessThan(absent.homeWinProbability);
+    expect(unfiled.referenceHomeWinProbability).toBe(absent.referenceHomeWinProbability);
+  });
+
+  it("leave the tracker as it was", () => {
+    const tracker = createTracker();
+    tracker.latestRows.set(A, [{ teamId: A, athleteId: "old", status: "O", reason: "" }]);
+    nextGameAbsenceDetail(unfiledA, A, tracker, MODEL, (id) => id);
+    expect(tracker.latestRows.get(A)?.map((row) => row.athleteId)).toEqual(["old"]);
+  });
+});
+
+describe("complete drivers", () => {
+  // Five rotation players a side, all playing every game.
+  const rotation = (team: string): StoredLine[] =>
+    [36, 32, 28, 24, 20].map((minutes, index) => [`${team}-${index}`, minutes, 20 - index * 3]);
+  function deep(): { games: SeasonGame[]; box: Map<string, Record<string, StoredLine[]>> } {
+    const games: SeasonGame[] = [];
+    const box = new Map<string, Record<string, StoredLine[]>>();
+    for (let day = 0; day < 20; day += 1) {
+      const tipUtc = new Date(Date.UTC(2026, 9, 21 + day, 23, 30)).toISOString();
+      games.push(game({ id: `d-${day}`, tipUtc, status: "final", homeScore: 104, awayScore: 100 + (day % 5) }));
+      box.set(`d-${day}`, { [A]: rotation("a"), [B]: rotation("b") });
+    }
+    return { games, box };
+  }
+  const target = game({ id: "target", tipUtc: "2026-11-13T00:30:00Z" });
+  const report = point([
+    [A, "a-0", "O"], [A, "a-1", "O"], [A, "a-2", "Q"], [A, "a-3", "D"], [A, "a-4", "P"],
+    [B, "b-0", "Q"], [B, "b-1", "O"], [B, "b-2", "P"], [B, "b-3", "O"],
+  ]);
+
+  it("stores every player largest first, adds up to the side's points, and never feeds the number", () => {
+    const { games, box } = deep();
+    const source = { boxScores: (id: string) => box.get(id), availability: () => null };
+    const sealWith = (nameOf: (id: string) => string) =>
+      sealInjuryGames([{ game: target, inputsIncomplete: false, missingGameIds: [], kind: "final" }], {
+        ...context(),
+        seasonGames: [...games, target],
+        source,
+        nameOf,
+        report: { point: report, stale: false, missing: false },
+      })[0];
+    const row = sealWith((id) => `Name ${id}`);
+    expect(row.driversComplete).toBe(true);
+    expect(row.drivers?.home).toHaveLength(5);
+    expect(row.drivers?.away).toHaveLength(4);
+    for (const side of ["home", "away"] as const) {
+      const list = row.drivers?.[side] ?? [];
+      const total = list.reduce((sum, driver) => sum + driver.points, 0);
+      expect(Math.abs(total - (row.absencePoints?.[side] ?? 0))).toBeLessThan(0.01);
+      for (let index = 1; index < list.length; index += 1) {
+        expect(list[index].points).toBeLessThanOrEqual(list[index - 1].points);
+      }
+    }
+    // The number is the engine's: ratings and the expected absences, nothing from the drivers.
+    const frozen = replayFullStrength([...games, target], MODEL, source, { throughEtDate: target.etDate });
+    const book = frozen.tracker.book;
+    const home = expectedAbsence(report, A, book, INJURY_STATUS_TABLE, INJURY_PARAMS);
+    const away = expectedAbsence(report, B, book, INJURY_STATUS_TABLE, INJURY_PARAMS);
+    const expected = predictGame(
+      frozen.state,
+      { homeId: A, awayId: B, neutral: false, playoff: false, homeOnBackToBack: false, awayOnBackToBack: false },
+      LIVE_PARAMS,
+      -INJURY_PARAMS.beta * (home - away),
+    );
+    expect(row.homeWinProbability).toBe(Number(expected.homeWinProbability.toFixed(6)));
+    expect(row.absence).toEqual({ home: Number(home.toFixed(4)), away: Number(away.toFixed(4)) });
+    // Different names, same number.
+    expect(sealWith((id) => id.toUpperCase()).homeWinProbability).toBe(row.homeWinProbability);
   });
 });

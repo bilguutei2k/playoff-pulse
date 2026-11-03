@@ -59,13 +59,16 @@ export function formatDateTime(iso: string, viewerZone: boolean): string {
 
 /**
  * An injury report's own stamp, already Eastern wall-clock time ("2026-11-01T14:15"),
- * as "2:15 PM ET". No zone conversion: the stamp is the NBA's, in ET.
+ * as "2:15 PM ET", or "Nov 1, 2:15 PM ET" when it is not from `sameDayAs`. No zone
+ * conversion: the stamp is the NBA's, in ET.
  */
-export function formatReportTime(at: string): string {
+export function formatReportTime(at: string, sameDayAs?: string): string {
   const hour = Number(at.slice(11, 13));
   const minute = at.slice(14, 16);
   const twelve = hour % 12 === 0 ? 12 : hour % 12;
-  return `${twelve}:${minute} ${hour >= 12 ? "PM" : "AM"} ET`;
+  const time = `${twelve}:${minute} ${hour >= 12 ? "PM" : "AM"} ET`;
+  // A stale report can be from the day before; then the day is part of the time.
+  return sameDayAs && at.slice(0, 10) !== sameDayAs ? `${formatShortDay(at.slice(0, 10))}, ${time}` : time;
 }
 
 const ET_TIME = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: ET });
