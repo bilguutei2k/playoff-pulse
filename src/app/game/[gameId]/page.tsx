@@ -67,7 +67,7 @@ export default async function GamePage({ params }: Params) {
           <Seals game={game} detail={detail} />
         </div>
         <aside aria-label="Both teams" className="flex flex-col gap-4">
-          <h2 className="kicker">Both teams today</h2>
+          <h2 className="kicker">{day.kind === "today" ? "Both teams today" : "Both teams now"}</h2>
           {[game.awayId, game.homeId].map((teamId) => (
             <TeamSnapshot
               key={teamId}

@@ -351,9 +351,8 @@ export function WhatMoves({ game, breakdown, detail, today }: { game: DayGame; b
         ) : null}
         {game.absences ? (
           <p>
-            A seal counts every player on the report in use, weighted by status; a team that had not filed counts
-            the players who missed its last game. Team pages and the season odds list current absences instead,
-            which is who the season simulation counts as out.
+            A seal counts every player on the report in use, weighted by status. Team pages and the season odds
+            list current absences instead, which is who the season simulation counts as out.
           </p>
         ) : null}
       </div>
