@@ -174,7 +174,7 @@ attached at the point of use. Sources: `docs/backtest/summary.json`,
 
 Sources: `docs/live/registration.md`, `docs/live/evaluation-games.json`,
 `docs/live/evaluation-season.json`, `docs/live/injury-fit.json`,
-`docs/live/evaluation-injury.json`, and `data/live/ledger/` (on the `live-data` branch since 2026-11-03; `main` keeps the rows up to that day). These claims appear on `/` (games and
+`docs/live/evaluation-injury.json`, and `data/live/ledger/` (on the `live-data` branch since the cutover; `main` keeps the rows up to then). These claims appear on `/` (games and
 track record), `/odds` (season forecast) and `/how-it-works` (methodology). v2 is v1 with the
 injury adjustment; every rating parameter is shared, so the v1 claims below still describe the
 rating model. Each version's sealed record is reported separately.
