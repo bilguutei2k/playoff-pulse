@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Every 548 forecast is sealed before tip and scored after the final, in public: Brier score, log loss, accuracy, misses and every game, per model version.",
 };
 
-const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/main/data/live/ledger";
+const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 
 // Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
 export const revalidate = 60;

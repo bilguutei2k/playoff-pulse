@@ -1,13 +1,16 @@
-// The one way the site reads what the live job publishes (data/live/**). Pages render
-// with incremental static regeneration and read main's files over HTTPS at render time,
-// so the job's data commits never need a deploy. Scripts keep reading the filesystem.
+// The one way the site reads what the live job publishes (data/live/**). The job commits
+// its data to the `live-data` branch, which Vercel never deploys (vercel.json), and pages
+// render with incremental static regeneration and read that branch's files over HTTPS at
+// render time. Scripts keep reading the filesystem.
 //
 // Freshness. raw.githubusercontent.com caches a branch URL for five minutes and ignores
 // query strings, so a cache buster does not work (measured 2026-11-03). Each render
-// therefore resolves main's head commit from git's public ref advertisement (the request
-// behind `git ls-remote`, kept 15 seconds per server instance) and reads every file at
-// that commit. A commit URL is new to the CDN and never changes, so a render sees a
-// commit within seconds of the push, and all of its files come from that one commit.
+// therefore resolves the data branch's head commit from git's public smart-HTTP ref
+// advertisement (`/info/refs?service=git-upload-pack`, the request behind `git ls-remote`;
+// not the rate-limited REST API), kept 15 seconds per server instance, and reads every
+// file at that commit. A commit URL is new to the CDN and never changes, so a render sees
+// a commit within seconds of the push, and all of its files come from that one commit.
+// Until `live-data` exists the same advertisement's `main` is read instead.
 //
 // Caching. Files are kept in Next's data cache under the content hash the job's manifest
 // lists (data/live/site/manifest.json), so an unchanged file is stored once rather than
@@ -16,12 +19,15 @@
 // (src/lib/season/site-files.ts).
 //
 // Failure. A request that fails, times out or returns something that does not validate
-// falls back to the copy bundled at build time from the repository; ledger-derived files
-// are rebuilt from the bundled ledger. Nothing here throws to a page.
+// falls back to the copy bundled at build time from main; ledger-derived files are
+// rebuilt from the bundled ledger. Main's data/live stops at the cutover to live-data, so
+// that copy only gets older: pages say when they show it (`getLiveStateSource`). Nothing
+// here throws to a page.
 //
 // Environment overrides: LIVE_DATA_BASE_URL (raw base, default the repository on
-// raw.githubusercontent.com), LIVE_DATA_REFS_URL (the ref advertisement), and
-// LIVE_DATA_SOURCE=bundled to read only the bundled copies, e.g. for local pipeline work.
+// raw.githubusercontent.com), LIVE_DATA_REFS_URL (the ref advertisement), LIVE_DATA_BRANCH
+// (default live-data), and LIVE_DATA_SOURCE=bundled to read only the bundled copies, e.g.
+// for local pipeline work.
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
@@ -45,7 +51,10 @@ import { upgradeLiveState } from "@/lib/season/state-schema";
 import type { LedgerRow, LiveState, SealRow, SeasonGame } from "@/lib/season/types";
 
 const REPOSITORY = "bilguutei2k/playoff-pulse";
-const BRANCH = "main";
+/** The branch the live job commits data to. */
+export const DATA_BRANCH = process.env.LIVE_DATA_BRANCH ?? "live-data";
+/** Read instead while the data branch does not exist yet (before the cutover). */
+const FALLBACK_BRANCH = "main";
 const RAW_BASE = (process.env.LIVE_DATA_BASE_URL ?? `https://raw.githubusercontent.com/${REPOSITORY}`).replace(/\/+$/, "");
 const REFS_URL = process.env.LIVE_DATA_REFS_URL ?? `https://github.com/${REPOSITORY}.git/info/refs?service=git-upload-pack`;
 const BUNDLED_ONLY = process.env.LIVE_DATA_SOURCE === "bundled";
@@ -68,6 +77,8 @@ type NetworkSource = {
   kind: "network";
   /** The commit every file of this render is read at, or the branch if it is unknown. */
   ref: string;
+  /** The branch the commit is the head of. */
+  branch: string;
   commit: string | null;
   manifest: SiteManifest | null;
 };
@@ -297,27 +308,38 @@ function bundledSiteFiles(seasonLabel: string) {
 // ---------------------------------------------------------------------------------------
 // The network source for one render.
 
-let head: { at: number; commit: Promise<string | null> } | null = null;
+type Head = { branch: string; commit: string | null };
+let head: { at: number; value: Promise<Head> } | null = null;
 
-async function fetchHeadCommit(): Promise<string | null> {
-  const text = (await httpGet(REFS_URL, REFS_TIMEOUT_MS)).toString("utf8");
-  const match = new RegExp(`([0-9a-f]{40}) refs/heads/${BRANCH}(?=[\\n\\0])`).exec(text);
-  if (!match) throw new Error(`no refs/heads/${BRANCH} in the ref advertisement`);
-  return match[1];
+/** A branch's head in a smart-HTTP ref advertisement (pkt-lines "<sha> refs/heads/<name>"). */
+export function advertisedHead(advertisement: string, branch: string): string | null {
+  const escaped = branch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(`([0-9a-f]{40}) refs/heads/${escaped}(?=[\\n\\0])`).exec(advertisement);
+  return match ? match[1] : null;
 }
 
-function currentCommit(): Promise<string | null> {
+/** The data branch's head, or main's before the data branch exists. One request gives both. */
+async function fetchHead(): Promise<Head> {
+  const text = (await httpGet(REFS_URL, REFS_TIMEOUT_MS)).toString("utf8");
+  for (const branch of [DATA_BRANCH, FALLBACK_BRANCH]) {
+    const commit = advertisedHead(text, branch);
+    if (commit) return { branch, commit };
+  }
+  throw new Error(`neither refs/heads/${DATA_BRANCH} nor refs/heads/${FALLBACK_BRANCH} is advertised`);
+}
+
+function currentHead(): Promise<Head> {
   const now = Date.now();
   if (!head || now - head.at > HEAD_TTL_MS) {
     head = {
       at: now,
-      commit: fetchHeadCommit().catch((error) => {
-        console.error(`[live-data] head of ${BRANCH} unknown, reading the branch URL instead:`, describe(error));
-        return null;
+      value: fetchHead().catch((error) => {
+        console.error(`[live-data] head of ${DATA_BRANCH} unknown, reading the branch URL instead:`, describe(error));
+        return { branch: DATA_BRANCH, commit: null };
       }),
     };
   }
-  return head.commit;
+  return head.value;
 }
 
 /**
@@ -341,11 +363,11 @@ function fetchPublished<T>(source: NetworkSource, relative: string, parse: (text
     const commit = source.commit;
     return remember(`${commit}:${relative}`, () => unstable_cache(download, ["live-data", relative, commit], { revalidate: false })());
   }
-  return remember(`${BRANCH}:${relative}:${Math.floor(Date.now() / HEAD_TTL_MS)}`, download);
+  return remember(`${source.ref}:${relative}:${Math.floor(Date.now() / HEAD_TTL_MS)}`, download);
 }
 
-async function loadManifest(ref: string, commit: string | null): Promise<SiteManifest | null> {
-  const source: NetworkSource = { kind: "network", ref, commit, manifest: null };
+async function loadManifest(ref: string, branch: string, commit: string | null): Promise<SiteManifest | null> {
+  const source: NetworkSource = { kind: "network", ref, branch, commit, manifest: null };
   try {
     return await fetchPublished(source, SITE_MANIFEST_PATH, parseManifest);
   } catch (error) {
@@ -357,12 +379,12 @@ async function loadManifest(ref: string, commit: string | null): Promise<SiteMan
   }
 }
 
-/** Where this render reads from: one commit of main, resolved once per render. */
+/** Where this render reads from: one commit of the data branch, resolved once per render. */
 const renderSource = cache(async (): Promise<Source> => {
   if (BUNDLED_ONLY) return { kind: "bundled" };
-  const commit = await currentCommit();
-  const ref = commit ?? BRANCH;
-  return { kind: "network", ref, commit, manifest: await loadManifest(ref, commit) };
+  const { branch, commit } = await currentHead();
+  const ref = commit ?? branch;
+  return { kind: "network", ref, branch, commit, manifest: await loadManifest(ref, branch, commit) };
 });
 
 type Loaded<T> = { value: T; via: DataVia };
@@ -409,6 +431,12 @@ const loadLedger = cache(async (): Promise<LedgerRow[]> => {
 
 /** The published state (schema 2) for this render. */
 export const getLiveState = cache(async (): Promise<LiveState> => (await loadState()).value);
+
+/**
+ * Whether this render's state came from the data branch or the copy bundled with the
+ * deployment. The bundled copy can be days old, so pages label it.
+ */
+export const getLiveStateSource = cache(async (): Promise<DataVia> => (await loadState()).via);
 
 /** Every game of the live season, in tip order. Empty if no copy can be read. */
 export const getSeasonGames = cache(async (): Promise<SeasonGame[]> => (await loadGames()).value);
@@ -491,6 +519,7 @@ export async function getReportDay(etDate: string): Promise<LiveReportDay | null
 /** Where this render's state and games came from, for the health endpoint. */
 export async function getLiveDataStatus(): Promise<{
   source: "network" | "bundled";
+  branch: string | null;
   commit: string | null;
   manifest: boolean;
   state: DataVia;
@@ -500,6 +529,7 @@ export async function getLiveDataStatus(): Promise<{
   const [state, games] = await Promise.all([loadState(), loadGames()]);
   return {
     source: source.kind,
+    branch: source.kind === "network" ? source.branch : null,
     commit: source.kind === "network" ? source.commit : null,
     manifest: source.kind === "network" && source.manifest !== null,
     state: state.via,

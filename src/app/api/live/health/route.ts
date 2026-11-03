@@ -7,8 +7,10 @@ export const dynamic = "force-dynamic";
 
 /**
  * Monitors can poll this: 503 means published data is stale on a game day. `data` says
- * where this response's state came from: main's commit over the network, or the copy
- * bundled with the deployment when GitHub could not be read.
+ * where this response's state came from: a commit of the data branch over the network, or
+ * the copy bundled with the deployment when GitHub could not be read. `deployment` is the
+ * commit this deployment was built from; the live job compares it with main to retry a
+ * code deploy Vercel refused.
  */
 export async function GET() {
   const [liveState, data] = await Promise.all([getLiveState(), getLiveDataStatus()]);
@@ -26,6 +28,11 @@ export async function GET() {
       modelVersion: liveState.modelVersion,
       notes: liveState.notes,
       data,
+      deployment: {
+        commit: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+        ref: process.env.VERCEL_GIT_COMMIT_REF ?? null,
+        environment: process.env.VERCEL_ENV ?? null,
+      },
     },
     { status: stale ? 503 : 200, headers: { "Cache-Control": "no-store" } },
   );

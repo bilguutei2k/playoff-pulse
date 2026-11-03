@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Brand548 } from "@/components/brand/Brand548";
 import { getLiveState } from "@/lib/live-data/published";
 
-const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/main/data/live/ledger";
+const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 
 const FORECAST_LINKS = [
   { href: "/", label: "Today's games" },

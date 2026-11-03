@@ -6,7 +6,7 @@
 #
 # Usage: scripts/live/report-alert.sh "<title prefix>"
 # Needs GH_TOKEN and jq. HEALTH_FILE and STATE_FILE override data/live/health.json and
-# data/live/state.json.
+# data/live/state.json. DRY_RUN=1 prints the issue it would open instead of opening it.
 set -euo pipefail
 
 prefix="${1:?usage: report-alert.sh \"<title prefix>\"}"
@@ -23,6 +23,10 @@ seen=$(gh issue list --state all --search "\"$title\" in:title" --json title \
   --jq "[.[] | select(.title == \"$title\")] | length")
 if [ "$seen" != "0" ]; then
   echo "Already reported: $title"
+  exit 0
+fi
+if [ "${DRY_RUN:-0}" = "1" ]; then
+  echo "Dry run: would open issue: $title"
   exit 0
 fi
 gh issue create --title "$title" --body "$problem
