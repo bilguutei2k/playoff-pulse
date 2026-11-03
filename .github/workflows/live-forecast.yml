@@ -11,8 +11,9 @@ name: Live forecast
 # fallback schedule takes over, so a persistent bug does not email every ten minutes.
 # Pushes made with GITHUB_TOKEN do not trigger ci.yml, so these commits are checked
 # here. Data commits do not deploy: the site reads data/live from main at request time
-# (src/lib/live-data/published.ts), and vercel.json skips every commit that touches only
-# data/live/. The pipeline also publishes data/live/site/, compact copies of the ledger
+# (src/lib/live-data/published.ts), and vercel.json cancels the build of every commit that
+# touches only data/live/ (Vercel still counts the canceled deployment toward Hobby's 100 a
+# day). The pipeline also publishes data/live/site/, compact copies of the ledger
 # the site reads instead of the full ledger.
 
 on:
