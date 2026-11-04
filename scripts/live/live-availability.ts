@@ -7,7 +7,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { fetchBoxScore, type FetchJson } from "../../src/lib/live-data/espn-season";
+import { fetchBoxScore, fetchPlayerBoxScore, type FetchJson } from "../../src/lib/live-data/espn-season";
 import {
   quarterReportNames,
   reportForSlate,
@@ -25,6 +25,12 @@ import {
   type LiveReportDay,
 } from "../../src/lib/season/live-reports";
 import { NAME_INDEX_SEASONS } from "../../src/lib/season/params";
+import {
+  addPlayerGame,
+  emptyPlayerGamesDay,
+  storePlayerGame,
+  type PlayerGamesDay,
+} from "../../src/lib/season/player-stats";
 import type { SeasonGame } from "../../src/lib/season/types";
 import { buildNameIndex, loadBoxScores, loadReports } from "./availability-store";
 import { LIVE_DIRECTORY } from "./game-store";
@@ -210,7 +216,7 @@ export function loadReportDay(seasonLabel: string, etDate: string): LiveReportDa
 }
 
 /** One request and one retry. Null when the host refuses, which is also how it says "not yet". */
-async function fetchReportPdf(name: string): Promise<Uint8Array | null> {
+export async function fetchReportPdf(name: string): Promise<Uint8Array | null> {
   for (let attempt = 0; attempt < 2; attempt += 1) {
     if (attempt > 0) await wait(REPORT_RETRY_MS);
     try {
@@ -232,11 +238,172 @@ export type ReportRefresh = {
   log: string[];
 };
 
+/** One slate the run wants a report for: its ET date, its games, and what is stored. */
+export type SlateRefreshInput = {
+  etDate: string;
+  /** The slate's games that are not postponed or canceled. */
+  games: readonly SeasonGame[];
+  day: LiveReportDay | null;
+};
+
+export type SlateRefresh = { etDate: string; day: LiveReportDay; succeeded: boolean; changed: boolean };
+
+type Downloaded = { parsed: ParsedReport } | { problem: string } | null;
+
 /**
- * Looks for the newest usable report at or before now: quarter-hour names from now
- * backward, stopping at the first usable one, already stored or freshly downloaded and
- * validated against the slate. Unreadable and unusable files are remembered too, so no
- * run downloads a file twice; refusals are not, because a file may appear later.
+ * Looks for the newest usable report at or before now for each slate: quarter-hour names
+ * from now backward, already stored or freshly downloaded and validated against that
+ * slate's games with `reportForSlate`. Unreadable and unusable files are remembered per
+ * slate, so no run downloads a file twice for a slate; refusals are not, because a file
+ * may appear later.
+ *
+ * The first slate leads, exactly as a single slate always did: the same names, the same
+ * stopping rule and the same download budget. Every file it downloads is also cut for the
+ * other slates and recorded in their day files, so one download serves all. Only then may
+ * a slate still without a usable report try the names it has not seen, with whatever is
+ * left of the same per-run budget, one file at a time with the same pauses. Nothing is
+ * recorded in the lead's day after it is settled, so its outcome never depends on the
+ * other slates.
+ */
+export async function refreshReportSlates(input: {
+  nowIso: string;
+  slates: readonly SlateRefreshInput[];
+  parse: (data: Uint8Array) => Promise<ParsedReport>;
+  /** Defaults to the report host, one request and one retry. */
+  fetchPdf?: (name: string) => Promise<Uint8Array | null>;
+  pause?: (ms: number) => Promise<void>;
+}): Promise<{ slates: SlateRefresh[]; downloads: number; log: string[] }> {
+  const fetchPdf = input.fetchPdf ?? fetchReportPdf;
+  const pause = input.pause ?? wait;
+  const nowEt = etWallClockOf(input.nowIso);
+  const log: string[] = [];
+  const states = input.slates.map((slate) => ({
+    etDate: slate.etDate,
+    games: slate.games,
+    day: slate.day
+      ? { ...slate.day, files: { ...slate.day.files }, reports: { ...slate.day.reports } }
+      : emptyReportDay(slate.etDate),
+    succeeded: false,
+    changed: false,
+    settled: false,
+  }));
+  type State = (typeof states)[number];
+  const names = quarterReportNames(nowEt, REPORT_CANDIDATES);
+  const downloaded = new Map<string, Downloaded>();
+  let downloads = 0;
+
+  const download = async (name: string): Promise<Downloaded> => {
+    if (downloads > 0) await pause(REPORT_GAP_MS);
+    downloads += 1;
+    const data = await fetchPdf(name);
+    let result: Downloaded;
+    if (!data) result = null;
+    else {
+      try {
+        result = { parsed: await input.parse(data) };
+      } catch (error) {
+        result = { problem: error instanceof Error ? error.message : String(error) };
+      }
+    }
+    downloaded.set(name, result);
+    return result;
+  };
+
+  /** Records a downloaded file in one slate's day; true when it is usable there. */
+  const record = (state: State, name: string, result: Exclude<Downloaded, null>, lead: boolean): boolean => {
+    const prefix = lead ? "" : `${state.etDate}: `;
+    if ("problem" in result) {
+      state.day.files[name] = { at: null, usable: false, problem: result.problem };
+      state.changed = true;
+      log.push(`${prefix}report ${name} unreadable: ${result.problem}`);
+      return false;
+    }
+    const { parsed } = result;
+    if (parsed.issuedEt > nowEt) {
+      // Only possible when the clock is overridden into the past; nothing is kept.
+      log.push(`${prefix}report ${name} is stamped ${parsed.issuedEt}, after now`);
+      return false;
+    }
+    const cut = reportForSlate(parsed, name, state.etDate, state.games);
+    if (!cut.ok) {
+      state.day.files[name] = { at: parsed.issuedEt, usable: false, problem: cut.problem };
+      state.changed = true;
+      log.push(`${prefix}report ${name} unusable: ${cut.problem}`);
+      return false;
+    }
+    state.day.files[name] = { at: parsed.issuedEt, usable: true };
+    state.day.reports[parsed.issuedEt] = cut.report;
+    state.changed = true;
+    const unlisted = cut.unlisted.length > 0 ? `, nobody listed for team(s) ${cut.unlisted.join(", ")}` : "";
+    log.push(`${prefix}report ${name} stored (${parsed.issuedEt}, ${cut.report.rows.length} rows${unlisted})`);
+    return true;
+  };
+
+  /** Whether a slate already holds this name: settled if usable at or before now. */
+  const alreadySeen = (state: State, name: string, lead: boolean): boolean => {
+    const seen = state.day.files[name];
+    if (!seen) return false;
+    if (seen.usable && seen.at !== null && seen.at <= nowEt) {
+      log.push(`${lead ? "" : `${state.etDate}: `}report ${name} already stored (${seen.at})`);
+      state.succeeded = true;
+      state.settled = true;
+    }
+    return true;
+  };
+
+  const [lead, ...others] = states;
+  if (lead) {
+    for (const name of names) {
+      if (alreadySeen(lead, name, true)) {
+        if (lead.settled) break;
+        continue;
+      }
+      if (downloads >= REPORT_DOWNLOADS) break;
+      const result = await download(name);
+      if (!result) {
+        log.push(`report ${name} refused or not published yet`);
+        continue;
+      }
+      for (const other of others) {
+        if (!other.settled && !alreadySeen(other, name, false) && record(other, name, result, false)) {
+          other.succeeded = true;
+          other.settled = true;
+        }
+      }
+      if (record(lead, name, result, true)) {
+        lead.succeeded = true;
+        lead.settled = true;
+        break;
+      }
+    }
+    lead.settled = true;
+  }
+  for (const other of others) {
+    for (const name of names) {
+      if (other.settled) break;
+      if (alreadySeen(other, name, false)) continue;
+      let result = downloaded.get(name);
+      if (result === undefined) {
+        if (downloads >= REPORT_DOWNLOADS) break;
+        result = await download(name);
+        if (!result) log.push(`${other.etDate}: report ${name} refused or not published yet`);
+      }
+      if (result && record(other, name, result, false)) {
+        other.succeeded = true;
+        other.settled = true;
+      }
+    }
+  }
+  return {
+    slates: states.map(({ etDate, day, succeeded, changed }) => ({ etDate, day, succeeded, changed })),
+    downloads,
+    log,
+  };
+}
+
+/**
+ * Looks for the newest usable report at or before now for one slate (see
+ * `refreshReportSlates`, of which this is the one-slate case).
  */
 export async function refreshReports(input: {
   nowIso: string;
@@ -246,58 +413,115 @@ export async function refreshReports(input: {
   day: LiveReportDay | null;
   parse: (data: Uint8Array) => Promise<ParsedReport>;
 }): Promise<ReportRefresh> {
-  const day: LiveReportDay = input.day
-    ? { ...input.day, files: { ...input.day.files }, reports: { ...input.day.reports } }
-    : emptyReportDay(input.slate);
-  const nowEt = etWallClockOf(input.nowIso);
-  const log: string[] = [];
-  let downloads = 0;
-  let changed = false;
-  for (const name of quarterReportNames(nowEt, REPORT_CANDIDATES)) {
-    const seen = day.files[name];
-    if (seen) {
-      if (seen.usable && seen.at !== null && seen.at <= nowEt) {
-        log.push(`report ${name} already stored (${seen.at})`);
-        return { day, succeeded: true, changed, downloads, log };
-      }
-      continue;
-    }
-    if (downloads >= REPORT_DOWNLOADS) break;
-    if (downloads > 0) await wait(REPORT_GAP_MS);
-    downloads += 1;
-    const data = await fetchReportPdf(name);
-    if (!data) {
-      log.push(`report ${name} refused or not published yet`);
-      continue;
-    }
-    let parsed;
-    try {
-      parsed = await input.parse(data);
-    } catch (error) {
-      const problem = error instanceof Error ? error.message : String(error);
-      day.files[name] = { at: null, usable: false, problem };
-      changed = true;
-      log.push(`report ${name} unreadable: ${problem}`);
-      continue;
-    }
-    if (parsed.issuedEt > nowEt) {
-      // Only possible when the clock is overridden into the past; nothing is kept.
-      log.push(`report ${name} is stamped ${parsed.issuedEt}, after now`);
-      continue;
-    }
-    const cut = reportForSlate(parsed, name, input.slate, input.slateGames);
-    if (!cut.ok) {
-      day.files[name] = { at: parsed.issuedEt, usable: false, problem: cut.problem };
-      changed = true;
-      log.push(`report ${name} unusable: ${cut.problem}`);
-      continue;
-    }
-    day.files[name] = { at: parsed.issuedEt, usable: true };
-    day.reports[parsed.issuedEt] = cut.report;
-    changed = true;
-    const unlisted = cut.unlisted.length > 0 ? `, nobody listed for team(s) ${cut.unlisted.join(", ")}` : "";
-    log.push(`report ${name} stored (${parsed.issuedEt}, ${cut.report.rows.length} rows${unlisted})`);
-    return { day, succeeded: true, changed, downloads, log };
+  const refresh = await refreshReportSlates({
+    nowIso: input.nowIso,
+    slates: [{ etDate: input.slate, games: input.slateGames, day: input.day }],
+    parse: input.parse,
+  });
+  const [only] = refresh.slates;
+  return { day: only.day, succeeded: only.succeeded, changed: only.changed, downloads: refresh.downloads, log: refresh.log };
+}
+
+/**
+ * The first ET date after `slate` with a game that is not postponed or canceled, and
+ * those games; null when the schedule has none.
+ */
+export function nextGameDate(
+  games: readonly SeasonGame[],
+  slate: string,
+): { etDate: string; games: SeasonGame[] } | null {
+  let etDate: string | null = null;
+  for (const game of games) {
+    if (game.etDate <= slate || game.status === "postponed" || game.status === "canceled") continue;
+    if (etDate === null || game.etDate < etDate) etDate = game.etDate;
   }
-  return { day, succeeded: false, changed, downloads, log };
+  if (etDate === null) return null;
+  const date = etDate;
+  return {
+    etDate: date,
+    games: games.filter((game) => game.etDate === date && game.status !== "postponed" && game.status !== "canceled"),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Player games: full box-score lines (never a model input)
+// ---------------------------------------------------------------------------
+
+/** Player summaries fetched per run at most, newest first; a backlog drains over a few runs. */
+export const PLAYER_GAMES_PER_RUN = 40;
+/** Fetching stops starting new requests after this long in one run. */
+export const PLAYER_GAMES_BUDGET_MS = 120_000;
+const PLAYER_FETCH_TIMEOUT_MS = 20_000;
+
+export function playerDayPath(seasonLabel: string, etDate: string): string {
+  return path.join(LIVE_DIRECTORY, "players", seasonLabel, `${etDate}.json`);
+}
+
+/** Every stored player day for the season, by ET date. */
+export function loadPlayerDays(seasonLabel: string): Map<string, PlayerGamesDay> {
+  const directory = path.join(LIVE_DIRECTORY, "players", seasonLabel);
+  const days = new Map<string, PlayerGamesDay>();
+  if (!fs.existsSync(directory)) return days;
+  for (const file of fs.readdirSync(directory).sort()) {
+    if (!file.endsWith(".json")) continue;
+    const day = readJson<PlayerGamesDay>(path.join(directory, file));
+    if (day) days.set(day.etDate, day);
+  }
+  return days;
+}
+
+/** ESPN JSON with a per-request timeout, so one stuck request cannot hold the job. */
+export function timedFetchJson(timeoutMs = PLAYER_FETCH_TIMEOUT_MS): FetchJson {
+  return async (url: string) => {
+    const response = await fetch(url, {
+      headers: { accept: "application/json", ...USER_AGENT },
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (!response.ok) throw new Error(`ESPN request failed with HTTP ${response.status}: ${url}`);
+    return response.json();
+  };
+}
+
+/**
+ * Stores full lines for final games that lack them, newest first, at most `limit` and
+ * within `budgetMs`. A game that fails stays missing and is retried next run. Writes
+ * nothing: the changed dates are returned for the job to write.
+ */
+export async function collectPlayerGames(
+  days: Map<string, PlayerGamesDay>,
+  games: readonly SeasonGame[],
+  fetchJson: FetchJson,
+  options: { limit?: number; budgetMs?: number; now?: () => number } = {},
+): Promise<{ added: string[]; changedDates: string[]; failed: Array<{ gameId: string; problem: string }>; waiting: number }> {
+  const limit = options.limit ?? PLAYER_GAMES_PER_RUN;
+  const budgetMs = options.budgetMs ?? PLAYER_GAMES_BUDGET_MS;
+  const now = options.now ?? Date.now;
+  const started = now();
+  const queue = games
+    .filter(
+      (game) =>
+        game.status === "final" &&
+        game.homeScore !== null &&
+        game.awayScore !== null &&
+        !days.get(game.etDate)?.games[game.id],
+    )
+    .sort((a, b) => b.tipUtc.localeCompare(a.tipUtc) || b.id.localeCompare(a.id));
+  const added: string[] = [];
+  const changed = new Set<string>();
+  const failed: Array<{ gameId: string; problem: string }> = [];
+  for (const game of queue.slice(0, limit)) {
+    if (now() - started > budgetMs) break;
+    try {
+      const box = await fetchPlayerBoxScore(fetchJson, game.id);
+      const stored = storePlayerGame(game, box);
+      const day = days.get(game.etDate) ?? emptyPlayerGamesDay(game.etDate);
+      addPlayerGame(day, stored, box);
+      days.set(game.etDate, day);
+      changed.add(game.etDate);
+      added.push(game.id);
+    } catch (error) {
+      failed.push({ gameId: game.id, problem: error instanceof Error ? error.message : String(error) });
+    }
+  }
+  return { added, changedDates: [...changed].sort(), failed, waiting: queue.length - added.length };
 }

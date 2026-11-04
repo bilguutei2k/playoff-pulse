@@ -74,6 +74,8 @@ import {
 } from "../../src/lib/season/params";
 import { ratingsHash, toRatingState } from "../../src/lib/season/ratings";
 import { simulateSeason } from "../../src/lib/season/simulate";
+import { isModelViewPath } from "../../src/lib/season/site-files";
+import type { PlayerGamesDay } from "../../src/lib/season/player-stats";
 import { SEASON_TEAMS, teamById } from "../../src/lib/season/teams";
 import type {
   HealthNote,
@@ -89,15 +91,21 @@ import type {
 import { compareGames, gamesPath, LIVE_DIRECTORY, LIVE_SEASON, loadHistory } from "./game-store";
 import {
   collectBoxScores,
+  collectPlayerGames,
   liveBoxScorePath,
   loadLiveAvailability,
   loadLiveBoxScores,
+  loadPlayerDays,
   loadReportDay,
-  refreshReports,
+  nextGameDate,
+  playerDayPath,
+  refreshReportSlates,
   reportDayPath,
+  timedFetchJson,
 } from "./live-availability";
+import { buildModelViews, type ModelViews } from "./model-views";
 import { parseReportPdf } from "./report-pdf";
-import { expectedSiteFiles } from "./site-files";
+import { expectedSiteFiles, publishedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
 
 const SEASON = LIVE_SEASON;
@@ -241,6 +249,27 @@ function publishSiteFiles(): void {
     if (!fs.existsSync(file) || fs.readFileSync(file, "utf-8") !== content) writeText(file, content);
   }
   log(`site files: ${files.size - 1} derived from the ledger, manifest updated`);
+}
+
+/**
+ * Writes the model views that changed and removes any view file the run did not produce,
+ * so the site never reads a view computed from older inputs than the rest. With no views
+ * (they failed), every view file is removed.
+ */
+function publishModelViews(views: ModelViews | null): void {
+  const files = views?.files ?? new Map<string, string>();
+  for (const relative of publishedSiteFiles(LIVE_DIRECTORY).keys()) {
+    if (isModelViewPath(relative, LABEL) && !files.has(relative)) fs.rmSync(path.join(LIVE_DIRECTORY, relative));
+  }
+  let written = 0;
+  for (const [relative, content] of files) {
+    const file = path.join(LIVE_DIRECTORY, relative);
+    if (!fs.existsSync(file) || fs.readFileSync(file, "utf-8") !== content) {
+      writeText(file, content);
+      written += 1;
+    }
+  }
+  log(`views: ${files.size} files, ${written} changed`);
 }
 
 /** Every stored report day for the live season, by ET date. */
@@ -394,18 +423,42 @@ async function main(): Promise<void> {
   let reportDay = reportDays.get(slate) ?? loadReportDay(LABEL, slate);
   let reportChanged = false;
   let chosen: ChosenReport;
-  if (slateGames.some((game) => game.status === "scheduled" || game.status === "in-progress")) {
-    const refresh = await refreshReports({
+  // The next ET date with games is fetched for too: the NBA lists the next day's games on
+  // the evening report. One download serves both slates, each cut and validated with its
+  // own games. The current slate leads exactly as it always did, so the report a seal
+  // uses is chosen by the same rule from the same downloads; the next slate's day file
+  // only gains reports, at or before now, that it would otherwise have fetched later.
+  const slateActive = slateGames.some((game) => game.status === "scheduled" || game.status === "in-progress");
+  const next = nextGameDate(seasonGames, slate);
+  const nextActive = next !== null && next.games.some((game) => game.status === "scheduled");
+  let nextDay = next ? (reportDays.get(next.etDate) ?? null) : null;
+  let nextChanged = false;
+  let nextSucceeded = false;
+  let slateSucceeded = false;
+  if (slateActive || nextActive) {
+    const refresh = await refreshReportSlates({
       nowIso,
-      slate,
-      slateGames,
-      day: reportDay,
+      slates: [
+        ...(slateActive ? [{ etDate: slate, games: slateGames, day: reportDay }] : []),
+        ...(next && nextActive ? [{ etDate: next.etDate, games: next.games, day: nextDay }] : []),
+      ],
       parse: parseReportPdf,
     });
     for (const line of refresh.log) log(line);
-    reportDay = refresh.day;
-    reportChanged = refresh.changed;
-    chosen = chooseReport(reportDay, refresh.succeeded, nowIso);
+    for (const result of refresh.slates) {
+      if (result.etDate === slate) {
+        reportDay = result.day;
+        reportChanged = result.changed;
+        slateSucceeded = result.succeeded;
+      } else {
+        nextDay = result.day;
+        nextChanged = result.changed;
+        nextSucceeded = result.succeeded;
+      }
+    }
+  }
+  if (slateActive) {
+    chosen = chooseReport(reportDay, slateSucceeded, nowIso);
   } else {
     // Nothing left to seal on this slate, so no report is needed.
     const latest = latestReport(reportDay, etWallClockOf(nowIso));
@@ -641,6 +694,62 @@ async function main(): Promise<void> {
     notes,
   };
 
+  // Model views for the site: projections with the injury term for the next seven days,
+  // each team's injury list for its next game, and player files from the full box-score
+  // store. None of it is a model input, a seal or part of the record. A failure here is
+  // logged and publishes no views, and never costs a seal.
+  let playerDays = new Map<string, PlayerGamesDay>();
+  let playerRun: Awaited<ReturnType<typeof collectPlayerGames>> = { added: [], changedDates: [], failed: [], waiting: 0 };
+  let views: ModelViews | null = null;
+  let viewsProblem: string | null = null;
+  try {
+    playerDays = loadPlayerDays(LABEL);
+    const started = Date.now();
+    playerRun = await collectPlayerGames(playerDays, seasonGames, timedFetchJson());
+    log(
+      `player lines: ${playerRun.added.length} games stored in ${((Date.now() - started) / 1000).toFixed(1)}s, ${playerRun.failed.length} failed, ${playerRun.waiting} still missing`,
+    );
+    for (const failure of playerRun.failed) log(`player lines ${failure.gameId} not stored: ${failure.problem}`);
+    const nextReport =
+      next && nextDay ? chooseReport(nextDay, nextSucceeded, nowIso) : null;
+    views = buildModelViews({
+      season: SEASON,
+      seasonLabel: LABEL,
+      modelVersion: LIVE_MODEL_VERSION,
+      games: seasonGames,
+      slate,
+      state,
+      model: MODEL,
+      tracker: display.tracker,
+      current: availability.current,
+      slateReport:
+        reportInUse.point && chosen.at && reportDay
+          ? { etDate: slate, point: reportInUse.point, stale: chosen.stale, file: reportDay.reports[chosen.at]?.file ?? null }
+          : null,
+      nextReport:
+        next && nextReport && !nextReport.missing && nextReport.report && nextReport.at
+          ? {
+              etDate: next.etDate,
+              point: toReportPoint(nextReport.report, nextReport.at, (teamId, printed) => live.resolve(SEASON, teamId, printed)),
+              stale: nextReport.stale,
+              file: nextReport.report.file,
+            }
+          : null,
+      reportDays: (etDate) => reportDays.get(etDate) ?? (etDate === slate ? reportDay : null),
+      resolve: (teamId, printed) => live.resolve(SEASON, teamId, printed),
+      nameOf: live.nameOf,
+      playerDays: [...playerDays.values()],
+      ledger: fullLedger,
+    });
+    log(
+      `views: ${views.projections.games.length} projections through ${views.projections.throughEtDate}, ${views.players.index.players.length} players, ${views.players.teams.size} team files`,
+    );
+  } catch (error) {
+    viewsProblem = error instanceof Error ? error.message : String(error);
+    views = null;
+    log(`views not published, seals unaffected: ${viewsProblem}`);
+  }
+
   // Everything validated. Only now does anything get written.
   writeText(gamesPath(SEASON), `${JSON.stringify(seasonGames.map(withoutLiveScores))}\n`);
   if (newRows.length > 0) {
@@ -656,6 +765,13 @@ async function main(): Promise<void> {
   }
   if (reportChanged && reportDay) {
     writeText(reportDayPath(LABEL, slate), `${JSON.stringify(reportDay)}\n`);
+  }
+  if (next && nextChanged && nextDay) {
+    writeText(reportDayPath(LABEL, next.etDate), `${JSON.stringify(nextDay)}\n`);
+  }
+  for (const etDate of playerRun.changedDates) {
+    const day = playerDays.get(etDate);
+    if (day) writeText(playerDayPath(LABEL, etDate), `${JSON.stringify(day)}\n`);
   }
   // ESPN's injury list, kept for later study only: at every seal, as before, and
   // whenever it changes, with ESPN's return dates. Never a model input.
@@ -674,12 +790,14 @@ async function main(): Promise<void> {
   writeText(path.join(SNAPSHOT_DIRECTORY, `${slate}.json`), `${JSON.stringify(forecast)}\n`);
   const changed = publishState(state);
   log(changed ? "state published" : "state unchanged");
+  publishModelViews(views);
   publishSiteFiles();
 
   const healthBody = {
     stuckGames: stuck.map((game) => ({ id: game.id, etDate: game.etDate })),
     standingsLag: crossCheck.lagNotes,
     reportProblem: injuryReportProblem,
+    viewsProblem,
   };
   const previousHealth = readJson<typeof healthBody & { generatedAt: string }>(HEALTH_PATH);
   if (

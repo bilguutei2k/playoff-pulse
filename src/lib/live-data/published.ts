@@ -38,11 +38,17 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import bundledStateJson from "../../../data/live/state.json";
 import type { LiveReportDay } from "@/lib/season/live-reports";
+import type { PlayerIndexFile, TeamPlayersFile } from "@/lib/season/player-stats";
+import type { ProjectionsFile, TeamInjuriesFile } from "@/lib/season/projections";
 import {
   deriveSiteFiles,
   manifestMonthPaths,
   SITE_MANIFEST_PATH,
   siteDayPath,
+  sitePlayerIndexPath,
+  siteProjectionsPath,
+  siteTeamInjuriesPath,
+  siteTeamPlayersPath,
   type DaySealsFile,
   type MonthRowsFile,
   type SiteManifest,
@@ -259,6 +265,51 @@ function parseManifest(text: string): SiteManifest {
   }
   return raw as SiteManifest;
 }
+
+/** A model view's common header: version 1 and the season it belongs to. */
+function parseView<T>(text: string, what: string, seasonLabel: string, check: (raw: UnknownRecord) => boolean): T {
+  const raw: unknown = JSON.parse(text);
+  if (!isRecord(raw) || raw.version !== 1 || raw.seasonLabel !== seasonLabel || !check(raw)) {
+    throw new Error(`${what} is malformed`);
+  }
+  return raw as T;
+}
+
+const parseProjections = (text: string, label: string) =>
+  parseView<ProjectionsFile>(text, "projections", label, (raw) =>
+    isString(raw.fromEtDate) &&
+    Array.isArray(raw.games) &&
+    raw.games.every(
+      (game) =>
+        isRecord(game) &&
+        isString(game.gameId) &&
+        isProbability(game.homeWinProbability) &&
+        isProbability(game.awayWinProbability) &&
+        isRecord(game.basis) &&
+        isRecord(game.absencePoints) &&
+        isRecord(game.drivers),
+    ),
+  );
+
+const parseTeamInjuries = (text: string, label: string) =>
+  parseView<TeamInjuriesFile>(text, "team injury lists", label, (raw) =>
+    Array.isArray(raw.teams) &&
+    raw.teams.every((team) => isRecord(team) && isString(team.teamId) && Array.isArray(team.rows) && typeof team.absencePoints === "number"),
+  );
+
+const parsePlayerIndex = (text: string, label: string) =>
+  parseView<PlayerIndexFile>(text, "player index", label, (raw) =>
+    Array.isArray(raw.players) &&
+    raw.players.every((player) => isRecord(player) && isString(player.athleteId) && isString(player.name) && isString(player.teamId)),
+  );
+
+const parseTeamPlayers = (text: string, label: string, teamId: string) =>
+  parseView<TeamPlayersFile>(text, `player file for team ${teamId}`, label, (raw) =>
+    raw.teamId === teamId &&
+    Array.isArray(raw.games) &&
+    Array.isArray(raw.players) &&
+    raw.players.every((player) => isRecord(player) && isString(player.athleteId) && Array.isArray(player.log) && Array.isArray(player.injuries)),
+  );
 
 // ---------------------------------------------------------------------------------------
 // The bundled copies: what was in the repository when this deployment was built.
@@ -515,6 +566,61 @@ export async function getReportDay(etDate: string): Promise<LiveReportDay | null
     return text ? (JSON.parse(text) as LiveReportDay) : null;
   }, null);
 }
+
+/**
+ * One model view (projections, team injury lists, player files) at the render's commit.
+ * Only files the manifest lists are read; a failed read falls back to the bundled copy,
+ * which main's frozen data/live does not have, so the result is then null. Never throws.
+ */
+async function loadView<T>(relative: string, parse: (text: string) => T): Promise<T | null> {
+  const source = network(await renderSource());
+  const fallback = () =>
+    bundled(relative, () => {
+      const text = bundledFile(relative);
+      return text ? parse(text) : null;
+    }, null);
+  if (!source?.manifest || !(relative in source.manifest.files)) return fallback();
+  return (await withFallback<T | null>(relative, () => fetchPublished(source, relative, parse), fallback)).value;
+}
+
+/**
+ * Projections with the injury term for every scheduled game from the published slate's
+ * date through six days later (`ProjectionsFile`, src/lib/season/projections.ts). Each
+ * carries its basis: the seal rules on a stored report (`report`, with `reportAt`) or the
+ * season simulation's charge from current absences (`current-absences`). Never a seal,
+ * never scored: label every one as a projection. Null when not published.
+ */
+export const getProjections = cache(async (): Promise<ProjectionsFile | null> => {
+  const { value: state } = await loadState();
+  return loadView(siteProjectionsPath(state.seasonLabel), (text) => parseProjections(text, state.seasonLabel));
+});
+
+/**
+ * Every team's injury list for its next scheduled game (`TeamInjuriesFile`): rows from
+ * the report covering it with status, reason and report time, its filing state, and
+ * players counted from box scores, each with the model's points. Null when not published.
+ */
+export const getTeamInjuryLists = cache(async (): Promise<TeamInjuriesFile | null> => {
+  const { value: state } = await loadState();
+  return loadView(siteTeamInjuriesPath(state.seasonLabel), (text) => parseTeamInjuries(text, state.seasonLabel));
+});
+
+/** Every player of the live season with averages, shooting and 548 impact (`PlayerIndexFile`). Null when not published. */
+export const getPlayerIndex = cache(async (): Promise<PlayerIndexFile | null> => {
+  const { value: state } = await loadState();
+  return loadView(sitePlayerIndexPath(state.seasonLabel), (text) => parsePlayerIndex(text, state.seasonLabel));
+});
+
+/**
+ * One team's players with their game logs (lines and did-not-play rows) and injury-report
+ * listings (`TeamPlayersFile`). A traded player appears in each team's file for his games
+ * there. Null when not published or for an unknown team.
+ */
+export const getTeamPlayers = cache(async (teamId: string): Promise<TeamPlayersFile | null> => {
+  if (!/^\d+$/.test(teamId)) return null;
+  const { value: state } = await loadState();
+  return loadView(siteTeamPlayersPath(state.seasonLabel, teamId), (text) => parseTeamPlayers(text, state.seasonLabel, teamId));
+});
 
 /** Where this render's state and games came from, for the health endpoint. */
 export async function getLiveDataStatus(): Promise<{
