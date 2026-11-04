@@ -131,8 +131,10 @@ jobs:
         run: |
           export GIT_INDEX_FILE="$RUNNER_TEMP/live-data.index"
           git read-tree "$DATA_BASE"
-          git rm -r -q --cached --ignore-unmatch data/live
-          git add data/live
+          # Stage data/live exactly as the pipeline left it, deletions included. The temporary
+          # index holds live-data's tree, which differs from main's, so `git rm --cached` would
+          # refuse those paths once the branches diverge.
+          git add -A -- data/live
           tree=$(git write-tree)
           if [ "$tree" = "$(git rev-parse "$DATA_BASE^{tree}")" ]; then
             if [ "$DATA_BOOTSTRAP" = "0" ]; then
