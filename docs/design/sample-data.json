@@ -1,0 +1,125 @@
+{
+ "_meta": {
+  "source": "548 production state at 2026-11-03 05:40 UTC (12:40 AM ET), model live-2026.27-v2, built with the site's own view functions; live cards from /api/live/today at 05:46 UTC.",
+  "conventions": "Probabilities are 0-1 floats; display strings are exactly what the UI prints (ET times, whole percents, en dash records, U+2212 minus). away is always listed before home. Keys starting with _ are notes, not data.",
+  "realVsIllustrative": "Everything is real data except objects carrying an _illustrative note."
+ },
+ "site": {
+  "modelVersion": "live-2026.27-v2",
+  "referenceModelVersion": "live-2026.27-v1",
+  "generatedAt": "2026-11-03T05:40:09.591Z",
+  "generatedAtEt": "Nov 3, 12:40 AM EST",
+  "seasonLabel": "2026-27",
+  "phase": "regular-season",
+  "simulations": 20000,
+  "ledgerStartedAt": "2026-11-01T11:48:00.714Z",
+  "injuryReportInUse": {"reportAt":"2026-11-02T23:45","stale":false,"missing":false},
+  "freshnessChip": {"fresh":"Updated 4 min ago · live-2026.27-v2","staleAfterHours":12},
+  "teamsColumns": "espnId|code|shortName|name|conference|displayColor",
+  "teams": ["1|ATL|Hawks|Atlanta Hawks|E|#c8102e","2|BOS|Celtics|Boston Celtics|E|#008348","17|BKN|Nets|Brooklyn Nets|E|#000000","30|CHA|Hornets|Charlotte Hornets|E|#008ca8","4|CHI|Bulls|Chicago Bulls|E|#ce1141","5|CLE|Cavaliers|Cleveland Cavaliers|E|#860038","6|DAL|Mavericks|Dallas Mavericks|W|#0064b1","7|DEN|Nuggets|Denver Nuggets|W|#0e2240","8|DET|Pistons|Detroit Pistons|E|#1d428a","9|GSW|Warriors|Golden State Warriors|W|#1d428a","10|HOU|Rockets|Houston Rockets|W|#ce0e2d","11|IND|Pacers|Indiana Pacers|E|#0c2340","12|LAC|Clippers|LA Clippers|W|#12173f","13|LAL|Lakers|Los Angeles Lakers|W|#552583","29|MEM|Grizzlies|Memphis Grizzlies|W|#5d76a9","14|MIA|Heat|Miami Heat|E|#98002e","15|MIL|Bucks|Milwaukee Bucks|E|#00471b","16|MIN|Timberwolves|Minnesota Timberwolves|W|#266092","3|NOP|Pelicans|New Orleans Pelicans|W|#0a2240","18|NYK|Knicks|New York Knicks|E|#1d428a","25|OKC|Thunder|Oklahoma City Thunder|W|#007ac1","19|ORL|Magic|Orlando Magic|E|#0150b5","20|PHI|76ers|Philadelphia 76ers|E|#1d428a","21|PHX|Suns|Phoenix Suns|W|#29127a","22|POR|Trail Blazers|Portland Trail Blazers|W|#e03a3e","23|SAC|Kings|Sacramento Kings|W|#5a2d81","24|SAS|Spurs|San Antonio Spurs|W|#000000","28|TOR|Raptors|Toronto Raptors|E|#d91244","26|UTA|Jazz|Utah Jazz|W|#4e008e","27|WAS|Wizards|Washington Wizards|E|#e31837"],
+  "logoPath": "/logos/nba/{espnId}.png (56px PNG, ESPN default logo)"
+ },
+ "dateStrip": {
+  "selected": "2026-11-02",
+  "days": ["2026-10-30|Fri|Oct 30|10 games","2026-10-31|Sat|Oct 31|7 games","2026-11-01|Sun|Nov 1|4 games","2026-11-02|Today|Nov 2|15 games","2026-11-03|Tue|Nov 3|No games","2026-11-04|Wed|Nov 4|14 games","2026-11-05|Thu|Nov 5|2 games"],
+  "_format": "isoDate|top label|day label|count label"
+ },
+ "dayPage": {
+  "_route": "/ (today) or /games/2026-11-02",
+  "header": {"kicker":"Today's games","title":"Monday, November 2","summary":"15 games · 2 live · 13 final · times ET"},
+  "cardsFinal": [{"gameId":"401909909","status":"final","statusLabel":"Final","tipEt":"7:30 PM ET","badge":{"label":"Final seal 6:30 PM ET","tone":"good","detail":"Sealed 6:30 PM ET. This is the number the record scores."},"numberLabel":"548 pregame","away":{"code":"ATL","shortName":"Hawks","record":"4–4","rank":16,"percent":88,"market":77,"diff":"+11","score":108},"home":{"code":"IND","shortName":"Pacers","record":"2–6","rank":24,"percent":12,"market":23,"diff":"−11","score":104},"marketProvider":"DraftKings","splitBar":{"homeProbability":0.124,"colors":["#c8102e","#0c2340"]},"resultLine":"Hawks won 108–104. 548 gave them 88%.","marginLine":null,"injuryLines":["ATL −3.8: Johnson, Landale, Wilson out +4 more","IND −12.2: Haliburton, Siakam, Nembhard out +7 more"],"notes":[],"where":"Gainbridge Fieldhouse, Indianapolis, IN · DAZN IND"}],
+  "cardsLive": [{"gameId":"401909919","status":"in-progress","statusLabel":"Live · 4th 20.2","tipEt":"10:00 PM ET","badge":{"label":"Final seal 9:00 PM ET","tone":"good","detail":"Sealed 9:00 PM ET. This is the number the record scores."},"numberLabel":"Live estimate","away":{"code":"PHX","shortName":"Suns","record":"1–3","rank":22,"percent":13,"market":null,"diff":null,"score":110},"home":{"code":"GSW","shortName":"Warriors","record":"4–3","rank":12,"percent":87,"market":null,"diff":null,"score":113},"marketProvider":null,"splitBar":{"homeProbability":0.873,"colors":["#29127a","#6b7280"]},"resultLine":null,"marginLine":"548 favors PHX by 1.6 · pregame 44% GSW","injuryLines":["PHX −1.7: Williams, Timme out","GSW −8.0: Butler, Porzingis, Williams out +3 more"],"notes":[],"where":"Chase Center, San Francisco, CA · Suns Live, Arizona's Family 3TV"}],
+  "liveSnapshotFetchedAt": "2026-11-03T05:47:06.915Z"
+ },
+ "lifecycleAtlInd": {
+  "_about": "ATL at IND through its day, from its real ledger rows. Pre-tip stages show the card as it read then (status Scheduled, tip 7:30 PM ET); other card fields as in dayPage.cardsFinal[0].",
+  "morning6am": {"statusLabel":"Scheduled","badge":{"label":"Morning seal 6:00 AM ET","tone":"good","detail":"Sealed 6:00 AM ET. A final seal replaces it in the hour before tip."},"numberLabel":"548","away":{"code":"ATL","percent":65,"market":64,"diff":"+1"},"home":{"code":"IND","percent":35,"market":36,"diff":"−1"},"marketProvider":"DraftKings","marginLine":"548 favors ATL by 4.4","injuryLines":[],"notes":["No NBA injury report was available for this number."]},
+  "reissued1130am": {"card":{"statusLabel":"Scheduled","badge":{"label":"Reissued seal 11:30 AM ET","tone":"good","detail":"Reissued 11:30 AM ET, because the morning seal was made before a usable NBA injury report arrived. A final seal replaces it in the hour before tip."},"numberLabel":"548","away":{"code":"ATL","percent":57,"market":64,"diff":"−7"},"home":{"code":"IND","percent":43,"market":36,"diff":"+7"},"marketProvider":"DraftKings","marginLine":"548 favors ATL by 1.8","injuryLines":["ATL −2.5: Johnson questionable, Landale out, Wilson doubtful +4 more","IND: report not filed, nobody counted"],"notes":[]},"absences":{"away":{"team":"Hawks","points":"−2.5 pts","filing":"filed","othersNote":"This seal stored points for its three largest absences only. The other 4 listed players add −0.3 pts together."},"home":{"team":"Pacers","points":"0.0 pts","filing":"unfiled-nobody","filingNote":"IND had not filed today's report when this was sealed. Seals written before the rule changed in November 2026 counted nobody for a team that had not filed.","groups":[],"othersNote":null}}},
+  "finalSeal630pm": "see dayPage.cardsFinal[0] and gamePage"
+ },
+ "futureDay": {
+  "_route": "/games/2026-11-04",
+  "header": {"kicker":"Schedule","title":"Wednesday, November 4"},
+  "notice": "Projection from current ratings, before injuries. The sealed forecast is issued on game day. Projections are never scored or compared with the market.",
+  "cards": [{"gameId":"401909922","status":"scheduled","statusLabel":"Scheduled","tipEt":"7:00 PM ET","badge":{"label":"Projection","tone":"quiet","detail":"From current ratings, before injuries. Not sealed, never scored."},"numberLabel":"548","away":{"code":"PHI","shortName":"76ers","record":"7–1","rank":10,"percent":31,"market":null,"diff":null,"score":null},"home":{"code":"DET","shortName":"Pistons","record":"6–1","rank":4,"percent":69,"market":null,"diff":null,"score":null},"marketProvider":null,"splitBar":{"homeProbability":0.69,"colors":["#1d428a","#c8102e"]},"resultLine":null,"marginLine":"548 favors DET by 5.5","injuryLines":null,"notes":[],"where":"Little Caesars Arena, Detroit, MI · ESPN"}]
+ },
+ "emptyDay": {
+  "_route": "/games/2026-11-03",
+  "games": 0,
+  "title": "No NBA games on Tuesday, November 3",
+  "body": "Forecasts are sealed on the morning of each game day.",
+  "buttons": ["Previous games: Monday, November 2","Next games: Wednesday, November 4"]
+ },
+ "gamePage": {
+  "_route": "/game/401909909",
+  "breadcrumb": "← Games on Monday, November 2",
+  "matchupHeader": {"statusLabel":"Final","kicker":"Regular season · Mon, Nov 2","badge":{"label":"Final seal 6:30 PM ET","tone":"good","detail":"Sealed 6:30 PM ET. This is the number the record scores."},"away":{"id":"1","code":"ATL","shortName":"Hawks","record":"4–4","rank":16,"name":"Atlanta Hawks","score":108,"dim":false},"home":{"id":"11","code":"IND","shortName":"Pacers","record":"2–6","rank":24,"name":"Indiana Pacers","score":104,"dim":true},"joiner":"at","meta":"7:30 PM ET · Gainbridge Fieldhouse, Indianapolis, IN · DAZN IND"},
+  "winProbability": {"kicker":"Sealed before tip","away":{"shortName":"Hawks","percent":88,"market":77,"diff":"+11"},"home":{"shortName":"Pacers","percent":12,"market":23,"diff":"−11"},"splitBar":{"homeProbability":0.124,"colors":["#c8102e","#0c2340"]},"predictedMargin":"548 favors ATL by 12.8 points","marketSpread":{"label":"Market spread (DraftKings)","text":"ATL −9.5"},"footnote":"The market is the DraftKings moneyline via ESPN with the vig removed, shown for reference. It is never a model input and is not scored."},
+  "whatMoves": {"intro":"Each part adds points to one side's expected margin; together they make the prediction. Pacers are on the second night of a back-to-back.","parts":[{"key":"strength","label":"Team ratings and home court","points":-2.8,"text":"ATL +2.8"},{"key":"rest","label":"Rest (back-to-back)","points":-1.5,"text":"ATL +1.5"},{"key":"absences","label":"Expected absences","points":-8.5,"text":"ATL +8.5"}],"total":{"label":"Predicted margin","points":-12.8,"text":"ATL +12.8"},"separated":false,"notes":["Ratings have been updated since this seal, so its rating and home-court parts are shown together.","Injury report used: the NBA's report of 6:30 PM ET.","A seal counts every player on the report in use, weighted by status. Team pages and the season odds list current absences instead, which is who the season simulation counts as out."],"absences":{"away":{"team":"Hawks","points":"−3.8 pts","filing":"filed","filingNote":null,"groups":[{"label":"Out","players":[["Jalen Johnson","−2.4"],["Jock Landale","−0.7"],["Jalen Wilson","−0.3"],"Kingston Flemings","Keshon Gilbert","Mouhamed Gueye","Henri Veesaar"]}],"othersNote":"This seal stored points for its three largest absences only. The other 4 listed players add −0.3 pts together."},"home":{"team":"Pacers","points":"−12.2 pts","filing":"filed","filingNote":null,"groups":[{"label":"Out","players":[["Tyrese Haliburton","−2.7"],["Pascal Siakam","−2.4"],["Andrew Nembhard","−1.6"],"Johnny Furphy","T.J. McConnell","Larry Nance Jr.","Aaron Nesmith","Ben Sheppard","Obi Toppin","Ivica Zubac"]}],"othersNote":"This seal stored points for its three largest absences only. The other 7 listed players add −5.6 pts together."}}},
+  "result": {"sentence":"Atlanta Hawks won 108–104.","versions":[{"modelVersion":"live-2026.27-v2","role":"published","gave":"Gave Hawks 88%","brier":"0.015"},{"modelVersion":"live-2026.27-v1","role":"reference","gave":"Gave Hawks 75%","brier":"0.062"}]},
+  "seals": [{"modelVersion":"live-2026.27-v2","role":"published","morning":{"text":"IND 35%","time":"6:00 AM ET"},"reissued":{"text":"IND 43%","time":"11:30 AM ET","note":"Reissued with the injury report"},"final":{"text":"IND 12%","time":"6:30 PM ET"},"scored":"Final seal"},{"modelVersion":"live-2026.27-v1","role":"reference","morning":{"text":"IND 25%","time":"6:00 AM ET"},"reissued":null,"final":"Seals once","scored":"Morning seal"}],
+  "teamSnapshots": {"heading":"Both teams now","teams":[{"name":"Atlanta Hawks","line":"4–4 · rating −0.4 (16th)","makePlayoffs":"66%","winTitle":"1%","projectedWins":"41 (29–53)","nextGame":{"gameId":"401909923","text":"Wed Nov 4 at WAS"}},{"name":"Indiana Pacers","line":"2–6 · rating −3.8 (24th)","makePlayoffs":"21%","winTitle":"<1%","projectedWins":"29 (18–40)","nextGame":{"gameId":"401909927","text":"Wed Nov 4 at MEM"}}]}
+ },
+ "injuryStates": {
+  "fullListLegacyRebuilt": "gamePage.whatMoves.absences: a seal that stored three drivers a side; the rest rebuilt from its report with no per-player points",
+  "unfiledCountedNobodyLegacy": "lifecycleAtlInd.reissued1130am: IND had not filed; seals before 2026-11-03 counted nobody",
+  "unfiledCountedIllustrative": {"_illustrative":"Not yet seen in a real seal (rule merged 2026-11-03). Built from IND's real current absences through the real helpers.","cardLines":["ATL −3.8: Johnson, Landale, Wilson out","IND −12.9 (report not filed): Haliburton, Siakam, Nembhard missed last game +8 more"],"absences":{"home":{"team":"Pacers","points":"−12.9 pts","filing":"unfiled-counted","filingNote":"IND had not filed today's report when this was sealed, so this counts players who missed its last game.","groups":[{"label":"Missed the last game","players":[["Tyrese Haliburton","−2.7"],["Pascal Siakam","−2.4"],["Andrew Nembhard","−1.6"],"+8 more"]}]}}},
+  "reportMissing": {"cardNote":"No NBA injury report was available for this number.","gamePageNote":"No NBA injury report under 24 hours old was available, so absences are zero.","emptySide":"No injury report was in use, so nobody is counted.","recordTag":"No report"},
+  "reportStale": {"gamePageNote":"The latest report could not be read, so the last good one, from 6:15 PM ET, was used.","recordTag":"Stale report","_illustrative":"no real stale seal yet"},
+  "reportFreshnessOdds": "latest 11:45 PM ET"
+ },
+ "sealBadges": {
+  "finalSeal": {"label":"Final seal 6:30 PM ET","tone":"good","detail":"Sealed 6:30 PM ET. This is the number the record scores."},
+  "morningSeal": {"label":"Morning seal 6:00 AM ET","tone":"good","detail":"Sealed 6:00 AM ET. A final seal replaces it in the hour before tip."},
+  "reissuedSeal": {"label":"Reissued seal 11:30 AM ET","tone":"good","detail":"Reissued 11:30 AM ET, because the morning seal was made before a usable NBA injury report arrived. A final seal replaces it in the hour before tip."},
+  "noFinalSeal": {"label":"No final seal","tone":"warn","detail":"No final seal in the hour before tip, so the reissued morning seal from 11:30 AM ET is scored."},
+  "v1OnlySeal": {"label":"Sealed 6:48 AM ET","tone":"good","detail":"Sealed by live-2026.27-v1, which does not account for injuries."},
+  "provisional": {"label":"Provisional","tone":"warn","detail":"Not sealed yet. From the latest ratings and published absences; replaced by the seal and never scored."},
+  "projection": {"label":"Projection","tone":"quiet","detail":"From current ratings, before injuries. Not sealed, never scored."},
+  "missed": {"label":"Missed","tone":"bad","detail":"Tipped before a forecast was sealed. Counted as missed in the record, never backfilled."},
+  "beforeRecord": {"label":"Before the record","tone":"quiet","detail":"Tipped before the first seal, so it was never in the record."},
+  "incompleteInputs": {"label":"Final seal 6:30 PM ET","tone":"warn","detail":"Sealed 6:30 PM ET. This is the number the record scores. An earlier result was missing from its ratings; it still counts."}
+ },
+ "sealRows": {
+  "_about": "Raw ledger row shapes. v2Final is ATL at IND's scored seal (hashes and run IDs removed); it predates driversComplete, so drivers holds only the three largest a side. v1 rows carry no sealKind and no injury fields; this one is BKN at IND on Nov 1, before v2 existed. Morning and reissued rows are summarized in lifecycleAtlInd and gamePage.seals.",
+  "v2Final": {"type":"seal","gameId":"401909909","etDate":"2026-11-02","tipUtc":"2026-11-03T00:30Z","issuedAt":"2026-11-02T23:30:09.488Z","modelVersion":"live-2026.27-v2","homeId":"11","awayId":"1","homeWinProbability":0.124,"expectedMargin":-12.8,"inputsIncomplete":false,"market":{"provider":"DraftKings","homeMoneyline":311,"awayMoneyline":-394,"homeSpread":9.5},"sealKind":"final","reportAt":"2026-11-02T18:30","availabilityStale":false,"availabilityMissing":false,"absence":{"home":30.6,"away":9.4},"absencePoints":{"home":12.225,"away":3.753},"drivers":{"home":[{"athleteId":"4396993","name":"Tyrese Haliburton","status":"O","points":2.653},{"athleteId":"3149673","name":"Pascal Siakam","status":"O","points":2.359},{"athleteId":"4395712","name":"Andrew Nembhard","status":"O","points":1.643}],"away":[{"athleteId":"4701230","name":"Jalen Johnson","status":"O","points":2.376},{"athleteId":"3146557","name":"Jock Landale","status":"O","points":0.693},{"athleteId":"4431714","name":"Jalen Wilson","status":"O","points":0.335}]},"referenceModelVersion":"live-2026.27-v1","referenceHomeWinProbability":0.248},
+  "v1OnlyNov1": {"type":"seal","gameId":"401909904","etDate":"2026-11-01","tipUtc":"2026-11-01T22:00Z","issuedAt":"2026-11-01T11:48:00.714Z","modelVersion":"live-2026.27-v1","homeId":"11","awayId":"17","homeWinProbability":0.688,"expectedMargin":5.5,"inputsIncomplete":false}
+ },
+ "oddsTable": {
+  "heatBins": [["heat-0","Under 1%"],["heat-1","1 to 10%"],["heat-2","10 to 25%"],["heat-3","25 to 40%"],["heat-4","40 to 50%"],["heat-5","50 to 60%"],["heat-6","60 to 80%"],["heat-7","80 to 95%"],["heat-8","95% or more"]],
+  "columns": ["Team","Rating","Proj. W–L","Seed 1–15","Play-in","Playoffs","Top 6","Conf. finals","Finals","Title"],
+  "rows": [{"code":"DET","shortName":"Pistons","slug":"det","conference":"East","record":"6–1","rating":"+6.7","ratingRank":4,"ratingNow":"+3.6","projected":"59–21","projectedRange":"48–69 W","seeds":[0.41,0.227,0.136,0.096,0.058,0.035,0.02,0.011,0.005,0.002,0.001,0,0,0,0],"playIn":0.037,"makePlayoffs":0.988,"topSix":0.962,"reachConferenceFinals":0.514,"reachFinals":0.302,"champion":0.137,"titleHeat":"heat-2"},{"code":"IND","shortName":"Pacers","slug":"ind","conference":"East","record":"2–6","rating":"−3.8","ratingRank":24,"ratingNow":"−16.7","projected":"29–51","projectedRange":"18–40 W","seeds":[0,0.001,0.003,0.007,0.016,0.026,0.047,0.074,0.101,0.132,0.153,0.16,0.135,0.092,0.052],"playIn":0.354,"makePlayoffs":0.209,"topSix":0.054,"reachConferenceFinals":0.014,"reachFinals":0.005,"champion":0.001,"titleHeat":"heat-0"},{"code":"OKC","shortName":"Thunder","slug":"okc","conference":"West","record":"5–2","rating":"+6.7","ratingRank":3,"ratingNow":"+1.3","projected":"57–23","projectedRange":"45–67 W","seeds":[0.157,0.168,0.159,0.139,0.109,0.085,0.065,0.047,0.032,0.02,0.01,0.006,0.003,0.001,0],"playIn":0.165,"makePlayoffs":0.919,"topSix":0.816,"reachConferenceFinals":0.324,"reachFinals":0.173,"champion":0.107,"titleHeat":"heat-2"}],
+  "_about": "Probabilities as 0-1 floats; print with whole percents (<1% under 0.005, >99% at 0.995+). seeds[0] is the 1 seed. Heat class from heatBins."
+ },
+ "titleRace": {
+  "since": "2026-11-01",
+  "rows": [{"code":"HOU","shortName":"Rockets","record":"7–1","title":"14%","heat":"heat-2","change":"+1.3"},{"code":"SAS","shortName":"Spurs","record":"5–2","title":"14%","heat":"heat-2","change":"+0.8"},{"code":"DET","shortName":"Pistons","record":"6–1","title":"14%","heat":"heat-2","change":"+4.0"},{"code":"OKC","shortName":"Thunder","record":"5–2","title":"11%","heat":"heat-2","change":"0.0"},{"code":"NYK","shortName":"Knicks","record":"3–4","title":"8%","heat":"heat-1","change":"−1.1"},{"code":"BOS","shortName":"Celtics","record":"5–2","title":"7%","heat":"heat-1","change":"−2.6"},{"code":"MIN","shortName":"Timberwolves","record":"5–3","title":"7%","heat":"heat-1","change":"−0.8"},{"code":"LAL","shortName":"Lakers","record":"6–2","title":"4%","heat":"heat-1","change":"+1.2"}]
+ },
+ "titleHistory": {
+  "dates": ["2026-10-31","2026-11-01","2026-11-02"],
+  "highlighted": [{"code":"HOU","color":"#ce0e2d","values":[0.128,0.131,0.144]},{"code":"SAS","color":"#000000","values":[0.194,0.131,0.139]},{"code":"DET","color":"#1d428a","values":[0.108,0.098,0.137]},{"code":"OKC","color":"#007ac1","values":[0.091,0.107,0.107]},{"code":"NYK","color":"#1f2937","values":[0.115,0.093,0.082]},{"code":"BOS","color":"#008348","values":[0.081,0.1,0.074]},{"code":"MIN","color":"#6b7280","values":[0.089,0.08,0.071]},{"code":"LAL","color":"#9a6dd1","values":[0.027,0.033,0.045]}],
+  "othersColor": "#d9d5ce",
+  "othersCount": 22
+ },
+ "currentAbsences": {
+  "_about": "Who the season simulation counts as out now (state.absences). Odds page groups all teams; team page shows one.",
+  "reportAt": "2026-11-02T23:45",
+  "IND": {"nextGame":"next game −12.9 pts","rows":[{"name":"Tyrese Haliburton","status":"Out, missed 4 games","points":"−2.7 pts","expected":"about 7 more games","raw":{"status":"O","class":"short","gamesMissed":4,"expectedGames":7.1,"points":2.656}},{"name":"Pascal Siakam","status":"Out, missed 1 game","points":"−2.4 pts","expected":"about 5 more games","raw":{"status":"O","class":"short","gamesMissed":1,"expectedGames":4.7,"points":2.361}},{"name":"Andrew Nembhard","status":"Out, missed 1 game","points":"−1.6 pts","expected":"about 5 more games"},{"name":"Ivica Zubac","status":"Out, missed 5 games","points":"−1.4 pts","expected":"about 7 more games"}],"moreRows":7}
+ },
+ "teamPage": {
+  "_route": "/teams/ind",
+  "header": {"kicker":"Eastern Conference · Central","title":"Indiana Pacers","line":"2–6, 12th in the East by record · rating −3.8, 24th of 30 · −16.7 with current absences"},
+  "tiles": {"makePlayoffs":"21%","playIn":"35%","topSix":"5%","title":"<1%"},
+  "projectedRecord": {"record":"29–51","range":"18 to 40 wins in 8 of 10 simulations","mean":28.7,"p10":18,"p90":40,"seasonGames":80},
+  "seedChances": "oddsTable.rows[IND].seeds",
+  "ratingHistory": {"columns":["date","team","leagueMin","leagueQ1","leagueQ3","leagueMax"],"_first":"The first point is the season start (labeled Start), before any game.","points":[["2026-10-20",-5.4,-10.4,-5.1,3.4,9.8],["2026-10-20",-5.4,-10.4,-5.1,3.4,9.9],["2026-10-21",-4.8,-9.3,-5.7,4,10],["2026-10-22",-4.8,-9.3,-5.7,4,10.2],["2026-10-23",-6.2,-9.3,-5.5,4.8,10.2],["2026-10-24",-6.2,-8.7,-5.6,4.2,10.2],["2026-10-25",-4.5,-10.2,-4.5,4.3,10],["2026-10-26",-5,-10.3,-4.6,4,9.9],["2026-10-27",-4.9,-9.5,-4.6,3.8,10],["2026-10-28",-4.9,-9.6,-4.5,4.5,8.7],["2026-10-29",-4.9,-10,-3.7,4.3,8.7],["2026-10-30",-5.7,-10.1,-3.7,3.5,8.7],["2026-10-31",-5.7,-11.1,-2.2,3.5,8.8],["2026-11-01",-6.4,-11.1,-2.2,3.3,8.8],["2026-11-02",-6.3,-9.5,-2.4,4.3,9]],"publishedFullStrength":-3.8,"color":"#0c2340"},
+  "upcoming": {"total":72,"shownBeforeExpand":10,"rows":[{"gameId":"401909927","date":"Wed Nov 4","opponent":"at Grizzlies","result":"8:00 PM ET","number":{"chance":"28%","heat":"heat-3","tag":"Proj."}},{"gameId":"401909938","date":"Sat Nov 7","opponent":"vs Nuggets","result":"5:00 PM ET","number":{"chance":"31%","heat":"heat-3","tag":"Proj."}}]},
+  "results": [{"gameId":"401909909","date":"Mon Nov 2","opponent":"vs Hawks","result":"L 104–108","number":{"chance":"12%","heat":"heat-2","tag":null}},{"gameId":"401909904","date":"Sun Nov 1","opponent":"vs Nets","result":"L 90–98","number":{"chance":"69%","heat":"heat-6","tag":"v1"}},{"gameId":"401909282","date":"Fri Oct 30","opponent":"at Heat","result":"L 125–145","number":"Before the record"}]
+ },
+ "teamsIndex": [{"name":"Atlanta Hawks","line":"4–4 · rating −0.4 (#16)","title":"1%","heat":"heat-1"},{"name":"Cleveland Cavaliers","line":"4–3 · rating +1.8 (#13)","title":"2%","heat":"heat-1"}],
+ "record": {
+  "smallSampleLabel": "Small sample: 13 scored games. Below 500, results say little about skill.",
+  "published": {"summary":{"modelVersion":"live-2026.27-v2","sealed":15,"scored":13,"pending":2,"missed":0,"incomplete":0,"noFinalSeal":0,"brier":0.2133,"logLoss":0.6022,"accuracy":0.6154,"baselineBrier":0.2587,"morningBrier":0.2397,"referenceBrier":0.1954,"referenceModelVersion":"live-2026.27-v1","smallSample":true},"counts":"13 scored · 2 pending · 0 missed","withMarketLine":13,"scoredRows":[{"date":"Nov 2","game":"MIA at LAL","favored":"LAL 64%","result":"LAL 138–117","brier":"0.129","sealTags":["Final"]},{"date":"Nov 2","game":"POR at DEN","favored":"DEN 62%","result":"POR 118–110","brier":"0.378","sealTags":["Final"]},{"date":"Nov 2","game":"BOS at HOU","favored":"HOU 68%","result":"HOU 109–93","brier":"0.103","sealTags":["Final"]}],"missed":[]},
+  "reference": {"summary":{"modelVersion":"live-2026.27-v1","sealed":19,"scored":17,"pending":2,"missed":0,"incomplete":0,"noFinalSeal":null,"brier":0.2065,"logLoss":0.5927,"accuracy":0.7059,"baselineBrier":0.2575,"morningBrier":null,"referenceBrier":null,"referenceModelVersion":null,"smallSample":true},"counts":"17 scored · 2 pending · 0 missed","withMarketLine":17,"scoredRows":[{"date":"Nov 2","game":"MIA at LAL","favored":"LAL 63%","result":"LAL 138–117","brier":"0.136","sealTags":["Morning"]},{"date":"Nov 2","game":"POR at DEN","favored":"DEN 56%","result":"POR 118–110","brier":"0.315","sealTags":["Morning"]},{"date":"Nov 1","game":"TOR at LAL","favored":"LAL 55%","result":"LAL 131–125","brier":"0.207","sealTags":["Morning"]}],"missed":[]}
+ }
+}
