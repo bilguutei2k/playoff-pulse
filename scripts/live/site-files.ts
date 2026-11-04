@@ -6,6 +6,7 @@ import { createHash } from "node:crypto";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import {
+  isModelViewPath,
   SITE_MANIFEST_PATH,
   siteFileContent,
   siteFileContents,
@@ -31,7 +32,8 @@ function readLedgerRows(file: string): LedgerRow[] {
 /**
  * Every site file's path under data/live and its exact content: the day and month files
  * derived from the season's ledger, and the manifest hashing them together with the
- * state and games files the site also reads.
+ * state and games files the site also reads and the model views on disk (projections,
+ * team injury lists, player files), which the job writes before calling this.
  */
 export function expectedSiteFiles(liveDirectory: string, season: number, seasonLabel: string): Map<string, string> {
   const ledger = readLedgerRows(path.join(liveDirectory, "ledger", `${seasonLabel}.jsonl`));
@@ -42,6 +44,9 @@ export function expectedSiteFiles(liveDirectory: string, season: number, seasonL
     if (fs.existsSync(file)) hashes[relative] = sha256(fs.readFileSync(file));
   }
   for (const [relative, content] of files) hashes[relative] = sha256(content);
+  for (const [relative, content] of publishedSiteFiles(liveDirectory)) {
+    if (isModelViewPath(relative, seasonLabel)) hashes[relative] = sha256(content);
+  }
   const manifest: SiteManifest = {
     version: 1,
     season,

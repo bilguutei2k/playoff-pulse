@@ -8,7 +8,16 @@
 //   - manifest.json: the SHA-256 of each file the site reads, which the site uses as
 //     cache keys so a file is stored once per content rather than once per commit.
 // They are derived from the ledger alone, never edited, and `verify:live` checks that
-// they match it. Pure: no fetch, no file access.
+// they match it.
+//
+// The job also publishes model views under the same directory, computed in the run from
+// the published replay and the stored files rather than from the ledger, and listed in
+// the manifest like the rest (`isModelViewPath`):
+//   - projections.json: `ProjectionsFile` (src/lib/season/projections.ts);
+//   - team-injuries.json: `TeamInjuriesFile` (src/lib/season/projections.ts);
+//   - players/index.json: `PlayerIndexFile` (src/lib/season/player-stats.ts);
+//   - players/teams/{teamId}.json: `TeamPlayersFile` (src/lib/season/player-stats.ts).
+// `verify:live` checks them against their invariants. Pure: no fetch, no file access.
 
 import { etDateOf } from "@/lib/season/dates";
 import type { LedgerRow, SealRow } from "@/lib/season/types";
@@ -34,6 +43,32 @@ export function siteDayPath(seasonLabel: string, etDate: string): string {
 
 export function siteMonthPath(seasonLabel: string, month: string): string {
   return `site/${seasonLabel}/months/${month}.json`;
+}
+
+export function siteProjectionsPath(seasonLabel: string): string {
+  return `site/${seasonLabel}/projections.json`;
+}
+
+export function siteTeamInjuriesPath(seasonLabel: string): string {
+  return `site/${seasonLabel}/team-injuries.json`;
+}
+
+export function sitePlayerIndexPath(seasonLabel: string): string {
+  return `site/${seasonLabel}/players/index.json`;
+}
+
+export function siteTeamPlayersPath(seasonLabel: string, teamId: string): string {
+  return `site/${seasonLabel}/players/teams/${teamId}.json`;
+}
+
+/** Whether a path under data/live is one of the season's model views (not ledger-derived). */
+export function isModelViewPath(relative: string, seasonLabel: string): boolean {
+  return (
+    relative === siteProjectionsPath(seasonLabel) ||
+    relative === siteTeamInjuriesPath(seasonLabel) ||
+    relative === sitePlayerIndexPath(seasonLabel) ||
+    new RegExp(`^site/${seasonLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/players/teams/\\d+\\.json$`).test(relative)
+  );
 }
 
 /** The month files listed in a manifest, oldest first. */
@@ -95,7 +130,7 @@ export function deriveSiteFiles(ledger: readonly LedgerRow[]): {
 }
 
 /** The bytes a site file is published with: compact JSON and a newline, like the job's other files. */
-export function siteFileContent(value: DaySealsFile | MonthRowsFile | SiteManifest): string {
+export function siteFileContent(value: unknown): string {
   return `${JSON.stringify(value)}\n`;
 }
 

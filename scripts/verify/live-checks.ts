@@ -15,9 +15,35 @@ import {
 import {
   absenceDetail,
   injuryModelHash,
+  replayFullStrength,
   sealInjuryGames,
   type InjuryModel,
 } from "../../src/lib/season/live-injury";
+import { currentAbsences } from "../../src/lib/season/injury-model";
+import {
+  derivePlayerFiles,
+  type PlayerGamesDay,
+  type PlayerIndexFile,
+  type ResolvedListing,
+  type TeamPlayersFile,
+} from "../../src/lib/season/player-stats";
+import {
+  PROJECTION_ONLY_KEYS,
+  projectionProblems,
+  projectUpcomingGames,
+  teamInjuryLists,
+  teamInjuryProblems,
+  type ProjectionsFile,
+  type TeamInjuriesFile,
+} from "../../src/lib/season/projections";
+import {
+  siteFileContent,
+  sitePlayerIndexPath,
+  siteProjectionsPath,
+  siteTeamInjuriesPath,
+  siteTeamPlayersPath,
+  isModelViewPath,
+} from "../../src/lib/season/site-files";
 import {
   INJURY_PARAMS,
   INJURY_STATUS_TABLE,
@@ -386,6 +412,230 @@ function checkProjections(state: LiveState, games: readonly SeasonGame[]): void 
   );
 }
 
+/**
+ * Projections with the injury term, on a synthetic season: probabilities in (0, 1), home
+ * and away summing to one, absences never negative and always lowering their side's
+ * chance, drivers adding up to the side's points, the seal rules on a report slate
+ * (including an unfiled side), and no projection key ever accepted in the ledger.
+ */
+function checkProjectionInvariants(): void {
+  const [A, B, C] = SEASON_TEAMS.map((team) => team.id);
+  const finals: SeasonGame[] = [];
+  const box = new Map<string, Record<string, StoredLine[]>>();
+  for (let day = 0; day < 24; day += 1) {
+    const etDate = new Date(Date.UTC(2026, 9, 21 + day)).toISOString().slice(0, 10);
+    const id = `projection-${day}`;
+    finals.push({
+      id,
+      season: 2027,
+      kind: "regular",
+      tipUtc: `${etDate}T23:30Z`,
+      etDate,
+      homeId: day % 2 === 0 ? A : B,
+      awayId: day % 2 === 0 ? B : C,
+      neutral: false,
+      status: "final",
+      homeScore: 108,
+      awayScore: 104,
+    });
+    const home = day % 2 === 0 ? A : B;
+    const away = day % 2 === 0 ? B : C;
+    const lines = (teamId: string): StoredLine[] => [[`${teamId}-star`, 36, 26], [`${teamId}-bench`, 24, 9]];
+    // C's star sits out the last game he could play: C counts him from box scores.
+    box.set(id, { [home]: lines(home), [away]: day === 23 && away === C ? lines(C).slice(1) : lines(away) });
+  }
+  const scheduled = (id: string, etDate: string, homeId: string, awayId: string): SeasonGame => ({
+    id,
+    season: 2027,
+    kind: "regular",
+    tipUtc: `${etDate}T23:30Z`,
+    etDate,
+    homeId,
+    awayId,
+    neutral: false,
+    status: "scheduled",
+    homeScore: null,
+    awayScore: null,
+  });
+  const today = scheduled("projection-today", "2026-11-15", A, B);
+  const tomorrow = scheduled("projection-tomorrow", "2026-11-16", C, A);
+  const later = scheduled("projection-later", "2026-11-19", B, C);
+  const outside = scheduled("projection-outside", "2026-11-25", A, C);
+  const games = [...finals, today, tomorrow, later, outside];
+  const replay = replayFullStrength(games, MODEL, { boxScores: (gameId) => box.get(gameId), availability: () => null }, { asOfEtDate: today.etDate });
+  const current = currentAbsences(replay.tracker, MODEL.injury, MODEL.survival);
+  const point = (rows: Array<[string, string, "O" | "Q"]>, notSubmitted: string[] = []): ReportPoint => ({
+    at: "2026-11-15T12:00",
+    notSubmitted,
+    rows: rows.map(([teamId, athleteId, status]) => ({ teamId, athleteId, status, reason: "Injury/Illness - Ankle" })),
+  });
+  const project = (reports: Array<{ etDate: string; point: ReportPoint }>) =>
+    projectUpcomingGames({
+      season: 2027,
+      seasonLabel: "2026-27",
+      modelVersion: LIVE_MODEL_VERSION,
+      games,
+      fromEtDate: today.etDate,
+      ratings: replay.state,
+      ratingsHash: "check",
+      ratingsThroughUtc: null,
+      params: LIVE_PARAMS,
+      model: MODEL,
+      tracker: replay.tracker,
+      current,
+      reports: reports.map((report) => ({ ...report, stale: false })),
+      nameOf: (athleteId) => athleteId,
+    });
+  const nobody = project([{ etDate: today.etDate, point: point([]) }]);
+  const homeOut = project([{ etDate: today.etDate, point: point([[A, `${A}-star`, "O"]]) }]);
+  const awayOut = project([{ etDate: today.etDate, point: point([[B, `${B}-star`, "O"]]) }]);
+  const nextSlate = project([
+    { etDate: today.etDate, point: point([]) },
+    { etDate: tomorrow.etDate, point: { ...point([]), at: "2026-11-15T20:00", notSubmitted: [C, A] } },
+  ]);
+  const at = (file: ProjectionsFile, id: string) => {
+    const found = file.games.find((game) => game.gameId === id);
+    assert.ok(found, `Projection ${id} is missing.`);
+    return found;
+  };
+  for (const file of [nobody, homeOut, awayOut, nextSlate]) {
+    assert.deepEqual(
+      projectionProblems(file, { ratings: replay.state, params: LIVE_PARAMS, games, ledger: [] }),
+      [],
+      "Synthetic projections must satisfy every projection invariant.",
+    );
+    assert.deepEqual(file.games.map((game) => game.gameId), [today.id, tomorrow.id, later.id], "Only scheduled games in the seven-day window are projected.");
+    for (const game of file.games) {
+      assert.ok(game.homeWinProbability > 0 && game.homeWinProbability < 1, "A projection must be a probability.");
+      assert.ok(Math.abs(game.homeWinProbability + game.awayWinProbability - 1) < 1e-9, "Home and away must sum to one.");
+      assert.ok(game.absencePoints.home >= 0 && game.absencePoints.away >= 0, "Projection absences must be at least 0.");
+      for (const side of ["home", "away"] as const) {
+        const total = game.drivers[side].reduce((sum, driver) => sum + driver.points, 0);
+        assert.ok(Math.abs(total - game.absencePoints[side]) <= 0.01, "Projection drivers must add up to the side's points.");
+      }
+    }
+  }
+  assert.ok(at(homeOut, today.id).homeWinProbability < at(nobody, today.id).homeWinProbability, "A listed home absence must lower the home projection.");
+  assert.ok(at(awayOut, today.id).homeWinProbability > at(nobody, today.id).homeWinProbability, "A listed away absence must lower the away projection.");
+  assert.deepEqual(at(homeOut, today.id).basis, { kind: "report", reportAt: "2026-11-15T12:00", stale: false }, "A report slate's projection names its report.");
+  // The next slate's report marks both teams unfiled: each counts current absences, as a seal would.
+  const unfiled = at(nextSlate, tomorrow.id);
+  assert.deepEqual(unfiled.unfiled, { home: true, away: true }, "Unfiled sides must be marked.");
+  assert.ok(unfiled.absencePoints.home > 0, "An unfiled side counts the player who missed its last game.");
+  const sealed = sealInjuryGames([{ game: tomorrow, inputsIncomplete: false, missingGameIds: [], kind: "final" }], {
+    history: [],
+    seasonGames: games,
+    model: MODEL,
+    modelVersion: LIVE_MODEL_VERSION,
+    referenceModelVersion: REFERENCE_MODEL_VERSION,
+    runId: "check",
+    nowIso: "2026-11-16T22:45:00Z",
+    source: { boxScores: (gameId) => box.get(gameId), availability: () => null },
+    report: { point: { ...point([]), at: "2026-11-15T20:00", notSubmitted: [C, A] }, stale: false, missing: false },
+    nameOf: (athleteId) => athleteId,
+    marketFor: () => null,
+  })[0];
+  assert.deepEqual(unfiled.absencePoints, sealed.absencePoints, "A report slate's injury term must follow the seal rules exactly.");
+  assert.deepEqual(unfiled.drivers, sealed.drivers, "A report slate's drivers must be the seal's.");
+  assert.equal(at(nobody, later.id).basis.kind, "current-absences", "A game beyond the report slates uses current absences.");
+  assert.ok(at(nobody, later.id).absencePoints.away > 0, "Current absences must reach later games.");
+  // Team lists agree with the projections.
+  const lists: TeamInjuriesFile = teamInjuryLists({
+    season: 2027,
+    seasonLabel: "2026-27",
+    modelVersion: LIVE_MODEL_VERSION,
+    games,
+    fromEtDate: today.etDate,
+    ratings: replay.state,
+    ratingsHash: "check",
+    ratingsThroughUtc: null,
+    params: LIVE_PARAMS,
+    model: MODEL,
+    tracker: replay.tracker,
+    current,
+    reports: [{ etDate: today.etDate, point: point([[A, `${A}-star`, "O"]]), stale: false }],
+    nameOf: (athleteId) => athleteId,
+    teamIds: SEASON_TEAMS.map((team) => team.id),
+    reportFile: () => "check",
+  });
+  assert.deepEqual(teamInjuryProblems(lists, homeOut, SEASON_TEAMS.map((team) => team.id)), [], "Team injury lists must match their projections.");
+  // No projection key is ever accepted on a ledger row.
+  const leaked = { type: "seal", gameId: "leak", basis: { kind: "current-absences" } } as unknown as LedgerRow;
+  assert.ok(projectionProblems(nobody, { ratings: replay.state, params: LIVE_PARAMS, games, ledger: [leaked] }).length > 0, "A projection key in the ledger must be caught.");
+}
+
+function readLiveJson<T>(relative: string): T | null {
+  const file = path.join(process.cwd(), "data/live", relative);
+  return fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, "utf-8")) as T) : null;
+}
+
+/**
+ * The published model views: projections against the state, games and ledger on disk,
+ * team lists against the projections, and player files re-derived exactly from the
+ * stored player lines (taking report listings and 548 impact from the published files).
+ * Skipped until the job first writes them.
+ */
+function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger: readonly LedgerRow[]): void {
+  const label = seasonLabel(LIVE_SEASON);
+  for (const row of ledger) {
+    const leaked = PROJECTION_ONLY_KEYS.filter((key) => key in row);
+    assert.deepEqual(leaked, [], `Ledger row for ${row.gameId} carries a projection key.`);
+  }
+  const projections = readLiveJson<ProjectionsFile>(siteProjectionsPath(label));
+  if (!projections) {
+    console.log("Model views not published yet; the next pipeline run writes them.");
+    return;
+  }
+  assert.equal(projections.fromEtDate, state.slateEtDate, "Projections must start at the published slate.");
+  assert.equal(projections.ratingsHash, state.ratingsHash, "Projections must use the published ratings.");
+  assert.deepEqual(
+    projectionProblems(projections, { ratings: state.ratings, params: state.params, games, ledger }),
+    [],
+    "Published projections must satisfy every projection invariant.",
+  );
+  const lists = readLiveJson<TeamInjuriesFile>(siteTeamInjuriesPath(label));
+  assert.ok(lists, "Team injury lists must be published with the projections.");
+  assert.deepEqual(teamInjuryProblems(lists, projections, SEASON_TEAMS.map((team) => team.id)), [], "Team injury lists must match the projections.");
+  const index = readLiveJson<PlayerIndexFile>(sitePlayerIndexPath(label));
+  assert.ok(index, "The player index must be published with the projections.");
+  const teams = new Map<string, TeamPlayersFile>();
+  const listings: ResolvedListing[] = [];
+  for (const team of SEASON_TEAMS) {
+    const file = readLiveJson<TeamPlayersFile>(siteTeamPlayersPath(label, team.id));
+    if (!file) continue;
+    teams.set(team.id, file);
+    for (const player of file.players) for (const listing of player.injuries) listings.push({ ...listing, athleteId: player.athleteId });
+  }
+  const daysDirectory = path.join(process.cwd(), "data/live/players", label);
+  const days: PlayerGamesDay[] = fs.existsSync(daysDirectory)
+    ? fs
+        .readdirSync(daysDirectory)
+        .filter((file) => file.endsWith(".json"))
+        .map((file) => JSON.parse(fs.readFileSync(path.join(daysDirectory, file), "utf-8")) as PlayerGamesDay)
+    : [];
+  const impact = new Map(index.players.map((player) => [player.athleteId, player.impact]));
+  const names = new Map(index.players.map((player) => [player.athleteId, player.name]));
+  const derived = derivePlayerFiles({
+    season: LIVE_SEASON,
+    seasonLabel: label,
+    days,
+    listings,
+    impact: (athleteId) => impact.get(athleteId) ?? null,
+    nameOf: (athleteId) => names.get(athleteId),
+  });
+  assert.equal(siteFileContent(derived.index), siteFileContent(index), "The player index must be what the stored player lines give.");
+  assert.deepEqual([...derived.teams.keys()].sort(), [...teams.keys()].sort(), "Every team with stored lines has a player file, and no other.");
+  for (const [teamId, file] of derived.teams) {
+    assert.equal(siteFileContent(file), siteFileContent(teams.get(teamId)), `Team ${teamId}'s player file must be what the stored lines give.`);
+  }
+  for (const player of index.players) {
+    assert.ok(player.impact === null || player.impact >= 0, "A 548 impact is never negative.");
+  }
+  console.log(
+    `Model views pass (${projections.games.length} projections, ${lists.teams.length} team lists, ${index.players.length} players from ${index.storedGames} stored games).`,
+  );
+}
+
 /** The data cache stores items up to 2 MB; warn well before a file the site reads gets there. */
 const SITE_FILE_WARN_BYTES = 1_500_000;
 
@@ -403,7 +653,9 @@ function checkSiteFiles(): void {
   }
   const expected = expectedSiteFiles(liveDirectory, LIVE_SEASON, seasonLabel(LIVE_SEASON));
   const missing = [...expected.keys()].filter((file) => !published.has(file));
-  const extra = [...published.keys()].filter((file) => !expected.has(file));
+  const extra = [...published.keys()].filter(
+    (file) => !expected.has(file) && !isModelViewPath(file, seasonLabel(LIVE_SEASON)),
+  );
   const different = [...expected.keys()].filter(
     (file) => published.has(file) && published.get(file) !== expected.get(file),
   );
@@ -414,6 +666,7 @@ function checkSiteFiles(): void {
     "state.json",
     `games/${LIVE_SEASON}.json`,
     ...expected.keys(),
+    ...[...published.keys()].filter((file) => isModelViewPath(file, seasonLabel(LIVE_SEASON))),
   ].map((file) => ({ file, bytes: fs.existsSync(path.join(liveDirectory, file)) ? fs.statSync(path.join(liveDirectory, file)).size : 0 }));
   for (const { file, bytes } of read) {
     if (bytes > SITE_FILE_WARN_BYTES) {
@@ -431,6 +684,7 @@ export function runLiveChecks(): void {
 
   checkFrozenInjuryInputs();
   checkInjuryInvariants();
+  checkProjectionInvariants();
 
   assert.ok(raw.schemaVersion === 1 || raw.schemaVersion === 2, "Unknown live state schema.");
   if (raw.schemaVersion === 2) checkSchemaTwoState(raw);
@@ -530,15 +784,16 @@ export function runLiveChecks(): void {
     "data/live/ledger",
     `${seasonLabel(LIVE_SEASON)}.jsonl`,
   );
-  if (fs.existsSync(ledgerPath)) {
-    const rows = fs
-      .readFileSync(ledgerPath, "utf-8")
-      .split("\n")
-      .filter(Boolean)
-      .map((line) => JSON.parse(line) as LedgerRow);
-    assert.deepEqual(ledgerProblems(rows), [], "Ledger rows must be valid.");
-  }
+  const ledgerRows: LedgerRow[] = fs.existsSync(ledgerPath)
+    ? fs
+        .readFileSync(ledgerPath, "utf-8")
+        .split("\n")
+        .filter(Boolean)
+        .map((line) => JSON.parse(line) as LedgerRow)
+    : [];
+  assert.deepEqual(ledgerProblems(ledgerRows), [], "Ledger rows must be valid.");
   checkSiteFiles();
+  if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, ledgerRows);
 }
 
 if (process.argv[1]?.endsWith("live-checks.ts")) {

@@ -221,6 +221,14 @@ rating model. Each version's sealed record is reported separately.
   in small bins, and are not claimed to be well calibrated. On 2023-2026 they did not beat a
   win-percentage baseline on Dec 1 and Feb 1.
 - In-game values between quarter ends, including the final minutes, are unvalidated interpolation.
+- A player's "548 impact" (beta times `lostValue` in the published replay's player book: the points
+  of margin the model takes off his team per game while he is out) is the model's estimate from box
+  scores. It must be labelled as the model's estimate and is not validated per player: the v2 test
+  gated team-level absence terms on game outcomes, never any single player's value, and minutes
+  redistribution is not modeled.
+- Projections (games not yet sealed, through six days ahead) are not forecasts on the record. They
+  must be labelled as projections with their basis (a stored report by the seal rules, or current
+  absences), are never scored, and carry no performance claim of their own.
 - The ledger must always show missed seals, games with no final seal (scored on their morning
   seal, as reissued if it was) and seals with incomplete inputs, and seals made with a stale or
   missing injury report say so. A reissued morning seal shows its true time and keeps the original. Results below 500 scored games carry a small-sample label.
@@ -237,5 +245,6 @@ rating model. Each version's sealed record is reported separately.
 - That v2 beats v1 prospectively, before the sealed ledger shows it on at least 500 scored games
   with the paired reference stored on each v2 seal.
 - That the injury test is a prospective result, or that return estimates use reported return dates.
+- That a player's 548 impact is validated, measures his true value, or ranks players reliably.
 - Betting value of any kind, official NBA data, or any affiliation with the NBA. The injury report
   PDFs are the NBA's public documents, read unofficially.

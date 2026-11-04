@@ -371,3 +371,27 @@ unfiled sides now count 4.6 points on average, against 5.2 at the final point.
 Rows written before this change keep their rule and stay in the record as written; nothing is
 backfilled. Their game pages rebuild the rest of the list from the report the seal used, giving those
 players only their combined points.
+
+2026-11-04, data note: next-slate reports and projections with the injury term. No change to
+sealing, scoring, the frozen inputs or anything the model reads. Each run now also fetches the newest
+NBA report when the next ET date with games has scheduled games (the NBA lists the next day's games
+on its evening report), and one download is cut and validated per slate with the existing
+`reportForSlate` rule and recorded in each slate's day file under the same politeness limits (one
+file at a time with pauses, at most four downloads a run, never a file twice for a slate). The
+current slate leads exactly as before, so a seal's report is chosen by the same rule from the same
+downloads: the latest validated report for its slate at or before now. A next-slate report is only
+another stored report for its slate, at or before now, like any other; in particular, when a run's
+own fetch fails, the last good one under 24 hours old may now be one stored the evening before,
+used and flagged stale as the rule already says.
+
+Projections for every scheduled game in the next seven days now carry an injury term
+(`data/live/site/{season}/projections.json`): published full-strength ratings, home court and rest
+as a seal sets them, and, for a slate with a usable report (the current slate's report in use, or
+the next ET date's latest), exactly the seal rules, unfiled sides included; for other games the
+team's expected absence from current absences, the season simulation's charge for that pending game.
+Each records its basis (`report` with `reportAt`, or `current-absences`), `absencePoints` and
+complete drivers. Projections never enter the ledger or the record, are never scored and are never
+compared to the market; `verify:live` checks them, including that no projection key appears in the
+ledger. Safety check before merge: on a copy of `live-data` at 7d61656 with every network input
+pinned, `main` and this change wrote byte-identical ledger rows at 2026-11-04 11:00 UTC (28 morning
+seals) and 23:10 UTC (2 final seals).
