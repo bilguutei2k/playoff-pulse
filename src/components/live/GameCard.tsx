@@ -8,6 +8,7 @@ import {
   injuryNotes,
   marginText,
   metaLine,
+  projectionBasisLine,
   resultLine,
   splitPercents,
   statusLabel,
@@ -194,6 +195,7 @@ export function GameCard({
               {notes.join("; ")}
             </p>
           ) : null}
+          {game.projection ? <p className="text-[12px] text-ink-3">{projectionBasisLine(game)}</p> : null}
           {modelNote && game.forecast && game.forecast.absencePoints === null ? (
             <p className="text-[12px] text-ink-3">Before injuries: this number comes from {game.forecast.modelVersion}.</p>
           ) : null}

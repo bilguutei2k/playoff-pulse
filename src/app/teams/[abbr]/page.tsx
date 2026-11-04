@@ -4,14 +4,28 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { AbsenceRows } from "@/components/live/AbsenceList";
 import { Badge } from "@/components/live/Badge";
 import { heatClass } from "@/components/live/heat";
+import { InjuryTable } from "@/components/live/InjuryTable";
+import { PlayersTable } from "@/components/live/PlayersTable";
 import { RatingChart, type RatingChartPoint } from "@/components/live/RatingChart";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import { getLiveState, getSeasonGames, getSeasonLedger } from "@/lib/live-data/published";
+import {
+  getLiveState,
+  getPlayerIndex,
+  getProjections,
+  getSeasonGames,
+  getSeasonLedger,
+  getTeamInjuryLists,
+  getTeamPlayers,
+} from "@/lib/live-data/published";
+import { IMPACT_LABEL } from "@/lib/season/player-stats";
+import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { teamById } from "@/lib/season/teams";
-import { formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
+import { formatLongDay, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
+import { blockFromList } from "@/lib/view/injury-report";
 import { formatRating, oddsRows, type OddsRow } from "@/lib/view/odds";
+import { teamRoster } from "@/lib/view/players";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { ratingHistory } from "@/lib/view/rating-history";
 import { teamSchedule, type TeamGameRow } from "@/lib/view/team";
@@ -158,7 +172,15 @@ function ScheduleRow({ row, modelVersion }: { row: TeamGameRow; modelVersion: st
         {row.forecast ? (
           <span className="inline-flex items-center gap-2">
             {row.forecast.source === "projection" ? (
-              <Badge tone="quiet">Proj.</Badge>
+              <span
+                title={
+                  row.forecast.withInjuries
+                    ? "Projection with the injury term. Not sealed, never scored."
+                    : "Projection from ratings alone, before injuries. Not sealed, never scored."
+                }
+              >
+                <Badge tone="quiet">Proj.</Badge>
+              </span>
             ) : row.forecast.modelVersion !== null && row.forecast.modelVersion !== modelVersion ? (
               <span title={`Sealed by ${row.forecast.modelVersion}, which does not account for injuries`}>
                 <Badge tone="quiet">{row.forecast.modelVersion.split("-").at(-1)}</Badge>
@@ -201,9 +223,22 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
-            <ScheduleRow key={row.game.id} row={row} modelVersion={modelVersion} />
-          ))}
+          {rows.map((row, index) => {
+            const ratingsOnly = row.forecast?.source === "projection" && !row.forecast.withInjuries;
+            const previous = rows[index - 1]?.forecast;
+            const startsGroup = ratingsOnly && !(previous?.source === "projection" && !previous.withInjuries);
+            return [
+              startsGroup ? (
+                <tr key={`${row.game.id}-group`} className="border-b border-line bg-wash">
+                  <td colSpan={4} className="px-3 py-2 text-left text-[12px] leading-5 text-ink-2 sm:px-4">
+                    <span className="font-semibold text-ink">Later games</span> are projected from ratings alone, before
+                    injuries, until they are within a week.
+                  </td>
+                </tr>
+              ) : null,
+              <ScheduleRow key={row.game.id} row={row} modelVersion={modelVersion} />,
+            ];
+          })}
         </tbody>
       </table>
     </div>
@@ -218,18 +253,22 @@ export default async function TeamPage({ params }: Params) {
   if (!team) notFound();
   if (team.slug !== abbr) permanentRedirect(`/teams/${team.slug}`);
 
-  const [liveState, games, ledger, history] = await Promise.all([
+  const [liveState, games, ledger, history, projections, lists, players, index] = await Promise.all([
     getLiveState(),
     getSeasonGames(),
     getSeasonLedger(),
     ratingHistory(),
+    getProjections(),
+    getTeamInjuryLists(),
+    getTeamPlayers(team.id),
+    getPlayerIndex(),
   ]);
   const rows = oddsRows(liveState, games);
   const row = rows.find((candidate) => candidate.teamId === team.id);
   if (!row) notFound();
   const division = teamById(team.id).division;
   const standing = conferenceOrder(liveState.forecast.teams, team.conference).findIndex((t) => t.teamId === team.id) + 1;
-  const schedule = teamSchedule({ state: liveState, games, ledger, teamId: team.id });
+  const schedule = teamSchedule({ state: liveState, games, ledger, teamId: team.id, projections });
   const played = schedule.filter((game) => game.result !== null).reverse();
   const upcoming = schedule.filter((game) => game.result === null);
   const anySealed = played.some((game) => game.forecast?.source === "sealed");
@@ -248,6 +287,13 @@ export default async function TeamPage({ params }: Params) {
   });
   const modeled = liveState.injury !== null;
   const absences = liveState.absences.filter((absence) => absence.teamId === team.id).sort((a, b) => b.points - a.points);
+  // The team's list for its next game replaces the current absences, so the page shows
+  // one list; the season odds' absences stay on /odds.
+  const teamList = lists?.teams.find((candidate) => candidate.teamId === team.id) ?? null;
+  const injuryBlock = teamList ? blockFromList(teamList) : null;
+  const roster = players ? teamRoster(players, index, lists) : null;
+  const projectedWithInjuries = upcoming.some((game) => game.forecast?.source === "projection" && game.forecast.withInjuries);
+  const projectedWithout = upcoming.some((game) => game.forecast?.source === "projection" && !game.forecast.withInjuries);
 
   return (
     <main className="pp-container py-8 sm:py-10">
@@ -307,7 +353,31 @@ export default async function TeamPage({ params }: Params) {
         </section>
       </div>
 
-      {modeled ? (
+      {modeled && lists ? (
+        <section aria-labelledby="absences-title" className="mt-10">
+          <SectionHeading
+            id="absences-title"
+            kicker="Injuries"
+            title="Injury list for the next game"
+            dek={
+              injuryBlock ? (
+                <>
+                  The NBA report&apos;s listings and the players the model infers from box scores, with the points of
+                  margin it counts for each. A game&apos;s seals count the report in use when they are made. Every
+                  team&apos;s list is on the <Link href="/injuries" className="pp-link">injury report</Link>.
+                </>
+              ) : undefined
+            }
+          />
+          {injuryBlock ? (
+            <div className="panel mt-4 overflow-hidden">
+              <InjuryTable block={injuryBlock} showGame />
+            </div>
+          ) : (
+            <p className="notice-quiet mt-4">The {team.shortName} have no game scheduled, so there is no injury list.</p>
+          )}
+        </section>
+      ) : modeled ? (
         <section aria-labelledby="absences-title" className="mt-10">
           <SectionHeading
             id="absences-title"
@@ -332,8 +402,58 @@ export default async function TeamPage({ params }: Params) {
         </p>
       )}
 
+      <section aria-labelledby="roster-title" className="mt-10">
+        <SectionHeading
+          id="roster-title"
+          kicker="Players"
+          title="Roster and season stats"
+          dek={
+            roster && roster.length > 0 ? (
+              <>
+                Per game played for the {team.shortName}, most minutes first; select a column heading to sort. A traded
+                player counts only his games here. {IMPACT_LABEL}
+              </>
+            ) : undefined
+          }
+          href="/players"
+          linkLabel="Every player"
+        />
+        <div className="mt-4">
+          {roster && roster.length > 0 ? (
+            <PlayersTable
+              rows={roster}
+              caption={`${team.name} roster: season averages, shooting, 548 impact and injury status.`}
+              showTeam={false}
+              controls={false}
+              initialSort={{ key: "minutes", descending: true }}
+            />
+          ) : (
+            <p className="notice-quiet">
+              {roster ? `No ${team.shortName} box score is stored yet.` : "Player stats are not published yet."}
+            </p>
+          )}
+          {players && players.games.length > 0 ? (
+            <p className="mt-3 text-[12.5px] text-ink-3">
+              From {players.games.length} stored {players.games.length === 1 ? "box score" : "box scores"}, the latest on{" "}
+              {formatLongDay(players.games.at(-1)!.etDate)}.
+            </p>
+          ) : null}
+        </div>
+      </section>
+
       <section aria-labelledby="upcoming-title" className="mt-10">
-        <SectionHeading id="upcoming-title" kicker="Schedule" title="Upcoming games" dek={upcoming.some((game) => game.forecast?.source === "projection") ? PROJECTION_LABEL : undefined} />
+        <SectionHeading
+          id="upcoming-title"
+          kicker="Schedule"
+          title="Upcoming games"
+          dek={
+            projectedWithInjuries
+              ? `${PROJECTION_WITH_INJURIES_LABEL}${projectedWithout ? " Games more than a week away are projected from ratings alone, before injuries." : ""}`
+              : projectedWithout
+                ? PROJECTION_LABEL
+                : undefined
+          }
+        />
         <div className="mt-4">
           {upcoming.length === 0 ? (
             <p className="notice-quiet">No games left on the schedule.</p>

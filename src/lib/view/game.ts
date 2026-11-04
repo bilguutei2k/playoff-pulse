@@ -51,8 +51,9 @@ export function buildGameDetail(input: {
 }): GameDetail {
   const { state, game, storeGames } = input;
   const dates = scheduleDates(state, storeGames);
-  const homeOnBackToBack = backToBackFromDates(dates[game.homeId] ?? [], game.etDate);
-  const awayOnBackToBack = backToBackFromDates(dates[game.awayId] ?? [], game.etDate);
+  // A projection carries the rest flags it was priced with.
+  const homeOnBackToBack = game.projection?.homeOnBackToBack ?? backToBackFromDates(dates[game.homeId] ?? [], game.etDate);
+  const awayOnBackToBack = game.projection?.awayOnBackToBack ?? backToBackFromDates(dates[game.awayId] ?? [], game.etDate);
   const context = {
     homeId: game.homeId,
     awayId: game.awayId,
@@ -80,7 +81,7 @@ export function buildGameDetail(input: {
       state,
       context,
       expectedMargin: game.projection.expectedMargin,
-      absencePoints: null,
+      absencePoints: game.projection.absencePoints,
       ratingsHash: null,
     });
   }

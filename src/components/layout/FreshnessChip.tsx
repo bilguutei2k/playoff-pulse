@@ -51,7 +51,7 @@ export function FreshnessChip({
       <span className="whitespace-nowrap">
         {stored ? <span className="font-medium">Stored copy · </span> : null}
         <time dateTime={iso}>{stored ? "updated" : "Updated"} {when}</time>
-        <span className="hidden lg:inline">
+        <span className="hidden xl:inline">
           <span aria-hidden className="mx-1.5 text-ink-4">·</span>
           <span className="num">{modelVersion}</span>
         </span>

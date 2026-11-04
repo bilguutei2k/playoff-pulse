@@ -6,6 +6,7 @@
 
 import type { GameExtras } from "@/lib/live-data/espn-extras";
 import type { LiveReportDay } from "@/lib/season/live-reports";
+import type { ProjectionsFile } from "@/lib/season/projections";
 import { sealsByGame } from "@/lib/season/live-state";
 import { providerName } from "@/lib/season/market";
 import { buildSlateView, displayedSeal, type SlateGameView, type SlateView } from "@/lib/season/slate";
@@ -19,14 +20,25 @@ import type {
   SeasonGame,
 } from "@/lib/season/types";
 import { absenceSides, type AbsenceSides } from "@/lib/view/injuries";
-import { projectGame, scheduleDates, type Projection } from "@/lib/view/projection";
+import {
+  fromPublished,
+  projectGame,
+  publishedProjection,
+  scheduleDates,
+  withoutInjuries,
+  type ShownProjection,
+} from "@/lib/view/projection";
 import { mergeSeals } from "@/lib/view/seals";
 
 export type DayKind = "past" | "today" | "future";
 
 export type DayGame = SlateGameView & {
-  /** Unsealed future games only. Never scored, never compared to the market. */
-  projection: Projection | null;
+  /**
+   * Unsealed future games only: the published projection with the injury term, or the
+   * fallback from ratings alone when it is not published for this game. Never scored,
+   * never compared to the market.
+   */
+  projection: ShownProjection | null;
   extras: GameExtras | null;
   /** The line the market reference came from, with its spread. */
   marketLine: MarketReference | null;
@@ -70,6 +82,8 @@ export function buildDayView(input: {
   extras: Record<string, GameExtras>;
   /** The date's stored NBA reports, for seals that kept only three drivers a side. */
   reports?: LiveReportDay | null;
+  /** The published projections with the injury term (`getProjections`); null when not published. */
+  projections?: ProjectionsFile | null;
 }): DayView {
   const { state, etDate, todayEtDate, nowIso, espnRows, storeGames, ledger, extras } = input;
   const kind: DayKind = etDate < todayEtDate ? "past" : etDate > todayEtDate ? "future" : "today";
@@ -88,13 +102,15 @@ export function buildDayView(input: {
 
   const games: DayGame[] = slate.games.map((game) => {
     let forecast = game.forecast;
-    let projection: Projection | null = null;
+    let projection: ShownProjection | null = null;
     if (forecast?.source === "provisional" && kind !== "today") {
-      // A provisional number is today's stopgap only. Future games get a projection
-      // without injuries; an unresolved past game gets nothing.
+      // A provisional number is today's stopgap only. Future games get the published
+      // projection with the injury term, or the one from ratings alone where it is not
+      // published; an unresolved past game gets nothing.
       forecast = null;
       if (kind === "future" && game.status === "scheduled") {
-        projection = projectGame(state, game, dates);
+        const published = publishedProjection(input.projections ?? null, game.id);
+        projection = published ? fromPublished(published) : withoutInjuries(projectGame(state, game, dates));
       }
     }
     const sealRows = seals[game.id] ?? [];
@@ -113,7 +129,19 @@ export function buildDayView(input: {
       extras: extras[game.id] ?? null,
       marketLine: line ? { ...line, provider: providerName(line.provider) } : null,
       sealRows,
-      absences: absenceSides({ forecast, homeId: game.homeId, awayId: game.awayId, report }),
+      absences: projection?.withInjuries
+        ? absenceSides({
+            forecast: {
+              absencePoints: projection.absencePoints,
+              drivers: projection.drivers,
+              driversComplete: true,
+              unfiled: projection.unfiled,
+            },
+            homeId: game.homeId,
+            awayId: game.awayId,
+            report: null,
+          })
+        : absenceSides({ forecast, homeId: game.homeId, awayId: game.awayId, report }),
     };
   });
 

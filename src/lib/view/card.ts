@@ -2,7 +2,7 @@
 // Formatting only: every probability and margin comes from a seal, a provisional
 // number, a projection or the in-game estimate already computed upstream.
 
-import { formatTimeEt } from "@/lib/utils/dates";
+import { formatReportTime, formatTimeEt } from "@/lib/utils/dates";
 import type { DayGame } from "@/lib/view/day";
 import { cardInjuryLines } from "@/lib/view/injuries";
 import { teamDisplay } from "@/lib/view/teams";
@@ -90,7 +90,13 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
     return { label: "Before the record", tone: "quiet", detail: "Tipped before the first seal, so it was never in the record." };
   }
   if (game.projection) {
-    return { label: "Projection", tone: "quiet", detail: "From current ratings, before injuries. Not sealed, never scored." };
+    return {
+      label: "Projection",
+      tone: "quiet",
+      detail: game.projection.withInjuries
+        ? "From current ratings, home court, rest and the injury term. Not sealed, never scored."
+        : "From current ratings, before injuries. Not sealed, never scored.",
+    };
   }
   const forecast = game.forecast;
   if (!forecast) return null;
@@ -155,6 +161,15 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
  */
 export function injuryNotes(game: Pick<DayGame, "absences">, threshold = 1): string[] | null {
   return cardInjuryLines(game.absences, threshold);
+}
+
+/** "From the NBA report of 1:30 AM ET" or "From current absences": a card's projection basis. */
+export function projectionBasisLine(game: Pick<DayGame, "projection" | "etDate">): string | null {
+  const basis = game.projection?.basis;
+  if (!game.projection) return null;
+  if (!basis) return "Before injuries: ratings, home court and rest only";
+  if (basis.kind === "current-absences") return "Injury term from current absences; no report yet";
+  return `Injury term from the NBA report of ${formatReportTime(basis.reportAt, game.etDate)}${basis.stale ? " (last good one)" : ""}`;
 }
 
 /** "Cavaliers won 112–104. 548 gave them 57%." for a final with a sealed number. */

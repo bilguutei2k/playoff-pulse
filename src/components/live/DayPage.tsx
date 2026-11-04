@@ -6,6 +6,8 @@ import { RecordGlance, TitleRace } from "@/components/live/HomePanels";
 import { getGameCountsByDate, getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import { formatLongDay } from "@/lib/utils/dates";
 import type { DayView } from "@/lib/view/day";
+import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
+import { basisSummary } from "@/lib/view/injury-report";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { recordsThrough, teamLines } from "@/lib/view/teams";
 
@@ -71,6 +73,9 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
     forecasts.length > 0 &&
     forecasts.every((forecast) => forecast.source === "provisional");
   const beforeInjuries = forecasts.filter((forecast) => forecast.absencePoints === null);
+  const projections = view.games.flatMap((game) => (game.projection ? [game.projection] : []));
+  const withInjuries = projections.filter((projection) => projection.withInjuries);
+  const ratingsOnly = projections.length - withInjuries.length;
   const nextDay = nearestGameDay(counts, view.etDate, 1);
   const previousDay = nearestGameDay(counts, view.etDate, -1);
 
@@ -115,8 +120,19 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
               numbers are labeled and never scored.
             </p>
           ) : null}
-          {view.kind === "future" && view.games.some((game) => game.projection) ? (
-            <p className="notice-quiet">{PROJECTION_LABEL} Projections are never scored or compared with the market.</p>
+          {view.kind === "future" && withInjuries.length > 0 ? (
+            <p className="notice-quiet">
+              {PROJECTION_WITH_INJURIES_LABEL}{" "}
+              {basisSummary(withInjuries.map((projection) => projection.basis), view.etDate)} Projections are never
+              compared with the market. Every team&apos;s list is on the{" "}
+              <Link href="/injuries" className="pp-link">injury report</Link>.
+            </p>
+          ) : null}
+          {view.kind === "future" && ratingsOnly > 0 ? (
+            <p className="notice-quiet">
+              {PROJECTION_LABEL} Projections with the injury term cover the next seven days. Projections are never
+              scored or compared with the market.
+            </p>
           ) : null}
           {beforeInjuries.length > 0 ? (
             <p className="notice-quiet">

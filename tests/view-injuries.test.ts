@@ -78,12 +78,12 @@ describe("lists for a seal that kept three drivers", () => {
     const home = sides!.home;
     expect(home.players).toHaveLength(10);
     expect(home.players.slice(0, 3)).toEqual([
-      { name: "Tyrese Haliburton", status: "O", points: 2.653 },
-      { name: "Pascal Siakam", status: "O", points: 2.359 },
-      { name: "Andrew Nembhard", status: "O", points: 1.643 },
+      { athleteId: "Tyrese Haliburton", name: "Tyrese Haliburton", status: "O", points: 2.653 },
+      { athleteId: "Pascal Siakam", name: "Pascal Siakam", status: "O", points: 2.359 },
+      { athleteId: "Andrew Nembhard", name: "Andrew Nembhard", status: "O", points: 1.643 },
     ]);
-    // Nobody else gets a per-player number.
-    expect(home.players.slice(3).every((player) => player.points === null)).toBe(true);
+    // Nobody else gets a per-player number, or a link: a name rebuilt from the report has no athlete ID.
+    expect(home.players.slice(3).every((player) => player.points === null && player.athleteId === null)).toBe(true);
     expect(home.players.map((player) => player.name)).toContain("Larry Nance Jr.");
     expect(home.others?.count).toBe(7);
     expect(home.others?.points).toBeCloseTo(12.225 - 2.653 - 2.359 - 1.643, 9);

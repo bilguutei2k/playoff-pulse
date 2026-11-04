@@ -15,7 +15,7 @@ export async function Header() {
           <Brand548 size={36} />
           <span className="kicker whitespace-nowrap text-ink-2">NBA forecasts</span>
         </Link>
-        <div className="hidden min-w-0 flex-1 md:block">
+        <div className="hidden min-w-0 flex-1 lg:block">
           <NavLinks />
         </div>
         <div className="ml-auto shrink-0">
@@ -27,7 +27,7 @@ export async function Header() {
           />
         </div>
       </div>
-      <div className="border-t border-line md:hidden">
+      <div className="border-t border-line lg:hidden">
         <div className="pp-container">
           <NavLinks />
         </div>
