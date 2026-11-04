@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/live/Badge";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import { liveState } from "@/lib/season/published";
+import { getLiveState, getSeasonLedger } from "@/lib/live-data/published";
 import type { RecordSummary } from "@/lib/season/types";
 import { formatShortDay } from "@/lib/utils/dates";
 import { splitPercents } from "@/lib/view/card";
@@ -20,7 +20,6 @@ import {
   type ScoredGame,
   type VersionLedger,
 } from "@/lib/view/record";
-import { ledgerRows } from "@/lib/view/store";
 import { teamDisplay } from "@/lib/view/teams";
 
 export const metadata: Metadata = {
@@ -29,7 +28,10 @@ export const metadata: Metadata = {
     "Every 548 forecast is sealed before tip and scored after the final, in public: Brier score, log loss, accuracy, misses and every game, per model version.",
 };
 
-const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/main/data/live/ledger";
+const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
+
+// Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
+export const revalidate = 60;
 const LIST_LIMIT = 100;
 
 const fixed = (value: number | null, digits: number) => (value === null ? null : value.toFixed(digits));
@@ -193,8 +195,9 @@ function CalibrationChart({ bins }: { bins: CalibrationBin[] }) {
   );
 }
 
-export default function RecordPage() {
-  const ledger = ledgerRows();
+export default async function RecordPage() {
+  // The season's rows from the job's month files (no driver lists; this page needs none).
+  const [liveState, ledger] = await Promise.all([getLiveState(), getSeasonLedger()]);
   const versions = [liveState.modelVersion, ...(liveState.referenceModelVersion !== liveState.modelVersion ? [liveState.referenceModelVersion] : [])];
   const records = versions.map((version) => ({
     version,

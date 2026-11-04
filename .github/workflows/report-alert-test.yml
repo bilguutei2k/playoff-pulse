@@ -1,0 +1,39 @@
+name: Injury report alert test
+
+# Run by hand to prove the injury report alert end to end. It copies data/live/health.json
+# with a fake `reportProblem` into the runner's temp directory (nothing under data/live is
+# changed or committed) and runs scripts/live/report-alert.sh, the script the live job
+# runs, with the title prefix "Injury report alert test". It opens at most one issue per
+# slate, which emails the owner; close it after checking. Never scheduled.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: report-alert-test
+  cancel-in-progress: false
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Write a fake report problem
+        run: |
+          jq '.reportProblem = "Alert test, run by hand from the Injury report alert test workflow. Nothing is wrong with the injury reports; close this issue."' \
+            data/live/health.json > "$RUNNER_TEMP/health.json"
+          cat "$RUNNER_TEMP/health.json"
+
+      - name: Open the test issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEALTH_FILE: ${{ runner.temp }}/health.json
+        run: bash scripts/live/report-alert.sh "Injury report alert test"

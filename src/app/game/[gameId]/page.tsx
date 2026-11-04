@@ -12,19 +12,25 @@ import {
 } from "@/components/live/GameSections";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { loadDayView } from "@/lib/live-data/day-loader";
-import { liveState } from "@/lib/season/published";
+import { getGameById, getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import { formatLongDay } from "@/lib/utils/dates";
 import { buildGameDetail, nextGameFor } from "@/lib/view/game";
-import { gameById, seasonGames } from "@/lib/view/store";
 import { recordsThrough, teamDisplay, teamLines } from "@/lib/view/teams";
 
+// Rendered on demand from main's published data and re-rendered about once a minute
+// (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
 export const revalidate = 60;
+export const dynamicParams = true;
+
+export function generateStaticParams() {
+  return [];
+}
 
 type Params = { params: Promise<{ gameId: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { gameId } = await params;
-  const game = gameById(gameId);
+  const game = await getGameById(gameId);
   if (!game) return { title: "Game not found" };
   const away = teamDisplay(game.awayId);
   const home = teamDisplay(game.homeId);
@@ -36,13 +42,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function GamePage({ params }: Params) {
   const { gameId } = await params;
-  const stored = gameById(gameId);
+  const stored = await getGameById(gameId);
   if (!stored) notFound();
   const day = await loadDayView(stored.etDate);
   const game = day.games.find((row) => row.id === gameId);
   if (!game) notFound();
 
-  const games = seasonGames();
+  const [liveState, games] = await Promise.all([getLiveState(), getSeasonGames()]);
   const detail = buildGameDetail({ state: liveState, game, storeGames: games });
   const lines = day.kind === "past" ? recordsThrough(games, day.etDate) : teamLines(liveState);
   const current = teamLines(liveState);

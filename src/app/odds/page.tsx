@@ -6,12 +6,11 @@ import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TitleOddsChart } from "@/components/live/TitleOddsChart";
-import { liveState } from "@/lib/season/published";
+import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import { distinctTeamColors } from "@/lib/season/team-colors";
 import type { SeasonPhase } from "@/lib/season/types";
 import { formatDateTimeEt, formatShortDay } from "@/lib/utils/dates";
 import { oddsRows } from "@/lib/view/odds";
-import { seasonGames } from "@/lib/view/store";
 import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
 
 export const metadata: Metadata = {
@@ -29,10 +28,14 @@ const PHASE_LABELS: Record<SeasonPhase, string> = {
 
 const CHART_TEAMS = 8;
 
-export default function OddsPage() {
+// Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
+export const revalidate = 60;
+
+export default async function OddsPage() {
+  const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
   const { forecast, history, generatedAt, seasonLabel } = liveState;
   const modeled = liveState.injury !== null;
-  const rows = oddsRows(liveState, seasonGames());
+  const rows = oddsRows(liveState, seasonGames);
   const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
   const ranked = [...forecast.teams].sort((a, b) => b.champion - a.champion);
   const top = ranked.slice(0, CHART_TEAMS).map((team) => team.teamId);

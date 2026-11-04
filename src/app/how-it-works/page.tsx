@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 /** No claim about the model against the market before this many scored games. */
 const MARKET_CLAIM_GAMES = 500;
 
-const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/main/data/live/ledger";
+const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 const REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration.md";
 

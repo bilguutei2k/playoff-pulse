@@ -20,6 +20,7 @@ import type {
 } from "@/lib/season/types";
 import { absenceSides, type AbsenceSides } from "@/lib/view/injuries";
 import { projectGame, scheduleDates, type Projection } from "@/lib/view/projection";
+import { mergeSeals } from "@/lib/view/seals";
 
 export type DayKind = "past" | "today" | "future";
 
@@ -73,8 +74,8 @@ export function buildDayView(input: {
   const { state, etDate, todayEtDate, nowIso, espnRows, storeGames, ledger, extras } = input;
   const kind: DayKind = etDate < todayEtDate ? "past" : etDate > todayEtDate ? "future" : "today";
   const rows = espnRows && espnRows.length > 0 ? espnRows : storeRows(storeGames, etDate);
-  const ledgerSeals = sealsByGame(ledger, etDate, etDate);
-  const seals: Record<string, SealRow[]> = { ...state.seals, ...ledgerSeals };
+  // The day's ledger rows and the state can be a commit apart; keep every seal from both.
+  const seals: Record<string, SealRow[]> = mergeSeals(state.seals, sealsByGame(ledger, etDate, etDate));
   const slate = buildSlateView({
     state: { ...state, seals },
     etDate,
