@@ -7,7 +7,7 @@ import { parseScoreboardExtras, type GameExtras } from "@/lib/live-data/espn-ext
 import { createFetchJson, fetchInjuries, parseScoreboard } from "@/lib/live-data/espn-season";
 import { slateDateAt } from "@/lib/season/live-state";
 import type { InjuryRow, ScoreboardRow } from "@/lib/season/types";
-import { getDaySeals, getLiveState, getReportDay, getSeasonGames } from "@/lib/live-data/published";
+import { getDaySeals, getLiveState, getProjections, getReportDay, getSeasonGames } from "@/lib/live-data/published";
 import { buildDayView, type DayView } from "@/lib/view/day";
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
@@ -24,11 +24,13 @@ export async function loadDayView(etDate: string): Promise<DayView> {
   const nowIso = new Date().toISOString();
   const today = todayEtDate(nowIso);
   const isToday = etDate === today;
-  const [liveState, storeGames, daySeals, reports] = await Promise.all([
+  // Only future days show projections; today and past days never read that file.
+  const [liveState, storeGames, daySeals, reports, projections] = await Promise.all([
     getLiveState(),
     getSeasonGames(),
     getDaySeals(etDate),
     getReportDay(etDate),
+    etDate > today ? getProjections() : Promise.resolve(null),
   ]);
 
   let espnRows: ScoreboardRow[] | null = null;
@@ -65,5 +67,6 @@ export async function loadDayView(etDate: string): Promise<DayView> {
     injuries,
     extras,
     reports,
+    projections,
   });
 }

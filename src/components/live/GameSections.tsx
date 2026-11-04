@@ -18,6 +18,9 @@ import type { DayGame } from "@/lib/view/day";
 import type { GameDetail } from "@/lib/view/game";
 import { filingNote, othersNote, playerPoints } from "@/lib/view/injuries";
 import type { MarginBreakdown, MarginPart } from "@/lib/view/margin";
+import { PlayerLink } from "@/components/live/PlayerLink";
+import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
+import { basisSentence } from "@/lib/view/injury-report";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { formatRecord, ordinal, pairColors, teamDisplay, teamHref, type TeamLine } from "@/lib/view/teams";
 
@@ -173,7 +176,13 @@ export function WinProbability({ game }: { game: DayGame }) {
       kicker={live ? "Live estimate" : game.projection ? "Projection" : game.status === "final" ? "Sealed before tip" : "548"}
       title="Win probability"
     >
-      {game.projection ? <p className="notice-quiet mb-4">{PROJECTION_LABEL}</p> : null}
+      {game.projection ? (
+        <p className="notice-quiet mb-4">
+          {game.projection.withInjuries
+            ? `${PROJECTION_WITH_INJURIES_LABEL} ${basisSentence(game.projection.basis, game.etDate)}`
+            : PROJECTION_LABEL}
+        </p>
+      ) : null}
       <div className="flex items-end justify-between gap-6">
         <BigNumber id={game.awayId} percent={percents.away} market={market?.away ?? null} align="left" />
         <BigNumber id={game.homeId} percent={percents.home} market={market?.home ?? null} align="right" />
@@ -254,10 +263,10 @@ function DivergingRow({ label, points, scale, homeId, awayId, total = false }: {
   );
 }
 
-function PlayerRow({ name, points }: { name: string; points: number | null }) {
+function PlayerRow({ athleteId, name, points }: { athleteId: string | null; name: string; points: number | null }) {
   return (
     <li className="flex justify-between gap-3">
-      <span>{name}</span>
+      <PlayerLink athleteId={athleteId} name={name} />
       <span className="num text-ink-3">{points === null ? "" : playerPoints(points)}</span>
     </li>
   );
@@ -270,7 +279,7 @@ function AbsenceLists({ game, today }: { game: DayGame; today: boolean }) {
     <div className="mt-5 grid gap-4 sm:grid-cols-2">
       {(["away", "home"] as const).map((key) => {
         const side = sides[key];
-        const filing = filingNote(side, today);
+        const filing = filingNote(side, today, game.projection !== null);
         const others = othersNote(side);
         return (
           <div key={key} className="rounded-lg bg-wash px-4 py-3">
@@ -288,7 +297,9 @@ function AbsenceLists({ game, today }: { game: DayGame; today: boolean }) {
                   ? "No injury report was in use, so nobody is counted."
                   : side.filing === "unfiled-counted"
                     ? "Nobody missed its last game."
-                    : "No listed absences."}
+                    : game.projection?.basis?.kind === "current-absences"
+                      ? "Nobody is counted as out."
+                      : "No listed absences."}
               </p>
             ) : (
               side.groups.map((group) => (
@@ -298,7 +309,7 @@ function AbsenceLists({ game, today }: { game: DayGame; today: boolean }) {
                   </p>
                   <ul className="mt-1 space-y-1 text-[13px] text-ink-2">
                     {group.players.map((player, index) => (
-                      <PlayerRow key={`${player.name}-${index}`} name={player.name} points={player.points} />
+                      <PlayerRow key={`${player.name}-${index}`} athleteId={player.athleteId} name={player.name} points={player.points} />
                     ))}
                   </ul>
                 </div>
@@ -338,7 +349,16 @@ export function WhatMoves({ game, breakdown, detail, today }: { game: DayGame; b
         {!breakdown.separated ? (
           <p>Ratings have been updated since this seal, so its rating and home-court parts are shown together.</p>
         ) : null}
-        {game.projection ? <p>A projection has no injury term: expected absences enter only when the game is sealed.</p> : null}
+        {game.projection && !game.projection.withInjuries ? (
+          <p>This projection comes from ratings alone and has no injury term: expected absences enter when the game is sealed.</p>
+        ) : null}
+        {game.projection?.withInjuries ? (
+          <p>
+            {basisSentence(game.projection.basis, game.etDate)} The seals on game day count the report in use at each
+            seal. The <Link href="/injuries" className="pp-link">injury report</Link> has each team&apos;s full list,
+            with reasons and the players the model infers from box scores.
+          </p>
+        ) : null}
         {forecast && forecast.absencePoints === null ? (
           <p>This number is from {forecast.modelVersion}, which does not account for injuries, so there is no absence line.</p>
         ) : null}
@@ -349,7 +369,7 @@ export function WhatMoves({ game, breakdown, detail, today }: { game: DayGame; b
         {forecast?.reportAt && !forecast.availabilityStale ? (
           <p>Injury report used: the NBA&apos;s report of {formatReportTime(forecast.reportAt, game.etDate)}.</p>
         ) : null}
-        {game.absences ? (
+        {game.absences && game.forecast ? (
           <p>
             A seal counts every player on the report in use, weighted by status. Team pages and the season odds
             list current absences instead, which is who the season simulation counts as out.

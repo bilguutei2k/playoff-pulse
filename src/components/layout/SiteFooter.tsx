@@ -7,6 +7,8 @@ const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/
 const FORECAST_LINKS = [
   { href: "/", label: "Today's games" },
   { href: "/odds", label: "Playoff and title odds" },
+  { href: "/injuries", label: "Injury report" },
+  { href: "/players", label: "Players" },
   { href: "/teams", label: "Teams" },
   { href: "/record", label: "Track record" },
   { href: "/how-it-works", label: "How it works" },

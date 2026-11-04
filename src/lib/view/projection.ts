@@ -1,12 +1,16 @@
-// Projections for games that have no seal yet: the published full-strength ratings
-// priced with `predictGame`, home court and back-to-back from the schedule, and no
-// injury term. They exist so a future schedule is not a blank list. They never enter
-// the ledger or the record, are never scored and are never compared to the market.
-// `scripts/verify/live-checks.ts` checks every one the site can show.
+// Projections for games that have no seal yet. The site shows the job's published
+// projections with the injury term (`getProjections`, src/lib/season/projections.ts)
+// for every game they cover: the next seven days. This file keeps the older number, the
+// published full-strength ratings priced with `predictGame`, home court and back-to-back
+// from the schedule and no injury term, only as the fallback for a game the published
+// file does not cover (it is not published, or the game is more than a week away).
+// Neither kind ever enters the ledger or the record, is scored or is compared to the
+// market. `scripts/verify/live-checks.ts` checks every one the site can show.
 
 import { backToBackFromDates } from "@/lib/season/live-state";
+import type { GameProjection, ProjectionBasis, ProjectionsFile } from "@/lib/season/projections";
 import { predictGame } from "@/lib/season/ratings";
-import type { LiveState, SeasonGame } from "@/lib/season/types";
+import type { AbsenceDriver, LiveState, SeasonGame } from "@/lib/season/types";
 
 export const PROJECTION_LABEL =
   "Projection from current ratings, before injuries. The sealed forecast is issued on game day.";
@@ -19,6 +23,41 @@ export type Projection = {
   homeOnBackToBack: boolean;
   awayOnBackToBack: boolean;
 };
+
+/** A projection as the pages show it: the published one with the injury term, or the fallback without it. */
+export type ShownProjection = Projection & {
+  /** True for the job's published projection; false for the fallback from ratings alone, before injuries. */
+  withInjuries: boolean;
+  /** Null on the fallback. */
+  basis: ProjectionBasis | null;
+  absencePoints: { home: number; away: number } | null;
+  unfiled: { home: boolean; away: boolean } | null;
+  drivers: { home: AbsenceDriver[]; away: AbsenceDriver[] } | null;
+};
+
+/** The published projection for one game, or null when the file is missing or does not cover it. */
+export function publishedProjection(file: ProjectionsFile | null, gameId: string): GameProjection | null {
+  return file?.games.find((game) => game.gameId === gameId) ?? null;
+}
+
+export function fromPublished(projection: GameProjection): ShownProjection {
+  return {
+    homeWinProbability: projection.homeWinProbability,
+    awayWinProbability: projection.awayWinProbability,
+    expectedMargin: projection.expectedMargin,
+    homeOnBackToBack: projection.homeOnBackToBack,
+    awayOnBackToBack: projection.awayOnBackToBack,
+    withInjuries: true,
+    basis: projection.basis,
+    absencePoints: projection.absencePoints,
+    unfiled: projection.unfiled,
+    drivers: projection.drivers,
+  };
+}
+
+export function withoutInjuries(projection: Projection): ShownProjection {
+  return { ...projection, withInjuries: false, basis: null, absencePoints: null, unfiled: null, drivers: null };
+}
 
 type ProjectableGame = Pick<SeasonGame, "homeId" | "awayId" | "neutral" | "kind" | "etDate">;
 

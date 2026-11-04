@@ -13,6 +13,8 @@ import {
   LIVE_SIMULATION_ITERATIONS,
   REFERENCE_MODEL_VERSION,
 } from "@/lib/season/params";
+import { IMPACT_LABEL } from "@/lib/season/player-stats";
+import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 
 export const metadata: Metadata = {
@@ -703,9 +705,25 @@ export default function HowItWorksPage() {
                 never stored or scored.
               </Term>
               <Term term="Projection">
-                A number for a game on a later day, labeled &ldquo;{PROJECTION_LABEL}&rdquo; It uses the published
-                ratings, home court and rest, and no injury term. It is never stored, scored or compared with the
-                market.
+                A number for a game on a later day. Through the next seven days it is labeled &ldquo;
+                {PROJECTION_WITH_INJURIES_LABEL}&rdquo; Its injury term follows the seal rules on a stored NBA
+                report for that day when one exists, and otherwise counts current absences, as the season odds do;
+                the label names which. Later games are labeled &ldquo;{PROJECTION_LABEL}&rdquo; and have no injury
+                term. A projection is never stored, scored or compared with the market.
+              </Term>
+              <Term term="Injury list">
+                A team&apos;s list for its next game on the{" "}
+                <Link href="/injuries" className="pp-link">
+                  injury report page
+                </Link>
+                : the NBA report&apos;s listings with their status and reason, and players the model infers from box
+                scores (they missed recent games and are not listed), each with the points the model counts. It is
+                the projection&apos;s own count for that game, never a seal.
+              </Term>
+              <Term term="548 impact">
+                {IMPACT_LABEL} It is beta times the player&apos;s lost value in the replay&apos;s player book, from box
+                scores; the injury test checked team-level absence terms on game outcomes, never any single
+                player&apos;s value, and minutes moving to teammates are not modeled.
               </Term>
               <Term term="Live estimate">
                 During a game, the model&apos;s in-game estimate from the score and the time left. The sealed

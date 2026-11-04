@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PlayerLink } from "@/components/live/PlayerLink";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import type { PublishedAbsence } from "@/lib/season/types";
@@ -31,7 +32,7 @@ export function AbsenceRows({ rows }: { rows: PublishedAbsence[] }) {
       {rows.map((row) => (
         <li key={row.athleteId} className="flex items-baseline justify-between gap-3 py-2 text-[13px]">
           <span className="min-w-0">
-            <span className="font-medium text-ink">{row.name}</span>{" "}
+            <PlayerLink athleteId={row.athleteId} name={row.name} className="font-medium text-ink" />{" "}
             <span className="block text-[12px] text-ink-3">{statusText(row)}</span>
           </span>
           <span className="num shrink-0 text-right text-[12px] text-ink-2">

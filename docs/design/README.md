@@ -1,6 +1,6 @@
 # 548: design handoff
 
-For a designer, human or model, who will not see the code. Read this, then `sample-data.json`, then the screenshots (1440 and 390 px of eight pages, taken about 12:45 AM ET on 2026-11-03 with two games live).
+For a designer, human or model, who will not see the code. Read this, then `sample-data.json`, then the screenshots (1440 and 390 px of eight pages, taken about 12:45 AM ET on 2026-11-03 with two games live; screens 09 to 14, taken about 2:00 AM ET on 2026-11-04, add the injury, players and player pages and the team, future day and future game pages as they now read).
 
 ## 1. What 548 is
 
@@ -28,6 +28,9 @@ A public NBA forecast site (https://548-sable.vercel.app). Every game gets a win
 | `/games/YYYY-MM-DD` | Any day ("Results" past, "Schedule" future) | Date strip, game breadcrumb |
 | `/game/{espnGameId}` | One game | Whole game card, record and schedule rows, "Next game" |
 | `/odds` | Playoff and title odds | Nav, "All odds", team page |
+| `/injuries` | Every team's injury list for its next game | Nav, footer, day notice, game page, team page, player page |
+| `/players` | Every player, sortable and searchable | Nav, footer, team roster "Every player" |
+| `/players/{athleteId}` | One player (ESPN athlete ID) | Every player name whose ID is known: injury lists, game page absences, odds absences, rosters, players table |
 | `/teams` | 30-team index | Nav, team breadcrumb |
 | `/teams/{slug}` | Team (`atl`, `gs`, `ny`, `sa`, `utah`, `wsh`...) | Index, odds rows, title race, game page names |
 | `/record` | Track record | Nav, "Full record", game result |
@@ -36,7 +39,7 @@ A public NBA forecast site (https://548-sable.vercel.app). Every game gets a win
 
 Out of scope: the frozen 2026 archive (`/retrospective`, `/snapshot`, `/evidence`, `/methodology`, `/lab`), which stays linked from the footer.
 
-**Header** (sticky): mark, nav (a second scrolling row below 768 px), and a freshness chip "Updated 4 min ago · live-2026.27-v2", amber past 12 h. **Footer**: not-affiliated notice, versions, links, data sources.
+**Header** (sticky): mark, nav (Games, Odds, Injuries, Players, Teams, Record, How it works; a second scrolling row below 1024 px that scrolls the current page into view and fades at an edge with more links beyond), and a freshness chip "Updated 4 min ago · live-2026.27-v2" (the version from 1280 px), amber past 12 h. **Footer**: not-affiliated notice, versions, links, data sources.
 
 ## 4. Pages, sections and states
 
@@ -45,7 +48,7 @@ Out of scope: the frozen 2026 archive (`/retrospective`, `/snapshot`, `/evidence
 ### Day page (`/`, `/games/{date}`) [dateStrip, dayPage, lifecycleAtlInd, futureDay, emptyDay]
 1. **Date strip**: 3/5/7 days by width, with arrows. Each day shows "Today" or the weekday, the date, and the game count or "No games".
 2. **Header**: kicker, long date, "15 games · 2 live · 13 final · times ET", "Back to today".
-3. **Notices**, shown only when true: state stale or scores unavailable (amber); nothing sealed yet (provisional), future-day projections, or v1 numbers (grey).
+3. **Notices**, shown only when true: state stale or scores unavailable (amber); nothing sealed yet (provisional), future-day projections (with the injury term and its basis, or, past seven days, before injuries), or v1 numbers (grey).
 4. **Game grid**: 1 column, 2 from 768 px.
 5. **Home only**: the Title race (top 8, heat cell, change since the previous day in percentage points) [titleRace] and the Record glance (scored, Brier, missed, no final seal, small-sample label) [record].
 6. **How to read a card**: legend.
@@ -60,7 +63,8 @@ Out of scope: the frozen 2026 archive (`/retrospective`, `/snapshot`, `/evidence
 | Reissued seal | `Reissued seal 11:30 AM ET` | same | Injury lines |
 | Final seal, pre-tip | `Final seal 6:30 PM ET` | same | same |
 | Today, unsealed | `Provisional` amber | same | Never scored |
-| Future | `Projection` grey | no market | No injury term |
+| Future, next 7 days | `Projection` grey | no market | Injury lines; "Injury term from the NBA report of 1:45 AM ET" or "…from current absences; no report yet" [futureDay] |
+| Future, later | `Projection` grey | no market | "Before injuries: ratings, home court and rest only" |
 | Live | pulsing "LIVE · 4TH 2:40" | "Live estimate", no market | Scores; "· pregame 44% GSW" |
 | Final, Final/OT | seal badge | "548 pregame", small | Big scores, loser dimmed; "Hawks won 108–104. 548 gave them 88%." |
 | Postponed, Canceled | status text | seal if any | No real example yet |
@@ -79,6 +83,7 @@ Badge tooltips are in [sealBadges]. **Injury lines** appear for sides that lose 
 3. **Win probability**: two 60 px numbers with the market, a split bar, the margin, the market spread (or "No market line for this game") and the footnote. Live adds the pregame number; projections drop the market.
 4. **What moves the number**: diverging bars for ratings, home court, rest and absences, plus a total. Then two **absence boxes**: points, a filing note, and status groups with per-player points where stored.
    Report states: used ("Injury report used: the NBA's report of 6:30 PM ET."), stale ("…the last good one, from 6:15 PM ET, was used"), missing ("absences are zero", empty sides say "nobody is counted"). Unfiled side: legacy seals "counted nobody"; current seals count "players who missed its last game". A v1 number has no absence line.
+   Unsealed future game: the projection with the injury term, its label and basis on the number's panel, an absence row in the breakdown, and both sides' players by status as for a seal. Player names link to player pages when the ID is known.
 5. **Result** (final only): one tile per version ("Gave Hawks 88%", Brier 0.015).
 6. **Seals** table, one row per version: morning, reissued, final ("Due in the hour before tip", "Seals once"), and which one was scored. ATL at IND reads IND 35% → 43% → 12%.
 7. **Aside**: both teams' playoff and title odds, projected wins, next game and team link.
@@ -97,9 +102,28 @@ East and West card grids: logo, name, record · rating (#rank), title chip.
 1. **Header**: conference · division, name, "2–6, 12th in the East by record · rating −3.8, 24th of 30 · −16.7 with current absences".
 2. **Tiles**: playoffs, play-in, top six, title, and a projected-record band.
 3. **Seed chances** (15 bars) and **Rating over time** (team line over league bands).
-4. **Current absences**, or an empty line.
-5. **Upcoming games**: `Proj.` %; 10 rows, then "Show the other 62 games".
-6. **Results**: W/L with score, and a sealed %, `V1` + %, `Missed`, or "Before the record".
+4. **Injury list for the next game** [teamPage.injuryList]: the injury table (below). It replaced Current absences, which shows only when the lists are not published.
+5. **Roster and season stats** [teamPage.roster]: the players table without Team or controls, per game for this team, most minutes first.
+6. **Upcoming games**: `Proj.` %; projections with the injury term for the next seven days, then a "Later games" row and ratings-only projections; 10 rows, then "Show the other 62 games".
+7. **Results**: W/L with score, and a sealed %, `V1` + %, `Missed`, or "Before the record".
+
+### Injuries [injuriesPage]
+1. Title, the newest report time, and a four-term key: NBA report, Box scores (the model's inference: missed recent games, not listed; 0 pts on a filed team), Earlier report, 548 pts. A grey line says the lists are projections and what is not modeled.
+2. **Filters** (client side): team select; status buttons All / Out / Doubtful / Questionable / Probable or available / Missed, not listed; a live count and "Clear filters".
+3. **The next two dates with games**: per game in tip order, a panel with both teams' injury tables side by side from 1024 px. A side whose list covers an earlier game shows the players its projection counts ("Only players with points are listed").
+4. **Teams not playing on these days**: each team's table for its next game, with a link to it.
+Unfiled team: warn badge "Not yet submitted" and a note that current absences count. No report yet: "No report yet" and a note. Not published: an empty state with two buttons.
+
+### Players [playersPage]
+Title, stored box scores and date, the `IMPACT_LABEL` notice, then search, minutes per game (default at least 10) and team, "333 of 511 players", and the table: Player (sticky; name link, position, team code under the name below 640 px), Team, GP, GS, Min, Pts, Reb, Ast, Stl, Blk, TO, FG%, 3P%, FT%, 548 impact, Status. Default sort Pts descending; headers sort with `aria-sort`; empty values are "–" and sort last. Scrolls inside its frame below 1280 px with a sticky header.
+
+### Player [playerPage]
+1. Breadcrumb "All players"; header: position · team, name, team link, other teams this season, and his row on his team's list (status badge, linked next game, reason, source, and the model's points for that game, or why he counts 0).
+2. **Averages and shooting**: seven tiles and three shooting tiles with made–attempted.
+3. **548 impact**: the number, `IMPACT_LABEL`, and what it does not do.
+4. **Game log**: newest first, sticky date, linked game, W/L score, Starter or Bench, counting stats, made–attempted; did-not-play rows read "Did not play · ESPN: Rest".
+5. **Injury history**: each finished game the report before tip listed him: report time, status, reason, then Played / Did not play. Reports are stored from Nov 2, 2026.
+Unknown ID: 404. Not published: an empty state.
 
 ### Record [record]
 1. Title and ledger link.
@@ -113,7 +137,7 @@ A table of contents, then 10 prose sections with test tables and a glossary (abo
 
 ## 5. Shared components
 
-548 mark (ink tile, orange square); freshness chip; panel with kicker, title, dek; game card; status pill; badge (good, warn, bad, quiet); split bar (away left, team colours ≥3:1); heat cell (9 teal bins, value printed, white text from 60%); seed sparkline and chart (teal 1–6, light teal 7–10, grey 11–15); diverging row; absence box and rows; team logo (18–56 px); sortable and plain tables; three charts; notice (amber, grey); date strip; segmented control; buttons; orange-underlined links.
+548 mark (ink tile, orange square); freshness chip; panel with kicker, title, dek; game card; status pill; badge (good, warn, bad, quiet); split bar (away left, team colours ≥3:1); heat cell (9 teal bins, value printed, white text from 60%); seed sparkline and chart (teal 1–6, light teal 7–10, grey 11–15); diverging row; absence box and rows; team logo (18–56 px); sortable and plain tables; three charts; notice (amber, grey); date strip; segmented control; buttons; orange-underlined links. New: **injury table** (team, source line, note when needed, Player / Status badge / Reason / Source / 548 pts; reason and source fold under the name in a narrow container); **players table** (sortable, sticky first column and header, search and filters); **player link** (grey underline, orange on hover; plain text without an ID).
 
 ## 6. Current tokens (current, open to change)
 
@@ -142,6 +166,7 @@ Team colours are in `site.teams`.
 - **ET** for every time, labelled "ET". Days are ET slates.
 - **Whole percents.** A game's two sides sum to 100, within 1–99; season odds show <1% and >99%. Ratings use one decimal.
 - **Logos**: only the 56 px ESPN files, small and unaltered, always beside the name or code, decorative. A single switch hides them, so screens must work without them. Keep the not-affiliated notice on `/` (the footer carries it on every page).
+- **548 impact** always carries `IMPACT_LABEL` (the model's estimate, not validated per player) and is never a ranking. Injury lists are projections: never seals, never scored. Box-score rows are labelled as the model's inference, not the report.
 - **Caveats stay visible**: v2 sees only the injury report (not future injuries, minutes or matchups); midseason odds are uncalibrated; no title-odds skill is claimed; never "official NBA data"; no claim that v2 beats v1, the baseline or the market.
 
 ## 8. Open to change
@@ -163,6 +188,8 @@ Everything else: visual language, palette, type, density, layout, card anatomy, 
 11. **Mobile chrome is about 100 px sticky**; much text is 10.5–12 px.
 12. **Live games barely stand out**: a small dot is the only cue.
 13. **How it works is 10,000 px of prose.**
+14. **The injury page is long** (about 10,000 px at 1440, far more at 390): 30 tables, mostly two-way and long-term absences at 0 points.
+15. **The players table is 17 columns**: on a phone only four or five show at once, and 300 rows scroll inside a frame.
 
 ## 10. Responsive and accessibility targets
 
@@ -175,7 +202,7 @@ Everything else: visual language, palette, type, density, layout, card anatomy, 
 
 Real production data (12:40 AM ET) from the site's own view functions, minified below the second level. Strings are exactly as printed; probabilities are 0–1 floats; away precedes home. Cards name teams by `code`; `site.teams` maps a code to its ESPN id (`logoPath`), names and colour. `_` keys are notes, and `_illustrative` marks the only constructed objects.
 
-Section 4 names the key for each page. Also: `site` (chip, footer, 30 teams), `lifecycleAtlInd` (one game from morning seal to reissue, with an unfiled side, to final), `injuryStates`, `sealBadges` (10 states) and `sealRows` (raw ledger rows).
+Section 4 names the key for each page; `futureDay`, `injuriesPage`, `playersPage`, `playerPage`, `teamPage.injuryList` and `teamPage.roster` are from 2:00 AM ET on 2026-11-04 (`_meta.update`). Also: `site` (chip, footer, 30 teams), `lifecycleAtlInd` (one game from morning seal to reissue, with an unfiled side, to final), `injuryStates`, `sealBadges` (10 states) and `sealRows` (raw ledger rows).
 
 No real examples exist yet for missed, no-final-seal, postponed, stale-report, no-market-line or playoff states; their copy is above and in `sealBadges`.
 
@@ -186,7 +213,9 @@ No real examples exist yet for missed, no-final-seal, postponed, stale-report, n
 - **No final seal**: scored on the morning seal. Counted, not missed.
 - **Missed**: tipped without a seal.
 - **Provisional**: today's stopgap number. Never scored.
-- **Projection**: a future game's number, without injuries. Never scored.
+- **Projection**: a future game's number. Through seven days ahead it has the injury term, from a stored report for that day or from current absences, and says which; later games are from ratings alone, before injuries. Never scored.
+- **Injury list**: a team's list for its next game: report rows, box-score inferences, earlier-report rows, each with the model's points. A projection, never a seal.
+- **548 impact**: the model's estimate of the points of margin a team loses per game without a player. Not validated per player.
 - **Live estimate**: an in-game chance from score and clock.
 - **Market**: the vig-free DraftKings moneyline, a reference.
 - **Rating**: points per game above an average team.

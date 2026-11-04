@@ -11,6 +11,8 @@ import { displayName, nameKey, surname } from "@/lib/utils/injuries";
 import { teamDisplay } from "@/lib/view/teams";
 
 export type AbsencePlayer = {
+  /** ESPN athlete ID; null for a name rebuilt from a stored report. */
+  athleteId: string | null;
   /** "First Last". */
   name: string;
   /** Null for a player counted because he missed the team's last game and is not listed. */
@@ -100,6 +102,7 @@ function buildSide(
 ): AbsenceSide {
   const points = forecast.absencePoints[side];
   const stored: AbsencePlayer[] = forecast.drivers[side].map((driver) => ({
+    athleteId: driver.athleteId,
     name: displayName(driver.name),
     status: driver.status,
     points: driver.points,
@@ -118,6 +121,7 @@ function buildSide(
   const leftover = Math.max(0, points - known);
   const rest: AbsencePlayer[] = report
     ? otherRows(report, teamId, stored).map(([, printed, status]) => ({
+        athleteId: null,
         name: displayName(printed),
         status,
         points: null,
@@ -209,11 +213,16 @@ export function cardInjuryLines(sides: AbsenceSides | null, threshold = 1): stri
 
 /**
  * The game page's sentence for an unfiled side, or null. `today` says whether the game
- * is on today's slate.
+ * is on today's slate; `projection` that the number is a projection, not a seal.
  */
-export function filingNote(side: AbsenceSide, today: boolean): string | null {
+export function filingNote(side: AbsenceSide, today: boolean, projection = false): string | null {
   const code = teamDisplay(side.teamId).code;
   const report = today ? "today's report" : "that day's report";
+  if (projection) {
+    return side.filing === "unfiled-counted"
+      ? `${code} had not submitted its injury report in the one this projection uses, so it counts players who missed its last game.`
+      : null;
+  }
   if (side.filing === "unfiled-counted") {
     return `${code} had not filed ${report} when this was sealed, so this counts players who missed its last game.`;
   }
