@@ -395,3 +395,19 @@ compared to the market; `verify:live` checks them, including that no projection 
 ledger. Safety check before merge: on a copy of `live-data` at 7d61656 with every network input
 pinned, `main` and this change wrote byte-identical ledger rows at 2026-11-04 11:00 UTC (28 morning
 seals) and 23:10 UTC (2 final seals).
+
+2026-11-05, scheduler measurement. From 2026-11-02 03:00 to 2026-11-05 03:00 UTC, 303 of 432 ten-minute
+slots had a successful run (70.1%), so decision 9's 90% condition was not met. The owner had waived
+it before shipping v2 on 2026-11-02. There were 321 runs in the window: 313 succeeded and 8 failed.
+The missed slots:
+- 2026-11-03 10:00 to 2026-11-04 04:40 UTC, 112 slots. After the cutover to the live-data branch the
+  commit step's `git rm --cached` failed on every run with data to publish. Three failures then stopped
+  the chain, and the cron fallback ran only rarely. Fixed by PR #12 (staging) and PR #14 (tests, and
+  backoff instead of stopping). No games were scheduled in this window.
+- 2026-11-04 09:40 to 09:50 UTC, 1 slot. GitHub returned a server error on both push attempts. The
+  next run published normally.
+- 2026-11-04 16:00 to 18:40 UTC, 16 slots. The 15:50 run found another run listed as queued, so it
+  did not start the next one. No such run exists in the run history. The cron fallback restarted
+  the chain at 18:47.
+No seal was missed. The measurement was due from a scheduled task that did not run, so it was taken
+by hand on 2026-11-05 at 23:20 UTC.
