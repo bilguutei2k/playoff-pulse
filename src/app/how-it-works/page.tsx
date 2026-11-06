@@ -16,6 +16,7 @@ import {
 import { IMPACT_LABEL } from "@/lib/season/player-stats";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
+import { Ticker } from "@/components/live/Ticker";
 
 export const metadata: Metadata = {
   title: "How it works",
@@ -65,7 +66,7 @@ type SectionId = (typeof SECTIONS)[number]["id"];
 function Section({ id, children }: { id: SectionId; children: React.ReactNode }) {
   const title = SECTIONS.find((section) => section.id === id)?.title ?? id;
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="panel scroll-mt-24 p-5 sm:p-7">
+    <section id={id} aria-labelledby={`${id}-title`} className="panel scroll-mt-24 pt-4 sm:pt-5">
       <h2 id={`${id}-title`} className="headline text-[22px] sm:text-[24px]">
         {title}
       </h2>
@@ -105,7 +106,9 @@ export default function HowItWorksPage() {
   const checkpointLabel: Record<string, string> = { dec1: "Dec 1", feb1: "Feb 1", apr1: "Apr 1" };
 
   return (
-    <main className="pp-container py-8 sm:py-10">
+    <>
+      <Ticker />
+    <main className="pp-container pb-4 pt-7 sm:pt-11">
       <div className="grid gap-10 lg:grid-cols-[13.5rem_minmax(0,1fr)]">
         <aside className="hidden lg:block">
           <nav aria-label="On this page" className="sticky top-24">
@@ -755,5 +758,6 @@ export default function HowItWorksPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

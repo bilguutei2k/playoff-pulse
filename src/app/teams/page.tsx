@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { heatClass } from "@/components/live/heat";
-import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
+import { Ticker } from "@/components/live/Ticker";
 import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import type { Conference } from "@/lib/season/types";
 import { formatChance } from "@/lib/utils/format";
@@ -23,51 +22,60 @@ export default async function TeamsPage() {
   const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
   const rows = oddsRows(liveState, seasonGames);
   return (
-    <main className="pp-container py-8 sm:py-10">
-      <SectionHeading
-        as="h1"
-        kicker={liveState.seasonLabel}
-        title="Teams"
-        dek="Every team's record, its 548 rating (points per game better or worse than an average team) and its chance to win the title. Pick a team for its schedule, odds and injuries."
-      />
-      {CONFERENCES.map((conference) => {
-        const teams = rows
-          .filter((row) => row.conference === conference)
-          .sort((a, b) => a.name.localeCompare(b.name));
-        return (
-          <section key={conference} aria-labelledby={`conference-${conference}`} className="mt-10">
-            <h2 id={`conference-${conference}`} className="kicker border-b border-line pb-2">
-              {conference}ern Conference
-            </h2>
-            <ul className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-3">
-              {teams.map((team) => (
-                <li key={team.teamId}>
-                  <Link
-                    href={`/teams/${team.slug}`}
-                    className="group flex h-full items-center gap-4 rounded-[var(--radius-card)] border border-line bg-panel px-4 py-3.5 transition-[border-color,box-shadow] hover:border-line-strong hover:shadow-[0_10px_30px_-18px_rgba(18,20,23,0.35)]"
-                  >
-                    <TeamLogo teamId={team.teamId} size={44} />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[15px] font-semibold text-ink group-hover:underline group-hover:decoration-pulse group-hover:underline-offset-4">
-                        {team.name}
-                      </span>
-                      <span className="num mt-1 block text-[12px] text-ink-3">
-                        {formatRecord(team.wins, team.losses)} · rating {formatRating(team.rating)} (#{team.ratingRank})
-                      </span>
-                    </span>
-                    <span className="flex flex-col items-end gap-1">
-                      <span className="kicker text-[9.5px]">Title</span>
-                      <span className={`heat ${heatClass(team.champion)} min-w-[2.75rem] px-1.5 py-0.5 text-[12.5px]`}>
-                        {formatChance(team.champion)}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
-    </main>
+    <>
+      <Ticker />
+      <main className="pp-container pb-4 pt-7 sm:pt-11">
+        <header className="mb-12 sm:mb-[60px]">
+          <h1 className="headline text-[32px] sm:text-[46px]">Teams</h1>
+          <p className="mt-2.5 max-w-2xl text-[15px] text-ink-2">
+            {liveState.seasonLabel}. Every team&apos;s record, its 548 rating (points per game better or worse than an
+            average team, with its rank) and its chance to win the title. Pick a team for its schedule, odds and injuries.
+          </p>
+        </header>
+        <div className="grid items-start gap-x-[72px] gap-y-14 lg:grid-cols-2">
+          {CONFERENCES.map((conference) => {
+            const teams = rows
+              .filter((row) => row.conference === conference)
+              .sort((a, b) => a.name.localeCompare(b.name));
+            return (
+              <section key={conference} aria-labelledby={`conference-${conference}`}>
+                <div className="sh mb-0">
+                  <h2 id={`conference-${conference}`}>{conference}ern Conference</h2>
+                  <span className="hidden sm:inline">Title</span>
+                </div>
+                <ul>
+                  {teams.map((team) => (
+                    <li key={team.teamId} className="border-b border-line">
+                      <Link
+                        href={`/teams/${team.slug}`}
+                        className="group grid grid-cols-[32px_minmax(0,1fr)_auto] items-center gap-x-3.5 py-3 hover:bg-wash"
+                      >
+                        <TeamLogo teamId={team.teamId} size={32} />
+                        <span className="min-w-0">
+                          <span className="block text-[16px] font-bold leading-tight group-hover:underline group-hover:underline-offset-4">
+                            {team.name}
+                          </span>
+                          <span className="num mt-0.5 block text-[13px] text-ink-2">
+                            {formatRecord(team.wins, team.losses)} · rating {formatRating(team.rating)} (#{team.ratingRank})
+                          </span>
+                        </span>
+                        <span className={`num text-right text-[15px] ${team.champion >= 0.5 ? "font-bold" : ""}`}>
+                          <span className="sr-only">Title chance </span>
+                          {formatChance(team.champion)}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+        <p className="mt-6 text-[13px] text-ink-2">
+          Title odds from {liveState.forecast.iterations.toLocaleString("en-US")} simulations. No skill is claimed for
+          title odds. <Link href="/odds" className="pp-link">Every team&apos;s odds</Link>
+        </p>
+      </main>
+    </>
   );
 }

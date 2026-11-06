@@ -1,26 +1,13 @@
-// The three type families. Archivo sets the interface, JetBrains Mono every figure
-// and label (tabular numerals), and Archivo Black only the 548 wordmark. Archivo
-// Black is a committed OFL file (see fonts/ArchivoBlack-OFL.txt) so the icon and
-// share images can load the same bytes through ImageResponse.
+// One type family. Schibsted Grotesk sets everything, figures included (tabular
+// numerals through `font-variant-numeric`). The 548 mark is outlined paths, so it
+// needs no font. Archivo Black stays only for the share image's text, as a committed
+// OFL file (see fonts/ArchivoBlack-OFL.txt) that ImageResponse can load.
 
-import { Archivo, JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { Schibsted_Grotesk } from "next/font/google";
 
-export const archivo = Archivo({
+export const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-archivo",
-});
-
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-jetbrains",
-});
-
-export const archivoBlack = localFont({
-  src: "./fonts/ArchivoBlack-Regular.ttf",
-  display: "block",
-  weight: "400",
-  variable: "--font-archivo-black",
+  variable: "--font-schibsted",
+  weight: "variable",
 });
