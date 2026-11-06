@@ -4,6 +4,8 @@
 //
 // Run: corepack pnpm verify:ledger [baseRef]   (baseRef defaults to HEAD)
 
+import { etWallClockOf } from "../../src/lib/season/dates";
+import { POLICY_MODEL_VERSION, policyRevisionAt } from "../../src/lib/season/policy-revisions";
 import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -77,6 +79,14 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
   const missedByVersion = new Set<string>();
   const morningWithoutReport = new Set<string>();
   for (const row of rows) {
+    const fields = row.type === "seal" ? ["issuedAt", "tipUtc"] as const
+      : row.type === "missed" ? ["recordedAt", "tipUtc"] as const : ["recordedAt"] as const;
+    for (const field of fields) {
+      const value = (row as unknown as Record<string, unknown>)[field];
+      if (typeof value !== "string" || !Number.isFinite(Date.parse(value))) {
+        problems.push(`${row.type} for ${row.gameId} has invalid ${field}`);
+      }
+    }
     if (row.type === "result") {
       if (!games.has(row.gameId)) problems.push(`result for unknown game ${row.gameId}`);
       continue;
@@ -106,6 +116,21 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
     sealedByVersion.add(versionKey);
     const tip = Date.parse(row.tipUtc);
     const issued = Date.parse(row.issuedAt);
+    if (row.reportAt != null) {
+      const report = row.reportAt;
+      const parsed = Date.parse(`${report}:00Z`);
+      const valid = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(report)
+        && Number.isFinite(parsed) && new Date(parsed).toISOString().slice(0, 16) === report;
+      if (!valid) problems.push(`seal for ${row.gameId} has invalid reportAt`);
+      else if (Number.isFinite(issued) && report > etWallClockOf(issued)) {
+        problems.push(`seal for ${row.gameId} reportAt is after issuedAt (ET)`);
+      }
+    }
+    if (row.policyRevision !== undefined &&
+      (row.modelVersion !== POLICY_MODEL_VERSION || !Number.isFinite(issued) ||
+        row.policyRevision !== policyRevisionAt(row.issuedAt))) {
+      problems.push(`seal for ${row.gameId} has inconsistent policyRevision`);
+    }
     if (issued >= tip) {
       problems.push(`seal for ${row.gameId} issued at or after tip`);
     }
@@ -122,6 +147,9 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
     }
     if (kind === "morning" && row.availabilityMissing) morningWithoutReport.add(versionKey);
     if (kind === "reissued") {
+      if (tip - issued <= FINAL_SEAL_WINDOW_MS) {
+        problems.push(`reissued seal for ${row.gameId} must be more than an hour before tip`);
+      }
       if (!morningWithoutReport.has(versionKey)) {
         problems.push(`reissued seal for ${row.gameId} without a morning seal that lacked a report`);
       }
@@ -162,20 +190,36 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
   return problems;
 }
 
+/**
+ * Bootstrap only: a valid base commit with no ledger file may start an empty ledger.
+ * A missing/unreadable ref always fails, including with the flag. Normal jobs use DATA_BASE.
+ */
+export function readBaseLedger(baseRef: string, bootstrap = false): string {
+  const options = { encoding: "utf-8" as const, stdio: ["ignore", "pipe", "pipe"] as ["ignore", "pipe", "pipe"], maxBuffer: 200 * 1024 * 1024 };
+  try {
+    execFileSync("git", ["rev-parse", "--verify", `${baseRef}^{commit}`], options);
+  } catch {
+    throw new Error(`Cannot read base ref ${baseRef}; refusing to waive append-only history.`);
+  }
+  const files = execFileSync("git", ["ls-tree", "--name-only", baseRef, "--", RELATIVE_PATH], options);
+  if (!files.trim() && bootstrap) return "";
+  try {
+    return execFileSync("git", ["show", `${baseRef}:${RELATIVE_PATH}`], options);
+  } catch {
+    throw new Error(`Cannot read base ledger at ${baseRef}; use --bootstrap-empty-ledger only for a valid initial commit with no ledger file.`);
+  }
+}
+
 function main(): void {
-  const baseRef = process.argv[2] ?? "HEAD";
+  const baseRef = process.argv.slice(2).find((arg) => !arg.startsWith("--")) ?? "HEAD";
   const file = path.join(process.cwd(), RELATIVE_PATH);
   const current = fs.existsSync(file) ? fs.readFileSync(file, "utf-8") : "";
 
-  let committed = "";
+  let committed: string;
   try {
-    committed = execFileSync("git", ["show", `${baseRef}:${RELATIVE_PATH}`], {
-      encoding: "utf-8",
-      stdio: ["ignore", "pipe", "ignore"],
-      maxBuffer: 1024 * 1024 * 200,
-    });
-  } catch {
-    committed = "";
+    committed = readBaseLedger(baseRef, process.argv.includes("--bootstrap-empty-ledger"));
+  } catch (error) {
+    fail(String(error));
   }
   if (!historyIntact(committed, current)) {
     fail(`committed rows changed compared with ${baseRef}. The ledger is append-only.`);

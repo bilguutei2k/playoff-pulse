@@ -1,3 +1,4 @@
+import { POLICY_REVISIONS, policyRevisionAt } from "@/lib/season/policy-revisions";
 // Shared wording and numbers for the track record, gated by the live section of
 // docs/claims-ledger.md: below 500 scored games every result carries the small-sample
 // label, missed and incomplete seals are always shown, calibration waits for 100
@@ -5,8 +6,8 @@
 
 import { clampProbability } from "@/lib/season/math";
 import { impliedHomeProbability } from "@/lib/season/market";
-import { missedVersionOf, scoredSeal, sealKindOf } from "@/lib/season/live-state";
-import type { LedgerRow, MissedRow, ResultRow, SealRow } from "@/lib/season/types";
+import { missedVersionOf, scoredSeal, sealKindOf, summarizeRecord } from "@/lib/season/live-state";
+import type { LedgerRow, MissedRow, ResultRow, SealRow, RecordSummary } from "@/lib/season/types";
 
 export const SMALL_SAMPLE_GAMES = 500;
 export const CALIBRATION_MIN_GAMES = 100;
@@ -110,4 +111,25 @@ export function marketComparison(scored: readonly ScoredGame[]): { games: number
     market += gameBrier(impliedHomeProbability(game.seal.market!)!, game.homeWon);
   }
   return { games: games.length, model: model / games.length, market: market / games.length };
+}
+
+/** Descriptive segments of one record, assigned by each game's operationally selected seal.
+ * A game crossing a revision boundary belongs only to the revision of that seal.
+ */
+export function revisionBreakdown(ledger: readonly LedgerRow[], modelVersion: string) {
+  const games = versionLedger(ledger, modelVersion);
+  return POLICY_REVISIONS.map((revision) => {
+    const scored = games.scored.filter((game) => policyRevisionAt(game.seal.issuedAt) === revision.revision);
+    const pending = games.pending.filter((seal) => policyRevisionAt(seal.issuedAt) === revision.revision);
+    return { ...revision, sealed: scored.length + pending.length, scored: scored.length,
+      brier: scored.length ? scored.reduce((sum, game) => sum + game.brier, 0) / scored.length : null };
+  });
+}
+
+/** Recompute seal metrics even when the stored state predates the split.
+ * The baseline's historical prior is not in the ledger; retain its published value.
+ */
+export function recordSummary(ledger: readonly LedgerRow[], version: string, published?: RecordSummary): RecordSummary {
+  return { ...summarizeRecord(ledger, version, 0.5),
+    baselineBrier: published?.baselineBrier ?? null };
 }

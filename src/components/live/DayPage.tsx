@@ -183,7 +183,7 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
         {home ? (
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
             <TitleRace state={liveState} />
-            <RecordGlance record={liveState.record} />
+            <RecordGlance record={liveState.record} generatedAt={liveState.generatedAt} />
           </div>
         ) : null}
 

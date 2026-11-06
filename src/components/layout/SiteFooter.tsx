@@ -1,3 +1,4 @@
+import { modelPolicyLabel } from "@/lib/season/policy-revisions";
 import Link from "next/link";
 import { Brand548 } from "@/components/brand/Brand548";
 import { getLiveState } from "@/lib/live-data/published";
@@ -62,7 +63,7 @@ export async function SiteFooter() {
             here is betting advice.
           </p>
           <p className="mt-4 text-[13px] leading-5 text-ink-3">
-            Published model <span className="num text-ink-2">{liveState.modelVersion}</span>
+            Published model <span className="num text-ink-2">{modelPolicyLabel(liveState.modelVersion, liveState.generatedAt)}</span>
             {sameModel ? null : (
               <>
                 {" "}

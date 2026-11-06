@@ -1,3 +1,4 @@
+import { summarizeRecord, scoredSeal, sealKindOf } from "../../src/lib/season/live-state";
 // Checks for the live forecast path: published state, the injury model's invariants,
 // NBA seeding rules against real seasons, and the ledger. Runs offline.
 
@@ -56,7 +57,7 @@ import { impliedHomeProbability } from "../../src/lib/season/market";
 import { createFilterState, paramsHash, predictGame } from "../../src/lib/season/ratings";
 import { assertForecastSums, simulateSeason } from "../../src/lib/season/simulate";
 import { SEASON_TEAMS, STATE_SIZE, teamIndex } from "../../src/lib/season/teams";
-import type { LedgerRow, LiveState, SeasonGame } from "../../src/lib/season/types";
+import type { LedgerRow, LiveState, SeasonGame, SealRow } from "../../src/lib/season/types";
 import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
@@ -792,6 +793,37 @@ export function runLiveChecks(): void {
         .map((line) => JSON.parse(line) as LedgerRow)
     : [];
   assert.deepEqual(ledgerProblems(ledgerRows), [], "Ledger rows must be valid.");
+  const summary = summarizeRecord(ledgerRows, LIVE_MODEL_VERSION, 0.5);
+  const resultMap = new Map(ledgerRows.filter((row) => row.type === "result").map((row) => [row.gameId, row]));
+  const grouped = new Map<string, SealRow[]>();
+  for (const row of ledgerRows) {
+    if (row.type === "seal" && row.modelVersion === LIVE_MODEL_VERSION)
+      grouped.set(row.gameId, [...(grouped.get(row.gameId) ?? []), row]);
+  }
+  for (const [kind, scoreKey, countKey] of [
+    ["morning", "morningBrier", "morningCount"],
+    ["reissued", "reissuedBrier", "reissuedCount"],
+    ["latest", "latestPreFinalBrier", "latestPreFinalCount"],
+  ] as const) {
+    const losses: number[] = [];
+    for (const rows of grouped.values()) {
+      const result = resultMap.get(rows[0].gameId);
+      const seal = kind === "latest" ? scoredSeal(rows.filter((row) => sealKindOf(row) !== "final"))
+        : rows.find((row) => sealKindOf(row) === kind);
+      if (result && seal) losses.push((seal.homeWinProbability - (result.homeScore > result.awayScore ? 1 : 0)) ** 2);
+    }
+    assert.equal(summary[countKey], losses.length, `${kind} count must match its own scored games.`);
+    const expected = losses.length ? losses.reduce((a, b) => a + b, 0) / losses.length : null;
+    if (expected === null) assert.equal(summary[scoreKey], null);
+    else assert.ok(Math.abs(summary[scoreKey]! - expected) < 1e-10, `${kind} Brier must match its own seals.`);
+    const published = state.records?.[LIVE_MODEL_VERSION];
+    if (published?.morningCount !== undefined) {
+      assert.equal(published[countKey], summary[countKey]);
+      assert.equal(published[scoreKey], summary[scoreKey]);
+    }
+  }
+  console.log(`Record metric split checked: original n=${summary.morningCount}, reissued n=${summary.reissuedCount}, latest pre-final n=${summary.latestPreFinalCount}.`);
+
   checkSiteFiles();
   if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, ledgerRows);
 }

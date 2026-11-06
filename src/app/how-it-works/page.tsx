@@ -1,3 +1,4 @@
+import { POLICY_REVISIONS, modelPolicyLabel } from "@/lib/season/policy-revisions";
 import type { Metadata } from "next";
 import Link from "next/link";
 import gameEvaluation from "../../../docs/live/evaluation-games.json";
@@ -85,7 +86,7 @@ function Term({ term, children }: { term: string; children: React.ReactNode }) {
 
 /** Model version strings stay in mono so they never read as words. */
 function Version({ children }: { children: string }) {
-  return <span className="num whitespace-nowrap text-[0.92em] text-ink">{children}</span>;
+  return <span className="num whitespace-nowrap text-[0.92em] text-ink">{modelPolicyLabel(children)}</span>;
 }
 
 export default function HowItWorksPage() {
@@ -174,7 +175,7 @@ export default function HowItWorksPage() {
             <ul className="grid list-disc gap-2 pl-5">
               <li>
                 <strong className="text-ink">
-                  It sees injuries only through the NBA injury report.
+                  It uses NBA report listings and box-score inference for unfiled teams and season odds.
                 </strong>{" "}
                 Listed players count by their status. It does not foresee injuries that have not
                 happened, shift minutes to teammates, read matchups, or know about rest decisions
@@ -214,7 +215,7 @@ export default function HowItWorksPage() {
             </p>
             <p>
               Since <Version>{LIVE_MODEL_VERSION}</Version>, the expected margin also gives up points for players on the
-              NBA injury report, and the ratings describe each team at full strength. Every rating
+              NBA injury report, and the injury-adjusted ratings are intended to approximate each team at full strength. Every rating
               parameter above is unchanged from <Version>{REFERENCE_MODEL_VERSION}</Version>.{" "}
               <a href="#injuries" className="pp-link">
                 How injuries work
@@ -222,6 +223,22 @@ export default function HowItWorksPage() {
               .
             </p>
           </Section>
+
+          <section className="panel p-5" aria-labelledby="policy-revisions">
+            <h2 id="policy-revisions" className="text-xl font-semibold">Policy revisions</h2>
+            <p>v2 keeps one version and one record. Post-test behavior changes have policy revision labels. The registered test covers revision 0&apos;s original final-point endpoint only; it does not validate the amended morning, fallback or unfiled policy.</p>
+            <ul className="mt-3 grid gap-2">{POLICY_REVISIONS.map((row) => <li key={row.revision}>Revision {row.revision} — {row.effectiveAt}: {row.description}</li>)}</ul>
+          </section>
+          <aside className="notice" aria-labelledby="known-issues">
+            <h2 id="known-issues" className="text-xl font-semibold">Known issues</h2>
+            <p>Confirmed defects pending the next model version:</p>
+            <ul className="list-disc pl-5">
+              <li>The postseason absence penalty never expires within a simulation, even when a player should return.</li>
+              <li>Inferred absences for departed players can persist after they leave the recent rotation.</li>
+              <li>The return table answers the wrong question: it conditions on another missed game instead of allowing immediate return after games already missed.</li>
+            </ul>
+            <p>The historical season test used realized schedules, not schedules archived at each checkpoint. Future roster evidence can change name resolution; the review found no positive-value historical impact from that route, which is not a universal no-leak guarantee.</p>
+          </aside>
 
           <Section id="injuries">
             <p>
@@ -238,8 +255,8 @@ export default function HowItWorksPage() {
               listed player counts by how often players with his status did not play in 2021-22 to
               2023-24: Out {share(INJURY_STATUS_TABLE.O)}, Doubtful {share(INJURY_STATUS_TABLE.D)},
               Questionable {share(INJURY_STATUS_TABLE.Q)}, Probable and Available{" "}
-              {share(INJURY_STATUS_TABLE.P)}. A team&apos;s expected absence is the sum, and every unit
-              of Game Score costs {INJURY_PARAMS.beta} points of margin. Every seal stores each player
+              {share(INJURY_STATUS_TABLE.P)}. These measure nonparticipation, including non-injury DNPs, not medical inability. A team&apos;s expected absence is the sum, and every unit
+              of Game Score costs {INJURY_PARAMS.beta} points of margin. Seals since policy revision 2 store each player
               behind those points; the game page lists them all by status, and a game card names up to
               three listed out, doubtful or questionable, largest first, and says how many more.
             </p>
@@ -247,15 +264,15 @@ export default function HowItWorksPage() {
               <strong className="text-ink">Full-strength ratings.</strong>{" "}
               From 2020-21, when box scores begin, the ratings learn from margins adjusted for who
               actually missed each game. A team that won without its star gets more credit, so its
-              rating describes it with everyone available, and a long absence is not counted twice.
+              injury-adjusted rating is intended to approximate full strength and reduce double counting; it cannot guarantee either.
               The season table shows that rating beside a &ldquo;now&rdquo; rating with current
               absences.
             </p>
             <p>
               <strong className="text-ink">The final seal.</strong> Injury
               news often lands in the afternoon, so each game is sealed twice: in the morning, and by
-              the first update in the hour before tip, from the same frozen ratings with the latest
-              report. The final seal is scored. If the report cannot be read, a seal uses the last
+              the first update in the hour before tip, from previous-ET-date results with the latest
+              report. Late-arriving box scores can revise the rating replay between seals. The final seal is scored. If the report cannot be read, a seal uses the last
               good one when it is under 24 hours old and says so; otherwise it has no absences and is
               marked as missing them. A team that the report in use marks &ldquo;NOT YET
               SUBMITTED&rdquo; (teams often file only in the evening) is not counted as healthy:
@@ -267,16 +284,15 @@ export default function HowItWorksPage() {
             <p>
               <strong className="text-ink">Return estimates.</strong> In
               the season odds, a player counted as out misses the number of further team games
-              expected from a survival table fitted on 2021-22 to 2023-24, then returns: about{" "}
+              estimated by a heuristic table fitted on 2021-22 to 2023-24: about{" "}
               {INJURY_SURVIVAL.short[0].toFixed(1)} more games for a fresh short absence, and{" "}
               {INJURY_SURVIVAL.long[0].toFixed(1)} when the report&apos;s reason names a surgery, tear,
-              fracture or similar. Return estimates come from that table only. ESPN&apos;s estimated
+              fracture or similar. Return estimates come from that table only and are not validated medical predictions. See the known issues below. ESPN&apos;s estimated
               return dates are stored at every update for later study, but never used.
             </p>
             <p>
               <strong className="text-ink">The test.</strong> The adjustment
-              was fitted on 2021-22 to 2023-24 and registered, with its pass rule, before any number
-              from the test seasons existed. It ran once on {injuryEvaluation.games.toLocaleString("en-US")}{" "}
+              was fitted on 2021-22 to 2023-24 and registered, with its pass rule, before this candidate&apos;s test results were committed. Base-model evaluations already existed. It ran once on {injuryEvaluation.games.toLocaleString("en-US")}{" "}
               regular-season games in 2024-25 and 2025-26, against <Version>{REFERENCE_MODEL_VERSION}</Version> on the
               same games.
             </p>
@@ -346,10 +362,8 @@ export default function HowItWorksPage() {
             </p>
             <ul className="grid list-disc gap-2 pl-5">
               <li>
-                <strong className="text-ink">The test is conservative.</strong>{" "}
-                2025-26 was among the seasons seen when <Version>{REFERENCE_MODEL_VERSION}</Version>&apos;s form was
-                chosen, which favors <Version>{REFERENCE_MODEL_VERSION}</Version>. Two test seasons are still thin; the
-                sealed record is the real test.
+                <strong className="text-ink">Not a fully untouched holdout.</strong>{" "}
+                Both 2024-25 and 2025-26 were inside the 2023–2026 span used to choose the shared base-model form. Selection could affect the contrast in either direction. Two seasons are thin; the prospective sealed record is the independent test.
               </li>
               <li>
                 <strong className="text-ink">The market stayed ahead.</strong>{" "}
@@ -364,8 +378,7 @@ export default function HowItWorksPage() {
                 <strong className="text-ink">What it does not do.</strong> It
                 does not simulate injuries that have not happened, redistribute minutes, account for
                 matchups, or use plus-minus. Report names it cannot match to a box score, such as a
-                rookie who has not played, count as zero, and it learns nothing about a game until
-                that game&apos;s box score is stored.
+                rookie who has not played, count as zero. Final margins update ratings unadjusted until the box score is stored; later replay applies the absence adjustment.
               </li>
               <li>
                 The live season odds read each player&apos;s current status from the latest report,
@@ -381,12 +394,12 @@ export default function HowItWorksPage() {
               only results through the previous day, so an afternoon result can never change an
               evening number. If an earlier game is still unresolved within six hours of tip, the
               forecast is sealed anyway and marked as sealed before that result was in. The first
-              update in the hour before tip then writes a final seal from the same ratings with the
+              update in the hour before tip then writes a final seal from previous-day results with the
               latest NBA injury report. The final seal is the one scored; a game that tips with only
               its morning seal is scored on that and counted as &ldquo;no final seal&rdquo;, never as
               missed. A morning seal made before any usable injury report had zero absences in it, so
               the first update with a usable report issues it again under its true time. The original
-              stays in the ledger, and the reissued number stands in for it. Every seal, morning,
+              stays in the ledger. Scoring takes final, else reissued, else original morning; the record reports all three pre-final metrics separately with counts. Since revision 2, every seal, morning,
               reissued or final, treats a team that has not filed yet the same way: it counts the
               players who missed the team&apos;s last game.
             </p>
@@ -445,9 +458,7 @@ export default function HowItWorksPage() {
             <p>
               Players the model currently counts as out (listed Out or Doubtful on the latest
               report, or out of the team&apos;s last game and not listed as probable or available) cost their team
-              points in each simulated game for as long as the survival table expects them to miss,
-              playoff games included, and then return. Injuries that have not happened yet are not
-              simulated: every team will have some, and they mostly cancel out.{" "}
+              points over the estimated regular-season absence. A penalty remaining at the postseason currently persists through the whole postseason; this is a known defect. Unknown future injuries are not simulated, and their effect on uncertainty and title odds has not been validated.{" "}
               <Link href="/odds#absences-title" className="pp-link">
                 Who is counted as out
               </Link>
@@ -478,7 +489,7 @@ export default function HowItWorksPage() {
               latest line; once a game starts, it is the line captured when the forecast was sealed.
             </p>
             <p>
-              The market number is for reference only. It is never a model input, it is not scored,
+              The market number is for reference only. It is never a model input. The record shows paired market Brier once the model has 500 scored games,
               and no claim is made about the model against the market until at least{" "}
               {MARKET_CLAIM_GAMES} games have been scored. This is not a betting product.
             </p>
@@ -491,7 +502,7 @@ export default function HowItWorksPage() {
               <a href="#injuries" className="pp-link">
                 Injuries
               </a>
-              . Gates were written down before any validation season was scored (
+              . Gates were written down before the registered validation runs; the shared form had already been selected with sight of 2023–2026 (
               <a href={REGISTRATION_URL} className="pp-link">
                 registration
               </a>
@@ -652,12 +663,12 @@ export default function HowItWorksPage() {
             <span id="terms" className="block scroll-mt-24" aria-hidden />
             <dl>
               <Term term="548">
-                Our chance of each team winning, from full-strength team ratings, home court, rest and the players
+                Our chance of each team winning, from injury-adjusted team ratings intended to approximate full strength, home court, rest and the players
                 on the NBA injury report. A game&apos;s chances are shown as whole percents from 1% to 99%; season
                 odds use &ldquo;&lt;1%&rdquo; and &ldquo;&gt;99%&rdquo; at the ends.
               </Term>
               <Term term="Rating">
-                A team&apos;s strength in points per game better or worse than an average team, at full strength.
+                A team&apos;s injury-adjusted strength in points per game relative to average, intended to approximate full strength.
                 The difference between two ratings, plus home court and rest, is the expected margin. The rank
                 shown as #3 on a game card is the team&apos;s place among all 30 ratings.
               </Term>
@@ -731,7 +742,7 @@ export default function HowItWorksPage() {
               </Term>
               <Term term="Market">
                 The DraftKings line via ESPN, converted to a win probability with the vig removed. It is shown
-                beside the model for reference only: never a model input, never scored, and never advice. See{" "}
+                beside the model for reference only: never a model input or advice. The record scores paired market Brier only after 500 model games. See{" "}
                 <a href="#market" className="pp-link">
                   the market reference
                 </a>

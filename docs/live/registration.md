@@ -411,3 +411,65 @@ The missed slots:
   the chain at 18:47.
 No seal was missed. The measurement was due from a scheduled task that did not run, so it was taken
 by hand on 2026-11-05 at 23:20 UTC.
+
+## 2026-11-06, corrections after the independent review
+
+This entry corrects the interpretation of earlier registration entries and the frozen
+`evaluation-injury.json` and `injury-fit.json`; those evidence files remain unchanged.
+
+v2 keeps the version string `live-2026.27-v2` and one prospective record. Post-test
+behavior changes are policy revisions. Exact UTC merge times from GitHub:
+
+| Revision | Effective UTC | Policy |
+| --- | --- | --- |
+| 0 | 2026-11-02T06:57:24Z | Registered policy as shipped, PR #6 |
+| 1 | 2026-11-02T16:27:31Z | Half-slate report gate, reissued morning seals, report-problem alerts, PR #8 |
+| 2 | 2026-11-03T05:35:03Z | Unfiled teams use current absences; complete driver lists, PR #9 |
+| 3 | 2026-11-04T06:13:03Z | Next-slate evening reports stored; projections include injury term, PR #15 |
+
+New v2 seals store `policyRevision`; older rows derive it from `issuedAt` through
+the frozen code table and are never rewritten. A game is assigned to the revision
+of its operationally selected seal, including pending games. Per-revision sealed
+and scored counts and Brier are descriptive, not a policy comparison.
+
+The operational scoring order remains **final, else reissued, else original morning**.
+The record separately reports original morning Brier (morning kind only), reissued
+Brier (only reissued games), and latest pre-final Brier (reissued else morning),
+each with its own scored-game count. Earlier “morning” scores substituted reissues.
+
+Corrections to claims:
+- “Before any number from the test seasons existed” means registration preceded
+  this candidate's committed test results; base-model evaluations already existed.
+  Both test seasons, 2024-25 and 2025-26, informed the shared base-model form through
+  the 2023–2026 selection span. This is not a fully untouched holdout, and there is
+  no demonstrated conservative direction for the contrast.
+- “The registered test is unaffected” applies only to revision 0's original
+  final-point gates. It does not validate amended morning, fallback or unfiled
+  policies. The unfiled experiment reused test outcomes and is exploratory.
+  Evening report storage changes available fallback inputs.
+- Injuries do not enter only through reports: box-score inference contributes to
+  unfiled seals and season odds. Available and Probable weights estimate
+  nonparticipation, including non-injury DNPs, not medical inability.
+- Final margins update ratings unadjusted when box scores are missing; later replay
+  adjusts them. Seals use previous-ET-date results, but late box scores can change
+  the replay between seals. Injury-adjusted ratings are intended to approximate
+  full strength and reduce double counting, not eliminate it.
+- Complete driver lists apply since revision 2; older rows can contain only three.
+  The market is never an input; /record computes paired market Brier once the model
+  has 500 scored games, with matched-game counts. That threshold does not establish skill.
+- Unknown future injuries are omitted; there is no evidence they mostly cancel out.
+  The postseason absence penalty currently never expires within a simulation.
+  Inferred absences for departed players can persist. The return table conditions
+  on another missed game instead of estimating remaining absence after games already
+  missed, and truncates open spells at season boundaries. These are confirmed defects
+  pending the next model version, not validated medical return estimates.
+- T4 is a realized-schedule reconstruction, not a replay of archived schedules
+  known at each checkpoint. Future roster evidence can resolve as well as un-resolve
+  names. The review found no positive-value historical impact through that route;
+  this does not establish a universal no-leak property.
+- Internal timestamps and owner-controlled git history do not independently attest
+  publication before tip. The review observed no backfills. The verifier now rejects
+  malformed timestamps, future report times and reissues within 60 minutes of tip.
+  Missing/unreadable base refs fail closed. Only an initial valid commit with no ledger
+  file may use `verify:ledger <base> --bootstrap-empty-ledger`; normal CI and publication
+  must continue passing the existing base, including the live-data previous head.

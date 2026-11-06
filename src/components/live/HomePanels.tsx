@@ -1,3 +1,4 @@
+import { modelPolicyLabel } from "@/lib/season/policy-revisions";
 import Link from "next/link";
 import { heatClass } from "@/components/live/heat";
 import { SectionHeading } from "@/components/live/SectionHeading";
@@ -76,7 +77,7 @@ function Stat({ label, value, note }: { label: string; value: string; note?: str
 }
 
 /** The published model's record at a glance, with its small-sample label. */
-export function RecordGlance({ record }: { record: RecordSummary }) {
+export function RecordGlance({ record, generatedAt }: { record: RecordSummary; generatedAt: string }) {
   return (
     <section aria-labelledby="record-glance" className="panel p-5 sm:p-6">
       <SectionHeading
@@ -86,7 +87,7 @@ export function RecordGlance({ record }: { record: RecordSummary }) {
         dek={
           <>
             Each game is sealed before tip and scored after the final. Model{" "}
-            <span className="num whitespace-nowrap text-[14px]">{record.modelVersion}</span>.
+            <span className="num text-[14px]">{modelPolicyLabel(record.modelVersion, generatedAt)}</span>.
           </>
         }
         href="/record"

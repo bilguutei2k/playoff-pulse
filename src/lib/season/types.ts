@@ -200,6 +200,8 @@ export type SealRow = {
   etDate: string;
   tipUtc: string;
   issuedAt: string;
+  /** v2 policy label; older rows derive it from issuedAt. */
+  policyRevision?: number;
   modelVersion: string;
   paramsHash: string;
   ratingsHash: string;
@@ -287,6 +289,12 @@ export type RecordSummary = {
   baselineBrier: number | null;
   /** Morning seals alone on the same scored games, reported beside the scored number. */
   morningBrier: number | null;
+  /** Absent on published states from before the metric split. */
+  morningCount?: number;
+  reissuedBrier?: number | null;
+  reissuedCount?: number;
+  latestPreFinalBrier?: number | null;
+  latestPreFinalCount?: number;
   /**
    * The reference model's number stored on each scored seal, scored on the same games:
    * the prospective head-to-head. Null for a version whose rows carry no reference.

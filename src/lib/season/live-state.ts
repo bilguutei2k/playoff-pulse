@@ -444,6 +444,10 @@ export function summarizeRecord(
   let baselineSum = 0;
   let morningSum = 0;
   let morningCount = 0;
+  let reissuedSum = 0;
+  let reissuedCount = 0;
+  let latestSum = 0;
+  let latestCount = 0;
   let noFinalSeal = 0;
   let incomplete = 0;
   let referenceSum = 0;
@@ -469,7 +473,17 @@ export function summarizeRecord(
     }
     if (twoSeals) {
       if (sealKindOf(seal) !== "final") noFinalSeal += 1;
-      const morning = morningSeal(rows);
+      const latest = morningSeal(rows);
+      if (latest) {
+        latestSum += (clampProbability(latest.homeWinProbability) - homeWon) ** 2;
+        latestCount += 1;
+      }
+      const reissued = rows.find((row) => sealKindOf(row) === "reissued");
+      if (reissued) {
+        reissuedSum += (clampProbability(reissued.homeWinProbability) - homeWon) ** 2;
+        reissuedCount += 1;
+      }
+      const morning = rows.find((row) => sealKindOf(row) === "morning");
       if (morning) {
         morningSum += (clampProbability(morning.homeWinProbability) - homeWon) ** 2;
         morningCount += 1;
@@ -490,6 +504,11 @@ export function summarizeRecord(
     accuracy: scored ? correct / scored : null,
     baselineBrier: scored ? baselineSum / scored : null,
     morningBrier: twoSeals && morningCount ? morningSum / morningCount : null,
+    morningCount,
+    reissuedBrier: reissuedCount ? reissuedSum / reissuedCount : null,
+    reissuedCount,
+    latestPreFinalBrier: latestCount ? latestSum / latestCount : null,
+    latestPreFinalCount: latestCount,
     // Only when every scored game carries a reference, so the comparison is paired.
     referenceBrier: referenceCount > 0 && referenceCount === scored ? referenceSum / referenceCount : null,
     referenceModelVersion: referenceCount > 0 ? referenceModelVersion : null,

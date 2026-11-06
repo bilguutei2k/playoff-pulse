@@ -1,3 +1,5 @@
+import { modelPolicyLabel } from "@/lib/season/policy-revisions";
+import { recordSummary, revisionBreakdown } from "@/lib/view/record";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/live/Badge";
@@ -45,12 +47,14 @@ const METRICS: Metric[] = [
   { label: "Pending", note: "Sealed, waiting for a result", value: (r) => String(r.pending) },
   { label: "Missed", note: "Tipped before a seal; never backfilled", value: (r) => String(r.missed) },
   { label: "Incomplete inputs", note: "Sealed before an earlier result was in; still counted", value: (r) => String(r.incomplete) },
-  { label: "No final seal", note: "Scored on the morning seal", value: (r) => (r.noFinalSeal === null ? "Seals once" : String(r.noFinalSeal)) },
+  { label: "No final seal", note: "Scored on reissued, else original morning", value: (r) => (r.noFinalSeal === null ? "Seals once" : String(r.noFinalSeal)) },
   { label: "Brier score", note: "Lower is better; an even 50% call scores 0.250", value: (r) => fixed(r.brier, 3) },
   { label: "Baseline Brier", note: "Always the prior home-win rate, same games", value: (r) => fixed(r.baselineBrier, 3) },
   { label: "Log loss", note: "Lower is better", value: (r) => fixed(r.logLoss, 3) },
   { label: "Accuracy", note: "The sealed favorite won", value: (r) => percent(r.accuracy) },
-  { label: "Morning seals' Brier", note: "The morning seal alone, same games", value: (r) => (r.noFinalSeal === null ? "Seals once" : fixed(r.morningBrier, 3)) },
+  { label: "Original morning seals' Brier", note: "Morning kind only; scored games with an original morning seal", value: (r) => r.noFinalSeal === null ? "Seals once" : `${fixed(r.morningBrier, 3) ?? "—"} (n=${r.morningCount ?? 0})` },
+  { label: "Reissued seals' Brier", note: "Reissued games only", value: (r) => r.noFinalSeal === null ? "Seals once" : `${fixed(r.reissuedBrier ?? null, 3) ?? "—"} (n=${r.reissuedCount ?? 0})` },
+  { label: "Latest pre-final seal Brier", note: "Reissued when present, otherwise original morning", value: (r) => r.noFinalSeal === null ? "Seals once" : `${fixed(r.latestPreFinalBrier ?? null, 3) ?? "—"} (n=${r.latestPreFinalCount ?? 0})` },
   {
     label: "Reference Brier",
     note: "The other version's number stored on each seal, same games",
@@ -131,7 +135,7 @@ function VersionGames({ version, ledger, role }: { version: string; ledger: Vers
     <section aria-labelledby={`games-${version}`} className="mt-8">
       <h3 id={`games-${version}`} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="text-[17px] font-semibold text-ink">{role}</span>
-        <span className="num text-[13px] text-ink-3">{version}</span>
+        <span className="num text-[13px] text-ink-3">{modelPolicyLabel(version)}</span>
       </h3>
       <p className="mt-1 text-[13px] text-ink-2">
         {ledger.scored.length} scored · {ledger.pending.length} pending · {ledger.missed.length} missed
@@ -202,7 +206,7 @@ export default async function RecordPage() {
   const records = versions.map((version) => ({
     version,
     role: version === liveState.modelVersion ? "Published model" : "Reference model",
-    record: liveState.records[version] ?? null,
+    record: recordSummary(ledger, version, liveState.records[version]),
     ledger: versionLedger(ledger, version),
   }));
   const headline = records[0];
@@ -220,8 +224,7 @@ export default async function RecordPage() {
         dek={
           <>
             Each game&apos;s forecast is sealed before tip and written to an append-only{" "}
-            <a href={LEDGER_URL} className="pp-link">public ledger</a>, then scored after the final. Nothing is
-            backfilled: a game that tips without a seal is a miss and stays counted. Each model version keeps its own
+            <a href={LEDGER_URL} className="pp-link">public ledger</a>, then scored after the final. The policy forbids backfilling: a game that tips without a seal is a miss and stays counted. Internal timestamps and git history are auditable, but are not independent pre-tip attestation. Each model version keeps its own
             record.
           </>
         }
@@ -246,8 +249,7 @@ export default async function RecordPage() {
                   <th key={entry.version} scope="col" className="py-2.5 pr-4 text-right align-bottom">
                     <span className="kicker block font-medium">{entry.role.replace(" model", "")}</span>
                     <span className="num block text-[12px] font-normal text-ink-2">
-                      <span className="sm:hidden">{entry.version.split("-").at(-1)}</span>
-                      <span className="hidden sm:inline">{entry.version}</span>
+                      <span>{modelPolicyLabel(entry.version, liveState.generatedAt)}</span>
                     </span>
                   </th>
                 ))}
@@ -273,6 +275,15 @@ export default async function RecordPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="panel mt-8 p-5">
+        <h2 className="text-xl font-semibold">Policy revisions within the v2 record</h2>
+        <p className="mt-2 text-ink-2">Descriptive breakdown, not a comparison. Each game belongs to the revision of its scored seal (final, else reissued, else morning); pending games use the same order. Different revisions cover different games and information times.</p>
+        <table className="pp-table mt-4">
+          <thead><tr><th>Revision</th><th>Sealed games</th><th>Scored games (n)</th><th>Brier</th></tr></thead>
+          <tbody>{revisionBreakdown(ledger, liveState.modelVersion).map((row) => <tr key={row.revision}><td>{row.revision}</td><td>{row.sealed}</td><td>{row.scored}</td><td>{fixed(row.brier, 3) ?? "—"}</td></tr>)}</tbody>
+        </table>
       </section>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
@@ -325,7 +336,7 @@ export default async function RecordPage() {
           id="games-title"
           kicker="Game by game"
           title="Every scored seal"
-          dek="Most recent first. The scored seal is the final seal when one exists, else the morning seal. Missed seals are listed under each version."
+          dek="Most recent first. The scored seal is the final seal when one exists, else reissued, else original morning. Missed seals are listed under each version."
         />
         {records.map((entry) => (
           <VersionGames key={entry.version} version={entry.version} ledger={entry.ledger} role={entry.role} />

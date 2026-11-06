@@ -1,3 +1,4 @@
+import { modelPolicyLabel } from "@/lib/season/policy-revisions";
 import Link from "next/link";
 import { Badge, StatusPill } from "@/components/live/Badge";
 import { SplitBar } from "@/components/live/SplitBar";
@@ -217,7 +218,7 @@ export function WinProbability({ game }: { game: DayGame }) {
       {game.projection ? null : (
         <p className="mt-4 text-[12px] leading-5 text-ink-3">
           The market is the {provider ?? "sportsbook"} moneyline via ESPN with the vig removed, shown for
-          reference. It is never a model input and is not scored.
+          reference. It is never a model input. The record reports paired market Brier after 500 scored model games.
         </p>
       )}
     </Panel>
@@ -371,7 +372,7 @@ export function WhatMoves({ game, breakdown, detail, today }: { game: DayGame; b
         ) : null}
         {game.absences && game.forecast ? (
           <p>
-            A seal counts every player on the report in use, weighted by status. Team pages and the season odds
+            A seal counts players on the report in use, weighted by status. Since policy revision 2, a team marked unfiled instead counts current absences inferred from box scores. Team pages and the season odds
             list current absences instead, which is who the season simulation counts as out.
           </p>
         ) : null}
@@ -428,8 +429,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                   <tr key={version.modelVersion} className="border-b border-line last:border-0">
                     <th scope="row" className="py-3 pr-3 text-left font-normal">
                       <span className="num text-[13px] text-ink">
-                        <span className="sm:hidden">{version.modelVersion.split("-").at(-1)}</span>
-                        <span className="hidden sm:inline">{version.modelVersion}</span>
+                        <span>{modelPolicyLabel(version.modelVersion, (version.scored ?? version.final ?? version.reissued ?? version.morning)?.issuedAt)}</span>
                       </span>
                       <span className="block text-[12px] text-ink-3">
                         {ROLE_LABELS[version.role]}
@@ -494,7 +494,7 @@ export function Result({ game, detail }: { game: DayGame; detail: GameDetail }) 
           {detail.results.map((result) => (
             <div key={result.modelVersion} className="rounded-lg bg-wash px-4 py-3">
               <dt className="flex items-center justify-between gap-2">
-                <span className="num text-[12px] text-ink-2">{result.modelVersion}</span>
+                <span className="num text-[12px] text-ink-2">{modelPolicyLabel(result.modelVersion, result.seal.issuedAt)}</span>
                 <span className="kicker text-[10px]">{ROLE_LABELS[result.role]}</span>
               </dt>
               <dd className="mt-2 text-[14px] text-ink-2">

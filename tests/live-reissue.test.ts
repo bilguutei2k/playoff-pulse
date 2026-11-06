@@ -115,7 +115,11 @@ describe("which seal counts", () => {
     expect(summary.scored).toBe(1);
     expect(summary.noFinalSeal).toBe(1);
     expect(summary.brier).toBeCloseTo((1 - 0.88) ** 2, 10);
-    expect(summary.morningBrier).toBeCloseTo((1 - 0.88) ** 2, 10);
+    expect(summary.latestPreFinalBrier).toBeCloseTo((1 - 0.88) ** 2, 10);
+    expect(summary.reissuedCount).toBe(1);
+    expect(summary.morningCount).toBe(1);
+    expect(summary.morningBrier).toBeCloseTo((1 - morning.homeWinProbability) ** 2, 10);
+    expect(summary.reissuedBrier).toBeCloseTo((1 - reissued.homeWinProbability) ** 2, 10);
   });
 });
 

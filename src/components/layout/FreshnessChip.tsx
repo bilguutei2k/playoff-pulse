@@ -1,5 +1,6 @@
 "use client";
 
+import { modelPolicyLabel } from "@/lib/season/policy-revisions";
 import { useSyncExternalStore } from "react";
 import { formatAgeShort } from "@/lib/utils/format";
 
@@ -43,8 +44,8 @@ export function FreshnessChip({
       }`}
       title={
         stored
-          ? `Live data could not be read. Showing the copy stored with this version of the site, published ${stamp}, model ${modelVersion}`
-          : `Forecast published ${stamp}, model ${modelVersion}`
+          ? `Live data could not be read. Showing the copy stored with this version of the site, published ${stamp}, model ${modelPolicyLabel(modelVersion, iso)}`
+          : `Forecast published ${stamp}, model ${modelPolicyLabel(modelVersion, iso)}`
       }
     >
       <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full ${stale ? "bg-warn" : "bg-teal"}`} />
@@ -53,7 +54,7 @@ export function FreshnessChip({
         <time dateTime={iso}>{stored ? "updated" : "Updated"} {when}</time>
         <span className="hidden xl:inline">
           <span aria-hidden className="mx-1.5 text-ink-4">·</span>
-          <span className="num">{modelVersion}</span>
+          <span className="num">{modelPolicyLabel(modelVersion, iso)}</span>
         </span>
       </span>
     </p>

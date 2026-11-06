@@ -190,26 +190,41 @@ rating model. Each version's sealed record is reported separately.
 - The tiebreak code reproduced all 100 actual seeds, 2021-22 to 2025-26.
 - In-game estimates passed reliability and slope checks at Q1, Q2 and Q3 ends on 2025-26 games not
   used to fit them.
-- v2 injury test, gated by `docs/live/evaluation-injury.json` (registered before any test-season
-  number, run once): on 2,460 regular-season games in 2024-25 and 2025-26, Brier 0.2009 against
+- v2 injury test, gated by `docs/live/evaluation-injury.json` (registered before this candidate’s test results were committed; base-model evaluations already existed): on 2,460 regular-season games in 2024-25 and 2025-26, Brier 0.2009 against
   0.2061 for v1 on the same games, a paired difference of -0.0051 with a 95% interval of -0.0081 to
   -0.0022 (bootstrap over 327 game dates), negative in each season (-0.0057 and -0.0046). Log loss
   0.5856 against 0.5991; calibration slope 0.875 against 0.886, within the registered 0.02. The
   season simulator stayed within its registered tolerances at Dec 1, Feb 1 and Apr 1. Every use
-  must carry the two disclosures below about 2025-26 and the market.
+  must carry the disclosures below about both test seasons and the market.
 
 **Required disclosures:**
 
+- v2 keeps one record with policy revisions 0–3 (exact effective times in
+  `src/lib/season/policy-revisions.ts` and the dated registration correction).
+  Revision breakdowns are descriptive, not comparisons. The original registered final-point
+  gates are unchanged; they do not validate later morning, fallback or unfiled policy changes.
+  The unfiled experiment reused test outcomes and is exploratory.
+- Report status weights, including Available and Probable, estimate nonparticipation, not
+  medical inability. Box-score inference also enters unfiled seals and season odds.
+  Missing box scores do not stop learning: margins update unadjusted until replay can adjust them.
+  Complete driver lists are stored only since revision 2.
+- Known defects pending a new version: postseason absence penalties do not expire within a
+  simulation; departed players can retain inferred absences; the return table conditions on
+  another missed game rather than estimating remaining absence after games already missed.
+  Unknown future injuries are omitted, with no supported cancellation claim.
+- T4 uses realized schedules, not archived checkpoint schedules. Future roster evidence can
+  resolve names as well as un-resolve them; the review found no positive-value historical
+  effect, not a universal no-leak guarantee.
+
 - What v2 models and what it does not: listed players on the NBA injury report, by their
   expected absence weighted by status (a team that has not filed yet counts its current
-  absences, chiefly players who missed its last game), with full-strength ratings, a final seal
+  absences, chiefly players who missed its last game), with injury-adjusted ratings intended to approximate full strength, a final seal
   in the hour before tip, and return estimates in the season simulation from the survival table
   only. It does
   not simulate unknown future injuries, redistribute minutes, or model matchups. ESPN's return
   dates are stored and never used. v1 does not account for injuries, and any number from v1 must
   say so.
-- The v2 test is conservative and thin: 2025-26 was among the seasons seen when v1's form was
-  chosen, which favors v1, and only two test seasons exist. The sealed ledger is the real test.
+- Both injury-test seasons (2024-25 and 2025-26) were inside the 2023–2026 span used to choose the shared base-model form. This is not a fully untouched holdout; there is no demonstrated conservative direction. Only two seasons exist. The prospective sealed ledger is the independent test.
 - In the test, the market remained ahead on the 978 games with a stored ESPN spread (its timing
   unknown): market 0.1965, v2 0.2008, v1 0.2070.
 - The test approximated live statuses from stored reports; the live season odds read the latest
@@ -241,7 +256,7 @@ rating model. Each version's sealed record is reported separately.
 - Any claim about either model against the market, including that v2 narrows a gap to it, until at
   least 500 scored games. By the owner's decision of 2026-11-01, the market's vig-free win
   probability is displayed per game as a reference only, labeled "Market" with its provider named;
-  it is never a model input and is not scored.
+  it is never a model input. /record reports paired market Brier after 500 model games; the matched-market count is shown, and this threshold alone does not establish superiority.
 - That v2 beats v1 prospectively, before the sealed ledger shows it on at least 500 scored games
   with the paired reference stored on each v2 seal.
 - That the injury test is a prospective result, or that return estimates use reported return dates.
