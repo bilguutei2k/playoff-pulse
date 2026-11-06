@@ -1,0 +1,182 @@
+{
+  "version": "live-2026.27-v3",
+  "provenance": {
+    "codeSha": "b12a00702cf3c444271aaf54bd50c087badb77ba",
+    "sourceHashes": {
+      "scripts/live/fit-injury-v3.ts": "63b46d01ae399b5ee51f028615ea6e1b0493d76f1b19d9dcdf0450057749ce9d",
+      "src/lib/season/injury-v3.ts": "7b2798439629eb210d8656956a00c18a56746806dd57653c4801d8a038599c2d",
+      "src/lib/season/injury-model.ts": "cd666605d19bebacce77baf8490bbf30fddedf7260dc25f91e634627533e248e"
+    },
+    "warmupSeason": "2020-21",
+    "developmentSeasons": [
+      "2021-22",
+      "2022-23",
+      "2023-24"
+    ],
+    "dataHashes": {
+      "data/season/boxscores/2021.json": "d35fca4c0999a93e9987fc01c98a914a21b1c1929d32d8c902e17d8d8d3d4786",
+      "data/season/boxscores/2022.json": "8dd63dd5ba9f4126e00cdbf3562f6b655941fab52d7072d7d2b16a56c223d5d4",
+      "data/season/boxscores/2023.json": "0486460fffa2c2d2c28e542c4f94364e0e9cd9acfec84fc12039abefeda42b76",
+      "data/season/boxscores/2024.json": "ac17d001a606cd7785bd230eee96f534c635a10fee8cdaac4a119fd5441db968",
+      "data/season/games/2005.json": "c4500bc2a03675f5ae3b9a417f12440383ce05145b751f5fd0d9b3121bb1e20e",
+      "data/season/games/2006.json": "f6d257427731ffcf1d57e2831357a4b5f83cfa45e92a4263a962f10b92c3d6e8",
+      "data/season/games/2007.json": "d0021e3c428fea63972ab08c7008cc53874ad8ef7118afdceb0561fe07703e76",
+      "data/season/games/2008.json": "5de7e94fc487b1a682c33df5bf457a27042deba1865c5d265c4328191911ced6",
+      "data/season/games/2009.json": "92837ad404d0ac37173db0510e713c0fb222b53735a1c57c08680b2929a9941b",
+      "data/season/games/2010.json": "777054fe16c9c33f1dd1be553839fca7c3b2344d7e15a013fb00511397fe43c4",
+      "data/season/games/2011.json": "bcd63a877b6d45018caac5cd21b3394ab1ce06d232c583c8f9bcd9f506595270",
+      "data/season/games/2012.json": "0166f1cbc86d66cc0bffb7ed6f4de80f19db9f88293149ffac0366569d348564",
+      "data/season/games/2013.json": "827d7c222b7c26162745905c8077c51d350be772b8dc6b00032c445be1fb3547",
+      "data/season/games/2014.json": "f05b4c3f3f8d9370596daaf15ed24332dfaec2232f77beb9a046e2899ae96c4c",
+      "data/season/games/2015.json": "7d37213545ce3f9cc8ad608cca18a6b12a34542f7a3e5c8c44e67a21b4bc0284",
+      "data/season/games/2016.json": "229562c92902746aff1a117b05f78f2a3fec11c743c7fbe20172c8317803f8b8",
+      "data/season/games/2017.json": "3446ce1221a08130f0c1ba1a23932040fa1bc1d3ba4448f1a30bc6b2abd01f40",
+      "data/season/games/2018.json": "fe51a73938e694abe07118925f7cfb86503313e598551dacb409068d3643083f",
+      "data/season/games/2019.json": "eb6cd6aae7169a03b5644a38c4c682bac360a0d183f02933b0ee444aa79c0c79",
+      "data/season/games/2020.json": "473593861919c3642225069f2a5f8cba6ea93101b97b6c2ab0d362bd42c5ece4",
+      "data/season/games/2021.json": "2519f61e4a3bc6357b3324fce87fbec117b3898d9776ff87e8fb168d2929065b",
+      "data/season/games/2022.json": "5aee8a397c5f396ec7a3d0b43c3f40d5128a8963fb2702cc9aa09cda86a23a84",
+      "data/season/games/2023.json": "81297e73bcb457e52e1e8d490056d556f3758676ef606455c9db9282dfd190ac",
+      "data/season/games/2024.json": "ab2997b74743ff2d87e9af30a7f7c013b307cc00e7894ba0cd04545b05318660",
+      "data/season/reports/2022.json": "b38a4a627a5acd5f323472027520009fb223c7b857dfd0691073f7e3d88761ec",
+      "data/season/reports/2023.json": "17233ea1fce3726f7314d28d66b669e6d9e2dda5df37a4b98675a8f1ecd40189",
+      "data/season/reports/2024.json": "1f145093f0a58392714a375c0743b4f42f6258a7529ad341ef9dd96276ef1f27"
+    }
+  },
+  "table": {
+    "long": [
+      0.34705882352941175,
+      0.34705882352941175,
+      0.05970149253731343,
+      0.025477707006369428,
+      0.02441860465116279,
+      0.025075225677031094,
+      0.01236603462489695
+    ],
+    "short": [
+      0.43155080213903746,
+      0.43155080213903746,
+      0.2899428970982403,
+      0.1809341186138885,
+      0.09820039991113086,
+      0.055387278234530504,
+      0.024263431542461005
+    ]
+  },
+  "counts": {
+    "long": [
+      0,
+      170,
+      268,
+      471,
+      860,
+      997,
+      1213
+    ],
+    "short": [
+      0,
+      9350,
+      8581,
+      7301,
+      4501,
+      2311,
+      1154
+    ]
+  },
+  "events": {
+    "long": [
+      0,
+      59,
+      16,
+      12,
+      21,
+      25,
+      15
+    ],
+    "short": [
+      0,
+      4035,
+      2488,
+      1321,
+      442,
+      128,
+      28
+    ]
+  },
+  "pools": {
+    "long": [
+      [
+        0,
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3
+      ],
+      [
+        4
+      ],
+      [
+        5
+      ],
+      [
+        6
+      ]
+    ],
+    "short": [
+      [
+        0,
+        1
+      ],
+      [
+        2
+      ],
+      [
+        3
+      ],
+      [
+        4
+      ],
+      [
+        5
+      ],
+      [
+        6
+      ]
+    ]
+  },
+  "diagnostics": {
+    "observations": 37177,
+    "completedSpells": 8590,
+    "censoredSpells": 1328,
+    "brier": 0.1563887484581756,
+    "logLoss": 0.4735736598530074,
+    "expectedFurther": {
+      "long": [
+        24.36693743154654,
+        36.31873300326947,
+        54.62328477978207,
+        59.71628253374696,
+        62.050699850181644,
+        66.88329909459135,
+        79.86666666666666
+      ],
+      "short": [
+        2.9313154077478147,
+        4.156688440722872,
+        6.312330558938636,
+        10.111629480019388,
+        16.93564696649396,
+        26.906993095739686,
+        40.214285714285715
+      ]
+    }
+  },
+  "limitations": [
+    "In-sample nonparticipation return diagnostics, not medical recovery validation.",
+    "Bucket zero has no observations; pooled with one. Constant geometric tail after 31 games.",
+    "Rotation exits are censored, not returns; censoring can be informative."
+  ]
+}
