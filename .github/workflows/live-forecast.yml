@@ -13,9 +13,14 @@ name: Live forecast
 # a row it backs off, and each next run waits about 30 minutes instead of 10; one success
 # brings it back to 10 (scripts/live/chain-decision.sh). While it keeps failing it opens
 # one issue per UTC day, "Live job failing on <date>", with the failing run's URL
-# (scripts/live/failure-alert.sh, never fails the job). To stop the chain, disable the
-# workflow. Pushes made with GITHUB_TOKEN do not trigger ci.yml, so these commits are
-# checked here: verify:ledger against live-data's previous head, and verify:live.
+# (scripts/live/failure-alert.sh, never fails the job). Every real run asks for its next
+# run, whatever it saw in the run list; the concurrency group keeps that from making two
+# chains (see "Start the next run"). A separate workflow, live-watchdog.yml, restarts the
+# chain if it still stops and reports what this job cannot (a stale state, unsealed games);
+# it runs on the same platform, so it is a second path, not an external monitor. To stop
+# the chain, disable this workflow; the watchdog then stays idle. Pushes made with
+# GITHUB_TOKEN do not trigger ci.yml, so these commits are checked here: verify:ledger
+# against live-data's previous head, and verify:live.
 #
 # The git steps are scripts/live/data-checkout.sh and scripts/live/data-commit.sh, which
 # tests/live-data-git.test.ts runs against a throwaway origin on every CI run.
@@ -144,7 +149,15 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash scripts/live/report-alert.sh "Injury report problem"
+        run: bash scripts/live/report-alert.sh "Injury report problem" reportProblem
+
+      # Same for model views that were not published (health.json's viewsProblem): the
+      # site then shows no projections, team injury lists or player pages. Never fails the job.
+      - name: Open an issue if the model views were not published
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/live/report-alert.sh "Model views problem" viewsProblem
 
       # Never fails the job: a refused code deploy must not cost seals or slow the chain.
       - name: Retry a production deploy Vercel refused
@@ -186,15 +199,6 @@ jobs:
           STREAK: ${{ steps.next.outputs.streak }}
         run: bash scripts/live/failure-alert.sh "Live job failing" "$RUN_URL" "$STREAK"
 
-      # Also exercises the watchdog on a real runner before its new workflow exists on
-      # main (GitHub may refuse workflow_dispatch for an unregistered workflow).
-      - name: Dry run watchdog decisions
-        if: always() && inputs.dry_run == true
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: node scripts/live/watchdog.mjs
-
       - name: Dry run, no next run
         if: always() && inputs.dry_run == true
         env:
@@ -202,9 +206,17 @@ jobs:
         run: |
           echo "Dry run: the next run is not started (a real run would start it waiting about ${WAIT_MINUTES:-?} minutes)."
 
-      # Always dispatch: a run-list observation can be stale and strand the chain.
-      # GitHub allows one running and one pending run per group; a newer pending run
-      # replaces the older one, without cancelling the running job:
+      # Every real run asks for its next run; it never skips because the run list shows
+      # another run queued or running. That check stranded the chain on 2026-11-04: at
+      # 16:00 UTC run 41861919403 skipped because run 41860183917, whose job had finished at
+      # 15:50, was not marked completed until 16:15, and nothing ran until the 18:47
+      # schedule. Two runs cannot overlap anyway: with the default queue, GitHub keeps "at
+      # most one running job or workflow in a concurrency group at any time" and "at most one
+      # job or workflow run can be pending", and when another queues "any existing pending
+      # job or workflow run in the same group is canceled and replaced"; cancel-in-progress
+      # is false, so the running one is never cancelled. GitHub notes that the order of
+      # pending runs "is not guaranteed". A run cancelled that way is neutral in the failure
+      # streak (scripts/live/chain-decision.sh). Source, read 2026-11-06:
       # https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency
       - name: Start the next run
         if: always() && inputs.dry_run != true

@@ -1,63 +1,105 @@
+// Fault injection for src/lib/live-data/published.ts: the whole snapshot is the unit of
+// fallback. A local HTTP server stands in for GitHub's ref advertisement and
+// raw.githubusercontent.com; its network copies carry marker values (a state timestamp
+// and a seal probability) that the bundled copy does not have, so any mixing shows.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { createServer, type Server } from "node:http";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-const memoization = vi.hoisted(() => ({ enabled: true }));
-
+// React memoizes `cache` functions per render. Reproduce that: `render.next()` starts a new
+// render; `render.memoize = false` imitates a route handler, where nothing is memoized.
+const render = vi.hoisted(() => {
+  const maps: Map<string, unknown>[] = [];
+  return { maps, memoize: true, next: () => maps.forEach((map) => map.clear()) };
+});
 vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
-// Reproduce React's per-render memoization in this non-React test harness.
-vi.mock("react", () => ({ cache: (fn: (...args: unknown[]) => unknown) => {
-  const calls = new Map<string, unknown>();
-  return (...args: unknown[]) => {
-    if (!memoization.enabled) return fn(...args);
-    const key = JSON.stringify(args);
-    if (!calls.has(key)) calls.set(key, fn(...args));
-    return calls.get(key);
-  };
-} }));
+vi.mock("react", () => ({
+  cache: (fn: (...args: unknown[]) => unknown) => {
+    const calls = new Map<string, unknown>();
+    render.maps.push(calls);
+    return (...args: unknown[]) => {
+      if (!render.memoize) return fn(...args);
+      const key = JSON.stringify(args);
+      if (!calls.has(key)) calls.set(key, fn(...args));
+      return calls.get(key);
+    };
+  },
+}));
 
+const BUNDLED = JSON.parse(readFileSync("data/live/state.json", "utf8"));
+const LABEL: string = BUNDLED.seasonLabel;
+const MONTH = `site/${LABEL}/months/2026-11.json`;
+const DAY = `site/${LABEL}/days/2026-11-02.json`;
+const VIEW = `site/${LABEL}/projections.json`;
+const A = "a".repeat(40);
+const B = "b".repeat(40);
+/** A projections view that differs from the default one, so it changes between commits. */
+const NEXT_VIEW = JSON.stringify({ version: 1, seasonLabel: LABEL, fromEtDate: "2026-11-06", games: [] });
+
+/** One published commit: every bundled site file plus a projections view, with markers. */
+function publication(generatedAt: string, probability: number, extra: Record<string, string> = {}) {
+  const manifest = JSON.parse(readFileSync("data/live/site/manifest.json", "utf8"));
+  const files: Record<string, string> = {};
+  for (const relative of Object.keys(manifest.files)) files[relative] = readFileSync(`data/live/${relative}`, "utf8");
+  files["state.json"] = JSON.stringify({ ...BUNDLED, generatedAt });
+  for (const relative of Object.keys(files).filter((file) => /\/(days|months)\//.test(file))) {
+    const value = JSON.parse(files[relative]);
+    for (const row of value.seals ?? value.rows) if (row.type === "seal") row.homeWinProbability = probability;
+    files[relative] = JSON.stringify(value);
+  }
+  files[VIEW] = JSON.stringify({ version: 1, seasonLabel: LABEL, fromEtDate: "2026-11-05", games: [] });
+  Object.assign(files, extra);
+  manifest.files = Object.fromEntries(
+    Object.entries(files).map(([key, value]) => [key, createHash("sha256").update(value).digest("hex")]),
+  );
+  return { files, manifest };
+}
+
+type Fault = "down" | "malformed" | { flaky: number };
 let server: Server | undefined;
 afterEach(async () => {
   server?.closeAllConnections();
-  await new Promise<void>((resolve) => server ? server.close(() => resolve()) : resolve());
+  await new Promise<void>((resolve) => (server ? server.close(() => resolve()) : resolve()));
   server = undefined;
-  memoization.enabled = true;
+  render.memoize = true;
+  render.maps.length = 0;
+  vi.useRealTimers();
   vi.unstubAllEnvs();
   vi.resetModules();
 });
 
-async function fixture(fail?: string, malformed = false) {
+/** Serves commits; `site.head` is what the ref advertisement says, `site.faults` breaks files. */
+async function serve(commits: Record<string, ReturnType<typeof publication>>, head: string) {
   vi.resetModules();
-  const state = JSON.parse(readFileSync("data/live/state.json", "utf8"));
-  const originalStamp = state.generatedAt;
-  state.generatedAt = "2026-11-05T19:55:00Z";
-  const manifest = JSON.parse(readFileSync("data/live/site/manifest.json", "utf8"));
-  const files: Record<string, string> = {};
-  for (const relative of Object.keys(manifest.files)) files[relative] = readFileSync(`data/live/${relative}`, "utf8");
-  files["state.json"] = JSON.stringify(state);
-  // Make network ledger/day values distinguishable from the bundled fixture.
-  for (const relative of Object.keys(files).filter((file) => /\/(days|months)\//.test(file))) {
-    const value = JSON.parse(files[relative]);
-    for (const row of value.seals ?? value.rows) {
-      if (row.type === "seal") row.homeWinProbability = 0.123456;
-    }
-    files[relative] = JSON.stringify(value);
-  }
-  const view = `site/${state.seasonLabel}/projections.json`;
-  files[view] = JSON.stringify({ version: 1, seasonLabel: state.seasonLabel, fromEtDate: "2026-11-05", games: [] });
-  if (fail && malformed) files[fail] = "{}";
-  manifest.files = Object.fromEntries(Object.entries(files).map(([key, value]) => [key, createHash("sha256").update(value).digest("hex")]));
-  const commit = "d".repeat(40);
-  const requests: string[] = [];
+  vi.useFakeTimers({ toFake: ["Date"] });
+  vi.setSystemTime(new Date("2026-11-06T08:00:00Z"));
+  const site = { head, refsDown: false, faults: {} as Record<string, Fault>, requests: [] as string[] };
   server = createServer((req, res) => {
     const url = req.url ?? "";
-    requests.push(url);
-    if (url === "/refs") return res.end(`${commit} refs/heads/live-data\n`);
-    const relative = url.replace(`/${commit}/data/live/`, "");
-    if (relative === fail && !malformed) { res.statusCode = 503; return res.end("unavailable"); }
-    if (relative === "site/manifest.json") return res.end(JSON.stringify(manifest));
-    if (files[relative]) return res.end(files[relative]);
+    site.requests.push(url);
+    if (url === "/refs") {
+      if (site.refsDown) {
+        res.statusCode = 503;
+        return res.end();
+      }
+      return res.end(`${site.head} refs/heads/live-data\n`);
+    }
+    const [, commit, ...rest] = url.split("/");
+    const relative = rest.join("/").replace(/^data\/live\//, "");
+    const published = commits[commit];
+    const fault = site.faults[`${commit}:${relative}`];
+    if (fault === "down" || (typeof fault === "object" && fault.flaky-- > 0)) {
+      res.statusCode = 503;
+      return res.end("unavailable");
+    }
+    if (!published) {
+      res.statusCode = 404;
+      return res.end();
+    }
+    if (relative === "site/manifest.json") return res.end(JSON.stringify(published.manifest));
+    if (fault === "malformed") return res.end("{}");
+    if (relative in published.files) return res.end(published.files[relative]);
     res.statusCode = 404;
     res.end();
   });
@@ -67,49 +109,151 @@ async function fixture(fail?: string, malformed = false) {
   vi.stubEnv("LIVE_DATA_BASE_URL", `http://127.0.0.1:${address.port}`);
   vi.stubEnv("LIVE_DATA_REFS_URL", `http://127.0.0.1:${address.port}/refs`);
   vi.stubEnv("LIVE_DATA_SOURCE", "network");
-  return { published: await import("@/lib/live-data/published"), originalStamp, requests, commit, view };
+  const p = await import("@/lib/live-data/published");
+  /** Everything one page could combine, read the way React would: concurrently. */
+  const page = async () => {
+    const [state, via, ledger, day, view, status] = await Promise.all([
+      p.getLiveState(), p.getLiveStateSource(), p.getSeasonLedger(), p.getDaySeals("2026-11-02"), p.getProjections(), p.getLiveDataStatus(),
+    ]);
+    const probabilities = new Set(
+      [...ledger.filter((row) => row.type === "seal"), ...day].map((row) => (row as { homeWinProbability: number }).homeWinProbability),
+    );
+    return { generatedAt: state.generatedAt, via, probabilities, view, status, days: day.length, rows: ledger.length };
+  };
+  /** A later render, after the head cache (15 s) and the failed-commit pause (15 s). */
+  const later = () => {
+    vi.setSystemTime(Date.now() + 16_000);
+    render.next();
+  };
+  return { site, page, later, p };
 }
 
-describe("atomic published snapshot", () => {
-  it("uses one pinned complete network snapshot", async () => {
-    const { published: p, commit } = await fixture();
-    expect((await p.getLiveState()).generatedAt).toBe("2026-11-05T19:55:00Z");
-    expect(await p.getLiveDataStatus()).toMatchObject({ source: "network", state: "network", games: "network", commit });
-    expect(await p.getProjections()).not.toBeNull();
-    expect((await p.getSeasonLedger()).filter((row) => row.type === "seal").every((row) => row.homeWinProbability === 0.123456)).toBe(true);
-    expect((await p.getDaySeals("2026-11-02")).every((row) => row.homeWinProbability === 0.123456)).toBe(true);
+const fetched = (requests: string[], commit: string) =>
+  requests.filter((url) => url.startsWith(`/${commit}/`)).map((url) => url.replace(`/${commit}/data/live/`, ""));
+
+describe("one complete snapshot per render", () => {
+  it("reads every file from one pinned network commit", async () => {
+    const { page } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    const view = await page();
+    expect(view).toMatchObject({ generatedAt: "2026-11-06T07:50:00Z", via: "network", view: { fromEtDate: "2026-11-05" } });
+    expect(view.status).toMatchObject({ source: "network", commit: A, head: A, problem: null });
+    expect([...view.probabilities]).toEqual([0.111]);
+    expect(view.days).toBeGreaterThan(0);
   });
-  it.each([
-    "site/2026-27/months/2026-11.json",
-    "site/2026-27/days/2026-11-02.json",
-    "site/2026-27/projections.json",
-    "state.json",
-  ])("selects the whole bundle when %s fails, even with state fetched", async (failed) => {
-    const { published: p, originalStamp, requests, commit } = await fixture(failed);
-    const [state, source, ledger, day] = await Promise.all([
-      p.getLiveState(), p.getLiveStateSource(), p.getSeasonLedger(), p.getDaySeals("2026-11-02"),
-    ]);
-    expect(requests).toContain(`/${commit}/data/live/state.json`);
-    expect(state.generatedAt).toBe(originalStamp);
-    expect(source).toBe("bundled");
-    expect(await p.getLiveDataStatus()).toMatchObject({ source: "bundled", state: "bundled", games: "bundled", commit: null });
-    expect(ledger.length).toBeGreaterThan(0);
-    expect(day.length).toBeGreaterThan(0);
-    expect(day.every((row) => row.homeWinProbability !== 0.123456)).toBe(true);
-    expect(ledger.filter((row) => row.type === "seal").every((row) => row.homeWinProbability !== 0.123456)).toBe(true);
-    expect(await p.getProjections()).toBeNull();
+
+  it.each([MONTH, DAY, VIEW, "state.json"])(
+    "with no earlier snapshot, selects the whole bundle when %s fails",
+    async (failing) => {
+      const { site, page } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+      site.faults[`${A}:${failing}`] = "down";
+      const view = await page();
+      expect(fetched(site.requests, A)).toContain("state.json");
+      expect(view.generatedAt).toBe(BUNDLED.generatedAt);
+      expect(view.via).toBe("bundled");
+      expect(view.probabilities.has(0.111)).toBe(false);
+      expect(view.rows).toBeGreaterThan(0);
+      expect(view.days).toBeGreaterThan(0);
+      expect(view.view).toBeNull();
+      expect(view.status).toMatchObject({ source: "bundled", commit: null, head: A, problem: expect.stringContaining(failing) });
+    },
+  );
+
+  it("rejects an artifact that matches its manifest hash but does not validate", async () => {
+    const broken = publication("2026-11-06T07:50:00Z", 0.111, { [MONTH]: "{}" });
+    const { page } = await serve({ [A]: broken }, A);
+    expect(await page()).toMatchObject({ via: "bundled", generatedAt: BUNDLED.generatedAt });
   });
-  it("keeps route-handler health atomic without React memoization", async () => {
-    memoization.enabled = false;
-    const { published: p, originalStamp, requests, commit } = await fixture("state.json");
+
+  it("retries a read once, so one dropped request does not cost the snapshot", async () => {
+    const { site, page } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    site.faults[`${A}:${MONTH}`] = { flaky: 1 };
+    expect(await page()).toMatchObject({ via: "network", generatedAt: "2026-11-06T07:50:00Z" });
+    expect(fetched(site.requests, A).filter((file) => file === MONTH)).toHaveLength(2);
+  });
+
+  it("ignores artifacts this deployment does not read, even unreadable ones", async () => {
+    const extra = { [`site/${LABEL}/future-view.json`]: "not json", "site/other/thing.json": "{}" };
+    const { site, page } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111, extra) }, A);
+    site.faults[`${A}:site/${LABEL}/future-view.json`] = "down";
+    expect(await page()).toMatchObject({ via: "network", generatedAt: "2026-11-06T07:50:00Z" });
+    expect(fetched(site.requests, A)).not.toContain(`site/${LABEL}/future-view.json`);
+  });
+});
+
+describe("after a complete snapshot", () => {
+  it("downloads only the artifacts whose hash changed at the next commit", async () => {
+    const before = publication("2026-11-06T07:50:00Z", 0.111);
+    const after = publication("2026-11-06T08:00:00Z", 0.111);
+    const { site, page, later } = await serve({ [A]: before, [B]: after }, A);
+    await page();
+    site.head = B;
+    later();
+    expect(await page()).toMatchObject({ via: "network", generatedAt: "2026-11-06T08:00:00Z" });
+    expect(fetched(site.requests, B).sort()).toEqual(["site/manifest.json", "state.json"]);
+  });
+
+  it.each([MONTH, DAY, VIEW, "state.json"])(
+    "keeps the last complete snapshot, not a mix, when %s fails at the new head",
+    async (failing) => {
+      const { site, page, later } = await serve(
+        { [A]: publication("2026-11-06T07:50:00Z", 0.111), [B]: publication("2026-11-06T08:00:00Z", 0.222, { [VIEW]: NEXT_VIEW }) },
+        A,
+      );
+      await page();
+      site.head = B;
+      site.faults[`${B}:${failing}`] = "down";
+      later();
+      const view = await page();
+      expect(view).toMatchObject({ via: "network", generatedAt: "2026-11-06T07:50:00Z", view: { fromEtDate: "2026-11-05" } });
+      expect([...view.probabilities]).toEqual([0.111]);
+      expect(view.status).toMatchObject({ source: "network", commit: A, head: B, problem: expect.stringContaining(failing) });
+
+      // The fault clears: the next render after the pause shows the new head, all of it.
+      delete site.faults[`${B}:${failing}`];
+      later();
+      const healed = await page();
+      expect(healed).toMatchObject({ via: "network", generatedAt: "2026-11-06T08:00:00Z", view: { fromEtDate: "2026-11-06" } });
+      expect([...healed.probabilities]).toEqual([0.222]);
+      expect(healed.status).toMatchObject({ commit: B, head: B, problem: null });
+    },
+  );
+
+  it("does not download a failing commit again on every render", async () => {
+    const { site, page, later } = await serve(
+      { [A]: publication("2026-11-06T07:50:00Z", 0.111), [B]: publication("2026-11-06T08:00:00Z", 0.222) },
+      A,
+    );
+    await page();
+    site.head = B;
+    site.faults[`${B}:${MONTH}`] = "down";
+    later();
+    await page();
+    const tries = fetched(site.requests, B).filter((file) => file === MONTH).length;
+    vi.setSystemTime(Date.now() + 5_000);
+    render.next();
+    expect(await page()).toMatchObject({ generatedAt: "2026-11-06T07:50:00Z" });
+    expect(fetched(site.requests, B).filter((file) => file === MONTH)).toHaveLength(tries);
+  });
+
+  it("keeps the last complete snapshot when the head cannot be resolved", async () => {
+    const { site, page, later } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    await page();
+    site.refsDown = true;
+    later();
+    const view = await page();
+    expect(view).toMatchObject({ via: "network", generatedAt: "2026-11-06T07:50:00Z" });
+    expect(view.status).toMatchObject({ commit: A, head: null, problem: expect.stringContaining("unknown") });
+  });
+});
+
+describe("the health endpoint's reader", () => {
+  it("selects once per response, without React memoization", async () => {
+    const { site, p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    render.memoize = false;
+    site.faults[`${A}:state.json`] = "down";
     const snapshot = await p.getLiveHealthSnapshot();
-    expect(snapshot.liveState.generatedAt).toBe(originalStamp);
-    expect(snapshot.data).toMatchObject({ source: "bundled", state: "bundled", games: "bundled" });
-    expect(requests.filter((url) => url === `/${commit}/data/live/state.json`)).toHaveLength(1);
-  });
-  it("also rejects an invalid artifact whose manifest hash matches", async () => {
-    const { published: p, originalStamp } = await fixture("site/2026-27/months/2026-11.json", true);
-    expect((await p.getLiveState()).generatedAt).toBe(originalStamp);
-    expect(await p.getLiveStateSource()).toBe("bundled");
+    expect(snapshot.liveState.generatedAt).toBe(BUNDLED.generatedAt);
+    expect(snapshot.data).toMatchObject({ source: "bundled", state: "bundled", games: "bundled", head: A });
+    expect(snapshot.games.length).toBeGreaterThan(0);
   });
 });

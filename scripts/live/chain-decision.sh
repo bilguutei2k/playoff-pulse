@@ -8,8 +8,10 @@
 # Usage: scripts/live/chain-decision.sh <this run's job.status> [<earlier conclusion> ...]
 #   The earlier conclusions are completed real (not dry) runs, most recent first.
 #   failure, timed_out and startup_failure count as failures. cancelled, skipped and stale
-#   runs are neutral (including pending runs displaced by concurrency). Anything else ends the streak.
-#   This run's own "cancelled" is passed over the same way.
+#   runs never ran the job, so they are passed over; that includes a pending run the
+#   concurrency group cancelled because a newer one queued. Anything else ends the streak.
+#   This run's own "cancelled" is passed over the same way. scripts/live/watchdog-decision.mjs
+#   counts the same way (tests/live-watchdog.test.ts checks both agree).
 #
 # Prints, for $GITHUB_OUTPUT:
 #   streak=<failures in a row, this run included>

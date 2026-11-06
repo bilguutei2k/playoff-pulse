@@ -1,5 +1,5 @@
 // Decision logic of the live job's two side scripts, with fake `gh` and `curl` on PATH:
-// scripts/live/report-alert.sh (one issue per slate on a report problem) and
+// scripts/live/report-alert.sh (one issue per slate on a report or views problem) and
 // scripts/live/deploy-check.sh (retry a deploy Vercel refused; never fails). deploy-check
 // runs against a throwaway origin whose commits are backdated, and really pushes to it.
 import fs from "node:fs";
@@ -12,12 +12,12 @@ afterAll(removeTempDirs);
 const TIMEOUT = 30_000;
 
 describe("report-alert.sh", () => {
-  function reportAlert(health: object, env: Record<string, string> = {}) {
+  function reportAlert(health: object, env: Record<string, string> = {}, args = ["Injury report problem"]) {
     const dir = tempDir("pp-report-alert-");
     const tools = installFakeTools(dir);
     fs.writeFileSync(path.join(dir, "health.json"), JSON.stringify(health));
     fs.writeFileSync(path.join(dir, "state.json"), JSON.stringify({ slateEtDate: "2026-11-04" }));
-    const result = run("bash", [liveScript("report-alert.sh"), "Injury report problem"], dir, {
+    const result = run("bash", [liveScript("report-alert.sh"), ...args], dir, {
       PATH: tools.path,
       FAKE_LOG: tools.log,
       GH_TOKEN: "fake",
@@ -58,6 +58,29 @@ describe("report-alert.sh", () => {
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("Dry run: would open issue: Injury report problem on 2026-11-04");
     expect(creates(result.calls)).toEqual([]);
+  });
+
+  const views = ["Model views problem", "viewsProblem"];
+
+  it("opens one issue per slate for a views problem, even without a report problem", () => {
+    const result = reportAlert({ reportProblem: null, viewsProblem: "player index is 1.6 MB" }, {}, views);
+    expect(result.status, result.stderr).toBe(0);
+    const [create] = creates(result.calls);
+    expect(create[create.indexOf("--title") + 1]).toBe("Model views problem on 2026-11-04");
+    const body = create[create.indexOf("--body") + 1];
+    expect(body).toContain("player index is 1.6 MB");
+    expect(body).toContain("Seals and the record are unaffected.");
+  });
+
+  it("keeps the two problems apart", () => {
+    expect(reportAlert({ reportProblem: "report broken", viewsProblem: null }, {}, views).calls).toEqual([]);
+    expect(reportAlert({ reportProblem: null, viewsProblem: "views broken" }).calls).toEqual([]);
+  });
+
+  it("refuses an unknown field", () => {
+    const result = reportAlert({ reportProblem: "x" }, {}, ["Prefix", "stuckGames"]);
+    expect(result.status).toBe(2);
+    expect(result.calls).toEqual([]);
   });
 });
 
