@@ -186,6 +186,15 @@ jobs:
           STREAK: ${{ steps.next.outputs.streak }}
         run: bash scripts/live/failure-alert.sh "Live job failing" "$RUN_URL" "$STREAK"
 
+      # Also exercises the watchdog on a real runner before its new workflow exists on
+      # main (GitHub may refuse workflow_dispatch for an unregistered workflow).
+      - name: Dry run watchdog decisions
+        if: always() && inputs.dry_run == true
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/live/watchdog.mjs
+
       - name: Dry run, no next run
         if: always() && inputs.dry_run == true
         env:
@@ -193,25 +202,16 @@ jobs:
         run: |
           echo "Dry run: the next run is not started (a real run would start it waiting about ${WAIT_MINUTES:-?} minutes)."
 
-      # Dry runs are left out of both run lists, so they never change what a real run does.
-      # Never stops the chain on its own; GitHub's concurrency group keeps at most one run
-      # pending, so starting one when the check below cannot run never makes two chains.
+      # Always dispatch: a run-list observation can be stale and strand the chain.
+      # GitHub allows one running and one pending run per group; a newer pending run
+      # replaces the older one, without cancelling the running job:
+      # https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency
       - name: Start the next run
         if: always() && inputs.dry_run != true
         env:
           GH_TOKEN: ${{ github.token }}
-          THIS_RUN: ${{ github.run_id }}
           WAIT_MINUTES: ${{ steps.next.outputs.wait_minutes || '30' }}
         run: |
-          if others=$(gh run list --workflow=live-forecast.yml --limit 20 --json databaseId,status,displayTitle \
-            --jq "[.[] | select(.status != \"completed\" and (.databaseId | tostring) != \"$THIS_RUN\" and (.displayTitle | endswith(\"(dry run)\") | not))] | length"); then
-            if [ "$others" != "0" ]; then
-              echo "Another run is already queued or running; it will start the next one."
-              exit 0
-            fi
-          else
-            echo "Could not check for a queued run; starting the next one anyway."
-          fi
           for attempt in 1 2 3; do
             if gh workflow run live-forecast.yml --ref main -f chain=true -f wait_minutes="$WAIT_MINUTES"; then
               echo "Next run requested; it starts about $WAIT_MINUTES minutes after this one."

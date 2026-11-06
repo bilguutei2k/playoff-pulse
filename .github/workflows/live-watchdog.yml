@@ -1,0 +1,39 @@
+name: Live watchdog
+# Independent of the live job, but on the same platform. Not an external heartbeat.
+on:
+  schedule:
+    - cron: "3,18,33,48 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Log decisions without dispatching or opening/commenting on issues"
+        type: boolean
+        default: false
+
+run-name: ${{ inputs.dry_run && 'Live watchdog (dry run)' || 'Live watchdog' }}
+permissions:
+  contents: read
+  actions: write
+  issues: write
+concurrency:
+  group: ${{ inputs.dry_run && 'live-watchdog-dry-run' || 'live-watchdog' }}
+  cancel-in-progress: false
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.dry_run && github.ref_name || 'main' }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Read the published data commit
+        run: git fetch --no-tags --depth=1 origin +refs/heads/live-data:refs/remotes/origin/live-data
+      - name: Check heartbeat, seals and health
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: node scripts/live/watchdog.mjs

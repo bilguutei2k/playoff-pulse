@@ -8,7 +8,7 @@
 # Usage: scripts/live/chain-decision.sh <this run's job.status> [<earlier conclusion> ...]
 #   The earlier conclusions are completed real (not dry) runs, most recent first.
 #   failure, timed_out and startup_failure count as failures. cancelled, skipped and stale
-#   runs never ran the job, so they are passed over. Anything else ends the streak.
+#   runs are neutral (including pending runs displaced by concurrency). Anything else ends the streak.
 #   This run's own "cancelled" is passed over the same way.
 #
 # Prints, for $GITHUB_OUTPUT:

@@ -70,6 +70,15 @@ describe("chain decision", () => {
     expect(decide("cancelled", failures(3))).toMatchObject({ streak: 3, wait_minutes: 30, open_issue: 0 });
   });
 
+  it("replacement cancellations neither create nor reset failures", () => {
+    expect(decide("cancelled", ["cancelled", "failure", "cancelled", "failure", "success"])).toMatchObject({
+      streak: 2, wait_minutes: 10, open_issue: 0,
+    });
+    expect(decide("cancelled", ["cancelled", "success", "failure"])).toMatchObject({
+      streak: 0, wait_minutes: 10, open_issue: 0,
+    });
+  });
+
   it("with no history, a first failure waits 10 minutes", () => {
     expect(decide("failure", [])).toMatchObject({ streak: 1, wait_minutes: 10, open_issue: 0 });
   });

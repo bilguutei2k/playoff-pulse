@@ -9,7 +9,7 @@
 // advertisement (`/info/refs?service=git-upload-pack`, the request behind `git ls-remote`;
 // not the rate-limited REST API), kept 15 seconds per server instance, and reads every
 // file at that commit. A commit URL is new to the CDN and never changes, so a render sees
-// a commit within seconds of the push, and all of its files come from that one commit.
+// a commit after snapshot validation; all manifest-backed files come from that commit.
 // Until `live-data` exists the same advertisement's `main` is read instead.
 //
 // Caching. Files are kept in Next's data cache under the content hash the job's manifest
@@ -18,11 +18,12 @@
 // season, so the site reads the job's compact day and month files instead of the ledger
 // (src/lib/season/site-files.ts).
 //
-// Failure. A request that fails, times out or returns something that does not validate
-// falls back to the copy bundled at build time from main; ledger-derived files are
+// Failure. Before exposing data, validate every manifest artifact at the pinned commit.
+// Any failed read selects the whole copy bundled at build time from main; ledger-derived files are
 // rebuilt from the bundled ledger. Main's data/live stops at the cutover to live-data, so
 // that copy only gets older: pages say when they show it (`getLiveStateSource`). Nothing
-// here throws to a page.
+// here throws to a page. Historical reports for old incomplete driver lists are explicitly
+// bundled-only, not current snapshot inputs. Missing optional views return null.
 //
 // Environment overrides: LIVE_DATA_BASE_URL (raw base, default the repository on
 // raw.githubusercontent.com), LIVE_DATA_REFS_URL (the ref advertisement), LIVE_DATA_BRANCH
@@ -87,6 +88,7 @@ type NetworkSource = {
   branch: string;
   commit: string | null;
   manifest: SiteManifest | null;
+  snapshot?: Map<string, string>;
 };
 type Source = NetworkSource | { kind: "bundled" };
 
@@ -385,7 +387,7 @@ function currentHead(): Promise<Head> {
     head = {
       at: now,
       value: fetchHead().catch((error) => {
-        console.error(`[live-data] head of ${DATA_BRANCH} unknown, reading the branch URL instead:`, describe(error));
+        console.error(`[live-data] head of ${DATA_BRANCH} unknown, selecting the bundled snapshot:`, describe(error));
         return { branch: DATA_BRANCH, commit: null };
       }),
     };
@@ -399,6 +401,11 @@ function currentHead(): Promise<Head> {
  * one, under the commit; at the branch URL (commit unknown), only briefly in memory.
  */
 function fetchPublished<T>(source: NetworkSource, relative: string, parse: (text: string) => T): Promise<T> {
+  if (source.snapshot) {
+    const text = source.snapshot.get(relative);
+    if (text === undefined) return Promise.reject(new Error(`Unlisted snapshot file: ${relative}`));
+    return Promise.resolve(parse(text));
+  }
   const hash = source.commit ? (source.manifest?.files[relative] ?? null) : null;
   const url = `${RAW_BASE}/${source.ref}/data/live/${relative}`;
   const download = async (): Promise<T> => {
@@ -409,10 +416,10 @@ function fetchPublished<T>(source: NetworkSource, relative: string, parse: (text
     }
     return parse(body.toString("utf8"));
   };
-  if (hash) return remember(`sha256:${hash}`, () => unstable_cache(download, ["live-data", relative, hash], { revalidate: false })());
+  if (hash) return remember(`snapshot-v2:sha256:${hash}`, () => unstable_cache(download, ["live-data-snapshot-v2", relative, hash], { revalidate: false })());
   if (source.commit) {
     const commit = source.commit;
-    return remember(`${commit}:${relative}`, () => unstable_cache(download, ["live-data", relative, commit], { revalidate: false })());
+    return remember(`snapshot-v2:${commit}:${relative}`, () => unstable_cache(download, ["live-data-snapshot-v2", relative, commit], { revalidate: false })());
   }
   return remember(`${source.ref}:${relative}:${Math.floor(Date.now() / HEAD_TTL_MS)}`, download);
 }
@@ -422,7 +429,7 @@ async function loadManifest(ref: string, branch: string, commit: string | null):
   try {
     return await fetchPublished(source, SITE_MANIFEST_PATH, parseManifest);
   } catch (error) {
-    // Absent until the job first publishes site files; other failures fall back per file.
+    // Without a readable manifest the entire render uses the bundled snapshot.
     if (!(error instanceof HttpStatusError && error.status === 404)) {
       console.error("[live-data] site manifest unavailable:", describe(error));
     }
@@ -430,12 +437,66 @@ async function loadManifest(ref: string, branch: string, commit: string | null):
   }
 }
 
-/** Where this render reads from: one commit of the data branch, resolved once per render. */
+/**
+ * Validate the complete published manifest before exposing any value to React's
+ * independently scheduled readers. Bounded parallel downloads; immutable content hashes
+ * reuse unchanged files. Failure selects the entire bundle, never a partial network view.
+ */
+async function completeSnapshot(source: NetworkSource): Promise<NetworkSource> {
+  const manifest = source.manifest;
+  if (!source.commit || !manifest) throw new Error("No pinned manifest");
+  const files = new Map<string, string>();
+  const paths = Object.keys(manifest.files);
+  for (const required of ["state.json", `games/${manifest.season}.json`]) {
+    if (!paths.includes(required)) throw new Error(`Missing ${required}`);
+  }
+  const label = manifest.seasonLabel;
+  const validate = (relative: string, text: string) => {
+    if (relative === "state.json") {
+      const state = parseState(text);
+      if (state.season !== manifest.season || state.seasonLabel !== label) throw new Error("State/manifest season mismatch");
+    } else if (relative === `games/${manifest.season}.json`) parseGames(text, manifest.season);
+    else if (relative.startsWith(`site/${label}/days/`)) parseDay(text, path.basename(relative, ".json"));
+    else if (relative.startsWith(`site/${label}/months/`)) parseMonth(text);
+    else if (relative === siteProjectionsPath(label)) parseProjections(text, label);
+    else if (relative === siteTeamInjuriesPath(label)) parseTeamInjuries(text, label);
+    else if (relative === sitePlayerIndexPath(label)) parsePlayerIndex(text, label);
+    else if (relative.startsWith(`site/${label}/players/teams/`)) parseTeamPlayers(text, label, path.basename(relative, ".json"));
+    else throw new Error(`Unknown manifest artifact: ${relative}`);
+    return text;
+  };
+  let next = 0;
+  const results = await Promise.allSettled(Array.from({ length: Math.min(6, paths.length) }, async () => {
+    while (next < paths.length) {
+      const relative = paths[next++];
+      files.set(relative, await fetchPublished(source, relative, (text) => validate(relative, text)));
+    }
+  }));
+  const failure = results.find((result) => result.status === "rejected");
+  if (failure?.status === "rejected") throw failure.reason;
+  return { ...source, snapshot: files };
+}
+
+// Retain only the latest complete snapshot, rather than every season-sized commit.
+let complete: { commit: string; promise: Promise<NetworkSource> } | null = null;
 const renderSource = cache(async (): Promise<Source> => {
   if (BUNDLED_ONLY) return { kind: "bundled" };
-  const { branch, commit } = await currentHead();
-  const ref = commit ?? branch;
-  return { kind: "network", ref, branch, commit, manifest: await loadManifest(ref, branch, commit) };
+  try {
+    const { branch, commit } = await currentHead();
+    if (!commit) throw new Error("Cannot pin the data commit");
+    if (!complete || complete.commit !== commit) {
+      const promise = (async () => completeSnapshot({
+        kind: "network", ref: commit, branch, commit,
+        manifest: await loadManifest(commit, branch, commit),
+      }))();
+      complete = { commit, promise };
+      promise.catch(() => { if (complete?.promise === promise) complete = null; });
+    }
+    return await complete.promise;
+  } catch (error) {
+    console.error("[live-data] complete snapshot unavailable; using bundled snapshot:", describe(error));
+    return { kind: "bundled" };
+  }
 });
 
 type Loaded<T> = { value: T; via: DataVia };
@@ -569,8 +630,9 @@ export async function getReportDay(etDate: string): Promise<LiveReportDay | null
 
 /**
  * One model view (projections, team injury lists, player files) at the render's commit.
- * Only files the manifest lists are read; a failed read falls back to the bundled copy,
- * which main's frozen data/live does not have, so the result is then null. Never throws.
+ * Snapshot validation has already selected network or bundled data for all readers.
+ * Only files the manifest lists are read; absent views are null. A bundled snapshot
+ * without model views also returns null. Never throws.
  */
 async function loadView<T>(relative: string, parse: (text: string) => T): Promise<T | null> {
   const source = network(await renderSource());
@@ -579,7 +641,8 @@ async function loadView<T>(relative: string, parse: (text: string) => T): Promis
       const text = bundledFile(relative);
       return text ? parse(text) : null;
     }, null);
-  if (!source?.manifest || !(relative in source.manifest.files)) return fallback();
+  if (source?.manifest && !(relative in source.manifest.files)) return null;
+  if (!source) return fallback();
   return (await withFallback<T | null>(relative, () => fetchPublished(source, relative, parse), fallback)).value;
 }
 
