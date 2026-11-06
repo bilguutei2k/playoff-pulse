@@ -23,10 +23,12 @@ name: Live watchdog
 #
 # Dry runs log every decision and the issue text they would post, and dispatch nothing
 # and write no issue or comment: workflow_dispatch with dry_run=true, and every pull
-# request that changes the watchdog, which runs the pull request's code. workflow_dispatch
-# "will only trigger a workflow run if the workflow file exists on the default branch"
-# (GitHub's events reference), so before this file is on main the pull request run is the
-# only way to run it on a real runner.
+# request that changes the watchdog, which runs the pull request's code. GitHub's events
+# reference says workflow_dispatch "will only trigger a workflow run if the workflow file
+# exists on the default branch", and dispatching this file from its branch returned 404
+# before it had ever run (2026-11-06); once the pull request run had registered it,
+# `gh workflow run live-watchdog.yml --ref <branch> -f dry_run=true` worked. The pull
+# request run is what makes a pre-merge real-runner check possible.
 
 on:
   schedule:
