@@ -1,14 +1,15 @@
-import { POLICY_MODEL_VERSION, modelPolicyLabel } from "@/lib/season/policy-revisions";
-import { recordSummary, revisionBreakdown } from "@/lib/view/record";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Badge } from "@/components/live/Badge";
-import { SectionHeading } from "@/components/live/SectionHeading";
-import { TeamLogo } from "@/components/live/TeamLogo";
+import {
+  CalibrationChart,
+  CalibrationPlaceholder,
+  MissedSeals,
+  ScoredSeals,
+  Waffle,
+} from "@/components/live/RecordParts";
+import { Ticker } from "@/components/live/Ticker";
 import { getLiveState, getSeasonLedger } from "@/lib/live-data/published";
 import type { RecordSummary } from "@/lib/season/types";
 import { formatShortDay } from "@/lib/utils/dates";
-import { splitPercents } from "@/lib/view/card";
 import {
   CALIBRATION_MIN_GAMES,
   MARKET_COMPARISON_MIN_GAMES,
@@ -18,11 +19,14 @@ import {
   marketComparison,
   versionLedger,
   withMarketLine,
-  type CalibrationBin,
-  type ScoredGame,
-  type VersionLedger,
 } from "@/lib/view/record";
-import { teamDisplay } from "@/lib/view/teams";
+import {
+  favoriteSummary,
+  firstScoredDate,
+  hasInjuryTerm,
+  sameScoredGames,
+  versionShort,
+} from "@/lib/view/record-page";
 
 export const metadata: Metadata = {
   title: "Track record",
@@ -47,14 +51,12 @@ const METRICS: Metric[] = [
   { label: "Pending", note: "Sealed, waiting for a result", value: (r) => String(r.pending) },
   { label: "Missed", note: "Tipped before a seal; never backfilled", value: (r) => String(r.missed) },
   { label: "Incomplete inputs", note: "Sealed before an earlier result was in; still counted", value: (r) => String(r.incomplete) },
-  { label: "No final seal", note: "Scored on reissued, else original morning", value: (r) => (r.noFinalSeal === null ? "Seals once" : String(r.noFinalSeal)) },
+  { label: "No final seal", note: "Scored on the morning seal", value: (r) => (r.noFinalSeal === null ? "Seals once" : String(r.noFinalSeal)) },
   { label: "Brier score", note: "Lower is better; an even 50% call scores 0.250", value: (r) => fixed(r.brier, 3) },
   { label: "Baseline Brier", note: "Always the prior home-win rate, same games", value: (r) => fixed(r.baselineBrier, 3) },
   { label: "Log loss", note: "Lower is better", value: (r) => fixed(r.logLoss, 3) },
   { label: "Accuracy", note: "The sealed favorite won", value: (r) => percent(r.accuracy) },
-  { label: "Original morning seals' Brier", note: "Morning kind only; scored games with an original morning seal", value: (r) => r.noFinalSeal === null ? "Seals once" : `${fixed(r.morningBrier, 3) ?? "—"} (n=${r.morningCount ?? 0})` },
-  { label: "Reissued seals' Brier", note: "Reissued games only", value: (r) => r.noFinalSeal === null ? "Seals once" : `${fixed(r.reissuedBrier ?? null, 3) ?? "—"} (n=${r.reissuedCount ?? 0})` },
-  { label: "Latest pre-final seal Brier", note: "Reissued when present, otherwise original morning", value: (r) => r.noFinalSeal === null ? "Seals once" : `${fixed(r.latestPreFinalBrier ?? null, 3) ?? "—"} (n=${r.latestPreFinalCount ?? 0})` },
+  { label: "Morning seals' Brier", note: "The morning seal alone, same games", value: (r) => (r.noFinalSeal === null ? "Seals once" : fixed(r.morningBrier, 3)) },
   {
     label: "Reference Brier",
     note: "The other version's number stored on each seal, same games",
@@ -62,286 +64,305 @@ const METRICS: Metric[] = [
   },
 ];
 
-function Matchup({ awayId, homeId }: { awayId: string; homeId: string }) {
+function Stat({ title, value, note, extra }: { title: string; value: string; note: string; extra?: string }) {
   return (
-    <span className="flex items-center gap-1.5 whitespace-nowrap">
-      <TeamLogo teamId={awayId} size={18} />
-      <span className="num text-ink">{teamDisplay(awayId).code}</span>
-      <span className="text-[12px] text-ink-3">at</span>
-      <TeamLogo teamId={homeId} size={18} />
-      <span className="num text-ink">{teamDisplay(homeId).code}</span>
-    </span>
-  );
-}
-
-function GameRows({ games }: { games: ScoredGame[] }) {
-  return (
-    <div className="table-scroll rounded-[var(--radius-card)] border border-line bg-panel">
-      <table className="w-full min-w-[40rem] text-[14px]">
-        <thead>
-          <tr className="border-b border-line-strong text-left">
-            <th scope="col" className="kicker py-2 pl-4 pr-3 font-medium">Date</th>
-            <th scope="col" className="kicker py-2 pr-3 font-medium">Game</th>
-            <th scope="col" className="kicker py-2 pr-3 font-medium">548 favored</th>
-            <th scope="col" className="kicker py-2 pr-3 font-medium">Result</th>
-            <th scope="col" className="kicker py-2 pr-3 text-right font-medium">Brier</th>
-            <th scope="col" className="kicker py-2 pr-4 font-medium">Seal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {games.map((game) => {
-            const { home, away } = splitPercents(game.seal.homeWinProbability);
-            const favoriteHome = home >= away;
-            const favorite = teamDisplay(favoriteHome ? game.seal.homeId : game.seal.awayId).code;
-            const winner = teamDisplay(game.homeWon ? game.seal.homeId : game.seal.awayId).code;
-            const high = Math.max(game.result.homeScore, game.result.awayScore);
-            const low = Math.min(game.result.homeScore, game.result.awayScore);
-            const favoriteWon = favoriteHome === game.homeWon;
-            return (
-              <tr key={game.seal.gameId} className="border-b border-line last:border-0 hover:bg-wash">
-                <td className="num whitespace-nowrap py-2.5 pl-4 pr-3 text-[12.5px] text-ink-2">{formatShortDay(game.seal.etDate)}</td>
-                <th scope="row" className="py-2.5 pr-3 text-left font-normal">
-                  <Link href={`/game/${game.seal.gameId}`} className="hover:underline hover:decoration-pulse hover:underline-offset-4">
-                    <Matchup awayId={game.seal.awayId} homeId={game.seal.homeId} />
-                  </Link>
-                </th>
-                <td className="num whitespace-nowrap py-2.5 pr-3 text-ink">
-                  {home === away ? "Even" : `${favorite} ${Math.max(home, away)}%`}
-                </td>
-                <td className="num whitespace-nowrap py-2.5 pr-3">
-                  <span className={favoriteWon || home === away ? "text-ink" : "text-ink-2"}>
-                    {winner} {high}–{low}
-                  </span>
-                </td>
-                <td className="num py-2.5 pr-3 text-right text-ink">{game.brier.toFixed(3)}</td>
-                <td className="py-2.5 pr-4">
-                  <span className="flex flex-wrap gap-1">
-                    {game.noFinalSeal ? <Badge tone="warn">No final seal</Badge> : game.seal.sealKind === "final" ? <Badge tone="good">Final</Badge> : <Badge tone="quiet">Morning</Badge>}
-                    {game.seal.inputsIncomplete ? <Badge tone="warn">Incomplete</Badge> : null}
-                    {game.seal.availabilityMissing ? <Badge tone="warn">No report</Badge> : game.seal.availabilityStale ? <Badge tone="warn">Stale report</Badge> : null}
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <div>
+      <h3 className="text-[16px] font-bold">{title}</h3>
+      <p className="figure mt-1 text-[34px] [font-variant-numeric:normal]">{value}</p>
+      <p className="mt-2 text-[13px] text-ink-2">{note}</p>
+      {extra ? <p className="mt-0.5 text-[13px] text-ink-2">{extra}</p> : null}
     </div>
   );
 }
 
-function VersionGames({ version, ledger, role }: { version: string; ledger: VersionLedger; role: string }) {
+function SmallSample({ scored }: { scored: number }) {
+  const label = SMALL_SAMPLE_LABEL(scored);
+  const split = label.indexOf(":") + 1;
   return (
-    <section aria-labelledby={`games-${version}`} className="mt-8">
-      <h3 id={`games-${version}`} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="text-[17px] font-semibold text-ink">{role}</span>
-        <span className="num text-[13px] text-ink-3">{modelPolicyLabel(version)}</span>
-      </h3>
-      <p className="mt-1 text-[13px] text-ink-2">
-        {ledger.scored.length} scored · {ledger.pending.length} pending · {ledger.missed.length} missed
-      </p>
-      <div className="mt-3">
-        {ledger.scored.length === 0 ? (
-          <p className="notice-quiet">No scored games yet. The first appear the morning after the first sealed games finish.</p>
-        ) : (
-          <>
-            <GameRows games={ledger.scored.slice(0, LIST_LIMIT)} />
-            {ledger.scored.length > LIST_LIMIT ? (
-              <p className="mt-2 text-[13px] text-ink-3">
-                The latest {LIST_LIMIT} shown. Every row is in the <a className="pp-link" href={LEDGER_URL}>ledger on GitHub</a>.
-              </p>
-            ) : null}
-          </>
-        )}
-      </div>
-      <div className="mt-4">
-        <h4 className="kicker">Missed seals</h4>
-        {ledger.missed.length === 0 ? (
-          <p className="mt-2 text-[13px] text-ink-2">None. Every game this version should have sealed was sealed before tip.</p>
-        ) : (
-          <ul className="mt-2 grid gap-1.5 text-[13px] text-ink-2 sm:grid-cols-2">
-            {ledger.missed.map((row) => (
-              <li key={row.gameId} className="flex items-center gap-2">
-                <Badge tone="bad">Missed</Badge>
-                <span className="num">{formatShortDay(row.etDate)}</span>
-                <Matchup awayId={row.awayId} homeId={row.homeId} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function CalibrationChart({ bins }: { bins: CalibrationBin[] }) {
-  const size = 320;
-  const pad = 36;
-  const scale = (value: number) => pad + value * (size - 2 * pad);
-  const flip = (value: number) => size - scale(value);
-  const maxCount = Math.max(...bins.map((bin) => bin.count));
-  return (
-    <svg viewBox={`0 0 ${size} ${size}`} className="h-auto w-full max-w-sm" role="img" aria-label={`Calibration: ${bins.map((bin) => `forecasts near ${Math.round(bin.forecast * 100)}% came true ${Math.round(bin.observed * 100)}% of the time (${bin.count} games)`).join("; ")}.`}>
-      {[0, 0.25, 0.5, 0.75, 1].map((tick) => (
-        <g key={tick}>
-          <line x1={scale(0)} x2={scale(1)} y1={flip(tick)} y2={flip(tick)} stroke="#ece9e4" />
-          <text x={pad - 6} y={flip(tick)} dy="0.32em" textAnchor="end" fontSize={10} fill="#6b6863" className="font-mono">{tick * 100}%</text>
-          <text x={scale(tick)} y={size - pad + 16} textAnchor="middle" fontSize={10} fill="#6b6863" className="font-mono">{tick * 100}%</text>
-        </g>
-      ))}
-      <line x1={scale(0)} y1={flip(0)} x2={scale(1)} y2={flip(1)} stroke="#b9b5ae" />
-      {bins.map((bin) => (
-        <circle key={bin.from} cx={scale(bin.forecast)} cy={flip(bin.observed)} r={4 + 6 * Math.sqrt(bin.count / maxCount)} fill="#0b6e55" fillOpacity={0.85} stroke="#ffffff" strokeWidth={2}>
-          <title>{`${Math.round(bin.from * 100)}–${Math.round(bin.to * 100)}%: forecast ${Math.round(bin.forecast * 100)}%, home team won ${Math.round(bin.observed * 100)}% (${bin.count} games)`}</title>
-        </circle>
-      ))}
-    </svg>
+    <p className="mt-[18px]">
+      <b>{label.slice(0, split)}</b> <span className="text-ink-2">{label.slice(split).trim()}</span>
+    </p>
   );
 }
 
 export default async function RecordPage() {
   // The season's rows from the job's month files (no driver lists; this page needs none).
   const [liveState, ledger] = await Promise.all([getLiveState(), getSeasonLedger()]);
-  const versions = [liveState.modelVersion, ...(liveState.referenceModelVersion !== liveState.modelVersion ? [liveState.referenceModelVersion] : [])];
+  const versions = [
+    liveState.modelVersion,
+    ...(liveState.referenceModelVersion !== liveState.modelVersion ? [liveState.referenceModelVersion] : []),
+  ];
   const records = versions.map((version) => ({
     version,
-    role: version === liveState.modelVersion ? "Published model" : "Reference model",
-    record: recordSummary(ledger, version, liveState.records[version]),
+    short: versionShort(version),
+    published: version === liveState.modelVersion,
+    injuries: hasInjuryTerm(ledger, version),
+    record: liveState.records[version] ?? null,
     ledger: versionLedger(ledger, version),
   }));
   const headline = records[0];
+  const reference = records[1] ?? null;
+  const record = headline.record;
   const scored = headline.ledger.scored;
+  const scoredCount = record?.scored ?? scored.length;
   const lined = withMarketLine(scored);
   const market = marketComparison(scored);
   const bins = calibrationBins(scored);
+  const favorites = favoriteSummary(scored);
+  const since = firstScoredDate(scored);
+  const started = liveState.ledgerStartedAt ? formatShortDay(liveState.ledgerStartedAt.slice(0, 10)) : null;
+  const smallSample = records.some((entry) => (entry.record?.scored ?? 0) < SMALL_SAMPLE_GAMES);
+  const same = reference ? sameScoredGames(headline.ledger, reference.ledger) : false;
+  const columnLabel = (entry: (typeof records)[number]) =>
+    `${entry.short} ${entry.published ? "published" : entry.injuries ? "reference" : "no injuries"}`;
 
   return (
-    <main className="pp-container py-8 sm:py-10">
-      <SectionHeading
-        as="h1"
-        kicker="Track record"
-        title="Every forecast, sealed and scored"
-        dek={
-          <>
-            Each game&apos;s forecast is sealed before tip and written to an append-only{" "}
-            <a href={LEDGER_URL} className="pp-link">public ledger</a>, then scored after the final. The policy forbids backfilling: a game that tips without a seal is a miss and stays counted. Internal timestamps and git history are auditable, but are not independent pre-tip attestation. Each model version keeps its own
-            record.
-          </>
-        }
-      />
-
-      {records.some((entry) => (entry.record?.scored ?? 0) < SMALL_SAMPLE_GAMES) ? (
-        <p className="notice mt-6">
-          <span className="font-semibold">{SMALL_SAMPLE_LABEL(headline.record?.scored ?? 0)}</span> The record began{" "}
-          {liveState.ledgerStartedAt ? formatShortDay(liveState.ledgerStartedAt.slice(0, 10)) : "with the first seal"}; no version is
-          claimed to beat another, or the baseline, before {SMALL_SAMPLE_GAMES} scored games.
+    <>
+      <Ticker />
+      <main className="pp-container pt-8 sm:pt-11">
+        <h1 className="headline text-[32px] sm:text-[46px]">Track record</h1>
+        <p className="mb-9 mt-3 text-[17px] sm:mb-11 sm:text-[19px]">
+          Sealed before tip. Scored after the final. Never backfilled.
         </p>
-      ) : null}
 
-      <section aria-labelledby="numbers-title" className="mt-10">
-        <SectionHeading id="numbers-title" kicker="Per version" title="The numbers" />
-        <div className="table-scroll mt-4 rounded-[var(--radius-card)] border border-line bg-panel">
-          <table className="w-full text-[14px]">
-            <thead>
-              <tr className="border-b border-line-strong text-left">
-                <th scope="col" className="kicker py-2.5 pl-4 pr-3 font-medium">Measure</th>
-                {records.map((entry) => (
-                  <th key={entry.version} scope="col" className="py-2.5 pr-4 text-right align-bottom">
-                    <span className="kicker block font-medium">{entry.role.replace(" model", "")}</span>
-                    <span className="num block text-[12px] font-normal text-ink-2">
-                      <span>{modelPolicyLabel(entry.version, liveState.generatedAt)}</span>
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {METRICS.map((metric) => (
-                <tr key={metric.label} className="border-b border-line last:border-0">
-                  <th scope="row" className="py-2.5 pl-4 pr-2 text-left font-normal">
-                    <span className="block font-medium text-ink">{metric.label}</span>
-                    <span className="block text-[12px] text-ink-3">{metric.note}</span>
-                  </th>
-                  {records.map((entry) => {
-                    const value = entry.record ? metric.value(entry.record) : null;
-                    return (
-                      <td key={entry.version} className="num py-2.5 pr-4 text-right align-top text-[15px] text-ink">
-                        {value ?? <span className="text-[12.5px] text-ink-3">None yet</span>}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {liveState.modelVersion === POLICY_MODEL_VERSION ? <section className="panel mt-8 p-5">
-        <h2 className="text-xl font-semibold">Policy revisions within the v2 record</h2>
-        <p className="mt-2 text-ink-2">Descriptive breakdown, not a comparison. Each game belongs to the revision of its scored seal (final, else reissued, else morning); pending games use the same order. Different revisions cover different games and information times.</p>
-        <div className="table-scroll mt-4"><table className="w-full text-left text-[14px] [&_th]:px-3 [&_th]:py-2 [&_td]:px-3 [&_td]:py-2 [&_tr]:border-b [&_tr]:border-line">
-          <thead><tr><th>Revision</th><th>Sealed games</th><th>Scored games (n)</th><th>Brier</th></tr></thead>
-          <tbody>{revisionBreakdown(ledger, liveState.modelVersion).map((row) => <tr key={row.revision}><td>{row.revision}</td><td>{row.sealed}</td><td>{row.scored}</td><td>{fixed(row.brier, 3) ?? "—"}</td></tr>)}</tbody>
-        </table></div>
-      </section> : null}
-
-      <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        <section aria-labelledby="market-title" className="panel p-5 sm:p-6">
-          <SectionHeading id="market-title" kicker="Reference" title="548 and the market" />
-          {market ? (
-            <div className="mt-4">
-              <dl className="grid grid-cols-2 gap-4">
-                <div>
-                  <dt className="kicker">548 Brier</dt>
-                  <dd className="figure mt-1 text-[28px] font-semibold text-ink">{market.model.toFixed(3)}</dd>
-                </div>
-                <div>
-                  <dt className="kicker">Market Brier</dt>
-                  <dd className="figure mt-1 text-[28px] font-semibold text-market">{market.market.toFixed(3)}</dd>
-                </div>
-              </dl>
-              <p className="mt-3 text-[13px] text-ink-2">On the {market.games} scored games with a stored line. The market is a reference, never a model input.</p>
-            </div>
-          ) : (
-            <p className="mt-4 text-[14px] leading-6 text-ink-2">
-              Not shown until {MARKET_COMPARISON_MIN_GAMES} scored games: before then the claims ledger allows no statement
-              about the model against the market. So far {scored.length} scored {scored.length === 1 ? "game" : "games"},{" "}
-              {lined.length} with a stored line. The market&apos;s number stays on every game page as a reference.
-            </p>
-          )}
-        </section>
-        <section aria-labelledby="calibration-title" className="panel p-5 sm:p-6">
-          <SectionHeading id="calibration-title" kicker="Do the percentages hold?" title="Calibration" />
-          {scored.length >= CALIBRATION_MIN_GAMES ? (
-            <div className="mt-4">
-              <CalibrationChart bins={bins} />
+        <div className="grid items-start gap-x-14 gap-y-8 lg:grid-cols-[280px_minmax(0,1fr)]">
+          <div>
+            <span className="figure block text-[88px] sm:text-[110px]">{scoredCount}</span>
+            <p className="mt-1 text-[18px]">of {SMALL_SAMPLE_GAMES} games scored</p>
+            {smallSample ? <SmallSample scored={scoredCount} /> : null}
+            {smallSample ? (
               <p className="mt-2 text-[13px] text-ink-2">
-                Each dot is a tenth of the forecast range: where it sits against the diagonal shows how often home teams
-                given that chance won. Larger dots hold more games.
+                The record began {started ?? "with the first seal"}; no version is claimed to beat another, or the
+                baseline, before {SMALL_SAMPLE_GAMES} scored games.
               </p>
-            </div>
-          ) : (
-            <p className="mt-4 text-[14px] leading-6 text-ink-2">
-              The calibration chart appears at {CALIBRATION_MIN_GAMES} scored games; there {scored.length === 1 ? "is" : "are"}{" "}
-              {scored.length} so far. In testing, game forecasts were mildly overconfident (calibration slope 0.875 for
-              v2 on its test seasons).
-            </p>
-          )}
-        </section>
-      </div>
+            ) : null}
+          </div>
+          <Waffle scored={scoredCount} pending={headline.ledger.pending.length} />
+        </div>
 
-      <section aria-labelledby="games-title" className="mt-12">
-        <SectionHeading
-          id="games-title"
-          kicker="Game by game"
-          title="Every scored seal"
-          dek="Most recent first. The scored seal is the final seal when one exists, else reissued, else original morning. Missed seals are listed under each version."
-        />
-        {records.map((entry) => (
-          <VersionGames key={entry.version} version={entry.version} ledger={entry.ledger} role={entry.role} />
-        ))}
-      </section>
-    </main>
+        <div className="mt-14 grid gap-10 sm:mt-16 sm:grid-cols-3 sm:gap-12">
+          <Stat
+            title={`Brier score, ${headline.short}`}
+            value={record?.brier === null || !record ? "–" : record.brier.toFixed(3)}
+            note={
+              record?.baselineBrier !== null && record
+                ? `Lower is better. Baseline ${record.baselineBrier.toFixed(3)}`
+                : "Lower is better. After the first final"
+            }
+          />
+          <Stat
+            title="Favorite won"
+            value={favorites.decided === 0 ? "–" : `${favorites.won} of ${favorites.decided}`}
+            note={favorites.decided === 0 ? "After the first final" : `548 expected ${favorites.expected.toFixed(1)}`}
+          />
+          <Stat
+            title="Missed seals"
+            value={String(record?.missed ?? headline.ledger.missed.length)}
+            note={
+              (record?.missed ?? headline.ledger.missed.length) === 0
+                ? "Every game sealed before tip"
+                : "Tipped before a seal; never backfilled"
+            }
+            extra={`${record && record.noFinalSeal !== null ? `No final seal ${record.noFinalSeal} · ` : ""}Incomplete inputs ${record?.incomplete ?? 0}`}
+          />
+        </div>
+
+        <div className="grid items-start gap-x-[72px] lg:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="flex min-w-0 flex-col">
+            <section aria-labelledby="scored-title" className="order-2 mt-16 lg:order-1 lg:mt-[72px]">
+              <div className="sh">
+                <h2 id="scored-title">Every scored seal</h2>
+                <span>
+                  {headline.short}
+                  {since ? ` · since ${formatShortDay(since)}` : ""} · outline: favorite lost
+                </span>
+              </div>
+              {scored.length === 0 ? (
+                <p className="notice-quiet">No scored games yet. The first appear the morning after the first sealed games finish.</p>
+              ) : (
+                <>
+                  <ScoredSeals
+                    games={scored.slice(0, LIST_LIMIT)}
+                    caption={`Every scored seal of ${headline.version}, most recent first: the sealed pick, the result and the Brier score. Lower is better.`}
+                  />
+                  <p className="mt-3 text-[13px] text-ink-2">
+                    The scored seal is the final seal when one exists, else the reissued or morning seal.
+                    {scored.length > LIST_LIMIT ? (
+                      <>
+                        {" "}
+                        The latest {LIST_LIMIT} shown; every row is in the{" "}
+                        <a className="pp-link" href={LEDGER_URL}>
+                          ledger on GitHub
+                        </a>
+                        .
+                      </>
+                    ) : null}
+                  </p>
+                </>
+              )}
+              <h3 className="mt-6 text-[16px] font-bold">Missed seals</h3>
+              <div className="mt-2">
+                <MissedSeals missed={headline.ledger.missed} version={headline.version} />
+              </div>
+            </section>
+
+            <section aria-labelledby="models-title" className="order-1 mt-16 lg:order-2 lg:mt-[72px]">
+              <div className="sh">
+                <h2 id="models-title">Both models</h2>
+                {reference ? (
+                  <span>
+                    {same
+                      ? `The same ${scored.length} games, each version on its own seals`
+                      : "Different games, not a head-to-head"}
+                  </span>
+                ) : null}
+              </div>
+              <div className="table-scroll">
+                <table className="tb">
+                  <caption className="sr-only">Each version&apos;s record: counts, Brier score, log loss and accuracy.</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Measure</th>
+                      {records.map((entry) => (
+                        <th key={entry.version} scope="col" className="nm" title={entry.version}>
+                          {columnLabel(entry)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {METRICS.map((metric) => (
+                      <tr key={metric.label}>
+                        <th scope="row" className="whitespace-normal text-left">
+                          <span className="block">{metric.label}</span>
+                          <span className="block text-[12.5px] text-ink-2">{metric.note}</span>
+                        </th>
+                        {records.map((entry) => {
+                          const value = entry.record ? metric.value(entry.record) : null;
+                          return (
+                            <td key={entry.version} className={`nm num align-top ${entry.published ? "font-bold" : ""}`}>
+                              {value ?? <span className="text-[12.5px] font-normal text-ink-2">None yet</span>}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-3 text-[13px] text-ink-2">
+                {records.map((entry, index) => (
+                  <span key={entry.version}>
+                    {index > 0 ? " " : ""}
+                    <span className="num text-ink">{entry.short}</span> is {entry.version}
+                    {entry.published ? ", the published model" : ", the reference beside it"}
+                    {entry.injuries ? "." : ", without the injury term."}
+                  </span>
+                ))}{" "}
+                Each version keeps its own record.
+              </p>
+              {reference ? (
+                <details className="group mt-8">
+                  <summary className="cursor-pointer list-none text-[15px] font-bold">
+                    <span aria-hidden className="mr-2 inline-block transition-transform group-open:rotate-90">›</span>
+                    {reference.short}&apos;s {reference.ledger.scored.length} scored seals and its missed seals
+                  </summary>
+                  <div className="mt-4">
+                    {reference.ledger.scored.length === 0 ? (
+                      <p className="notice-quiet">No scored games yet.</p>
+                    ) : (
+                      <ScoredSeals
+                        games={reference.ledger.scored.slice(0, LIST_LIMIT)}
+                        caption={`Every scored seal of ${reference.version}, most recent first.`}
+                      />
+                    )}
+                    {reference.ledger.scored.length > LIST_LIMIT ? (
+                      <p className="mt-2 text-[13px] text-ink-2">
+                        The latest {LIST_LIMIT} shown. Every row is in the{" "}
+                        <a className="pp-link" href={LEDGER_URL}>
+                          ledger on GitHub
+                        </a>
+                        .
+                      </p>
+                    ) : null}
+                    <h3 className="mt-6 text-[16px] font-bold">Missed seals</h3>
+                    <div className="mt-2">
+                      <MissedSeals missed={reference.ledger.missed} version={reference.version} />
+                    </div>
+                  </div>
+                </details>
+              ) : null}
+            </section>
+          </div>
+
+          <aside aria-label="Calibration, the market and the ledger" className="mt-16 grid gap-12 lg:mt-[72px]">
+            <section aria-labelledby="calibration-title">
+              <h2 id="calibration-title" className="text-[21px] font-extrabold">Calibration</h2>
+              {scored.length >= CALIBRATION_MIN_GAMES ? (
+                <>
+                  <p className="mt-1.5 text-ink-2">Do the percentages hold?</p>
+                  <CalibrationChart bins={bins} />
+                  <p className="mt-2 text-[13px] text-ink-2">
+                    Each square is a tenth of the forecast range: where it sits against the dashed diagonal shows how often
+                    home teams given that chance won. Larger squares hold more games.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="mt-1.5 text-ink-2">Chart opens at {CALIBRATION_MIN_GAMES} games</p>
+                  <CalibrationPlaceholder />
+                  <p className="mt-2 text-[13px] text-ink-2">
+                    {scored.length} scored so far. In testing, game forecasts were mildly overconfident (calibration slope
+                    0.875 for v2 on its test seasons).
+                  </p>
+                </>
+              )}
+            </section>
+            <section aria-labelledby="market-title">
+              <h2 id="market-title" className="text-[21px] font-extrabold">548 vs. the market</h2>
+              {market ? (
+                <>
+                  <dl className="mt-3 grid grid-cols-2 gap-4">
+                    <div>
+                      <dt className="text-[13px] text-ink-2">548 Brier</dt>
+                      <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{market.model.toFixed(3)}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[13px] text-ink-2">Market Brier</dt>
+                      <dd className="figure mt-1 text-[28px] text-ink-2 [font-variant-numeric:normal]">{market.market.toFixed(3)}</dd>
+                    </div>
+                  </dl>
+                  <p className="mt-3 text-[13px] text-ink-2">
+                    On the {market.games} scored games with a stored line. The market is a reference, never a model input.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="mt-1.5 text-ink-2">Opens at {MARKET_COMPARISON_MIN_GAMES} games</p>
+                  <p className="mt-2 text-[13px] text-ink-2">
+                    Before then the claims ledger allows no statement about the model against the market. So far{" "}
+                    {scored.length} scored {scored.length === 1 ? "game" : "games"}, {lined.length} with a stored line. The
+                    market&apos;s number stays on every game page as a reference.
+                  </p>
+                </>
+              )}
+            </section>
+            <section aria-labelledby="ledger-title">
+              <h2 id="ledger-title" className="text-[21px] font-extrabold">The ledger</h2>
+              <p className="mt-1.5 text-ink-2">Public and append-only</p>
+              <p className="mt-2">
+                <a href={LEDGER_URL} className="font-semibold hover:underline hover:underline-offset-4">
+                  Open on GitHub
+                </a>
+              </p>
+              <p className="mt-2 text-[13px] text-ink-2">
+                Every seal is written before tip and never edited. Morning, reissued and final seals are separate rows,
+                each with its true time.
+              </p>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </>
   );
 }

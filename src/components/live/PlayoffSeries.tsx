@@ -1,9 +1,7 @@
-import { SectionHeading } from "@/components/live/SectionHeading";
-import { SplitBar } from "@/components/live/SplitBar";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import type { PlayoffRound, SeriesForecast } from "@/lib/season/types";
 import { formatChance } from "@/lib/utils/format";
-import { teamDisplay } from "@/lib/view/teams";
+import { pairColors, teamDisplay } from "@/lib/view/teams";
 
 const ROUNDS: Array<{ round: PlayoffRound; label: string }> = [
   { round: "finals", label: "NBA Finals" },
@@ -20,49 +18,60 @@ function SeriesRow({ series }: { series: SeriesForecast }) {
   const favorite = aLeads ? a : b;
   const chance = aLeads ? series.homeCourtSeriesProbability : 1 - series.homeCourtSeriesProbability;
   const winner = series.homeCourtWins >= 4 ? a : b;
+  const [aColor, bColor] = pairColors(series.homeCourtId, series.otherId);
+  const aShare = Math.min(0.99, Math.max(0.01, series.homeCourtSeriesProbability));
   return (
-    <li className="py-3">
+    <li className="border-b border-line py-3">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[14px]">
-        <span className="flex items-center gap-2 font-medium text-ink">
+        <span className="flex items-center gap-2 font-bold">
           <TeamLogo teamId={series.homeCourtId} size={20} />
           {a.code}
-          <span className="num rounded bg-wash px-1.5 py-0.5 font-semibold">
+          <span className="num px-1 font-normal text-ink-2">
             {series.homeCourtWins}–{series.otherWins}
           </span>
           {b.code}
           <TeamLogo teamId={series.otherId} size={20} />
         </span>
-        <span className="num text-[12px] text-ink-2">
-          {finished
-            ? `${winner.code} won the series`
-            : `${favorite.code} ${formatChance(chance, { exact: true })} to win`}
+        <span className="text-[13px]">
+          {finished ? (
+            <>
+              <b>{winner.code}</b> <span className="text-ink-2">won the series</span>
+            </>
+          ) : (
+            <>
+              <b>
+                {favorite.code} {formatChance(chance, { exact: true })}
+              </b>{" "}
+              <span className="text-ink-2">to win</span>
+            </>
+          )}
         </span>
       </div>
-      <div className="mt-2">
-        {/* Left to right as listed: the home-court team first. */}
-        <SplitBar awayId={series.homeCourtId} homeId={series.otherId} homeProbability={1 - series.homeCourtSeriesProbability} />
-      </div>
+      {/* Left to right as listed: the home-court team first. */}
+      <span aria-hidden className="mt-2 flex h-2.5 gap-0.5">
+        <span style={{ width: `${aShare * 100}%`, background: aColor }} />
+        <span className="flex-1" style={{ background: bColor }} />
+      </span>
     </li>
   );
 }
 
+/** Every playoff series from its current score. The team listed first has home court. */
 export function PlayoffSeries({ series }: { series: SeriesForecast[] }) {
   return (
     <section aria-labelledby="series-title">
-      <SectionHeading
-        id="series-title"
-        kicker="Playoffs"
-        title="Series odds"
-        dek="Each series from its current score. The team listed first has home court."
-      />
-      <div className="mt-5 grid gap-4 md:grid-cols-2">
+      <div className="sh">
+        <h2 id="series-title">Series odds</h2>
+        <span>From each current score · home court listed first</span>
+      </div>
+      <div className="grid gap-x-20 gap-y-8 md:grid-cols-2">
         {ROUNDS.map(({ round, label }) => {
           const rows = series.filter((row) => row.round === round);
           if (rows.length === 0) return null;
           return (
-            <div key={round} className="panel px-4 pt-3">
-              <h3 className="kicker">{label}</h3>
-              <ul className="divide-y divide-line">
+            <div key={round}>
+              <h3 className="border-b-2 border-ink pb-2 text-[16px] font-bold">{label}</h3>
+              <ul>
                 {rows.map((row) => (
                   <SeriesRow key={row.id} series={row} />
                 ))}

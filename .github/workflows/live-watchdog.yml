@@ -1,0 +1,90 @@
+name: Live watchdog
+
+# Watches the live chain from outside it (scripts/live/watchdog.mjs, decisions in
+# scripts/live/watchdog-decision.mjs). Every 15 minutes, if live-forecast.yml is enabled
+# and no real run of it was created in the last 25 minutes and none is queued or running,
+# it dispatches one on main, which restarts the chain. It reports, in one issue per UTC day
+# ("Live watchdog on <date>", each condition once), a restart, live-data's state.json older
+# than 2.5 hours, a game that tipped more than 10 minutes ago without a v2 final or morning
+# seal, three or more failed live runs in a row, and live-forecast being disabled other
+# than by hand. While live-forecast is disabled by hand (how the chain is stopped) it does
+# nothing.
+#
+# It cannot fail or slow the live job: it is a separate workflow with its own concurrency
+# group, it only reads live-data, and its only write to the chain is a dispatch, which
+# the chain's concurrency group absorbs. It needs no secret beyond GITHUB_TOKEN.
+#
+# Honest limits: it runs on GitHub Actions like the job it watches, so it is a second path,
+# not an external monitor; a GitHub outage, disabled Actions or a lost schedule stops both.
+# GitHub's schedule is unreliable here (7 of live-forecast's 96 scheduled runs were created
+# on 2026-11-04 and 2026-11-05 UTC), so this may run far less often than every 15 minutes.
+# The minutes avoid the start of the hour, which GitHub names as a high-load time when
+# scheduled runs are delayed or dropped.
+#
+# Dry runs log every decision and the issue text they would post, and dispatch nothing
+# and write no issue or comment: workflow_dispatch with dry_run=true, and every pull
+# request that changes the watchdog, which runs the pull request's code. GitHub's events
+# reference says workflow_dispatch "will only trigger a workflow run if the workflow file
+# exists on the default branch", and dispatching this file from its branch returned 404
+# before it had ever run (2026-11-06); once the pull request run had registered it,
+# `gh workflow run live-watchdog.yml --ref <branch> -f dry_run=true` worked. The pull
+# request run is what makes a pre-merge real-runner check possible.
+
+on:
+  schedule:
+    - cron: "3,18,33,48 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Log decisions without dispatching or opening/commenting on issues"
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - .github/workflows/live-watchdog.yml
+      - scripts/live/watchdog.mjs
+      - scripts/live/watchdog-decision.mjs
+
+run-name: ${{ (github.event_name == 'pull_request' || inputs.dry_run) && 'Live watchdog (dry run)' || 'Live watchdog' }}
+
+permissions:
+  contents: read
+  actions: write
+  issues: write
+
+concurrency:
+  # Real checks share one group and never overlap; each dry run's ref gets its own.
+  group: ${{ (github.event_name == 'pull_request' || inputs.dry_run) && format('live-watchdog-dry-run-{0}', github.ref) || 'live-watchdog' }}
+  cancel-in-progress: false
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DRY_RUN: ${{ (github.event_name == 'pull_request' || inputs.dry_run) && '1' || '0' }}
+
+    steps:
+      # Real checks run main's code; a dry run runs the code it was started on.
+      - name: Check out the watchdog
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.DRY_RUN == '1' && github.sha || 'main' }}
+          persist-credentials: false
+
+      # live-data is public, so no credentials. If the fetch fails the watchdog still
+      # checks the chain and reports that it could not read the data.
+      - name: Fetch live-data
+        continue-on-error: true
+        run: git fetch --no-tags --depth=1 origin +refs/heads/live-data:refs/remotes/origin/live-data
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Check the chain, the data and the seals
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: node scripts/live/watchdog.mjs

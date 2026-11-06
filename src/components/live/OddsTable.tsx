@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
-import { heatClass } from "@/components/live/heat";
-import { SeedStrip } from "@/components/live/SeedStrip";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { formatChance } from "@/lib/utils/format";
 import { formatRating, type OddsRow } from "@/lib/view/odds";
+import { teamColor } from "@/lib/view/teams";
 
 type SortKey =
   | "team"
   | "rating"
+  | "ratingNow"
   | "projectedWins"
   | "playIn"
   | "makePlayoffs"
@@ -21,28 +21,60 @@ type SortKey =
 
 type View = "East" | "West" | "League";
 
-const PROBABILITY_COLUMNS: Array<{ key: SortKey & keyof OddsRow; label: string; title: string }> = [
-  { key: "playIn", label: "Play-in", title: "Chance of finishing 7th to 10th and playing in the play-in tournament" },
-  { key: "makePlayoffs", label: "Playoffs", title: "Chance of reaching the playoffs, directly or through the play-in" },
-  { key: "topSix", label: "Top 6", title: "Chance of a top-six seed, which skips the play-in" },
-  { key: "reachConferenceFinals", label: "Conf. finals", title: "Chance of reaching the conference finals" },
-  { key: "reachFinals", label: "Finals", title: "Chance of reaching the NBA Finals" },
-  { key: "champion", label: "Title", title: "Chance of winning the championship" },
-];
+const DEFAULT_SORT: { key: SortKey; descending: boolean } = { key: "projectedWins", descending: true };
+
+/** Separator rows in a conference view under the default sort: a gap, not a rule. */
+const GROUPS: Record<number, { long: string; short: string }> = {
+  6: { long: "Projected 7th to 10th: play-in", short: "7th to 10th: play-in" },
+  10: { long: "Projected 11th and below", short: "11th and below" },
+};
+
+type ChanceKey = "playIn" | "makePlayoffs" | "topSix" | "reachConferenceFinals" | "reachFinals" | "champion";
+
+const CHANCE_TITLES: Record<ChanceKey, string> = {
+  playIn: "Chance of finishing 7th to 10th and playing in the play-in tournament",
+  makePlayoffs: "Chance of reaching the playoffs, directly or through the play-in",
+  topSix: "Chance of a top-six seed, which skips the play-in",
+  reachConferenceFinals: "Chance of reaching the conference finals",
+  reachFinals: "Chance of reaching the NBA Finals",
+  champion: "Chance of winning the championship",
+};
 
 function value(row: OddsRow, key: SortKey): number | string {
-  return key === "team" ? row.shortName : row[key];
+  if (key === "team") return row.shortName;
+  if (key === "ratingNow") return row.ratingNow ?? row.rating;
+  return row[key];
 }
 
-function RatingBar({ rating, max }: { rating: number; max: number }) {
-  const width = Math.min(50, (Math.abs(rating) / max) * 50);
+/** A whole percent: bold from 50%, grey below 1%. */
+function Chance({ value: chance, exact }: { value: number; exact: boolean }) {
+  const text = formatChance(chance, { exact });
+  if (chance >= 0.5) return <b className="font-bold">{text}</b>;
+  if (text === "<1%" || text === "0%") return <span className="text-ink-2">{text}</span>;
+  return <>{text}</>;
+}
+
+/** Wins in 8 of 10 simulations on a 0-to-season axis, in the team's color, black tick at the average. */
+function WinsRange({ row }: { row: OddsRow }) {
+  const at = (wins: number) => `${Math.min(100, Math.max(0, (wins / Math.max(1, row.seasonLength)) * 100))}%`;
   return (
-    <span aria-hidden className="relative mx-auto mt-1.5 block h-[5px] w-14 rounded-full bg-wash-2">
-      <span className="absolute inset-y-[-2px] left-1/2 w-px bg-line-strong" />
-      <span
-        className={`absolute inset-y-0 ${rating >= 0 ? "rounded-r-full" : "rounded-l-full"} bg-ink-2`}
-        style={{ left: rating >= 0 ? "50%" : `${50 - width}%`, width: `${width}%` }}
+    <span
+      className="relative inline-block h-3.5 w-[180px] align-middle"
+      role="img"
+      aria-label={`${row.projectedWinsP10} to ${row.projectedWinsP90} wins in 8 of 10 simulations, ${Math.round(row.projectedWins)} on average`}
+    >
+      <i aria-hidden className="absolute inset-x-0 top-1.5 h-0.5 bg-line" />
+      <i
+        aria-hidden
+        className="absolute top-[3px] h-2"
+        style={{
+          left: at(row.projectedWinsP10),
+          width: `calc(${at(row.projectedWinsP90)} - ${at(row.projectedWinsP10)})`,
+          minWidth: 2,
+          background: teamColor(row.teamId),
+        }}
       />
+      <i aria-hidden className="absolute top-0 h-3.5 w-[3px] -translate-x-1/2 bg-ink" style={{ left: at(row.projectedWins) }} />
     </span>
   );
 }
@@ -58,10 +90,10 @@ export function OddsTable({
   initialView?: View;
 }) {
   const [view, setView] = useState<View>(initialView);
-  const [sort, setSort] = useState<{ key: SortKey; descending: boolean }>({ key: "projectedWins", descending: true });
+  const [sort, setSort] = useState(DEFAULT_SORT);
+  // Below 1024 px the table starts with four columns; "All columns" shows the rest.
+  const [allColumns, setAllColumns] = useState(false);
   const tabsId = useId();
-  const maxRating = Math.max(1, ...rows.map((row) => Math.abs(row.rating)));
-  const seedScale = Math.max(0.05, ...rows.flatMap((row) => row.seeds));
   const modeled = rows.some((row) => row.ratingNow !== null);
 
   const shown = useMemo(() => {
@@ -74,28 +106,37 @@ export function OddsTable({
     });
   }, [rows, view, sort]);
 
+  const grouped = view !== "League" && sort.key === DEFAULT_SORT.key && sort.descending === DEFAULT_SORT.descending;
+  // Columns beyond the phone's four: always from 1024 px, on demand below it.
+  const extra = allColumns ? "" : "hidden lg:table-cell";
+  const phoneOnly = allColumns ? "hidden" : "lg:hidden";
+
   const sortBy = (key: SortKey) =>
     setSort((current) =>
       current.key === key ? { key, descending: !current.descending } : { key, descending: key !== "team" },
     );
 
-  const header = (key: SortKey, label: string, title: string, className = "") => {
+  const header = (key: SortKey, label: string, title: string, className = "", id: string = key) => {
     const active = sort.key === key;
     return (
       <th
-        key={key}
+        key={id}
         scope="col"
         aria-sort={active ? (sort.descending ? "descending" : "ascending") : "none"}
-        className={`sticky top-0 z-10 border-b border-line-strong bg-panel px-2 py-2.5 align-bottom lg:top-16 ${className}`}
+        className={`sticky top-0 z-10 bg-panel lg:top-[68px] ${className}`}
       >
         <button
           type="button"
           onClick={() => sortBy(key)}
           title={title}
-          className={`inline-flex items-center gap-1 font-mono text-[10.5px] font-medium uppercase leading-tight tracking-[0.06em] hover:text-ink ${active ? "text-ink" : "text-ink-3"}`}
+          className={`relative inline-flex items-center whitespace-nowrap hover:text-ink ${active ? "text-ink" : ""}`}
         >
           {label}
-          <span aria-hidden className={`text-[9px] ${active ? "opacity-100" : "opacity-0"}`}>
+          {/* Outside the label's box, so right-aligned headings line up with their figures. */}
+          <span
+            aria-hidden
+            className={`absolute top-1/2 -translate-y-1/2 text-[9px] ${className.includes("nm") ? "-left-3" : "-right-3"} ${active ? "opacity-100" : "opacity-0"}`}
+          >
             {sort.descending ? "▼" : "▲"}
           </span>
         </button>
@@ -103,9 +144,15 @@ export function OddsTable({
     );
   };
 
+  const chanceCell = (row: OddsRow, key: ChanceKey, className = "") => (
+    <td key={key} className={`nm whitespace-nowrap ${className}`}>
+      <Chance value={row[key]} exact={exact} />
+    </td>
+  );
+
   return (
     <div>
-      <div role="tablist" aria-label="Conference" className="mb-4 inline-flex rounded-lg border border-line bg-panel p-1">
+      <div role="tablist" aria-label="Conference" className="mb-5 flex gap-6 text-[15px]">
         {(["East", "West", "League"] as View[]).map((option) => (
           <button
             key={option}
@@ -115,8 +162,8 @@ export function OddsTable({
             aria-selected={view === option}
             aria-controls={`${tabsId}-panel`}
             onClick={() => setView(option)}
-            className={`min-h-9 rounded-md px-4 text-[14px] font-medium transition-colors ${
-              view === option ? "bg-ink text-white" : "text-ink-2 hover:bg-wash hover:text-ink"
+            className={`inline-flex h-11 items-center decoration-2 underline-offset-8 ${
+              view === option ? "font-bold text-ink underline" : "text-ink-2 hover:text-ink"
             }`}
           >
             {option === "League" ? "All 30" : option}
@@ -127,76 +174,100 @@ export function OddsTable({
         role="tabpanel"
         id={`${tabsId}-panel`}
         aria-labelledby={`${tabsId}-${view}`}
-        className="max-h-[78vh] overflow-auto rounded-[var(--radius-card)] border border-line bg-panel lg:max-h-none lg:overflow-visible"
+        className={allColumns ? "max-h-[78vh] overflow-auto lg:max-h-none lg:overflow-visible" : ""}
       >
-        <table className="w-full min-w-[60rem] border-separate border-spacing-0 text-[14px]">
+        <table className={`tb ${allColumns ? "min-w-[60rem]" : ""}`}>
           <caption className="sr-only">
-            {view === "League" ? "All 30 teams" : `${view}ern Conference`}: ratings, projected records and
-            playoff odds. Column headings sort the table.
+            {view === "League" ? "All 30 teams" : `${view}ern Conference`}: ratings, projected records and playoff
+            odds. Column headings sort the table.
           </caption>
           <thead>
             <tr>
-              {header("team", "Team", "Sort by team name", "sticky left-0 z-20 pl-4 text-left")}
-              {header("rating", "Rating", "Points per game better or worse than an average team", "text-center")}
-              {header("projectedWins", "Proj. W–L", "Average final record, with the 10th to 90th percentile of wins", "text-center")}
-              <th scope="col" className="sticky top-0 z-10 border-b border-line-strong bg-panel px-2 py-2.5 text-left align-bottom font-mono text-[10.5px] font-medium uppercase tracking-[0.06em] text-ink-3 lg:top-16">
-                Seed 1–15
+              {header("team", "Team", "Sort by team name", "sticky left-0 z-20 pr-3")}
+              {header("rating", "Rating", "Points per game better or worse than an average team", `nm ${extra}`)}
+              {modeled
+                ? header("ratingNow", "Now", "Rating minus the points lost to players currently out, for the next game", `nm ${extra}`)
+                : null}
+              {header("projectedWins", "Proj.", "Average final record", `nm ${extra}`)}
+              {header("projectedWins", "Wins", "Average final wins", `nm ${phoneOnly}`, "wins")}
+              <th scope="col" className={`sticky top-0 z-10 bg-panel lg:top-[68px] ${extra}`}>
+                Wins, 8 in 10 sims
               </th>
-              {PROBABILITY_COLUMNS.map((column) => header(column.key, column.label, column.title, "text-center"))}
+              {header("playIn", "Play-in", CHANCE_TITLES.playIn, `nm ${extra}`)}
+              {header("makePlayoffs", "Playoffs", CHANCE_TITLES.makePlayoffs, "nm")}
+              {header("topSix", "Top six", CHANCE_TITLES.topSix, `nm ${extra}`)}
+              {header("reachConferenceFinals", "Conf. finals", CHANCE_TITLES.reachConferenceFinals, `nm ${extra}`)}
+              {header("reachFinals", "Finals", CHANCE_TITLES.reachFinals, `nm ${extra}`)}
+              {header("champion", "Title", CHANCE_TITLES.champion, "nm")}
             </tr>
           </thead>
           <tbody>
-            {shown.map((row, index) => (
-              <tr key={row.teamId} className="group">
-                <th
-                  scope="row"
-                  className="sticky left-0 z-[5] border-b border-line bg-panel py-2 pl-4 pr-3 text-left font-normal group-hover:bg-wash"
-                >
-                  <Link href={`/teams/${row.slug}`} className="flex items-center gap-2.5">
-                    <span className="num w-5 text-right text-[11px] text-ink-3">{index + 1}</span>
-                    <TeamLogo teamId={row.teamId} size={24} />
-                    <span className="min-w-0">
-                      <span className="block truncate font-semibold text-ink group-hover:underline group-hover:decoration-pulse group-hover:underline-offset-4">
-                        {row.shortName}
-                      </span>
-                      <span className="num block text-[11.5px] text-ink-3">
+            {shown.map((row, index) => {
+              const group = grouped ? GROUPS[index] : undefined;
+              return [
+                group ? (
+                  <tr key={`group-${index}`}>
+                    <td
+                      colSpan={12}
+                      className="!border-b !border-ink !pb-1.5 !pt-5 text-[13px] !text-ink-2"
+                    >
+                      <span className="hidden lg:inline">{group.long}</span>
+                      <span className="lg:hidden">{allColumns ? group.long : group.short}</span>
+                    </td>
+                  </tr>
+                ) : null,
+                <tr key={row.teamId} className="group">
+                  <th scope="row" className="sticky left-0 z-[5] bg-panel pr-3 text-left group-hover:bg-wash">
+                    <Link href={`/teams/${row.slug}`} className="flex items-center gap-2 whitespace-nowrap">
+                      <TeamLogo teamId={row.teamId} size={18} />
+                      <b className="font-bold group-hover:underline group-hover:underline-offset-4">{row.shortName}</b>
+                      <span className="num text-[13px] text-ink-2">
                         {row.wins}–{row.losses}
                       </span>
-                    </span>
-                  </Link>
-                </th>
-                <td className="border-b border-line px-2 py-2 text-center group-hover:bg-wash">
-                  <span className="num text-[14px] text-ink">{formatRating(row.rating)}</span>
-                  <RatingBar rating={row.rating} max={maxRating} />
-                  {modeled && row.ratingNow !== null && Math.abs(row.ratingNow - row.rating) >= 0.05 ? (
-                    <span className="num mt-1 block text-[11px] text-ink-3" title="Rating minus points lost to current absences">
-                      now {formatRating(row.ratingNow)}
-                    </span>
+                    </Link>
+                  </th>
+                  <td className={`nm ${extra} group-hover:bg-wash`}>{formatRating(row.rating)}</td>
+                  {modeled ? (
+                    <td className={`nm ${extra} !text-ink-2 group-hover:bg-wash`}>
+                      {row.ratingNow === null ? "–" : formatRating(row.ratingNow)}
+                    </td>
                   ) : null}
-                </td>
-                <td className="border-b border-line px-2 py-2 text-center group-hover:bg-wash">
-                  <span className="num text-[14px] text-ink">
-                    {Math.round(row.projectedWins)}–{Math.round(row.projectedLosses)}
-                  </span>
-                  <span className="num block text-[11px] text-ink-3" title="10th to 90th percentile of final wins">
-                    {row.projectedWinsP10}–{row.projectedWinsP90} W
-                  </span>
-                </td>
-                <td className="border-b border-line px-2 py-2 group-hover:bg-wash">
-                  <SeedStrip seeds={row.seeds} scale={seedScale} name={row.shortName} />
-                </td>
-                {PROBABILITY_COLUMNS.map((column) => (
-                  <td key={column.key} className="border-b border-line px-1.5 py-2 text-center group-hover:bg-wash">
-                    <span className={`heat ${heatClass(row[column.key])}`}>
-                      {formatChance(row[column.key], { exact })}
+                  <td className={`nm whitespace-nowrap ${extra} group-hover:bg-wash`}>
+                    <b className="font-bold">
+                      {Math.round(row.projectedWins)}–{Math.round(row.projectedLosses)}
+                    </b>
+                  </td>
+                  <td className={`nm ${phoneOnly} group-hover:bg-wash`}>{Math.round(row.projectedWins)}</td>
+                  <td className={`${extra} w-[200px] group-hover:bg-wash`}>
+                    <WinsRange row={row} />
+                  </td>
+                  {chanceCell(row, "playIn", `${extra} group-hover:bg-wash`)}
+                  <td className="nm whitespace-nowrap group-hover:bg-wash">
+                    <span className="inline-flex items-center justify-end gap-2">
+                      <Chance value={row.makePlayoffs} exact={exact} />
+                      <span aria-hidden className="bar inline-block !h-2 w-10 sm:w-16">
+                        <i style={{ width: `${Math.min(100, row.makePlayoffs * 100)}%` }} />
+                      </span>
                     </span>
                   </td>
-                ))}
-              </tr>
-            ))}
+                  {chanceCell(row, "topSix", `${extra} group-hover:bg-wash`)}
+                  {chanceCell(row, "reachConferenceFinals", `${extra} group-hover:bg-wash`)}
+                  {chanceCell(row, "reachFinals", `${extra} group-hover:bg-wash`)}
+                  {chanceCell(row, "champion", "group-hover:bg-wash")}
+                </tr>,
+              ];
+            })}
           </tbody>
         </table>
       </div>
+      <button
+        type="button"
+        aria-expanded={allColumns}
+        onClick={() => setAllColumns((open) => !open)}
+        className="mt-4 inline-flex h-11 items-center text-[15px] font-bold hover:underline hover:underline-offset-4 lg:hidden"
+      >
+        {allColumns ? "Fewer columns" : "All columns"}
+      </button>
     </div>
   );
 }

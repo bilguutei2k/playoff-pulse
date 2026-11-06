@@ -13,9 +13,14 @@ name: Live forecast
 # a row it backs off, and each next run waits about 30 minutes instead of 10; one success
 # brings it back to 10 (scripts/live/chain-decision.sh). While it keeps failing it opens
 # one issue per UTC day, "Live job failing on <date>", with the failing run's URL
-# (scripts/live/failure-alert.sh, never fails the job). To stop the chain, disable the
-# workflow. Pushes made with GITHUB_TOKEN do not trigger ci.yml, so these commits are
-# checked here: verify:ledger against live-data's previous head, and verify:live.
+# (scripts/live/failure-alert.sh, never fails the job). Every real run asks for its next
+# run, whatever it saw in the run list; the concurrency group keeps that from making two
+# chains (see "Start the next run"). A separate workflow, live-watchdog.yml, restarts the
+# chain if it still stops and reports what this job cannot (a stale state, unsealed games);
+# it runs on the same platform, so it is a second path, not an external monitor. To stop
+# the chain, disable this workflow; the watchdog then stays idle. Pushes made with
+# GITHUB_TOKEN do not trigger ci.yml, so these commits are checked here: verify:ledger
+# against live-data's previous head, and verify:live.
 #
 # The git steps are scripts/live/data-checkout.sh and scripts/live/data-commit.sh, which
 # tests/live-data-git.test.ts runs against a throwaway origin on every CI run.
@@ -144,7 +149,15 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash scripts/live/report-alert.sh "Injury report problem"
+        run: bash scripts/live/report-alert.sh "Injury report problem" reportProblem
+
+      # Same for model views that were not published (health.json's viewsProblem): the
+      # site then shows no projections, team injury lists or player pages. Never fails the job.
+      - name: Open an issue if the model views were not published
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/live/report-alert.sh "Model views problem" viewsProblem
 
       # Never fails the job: a refused code deploy must not cost seals or slow the chain.
       - name: Retry a production deploy Vercel refused
@@ -193,25 +206,24 @@ jobs:
         run: |
           echo "Dry run: the next run is not started (a real run would start it waiting about ${WAIT_MINUTES:-?} minutes)."
 
-      # Dry runs are left out of both run lists, so they never change what a real run does.
-      # Never stops the chain on its own; GitHub's concurrency group keeps at most one run
-      # pending, so starting one when the check below cannot run never makes two chains.
+      # Every real run asks for its next run; it never skips because the run list shows
+      # another run queued or running. That check stranded the chain on 2026-11-04: at
+      # 16:00 UTC run 41861919403 skipped because run 41860183917, whose job had finished at
+      # 15:50, was not marked completed until 16:15, and nothing ran until the 18:47
+      # schedule. Two runs cannot overlap anyway: with the default queue, GitHub keeps "at
+      # most one running job or workflow in a concurrency group at any time" and "at most one
+      # job or workflow run can be pending", and when another queues "any existing pending
+      # job or workflow run in the same group is canceled and replaced"; cancel-in-progress
+      # is false, so the running one is never cancelled. GitHub notes that the order of
+      # pending runs "is not guaranteed". A run cancelled that way is neutral in the failure
+      # streak (scripts/live/chain-decision.sh). Source, read 2026-11-06:
+      # https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency
       - name: Start the next run
         if: always() && inputs.dry_run != true
         env:
           GH_TOKEN: ${{ github.token }}
-          THIS_RUN: ${{ github.run_id }}
           WAIT_MINUTES: ${{ steps.next.outputs.wait_minutes || '30' }}
         run: |
-          if others=$(gh run list --workflow=live-forecast.yml --limit 20 --json databaseId,status,displayTitle \
-            --jq "[.[] | select(.status != \"completed\" and (.databaseId | tostring) != \"$THIS_RUN\" and (.displayTitle | endswith(\"(dry run)\") | not))] | length"); then
-            if [ "$others" != "0" ]; then
-              echo "Another run is already queued or running; it will start the next one."
-              exit 0
-            fi
-          else
-            echo "Could not check for a queued run; starting the next one anyway."
-          fi
           for attempt in 1 2 3; do
             if gh workflow run live-forecast.yml --ref main -f chain=true -f wait_minutes="$WAIT_MINUTES"; then
               echo "Next run requested; it starts about $WAIT_MINUTES minutes after this one."
