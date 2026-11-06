@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Badge } from "@/components/live/Badge";
+import { Badge, StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { SOURCE_LABELS, totalPoints, type InjuryBlock, type InjuryRowView } from "@/lib/view/injury-report";
@@ -17,7 +17,7 @@ function SourceTag({ row }: { row: InjuryRowView }) {
   const inferred = row.source !== "report";
   return (
     <span
-      className={`whitespace-nowrap font-mono text-[10.5px] uppercase tracking-[0.06em] ${inferred ? "text-ink-3" : "text-ink-2"}`}
+      className={`whitespace-nowrap text-[12.5px] ${inferred ? "text-ink-2 italic" : "text-ink-2"}`}
       title={
         row.source === "report"
           ? "Status and reason as printed on the NBA's injury report"
@@ -59,9 +59,9 @@ export function InjuryTable({
   return (
     <div className="@container min-w-0 px-4 py-4 sm:px-5">
       <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-        <Heading id={captionId} className="flex items-center gap-2 text-[16px] font-semibold text-ink">
+        <Heading id={captionId} className="flex items-center gap-2 text-[16px] font-bold text-ink">
           <TeamLogo teamId={block.teamId} size={20} />
-          <Link href={teamHref(block.teamId)} className="hover:underline hover:decoration-pulse hover:underline-offset-4">
+          <Link href={teamHref(block.teamId)} className="hover:underline hover:underline-offset-4">
             {team.shortName}
           </Link>
         </Heading>
@@ -91,7 +91,7 @@ export function InjuryTable({
             {team.shortName} injury list, {block.gameLabel}
           </caption>
           <thead>
-            <tr className="border-b border-line-strong text-left">
+            <tr className="border-b-2 border-ink text-left">
               <th scope="col" className="kicker py-1.5 pr-2 font-medium">Player</th>
               <th scope="col" className="kicker py-1.5 pr-2 font-medium">Status</th>
               <th scope="col" className="kicker hidden py-1.5 pr-2 font-medium @lg:table-cell">Reason</th>
@@ -113,7 +113,7 @@ export function InjuryTable({
                 </th>
                 <td className="py-2 pr-2">
                   <span title={row.statusView.label}>
-                    <Badge tone={row.statusView.tone}>{row.statusView.short}</Badge>
+                    <StatusTag tone={row.statusView.tone}>{row.statusView.short}</StatusTag>
                   </span>
                 </td>
                 <td className={`hidden py-2 pr-2 leading-5 @lg:table-cell ${row.reason ? "text-ink-2" : "text-ink-3"}`}>{reasonText(row)}</td>

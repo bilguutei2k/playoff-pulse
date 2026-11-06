@@ -7,10 +7,10 @@ import { formatChance } from "@/lib/utils/format";
 export type ChartTeam = { teamId: string; code: string; name: string; color: string };
 export type ChartPoint = { date: string; champion: Record<string, number> };
 
-const GRID = "#ece9e4";
-const AXIS = "#d4d0c9";
-const AXIS_TEXT = "#6b6863";
-const OTHER = "#d9d5ce";
+const GRID = "#ececec";
+const AXIS = "#111111";
+const AXIS_TEXT = "#666666";
+const OTHER = "#dcdcdc";
 const LABEL_GAP = 13;
 
 function niceMax(value: number): { max: number; step: number } {
@@ -117,13 +117,13 @@ export function TitleOddsChart({
           {ticks.map((tick) => (
             <g key={tick}>
               <line x1={margin.left} x2={margin.left + plotWidth} y1={y(tick)} y2={y(tick)} stroke={tick === 0 ? AXIS : GRID} />
-              <text x={margin.left - 8} y={y(tick)} dy="0.32em" textAnchor="end" fontSize={11} fill={AXIS_TEXT} className="font-mono">
+              <text x={margin.left - 8} y={y(tick)} dy="0.32em" textAnchor="end" fontSize={11} fill={AXIS_TEXT}>
                 {Math.round(tick * 100)}%
               </text>
             </g>
           ))}
           {dateTicks.map((i) => (
-            <text key={points[i].date} x={x(i)} y={height - 8} textAnchor={points.length > 1 && i === points.length - 1 ? "end" : points.length > 1 && i === 0 ? "start" : "middle"} fontSize={11} fill={AXIS_TEXT} className="font-mono">
+            <text key={points[i].date} x={x(i)} y={height - 8} textAnchor={points.length > 1 && i === points.length - 1 ? "end" : points.length > 1 && i === 0 ? "start" : "middle"} fontSize={11} fill={AXIS_TEXT}>
               {formatShortDay(points[i].date)}
             </text>
           ))}
@@ -140,10 +140,10 @@ export function TitleOddsChart({
                 const labelY = labels.get(team.teamId) ?? endY;
                 return (
                   <g key={team.teamId}>
-                    <circle cx={endX} cy={endY} r={4} fill={team.color} stroke="#ffffff" strokeWidth={2} />
-                    <path d={`M${endX + 6},${endY} L${endX + 14},${labelY}`} stroke={AXIS} fill="none" />
-                    <rect x={endX + 16} y={labelY - 3} width={10} height={2} fill={team.color} rx={1} />
-                    <text x={endX + 30} y={labelY} dy="0.32em" fontSize={11.5} fill="#121417" className="font-mono">
+                    <rect x={endX - 4} y={endY - 4} width={8} height={8} fill={team.color} stroke="#ffffff" strokeWidth={1.5} />
+                    <path d={`M${endX + 6},${endY} L${endX + 14},${labelY}`} stroke={OTHER} fill="none" />
+                    <rect x={endX + 16} y={labelY - 4} width={10} height={4} fill={team.color} />
+                    <text x={endX + 30} y={labelY} dy="0.32em" fontSize={11.5} fill="#111111">
                       {team.code} {formatChance(last.champion[team.teamId] ?? 0)}
                     </text>
                   </g>
@@ -152,7 +152,7 @@ export function TitleOddsChart({
             : null}
           {hovered && shownIndex !== null ? (
             <g>
-              <line x1={x(shownIndex)} x2={x(shownIndex)} y1={margin.top} y2={margin.top + plotHeight} stroke="#121417" strokeOpacity={0.35} />
+              <line x1={x(shownIndex)} x2={x(shownIndex)} y1={margin.top} y2={margin.top + plotHeight} stroke="#111111" strokeOpacity={0.4} />
               {highlighted.map((team) => (
                 <circle key={team.teamId} cx={x(shownIndex)} cy={y(hovered.champion[team.teamId] ?? 0)} r={4} fill={team.color} stroke="#ffffff" strokeWidth={2} />
               ))}
@@ -184,19 +184,19 @@ export function TitleOddsChart({
         {hovered && shownIndex !== null ? (
           <div
             role="status"
-            className="pointer-events-none absolute top-2 z-10 w-44 rounded-lg border border-line bg-panel px-3 py-2 text-[12px] shadow-[0_8px_24px_-12px_rgba(18,20,23,0.35)]"
+            className="pointer-events-none absolute top-2 z-10 w-44 border border-ink bg-panel px-3 py-2 text-[13px]"
             style={{
               left: x(shownIndex) + 188 < width ? x(shownIndex) + 12 : Math.max(0, x(shownIndex) - 188),
             }}
           >
-            <p className="kicker mb-1.5">{formatShortDay(hovered.date)}</p>
+            <p className="mb-1.5 font-bold">{formatShortDay(hovered.date)}</p>
             <ul className="space-y-1">
               {[...highlighted]
                 .sort((a, b) => (hovered.champion[b.teamId] ?? 0) - (hovered.champion[a.teamId] ?? 0))
                 .map((team) => (
                   <li key={team.teamId} className="flex items-center gap-2">
-                    <span aria-hidden className="h-[2px] w-3 rounded-full" style={{ background: team.color }} />
-                    <span className="num font-semibold text-ink">{formatChance(hovered.champion[team.teamId] ?? 0)}</span>
+                    <span aria-hidden className="h-1 w-3" style={{ background: team.color }} />
+                    <span className="num font-bold text-ink">{formatChance(hovered.champion[team.teamId] ?? 0)}</span>
                     <span className="truncate text-ink-2">{team.name}</span>
                   </li>
                 ))}
@@ -204,15 +204,15 @@ export function TitleOddsChart({
           </div>
         ) : null}
       </div>
-      <ul aria-label="Legend" className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[12px] text-ink-2">
+      <ul aria-label="Legend" className="legend mt-3">
         {highlighted.map((team) => (
           <li key={team.teamId} className="flex items-center gap-1.5">
-            <span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: team.color }} />
+            <span aria-hidden className="h-1 w-4" style={{ background: team.color }} />
             {team.name}
           </li>
         ))}
         <li className="flex items-center gap-1.5">
-          <span aria-hidden className="h-[2px] w-4 rounded-full" style={{ background: OTHER }} />
+          <span aria-hidden className="h-1 w-4" style={{ background: OTHER }} />
           Other teams
         </li>
       </ul>

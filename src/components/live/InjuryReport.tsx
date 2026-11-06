@@ -102,7 +102,7 @@ export function InjuryReport({
                 return (
                   <li key={game.gameId}>
                     <article id={`game-${game.gameId}`} aria-labelledby={`title-${game.gameId}`} className="panel overflow-hidden">
-                      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-line bg-wash px-4 py-2.5 sm:px-5">
+                      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-line px-4 py-2.5 sm:px-5">
                         <h3 id={`title-${game.gameId}`} className="flex min-w-0 items-center gap-2 text-[15px] font-semibold text-ink">
                           <TeamLogo teamId={game.awayId} size={18} />
                           <span className="truncate">

@@ -8,6 +8,7 @@ import { SEASON_TEAMS } from "@/lib/season/teams";
 import { formatLongDay } from "@/lib/utils/dates";
 import { playerTableRows } from "@/lib/view/players";
 import { teamDisplay } from "@/lib/view/teams";
+import { Ticker } from "@/components/live/Ticker";
 
 export const metadata: Metadata = {
   title: "NBA player stats",
@@ -29,7 +30,9 @@ export default async function PlayersPage() {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <main className="pp-container py-8 sm:py-10">
+    <>
+      <Ticker />
+    <main className="pp-container pb-4 pt-7 sm:pt-11">
       <SectionHeading
         as="h1"
         kicker={index ? index.seasonLabel : "Players"}
@@ -75,5 +78,6 @@ export default async function PlayersPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Badge } from "@/components/live/Badge";
+import { StatusTag } from "@/components/live/Badge";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { getPlayerIndex, getTeamInjuryLists, getTeamPlayers } from "@/lib/live-data/published";
@@ -23,6 +23,7 @@ import {
   type PlayerPage as PlayerPageView,
 } from "@/lib/view/players";
 import { teamDisplay, teamHref } from "@/lib/view/teams";
+import { Ticker } from "@/components/live/Ticker";
 
 // Rendered on demand from the published data and re-rendered about once a minute
 // (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
@@ -98,7 +99,7 @@ function CurrentStatusLine({ page, listsPublished }: { page: PlayerPageView; lis
   return (
     <div className="mt-4 rounded-lg bg-wash px-4 py-3 text-[14px] leading-6 text-ink-2">
       <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <Badge tone={view.tone}>{view.label}</Badge>
+        <StatusTag tone={view.tone}>{view.label}</StatusTag>
         <Link href={`/game/${next.gameId}`} className="pp-link">
           {formatWeekday(next.etDate)} {formatShortDay(next.etDate)} {next.home ? "vs" : "at"} {opponent.shortName}, {formatTimeEt(next.tipUtc)}
         </Link>
@@ -228,10 +229,10 @@ function InjuryHistory({ page }: { page: PlayerPageView }) {
                 </th>
                 <td className="num whitespace-nowrap px-2 py-2 text-ink-2">{formatReportTime(listing.reportAt, listing.etDate)}</td>
                 <td className="px-2 py-2">
-                  <Badge tone={statusView({ status: listing.status, source: "report", gamesMissed: 0 }).tone}>{STATUS_LABELS[listing.status]}</Badge>
+                  <StatusTag tone={statusView({ status: listing.status, source: "report", gamesMissed: 0 }).tone}>{STATUS_LABELS[listing.status]}</StatusTag>
                 </td>
                 <td className="px-2 py-2 text-ink-2">{reportReason(listing.reason)}</td>
-                <td className="px-2 py-2 pr-4"><Badge tone={outcome.tone}>{outcome.label}</Badge></td>
+                <td className="px-2 py-2 pr-4"><StatusTag tone={outcome.tone}>{outcome.label}</StatusTag></td>
               </tr>
             );
           })}
@@ -270,12 +271,14 @@ export default async function PlayerPage({ params }: Params) {
   const missed = page.log.length - played;
 
   return (
-    <main className="pp-container py-8 sm:py-10">
+    <>
+      <Ticker />
+    <main className="pp-container pb-4 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-4 text-[14px]">
         <Link href="/players" className="text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</Link>
       </nav>
 
-      <header className="panel p-5 sm:p-7">
+      <header className="panel pt-5">
         <p className="kicker">{[page.position, team.name].filter(Boolean).join(" · ")}</p>
         <h1 className="headline mt-1 text-[30px] sm:text-[40px]">{page.name}</h1>
         <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[15px] text-ink-2">
@@ -331,7 +334,7 @@ export default async function PlayerPage({ params }: Params) {
       </section>
 
       <section aria-labelledby="impact-title" className="mt-10">
-        <div className="panel grid gap-5 p-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center sm:p-6">
+        <div className="panel grid gap-5 pt-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center">
           <div>
             <p className="kicker">The model&apos;s estimate</p>
             <h2 id="impact-title" className="headline mt-1 text-[22px]">548 impact</h2>
@@ -384,5 +387,6 @@ export default async function PlayerPage({ params }: Params) {
         </div>
       </section>
     </main>
+    </>
   );
 }
