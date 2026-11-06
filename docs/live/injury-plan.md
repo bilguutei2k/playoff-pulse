@@ -270,3 +270,15 @@ counts as "no final seal", never missed. The report parser fails closed on struc
 located, every slate game has rows or NOT YET SUBMITTED). Reports are cached by header timestamp,
 and only new files are downloaded. Each final seal is a commit and a deploy, roughly 15 an evening,
 which is accepted.
+
+
+## 2026-11-06 correction to the historical amendments
+
+The quoted amendment above remains a historical record, not a current no-leak claim.
+Future roster evidence can resolve as well as un-resolve a previously known name.
+The independent review found no positive-value historical effect through this route;
+that does not establish a universal no-leak property. Both injury-test seasons were
+inside the 2023–2026 span used to select the shared base-model form. There is no
+demonstrated conservative direction: the contrast can be affected either way.
+See the dated corrections in [registration.md](registration.md#2026-11-06-corrections-after-the-independent-review)
+for the policy revisions and the confirmed return-table and postseason defects.

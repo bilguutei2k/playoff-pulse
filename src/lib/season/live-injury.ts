@@ -1,4 +1,4 @@
-import { policyRevisionAt } from "./policy-revisions";
+import { POLICY_MODEL_VERSION, policyRevisionAt } from "./policy-revisions";
 // The live path of the injury model (v2): full-strength ratings from the adjusted
 // replay, seals that carry their availability and v1's number at the same instant, and
 // the absences the season simulation and the pages use. Pure and deterministic.
@@ -309,7 +309,7 @@ export function sealInjuryGames(
       etDate: game.etDate,
       tipUtc: game.tipUtc,
       issuedAt: context.nowIso,
-      policyRevision: policyRevisionAt(context.nowIso),
+      ...(context.modelVersion === POLICY_MODEL_VERSION ? { policyRevision: policyRevisionAt(context.nowIso) } : {}),
       modelVersion: context.modelVersion,
       paramsHash: hash,
       ratingsHash: ratingsHash(toRatingState(frozen.full.state)),

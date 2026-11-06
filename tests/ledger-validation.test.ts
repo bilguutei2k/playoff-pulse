@@ -182,8 +182,10 @@ describe("append-only history", () => {
 });
 
 describe("timestamp and policy enforcement", () => {
-  it.each(["issuedAt", "tipUtc"] as const)("rejects garbage %s", (field) => {
-    expect(ledgerProblems([v2("g", "final", { [field]: "garbage" })]).join(";")).toContain(`invalid ${field}`);
+  it.each(["issuedAt", "tipUtc"] as const)("rejects invalid %s", (field) => {
+    for (const value of ["garbage", "", "Infinity", "999999-01-01T00:00:00Z"]) {
+      expect(ledgerProblems([v2("g", "final", { [field]: value })]).join(";")).toContain(`invalid ${field}`);
+    }
   });
   it("rejects garbage recordedAt on results and misses", () => {
     expect(ledgerProblems([v1("g"), { ...result, recordedAt: "garbage" }]).join(";")).toContain("invalid recordedAt");
@@ -195,6 +197,11 @@ describe("timestamp and policy enforcement", () => {
     expect(ledgerProblems([v2("g", "final", { reportAt: "2026-11-01T17:10" })])).toEqual([]);
     expect(ledgerProblems([v2("g", "final", { reportAt: "2026-11-01T17:11" })]).join(";")).toContain("after issuedAt");
     expect(ledgerProblems([v2("g", "final", { reportAt: "2026-02-30T17:00" })]).join(";")).toContain("invalid reportAt");
+  });
+  it("compares report wall clocks in summer Eastern time too", () => {
+    const seal = v2("g", "final", { tipUtc: "2026-07-01T23:00:00Z", issuedAt: "2026-07-01T22:10:00Z", reportAt: "2026-07-01T18:10" });
+    expect(ledgerProblems([seal])).toEqual([]);
+    expect(ledgerProblems([{ ...seal, reportAt: "2026-07-01T18:11" }]).join(";")).toContain("after issuedAt");
   });
   it("requires reissued seals strictly more than 60 minutes before tip", () => {
     const original = v2("g", "morning", { availabilityMissing: true, reportAt: null, absence: { home: 0, away: 0 }, absencePoints: { home: 0, away: 0 }, drivers: { home: [], away: [] } });

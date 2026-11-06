@@ -348,7 +348,7 @@ export default async function TeamPage({ params }: Params) {
           <p className="mt-3 text-[12.5px] leading-5 text-ink-3">
             Points per game against an average team after each game day, rebuilt from results with the rating model
             alone, without the injury adjustment. The shaded bands are the league&apos;s full spread and its middle half.
-            {modeled ? " The open marker is today's published rating at full strength, which adjusts past margins for who played." : ""}
+            {modeled ? " The open marker is today's injury-adjusted rating, intended to approximate full strength by adjusting past margins for who played." : ""}
           </p>
         </section>
       </div>

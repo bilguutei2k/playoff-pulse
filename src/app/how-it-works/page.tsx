@@ -86,7 +86,7 @@ function Term({ term, children }: { term: string; children: React.ReactNode }) {
 
 /** Model version strings stay in mono so they never read as words. */
 function Version({ children }: { children: string }) {
-  return <span className="num whitespace-nowrap text-[0.92em] text-ink">{modelPolicyLabel(children)}</span>;
+  return <span className="num text-[0.92em] text-ink">{modelPolicyLabel(children)}</span>;
 }
 
 export default function HowItWorksPage() {
@@ -214,7 +214,7 @@ export default function HowItWorksPage() {
               were fitted on seasons 2005 to 2015 only, then frozen.
             </p>
             <p>
-              Since <Version>{LIVE_MODEL_VERSION}</Version>, the expected margin also gives up points for players on the
+              The published model, <Version>{LIVE_MODEL_VERSION}</Version>, also gives up expected-margin points for players on the
               NBA injury report, and the injury-adjusted ratings are intended to approximate each team at full strength. Every rating
               parameter above is unchanged from <Version>{REFERENCE_MODEL_VERSION}</Version>.{" "}
               <a href="#injuries" className="pp-link">
@@ -287,7 +287,7 @@ export default function HowItWorksPage() {
               estimated by a heuristic table fitted on 2021-22 to 2023-24: about{" "}
               {INJURY_SURVIVAL.short[0].toFixed(1)} more games for a fresh short absence, and{" "}
               {INJURY_SURVIVAL.long[0].toFixed(1)} when the report&apos;s reason names a surgery, tear,
-              fracture or similar. Return estimates come from that table only and are not validated medical predictions. See the known issues below. ESPN&apos;s estimated
+              fracture or similar. Return estimates come from that table only and are not validated medical predictions. See the known issues above. ESPN&apos;s estimated
               return dates are stored at every update for later study, but never used.
             </p>
             <p>
@@ -664,7 +664,7 @@ export default function HowItWorksPage() {
             <dl>
               <Term term="548">
                 Our chance of each team winning, from injury-adjusted team ratings intended to approximate full strength, home court, rest and the players
-                on the NBA injury report. A game&apos;s chances are shown as whole percents from 1% to 99%; season
+                on the NBA injury report (or current inferred absences for an unfiled team). A game&apos;s chances are shown as whole percents from 1% to 99%; season
                 odds use &ldquo;&lt;1%&rdquo; and &ldquo;&gt;99%&rdquo; at the ends.
               </Term>
               <Term term="Rating">
@@ -697,7 +697,7 @@ export default function HowItWorksPage() {
                 report. It is the number scored.
               </Term>
               <Term term="No final seal">
-                A game that tipped with only its morning seal. The morning seal is scored, and the game is counted
+                A game that tipped without a final seal. Its reissued seal is scored when present, otherwise its original morning seal, and the game is counted
                 under this name in the track record. It is not a missed seal.
               </Term>
               <Term term="Missed seal">

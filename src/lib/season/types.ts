@@ -287,7 +287,7 @@ export type RecordSummary = {
   accuracy: number | null;
   /** Same scored games, always predicting the prior home-win rate. */
   baselineBrier: number | null;
-  /** Morning seals alone on the same scored games, reported beside the scored number. */
+  /** Original morning seals only, on scored games with an original morning seal. */
   morningBrier: number | null;
   /** Absent on published states from before the metric split. */
   morningCount?: number;

@@ -93,7 +93,7 @@ export default async function OddsPage() {
         <div className="mt-4 grid gap-2 text-[13px] leading-5 text-ink-2 md:grid-cols-2 md:gap-x-10">
           <p>
             <span className="font-semibold text-ink">Rating</span> is points per game better or worse than an
-            average team{modeled ? " at full strength" : ""}. {modeled ? (
+            average team{modeled ? ", injury-adjusted to approximate full strength" : ""}. {modeled ? (
               <>
                 <span className="font-semibold text-ink">Now</span> takes off the points the team gives up in its
                 next game to players currently out.{" "}
@@ -107,7 +107,7 @@ export default async function OddsPage() {
             Early and midseason playoff odds failed their registered reliability check and are not claimed to be
             well calibrated; no skill is claimed for title odds.{" "}
             {modeled
-              ? "Known absences are carried for their expected length; injuries that have not happened yet are not simulated."
+              ? "Known absences use a heuristic return table. A remaining postseason penalty currently persists through the whole postseason, a known defect; unknown future injuries are not simulated."
               : "This forecast comes from the model without the injury term."}{" "}
             <Link href="/how-it-works#season-odds" className="pp-link">How the season is simulated</Link>
           </p>

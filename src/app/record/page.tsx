@@ -1,4 +1,4 @@
-import { modelPolicyLabel } from "@/lib/season/policy-revisions";
+import { POLICY_MODEL_VERSION, modelPolicyLabel } from "@/lib/season/policy-revisions";
 import { recordSummary, revisionBreakdown } from "@/lib/view/record";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -277,14 +277,14 @@ export default async function RecordPage() {
         </div>
       </section>
 
-      <section className="panel mt-8 p-5">
+      {liveState.modelVersion === POLICY_MODEL_VERSION ? <section className="panel mt-8 p-5">
         <h2 className="text-xl font-semibold">Policy revisions within the v2 record</h2>
         <p className="mt-2 text-ink-2">Descriptive breakdown, not a comparison. Each game belongs to the revision of its scored seal (final, else reissued, else morning); pending games use the same order. Different revisions cover different games and information times.</p>
-        <table className="pp-table mt-4">
+        <div className="table-scroll mt-4"><table className="w-full text-left text-[14px] [&_th]:px-3 [&_th]:py-2 [&_td]:px-3 [&_td]:py-2 [&_tr]:border-b [&_tr]:border-line">
           <thead><tr><th>Revision</th><th>Sealed games</th><th>Scored games (n)</th><th>Brier</th></tr></thead>
           <tbody>{revisionBreakdown(ledger, liveState.modelVersion).map((row) => <tr key={row.revision}><td>{row.revision}</td><td>{row.sealed}</td><td>{row.scored}</td><td>{fixed(row.brier, 3) ?? "—"}</td></tr>)}</tbody>
-        </table>
-      </section>
+        </table></div>
+      </section> : null}
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         <section aria-labelledby="market-title" className="panel p-5 sm:p-6">
