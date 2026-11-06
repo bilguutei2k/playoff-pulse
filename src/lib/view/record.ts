@@ -1,4 +1,3 @@
-import { POLICY_REVISIONS, policyRevisionAt } from "@/lib/season/policy-revisions";
 // Shared wording and numbers for the track record, gated by the live section of
 // docs/claims-ledger.md: below 500 scored games every result carries the small-sample
 // label, missed and incomplete seals are always shown, calibration waits for 100
@@ -7,7 +6,7 @@ import { POLICY_REVISIONS, policyRevisionAt } from "@/lib/season/policy-revision
 import { clampProbability } from "@/lib/season/math";
 import { impliedHomeProbability } from "@/lib/season/market";
 import { missedVersionOf, scoredSeal, sealKindOf, summarizeRecord } from "@/lib/season/live-state";
-import type { LedgerRow, MissedRow, ResultRow, SealRow, RecordSummary } from "@/lib/season/types";
+import type { LedgerRow, MissedRow, RecordSummary, ResultRow, SealRow } from "@/lib/season/types";
 
 export const SMALL_SAMPLE_GAMES = 500;
 export const CALIBRATION_MIN_GAMES = 100;
@@ -27,7 +26,7 @@ export type ScoredGame = {
   result: ResultRow;
   homeWon: boolean;
   brier: number;
-  /** A version that seals twice was scored on its morning seal. */
+  /** A version that seals twice was scored on its reissued or original morning seal. */
   noFinalSeal: boolean;
 };
 
@@ -113,23 +112,26 @@ export function marketComparison(scored: readonly ScoredGame[]): { games: number
   return { games: games.length, model: model / games.length, market: market / games.length };
 }
 
-/** Descriptive segments of one record, assigned by each game's operationally selected seal.
- * A game crossing a revision boundary belongs only to the revision of that seal.
- */
-export function revisionBreakdown(ledger: readonly LedgerRow[], modelVersion: string) {
-  const games = versionLedger(ledger, modelVersion);
-  return POLICY_REVISIONS.map((revision) => {
-    const scored = games.scored.filter((game) => policyRevisionAt(game.seal.issuedAt) === revision.revision);
-    const pending = games.pending.filter((seal) => policyRevisionAt(seal.issuedAt) === revision.revision);
-    return { ...revision, sealed: scored.length + pending.length, scored: scored.length,
-      brier: scored.length ? scored.reduce((sum, game) => sum + game.brier, 0) / scored.length : null };
-  });
-}
+const SPLIT_KEYS = [
+  "originalMorningBrier",
+  "originalMorningCount",
+  "reissuedBrier",
+  "reissuedCount",
+  "latestPreFinalBrier",
+  "latestPreFinalCount",
+  "policyRevisions",
+] as const;
 
-/** Recompute seal metrics even when the stored state predates the split.
- * The baseline's historical prior is not in the ledger; retain its published value.
+/**
+ * A published record with its pre-final split and policy revisions. A state written
+ * since 2026-11-06 carries them and is returned as it is; an older one (the bundled copy,
+ * or the minutes before the job's first run with this code) gets them from the same
+ * snapshot's ledger through the job's own summarizeRecord. Nothing else is recomputed.
  */
-export function recordSummary(ledger: readonly LedgerRow[], version: string, published?: RecordSummary): RecordSummary {
-  return { ...summarizeRecord(ledger, version, 0.5),
-    baselineBrier: published?.baselineBrier ?? null };
+export function withRecordSplit(record: RecordSummary, ledger: readonly LedgerRow[]): RecordSummary {
+  if (record.noFinalSeal === null || record.originalMorningCount !== undefined || record.modelVersion === null) return record;
+  const computed = summarizeRecord(ledger, record.modelVersion, 0.5, { finalSeals: true });
+  const split: Partial<RecordSummary> = {};
+  for (const key of SPLIT_KEYS) if (computed[key] !== undefined) Object.assign(split, { [key]: computed[key] });
+  return { ...record, ...split };
 }

@@ -1,24 +1,47 @@
 // Checks the forecast ledger. Committed rows must never change: the current file
 // must extend the version at the base ref, byte for byte. Git already provides the
-// tamper-evident history, so no separate hash chain is kept.
+// tamper-evident history, so no separate hash chain is kept. The pipeline also runs
+// `ledgerProblems` on every row before it writes anything.
 //
-// Run: corepack pnpm verify:ledger [baseRef]   (baseRef defaults to HEAD)
+// Run: corepack pnpm verify:ledger [baseRef] [--bootstrap-empty-ledger]
+// baseRef defaults to HEAD. A base ref that cannot be read fails; the flag only lets a
+// valid commit that has no ledger file yet stand for an empty ledger. The live job passes
+// live-data's previous head (or main's HEAD when it bootstraps live-data, which carries
+// main's frozen ledger), so it never needs the flag.
 
-import { etWallClockOf } from "../../src/lib/season/dates";
-import { POLICY_MODEL_VERSION, policyRevisionAt } from "../../src/lib/season/policy-revisions";
 import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { etWallClockOf } from "../../src/lib/season/dates";
 import { seasonLabel } from "../../src/lib/season/formats";
 import {
   FINAL_SEAL_WINDOW_MS,
   missedVersionOf,
   sealKindOf,
 } from "../../src/lib/season/live-state";
+import { POLICY_MODEL_VERSION, policyRevisionAt } from "../../src/lib/season/policy-revisions";
 import type { LedgerRow, SealRow } from "../../src/lib/season/types";
 import { LIVE_SEASON } from "./game-store";
 
 const RELATIVE_PATH = `data/live/ledger/${seasonLabel(LIVE_SEASON)}.jsonl`;
+const BOOTSTRAP_FLAG = "--bootstrap-empty-ledger";
+
+/**
+ * A UTC instant as the job writes it: `2026-11-07T00:00Z` (ESPN's tips) or a full ISO
+ * string with seconds and milliseconds (`toISOString`). The calendar fields must be real:
+ * `2026-02-30T00:00Z` and anything `Date.parse` merely tolerates are rejected.
+ */
+export function isUtcInstant(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?Z$/.test(value)) return false;
+  const time = Date.parse(value);
+  return Number.isFinite(time) && new Date(time).toISOString().slice(0, 16) === value.slice(0, 16);
+}
+
+/** An ET wall clock as reports are keyed: `2026-11-05T17:30`, with real calendar fields. */
+export function isWallClock(value: unknown): value is string {
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) && isUtcInstant(`${value}Z`);
+}
 
 function fail(message: string): never {
   console.error(`[verify-ledger] ${message}`);
@@ -79,12 +102,12 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
   const missedByVersion = new Set<string>();
   const morningWithoutReport = new Set<string>();
   for (const row of rows) {
-    const fields = row.type === "seal" ? ["issuedAt", "tipUtc"] as const
-      : row.type === "missed" ? ["recordedAt", "tipUtc"] as const : ["recordedAt"] as const;
-    for (const field of fields) {
-      const value = (row as unknown as Record<string, unknown>)[field];
-      if (typeof value !== "string" || !Number.isFinite(Date.parse(value))) {
-        problems.push(`${row.type} for ${row.gameId} has invalid ${field}`);
+    const times = row.type === "seal" ? (["issuedAt", "tipUtc"] as const)
+      : row.type === "missed" ? (["tipUtc", "recordedAt"] as const)
+      : (["recordedAt"] as const);
+    for (const field of times) {
+      if (!isUtcInstant((row as unknown as Record<string, unknown>)[field])) {
+        problems.push(`${row.type} for ${row.gameId} has an invalid ${field}`);
       }
     }
     if (row.type === "result") {
@@ -116,23 +139,27 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
     sealedByVersion.add(versionKey);
     const tip = Date.parse(row.tipUtc);
     const issued = Date.parse(row.issuedAt);
-    if (row.reportAt != null) {
-      const report = row.reportAt;
-      const parsed = Date.parse(`${report}:00Z`);
-      const valid = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(report)
-        && Number.isFinite(parsed) && new Date(parsed).toISOString().slice(0, 16) === report;
-      if (!valid) problems.push(`seal for ${row.gameId} has invalid reportAt`);
-      else if (Number.isFinite(issued) && report > etWallClockOf(issued)) {
-        problems.push(`seal for ${row.gameId} reportAt is after issuedAt (ET)`);
-      }
-    }
-    if (row.policyRevision !== undefined &&
-      (row.modelVersion !== POLICY_MODEL_VERSION || !Number.isFinite(issued) ||
-        row.policyRevision !== policyRevisionAt(row.issuedAt))) {
-      problems.push(`seal for ${row.gameId} has inconsistent policyRevision`);
-    }
+    // An invalid time is reported above; NaN makes this comparison false.
     if (issued >= tip) {
       problems.push(`seal for ${row.gameId} issued at or after tip`);
+    }
+    // The report in use is the latest at or before the issue time, compared on the ET
+    // wall clock exactly as the pipeline chooses it (`latestReport` in live-reports.ts).
+    if (row.reportAt != null) {
+      if (!isWallClock(row.reportAt)) problems.push(`seal for ${row.gameId} has an invalid reportAt`);
+      else if (Number.isFinite(issued) && row.reportAt > etWallClockOf(issued)) {
+        problems.push(`seal for ${row.gameId} uses a report from after its issue time`);
+      }
+    }
+    if (row.policyRevision !== undefined) {
+      const derived = row.modelVersion === POLICY_MODEL_VERSION && Number.isFinite(issued)
+        ? policyRevisionAt(row.issuedAt)
+        : null;
+      if (row.policyRevision !== derived) {
+        problems.push(
+          `seal for ${row.gameId} stores policy revision ${String(row.policyRevision)}, but its version and issue time give ${derived ?? "none"}`,
+        );
+      }
     }
     if (!(row.homeWinProbability >= 0 && row.homeWinProbability <= 1)) {
       problems.push(`seal for ${row.gameId} has probability ${row.homeWinProbability}`);
@@ -147,8 +174,9 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
     }
     if (kind === "morning" && row.availabilityMissing) morningWithoutReport.add(versionKey);
     if (kind === "reissued") {
-      if (tip - issued <= FINAL_SEAL_WINDOW_MS) {
-        problems.push(`reissued seal for ${row.gameId} must be more than an hour before tip`);
+      // decideReissues leaves a game within the final seal's window to the final seal.
+      if (!(tip - issued > FINAL_SEAL_WINDOW_MS)) {
+        problems.push(`reissued seal for ${row.gameId} issued within an hour of tip`);
       }
       if (!morningWithoutReport.has(versionKey)) {
         problems.push(`reissued seal for ${row.gameId} without a morning seal that lacked a report`);
@@ -191,35 +219,67 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
 }
 
 /**
- * Bootstrap only: a valid base commit with no ledger file may start an empty ledger.
- * A missing/unreadable ref always fails, including with the flag. Normal jobs use DATA_BASE.
+ * Rows appended since the base: every v2 seal the job writes now stores its policy
+ * revision. Older committed rows are never rewritten, so this applies to new rows only.
  */
-export function readBaseLedger(baseRef: string, bootstrap = false): string {
-  const options = { encoding: "utf-8" as const, stdio: ["ignore", "pipe", "pipe"] as ["ignore", "pipe", "pipe"], maxBuffer: 200 * 1024 * 1024 };
+export function appendedRowProblems(committed: string, current: string): string[] {
+  return current
+    .slice(committed.length)
+    .split("\n")
+    .filter((line) => line.trim().length > 0)
+    .map((line) => JSON.parse(line) as LedgerRow)
+    .filter((row): row is SealRow => row.type === "seal" && row.modelVersion === POLICY_MODEL_VERSION)
+    .filter((row) => row.policyRevision === undefined)
+    .map((row) => `new ${sealKindOf(row)} seal for ${row.gameId} does not store its policy revision`);
+}
+
+/**
+ * The ledger at `baseRef`. A ref that does not resolve to a commit, or a commit whose
+ * ledger cannot be read, throws: the append-only check is never silently waived. Only
+ * with `bootstrap` may a valid commit that has no ledger file stand for an empty one.
+ */
+export function readBaseLedger(baseRef: string, options: { bootstrap?: boolean; cwd?: string } = {}): string {
+  const git = (args: string[]) =>
+    execFileSync("git", args, {
+      cwd: options.cwd,
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "pipe"],
+      maxBuffer: 200 * 1024 * 1024,
+    });
+  let commit: string;
   try {
-    execFileSync("git", ["rev-parse", "--verify", `${baseRef}^{commit}`], options);
+    commit = git(["rev-parse", "--verify", "--quiet", `${baseRef}^{commit}`]).trim();
   } catch {
-    throw new Error(`Cannot read base ref ${baseRef}; refusing to waive append-only history.`);
+    throw new Error(`cannot resolve base ref ${baseRef} to a commit; refusing to skip the append-only check.`);
   }
-  const files = execFileSync("git", ["ls-tree", "--name-only", baseRef, "--", RELATIVE_PATH], options);
-  if (!files.trim() && bootstrap) return "";
+  const listed = git(["ls-tree", "--name-only", commit, "--", RELATIVE_PATH]).trim();
+  if (listed === "") {
+    if (options.bootstrap) return "";
+    throw new Error(`base ${baseRef} has no ${RELATIVE_PATH}; pass ${BOOTSTRAP_FLAG} only when starting a new ledger.`);
+  }
   try {
-    return execFileSync("git", ["show", `${baseRef}:${RELATIVE_PATH}`], options);
+    return git(["show", `${commit}:${RELATIVE_PATH}`]);
   } catch {
-    throw new Error(`Cannot read base ledger at ${baseRef}; use --bootstrap-empty-ledger only for a valid initial commit with no ledger file.`);
+    throw new Error(`cannot read ${RELATIVE_PATH} at ${baseRef}.`);
   }
 }
 
 function main(): void {
-  const baseRef = process.argv.slice(2).find((arg) => !arg.startsWith("--")) ?? "HEAD";
+  const args = process.argv.slice(2);
+  const unknown = args.filter((arg) => arg.startsWith("--") && arg !== BOOTSTRAP_FLAG);
+  const refs = args.filter((arg) => !arg.startsWith("--"));
+  if (unknown.length > 0 || refs.length > 1) {
+    fail(`usage: verify:ledger [baseRef] [${BOOTSTRAP_FLAG}]; got ${args.join(" ")}`);
+  }
+  const baseRef = refs[0] ?? "HEAD";
   const file = path.join(process.cwd(), RELATIVE_PATH);
   const current = fs.existsSync(file) ? fs.readFileSync(file, "utf-8") : "";
 
-  let committed: string;
+  let committed = "";
   try {
-    committed = readBaseLedger(baseRef, process.argv.includes("--bootstrap-empty-ledger"));
+    committed = readBaseLedger(baseRef, { bootstrap: args.includes(BOOTSTRAP_FLAG) });
   } catch (error) {
-    fail(String(error));
+    fail(error instanceof Error ? error.message : String(error));
   }
   if (!historyIntact(committed, current)) {
     fail(`committed rows changed compared with ${baseRef}. The ledger is append-only.`);
@@ -229,9 +289,10 @@ function main(): void {
     .split("\n")
     .filter(Boolean)
     .map((line) => JSON.parse(line) as LedgerRow);
-  const problems = ledgerProblems(rows);
+  const problems = [...ledgerProblems(rows), ...appendedRowProblems(committed, current)];
   if (problems.length > 0) fail(problems.join("; "));
-  console.log(`[verify-ledger] ${rows.length} row(s) valid; history intact against ${baseRef}.`);
+  const appended = rows.length - committed.split("\n").filter(Boolean).length;
+  console.log(`[verify-ledger] ${rows.length} row(s) valid, ${appended} new; history intact against ${baseRef}.`);
 }
 
 if (process.argv[1]?.endsWith("verify-ledger.ts")) main();

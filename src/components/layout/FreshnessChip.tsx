@@ -17,7 +17,7 @@ const noTickOnServer = () => null;
 
 /**
  * "Updated 4 min ago" on the masthead: the real age of the published state, with the
- * model version from 1280 px. Before hydration it shows the fixed ET stamp, because
+ * model version and policy revision from 1280 px. Before hydration it shows the fixed ET stamp, because
  * the server cannot know "now". `stored` means the live data could not be read and
  * the page shows the copy bundled with the deployment, which can be days old; the
  * line then says so and is always amber.
@@ -25,12 +25,13 @@ const noTickOnServer = () => null;
 export function FreshnessChip({
   iso,
   stamp,
-  modelVersion,
+  modelLabel,
   stored = false,
 }: {
   iso: string;
   stamp: string;
-  modelVersion: string;
+  /** The model version with its policy revision, e.g. "live-2026.27-v2, policy revision 3". */
+  modelLabel: string;
   stored?: boolean;
 }) {
   const now = useSyncExternalStore(subscribe, tickNow, noTickOnServer);
@@ -42,8 +43,8 @@ export function FreshnessChip({
       className={`flex items-center gap-2 whitespace-nowrap text-[13px] leading-none ${stale ? "text-[#f5c26b]" : "text-masthead-2"}`}
       title={
         stored
-          ? `Live data could not be read. Showing the copy stored with this version of the site, published ${stamp}, model ${modelVersion}`
-          : `Forecast published ${stamp}, model ${modelVersion}`
+          ? `Live data could not be read. Showing the copy stored with this version of the site, published ${stamp}, model ${modelLabel}`
+          : `Forecast published ${stamp}, model ${modelLabel}`
       }
     >
       {stale ? <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-[#f5c26b]" /> : null}
@@ -52,7 +53,7 @@ export function FreshnessChip({
         <time dateTime={iso}>{stored ? "updated" : "Updated"} {when}</time>
         <span className="hidden xl:inline">
           <span aria-hidden className="mx-1.5">·</span>
-          <span className="num">{modelVersion}</span>
+          <span className="num">{modelLabel}</span>
         </span>
       </span>
     </p>

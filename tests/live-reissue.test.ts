@@ -115,11 +115,16 @@ describe("which seal counts", () => {
     expect(summary.scored).toBe(1);
     expect(summary.noFinalSeal).toBe(1);
     expect(summary.brier).toBeCloseTo((1 - 0.88) ** 2, 10);
-    expect(summary.latestPreFinalBrier).toBeCloseTo((1 - 0.88) ** 2, 10);
+    // morningBrier keeps its published meaning, the latest pre-final seal; the split
+    // reports the original morning seal and the reissued seal separately, with counts.
+    expect(summary.morningBrier).toBeCloseTo((1 - 0.88) ** 2, 10);
+    expect(summary.latestPreFinalBrier).toBe(summary.morningBrier);
+    expect(summary.latestPreFinalCount).toBe(1);
     expect(summary.reissuedCount).toBe(1);
-    expect(summary.morningCount).toBe(1);
-    expect(summary.morningBrier).toBeCloseTo((1 - morning.homeWinProbability) ** 2, 10);
     expect(summary.reissuedBrier).toBeCloseTo((1 - reissued.homeWinProbability) ** 2, 10);
+    expect(summary.originalMorningCount).toBe(1);
+    expect(summary.originalMorningBrier).toBeCloseTo((1 - morning.homeWinProbability) ** 2, 10);
+    expect(morning.homeWinProbability).not.toBe(reissued.homeWinProbability);
   });
 });
 

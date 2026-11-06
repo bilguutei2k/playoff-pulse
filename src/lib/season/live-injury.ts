@@ -1,10 +1,10 @@
-import { POLICY_MODEL_VERSION, policyRevisionAt } from "./policy-revisions";
 // The live path of the injury model (v2): full-strength ratings from the adjusted
 // replay, seals that carry their availability and v1's number at the same instant, and
 // the absences the season simulation and the pages use. Pure and deterministic.
 
 import type { StoredLine } from "@/lib/season/box-scores";
 import { daysBetween } from "@/lib/season/dates";
+import { POLICY_MODEL_VERSION, policyRevisionAt } from "@/lib/season/policy-revisions";
 import {
   currentAbsences,
   expectedAbsence,
@@ -309,6 +309,7 @@ export function sealInjuryGames(
       etDate: game.etDate,
       tipUtc: game.tipUtc,
       issuedAt: context.nowIso,
+      // A label only: the revision in force at issue time, checked by verify:ledger.
       ...(context.modelVersion === POLICY_MODEL_VERSION ? { policyRevision: policyRevisionAt(context.nowIso) } : {}),
       modelVersion: context.modelVersion,
       paramsHash: hash,

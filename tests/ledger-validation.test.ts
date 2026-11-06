@@ -1,11 +1,19 @@
+import { execFileSync, spawnSync } from "node:child_process";
+import * as fs from "node:fs";
+import * as os from "node:os";
+import * as path from "node:path";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { summarizeRecord } from "@/lib/season/live-state";
-import { revisionBreakdown } from "@/lib/view/record";
-import { execFileSync } from "node:child_process";
-import { POLICY_REVISIONS, policyRevisionAt } from "@/lib/season/policy-revisions";
-import { describe, expect, it } from "vitest";
 import { LIVE_MODEL_VERSION, REFERENCE_MODEL_VERSION } from "@/lib/season/params";
+import { POLICY_MODEL_VERSION, POLICY_REVISIONS, policyRevisionAt } from "@/lib/season/policy-revisions";
 import type { LedgerRow, SealRow } from "@/lib/season/types";
-import { historyIntact, ledgerProblems, readBaseLedger } from "../scripts/live/verify-ledger";
+import {
+  appendedRowProblems,
+  historyIntact,
+  isUtcInstant,
+  ledgerProblems,
+  readBaseLedger,
+} from "../scripts/live/verify-ledger";
 
 const TIP = "2026-11-01T23:00:00Z";
 
@@ -181,78 +189,225 @@ describe("append-only history", () => {
   });
 });
 
-describe("timestamp and policy enforcement", () => {
-  it.each(["issuedAt", "tipUtc"] as const)("rejects invalid %s", (field) => {
-    for (const value of ["garbage", "", "Infinity", "999999-01-01T00:00:00Z"]) {
-      expect(ledgerProblems([v2("g", "final", { [field]: value })]).join(";")).toContain(`invalid ${field}`);
+describe("timestamps", () => {
+  const BAD = [
+    "garbage",
+    "",
+    "Infinity",
+    "999999-01-01T00:00:00Z",
+    "2026-02-30T00:00Z",
+    "2026-11-01T23:00:00",
+    "Nov 1 2026 23:00 UTC",
+    "2026-11-01 23:00Z",
+  ];
+
+  it("accepts the two forms the job writes", () => {
+    expect(isUtcInstant("2026-11-07T00:00Z")).toBe(true);
+    expect(isUtcInstant("2026-11-06T05:00:12.345Z")).toBe(true);
+    expect(isUtcInstant(1_762_038_000_000)).toBe(false);
+    for (const value of BAD) expect(isUtcInstant(value)).toBe(false);
+  });
+
+  it.each(["issuedAt", "tipUtc"] as const)("rejects a seal whose %s is not a real UTC instant", (field) => {
+    for (const value of BAD) {
+      expect(ledgerProblems([v2("g", "final", { [field]: value })])).toContain(`seal for g has an invalid ${field}`);
     }
   });
-  it("rejects garbage recordedAt on results and misses", () => {
-    expect(ledgerProblems([v1("g"), { ...result, recordedAt: "garbage" }]).join(";")).toContain("invalid recordedAt");
-    expect(ledgerProblems([{ type: "missed", gameId: "x", etDate: "2026-11-01", tipUtc: "garbage", homeId: "1", awayId: "2", recordedAt: "garbage" }])).toHaveLength(2);
+
+  it("rejects bad times on results and misses", () => {
+    expect(ledgerProblems([v1("g"), { ...result, recordedAt: "garbage" }])).toEqual(["result for g has an invalid recordedAt"]);
+    const miss: LedgerRow = { type: "missed", gameId: "x", etDate: "2026-11-01", tipUtc: "garbage", homeId: "1", awayId: "2", recordedAt: "" };
+    expect(ledgerProblems([miss])).toEqual(["missed for x has an invalid tipUtc", "missed for x has an invalid recordedAt"]);
   });
-  it("rejects the review counterexample and checks ET report chronology", () => {
-    expect(ledgerProblems([v2("g", "final", { issuedAt: "garbage", reportAt: "2099-01-01T12:00" })])).not.toEqual([]);
-    expect(ledgerProblems([v2("g", "final", { reportAt: "2099-01-01T12:00" })]).join(";")).toContain("after issuedAt");
+
+  it("catches the review's counterexample: garbage issue time and a report from 2099", () => {
+    // A valid final row mutated this way used to produce no problems at all.
+    const row = v2("g", "final", { issuedAt: "garbage", reportAt: "2099-01-01T12:00" });
+    expect(ledgerProblems([v2("g", "morning"), row, result])).toEqual(["seal for g has an invalid issuedAt"]);
+    expect(ledgerProblems([v2("g", "morning"), v2("g", "final", { reportAt: "2099-01-01T12:00" }), result])).toEqual([
+      "seal for g uses a report from after its issue time",
+    ]);
+  });
+
+  it("requires the report at or before the issue time on the ET wall clock", () => {
+    // 22:10Z on Nov 1 is 17:10 EST.
     expect(ledgerProblems([v2("g", "final", { reportAt: "2026-11-01T17:10" })])).toEqual([]);
-    expect(ledgerProblems([v2("g", "final", { reportAt: "2026-11-01T17:11" })]).join(";")).toContain("after issuedAt");
-    expect(ledgerProblems([v2("g", "final", { reportAt: "2026-02-30T17:00" })]).join(";")).toContain("invalid reportAt");
-  });
-  it("compares report wall clocks in summer Eastern time too", () => {
-    const seal = v2("g", "final", { tipUtc: "2026-07-01T23:00:00Z", issuedAt: "2026-07-01T22:10:00Z", reportAt: "2026-07-01T18:10" });
-    expect(ledgerProblems([seal])).toEqual([]);
-    expect(ledgerProblems([{ ...seal, reportAt: "2026-07-01T18:11" }]).join(";")).toContain("after issuedAt");
-  });
-  it("requires reissued seals strictly more than 60 minutes before tip", () => {
-    const original = v2("g", "morning", { availabilityMissing: true, reportAt: null, absence: { home: 0, away: 0 }, absencePoints: { home: 0, away: 0 }, drivers: { home: [], away: [] } });
-    for (const time of ["22:00:00", "22:00:01"]) {
-      expect(ledgerProblems([original, v2("g", "morning", { sealKind: "reissued", issuedAt: `2026-11-01T${time}Z` })]).join(";")).toContain("more than an hour");
+    expect(ledgerProblems([v2("g", "final", { reportAt: "2026-11-01T17:11" })])).toEqual([
+      "seal for g uses a report from after its issue time",
+    ]);
+    // 22:10Z on Jul 1 is 18:10 EDT.
+    const summer = { tipUtc: "2026-07-01T23:00Z", issuedAt: "2026-07-01T22:10:00.000Z" };
+    expect(ledgerProblems([v2("g", "final", { ...summer, reportAt: "2026-07-01T18:10" })])).toEqual([]);
+    expect(ledgerProblems([v2("g", "final", { ...summer, reportAt: "2026-07-01T18:11" })])).toHaveLength(1);
+    for (const reportAt of ["2026-02-30T17:00", "2026-11-01 17:00", "17:00", "2026-11-01T17:00Z"]) {
+      expect(ledgerProblems([v2("g", "final", { reportAt })])).toEqual(["seal for g has an invalid reportAt"]);
     }
-    expect(ledgerProblems([original, v2("g", "morning", { sealKind: "reissued", issuedAt: "2026-11-01T21:59:59Z" })])).toEqual([]);
-  });
-  it("checks stored revisions without requiring historical rows to be rewritten", () => {
-    expect(ledgerProblems([v2("g", "final", { policyRevision: 1 })]).join(";")).toContain("inconsistent policyRevision");
-    expect(ledgerProblems([v2("g", "final", { policyRevision: 0 })])).toEqual([]);
-    expect(ledgerProblems([v2("g", "final")])).toEqual([]);
-  });
-  it("fails closed on a missing ref even with the bootstrap flag", () => {
-    expect(() => readBaseLedger("refs/heads/does-not-exist-review-test")).toThrow("Cannot read base ref");
-    expect(() => readBaseLedger("refs/heads/does-not-exist-review-test", true)).toThrow("Cannot read base ref");
   });
 });
 
-it("permits bootstrap only when a valid commit has no ledger", () => {
-  const root = execFileSync("git", ["rev-list", "--max-parents=0", "HEAD"], { encoding: "utf8" }).trim().split("\n")[0];
-  expect(() => readBaseLedger(root)).toThrow("Cannot read base ledger");
-  expect(readBaseLedger(root, true)).toBe("");
-  expect(readBaseLedger("HEAD", true)).toBe(readBaseLedger("HEAD"));
+describe("the reissue window", () => {
+  const original = v2("g", "morning", {
+    availabilityMissing: true,
+    reportAt: null,
+    absence: { home: 0, away: 0 },
+    absencePoints: { home: 0, away: 0 },
+    drivers: { home: [], away: [] },
+  });
+  const reissue = (issuedAt: string) => v2("g", "morning", { sealKind: "reissued", issuedAt, reportAt: "2026-11-01T16:30" });
+
+  it("requires a reissued seal more than an hour before tip, as decideReissues does", () => {
+    // TIP is 23:00Z.
+    expect(ledgerProblems([original, reissue("2026-11-01T21:59:59.999Z")])).toEqual([]);
+    for (const issuedAt of ["2026-11-01T22:00:00.000Z", "2026-11-01T22:00:01.000Z", "2026-11-01T22:59:00.000Z"]) {
+      expect(ledgerProblems([original, reissue(issuedAt)])).toEqual(["reissued seal for g issued within an hour of tip"]);
+    }
+  });
 });
 
-it("uses exact immutable revision boundaries", () => {
-  for (const row of POLICY_REVISIONS) {
-    expect(policyRevisionAt(row.effectiveAt)).toBe(row.revision);
-    expect(policyRevisionAt(new Date(Date.parse(row.effectiveAt) - 1).toISOString())).toBe(Math.max(0, row.revision - 1));
-  }
-  expect(() => policyRevisionAt("garbage")).toThrow();
+describe("policy revisions", () => {
+  it("has four frozen revisions at the pull requests' merge times", () => {
+    expect(POLICY_MODEL_VERSION).toBe(LIVE_MODEL_VERSION);
+    expect(POLICY_REVISIONS.map((row) => [row.revision, row.effectiveAt, row.pullRequest])).toEqual([
+      [0, "2026-11-02T06:57:24Z", 6],
+      [1, "2026-11-02T16:27:31Z", 8],
+      [2, "2026-11-03T05:35:03Z", 9],
+      [3, "2026-11-04T06:13:03Z", 15],
+    ]);
+    expect(Object.isFrozen(POLICY_REVISIONS) && POLICY_REVISIONS.every(Object.isFrozen)).toBe(true);
+  });
+
+  it("derives a revision from the issue time, exactly at each boundary", () => {
+    for (const row of POLICY_REVISIONS) {
+      expect(policyRevisionAt(row.effectiveAt)).toBe(row.revision);
+      expect(policyRevisionAt(new Date(Date.parse(row.effectiveAt) - 1).toISOString())).toBe(Math.max(0, row.revision - 1));
+    }
+    expect(policyRevisionAt("2026-11-06T12:00:00.000Z")).toBe(3);
+    expect(() => policyRevisionAt("garbage")).toThrow();
+  });
+
+  it("accepts rows without a stored revision and checks a stored one against the derived one", () => {
+    const at = { issuedAt: "2026-11-04T23:10:00.000Z", tipUtc: "2026-11-05T00:00Z", reportAt: "2026-11-04T17:30" };
+    expect(ledgerProblems([v2("g", "final", at)])).toEqual([]);
+    expect(ledgerProblems([v2("g", "final", { ...at, policyRevision: 3 })])).toEqual([]);
+    expect(ledgerProblems([v2("g", "final", { ...at, policyRevision: 2 })])).toEqual([
+      "seal for g stores policy revision 2, but its version and issue time give 3",
+    ]);
+    expect(ledgerProblems([v2("g", "final", { ...at, policyRevision: "3" as unknown as number })])).toHaveLength(1);
+    expect(ledgerProblems([v1("g", { policyRevision: 0 })])).toEqual([
+      "seal for g stores policy revision 0, but its version and issue time give none",
+    ]);
+    expect(ledgerProblems([v2("g", "final", { issuedAt: "garbage", policyRevision: 0 })])).toContain(
+      "seal for g stores policy revision 0, but its version and issue time give none",
+    );
+  });
+
+  it("requires the revision on v2 seals appended after the base, never on committed rows", () => {
+    const line = (row: LedgerRow) => `${JSON.stringify(row)}\n`;
+    const committed = line(v2("old", "morning"));
+    expect(appendedRowProblems(committed, committed + line(v2("g", "final", { policyRevision: 0 })) + line(v1("g")) + line(result))).toEqual([]);
+    expect(appendedRowProblems(committed, committed + line(v2("g", "final")))).toEqual([
+      "new final seal for g does not store its policy revision",
+    ]);
+    expect(appendedRowProblems(committed, committed)).toEqual([]);
+  });
 });
 
-it("keeps split samples and revision totals descriptive across a policy boundary", () => {
-  const a = v2("g", "morning", { issuedAt: "2026-11-02T15:00:00Z", homeWinProbability: 0.6 });
-  const reissued = { ...a, sealKind: "reissued" as const, issuedAt: "2026-11-02T17:00:00Z", homeWinProbability: 0.8 };
-  const final = { ...a, sealKind: "final" as const, issuedAt: "2026-11-02T22:00:00Z", homeWinProbability: 0.7 };
-  const b = v2("b", "morning", { issuedAt: "2026-11-04T12:00:00Z", homeWinProbability: 0.4 });
-  const pending = { ...b, gameId: "pending" };
-  const rows: LedgerRow[] = [a, reissued, final, b, pending, result, { ...result, gameId: "b" }];
-  const summary = summarizeRecord(rows, LIVE_MODEL_VERSION, 0.55);
-  expect(summary.morningCount).toBe(2);
-  expect(summary.reissuedCount).toBe(1);
-  expect(summary.latestPreFinalCount).toBe(2);
-  expect(summary.morningBrier).toBeCloseTo((0.4 ** 2 + 0.6 ** 2) / 2);
-  expect(summary.reissuedBrier).toBeCloseTo(0.2 ** 2);
-  expect(summary.latestPreFinalBrier).toBeCloseTo((0.2 ** 2 + 0.6 ** 2) / 2);
-  expect(summary.brier).toBeCloseTo((0.3 ** 2 + 0.6 ** 2) / 2);
-  const revisions = revisionBreakdown(rows, LIVE_MODEL_VERSION);
-  expect(revisions.map((row) => [row.sealed, row.scored])).toEqual([[0, 0], [1, 1], [0, 0], [2, 1]]);
-  expect(revisions.reduce((sum, row) => sum + row.sealed, 0)).toBe(summary.sealed);
-  expect(revisions[1].brier).toBeCloseTo(0.3 ** 2);
+describe("the base ref", () => {
+  const ROOT = process.cwd();
+  const LEDGER = "data/live/ledger/2026-27.jsonl";
+  let repo = "";
+  let empty = "";
+  let withLedger = "";
+  const git = (...args: string[]) =>
+    execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@example.com", ...args], { cwd: repo, encoding: "utf-8" }).trim();
+  const cli = (...args: string[]) =>
+    spawnSync(path.join(ROOT, "node_modules/.bin/tsx"), ["--tsconfig", path.join(ROOT, "tsconfig.json"), path.join(ROOT, "scripts/live/verify-ledger.ts"), ...args], {
+      cwd: repo,
+      encoding: "utf-8",
+    });
+
+  beforeAll(() => {
+    repo = fs.mkdtempSync(path.join(os.tmpdir(), "verify-ledger-"));
+    git("init", "-q");
+    fs.writeFileSync(path.join(repo, "README"), "no ledger yet\n");
+    git("add", "README");
+    git("commit", "-q", "-m", "no ledger");
+    empty = git("rev-parse", "HEAD");
+    fs.mkdirSync(path.join(repo, "data/live/ledger"), { recursive: true });
+    fs.writeFileSync(path.join(repo, LEDGER), `${JSON.stringify(v1("g"))}\n`);
+    git("add", LEDGER);
+    git("commit", "-q", "-m", "ledger");
+    withLedger = git("rev-parse", "HEAD");
+  });
+  afterAll(() => fs.rmSync(repo, { recursive: true, force: true }));
+
+  it("fails closed on a ref that does not exist, even with the bootstrap flag", () => {
+    for (const bootstrap of [false, true]) {
+      expect(() => readBaseLedger("refs/heads/does-not-exist", { cwd: repo, bootstrap })).toThrow("cannot resolve base ref");
+    }
+  });
+
+  it("lets only the flag stand a valid commit without a ledger for an empty ledger", () => {
+    expect(() => readBaseLedger(empty, { cwd: repo })).toThrow("has no data/live/ledger/2026-27.jsonl");
+    expect(readBaseLedger(empty, { cwd: repo, bootstrap: true })).toBe("");
+    expect(readBaseLedger(withLedger, { cwd: repo })).toBe(`${JSON.stringify(v1("g"))}\n`);
+    expect(readBaseLedger(withLedger, { cwd: repo, bootstrap: true })).toBe(readBaseLedger(withLedger, { cwd: repo }));
+  });
+
+  it("exits non-zero from the command line unless the base is readable", { timeout: 60_000 }, () => {
+    const missing = cli("refs/heads/does-not-exist");
+    expect(missing.status).toBe(1);
+    expect(missing.stderr).toContain("cannot resolve base ref refs/heads/does-not-exist");
+    expect(cli(empty).status).toBe(1);
+    expect(cli("--bootsrap-empty-ledger").status).toBe(1);
+    const ok = cli(withLedger);
+    expect(ok.stderr).toBe("");
+    expect(ok.status).toBe(0);
+    expect(ok.stdout).toContain("1 row(s) valid, 0 new; history intact");
+    expect(cli(empty, "--bootstrap-empty-ledger").status).toBe(0);
+  });
+});
+
+describe("the record split", () => {
+  // One game reissued, then final; one scored on its original morning seal; one pending.
+  const day = { etDate: "2026-11-02", tipUtc: "2026-11-02T23:00Z" };
+  const a = v2("a", "morning", { ...day, issuedAt: "2026-11-02T11:00:00.000Z", homeWinProbability: 0.6, availabilityMissing: true });
+  const reissued = { ...a, sealKind: "reissued" as const, issuedAt: "2026-11-02T17:00:00.000Z", homeWinProbability: 0.8 };
+  const final = { ...a, sealKind: "final" as const, issuedAt: "2026-11-02T22:10:00.000Z", homeWinProbability: 0.7 };
+  const later = { etDate: "2026-11-04", tipUtc: "2026-11-05T00:00Z", issuedAt: "2026-11-04T12:00:00.000Z" };
+  const b = v2("b", "morning", { ...later, homeWinProbability: 0.4, policyRevision: 3 });
+  const pending = v2("p", "morning", { ...later, homeWinProbability: 0.5 });
+  const won = (gameId: string): LedgerRow => ({ ...result, gameId, recordedAt: "2026-11-05T06:00:00.000Z" });
+  const rows: LedgerRow[] = [a, reissued, final, b, pending, won("a"), won("b")];
+
+  it("scores original morning, reissued and latest pre-final seals separately, with counts", () => {
+    const summary = summarizeRecord(rows, LIVE_MODEL_VERSION, 0.55);
+    expect(summary.brier).toBeCloseTo((0.3 ** 2 + 0.6 ** 2) / 2, 12);
+    expect(summary.originalMorningCount).toBe(2);
+    expect(summary.originalMorningBrier).toBeCloseTo((0.4 ** 2 + 0.6 ** 2) / 2, 12);
+    expect(summary.reissuedCount).toBe(1);
+    expect(summary.reissuedBrier).toBeCloseTo(0.2 ** 2, 12);
+    expect(summary.latestPreFinalCount).toBe(2);
+    expect(summary.latestPreFinalBrier).toBeCloseTo((0.2 ** 2 + 0.6 ** 2) / 2, 12);
+    expect(summary.morningBrier).toBe(summary.latestPreFinalBrier);
+  });
+
+  it("files each game under its scored seal's revision, descriptively", () => {
+    const summary = summarizeRecord(rows, LIVE_MODEL_VERSION, 0.55);
+    // Game a: morning at revision 0, reissued and final at revision 1, scored on the final.
+    expect(summary.policyRevisions).toEqual([
+      { revision: 0, sealRows: 1, sealed: 0, scored: 0, brier: null },
+      { revision: 1, sealRows: 2, sealed: 1, scored: 1, brier: expect.closeTo(0.3 ** 2, 12) },
+      { revision: 2, sealRows: 0, sealed: 0, scored: 0, brier: null },
+      { revision: 3, sealRows: 2, sealed: 2, scored: 1, brier: expect.closeTo(0.6 ** 2, 12) },
+    ]);
+    expect(summary.policyRevisions!.reduce((sum, row) => sum + row.sealed, 0)).toBe(summary.sealed);
+  });
+
+  it("leaves a version that seals once without the split or revisions", () => {
+    const summary = summarizeRecord([v1("a", day), won("a")], REFERENCE_MODEL_VERSION, 0.55);
+    expect(summary.morningBrier).toBeNull();
+    expect(summary).not.toHaveProperty("originalMorningBrier");
+    expect(summary).not.toHaveProperty("policyRevisions");
+  });
 });
