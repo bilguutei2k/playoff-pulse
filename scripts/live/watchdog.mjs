@@ -2,8 +2,8 @@ import { execFileSync } from "node:child_process";
 import { decideWatchdog } from "./watchdog-decision.mjs";
 
 // Only GITHUB_TOKEN is needed. Never invoked by, or depended on by, the live job.
-const gh = (...args) => execFileSync("gh", args, { encoding: "utf8" }).trim();
-const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
+const gh = (...args) => execFileSync("gh", args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).trim();
+const git = (...args) => execFileSync("git", args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).trim();
 const repo = process.env.GITHUB_REPOSITORY;
 if (!repo) throw new Error("GITHUB_REPOSITORY is required");
 const now = new Date().toISOString();
