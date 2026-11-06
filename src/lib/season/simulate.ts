@@ -8,6 +8,7 @@
 // the wider pregame formula.
 
 import { createSeededRandom, type RandomSource } from "@/lib/model/random";
+import { sampleAbsenceSchedule, type AbsenceSchedule } from "./injury-v3";
 import { daysBetween } from "@/lib/season/dates";
 import { seasonFormat } from "@/lib/season/formats";
 import { cholesky, fingerprint, normalCdf, quantileFromHistogram } from "@/lib/season/math";
@@ -107,6 +108,8 @@ export type SimulationInput = {
   observed?: ObservedPostseason;
   /** Points each team gives up to known absences. Absent means none. */
   absences?: SimulationAbsences;
+  /** Explicit opt-in; mutually exclusive with legacy absences. Never enabled by production. */
+  absenceSchedule?: AbsenceSchedule;
 };
 
 export type SimulationAbsences = {
@@ -222,6 +225,7 @@ export function playSeries(
   strengths: Float64Array,
   params: ModelParams,
   random: RandomSource,
+  charge?: (team: number) => number,
 ): number {
   let homeCourtWins = startHomeCourtWins;
   let otherWins = startOtherWins;
@@ -229,7 +233,15 @@ export function playSeries(
   const awayProbability = 1 - winProbability(strengths, other, homeCourt, params, true);
   while (homeCourtWins < WINS_NEEDED && otherWins < WINS_NEEDED) {
     const gameNumber = homeCourtWins + otherWins;
-    const probability = HOME_GAMES[gameNumber] ? homeProbability : awayProbability;
+    let probability = HOME_GAMES[gameNumber] ? homeProbability : awayProbability;
+    if (charge) {
+      const homeLoss = charge(homeCourt);
+      const otherLoss = charge(other);
+      const hca = strengths[HCA_INDEX] + params.hcaPlayoffDelta;
+      probability = normalCdf((params.playoffSpread *
+        (strengths[homeCourt] - strengths[other]) - homeLoss + otherLoss +
+        (HOME_GAMES[gameNumber] ? hca : -hca)) / params.sigma);
+    }
     if (random() < probability) homeCourtWins += 1;
     else otherWins += 1;
   }
@@ -261,6 +273,7 @@ function simulateBracket(
   counters: Counters,
   lookup: Map<string, ObservedSeries>,
   seriesWins: Map<string, number>,
+  charge?: (team: number) => number,
 ): number {
   const play = (a: number, b: number): number => {
     const seen = lookup.get(seriesKey(a, b));
@@ -277,6 +290,7 @@ function simulateBracket(
       strengths,
       params,
       random,
+      charge,
     );
     if (seen) {
       const key = seriesKey(a, b);
@@ -306,12 +320,17 @@ function resolvePlayIn(
   params: ModelParams,
   random: RandomSource,
   observed: ObservedPostseason | undefined,
+  charge?: (team: number) => number,
 ): { seven: number; eight: number } {
   const final = observed?.playInFinal[conference];
   const results = observed?.playInResults[conference];
   const [s7, s8, s9, s10] = [order[6], order[7], order[8], order[9]];
-  const playGame = (home: number, away: number): number =>
-    random() < winProbability(strengths, home, away, params, false) ? home : away;
+  const playGame = (home: number, away: number): number => {
+    const p = charge ? normalCdf((strengths[home] - strengths[away] + strengths[HCA_INDEX]
+      - charge(home) + charge(away)) / params.sigma)
+      : winProbability(strengths, home, away, params, false);
+    return random() < p ? home : away;
+  };
 
   const sevenEightWinner =
     final?.seven ?? results?.sevenEightWinner ?? playGame(s7, s8);
@@ -325,6 +344,7 @@ function resolvePlayIn(
 
 export function simulateSeason(input: SimulationInput): SeasonForecast {
   const { params, state, observed } = input;
+  if (input.absences && input.absenceSchedule) throw new Error("Choose one absence policy");
   const format = seasonFormat(input.season);
   const scale = input.uncertaintyScale ?? 1;
   const iterations = Math.max(1, Math.floor(input.iterations));
@@ -370,6 +390,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
     ),
   );
 
+  const returnRandom = createSeededRandom(`v3-returns:${input.season}:${input.asOfEtDate}:${iterations}`);
   for (let iteration = 0; iteration < iterations; iteration += 1) {
     // Draw this iteration's true strengths from the posterior.
     for (let index = 0; index < STATE_SIZE; index += 1) {
@@ -383,6 +404,10 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
       strengths[row] = sum;
     }
 
+    const schedule = input.absenceSchedule ? sampleAbsenceSchedule(input.absenceSchedule, returnRandom) : undefined;
+    const ordinal = new Int32Array(TEAM_COUNT);
+    const charge = schedule ? (team: number): number =>
+      schedule[SEASON_TEAMS[team].id]?.[ordinal[team]++] ?? 0 : undefined;
     copyStandingsTable(base, table);
     let currentStep = 0;
     for (const game of pending) {
@@ -396,7 +421,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
         strengths[game.home] -
         strengths[game.away] +
         game.hcaCoefficient * strengths[HCA_INDEX] +
-        game.offset;
+        game.offset + (charge ? -charge(game.home) + charge(game.away) : 0);
       recordGame(
         table,
         game.home,
@@ -413,7 +438,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
     // Unscheduled slots against an average opponent, neutral floor.
     for (let team = 0; team < TEAM_COUNT; team += 1) {
       for (let slot = 0; slot < placeholders[team]; slot += 1) {
-        const margin = strengths[team] + params.sigma * standardNormal(random);
+        const margin = strengths[team] + params.sigma * standardNormal(random) - (charge?.(team) ?? 0);
         if (margin > 0) table.wins[team] += 1;
         else table.losses[team] += 1;
         table.pointDifferential[team] += margin;
@@ -450,6 +475,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
           params,
           random,
           observed,
+          charge,
         );
         seeded = [...order.slice(0, 6), seven, eight];
       } else {
@@ -472,6 +498,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
           counters,
           lookup,
           seriesWins,
+          charge,
         ),
       );
     }
@@ -491,6 +518,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
         strengths,
         params,
         random,
+        charge,
       );
       if (seen && winner === homeCourt) {
         const key = seriesKey(east, west);
