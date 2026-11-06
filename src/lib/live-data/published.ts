@@ -9,8 +9,8 @@
 // advertisement (`/info/refs?service=git-upload-pack`, the request behind `git ls-remote`;
 // not the rate-limited REST API), kept 15 seconds per server instance, and reads every
 // file at that commit. A commit URL is new to the CDN and never changes, so a render sees
-// a commit within seconds of the push, and all of its files come from that one commit.
-// Until `live-data` exists the same advertisement's `main` is read instead.
+// a commit once its snapshot (below) is assembled, and every file it reads comes from that
+// one commit.
 //
 // Caching. Files are kept in Next's data cache under the content hash the job's manifest
 // lists (data/live/site/manifest.json), so an unchanged file is stored once rather than
@@ -18,11 +18,25 @@
 // season, so the site reads the job's compact day and month files instead of the ledger
 // (src/lib/season/site-files.ts).
 //
-// Failure. A request that fails, times out or returns something that does not validate
-// falls back to the copy bundled at build time from main; ledger-derived files are
-// rebuilt from the bundled ledger. Main's data/live stops at the cutover to live-data, so
-// that copy only gets older: pages say when they show it (`getLiveStateSource`). Nothing
-// here throws to a page.
+// Snapshots, the unit of fallback. React renders a page's readers independently, so a
+// file failing after another was already shown cannot be undone. Before a render sees any
+// value, therefore, every manifest artifact this deployment reads (state, games, day and
+// month files, model views) is downloaded at the pinned commit, checked against its
+// manifest hash and validated. A server instance downloads all of them once (about 2 MB
+// and 40 files on 2026-11-06, growing with the season) and afterwards only the ones whose
+// hash changed; each read is retried once. Artifacts this deployment does not read are
+// skipped, so a newer job can add files without breaking an older deployment.
+//
+// Failure. If the head, the manifest or any artifact cannot be read or validated, the
+// render uses the last complete snapshot this server instance assembled (an older commit,
+// coherent, shown with its own timestamp), or, when it has none, the copy bundled at build
+// time from main for every file: ledger-derived files are rebuilt from the bundled ledger,
+// and main's copy has no model views, so those are absent. A render never combines files
+// from two commits. A failed commit is tried again after 15 seconds. Main's data/live
+// stopped at the cutover to live-data, so the bundled copy only gets older: pages say when
+// they show it (`getLiveStateSource`), and /api/live/health reports the head, the commit
+// served and why they differ. Nothing here throws to a page. NBA reports are read from the
+// bundled copy only (`getReportDay`).
 //
 // Environment overrides: LIVE_DATA_BASE_URL (raw base, default the repository on
 // raw.githubusercontent.com), LIVE_DATA_REFS_URL (the ref advertisement), LIVE_DATA_BRANCH
@@ -65,7 +79,7 @@ const RAW_BASE = (process.env.LIVE_DATA_BASE_URL ?? `https://raw.githubuserconte
 const REFS_URL = process.env.LIVE_DATA_REFS_URL ?? `https://github.com/${REPOSITORY}.git/info/refs?service=git-upload-pack`;
 const BUNDLED_ONLY = process.env.LIVE_DATA_SOURCE === "bundled";
 
-/** How long one server instance reuses main's head commit before asking again. */
+/** How long one server instance reuses the data branch's head commit before asking again. */
 const HEAD_TTL_MS = 15_000;
 const REFS_TIMEOUT_MS = 3_000;
 const FILE_TIMEOUT_MS = 6_000;
@@ -74,6 +88,11 @@ export const DATA_CACHE_ITEM_LIMIT_BYTES = 2 * 1024 * 1024;
 const MAX_DOWNLOAD_BYTES = 32 * 1024 * 1024;
 /** Parsed files kept per server instance, by content hash or commit. */
 const MEMO_LIMIT = 48;
+/** Parallel downloads while a snapshot is assembled, and tries per artifact. */
+const SNAPSHOT_CONCURRENCY = 6;
+const SNAPSHOT_ATTEMPTS = 2;
+/** How long a commit whose snapshot failed is not tried again on this instance. */
+const SNAPSHOT_RETRY_MS = 15_000;
 
 const LIVE_DIRECTORY = path.join(process.cwd(), "data", "live");
 
@@ -87,8 +106,15 @@ type NetworkSource = {
   branch: string;
   commit: string | null;
   manifest: SiteManifest | null;
-};
-type Source = NetworkSource | { kind: "bundled" };
+  /** Validated text of every artifact this deployment reads, by path under data/live. */
+  snapshot?: ReadonlyMap<string, string>;
+} & Selection;
+/**
+ * Set on a render's source: the data branch's head when this render resolved it (null if
+ * unknown) and, when the render does not show that head, why.
+ */
+type Selection = { head?: string | null; problem?: string | null };
+type Source = NetworkSource | ({ kind: "bundled" } & Selection);
 
 class HttpStatusError extends Error {
   constructor(
@@ -385,7 +411,7 @@ function currentHead(): Promise<Head> {
     head = {
       at: now,
       value: fetchHead().catch((error) => {
-        console.error(`[live-data] head of ${DATA_BRANCH} unknown, reading the branch URL instead:`, describe(error));
+        console.error(`[live-data] head of ${DATA_BRANCH} unknown:`, describe(error));
         return { branch: DATA_BRANCH, commit: null };
       }),
     };
@@ -399,6 +425,11 @@ function currentHead(): Promise<Head> {
  * one, under the commit; at the branch URL (commit unknown), only briefly in memory.
  */
 function fetchPublished<T>(source: NetworkSource, relative: string, parse: (text: string) => T): Promise<T> {
+  if (source.snapshot) {
+    const text = source.snapshot.get(relative);
+    if (text === undefined) return Promise.reject(new Error(`Unlisted snapshot file: ${relative}`));
+    return Promise.resolve(parse(text));
+  }
   const hash = source.commit ? (source.manifest?.files[relative] ?? null) : null;
   const url = `${RAW_BASE}/${source.ref}/data/live/${relative}`;
   const download = async (): Promise<T> => {
@@ -409,10 +440,10 @@ function fetchPublished<T>(source: NetworkSource, relative: string, parse: (text
     }
     return parse(body.toString("utf8"));
   };
-  if (hash) return remember(`sha256:${hash}`, () => unstable_cache(download, ["live-data", relative, hash], { revalidate: false })());
+  if (hash) return remember(`snapshot-v2:sha256:${hash}`, () => unstable_cache(download, ["live-data-snapshot-v2", relative, hash], { revalidate: false })());
   if (source.commit) {
     const commit = source.commit;
-    return remember(`${commit}:${relative}`, () => unstable_cache(download, ["live-data", relative, commit], { revalidate: false })());
+    return remember(`snapshot-v2:${commit}:${relative}`, () => unstable_cache(download, ["live-data-snapshot-v2", relative, commit], { revalidate: false })());
   }
   return remember(`${source.ref}:${relative}:${Math.floor(Date.now() / HEAD_TTL_MS)}`, download);
 }
@@ -422,7 +453,7 @@ async function loadManifest(ref: string, branch: string, commit: string | null):
   try {
     return await fetchPublished(source, SITE_MANIFEST_PATH, parseManifest);
   } catch (error) {
-    // Absent until the job first publishes site files; other failures fall back per file.
+    // Without a readable manifest no snapshot can be assembled at this commit.
     if (!(error instanceof HttpStatusError && error.status === 404)) {
       console.error("[live-data] site manifest unavailable:", describe(error));
     }
@@ -430,16 +461,134 @@ async function loadManifest(ref: string, branch: string, commit: string | null):
   }
 }
 
-/** Where this render reads from: one commit of the data branch, resolved once per render. */
+type Snapshot = NetworkSource & { commit: string; manifest: SiteManifest; snapshot: ReadonlyMap<string, string> };
+
+/** The check for an artifact this deployment reads, or null for one it never reads. */
+function artifactCheck(relative: string, manifest: SiteManifest): ((text: string) => unknown) | null {
+  const label = manifest.seasonLabel;
+  const name = path.basename(relative, ".json");
+  if (relative === "state.json") {
+    return (text) => {
+      const state = parseState(text);
+      if (state.season !== manifest.season || state.seasonLabel !== label) throw new Error("state.json is not the manifest's season");
+    };
+  }
+  if (relative === `games/${manifest.season}.json`) return (text) => parseGames(text, manifest.season);
+  if (relative.startsWith(`site/${label}/days/`)) return (text) => parseDay(text, name);
+  if (relative.startsWith(`site/${label}/months/`)) return parseMonth;
+  if (relative === siteProjectionsPath(label)) return (text) => parseProjections(text, label);
+  if (relative === siteTeamInjuriesPath(label)) return (text) => parseTeamInjuries(text, label);
+  if (relative === sitePlayerIndexPath(label)) return (text) => parsePlayerIndex(text, label);
+  if (relative.startsWith(`site/${label}/players/teams/`)) return (text) => parseTeamPlayers(text, label, name);
+  return null;
+}
+
+async function withRetry<T>(load: () => Promise<T>): Promise<T> {
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      return await load();
+    } catch (error) {
+      if (attempt >= SNAPSHOT_ATTEMPTS) throw error;
+    }
+  }
+}
+
+/**
+ * Every artifact this deployment reads at one commit, validated, or a rejection. Files
+ * whose hash matches `previous` are taken from it rather than downloaded again.
+ */
+async function assembleSnapshot(branch: string, commit: string, previous: Snapshot | null): Promise<Snapshot> {
+  const manifest = await loadManifest(commit, branch, commit);
+  if (!manifest) throw new Error(`no readable site manifest at ${commit}`);
+  for (const required of ["state.json", `games/${manifest.season}.json`]) {
+    if (!(required in manifest.files)) throw new Error(`the manifest at ${commit} does not list ${required}`);
+  }
+  const source: NetworkSource = { kind: "network", ref: commit, branch, commit, manifest };
+  const reuse = previous?.manifest.season === manifest.season && previous.manifest.seasonLabel === manifest.seasonLabel ? previous : null;
+  const work = Object.keys(manifest.files).flatMap((relative) => {
+    const check = artifactCheck(relative, manifest);
+    return check ? [{ relative, check }] : [];
+  });
+  const files = new Map<string, string>();
+  let next = 0;
+  let failed = false;
+  const worker = async () => {
+    while (!failed && next < work.length) {
+      const { relative, check } = work[next++];
+      const kept = reuse && reuse.manifest.files[relative] === manifest.files[relative] ? reuse.snapshot.get(relative) : undefined;
+      if (kept !== undefined) {
+        files.set(relative, kept);
+        continue;
+      }
+      try {
+        files.set(relative, await withRetry(() => fetchPublished(source, relative, (text) => (check(text), text))));
+      } catch (error) {
+        failed = true;
+        throw new Error(`${relative} at ${commit}: ${describe(error)}`);
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(SNAPSHOT_CONCURRENCY, work.length) }, worker));
+  return { ...source, commit, manifest, snapshot: files };
+}
+
+// One server instance keeps the last complete snapshot (the fallback, and the base the next
+// one reuses files from), the one being assembled, and the last failure.
+let lastGood: (Snapshot & { order: number }) | null = null;
+let assembling: { commit: string; promise: Promise<Snapshot> } | null = null;
+let lastFailure: { commit: string; at: number; problem: string } | null = null;
+let assembled = 0;
+
+function snapshotAt(branch: string, commit: string): Promise<Snapshot> {
+  if (lastGood?.commit === commit) return Promise.resolve(lastGood);
+  if (lastFailure?.commit === commit && Date.now() - lastFailure.at < SNAPSHOT_RETRY_MS) {
+    return Promise.reject(new Error(lastFailure.problem));
+  }
+  if (assembling?.commit !== commit) {
+    const order = ++assembled;
+    const promise = assembleSnapshot(branch, commit, lastGood);
+    assembling = { commit, promise };
+    promise
+      .then(
+        (snapshot) => {
+          // A slower, older commit finishing late must not replace a newer one.
+          if (!lastGood || lastGood.order < order) lastGood = { ...snapshot, order };
+          if (lastFailure?.commit === commit) lastFailure = null;
+        },
+        (error) => {
+          lastFailure = { commit, at: Date.now(), problem: describe(error) };
+        },
+      )
+      .finally(() => {
+        if (assembling?.promise === promise) assembling = null;
+      });
+  }
+  return assembling.promise;
+}
+
+/** Where this render reads from: one complete snapshot, resolved once per render. */
 const renderSource = cache(async (): Promise<Source> => {
-  if (BUNDLED_ONLY) return { kind: "bundled" };
-  const { branch, commit } = await currentHead();
-  const ref = commit ?? branch;
-  return { kind: "network", ref, branch, commit, manifest: await loadManifest(ref, branch, commit) };
+  if (BUNDLED_ONLY) return { kind: "bundled", head: null, problem: null };
+  let headCommit: string | null = null;
+  try {
+    const { branch, commit } = await currentHead();
+    headCommit = commit;
+    if (!commit) throw new Error(`the head commit of ${DATA_BRANCH} is unknown`);
+    return { ...(await snapshotAt(branch, commit)), head: commit, problem: null };
+  } catch (error) {
+    const problem = describe(error);
+    const fallback = lastGood ? `the last complete snapshot, ${lastGood.commit}` : "the bundled copy";
+    console.error(`[live-data] no complete snapshot at the head; using ${fallback}:`, problem);
+    return lastGood ? { ...lastGood, head: headCommit, problem } : { kind: "bundled", head: headCommit, problem };
+  }
 });
 
 type Loaded<T> = { value: T; via: DataVia };
 
+/**
+ * A network read from a snapshot cannot fail for a file the manifest lists: it was read and
+ * validated before the render started. The fallback is for the bundled source only.
+ */
 async function withFallback<T>(what: string, network: (() => Promise<T>) | null, fallback: () => T): Promise<Loaded<T>> {
   if (network) {
     try {
@@ -568,9 +717,10 @@ export async function getReportDay(etDate: string): Promise<LiveReportDay | null
 }
 
 /**
- * One model view (projections, team injury lists, player files) at the render's commit.
- * Only files the manifest lists are read; a failed read falls back to the bundled copy,
- * which main's frozen data/live does not have, so the result is then null. Never throws.
+ * One model view (projections, team injury lists, player files) from the render's
+ * snapshot: null when the manifest does not list it (the job did not publish it). From the
+ * bundled source, the bundled copy, which main's frozen data/live does not have, so null.
+ * Never throws.
  */
 async function loadView<T>(relative: string, parse: (text: string) => T): Promise<T | null> {
   const source = network(await renderSource());
@@ -579,7 +729,8 @@ async function loadView<T>(relative: string, parse: (text: string) => T): Promis
       const text = bundledFile(relative);
       return text ? parse(text) : null;
     }, null);
-  if (!source?.manifest || !(relative in source.manifest.files)) return fallback();
+  if (source?.manifest && !(relative in source.manifest.files)) return null;
+  if (!source) return fallback();
   return (await withFallback<T | null>(relative, () => fetchPublished(source, relative, parse), fallback)).value;
 }
 
@@ -622,23 +773,51 @@ export const getTeamPlayers = cache(async (teamId: string): Promise<TeamPlayersF
   return loadView(siteTeamPlayersPath(state.seasonLabel, teamId), (text) => parseTeamPlayers(text, state.seasonLabel, teamId));
 });
 
-/** Where this render's state and games came from, for the health endpoint. */
-export async function getLiveDataStatus(): Promise<{
-  source: "network" | "bundled";
-  branch: string | null;
-  commit: string | null;
-  manifest: boolean;
-  state: DataVia;
-  games: DataVia;
+/**
+ * The state, games and data provenance for /api/live/health, from one source. Route
+ * handlers are not React renders, so `cache` does not memoize there; selecting the source
+ * once keeps a response from mixing two selections.
+ */
+export async function getLiveHealthSnapshot(): Promise<{
+  liveState: LiveState;
+  games: SeasonGame[];
+  data: {
+    source: DataVia;
+    branch: string | null;
+    /** The data commit this response read, or null for the bundled copy. */
+    commit: string | null;
+    /** The data branch's head when this response resolved it, or null if unknown. */
+    head: string | null;
+    manifest: boolean;
+    state: DataVia;
+    games: DataVia;
+    /** Why this response does not show the head, or null when it does. */
+    problem: string | null;
+  };
 }> {
   const source = await renderSource();
-  const [state, games] = await Promise.all([loadState(), loadGames()]);
+  const liveState = source.kind === "network" ? await fetchPublished(source, "state.json", parseState) : bundledState;
+  const games =
+    source.kind === "network"
+      ? await fetchPublished(source, `games/${liveState.season}.json`, (text) => parseGames(text, liveState.season))
+      : bundledGames(liveState.season);
   return {
-    source: source.kind,
-    branch: source.kind === "network" ? source.branch : null,
-    commit: source.kind === "network" ? source.commit : null,
-    manifest: source.kind === "network" && source.manifest !== null,
-    state: state.via,
-    games: games.via,
+    liveState,
+    games,
+    data: {
+      source: source.kind,
+      branch: source.kind === "network" ? source.branch : null,
+      commit: source.kind === "network" ? source.commit : null,
+      head: source.head ?? null,
+      manifest: source.kind === "network" && source.manifest !== null,
+      state: source.kind,
+      games: source.kind,
+      problem: source.problem ?? null,
+    },
   };
+}
+
+/** Where this response's state and games came from. */
+export async function getLiveDataStatus() {
+  return (await getLiveHealthSnapshot()).data;
 }
