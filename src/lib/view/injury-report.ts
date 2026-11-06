@@ -151,7 +151,7 @@ export function blockFromList(list: TeamInjuryList): InjuryBlock | null {
   const code = teamDisplay(list.teamId).code;
   const reportTime = list.report ? formatReportTime(list.report.at, next.etDate) : null;
   const inferred = list.rows.some((row) => row.source === "box-score");
-  const zero = inferred ? " Players not on it who missed recent games are shown from box scores and count 0 on a filed side; since revision 2, an unfiled side instead uses current inferred absences." : "";
+  const zero = inferred ? " Players not on it who missed recent games are shown from box scores and count 0, as at a seal." : "";
   let sourceLabel: string;
   let note: string | null;
   switch (list.filing) {

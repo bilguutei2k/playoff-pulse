@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLogo } from "@/components/live/TeamLogo";
+import { sealPolicyRevision } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import type { SealRow, SeasonGame, TeamForecast } from "@/lib/season/types";
 import { formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
@@ -247,7 +248,8 @@ export function MarginSection({ game }: { game: DayGame }) {
           <p>A projection is never compared with the market.</p>
         ) : market ? (
           <p>
-            Market: the {provider} line via ESPN, vig removed. Reference only: never a model input, never scored.
+            Market: the {provider} line via ESPN, vig removed. Reference only: never a model input. The track record sets
+            its Brier beside 548&apos;s only after 500 scored games.
           </p>
         ) : (
           <p>No market line for this game.</p>
@@ -484,8 +486,10 @@ export function OutSection({ game, today }: { game: DayGame; today: boolean }) {
         ) : null}
         {game.forecast ? (
           <p>
-            A seal counts every player on the report in use, weighted by status. Team pages and the season odds list
-            current absences instead, which is who the season simulation counts as out. Unknown future injuries,
+            A seal counts the players on the report in use, each weighted by how often players with his status did not
+            play, for any reason. A team the report marks as not yet submitted is the exception: since policy revision 2
+            its side counts the team&apos;s current absences, inferred from box scores, instead. Team pages and the season
+            odds list current absences, which is who the season simulation counts as out. Unknown future injuries,
             minutes shifting to teammates and matchups are not modeled.
           </p>
         ) : null}
@@ -501,9 +505,20 @@ function versionName(modelVersion: string): string {
   return `Model ${modelVersion.split("-").at(-1) ?? modelVersion}`;
 }
 
+/** "policy revision 1", or "policy revisions 0 and 1" for seals on both sides of a change. Empty outside v2. */
+function revisionNote(rows: ReadonlyArray<SealRow | null>): string {
+  const revisions = [...new Set(rows.flatMap((row) => (row ? [sealPolicyRevision(row)] : [])))]
+    .filter((revision): revision is number => revision !== null)
+    .sort((a, b) => a - b);
+  if (revisions.length === 0) return "";
+  if (revisions.length === 1) return `policy revision ${revisions[0]}`;
+  return `policy revisions ${revisions.slice(0, -1).join(", ")} and ${revisions.at(-1)}`;
+}
+
 function versionNote(seal: SealRow, role: GameDetail["versions"][number]["role"]): string {
   if (seal.absencePoints === undefined) return "no injuries";
-  return role === "published" ? "published" : role === "reference" ? "reference" : "earlier";
+  const revision = revisionNote([seal]);
+  return `${role === "published" ? "published" : role === "reference" ? "reference" : "earlier"}${revision ? `, ${revision}` : ""}`;
 }
 
 export function Result({ game, detail }: { game: DayGame; detail: GameDetail }) {
@@ -699,7 +714,14 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                   <tr key={version.modelVersion}>
                     <th scope="row" className="text-left align-top">
                       <b>{versionName(version.modelVersion)}</b>
-                      <span className="block text-[12.5px] text-ink-2">{version.role === "published" ? "Published" : version.role === "reference" ? "Reference" : "Earlier"}</span>
+                      <span className="block text-[12.5px] text-ink-2">
+                        {[
+                          version.role === "published" ? "Published" : version.role === "reference" ? "Reference" : "Earlier",
+                          revisionNote([version.morning, version.reissued, version.final]),
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </span>
                       <span className="mt-1 block text-[12.5px] font-normal sm:hidden">
                         Scored: <ScoredNote version={version} tipped={tipped} />
                       </span>
@@ -733,10 +755,12 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
       <Notes>
         {game.beforeRecord ? null : (
           <p>
-            Each game is sealed from the ratings before its date: a morning seal, then a final seal in the hour before tip
-            with the latest NBA injury report. The final seal is scored when it exists; otherwise the morning seal is, and
-            the game counts as &quot;no final seal&quot;. A morning seal made before any usable report is reissued once,
-            when one arrives, and both stay in the ledger. Every model version keeps its own record.
+            Each game is sealed from results through the day before its date: a morning seal, then a final seal in the hour
+            before tip with the latest NBA injury report. A box score that arrives late can change the ratings between the
+            two. A morning seal made before any usable report is reissued once, when one arrives, and both stay in the
+            ledger. The final seal is scored when it exists; otherwise the reissued seal is, else the original morning seal,
+            and the game counts as &quot;no final seal&quot;. Every model version keeps its own record; v2&apos;s seals are
+            labeled with the policy revision in force when they were issued.
           </p>
         )}
       </Notes>

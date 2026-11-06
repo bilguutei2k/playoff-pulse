@@ -414,62 +414,115 @@ by hand on 2026-11-05 at 23:20 UTC.
 
 ## 2026-11-06, corrections after the independent review
 
-This entry corrects the interpretation of earlier registration entries and the frozen
-`evaluation-injury.json` and `injury-fit.json`; those evidence files remain unchanged.
+An independent methodology review of 2026-11-05 checked this registration, the frozen evidence and
+the live record. Its findings M1, M2, M9, H4 and H5 and its claims audit lead to the corrections
+below. Nothing here changes a forecast number, a parameter, a sealing rule or the scoring order.
+Earlier entries stay as they were written, and the frozen `evaluation-injury.json` and
+`injury-fit.json` are not edited; where they say something the review found unsupported or
+overstated, this entry is the correction.
 
-v2 keeps the version string `live-2026.27-v2` and one prospective record. Post-test
-behavior changes are policy revisions. Exact UTC merge times from GitHub:
+**Policy revisions.** `live-2026.27-v2` keeps its version string and its one record. The behaviour
+changes made after its registered test are labeled as policy revisions within that record, each in
+force from its pull request's merge on GitHub (`mergedAt`):
 
-| Revision | Effective UTC | Policy |
-| --- | --- | --- |
-| 0 | 2026-11-02T06:57:24Z | Registered policy as shipped, PR #6 |
-| 1 | 2026-11-02T16:27:31Z | Half-slate report gate, reissued morning seals, report-problem alerts, PR #8 |
-| 2 | 2026-11-03T05:35:03Z | Unfiled teams use current absences; complete driver lists, PR #9 |
-| 3 | 2026-11-04T06:13:03Z | Next-slate evening reports stored; projections include injury term, PR #15 |
+| Revision | In force from (UTC) | Pull request | What changed |
+| --- | --- | --- | --- |
+| 0 | 2026-11-02T06:57:24Z | #6 | Registered policy as shipped |
+| 1 | 2026-11-02T16:27:31Z | #8 | Half-slate report gate, reissued morning seals, report-problem alerts |
+| 2 | 2026-11-03T05:35:03Z | #9 | Unfiled teams counted from current absences; complete driver lists |
+| 3 | 2026-11-04T06:13:03Z | #15 | Next-slate evening reports stored; projections with the injury term |
 
-New v2 seals store `policyRevision`; older rows derive it from `issuedAt` through
-the frozen code table and are never rewritten. A game is assigned to the revision
-of its operationally selected seal, including pending games. Per-revision sealed
-and scored counts and Brier are descriptive, not a policy comparison.
+The table is frozen in `src/lib/season/policy-revisions.ts`; rows are only ever appended. From this
+change every v2 seal stores `policyRevision`, the revision in force at its `issuedAt`. Older rows are
+never rewritten: their revision is derived from `issuedAt` through the table. `verify:ledger` rejects
+a stored value that differs from the derived one, a stored value on another version, and a v2 seal
+appended after the base without one. On `live-data` at 71fad7a (147 rows), the 77 v2 seal rows derive
+revision 0 for 15 (the Nov 2 morning seals), 1 for 30, 2 for none (there were no games on Nov 3) and
+3 for 32. The only v2 rows within 30 minutes of a boundary are the 15 reissued seals of
+2026-11-02T16:30:14.894Z, 2 min 43 s after #8 merged; reissued seals exist only in #8's code, so
+revision 1 is right for them.
 
-The operational scoring order remains **final, else reissued, else original morning**.
-The record separately reports original morning Brier (morning kind only), reissued
-Brier (only reissued games), and latest pre-final Brier (reissued else morning),
-each with its own scored-game count. Earlier “morning” scores substituted reissues.
+The record stays one v2 record. `/record` adds a breakdown by revision: seal rows of every kind issued
+under it, the games filed under it, how many are scored, and their Brier score. Each game is filed
+once, under the seal it is scored on (final, else reissued, else original morning; a pending game
+under the seal it would be scored on now), so the Nov 2 games, sealed in the morning under revision 0
+and reissued and finally sealed under revision 1, count under revision 1. The breakdown is
+descriptive and never a comparison of policies: the revisions cover different games, dates and seal
+kinds. Wherever the site shows the published model version it now shows the revision too.
 
-Corrections to claims:
-- “Before any number from the test seasons existed” means registration preceded
-  this candidate's committed test results; base-model evaluations already existed.
-  Both test seasons, 2024-25 and 2025-26, informed the shared base-model form through
-  the 2023–2026 selection span. This is not a fully untouched holdout, and there is
-  no demonstrated conservative direction for the contrast.
-- “The registered test is unaffected” applies only to revision 0's original
-  final-point gates. It does not validate amended morning, fallback or unfiled
-  policies. The unfiled experiment reused test outcomes and is exploratory.
-  Evening report storage changes available fallback inputs.
-- Injuries do not enter only through reports: box-score inference contributes to
-  unfiled seals and season odds. Available and Probable weights estimate
-  nonparticipation, including non-injury DNPs, not medical inability.
-- Final margins update ratings unadjusted when box scores are missing; later replay
-  adjusts them. Seals use previous-ET-date results, but late box scores can change
-  the replay between seals. Injury-adjusted ratings are intended to approximate
-  full strength and reduce double counting, not eliminate it.
-- Complete driver lists apply since revision 2; older rows can contain only three.
-  The market is never an input; /record computes paired market Brier once the model
-  has 500 scored games, with matched-game counts. That threshold does not establish skill.
-- Unknown future injuries are omitted; there is no evidence they mostly cancel out.
-  The postseason absence penalty currently never expires within a simulation.
-  Inferred absences for departed players can persist. The return table conditions
-  on another missed game instead of estimating remaining absence after games already
-  missed, and truncates open spells at season boundaries. These are confirmed defects
-  pending the next model version, not validated medical return estimates.
-- T4 is a realized-schedule reconstruction, not a replay of archived schedules
-  known at each checkpoint. Future roster evidence can resolve as well as un-resolve
-  names. The review found no positive-value historical impact through that route;
-  this does not establish a universal no-leak property.
-- Internal timestamps and owner-controlled git history do not independently attest
-  publication before tip. The review observed no backfills. The verifier now rejects
-  malformed timestamps, future report times and reissues within 60 minutes of tip.
-  Missing/unreadable base refs fail closed. Only an initial valid commit with no ledger
-  file may use `verify:ledger <base> --bootstrap-empty-ledger`; normal CI and publication
-  must continue passing the existing base, including the live-data previous head.
+**What the registered test covers.** T1 to T4 cover revision 0's final-point endpoint only. The
+2026-11-03 entry's "The registered test is unaffected" holds for those original final-point gates and
+nothing more: no test covers the reissue rule, the half-slate gate, the unfiled rule at the morning
+point, the evening-report fallback, or a live final seal with an unfiled team. The 745-game
+unfiled comparison in that entry was run on the test seasons after their outcomes were known; it is
+exploratory, not a second confirmatory result. The 2026-11-04 data note's "no change to ... anything
+the model reads" is too broad: storing evening reports changes which report a seal falls back to when
+a run's own fetch fails. The comment in `params.ts` that each version is one fixed policy is
+overstated for v2 for the same reason; that file is frozen, so the revision table is the correction.
+
+**The pre-final scores.** `/record`'s "Morning seals' Brier" scored the reissued seal wherever there
+was one, so it was not the morning seal alone. It is replaced by three metrics, each with its number
+of games: original morning seals (`sealKind: "morning"` only), reissued seals (only the games that
+were reissued), and the latest pre-final seal (reissued, else original morning). `RecordSummary`
+keeps `morningBrier` with the meaning it was published with, the latest pre-final seal, so stored
+states keep their meaning; the new fields are `originalMorningBrier`, `reissuedBrier` and
+`latestPreFinalBrier` with their counts, and `policyRevisions`. The operational order that decides
+the score stays as frozen: final, else reissued, else original morning. On `live-data` at 71fad7a:
+v2 Brier 0.2120 on 31 scored games; original morning 0.1965 (31), reissued 0.2237 (15), latest
+pre-final 0.2137 (31); by revision, 1: 0.2165 (15 games), 3: 0.2077 (16), none filed under 0 or 2.
+
+**Statements corrected.**
+
+- "T1 is conservative" (the disclosure in the injury registration above, the `evaluation-injury.json`
+  note, `injury-plan.md`): withdrawn. Both test seasons, 2024-25 and 2025-26, are inside the
+  2023-2026 span whose spike informed v1's form (Candidate selection, above), and v2 keeps that form.
+  Selection can move the paired contrast either way; there is no demonstrated conservative direction,
+  and the test is not an untouched holdout.
+- "Registered before any number from the test seasons existed" (`/how-it-works`, the claims ledger,
+  the commit message of b8ed95f): the chronology is that v1's form was chosen with sight of
+  2023-2026, v1's numbers on those seasons existed before the injury work, and the injury candidate's
+  registration (b8ed95f, 2026-11-02T02:53:13Z) was committed before its test result (a599d2d,
+  02:55:27Z). It was registered before its own test run, not before any test-season number, and git
+  order cannot show that no uncommitted run happened.
+- Injuries do not enter only through the report: box-score inference counts in the season odds and,
+  since revision 2, on seals for a team that has not filed. Status weights, Probable and Available
+  included, measure nonparticipation for any reason, not medical unavailability.
+- The model does learn before a game's box score is stored: the final margin updates the ratings
+  without the absence adjustment until then. The injury-adjusted ratings are intended to approximate
+  full strength and to reduce double counting; they do not guarantee either. Seals use results
+  through the previous ET date, and a box score that arrives late can change the replay between a
+  game's morning and final seals.
+- "Unknown future injuries mostly cancel out": withdrawn; it was never evaluated, and equal means do
+  not remove their effect on spread or title odds. "Players return after their expected games,
+  playoffs included" is false today (the first defect below).
+- "The market is never scored": the market is never a model input, and once a version has 500 scored
+  games `/record` shows the market's Brier beside the model's on the scored games with a stored line.
+- "Every seal stores every player": only since revision 2; earlier v2 rows keep at most three a side.
+- "Future identity data can only un-resolve a name" (`injury-plan.md`, amendment 5(i), and its use
+  in the v2 candidate's shipping notes above): not a general property; a later appearance can make an ambiguous name
+  unique. The review's audit of stored rows found 5,666 identity differences and none that resolved
+  a player with positive prior value: a measured absence of effect, not a guarantee. T4 is likewise
+  a reconstruction on realized schedules, not schedules archived at each checkpoint.
+
+**Known defects, until the next model version.** Shown as "Known issues" on `/how-it-works`:
+
+1. In the season simulation an absence still running when the regular season ends costs its team in
+   every simulated postseason game; it never expires within a simulation.
+2. A box-score-inferred absence for a player not on any report can persist after he has left the team
+   or the ten-game rotation window.
+3. The return table conditions on another missed game: an inferred absence after k missed games
+   always costs the next game in full, and spells cut by a season's end were treated as complete.
+
+**Ledger checks.** `verify:ledger`, and the pipeline's own check before it writes, now also reject:
+`issuedAt`, `tipUtc` or `recordedAt` that is not a real UTC instant in the forms the job writes; a
+`reportAt` that is not a real ET wall clock, or is later than the seal's issue time on the ET wall
+clock (the rule the pipeline uses to choose the report); a reissued seal within an hour of tip
+(`decideReissues` leaves those games to the final seal); and the `policyRevision` cases above. The
+review's counterexample, a valid final row with `issuedAt: "garbage"` and
+`reportAt: "2099-01-01T12:00"`, now fails. A base ref that does not resolve, or whose ledger cannot be
+read, fails the check instead of standing for an empty ledger; only `--bootstrap-empty-ledger` lets
+a valid commit with no ledger file stand for an empty one. The live job passes `live-data`'s previous
+head (or `main`'s HEAD when it bootstraps `live-data`, which carries the frozen ledger) and never
+needs the flag. Every row on `live-data` at 71fad7a passes. The times are still the job's own clock
+and the git history, with no independent receipt that a seal existed before tip; the review's audit
+of 43 ledger-changing commits found no backfill or rewritten row.

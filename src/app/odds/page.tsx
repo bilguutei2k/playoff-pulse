@@ -76,7 +76,7 @@ export default async function OddsPage() {
           </h2>
           <OddsTable rows={rows} exact={forecast.phase !== "regular-season"} />
           <p className="mt-3.5 text-[13px] leading-5 text-ink-2">
-            Rating: points per game against an average team{modeled ? " at full strength" : ""}.
+            Rating: points per game against an average team{modeled ? ", adjusted for who missed past games to approximate full strength" : ""}.
             {modeled ? " Now: after the points lost to players currently out, for the next game." : ""} Bars: wins in 8
             of 10 simulations, black tick at the average. Column headings sort the table.
           </p>
@@ -84,7 +84,7 @@ export default async function OddsPage() {
             Not claimed calibrated midseason. No skill claimed for title odds.{" "}
             <span className="text-ink-2">
               {modeled
-                ? "Known absences are carried for their expected length; injuries that have not happened yet are not simulated."
+                ? "Known absences are carried for the games a return table expects them to last, except that one still running when the regular season ends currently costs every playoff game (a known issue); injuries that have not happened yet are not simulated."
                 : "This forecast comes from the model without the injury term."}{" "}
             </span>
             <Link href="/how-it-works#season-odds" className="pp-link">
