@@ -141,6 +141,17 @@ function SplitCell({ row }: { row: FinalRow }) {
 }
 
 /**
+ * Makes the rest of a row's cell open the game too. The real link is the score cell's;
+ * this copy is hidden from the keyboard and screen readers. Each cell holds its own
+ * cover because a table row cannot be trusted to contain one: where a browser ignores
+ * `position: relative` on a `<tr>` (Safari 26 does), a row-wide cover stretches over
+ * the top of the page and takes the clicks meant for the days row.
+ */
+function CellLink({ gameId }: { gameId: string }) {
+  return <Link href={`/game/${gameId}`} aria-hidden tabIndex={-1} className="absolute inset-0" />;
+}
+
+/**
  * The day's finals in tip order: both teams and the score, each side's sealed chance
  * in team colors, 548's pick, and the game's Brier score. Outline: the pick lost.
  */
@@ -171,25 +182,27 @@ export function FinalsTable({ rows }: { rows: FinalRow[] }) {
             const { game } = row;
             const overtime = /OT/i.test(game.statusDetail) ? game.statusDetail.replace(/^Final\s*\/?\s*/i, "") : null;
             return (
-              <tr key={game.id} className="group relative hover:bg-wash">
-                <td className="hidden align-middle text-[13px] text-ink-2 sm:table-cell">
+              <tr key={game.id} className="hover:bg-wash">
+                <td className="relative hidden align-middle text-[13px] text-ink-2 sm:table-cell">
                   {cardClock(game.tipUtc)}
                   {overtime ? <span className="block">{overtime}</span> : null}
+                  <CellLink gameId={game.id} />
                 </td>
-                <th scope="row" className="text-left">
+                <th scope="row" className="relative text-left">
                   <Link href={`/game/${game.id}`} className="grid gap-0.5 after:absolute after:inset-0" aria-label={`${teamDisplay(game.awayId).shortName} ${game.awayScore}, ${teamDisplay(game.homeId).shortName} ${game.homeScore}: game details`}>
                     <TeamCell teamId={game.awayId} score={game.awayScore!} won={!row.homeWon} />
                     <TeamCell teamId={game.homeId} score={game.homeScore!} won={row.homeWon} />
                   </Link>
                 </th>
-                <td className="min-w-[120px] sm:pr-6 lg:pr-16">
+                <td className="relative min-w-[120px] sm:pr-6 lg:pr-16">
                   <SplitCell row={row} />
                   <span className="mt-1 block text-[12.5px] text-ink-2 sm:hidden">
                     {cardClock(game.tipUtc)}
                     {overtime ? ` · ${overtime}` : ""}
                   </span>
+                  <CellLink gameId={game.id} />
                 </td>
-                <td className="nm sm:text-left">
+                <td className="nm relative sm:text-left">
                   {row.pick ? (
                     <Tile size="xs" className="!text-[13px]">
                       {row.pick.code} {row.pick.percent}%
@@ -198,9 +211,13 @@ export function FinalsTable({ rows }: { rows: FinalRow[] }) {
                     <span className="text-[13px] text-ink-2">–</span>
                   )}
                   {row.upset ? <span className="mt-1 block text-[13px] font-bold md:hidden">Upset</span> : null}
+                  <CellLink gameId={game.id} />
                 </td>
-                <td className="hidden text-[13px] font-bold md:table-cell">{row.upset ? "Upset" : ""}</td>
-                <td className="hidden md:table-cell">
+                <td className="relative hidden text-[13px] font-bold md:table-cell">
+                  {row.upset ? "Upset" : ""}
+                  <CellLink gameId={game.id} />
+                </td>
+                <td className="relative hidden md:table-cell">
                   {row.brier !== null ? (
                     <span className="grid grid-cols-[42px_minmax(0,1fr)] items-center gap-3">
                       <span className="num text-right text-[13px]">{row.brier.toFixed(3)}</span>
@@ -209,6 +226,7 @@ export function FinalsTable({ rows }: { rows: FinalRow[] }) {
                   ) : (
                     <span className="text-[13px] text-ink-2">–</span>
                   )}
+                  <CellLink gameId={game.id} />
                 </td>
               </tr>
             );
