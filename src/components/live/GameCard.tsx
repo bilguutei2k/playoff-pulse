@@ -1,222 +1,161 @@
 import Link from "next/link";
-import { Badge, StatusPill } from "@/components/live/Badge";
-import { SplitBar } from "@/components/live/SplitBar";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import {
-  forecastBadge,
-  formatDiff,
-  injuryNotes,
-  marginText,
-  metaLine,
-  projectionBasisLine,
-  resultLine,
-  splitPercents,
-  statusLabel,
-} from "@/lib/view/card";
+import { Tile } from "@/components/live/Tile";
+import { bracketView, outPoints, type BracketSide, type BracketView } from "@/lib/view/bracket";
 import type { DayGame } from "@/lib/view/day";
-import { formatRecord, ordinal, teamDisplay, type TeamLine } from "@/lib/view/teams";
+import { pairColors, type TeamLine } from "@/lib/view/teams";
 
-type Side = "away" | "home";
-
-function TeamRow({
-  game,
-  side,
-  line,
-  percent,
-  marketPercent,
-  score,
-  winner,
-  big,
-}: {
-  game: DayGame;
-  side: Side;
-  line: TeamLine | undefined;
-  percent: number | null;
-  marketPercent: number | null;
-  score: number | null;
-  winner: boolean | null;
-  /** The probability is the headline (before tip) rather than the score. */
-  big: boolean;
-}) {
-  const team = teamDisplay(side === "home" ? game.homeId : game.awayId);
-  const loser = winner === false;
+function Arm({ side, color, large }: { side: BracketSide; color: string; large: boolean }) {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-3 py-1.5">
-      <div className="flex min-w-0 items-center gap-3">
-        <TeamLogo teamId={team.id} size={30} />
-        <div className="min-w-0">
-          <p className={`truncate text-[16px] leading-tight ${loser ? "font-medium text-ink-2" : "font-semibold text-ink"}`}>
-            {team.shortName}
-          </p>
-          {line ? (
-            <p className="num mt-0.5 text-[12px] leading-none text-ink-3">
-              {formatRecord(line.wins, line.losses)}
-              {line.rank > 0 ? (
-                <>
-                  <span aria-hidden className="mx-1 text-ink-4">·</span>
-                  <span title={`${ordinal(line.rank)} in the 548 rating`}>
-                    <span className="sr-only">rating rank </span>#{line.rank}
-                  </span>
-                </>
-              ) : null}
-            </p>
-          ) : null}
-        </div>
-      </div>
-      <div className="min-w-[4.5rem] text-right">
-        {percent !== null ? (
-          <p className={`figure ${big ? "text-[30px] font-semibold text-ink" : "text-[18px] font-medium text-ink-2"}`}>
-            {percent}
-            <span className={big ? "text-[18px]" : "text-[13px]"}>%</span>
-          </p>
+    <div className={`arm ${side.dim ? "arm-lo" : ""}`}>
+      <span className="arm-logo">
+        <TeamLogo teamId={side.teamId} size={large ? 36 : 20} />
+      </span>
+      <span className="arm-t">
+        {large ? (
+          <>
+            <span className="sm:hidden">{side.shortName}</span>
+            <span className="hidden sm:inline">{side.name}</span>
+          </>
+        ) : (
+          side.shortName
+        )}
+      </span>
+      <span className="arm-r">{side.record ?? ""}</span>
+      <span className="arm-sc">{side.score ?? ""}</span>
+      <span aria-hidden className="arm-ln">
+        {side.percent !== null ? <i style={{ width: `${side.percent}%`, background: color }} /> : null}
+        {side.marketPercent !== null ? (
+          <b className="mk" style={{ left: `calc(${side.marketPercent}% - 1px)` }} />
         ) : null}
-        {marketPercent !== null && percent !== null ? (
-          <p className="num mt-1 whitespace-nowrap text-[11.5px] leading-none text-market">
-            Market {marketPercent}%{" "}
-            <span className="text-ink-3" title="548's number minus the market's, in percentage points">
-              ({formatDiff(percent, marketPercent)})
-            </span>
-          </p>
-        ) : null}
-      </div>
-      {score !== null ? (
-        <p
-          className={`figure w-12 text-right text-[28px] ${loser ? "font-medium text-ink-3" : "font-semibold text-ink"}`}
-        >
-          {score}
-        </p>
-      ) : (
-        <span />
-      )}
+        {side.pregamePercent !== null ? <b style={{ left: `calc(${side.pregamePercent}% - 1px)` }} /> : null}
+      </span>
     </div>
   );
 }
 
+/** The two arms, the bracket and the tile. Shared by the card and the game page header. */
+export function Bracket({ view, large = false }: { view: BracketView; large?: boolean }) {
+  const [awayColor, homeColor] = pairColors(view.away.teamId, view.home.teamId);
+  const { tile } = view;
+  return (
+    <div className={`bk ${view.dashed ? "bk-dash" : ""} ${large ? "bk-l" : ""}`}>
+      <div className="min-w-0">
+        <Arm side={view.away} color={awayColor} large={large} />
+        <Arm side={view.home} color={homeColor} large={large} />
+      </div>
+      <div aria-hidden className="bk-j" />
+      <div className="bk-o">
+        <span aria-hidden className="bk-stem" />
+        {tile.kind === "none" ? (
+          <span className="bk-none">{tile.text}</span>
+        ) : (
+          <>
+            <Tile kind={tile.kind}>{tile.percent}%</Tile>
+            <span className="bk-who">
+              <b>{tile.code}</b>
+              <span>{tile.label}</span>
+            </span>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** The context row: absences first, then the market in grey, or the pregame seal on a live game. */
+export function BracketContext({ view, marketLabel = "Market" }: { view: BracketView; marketLabel?: string }) {
+  const parts: React.ReactNode[] = [];
+  if (view.pregame) {
+    parts.push(
+      <span key="pregame">
+        <span aria-hidden className="gc-key" />
+        Pregame seal <b>{view.pregame.code} {view.pregame.percent}%</b>
+      </span>,
+    );
+  }
+  for (const note of view.notes) parts.push(<span key={note}>{note}</span>);
+  if (view.out.length > 0 || view.unfiled.length > 0) {
+    parts.push(
+      <span key="out">
+        Out{" "}
+        {view.out.map((side, index) => (
+          <span key={side.code}>
+            {index > 0 ? " " : ""}
+            <b>
+              {side.code} {outPoints(side.points)}
+            </b>
+          </span>
+        ))}
+        {view.unfiled.map((code) => (
+          <span key={code}> · {code} not filed</span>
+        ))}
+      </span>,
+    );
+  }
+  if (view.market === "none") {
+    parts.push(
+      <span key="market">
+        {marketLabel} <b>no line yet</b>
+      </span>,
+    );
+  } else if (view.market) {
+    parts.push(
+      <span key="market">
+        <span aria-hidden className="gc-key mk" />
+        {marketLabel} <b>{view.market.code} {view.market.percent}%</b>
+      </span>,
+    );
+  }
+  if (parts.length === 0) return null;
+  return <div className="gc-cx">{parts}</div>;
+}
+
+/** A sentence for screen readers: the card's lines and tile are decorative. */
+function cardLabel(view: BracketView): string {
+  const { away, home, tile } = view;
+  const scores = away.score !== null && home.score !== null ? `, ${away.score} to ${home.score}` : "";
+  const number = tile.kind === "none" ? tile.text : `548 ${tile.label}: ${tile.code} ${tile.percent}%`;
+  return `${away.shortName} at ${home.shortName}${scores}. ${view.status.lead}. ${number}. Game details`;
+}
+
+/**
+ * The v8 game card. Each team stands on a line as long as its chance; the lines join
+ * into 548's tile. Grey tick: the market. Black tick: the pregame seal on a live game.
+ */
 export function GameCard({
   game,
   lines,
   modelVersion,
   modelNote = true,
+  future = false,
 }: {
   game: DayGame;
   lines: Record<string, TeamLine>;
   modelVersion: string;
   /** Say on the card when its number predates the injury model. Off when the page says it. */
   modelNote?: boolean;
+  /** Show the weekday beside the tip time. */
+  future?: boolean;
 }) {
-  const away = teamDisplay(game.awayId);
-  const home = teamDisplay(game.homeId);
-  const status = statusLabel(game);
-  const badge = forecastBadge(game, modelVersion);
-  const tipped = game.status === "in-progress" || game.status === "final";
-  const live = game.status === "in-progress" && game.inGameHomeProbability !== null;
-
-  // The headline number: live estimate during a game, else the seal, provisional or projection.
-  const pregame = game.forecast?.homeWinProbability ?? game.projection?.homeWinProbability ?? null;
-  const shown = live ? game.inGameHomeProbability : pregame;
-  const percents = shown !== null ? splitPercents(shown) : null;
-  // The market sits beside pregame numbers only: never beside a projection or a live estimate.
-  const market =
-    game.market && game.forecast && !live ? splitPercents(game.market.homeWinProbability) : null;
-  const scores = tipped && game.homeScore !== null && game.awayScore !== null;
-  const homeWon = game.status === "final" && scores ? game.homeScore! > game.awayScore! : null;
-  const margin = game.forecast?.expectedMargin ?? game.projection?.expectedMargin ?? null;
-  const notes = injuryNotes(game);
-  const result = resultLine(game);
-  const label = live ? "Live estimate" : tipped ? "548 pregame" : "548";
-  const meta = metaLine(game);
-  const where = meta.slice(1).join(" · ");
-
+  const view = bracketView({ game, lines, modelVersion, modelNote, future });
   return (
-    <article className="group relative flex w-full flex-col rounded-[var(--radius-card)] border border-line bg-panel transition-[border-color,box-shadow] hover:border-line-strong hover:shadow-[0_10px_30px_-18px_rgba(18,20,23,0.35)]">
-      <header className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line px-4 py-2.5">
-        <StatusPill label={status.label} live={status.live} />
-        {game.status === "final" ? null : (
-          <p className="num shrink-0 whitespace-nowrap text-[12px] text-ink-2">{meta[0]}</p>
-        )}
-        {badge ? (
-          <span className="ml-auto">
-            <Badge tone={badge.tone} title={badge.detail}>
-              {badge.label}
-            </Badge>
+    <article className="gc group">
+      <div className="gc-st">
+        <b>{view.status.lead}</b>
+        {view.status.detail ? <span>{view.status.detail}</span> : null}
+        {view.status.right ? (
+          <span className="r" title={view.status.title ?? undefined}>
+            {view.status.right}
           </span>
         ) : null}
-      </header>
-
-      <div className="flex flex-1 flex-col px-4 pb-4 pt-2">
-        <div className="grid grid-cols-[minmax(0,1fr)_auto_auto] gap-x-3 pb-0.5 pt-1">
-          <span />
-          <span className="kicker min-w-[4.5rem] text-right text-[10px]">{percents ? label : ""}</span>
-          <span className={`kicker w-12 text-right text-[10px] ${scores ? "" : "invisible"}`}>Score</span>
-        </div>
-        <TeamRow
-          game={game}
-          side="away"
-          line={lines[game.awayId]}
-          percent={percents?.away ?? null}
-          marketPercent={market?.away ?? null}
-          score={scores ? game.awayScore : null}
-          winner={homeWon === null ? null : !homeWon}
-          big={!scores}
-        />
-        <TeamRow
-          game={game}
-          side="home"
-          line={lines[game.homeId]}
-          percent={percents?.home ?? null}
-          marketPercent={market?.home ?? null}
-          score={scores ? game.homeScore : null}
-          winner={homeWon}
-          big={!scores}
-        />
-
-        {shown !== null ? (
-          <div className="mt-3">
-            <SplitBar awayId={game.awayId} homeId={game.homeId} homeProbability={shown} />
-          </div>
-        ) : null}
-
-        <div className="mb-3 mt-3 space-y-1.5 text-[13px] leading-5 text-ink-2">
-          {result ? <p className="font-medium text-ink">{result}</p> : null}
-          {margin !== null && !result ? (
-            <p>
-              {marginText(margin, game.homeId, game.awayId)}
-              {live && pregame !== null ? (
-                <span className="text-ink-3"> · pregame {splitPercents(pregame).home}% {home.code}</span>
-              ) : null}
-              {!game.market && game.forecast && !live && !tipped ? (
-                <span className="text-ink-3"> · No market line yet</span>
-              ) : null}
-            </p>
-          ) : null}
-          {notes && notes.length > 0 ? (
-            <p className="text-ink-2">
-              <span className="font-medium text-ink">Injuries </span>
-              {notes.join("; ")}
-            </p>
-          ) : null}
-          {game.projection ? <p className="text-[12px] text-ink-3">{projectionBasisLine(game)}</p> : null}
-          {modelNote && game.forecast && game.forecast.absencePoints === null ? (
-            <p className="text-[12px] text-ink-3">Before injuries: this number comes from {game.forecast.modelVersion}.</p>
-          ) : null}
-          {game.forecast?.availabilityMissing ? (
-            <p className="text-[12px] text-ink-3">No NBA injury report was available for this number.</p>
-          ) : null}
-          {game.missed ? <p className="text-[12px] text-bad">Tipped without a seal: counted as missed.</p> : null}
-          {game.beforeRecord ? <p className="text-[12px] text-ink-3">Tipped before the record began.</p> : null}
-        </div>
-        {where ? (
-          <p className="mt-auto truncate border-t border-line pt-2.5 text-[12px] text-ink-3" title={where}>
-            {game.status === "final" ? `${meta[0]} · ` : ""}
-            {where}
-          </p>
-        ) : null}
       </div>
-
+      <Bracket view={view} />
+      <BracketContext view={view} />
       <Link
         href={`/game/${game.id}`}
-        className="absolute inset-0 rounded-[var(--radius-card)]"
-        aria-label={`${away.shortName} at ${home.shortName}: game details`}
+        className="absolute inset-0 -m-2 outline-offset-0 group-hover:bg-ink/[0.025]"
+        aria-label={cardLabel(view)}
       />
     </article>
   );

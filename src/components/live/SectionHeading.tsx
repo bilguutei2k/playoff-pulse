@@ -1,6 +1,9 @@
 import Link from "next/link";
 
-/** Kicker, headline and an optional "see all" link: the head of every page section. */
+/**
+ * The head of a page section in v8: an ink rule, the heading, and a grey link at the
+ * right. A page title (h1) keeps its grey line above instead of the rule.
+ */
 export function SectionHeading({
   id,
   kicker,
@@ -18,23 +21,31 @@ export function SectionHeading({
   linkLabel?: string;
   as?: "h1" | "h2" | "h3";
 }) {
-  return (
-    <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
-      <div className="min-w-0 max-w-3xl">
-        {kicker ? <p className="kicker">{kicker}</p> : null}
-        <Tag
-          id={id}
-          className={`headline mt-1 ${Tag === "h1" ? "text-[32px] sm:text-[42px]" : "text-[22px] sm:text-[26px]"}`}
-        >
-          {title}
-        </Tag>
-        {dek ? <div className="mt-2 text-[15px] leading-6 text-ink-2">{dek}</div> : null}
+  if (Tag === "h1") {
+    return (
+      <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+        <div className="min-w-0 max-w-3xl">
+          {kicker ? <p className="text-[15px] text-ink-2">{kicker}</p> : null}
+          <h1 id={id} className="headline mt-2.5 text-[32px] sm:text-[46px]">
+            {title}
+          </h1>
+          {dek ? <div className="mt-3 text-[15px] leading-6 text-ink-2">{dek}</div> : null}
+        </div>
+        {href && linkLabel ? (
+          <Link href={href} className="pp-link shrink-0 text-[14px]">
+            {linkLabel}
+          </Link>
+        ) : null}
       </div>
-      {href && linkLabel ? (
-        <Link href={href} className="pp-link shrink-0 text-[14px]">
-          {linkLabel}
-        </Link>
-      ) : null}
+    );
+  }
+  return (
+    <div>
+      <div className="sh !mb-0">
+        <Tag id={id}>{title}</Tag>
+        {href && linkLabel ? <Link href={href}>{linkLabel}</Link> : kicker ? <span>{kicker}</span> : null}
+      </div>
+      {dek ? <div className="mt-2 max-w-3xl text-[14px] leading-6 text-ink-2">{dek}</div> : null}
     </div>
   );
 }

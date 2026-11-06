@@ -18,7 +18,7 @@ export function PlayerLink({
   return (
     <Link
       href={playerHref(athleteId)}
-      className={`underline decoration-line-strong decoration-1 underline-offset-[3px] hover:decoration-pulse hover:decoration-2 ${className}`}
+      className={`underline-offset-[3px] hover:underline ${className}`}
     >
       {name}
     </Link>

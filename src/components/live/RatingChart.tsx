@@ -13,8 +13,8 @@ export type RatingChartPoint = {
   max: number;
 };
 
-const GRID = "#ece9e4";
-const AXIS_TEXT = "#6b6863";
+const GRID = "#ececec";
+const AXIS_TEXT = "#666666";
 
 function signed(value: number): string {
   if (Math.abs(value) < 0.05) return "0.0";
@@ -104,17 +104,17 @@ export function RatingChart({
       >
         {ticks.map((tick) => (
           <g key={tick}>
-            <line x1={margin.left} x2={margin.left + plotWidth} y1={y(tick)} y2={y(tick)} stroke={tick === 0 ? "#b9b5ae" : GRID} />
-            <text x={margin.left - 8} y={y(tick)} dy="0.32em" textAnchor="end" fontSize={11} fill={AXIS_TEXT} className="font-mono">
+            <line x1={margin.left} x2={margin.left + plotWidth} y1={y(tick)} y2={y(tick)} stroke={tick === 0 ? "#111111" : GRID} />
+            <text x={margin.left - 8} y={y(tick)} dy="0.32em" textAnchor="end" fontSize={11} fill={AXIS_TEXT}>
               {signed(tick)}
             </text>
           </g>
         ))}
-        <path d={area((p) => p.min, (p) => p.max)} fill="#121417" fillOpacity={0.05} />
-        <path d={area((p) => p.q1, (p) => p.q3)} fill="#121417" fillOpacity={0.07} />
+        <path d={area((p) => p.min, (p) => p.max)} fill="#111111" fillOpacity={0.05} />
+        <path d={area((p) => p.q1, (p) => p.q3)} fill="#111111" fillOpacity={0.08} />
         {points.map((p, i) =>
           showTick(i) ? (
-            <text key={`${p.date}-${p.preseason}`} x={x(i)} y={height - 8} fontSize={11} fill={AXIS_TEXT} className="font-mono" textAnchor={i === 0 ? "start" : i === points.length - 1 ? "end" : "middle"}>
+            <text key={`${p.date}-${p.preseason}`} x={x(i)} y={height - 8} fontSize={11} fill={AXIS_TEXT} textAnchor={i === 0 ? "start" : i === points.length - 1 ? "end" : "middle"}>
               {p.preseason ? "Start" : formatShortDay(p.date)}
             </text>
           ) : null,
@@ -123,13 +123,13 @@ export function RatingChart({
         {last ? (
           <g>
             <circle cx={x(points.length - 1)} cy={y(last.team)} r={4} fill={color} stroke="#ffffff" strokeWidth={2} />
-            <text x={x(points.length - 1) + 10} y={replayLabelY} dy="0.32em" fontSize={11.5} fill="#121417" className="font-mono">
+            <text x={x(points.length - 1) + 10} y={replayLabelY} dy="0.32em" fontSize={11.5} fill="#111111">
               {signed(last.team)}
             </text>
             {Math.abs(published - last.team) >= 0.05 ? (
               <g>
-                <circle cx={x(points.length - 1)} cy={y(published)} r={4.5} fill="#ffffff" stroke="#121417" strokeWidth={1.5} />
-                <text x={x(points.length - 1) + 10} y={publishedLabelY} dy="0.32em" fontSize={11} fill="#5c5a57" className="font-mono">
+                <circle cx={x(points.length - 1)} cy={y(published)} r={4.5} fill="#ffffff" stroke="#111111" strokeWidth={1.5} />
+                <text x={x(points.length - 1) + 10} y={publishedLabelY} dy="0.32em" fontSize={11} fill="#666666">
                   {signed(published)}
                 </text>
               </g>
@@ -138,7 +138,7 @@ export function RatingChart({
         ) : null}
         {hovered && index !== null ? (
           <g>
-            <line x1={x(index)} x2={x(index)} y1={margin.top} y2={margin.top + plotHeight} stroke="#121417" strokeOpacity={0.35} />
+            <line x1={x(index)} x2={x(index)} y1={margin.top} y2={margin.top + plotHeight} stroke="#111111" strokeOpacity={0.35} />
             <circle cx={x(index)} cy={y(hovered.team)} r={4} fill={color} stroke="#ffffff" strokeWidth={2} />
           </g>
         ) : null}
@@ -168,16 +168,16 @@ export function RatingChart({
       {hovered && index !== null ? (
         <div
           role="status"
-          className="pointer-events-none absolute top-2 z-10 w-48 rounded-lg border border-line bg-panel px-3 py-2 text-[12px] shadow-[0_8px_24px_-12px_rgba(18,20,23,0.35)]"
+          className="pointer-events-none absolute top-2 z-10 w-48 border border-ink bg-panel px-3 py-2 text-[12px]"
           style={{ left: x(index) + 200 < width ? x(index) + 12 : Math.max(0, x(index) - 204) }}
         >
           <p className="kicker mb-1">{label(hovered)}</p>
           <p className="flex items-center gap-2">
-            <span aria-hidden className="h-[2px] w-3 rounded-full" style={{ background: color }} />
+            <span aria-hidden className="h-[2px] w-3" style={{ background: color }} />
             <span className="num font-semibold text-ink">{signed(hovered.team)}</span>
             <span className="text-ink-2">{name}</span>
           </p>
-          <p className="num mt-1 text-ink-3">
+          <p className="num mt-1 text-ink-2">
             League {signed(hovered.min)} to {signed(hovered.max)}
           </p>
         </div>

@@ -7,6 +7,7 @@ import { SEASON_TEAMS } from "@/lib/season/teams";
 import { formatReportTime } from "@/lib/utils/dates";
 import { buildInjuryReport } from "@/lib/view/injury-report";
 import { teamDisplay } from "@/lib/view/teams";
+import { Ticker } from "@/components/live/Ticker";
 
 export const metadata: Metadata = {
   title: "NBA injury report",
@@ -39,7 +40,9 @@ export default async function InjuriesPage() {
   const latest = view?.latestReportAt ? formatReportTime(view.latestReportAt, "") : null;
 
   return (
-    <main className="pp-container py-8 sm:py-10">
+    <>
+      <Ticker />
+    <main className="pp-container pb-4 pt-7 sm:pt-11">
       <SectionHeading
         as="h1"
         kicker="Injury report"
@@ -59,7 +62,7 @@ export default async function InjuriesPage() {
         <dl className="grid gap-x-8 gap-y-3 rounded-[var(--radius-card)] border border-line bg-panel p-4 text-[13px] leading-5 text-ink-2 sm:p-5 md:grid-cols-2">
           {SOURCES.map(([term, definition]) => (
             <div key={term} className="flex gap-3">
-              <dt className="w-24 shrink-0 font-mono text-[11px] font-medium uppercase leading-5 tracking-[0.06em] text-ink">{term}</dt>
+              <dt className="w-24 shrink-0 text-[13px] font-bold leading-5 text-ink">{term}</dt>
               <dd>{definition}</dd>
             </div>
           ))}
@@ -94,5 +97,6 @@ export default async function InjuriesPage() {
         )}
       </div>
     </main>
+    </>
   );
 }

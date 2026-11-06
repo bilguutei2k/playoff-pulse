@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import { Badge } from "@/components/live/Badge";
+import { StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { formatAverage, formatImpact, formatShooting, type PlayerTableRow, type StatLine } from "@/lib/view/players";
@@ -124,7 +124,7 @@ export function PlayersTable({
         cell: (row) =>
           row.status ? (
             <span title={row.status.label}>
-              <Badge tone={row.status.tone}>{row.status.short}</Badge>
+              <StatusTag tone={row.status.tone}>{row.status.short}</StatusTag>
             </span>
           ) : (
             <span className="text-ink-3">–</span>
@@ -167,13 +167,13 @@ export function PlayersTable({
         key={key}
         scope="col"
         aria-sort={active ? (sort.descending ? "descending" : "ascending") : "none"}
-        className={`sticky top-0 z-10 whitespace-nowrap border-b border-line-strong bg-panel px-2 py-2.5 align-bottom xl:top-16 ${className}`}
+        className={`sticky top-0 z-10 whitespace-nowrap border-b-2 border-ink bg-panel px-2 py-2.5 align-bottom xl:top-[68px] ${className}`}
       >
         <button
           type="button"
           onClick={() => sortBy(key)}
           title={title}
-          className={`inline-flex items-center gap-1 font-mono text-[10.5px] font-medium uppercase leading-tight tracking-[0.06em] hover:text-ink ${active ? "text-ink" : "text-ink-3"}`}
+          className={`inline-flex items-center gap-1 text-[12.5px] font-medium leading-tight hover:text-ink ${active ? "text-ink" : "text-ink-3"}`}
         >
           {label}
           <span aria-hidden className={`text-[9px] ${active ? "opacity-100" : "opacity-0"}`}>
