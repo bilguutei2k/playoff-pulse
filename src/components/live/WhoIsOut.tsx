@@ -100,9 +100,10 @@ export function WhoIsOut({
       <p className="mt-4 text-[13px] leading-5 text-ink-2">
         Select a team to see its players. The model counts players listed out or doubtful on the NBA injury report,
         or who missed their team&apos;s last game and are not listed as probable or available; a team that has not
-        filed yet keeps only the players who missed its last game. Expected games out come from a survival table
+        filed yet keeps only the players who missed its last game. Expected games out come from a return table
         fitted on past seasons, never from reported return dates. A game&apos;s sealed number counts the report in
-        use at its seal instead, weighted by status; its game page lists those players.
+        use at its seal instead, weighted by status (or, for a team that has not filed yet, these current
+        absences); its game page lists those players.
       </p>
     </section>
   );

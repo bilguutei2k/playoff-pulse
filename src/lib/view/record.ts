@@ -5,8 +5,8 @@
 
 import { clampProbability } from "@/lib/season/math";
 import { impliedHomeProbability } from "@/lib/season/market";
-import { missedVersionOf, scoredSeal, sealKindOf } from "@/lib/season/live-state";
-import type { LedgerRow, MissedRow, ResultRow, SealRow } from "@/lib/season/types";
+import { missedVersionOf, scoredSeal, sealKindOf, summarizeRecord } from "@/lib/season/live-state";
+import type { LedgerRow, MissedRow, RecordSummary, ResultRow, SealRow } from "@/lib/season/types";
 
 export const SMALL_SAMPLE_GAMES = 500;
 export const CALIBRATION_MIN_GAMES = 100;
@@ -26,7 +26,7 @@ export type ScoredGame = {
   result: ResultRow;
   homeWon: boolean;
   brier: number;
-  /** A version that seals twice was scored on its morning seal. */
+  /** A version that seals twice was scored on its reissued or original morning seal. */
   noFinalSeal: boolean;
 };
 
@@ -110,4 +110,28 @@ export function marketComparison(scored: readonly ScoredGame[]): { games: number
     market += gameBrier(impliedHomeProbability(game.seal.market!)!, game.homeWon);
   }
   return { games: games.length, model: model / games.length, market: market / games.length };
+}
+
+const SPLIT_KEYS = [
+  "originalMorningBrier",
+  "originalMorningCount",
+  "reissuedBrier",
+  "reissuedCount",
+  "latestPreFinalBrier",
+  "latestPreFinalCount",
+  "policyRevisions",
+] as const;
+
+/**
+ * A published record with its pre-final split and policy revisions. A state written
+ * since 2026-11-06 carries them and is returned as it is; an older one (the bundled copy,
+ * or the minutes before the job's first run with this code) gets them from the same
+ * snapshot's ledger through the job's own summarizeRecord. Nothing else is recomputed.
+ */
+export function withRecordSplit(record: RecordSummary, ledger: readonly LedgerRow[]): RecordSummary {
+  if (record.noFinalSeal === null || record.originalMorningCount !== undefined || record.modelVersion === null) return record;
+  const computed = summarizeRecord(ledger, record.modelVersion, 0.5, { finalSeals: true });
+  const split: Partial<RecordSummary> = {};
+  for (const key of SPLIT_KEYS) if (computed[key] !== undefined) Object.assign(split, { [key]: computed[key] });
+  return { ...record, ...split };
 }

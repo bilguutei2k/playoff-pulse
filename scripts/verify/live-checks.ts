@@ -52,11 +52,14 @@ import {
   LIVE_PARAMS,
   REFERENCE_MODEL_VERSION,
 } from "../../src/lib/season/params";
+import { sealKindOf, summarizeRecord } from "../../src/lib/season/live-state";
+import { clampProbability } from "../../src/lib/season/math";
 import { impliedHomeProbability } from "../../src/lib/season/market";
+import { POLICY_MODEL_VERSION, POLICY_REVISIONS, policyRevisionAt } from "../../src/lib/season/policy-revisions";
 import { createFilterState, paramsHash, predictGame } from "../../src/lib/season/ratings";
 import { assertForecastSums, simulateSeason } from "../../src/lib/season/simulate";
 import { SEASON_TEAMS, STATE_SIZE, teamIndex } from "../../src/lib/season/teams";
-import type { LedgerRow, LiveState, SeasonGame } from "../../src/lib/season/types";
+import type { LedgerRow, LiveState, SeasonGame, SealRow } from "../../src/lib/season/types";
 import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
@@ -677,6 +680,91 @@ function checkSiteFiles(): void {
   console.log(`Site files match the ledger (${expected.size} files; largest read by the site: ${largest.file}, ${(largest.bytes / 1e3).toFixed(0)} KB).`);
 }
 
+/**
+ * The pre-final scores and the policy-revision breakdown, recomputed here from the
+ * ledger without summarizeRecord's code path, then held against summarizeRecord and,
+ * when the published state carries them, against the state.
+ */
+function checkRecordSplit(state: LiveState, ledgerRows: readonly LedgerRow[]): void {
+  const summary = summarizeRecord(ledgerRows, LIVE_MODEL_VERSION, 0.5, { finalSeals: true });
+  const results = new Map<string, { homeWon: number }>();
+  for (const row of ledgerRows) {
+    if (row.type === "result") results.set(row.gameId, { homeWon: row.homeScore > row.awayScore ? 1 : 0 });
+  }
+  const byGame = new Map<string, SealRow[]>();
+  for (const row of ledgerRows) {
+    if (row.type === "seal" && row.modelVersion === LIVE_MODEL_VERSION) {
+      byGame.set(row.gameId, [...(byGame.get(row.gameId) ?? []), row]);
+    }
+  }
+  const loss = (row: SealRow, homeWon: number) => (clampProbability(row.homeWinProbability) - homeWon) ** 2;
+  const mean = (values: number[]) => (values.length ? values.reduce((a, b) => a + b, 0) / values.length : null);
+  const original: number[] = [];
+  const reissued: number[] = [];
+  const latest: number[] = [];
+  const revisionOf = (row: SealRow) => row.policyRevision ?? policyRevisionAt(row.issuedAt);
+  const byRevision = new Map(POLICY_REVISIONS.map((row) => [row.revision, { sealRows: 0, sealed: 0, scored: 0, losses: [] as number[] }]));
+  for (const rows of byGame.values()) {
+    const kind = (wanted: string) => rows.find((row) => sealKindOf(row) === wanted);
+    const morning = kind("morning");
+    const again = kind("reissued");
+    const scoredOn = kind("final") ?? again ?? morning;
+    assert.ok(scoredOn, `Game ${rows[0].gameId} has v2 rows but no seal to score.`);
+    const result = results.get(rows[0].gameId);
+    if (LIVE_MODEL_VERSION === POLICY_MODEL_VERSION) {
+      for (const row of rows) byRevision.get(revisionOf(row))!.sealRows += 1;
+      const entry = byRevision.get(revisionOf(scoredOn));
+      assert.ok(entry, `Game ${rows[0].gameId} is scored on a seal outside the revision table.`);
+      entry.sealed += 1;
+      if (result) {
+        entry.scored += 1;
+        entry.losses.push(loss(scoredOn, result.homeWon));
+      }
+    }
+    if (!result) continue;
+    if (morning) original.push(loss(morning, result.homeWon));
+    if (again) reissued.push(loss(again, result.homeWon));
+    if (again ?? morning) latest.push(loss((again ?? morning)!, result.homeWon));
+  }
+  const close = (a: number | null | undefined, b: number | null, what: string) => {
+    if (b === null) assert.equal(a, null, `${what} must be empty.`);
+    else assert.ok(typeof a === "number" && Math.abs(a - b) < 1e-12, `${what} must match its own seals.`);
+  };
+  assert.equal(summary.originalMorningCount, original.length, "Original morning count must match its scored games.");
+  assert.equal(summary.reissuedCount, reissued.length, "Reissued count must match its scored games.");
+  assert.equal(summary.latestPreFinalCount, latest.length, "Latest pre-final count must match its scored games.");
+  close(summary.originalMorningBrier, mean(original), "Original morning Brier");
+  close(summary.reissuedBrier, mean(reissued), "Reissued Brier");
+  close(summary.latestPreFinalBrier, mean(latest), "Latest pre-final Brier");
+  assert.equal(summary.morningBrier, summary.latestPreFinalBrier, "morningBrier keeps its published meaning: the latest pre-final seal.");
+  if (LIVE_MODEL_VERSION === POLICY_MODEL_VERSION) {
+    const revisions = summary.policyRevisions ?? [];
+    assert.deepEqual(revisions.map((row) => row.revision), POLICY_REVISIONS.map((row) => row.revision), "Every revision must be listed.");
+    for (const row of revisions) {
+      const expected = byRevision.get(row.revision)!;
+      assert.equal(row.sealRows, expected.sealRows, `Revision ${row.revision} seal rows must match the ledger.`);
+      assert.equal(row.sealed, expected.sealed, `Revision ${row.revision} games must match the ledger.`);
+      assert.equal(row.scored, expected.scored, `Revision ${row.revision} scored games must match the ledger.`);
+      close(row.brier, mean(expected.losses), `Revision ${row.revision} Brier`);
+    }
+    assert.equal(revisions.reduce((sum, row) => sum + row.sealed, 0), summary.sealed, "Revisions must cover every sealed game once.");
+    assert.equal(revisions.reduce((sum, row) => sum + row.scored, 0), summary.scored, "Revisions must cover every scored game once.");
+  }
+  const published = state.records[LIVE_MODEL_VERSION];
+  const split = [
+    "originalMorningBrier", "originalMorningCount", "reissuedBrier", "reissuedCount",
+    "latestPreFinalBrier", "latestPreFinalCount", "policyRevisions",
+  ] as const;
+  if (published.originalMorningCount !== undefined) {
+    for (const key of split) assert.deepEqual(published[key], summary[key], `Published ${key} must match the ledger.`);
+  }
+  console.log(
+    `Record split matches the ledger (${published.originalMorningCount === undefined ? "state predates the split" : "state checked"}): ` +
+      `original morning n=${original.length}, reissued n=${reissued.length}, latest pre-final n=${latest.length}; ` +
+      `revisions ${(summary.policyRevisions ?? []).map((row) => `${row.revision}:${row.sealed}/${row.scored}`).join(" ")} (games/scored).`,
+  );
+}
+
 export function runLiveChecks(): void {
   const raw = JSON.parse(
     fs.readFileSync(path.join(process.cwd(), "data/live/state.json"), "utf-8"),
@@ -792,6 +880,7 @@ export function runLiveChecks(): void {
         .map((line) => JSON.parse(line) as LedgerRow)
     : [];
   assert.deepEqual(ledgerProblems(ledgerRows), [], "Ledger rows must be valid.");
+  if (raw.schemaVersion === 2) checkRecordSplit(raw, ledgerRows);
   checkSiteFiles();
   if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, ledgerRows);
 }

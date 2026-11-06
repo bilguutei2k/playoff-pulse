@@ -200,6 +200,12 @@ export type SealRow = {
   etDate: string;
   tipUtc: string;
   issuedAt: string;
+  /**
+   * v2's policy revision in force at `issuedAt` (`src/lib/season/policy-revisions.ts`).
+   * Stored on v2 seals from 2026-11-06; older rows derive it from `issuedAt` and are
+   * never rewritten.
+   */
+  policyRevision?: number;
   modelVersion: string;
   paramsHash: string;
   ratingsHash: string;
@@ -276,8 +282,9 @@ export type RecordSummary = {
   missed: number;
   incomplete: number;
   /**
-   * Scored games that had a morning seal but no final seal, so the morning seal was
-   * scored. Null for a version that seals once per game.
+   * Scored games that had a morning seal but no final seal, so the reissued seal (when
+   * there is one) or the original morning seal was scored. Null for a version that seals
+   * once per game.
    */
   noFinalSeal: number | null;
   brier: number | null;
@@ -285,8 +292,30 @@ export type RecordSummary = {
   accuracy: number | null;
   /** Same scored games, always predicting the prior home-win rate. */
   baselineBrier: number | null;
-  /** Morning seals alone on the same scored games, reported beside the scored number. */
+  /**
+   * The latest pre-final seal (reissued when there is one, else the original morning
+   * seal), on scored games of a version that seals twice. Kept under this older name so
+   * published states keep their meaning; `latestPreFinalBrier` is the same number.
+   */
   morningBrier: number | null;
+  // The pre-final scores, split (2026-11-06). Present on states written since then, for a
+  // version that seals twice; absent on older states and for a version that seals once.
+  // The operational score stays final, else reissued, else original morning.
+  /** Original morning seals only (`sealKind: "morning"`), on scored games that have one. */
+  originalMorningBrier?: number | null;
+  originalMorningCount?: number;
+  /** Reissued seals, on the scored games that were reissued. */
+  reissuedBrier?: number | null;
+  reissuedCount?: number;
+  /** The reissued seal when there is one, else the original morning seal. */
+  latestPreFinalBrier?: number | null;
+  latestPreFinalCount?: number;
+  /**
+   * v2 only: the record split by policy revision, each game under the revision of the
+   * seal it is scored on (pending games under the seal they would be scored on now).
+   * Descriptive, not a comparison: revisions cover different games and dates.
+   */
+  policyRevisions?: PolicyRevisionRecord[];
   /**
    * The reference model's number stored on each scored seal, scored on the same games:
    * the prospective head-to-head. Null for a version whose rows carry no reference.
@@ -294,6 +323,16 @@ export type RecordSummary = {
   referenceBrier: number | null;
   referenceModelVersion: string | null;
   smallSample: boolean;
+};
+
+export type PolicyRevisionRecord = {
+  revision: number;
+  /** This version's seal rows of any kind (morning, reissued, final) issued under it. */
+  sealRows: number;
+  /** Games whose scored (or, while pending, current) seal was issued under this revision. */
+  sealed: number;
+  scored: number;
+  brier: number | null;
 };
 
 export type TeamHistoryPoint = {

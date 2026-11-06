@@ -177,6 +177,7 @@ describe("v2 seals", () => {
     expect(row.referenceHomeWinProbability).toBe(v1.homeWinProbability);
     expect(row.referenceModelVersion).toBe(REFERENCE_MODEL_VERSION);
     expect(row.modelVersion).toBe(LIVE_MODEL_VERSION);
+    expect(row.policyRevision).toBe(3);
   });
 
   it("stores the kind, the report, the absence term and every driver", () => {

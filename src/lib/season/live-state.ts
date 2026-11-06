@@ -5,6 +5,7 @@
 import { addDays, etDateOf, etHourOf } from "@/lib/season/dates";
 import { clampProbability } from "@/lib/season/math";
 import { REFERENCE_MODEL_VERSION } from "@/lib/season/params";
+import { POLICY_MODEL_VERSION, POLICY_REVISIONS, sealPolicyRevision } from "@/lib/season/policy-revisions";
 import {
   isBackToBack,
   paramsHash,
@@ -416,8 +417,10 @@ export function sealsByGame(
 
 /**
  * Scores sealed forecasts for one model version. Each game is scored once, on its
- * final seal if it has one and otherwise on its morning seal; a version that writes
- * final seals also counts the scored games that never got one.
+ * final seal if it has one, else its reissued seal, else its original morning seal; a
+ * version that writes final seals also counts the scored games that never got one, and
+ * scores its pre-final seals separately: original morning, reissued, and the latest of
+ * the two. For v2 it also splits the record by policy revision, descriptively.
  */
 export function summarizeRecord(
   ledger: readonly LedgerRow[],
@@ -442,8 +445,21 @@ export function summarizeRecord(
   let logLossSum = 0;
   let correct = 0;
   let baselineSum = 0;
-  let morningSum = 0;
-  let morningCount = 0;
+  let latestSum = 0;
+  let latestCount = 0;
+  let originalSum = 0;
+  let originalCount = 0;
+  let reissuedSum = 0;
+  let reissuedCount = 0;
+  const revisions = new Map(POLICY_REVISIONS.map((row) => [row.revision, { sealRows: 0, sealed: 0, scored: 0, sum: 0 }]));
+  if (modelVersion === POLICY_MODEL_VERSION) {
+    for (const rows of byGame.values()) {
+      for (const row of rows) {
+        const entry = revisions.get(sealPolicyRevision(row)!);
+        if (entry) entry.sealRows += 1;
+      }
+    }
+  }
   let noFinalSeal = 0;
   let incomplete = 0;
   let referenceSum = 0;
@@ -453,12 +469,18 @@ export function summarizeRecord(
     const seal = scoredSeal(rows);
     if (!seal) continue;
     if (seal.inputsIncomplete) incomplete += 1;
+    const revision = modelVersion === POLICY_MODEL_VERSION ? revisions.get(sealPolicyRevision(seal)!) : undefined;
+    if (revision) revision.sealed += 1;
     const result = results.get(seal.gameId);
     if (!result) continue;
     const homeWon = result.homeScore > result.awayScore ? 1 : 0;
     const p = clampProbability(seal.homeWinProbability);
     scored += 1;
     brierSum += (p - homeWon) ** 2;
+    if (revision) {
+      revision.scored += 1;
+      revision.sum += (p - homeWon) ** 2;
+    }
     logLossSum -= homeWon * Math.log(p) + (1 - homeWon) * Math.log(1 - p);
     if ((p > 0.5) === (homeWon === 1)) correct += 1;
     baselineSum += (priorHomeWinRate - homeWon) ** 2;
@@ -469,10 +491,20 @@ export function summarizeRecord(
     }
     if (twoSeals) {
       if (sealKindOf(seal) !== "final") noFinalSeal += 1;
-      const morning = morningSeal(rows);
-      if (morning) {
-        morningSum += (clampProbability(morning.homeWinProbability) - homeWon) ** 2;
-        morningCount += 1;
+      const latest = morningSeal(rows);
+      if (latest) {
+        latestSum += (clampProbability(latest.homeWinProbability) - homeWon) ** 2;
+        latestCount += 1;
+      }
+      const original = rows.find((row) => sealKindOf(row) === "morning");
+      if (original) {
+        originalSum += (clampProbability(original.homeWinProbability) - homeWon) ** 2;
+        originalCount += 1;
+      }
+      const reissued = rows.find((row) => sealKindOf(row) === "reissued");
+      if (reissued) {
+        reissuedSum += (clampProbability(reissued.homeWinProbability) - homeWon) ** 2;
+        reissuedCount += 1;
       }
     }
   }
@@ -489,7 +521,28 @@ export function summarizeRecord(
     logLoss: scored ? logLossSum / scored : null,
     accuracy: scored ? correct / scored : null,
     baselineBrier: scored ? baselineSum / scored : null,
-    morningBrier: twoSeals && morningCount ? morningSum / morningCount : null,
+    morningBrier: twoSeals && latestCount ? latestSum / latestCount : null,
+    ...(twoSeals
+      ? {
+          originalMorningBrier: originalCount ? originalSum / originalCount : null,
+          originalMorningCount: originalCount,
+          reissuedBrier: reissuedCount ? reissuedSum / reissuedCount : null,
+          reissuedCount,
+          latestPreFinalBrier: latestCount ? latestSum / latestCount : null,
+          latestPreFinalCount: latestCount,
+        }
+      : {}),
+    ...(modelVersion === POLICY_MODEL_VERSION
+      ? {
+          policyRevisions: [...revisions.entries()].map(([revision, row]) => ({
+            revision,
+            sealRows: row.sealRows,
+            sealed: row.sealed,
+            scored: row.scored,
+            brier: row.scored ? row.sum / row.scored : null,
+          })),
+        }
+      : {}),
     // Only when every scored game carries a reference, so the comparison is paired.
     referenceBrier: referenceCount > 0 && referenceCount === scored ? referenceSum / referenceCount : null,
     referenceModelVersion: referenceCount > 0 ? referenceModelVersion : null,

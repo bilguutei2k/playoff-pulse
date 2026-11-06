@@ -475,8 +475,9 @@ export default async function TeamPage({ params }: Params) {
                   <OutNow rows={absences} color={color} />
                   <p className="mt-3 text-[13px] leading-5 text-ink-2">
                     Who the season simulation counts as out: listed out or doubtful on the NBA report, or missed the last
-                    game and not listed. Expected games come from a survival table, never reported return dates. A
-                    game&apos;s seal counts the report in use at its seal instead.
+                    game and not listed. Expected games come from a return table fitted on past seasons, never reported
+                    return dates. A game&apos;s seal counts the report in use at its seal instead, or these absences if
+                    the team has not filed its report yet.
                   </p>
                 </>
               ) : (
@@ -587,7 +588,7 @@ export default async function TeamPage({ params }: Params) {
             <p className="mt-3 text-[13px] leading-5 text-ink-2">
               Points per game against an average team after each game day, rebuilt from results with the rating model
               alone, without the injury adjustment. The shaded bands are the league&apos;s full spread and its middle half.
-              {modeled ? " The open marker is today's published rating at full strength, which adjusts past margins for who played." : ""}
+              {modeled ? " The open marker is today's published rating, which adjusts past margins for who played to approximate full strength." : ""}
             </p>
           </section>
         </div>

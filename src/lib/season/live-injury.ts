@@ -4,6 +4,7 @@
 
 import type { StoredLine } from "@/lib/season/box-scores";
 import { daysBetween } from "@/lib/season/dates";
+import { POLICY_MODEL_VERSION, policyRevisionAt } from "@/lib/season/policy-revisions";
 import {
   currentAbsences,
   expectedAbsence,
@@ -308,6 +309,8 @@ export function sealInjuryGames(
       etDate: game.etDate,
       tipUtc: game.tipUtc,
       issuedAt: context.nowIso,
+      // A label only: the revision in force at issue time, checked by verify:ledger.
+      ...(context.modelVersion === POLICY_MODEL_VERSION ? { policyRevision: policyRevisionAt(context.nowIso) } : {}),
       modelVersion: context.modelVersion,
       paramsHash: hash,
       ratingsHash: ratingsHash(toRatingState(frozen.full.state)),

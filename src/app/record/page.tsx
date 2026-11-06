@@ -8,6 +8,7 @@ import {
 } from "@/components/live/RecordParts";
 import { Ticker } from "@/components/live/Ticker";
 import { getLiveState, getSeasonLedger } from "@/lib/live-data/published";
+import { POLICY_REVISIONS, currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
 import type { RecordSummary } from "@/lib/season/types";
 import { formatShortDay } from "@/lib/utils/dates";
 import {
@@ -19,6 +20,7 @@ import {
   marketComparison,
   versionLedger,
   withMarketLine,
+  withRecordSplit,
 } from "@/lib/view/record";
 import {
   favoriteSummary,
@@ -41,6 +43,9 @@ export const revalidate = 60;
 const LIST_LIMIT = 100;
 
 const fixed = (value: number | null, digits: number) => (value === null ? null : value.toFixed(digits));
+/** A Brier score with the number of games behind it; null before a state has the split. */
+const withCount = (value: number | null | undefined, count: number | undefined) =>
+  count === undefined ? null : `${value === null || value === undefined ? "–" : value.toFixed(3)} (n=${count})`;
 const percent = (value: number | null) => (value === null ? null : `${Math.round(value * 100)}%`);
 
 type Metric = { label: string; note: string; value: (record: RecordSummary) => string | null };
@@ -51,12 +56,26 @@ const METRICS: Metric[] = [
   { label: "Pending", note: "Sealed, waiting for a result", value: (r) => String(r.pending) },
   { label: "Missed", note: "Tipped before a seal; never backfilled", value: (r) => String(r.missed) },
   { label: "Incomplete inputs", note: "Sealed before an earlier result was in; still counted", value: (r) => String(r.incomplete) },
-  { label: "No final seal", note: "Scored on the morning seal", value: (r) => (r.noFinalSeal === null ? "Seals once" : String(r.noFinalSeal)) },
+  { label: "No final seal", note: "Scored on the reissued seal, else the original morning seal", value: (r) => (r.noFinalSeal === null ? "Seals once" : String(r.noFinalSeal)) },
   { label: "Brier score", note: "Lower is better; an even 50% call scores 0.250", value: (r) => fixed(r.brier, 3) },
   { label: "Baseline Brier", note: "Always the prior home-win rate, same games", value: (r) => fixed(r.baselineBrier, 3) },
   { label: "Log loss", note: "Lower is better", value: (r) => fixed(r.logLoss, 3) },
   { label: "Accuracy", note: "The sealed favorite won", value: (r) => percent(r.accuracy) },
-  { label: "Morning seals' Brier", note: "The morning seal alone, same games", value: (r) => (r.noFinalSeal === null ? "Seals once" : fixed(r.morningBrier, 3)) },
+  {
+    label: "Original morning seals' Brier",
+    note: "Morning seals as first issued, on the scored games that have one",
+    value: (r) => (r.noFinalSeal === null ? "Seals once" : withCount(r.originalMorningBrier, r.originalMorningCount)),
+  },
+  {
+    label: "Reissued seals' Brier",
+    note: "Only the scored games whose morning seal was reissued with a report",
+    value: (r) => (r.noFinalSeal === null ? "Seals once" : withCount(r.reissuedBrier, r.reissuedCount)),
+  },
+  {
+    label: "Latest pre-final seal's Brier",
+    note: "The reissued seal when there is one, else the original morning seal",
+    value: (r) => (r.noFinalSeal === null ? "Seals once" : withCount(r.latestPreFinalBrier, r.latestPreFinalCount)),
+  },
   {
     label: "Reference Brier",
     note: "The other version's number stored on each seal, same games",
@@ -97,7 +116,7 @@ export default async function RecordPage() {
     short: versionShort(version),
     published: version === liveState.modelVersion,
     injuries: hasInjuryTerm(ledger, version),
-    record: liveState.records[version] ?? null,
+    record: liveState.records[version] ? withRecordSplit(liveState.records[version], ledger) : null,
     ledger: versionLedger(ledger, version),
   }));
   const headline = records[0];
@@ -113,6 +132,9 @@ export default async function RecordPage() {
   const started = liveState.ledgerStartedAt ? formatShortDay(liveState.ledgerStartedAt.slice(0, 10)) : null;
   const smallSample = records.some((entry) => (entry.record?.scored ?? 0) < SMALL_SAMPLE_GAMES);
   const same = reference ? sameScoredGames(headline.ledger, reference.ledger) : false;
+  const revision = currentPolicyRevision(liveState.modelVersion, liveState.generatedAt);
+  const revisions = headline.record?.policyRevisions ?? null;
+  const utc = (iso: string) => `${iso.slice(0, 10)} ${iso.slice(11, 19)} UTC`;
   const columnLabel = (entry: (typeof records)[number]) =>
     `${entry.short} ${entry.published ? "published" : entry.injuries ? "reference" : "no injuries"}`;
 
@@ -186,7 +208,8 @@ export default async function RecordPage() {
                     caption={`Every scored seal of ${headline.version}, most recent first: the sealed pick, the result and the Brier score. Lower is better.`}
                   />
                   <p className="mt-3 text-[13px] text-ink-2">
-                    The scored seal is the final seal when one exists, else the reissued or morning seal.
+                    The scored seal is the final seal when one exists, else the reissued seal, else the original morning
+                    seal.
                     {scored.length > LIST_LIMIT ? (
                       <>
                         {" "}
@@ -254,12 +277,14 @@ export default async function RecordPage() {
                 {records.map((entry, index) => (
                   <span key={entry.version}>
                     {index > 0 ? " " : ""}
-                    <span className="num text-ink">{entry.short}</span> is {entry.version}
+                    <span className="num text-ink">{entry.short}</span> is{" "}
+                    {entry.published ? modelPolicyLabel(entry.version, revision) : entry.version}
                     {entry.published ? ", the published model" : ", the reference beside it"}
                     {entry.injuries ? "." : ", without the injury term."}
                   </span>
                 ))}{" "}
-                Each version keeps its own record.
+                Each version keeps its own record
+                {revisions ? `; ${headline.short}'s spans policy revisions 0 to ${POLICY_REVISIONS.at(-1)!.revision}, listed below` : ""}.
               </p>
               {reference ? (
                 <details className="group mt-8">
@@ -293,6 +318,63 @@ export default async function RecordPage() {
                 </details>
               ) : null}
             </section>
+
+            {revisions ? (
+              <section aria-labelledby="revisions-title" className="order-3 mt-16 lg:mt-[72px]">
+                <div className="sh">
+                  <h2 id="revisions-title">Policy revisions</h2>
+                  <span>One {headline.short} record · descriptive, not a comparison</span>
+                </div>
+                <div className="table-scroll">
+                  <table className="tb">
+                    <caption className="sr-only">
+                      {headline.version}&apos;s record by policy revision: when each took effect, its seal rows, the games
+                      filed under it, how many are scored and their Brier score.
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Revision</th>
+                        <th scope="col">In force from</th>
+                        <th scope="col" className="nm">Seals</th>
+                        <th scope="col" className="nm">Games</th>
+                        <th scope="col" className="nm">Scored</th>
+                        <th scope="col" className="nm">Brier</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {revisions.map((row) => {
+                        const policy = POLICY_REVISIONS.find((entry) => entry.revision === row.revision);
+                        return (
+                          <tr key={row.revision}>
+                            <th scope="row" className="whitespace-normal text-left align-top">
+                              <span className="block">Revision {row.revision}</span>
+                              <span className="block text-[12.5px] text-ink-2">{policy?.description}</span>
+                            </th>
+                            <td className="num align-top text-[13px]">{policy ? utc(policy.effectiveAt) : "–"}</td>
+                            <td className="nm num align-top">{row.sealRows}</td>
+                            <td className="nm num align-top">{row.sealed}</td>
+                            <td className="nm num align-top">{row.scored}</td>
+                            <td className="nm num align-top">{fixed(row.brier, 3) ?? "–"}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="mt-3 text-[13px] text-ink-2">
+                  {headline.short} keeps one version and one record; changes made after its registered test are labeled as
+                  revisions, each in force from its pull request&apos;s merge. Seals counts every morning, reissued and final
+                  seal issued under a revision. Each game is filed once, under the seal it is scored on (final, else
+                  reissued, else original morning), so a game sealed in the morning under one revision and finally under
+                  the next counts under the next. The revisions cover different games and dates and are not a comparison
+                  of policies. The registered injury test covers revision 0&apos;s final-point endpoint only.{" "}
+                  <a className="pp-link" href="/how-it-works#policy-revisions">
+                    What each revision changed
+                  </a>
+                  .
+                </p>
+              </section>
+            ) : null}
           </div>
 
           <aside aria-label="Calibration, the market and the ledger" className="mt-16 grid gap-12 lg:mt-[72px]">
@@ -357,7 +439,8 @@ export default async function RecordPage() {
               </p>
               <p className="mt-2 text-[13px] text-ink-2">
                 Every seal is written before tip and never edited. Morning, reissued and final seals are separate rows,
-                each with its true time.
+                each with its true time and, since Nov 6, its policy revision. The times are the job&apos;s own clock and
+                the git history; there is no independent receipt that a seal existed before tip.
               </p>
             </section>
           </aside>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getLiveState } from "@/lib/live-data/published";
+import { currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
 
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 
@@ -47,7 +48,10 @@ export async function SiteFooter() {
           removed.
         </p>
         <p>
-          Published model <span className="num text-ink">{liveState.modelVersion}</span>
+          Published model{" "}
+          <span className="num text-ink">
+            {modelPolicyLabel(liveState.modelVersion, currentPolicyRevision(liveState.modelVersion, liveState.generatedAt))}
+          </span>
           {sameModel ? null : (
             <>
               {" "}

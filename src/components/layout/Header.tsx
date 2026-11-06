@@ -3,6 +3,7 @@ import { Mark548 } from "@/components/brand/Mark548";
 import { FreshnessChip } from "@/components/layout/FreshnessChip";
 import { MobileMenu, NavLinks } from "@/components/layout/NavLinks";
 import { getLiveState, getLiveStateSource } from "@/lib/live-data/published";
+import { currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
 import { formatStampEt } from "@/lib/utils/dates";
 
 /**
@@ -16,7 +17,7 @@ export async function Header() {
     <FreshnessChip
       iso={liveState.generatedAt}
       stamp={formatStampEt(liveState.generatedAt)}
-      modelVersion={liveState.modelVersion}
+      modelLabel={modelPolicyLabel(liveState.modelVersion, currentPolicyRevision(liveState.modelVersion, liveState.generatedAt))}
       stored={source === "bundled"}
     />
   );
