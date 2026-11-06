@@ -31,6 +31,8 @@ jobs:
         with:
           node-version: "24"
       - name: Read the published data commit
+        # Still recover/alert if the branch cannot be read.
+        continue-on-error: true
         run: git fetch --no-tags --depth=1 origin +refs/heads/live-data:refs/remotes/origin/live-data
       - name: Check heartbeat, seals and health
         env:

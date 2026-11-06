@@ -1,7 +1,8 @@
 import { execFileSync } from "node:child_process";
 import { decideWatchdog } from "./watchdog-decision.mjs";
 
-// Only GITHUB_TOKEN is needed. Never invoked by, or depended on by, the live job.
+// Only GITHUB_TOKEN is needed. The live job exercises this only in dry-run mode;
+// production monitoring runs independently in live-watchdog.yml.
 const gh = (...args) => execFileSync("gh", args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).trim();
 const git = (...args) => execFileSync("git", args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }).trim();
 const repo = process.env.GITHUB_REPOSITORY;
@@ -19,15 +20,24 @@ for (const status of ["queued", "in_progress", "waiting", "pending", "requested"
   runs.push(...api(`&status=${status}`));
 }
 const uniqueRuns = [...new Map(runs.map((run) => [run.id, run])).values()];
-const ref = git("rev-parse", "origin/live-data");
-const read = (file) => git("show", `${ref}:data/live/${file}`);
-const state = JSON.parse(read("state.json"));
-const decision = decideWatchdog({
-  now, runs: uniqueRuns, state,
-  games: JSON.parse(read(`games/${state.season}.json`)),
-  ledger: read(`ledger/${state.seasonLabel}.jsonl`).split("\n").filter(Boolean).map((line) => JSON.parse(line)),
-  health: JSON.parse(read("health.json")),
-});
+// A broken/missing publication must not prevent idle-chain recovery or other alerts.
+const readProblems = [];
+const attempt = (label, fn) => {
+  try { return fn(); }
+  catch { readProblems.push(`Cannot read published ${label}; check live-data.`); return null; }
+};
+const ref = attempt("commit", () => git("rev-parse", "origin/live-data"));
+const read = (file) => {
+  if (!ref) throw new Error("No data commit");
+  return git("show", `${ref}:data/live/${file}`);
+};
+const state = attempt("state.json", () => JSON.parse(read("state.json")));
+const games = state && attempt("games", () => JSON.parse(read(`games/${state.season}.json`)));
+const ledger = state && attempt("ledger", () => read(`ledger/${state.seasonLabel}.jsonl`)
+  .split("\n").filter(Boolean).map((line) => JSON.parse(line)));
+const health = attempt("health.json", () => JSON.parse(read("health.json")));
+const decision = decideWatchdog({ now, runs: uniqueRuns, state, games, ledger, health });
+decision.alerts.push(...readProblems);
 console.log(JSON.stringify({ now, dataCommit: ref, ...decision }, null, 2));
 if (dry) {
   console.log("Dry run: no dispatch and no issue create/comment.");

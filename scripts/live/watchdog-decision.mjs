@@ -14,17 +14,17 @@ export function decideWatchdog({ now, runs, state, games, ledger, health }) {
     streak++;
   }
   const alerts = [];
-  const age = time - Date.parse(state.generatedAt);
-  if (!Number.isFinite(age) || age > 150 * 60_000) alerts.push(`Published state is stale or invalid: ${state.generatedAt}`);
-  const sealed = new Set(ledger.filter((row) =>
+  const age = time - Date.parse(state?.generatedAt);
+  if (!Number.isFinite(age) || age > 150 * 60_000) alerts.push(`Published state is stale or invalid: ${state?.generatedAt ?? "missing"}`);
+  const sealed = new Set((ledger ?? []).filter((row) =>
     row.type === "seal" && row.modelVersion === "live-2026.27-v2" &&
     ["final", "morning"].includes(row.sealKind)).map((row) => row.gameId));
-  const missing = games.filter((game) => game.etDate >= "2026-11-02" && game.status !== "canceled" &&
+  const missing = (games ?? []).filter((game) => game.etDate >= "2026-11-02" && game.status !== "canceled" &&
     Date.parse(game.tipUtc) < time - 10 * 60_000 && !sealed.has(game.id));
   if (missing.length) alerts.push(`No v2 morning or final seal more than 10 minutes after tip: ${missing.map((g) => g.id).join(", ")}`);
   if (streak >= 3) alerts.push(`Live job failed ${streak} times in a row (cancelled runs ignored).`);
   for (const key of ["reportProblem", "viewsProblem"]) {
-    if (health[key]) alerts.push(`${key}: ${health[key]}`);
+    if (health?.[key]) alerts.push(`${key}: ${health[key]}`);
   }
   return { dispatch: !recent && !active, streak, alerts };
 }

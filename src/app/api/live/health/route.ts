@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { slateDateAt } from "@/lib/season/live-state";
-import { getLiveDataStatus, getLiveState, getSeasonGames } from "@/lib/live-data/published";
+import { getLiveHealthSnapshot } from "@/lib/live-data/published";
 import { STALE_AFTER_HOURS } from "@/lib/season/slate";
 
 export const dynamic = "force-dynamic";
@@ -13,12 +13,12 @@ export const dynamic = "force-dynamic";
  * code deploy Vercel refused.
  */
 export async function GET() {
-  const [liveState, data, games] = await Promise.all([getLiveState(), getLiveDataStatus(), getSeasonGames()]);
+  const { liveState, data, games } = await getLiveHealthSnapshot();
   const now = new Date().toISOString();
   const ageHours = (Date.parse(now) - Date.parse(liveState.generatedAt)) / 3_600_000;
   const slate = slateDateAt(now);
   const gamesToday = games.some((game) => game.etDate === slate && game.status !== "canceled");
-  const stale = gamesToday ? ageHours > STALE_AFTER_HOURS : ageHours > 36;
+  const stale = !Number.isFinite(ageHours) || (gamesToday ? ageHours > STALE_AFTER_HOURS : ageHours > 36);
   return NextResponse.json(
     {
       status: stale ? "stale" : "ok",

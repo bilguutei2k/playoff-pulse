@@ -1,12 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 const fixtures = vi.hoisted(() => ({ games: [] as { etDate: string; status: string }[] }));
 vi.mock("@/lib/live-data/published", () => ({
-  getLiveState: async () => ({
+  getLiveHealthSnapshot: async () => ({ liveState: {
     generatedAt: "2026-11-05T00:00:00Z", nextSlateEtDate: "2026-11-02",
     modelVersion: "test", notes: [],
-  }),
-  getSeasonGames: async () => fixtures.games,
-  getLiveDataStatus: async () => ({ source: "network" }),
+  }, games: fixtures.games, data: { source: "network" } }),
 }));
 import { GET } from "@/app/api/live/health/route";
 afterEach(() => vi.useRealTimers());

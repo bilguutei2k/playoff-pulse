@@ -3,11 +3,14 @@ import { readFileSync } from "node:fs";
 import { createServer, type Server } from "node:http";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+const memoization = vi.hoisted(() => ({ enabled: true }));
+
 vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
 // Reproduce React's per-render memoization in this non-React test harness.
 vi.mock("react", () => ({ cache: (fn: (...args: unknown[]) => unknown) => {
   const calls = new Map<string, unknown>();
   return (...args: unknown[]) => {
+    if (!memoization.enabled) return fn(...args);
     const key = JSON.stringify(args);
     if (!calls.has(key)) calls.set(key, fn(...args));
     return calls.get(key);
@@ -19,6 +22,7 @@ afterEach(async () => {
   server?.closeAllConnections();
   await new Promise<void>((resolve) => server ? server.close(() => resolve()) : resolve());
   server = undefined;
+  memoization.enabled = true;
   vi.unstubAllEnvs();
   vi.resetModules();
 });
@@ -32,6 +36,14 @@ async function fixture(fail?: string, malformed = false) {
   const files: Record<string, string> = {};
   for (const relative of Object.keys(manifest.files)) files[relative] = readFileSync(`data/live/${relative}`, "utf8");
   files["state.json"] = JSON.stringify(state);
+  // Make network ledger/day values distinguishable from the bundled fixture.
+  for (const relative of Object.keys(files).filter((file) => /\/(days|months)\//.test(file))) {
+    const value = JSON.parse(files[relative]);
+    for (const row of value.seals ?? value.rows) {
+      if (row.type === "seal") row.homeWinProbability = 0.123456;
+    }
+    files[relative] = JSON.stringify(value);
+  }
   const view = `site/${state.seasonLabel}/projections.json`;
   files[view] = JSON.stringify({ version: 1, seasonLabel: state.seasonLabel, fromEtDate: "2026-11-05", games: [] });
   if (fail && malformed) files[fail] = "{}";
@@ -64,7 +76,8 @@ describe("atomic published snapshot", () => {
     expect((await p.getLiveState()).generatedAt).toBe("2026-11-05T19:55:00Z");
     expect(await p.getLiveDataStatus()).toMatchObject({ source: "network", state: "network", games: "network", commit });
     expect(await p.getProjections()).not.toBeNull();
-    expect((await p.getSeasonLedger()).length).toBeGreaterThan(0);
+    expect((await p.getSeasonLedger()).filter((row) => row.type === "seal").every((row) => row.homeWinProbability === 0.123456)).toBe(true);
+    expect((await p.getDaySeals("2026-11-02")).every((row) => row.homeWinProbability === 0.123456)).toBe(true);
   });
   it.each([
     "site/2026-27/months/2026-11.json",
@@ -82,7 +95,17 @@ describe("atomic published snapshot", () => {
     expect(await p.getLiveDataStatus()).toMatchObject({ source: "bundled", state: "bundled", games: "bundled", commit: null });
     expect(ledger.length).toBeGreaterThan(0);
     expect(day.length).toBeGreaterThan(0);
+    expect(day.every((row) => row.homeWinProbability !== 0.123456)).toBe(true);
+    expect(ledger.filter((row) => row.type === "seal").every((row) => row.homeWinProbability !== 0.123456)).toBe(true);
     expect(await p.getProjections()).toBeNull();
+  });
+  it("keeps route-handler health atomic without React memoization", async () => {
+    memoization.enabled = false;
+    const { published: p, originalStamp, requests, commit } = await fixture("state.json");
+    const snapshot = await p.getLiveHealthSnapshot();
+    expect(snapshot.liveState.generatedAt).toBe(originalStamp);
+    expect(snapshot.data).toMatchObject({ source: "bundled", state: "bundled", games: "bundled" });
+    expect(requests.filter((url) => url === `/${commit}/data/live/state.json`)).toHaveLength(1);
   });
   it("also rejects an invalid artifact whose manifest hash matches", async () => {
     const { published: p, originalStamp } = await fixture("site/2026-27/months/2026-11.json", true);

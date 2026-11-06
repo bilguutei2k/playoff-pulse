@@ -66,7 +66,7 @@ const RAW_BASE = (process.env.LIVE_DATA_BASE_URL ?? `https://raw.githubuserconte
 const REFS_URL = process.env.LIVE_DATA_REFS_URL ?? `https://github.com/${REPOSITORY}.git/info/refs?service=git-upload-pack`;
 const BUNDLED_ONLY = process.env.LIVE_DATA_SOURCE === "bundled";
 
-/** How long one server instance reuses main's head commit before asking again. */
+/** How long one server instance reuses the data branch's head commit before asking again. */
 const HEAD_TTL_MS = 15_000;
 const REFS_TIMEOUT_MS = 3_000;
 const FILE_TIMEOUT_MS = 6_000;
@@ -685,23 +685,30 @@ export const getTeamPlayers = cache(async (teamId: string): Promise<TeamPlayersF
   return loadView(siteTeamPlayersPath(state.seasonLabel, teamId), (text) => parseTeamPlayers(text, state.seasonLabel, teamId));
 });
 
-/** Where this render's state and games came from, for the health endpoint. */
-export async function getLiveDataStatus(): Promise<{
-  source: "network" | "bundled";
-  branch: string | null;
-  commit: string | null;
-  manifest: boolean;
-  state: DataVia;
-  games: DataVia;
-}> {
+/**
+ * Route handlers do not share React server-component memoization. Select once here so
+ * even a failed snapshot followed by a successful retry cannot mix this HTTP response.
+ */
+export async function getLiveHealthSnapshot() {
   const source = await renderSource();
-  const [state, games] = await Promise.all([loadState(), loadGames()]);
-  return {
+  const liveState = source.kind === "network"
+    ? await fetchPublished(source, "state.json", parseState)
+    : bundledState;
+  const games = source.kind === "network"
+    ? await fetchPublished(source, `games/${liveState.season}.json`, (text) => parseGames(text, liveState.season))
+    : bundledGames(liveState.season);
+  const data = {
     source: source.kind,
     branch: source.kind === "network" ? source.branch : null,
     commit: source.kind === "network" ? source.commit : null,
     manifest: source.kind === "network" && source.manifest !== null,
-    state: state.via,
-    games: games.via,
+    state: source.kind,
+    games: source.kind,
   };
+  return { liveState, games, data };
+}
+
+/** Where this response's state and games came from. */
+export async function getLiveDataStatus() {
+  return (await getLiveHealthSnapshot()).data;
 }
