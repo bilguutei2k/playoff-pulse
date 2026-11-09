@@ -35,7 +35,7 @@ export default async function InjuriesPage() {
   const [lists, projections] = await Promise.all([getTeamInjuryLists(), getProjections()]);
   const view = lists ? buildInjuryReport({ lists, projections }) : null;
   const teams = SEASON_TEAMS.map((team) => teamDisplay(team.id))
-    .map((team) => ({ id: team.id, name: team.name, shortName: team.shortName }))
+    .map((team) => ({ id: team.id, code: team.code, name: team.name, shortName: team.shortName }))
     .sort((a, b) => a.name.localeCompare(b.name));
   const latest = view?.latestReportAt ? formatReportTime(view.latestReportAt, "") : null;
 

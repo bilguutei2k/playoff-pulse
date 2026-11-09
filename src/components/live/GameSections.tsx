@@ -20,6 +20,7 @@ import {
   type MarginMark,
   type SeasonLine,
 } from "@/lib/view/game-page";
+import { injuriesHref } from "@/lib/view/filters";
 import { basisSentence } from "@/lib/view/injury-report";
 import { filingNote, othersNote, playerPoints, type AbsenceSide } from "@/lib/view/injuries";
 import type { MarginBreakdown } from "@/lib/view/margin";
@@ -127,6 +128,7 @@ export function MatchupHeader({
           {live ? (
             <p>The live estimate uses the score and the time left; it never changes a seal.</p>
           ) : null}
+          {game.forecast && view.status.title ? <p>{view.status.title}</p> : null}
           {game.projection ? (
             <p>
               {game.projection.withInjuries
@@ -373,7 +375,11 @@ function OutSide({
       <div className="mb-1 flex items-baseline justify-between gap-3 border-b-2 border-ink pb-2">
         <span className="flex items-center gap-2">
           <TeamLogo teamId={side.teamId} size={20} />
-          <h3 className="text-[16px] font-bold">{team.shortName}</h3>
+          <h3 className="text-[16px] font-bold">
+            <Link href={injuriesHref(side.teamId)} className="hover:underline hover:underline-offset-4" title={`${team.shortName} on the injury report`}>
+              {team.shortName}
+            </Link>
+          </h3>
         </span>
         <span className="whitespace-nowrap">
           <b className="num">{side.points >= 0.05 ? `−${side.points.toFixed(1)}` : "0.0"}</b>{" "}

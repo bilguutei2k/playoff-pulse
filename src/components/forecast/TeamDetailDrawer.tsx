@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import type {
   BracketForecastRow,
   Team,
   TeamForecast,
 } from "@/lib/model/types";
+import { FOCUSABLE_SELECTOR, inertOthers, isTabbable, nextFocusIndex } from "@/lib/utils/focus";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
 
 type TeamDetailDrawerProps = {
@@ -73,20 +74,49 @@ export function TeamDetailDrawer({
   validationStatus,
   onClose,
 }: TeamDetailDrawerProps) {
+  const overlay = useRef<HTMLDivElement>(null);
+  const panel = useRef<HTMLElement>(null);
+  // The latest close handler, so the dialog's setup below does not re-run (and move
+  // focus) each time the dashboard re-renders with a new arrow function.
+  const close = useRef(onClose);
   useEffect(() => {
-    if (!team) {
-      return;
-    }
+    close.current = onClose;
+  }, [onClose]);
+
+  const open = team !== null && forecast !== null;
+
+  // A modal dialog: focus moves in on open and back to the opener on close, Tab stays
+  // inside, Escape closes, and the page behind is inert while it is open.
+  useEffect(() => {
+    if (!open) return;
+    const dialog = panel.current;
+    const root = overlay.current;
+    if (!dialog || !root) return;
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const restore = inertOthers(root);
+    dialog.focus();
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose();
+        event.preventDefault();
+        close.current();
+        return;
       }
+      if (event.key !== "Tab" || !dialog) return;
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(isTabbable);
+      const current = focusable.indexOf(document.activeElement as HTMLElement);
+      const next = nextFocusIndex(focusable.length, current, event.shiftKey);
+      event.preventDefault();
+      (next === -1 ? dialog : focusable[next]).focus();
     }
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onClose, team]);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      restore();
+      opener?.focus();
+    };
+  }, [open]);
 
   if (!team || !forecast) {
     return null;
@@ -128,7 +158,7 @@ export function TeamDetailDrawer({
   ] as const;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-[rgba(26,24,20,0.28)]">
+    <div ref={overlay} className="fixed inset-0 z-50 flex justify-end bg-[rgba(26,24,20,0.28)]">
       <button
         type="button"
         className="absolute inset-0 cursor-default"
@@ -137,7 +167,9 @@ export function TeamDetailDrawer({
         onClick={onClose}
       />
       <aside
-        className="relative h-full w-full max-w-[620px] overflow-y-auto border-l-2 border-[var(--color-border-strong)] bg-[var(--color-panel-primary)] shadow-2xl pp-scan-lite"
+        ref={panel}
+        tabIndex={-1}
+        className="relative h-full w-full max-w-[620px] overflow-y-auto border-l-2 border-[var(--color-border-strong)] bg-[var(--color-panel-primary)] shadow-2xl pp-scan-lite outline-none"
         aria-modal="true"
         role="dialog"
         aria-labelledby="team-detail-title"

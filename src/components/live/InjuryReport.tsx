@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useMemo, useState } from "react";
+import { useCallback, useId, useMemo } from "react";
 import { InjuryTable } from "@/components/live/InjuryTable";
 import { TeamLogo } from "@/components/live/TeamLogo";
+import { useQueryState } from "@/components/live/useQueryState";
+import { INJURIES_DEFAULT, parseInjuriesQuery, serializeInjuriesQuery, type InjuriesQuery } from "@/lib/view/filters";
 import { STATUS_FILTERS, type InjuryBlock, type InjuryReportView, type InjuryRowView } from "@/lib/view/injury-report";
-import type { StatusFilterKey } from "@/lib/view/players";
-
-type StatusChoice = StatusFilterKey | "all";
 
 /**
  * The injuries page's lists with a team and a status filter. Everything is rendered on
- * the server first; filtering only hides rows, lists and games.
+ * the server first; filtering only hides rows, lists and games. The filters live in the
+ * URL ("/injuries?team=DET&status=out"), so a link reproduces the view, a game page can
+ * open a team's list, and Back restores the previous selection.
  */
 export function InjuryReport({
   view,
@@ -19,10 +20,11 @@ export function InjuryReport({
 }: {
   view: InjuryReportView;
   /** Every team for the team filter, by name. */
-  teams: Array<{ id: string; name: string; shortName: string }>;
+  teams: Array<{ id: string; code: string; name: string; shortName: string }>;
 }) {
-  const [team, setTeam] = useState<string>("all");
-  const [status, setStatus] = useState<StatusChoice>("all");
+  const parse = useCallback((search: string) => parseInjuriesQuery(search, teams), [teams]);
+  const serialize = useCallback((state: InjuriesQuery) => serializeInjuriesQuery(state, teams), [teams]);
+  const [{ team, status }, update] = useQueryState(INJURIES_DEFAULT, parse, serialize);
   const selectId = useId();
 
   const rowsOf = useMemo(
@@ -49,7 +51,7 @@ export function InjuryReport({
       <div className="flex flex-col gap-4 rounded-[var(--radius-card)] border border-line bg-panel p-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <div className="min-w-0 sm:w-64">
           <label htmlFor={selectId} className="kicker block">Team</label>
-          <select id={selectId} value={team} onChange={(event) => setTeam(event.target.value)} className="pp-select mt-1.5">
+          <select id={selectId} value={team} onChange={(event) => update({ team: event.target.value, status })} className="pp-select mt-1.5">
             <option value="all">All teams</option>
             {teams.map((option) => (
               <option key={option.id} value={option.id}>{option.name}</option>
@@ -64,7 +66,7 @@ export function InjuryReport({
                 key={option.key}
                 type="button"
                 aria-pressed={status === option.key}
-                onClick={() => setStatus(option.key)}
+                onClick={() => update({ team, status: option.key })}
                 className={`pp-button pp-button-compact min-h-9 ${status === option.key ? "pp-button-active" : ""}`}
               >
                 {option.label}
@@ -79,7 +81,7 @@ export function InjuryReport({
         {filtered ? (
           <>
             {" · "}
-            <button type="button" className="pp-link font-normal" onClick={() => { setTeam("all"); setStatus("all"); }}>
+            <button type="button" className="pp-link font-normal" onClick={() => update(INJURIES_DEFAULT)}>
               Clear filters
             </button>
           </>

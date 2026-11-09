@@ -1,9 +1,11 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import { StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLogo } from "@/components/live/TeamLogo";
+import { useQueryState } from "@/components/live/useQueryState";
+import { parsePlayersQuery, serializePlayersQuery, type PlayersQuery, type PlayersQueryOptions } from "@/lib/view/filters";
 import { formatAverage, formatImpact, formatShooting, type PlayerTableRow, type StatLine } from "@/lib/view/players";
 
 export type SortKey =
@@ -66,6 +68,28 @@ const COLUMNS: Column[] = [
 ];
 
 const MINUTE_FILTERS = [0, 10, 20, 30];
+/** Every column a link may sort by; a `sort` outside this list falls back to the default. */
+const SORT_KEYS = [
+  "name",
+  "team",
+  "games",
+  "starts",
+  "minutes",
+  "points",
+  "rebounds",
+  "assists",
+  "steals",
+  "blocks",
+  "turnovers",
+  "fieldGoal",
+  "threePoint",
+  "freeThrow",
+  "impact",
+  "status",
+] as const satisfies ReadonlyArray<SortKey>;
+
+/** Names, teams and statuses sort A to Z first; every number sorts largest first. */
+const defaultDescending = (key: string) => !(key === "name" || key === "team" || key === "status");
 
 /** Accents and case dropped, for the name search. */
 function searchKey(value: string): string {
@@ -84,17 +108,41 @@ export function PlayersTable({
   rows: PlayerTableRow[];
   caption: string;
   showTeam?: boolean;
-  /** Search, minimum minutes and team filters. */
+  /** Search, minimum minutes and team filters. With them, the view is kept in the URL. */
   controls?: boolean;
   initialSort?: { key: SortKey; descending: boolean };
   initialMinutes?: number;
   /** Team filter options; omit to hide the filter. */
-  teams?: Array<{ id: string; name: string }>;
+  teams?: Array<{ id: string; code: string; name: string }>;
 }) {
-  const [sort, setSort] = useState(initialSort);
-  const [query, setQuery] = useState("");
-  const [minutes, setMinutes] = useState(initialMinutes);
-  const [team, setTeam] = useState("all");
+  // The filters and sort as one state, mirrored in the URL when the table has controls:
+  // a link reproduces the view, and Back restores the previous selection. The team page's
+  // roster table, without controls, keeps its sort to itself.
+  const defaults = useMemo<PlayersQuery>(
+    () => ({ q: "", min: initialMinutes, team: "all", sort: initialSort.key, desc: initialSort.descending }),
+    [initialMinutes, initialSort.key, initialSort.descending],
+  );
+  const options = useMemo<PlayersQueryOptions>(
+    () => ({ sortKeys: SORT_KEYS, minutes: MINUTE_FILTERS, teams: teams ?? [], defaultDescending }),
+    [teams],
+  );
+  const parse = useCallback(
+    (search: string) => (controls ? parsePlayersQuery(search, defaults, options) : defaults),
+    [controls, defaults, options],
+  );
+  const serialize = useCallback(
+    (state: PlayersQuery) => (controls ? serializePlayersQuery(state, defaults, options) : ""),
+    [controls, defaults, options],
+  );
+  const [state, update] = useQueryState(defaults, parse, serialize);
+  const [localSort, setLocalSort] = useState(initialSort);
+  const sort = useMemo(
+    () => (controls ? { key: state.sort as SortKey, descending: state.desc } : localSort),
+    [controls, state.sort, state.desc, localSort],
+  );
+  const query = state.q;
+  const minutes = state.min;
+  const team = state.team;
   const ids = useId();
 
   const columns = useMemo<Column[]>(
@@ -153,12 +201,11 @@ export function PlayersTable({
     });
   }, [rows, query, minutes, team, sort, columns]);
 
-  const sortBy = (key: SortKey) =>
-    setSort((current) =>
-      current.key === key
-        ? { key, descending: !current.descending }
-        : { key, descending: !(key === "name" || key === "team" || key === "status") },
-    );
+  const sortBy = (key: SortKey) => {
+    const next = sort.key === key ? { key, descending: !sort.descending } : { key, descending: defaultDescending(key) };
+    if (controls) update({ ...state, sort: next.key, desc: next.descending }, "replace");
+    else setLocalSort(next);
+  };
 
   const header = (key: SortKey, label: string, title: string, className = "") => {
     const active = sort.key === key;
@@ -194,7 +241,7 @@ export function PlayersTable({
               id={`${ids}-search`}
               type="search"
               value={query}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => update({ ...state, q: event.target.value }, "replace")}
               placeholder="Player name"
               autoComplete="off"
               className="pp-select mt-1.5"
@@ -202,7 +249,7 @@ export function PlayersTable({
           </div>
           <div>
             <label htmlFor={`${ids}-minutes`} className="kicker block">Minutes per game</label>
-            <select id={`${ids}-minutes`} value={minutes} onChange={(event) => setMinutes(Number(event.target.value))} className="pp-select mt-1.5">
+            <select id={`${ids}-minutes`} value={minutes} onChange={(event) => update({ ...state, min: Number(event.target.value) })} className="pp-select mt-1.5">
               {MINUTE_FILTERS.map((value) => (
                 <option key={value} value={value}>{value === 0 ? "Any, including no games" : `At least ${value}`}</option>
               ))}
@@ -211,7 +258,7 @@ export function PlayersTable({
           {teams ? (
             <div>
               <label htmlFor={`${ids}-team`} className="kicker block">Team</label>
-              <select id={`${ids}-team`} value={team} onChange={(event) => setTeam(event.target.value)} className="pp-select mt-1.5">
+              <select id={`${ids}-team`} value={team} onChange={(event) => update({ ...state, team: event.target.value })} className="pp-select mt-1.5">
                 <option value="all">All teams</option>
                 {teams.map((option) => (
                   <option key={option.id} value={option.id}>{option.name}</option>
@@ -224,6 +271,14 @@ export function PlayersTable({
       {controls ? (
         <p className="num mb-3 text-[12.5px] text-ink-2" role="status">
           {shown.length} of {rows.length} players
+          {query.trim() !== "" || minutes !== defaults.min || team !== "all" ? (
+            <>
+              {" · "}
+              <button type="button" className="pp-link font-normal" onClick={() => update({ ...defaults, sort: state.sort, desc: state.desc })}>
+                Clear filters
+              </button>
+            </>
+          ) : null}
         </p>
       ) : null}
       <div className="max-h-[78vh] overflow-auto rounded-[var(--radius-card)] border border-line bg-panel xl:max-h-none xl:overflow-visible">

@@ -26,7 +26,7 @@ export default async function PlayersPage() {
   const [index, lists] = await Promise.all([getPlayerIndex(), getTeamInjuryLists()]);
   const rows = index ? playerTableRows(index, lists) : [];
   const teams = SEASON_TEAMS.map((team) => teamDisplay(team.id))
-    .map((team) => ({ id: team.id, name: team.name }))
+    .map((team) => ({ id: team.id, code: team.code, name: team.name }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (

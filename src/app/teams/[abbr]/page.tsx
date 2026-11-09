@@ -26,6 +26,7 @@ import { teamById } from "@/lib/season/teams";
 import type { PublishedAbsence } from "@/lib/season/types";
 import { formatLongDay, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
+import { injuriesHref } from "@/lib/view/filters";
 import { blockFromList } from "@/lib/view/injury-report";
 import { formatRating, oddsRows, type OddsRow } from "@/lib/view/odds";
 import { teamRoster } from "@/lib/view/players";
@@ -520,7 +521,7 @@ export default async function TeamPage({ params }: Params) {
           <section aria-labelledby="injuries-title" className="mt-16">
             <div className="sh">
               <h2 id="injuries-title">Injury list for the next game</h2>
-              <Link href="/injuries">Every team&apos;s list</Link>
+              <Link href={injuriesHref(team.id)}>On the injury report</Link>
             </div>
             {injuryBlock ? (
               <>
