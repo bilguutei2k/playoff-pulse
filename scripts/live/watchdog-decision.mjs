@@ -23,6 +23,13 @@
 //             as in scripts/live/chain-decision.sh).
 //   paused    live-forecast was disabled by hand, which is how the chain is stopped: no
 //             dispatch, no alerts.
+//   pages     (pageFreshnessAlerts) What readers get: a GET of `/`, `/record` and
+//             yesterday's day page as the CDN serves them, each compared with
+//             /api/live/health, which is never cached. A copy whose state stamp is more
+//             than 30 minutes behind the server's, or served with an `age` header over
+//             30 minutes, is reported once per day per route. On 2026-11-09 a day page
+//             was served as rendered 44 hours earlier while the homepage was current;
+//             `expireTime` (next.config.ts) now bounds that, and this probe observes it.
 
 export const LIMITS = Object.freeze({
   idleMinutes: 25,
@@ -32,6 +39,9 @@ export const LIMITS = Object.freeze({
   tipLookbackHours: 24,
   failureStreak: 3,
 });
+
+/** The page probe: routes a reader lands on cold, and how far behind the server a copy may be. */
+export const PAGE_LIMITS = Object.freeze({ staleMinutes: 30, paths: ["/", "/record"] });
 
 /** The v2 model's version and the first ET date it sealed (2026-11-02). */
 export const V2 = Object.freeze({ modelVersion: "live-2026.27-v2", firstEtDate: "2026-11-02" });
@@ -155,6 +165,55 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
   }
 
   return { paused: false, dispatch, active, recent, streak, alerts };
+}
+
+/**
+ * The state stamp a served page carries: the masthead chip's
+ * `<time datetime="…" data-state-stamp>` (src/components/layout/FreshnessChip.tsx), or null
+ * when the HTML has none.
+ */
+export function renderedStamp(html) {
+  for (const match of String(html ?? "").matchAll(/<time\b([^>]*)>/gi)) {
+    const attributes = match[1];
+    if (!/\bdata-state-stamp\b/i.test(attributes)) continue;
+    const stamp = /\bdatetime="([^"]*)"/i.exec(attributes);
+    return stamp && stamp[1] ? stamp[1] : null;
+  }
+  return null;
+}
+
+/**
+ * Alerts for served pages that lag the server. `health` is /api/live/health's body (its
+ * `generatedAt` is the state the server has now), or null when it could not be read; each
+ * page is one GET as a reader gets it: `status`, the `age` header in seconds (or null),
+ * `x-vercel-cache` (or null) and the stamp from its HTML (`renderedAt`, or null).
+ * @returns {Array<{key: string, text: string}>}
+ */
+export function pageFreshnessAlerts({ health, pages }) {
+  const serverStamp = health && typeof health.generatedAt === "string" ? health.generatedAt : null;
+  const serverAt = serverStamp === null ? NaN : Date.parse(serverStamp);
+  const alerts = [];
+  for (const page of pages) {
+    if (page.status !== 200 || page.renderedAt === null) {
+      alerts.push({
+        key: `unreadable-page-${page.path}`,
+        text: `GET ${page.path} returned ${page.status}${page.renderedAt === null ? " with no state stamp in the page" : ""}, so its freshness could not be checked.`,
+      });
+      continue;
+    }
+    const renderedAt = Date.parse(page.renderedAt);
+    const lagMinutes = Number.isFinite(serverAt) && Number.isFinite(renderedAt) ? (serverAt - renderedAt) / MINUTE : null;
+    const lagging = lagMinutes !== null && lagMinutes > PAGE_LIMITS.staleMinutes;
+    const oldCopy = page.age !== null && Number.isFinite(page.age) && page.age > PAGE_LIMITS.staleMinutes * 60;
+    if (!lagging && !oldCopy) continue;
+    const served = page.age !== null ? ` (age ${page.age} s, x-vercel-cache ${page.cache ?? "none"})` : "";
+    const behind = lagMinutes !== null ? `, ${Math.round(lagMinutes)} minutes behind the server's ${serverStamp}` : "";
+    alerts.push({
+      key: `stale-page-${page.path}`,
+      text: `GET ${page.path} served a copy whose state is from ${page.renderedAt}${behind}${served}; the limit is ${PAGE_LIMITS.staleMinutes} minutes.`,
+    });
+  }
+  return alerts;
 }
 
 /** The keys a watchdog issue or comment already reported, from its hidden markers. */

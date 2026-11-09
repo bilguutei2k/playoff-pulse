@@ -1,6 +1,6 @@
 // Helpers for tests that run the live job's shell scripts (scripts/live/*.sh) against
 // throwaway git repositories and fake `gh` and `curl` commands.
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -53,6 +53,22 @@ export function run(command: string, args: string[], cwd: string, extra: Record<
   const result = spawnSync(command, args, { cwd, env: cleanEnv(extra), encoding: "utf8" });
   if (result.error) throw result.error;
   return { status: result.status ?? -1, stdout: result.stdout, stderr: result.stderr };
+}
+
+/**
+ * Like `run`, without blocking the event loop, for a command that must reach a server the
+ * test itself is running (the watchdog's fake site). Never throws on a non-zero exit.
+ */
+export function runAsync(command: string, args: string[], cwd: string, extra: Record<string, string> = {}): Promise<RunResult> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, { cwd, env: cleanEnv(extra), stdio: ["ignore", "pipe", "pipe"] });
+    let stdout = "";
+    let stderr = "";
+    child.stdout.setEncoding("utf8").on("data", (chunk: string) => (stdout += chunk));
+    child.stderr.setEncoding("utf8").on("data", (chunk: string) => (stderr += chunk));
+    child.on("error", reject);
+    child.on("close", (status) => resolve({ status: status ?? -1, stdout, stderr }));
+  });
 }
 
 const created: string[] = [];

@@ -3,12 +3,16 @@ import "./globals.css";
 import { schibsted } from "@/app/fonts";
 import { Header } from "@/components/layout/Header";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { FreshnessGuard } from "@/components/live/FreshnessGuard";
+import { getLiveState } from "@/lib/live-data/published";
 
 const SITE_URL = "https://548-sable.vercel.app";
 
-// Every page carries the header's "Updated N min ago" chip, read from main's published
-// state at render time (src/lib/live-data/published.ts), so every page re-renders about
-// once a minute. Data commits do not deploy.
+// Every page carries the header's "Updated N min ago" chip, read from the published state
+// at render time (src/lib/live-data/published.ts), so every page is regenerated about once
+// a minute; the CDN may serve the previous copy for up to `expireTime` (next.config.ts)
+// past that, and FreshnessGuard below asks the server for a newer one when the copy a
+// reader got lags it. Data commits do not deploy.
 export const revalidate = 60;
 const TAGLINE = "NBA forecasts, updated through the day.";
 
@@ -26,11 +30,12 @@ export const viewport: Viewport = {
   themeColor: "#111111",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const liveState = await getLiveState();
   return (
     <html
       lang="en"
@@ -45,6 +50,7 @@ export default function RootLayout({
         </a>
         <Header />
         <div id="main" className="flex-1">
+          <FreshnessGuard generatedAt={liveState.generatedAt} />
           {children}
         </div>
         <SiteFooter />

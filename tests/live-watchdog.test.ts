@@ -1,7 +1,7 @@
 // The live watchdog's pure decisions (scripts/live/watchdog-decision.mjs).
 import { describe, expect, it } from "vitest";
 // @ts-expect-error a plain Node module with no types, run by the watchdog workflow without a build
-import { alertBody, decideWatchdog, failureStreak, reportedKeys } from "../scripts/live/watchdog-decision.mjs";
+import { alertBody, decideWatchdog, failureStreak, pageFreshnessAlerts, renderedStamp, reportedKeys } from "../scripts/live/watchdog-decision.mjs";
 import { liveScript, run as runCommand } from "./support/shell";
 
 type Alert = { key: string; text: string };
@@ -154,5 +154,48 @@ describe("issue text", () => {
     expect(body).toContain("cc @bilguutei2k");
     expect([...reportedKeys(["unrelated", body, "<!-- live-watchdog: stale-x -->"])]).toEqual(["restart", "unsealed-g1", "stale-x"]);
     expect(reportedKeys([null, ""]).size).toBe(0);
+  });
+});
+
+describe("served pages", () => {
+  const chip = (stamp: string) => `<html><body><p class="x"><time datetime="${stamp}" data-state-stamp="">Updated 4 min ago</time></p><time datetime="2020-01-01">other</time></body></html>`;
+  const page = (overrides: Record<string, unknown> = {}) => ({ path: "/", status: 200, renderedAt: now, age: 30, cache: "HIT", ...overrides });
+  const pageKeys = (pages: unknown[], health: unknown = { generatedAt: now }) =>
+    (pageFreshnessAlerts({ health, pages }) as Alert[]).map((alert) => alert.key);
+
+  it("reads the chip's stamp, not another <time>, and null without one", () => {
+    expect(renderedStamp(chip(now))).toBe(now);
+    expect(renderedStamp(`<time data-state-stamp="" dateTime="${now}">x</time>`)).toBe(now);
+    expect(renderedStamp("<html><time datetime=\"2020-01-01\">x</time></html>")).toBeNull();
+    expect(renderedStamp("")).toBeNull();
+    expect(renderedStamp(null)).toBeNull();
+  });
+
+  it("alerts strictly past 30 minutes behind the server, keyed by route", () => {
+    expect(pageKeys([page({ renderedAt: "2026-11-05T19:30:00Z" })])).toEqual([]);
+    expect(pageKeys([page({ renderedAt: "2026-11-05T19:29:59Z" }), page({ path: "/record", renderedAt: "2026-11-05T19:29:59Z" })])).toEqual([
+      "stale-page-/",
+      "stale-page-/record",
+    ]);
+    const text = (pageFreshnessAlerts({ health: { generatedAt: now }, pages: [page({ renderedAt: "2026-11-05T17:00:00Z" })] }) as Alert[])[0].text;
+    expect(text).toContain("180 minutes behind the server's 2026-11-05T20:00:00Z");
+    expect(text).toContain("age 30 s, x-vercel-cache HIT");
+  });
+
+  it("alerts on an old copy by its age header even when the server's stamp is unknown", () => {
+    expect(pageKeys([page({ age: 1800 })], null)).toEqual([]);
+    expect(pageKeys([page({ age: 1801 })], null)).toEqual(["stale-page-/"]);
+    expect(pageKeys([page({ age: null, renderedAt: "2026-11-05T10:00:00Z" })], null)).toEqual([]);
+  });
+
+  it("does not alert on a copy newer than the server or on a normal fresh copy", () => {
+    expect(pageKeys([page({ renderedAt: "2026-11-05T20:05:00Z" })])).toEqual([]);
+    expect(pageKeys([page()])).toEqual([]);
+  });
+
+  it("reports a route that did not answer 200 or carried no stamp as unreadable", () => {
+    expect(pageKeys([page({ status: 500 })])).toEqual(["unreadable-page-/"]);
+    expect(pageKeys([page({ renderedAt: null })])).toEqual(["unreadable-page-/"]);
+    expect(pageKeys([page({ renderedAt: "garbage" })])).toEqual([]);
   });
 });

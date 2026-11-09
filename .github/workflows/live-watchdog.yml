@@ -6,9 +6,10 @@ name: Live watchdog
 # it dispatches one on main, which restarts the chain. It reports, in one issue per UTC day
 # ("Live watchdog on <date>", each condition once), a restart, live-data's state.json older
 # than 2.5 hours, a game that tipped more than 10 minutes ago without a v2 final or morning
-# seal, three or more failed live runs in a row, and live-forecast being disabled other
-# than by hand. While live-forecast is disabled by hand (how the chain is stopped) it does
-# nothing.
+# seal, three or more failed live runs in a row, live-forecast being disabled other than
+# by hand, and a served page (`/`, `/record`, yesterday's day page, read from SITE_URL as a
+# reader gets them) whose state is more than 30 minutes behind /api/live/health. While
+# live-forecast is disabled by hand (how the chain is stopped) it does nothing.
 #
 # It cannot fail or slow the live job: it is a separate workflow with its own concurrency
 # group, it only reads live-data, and its only write to the chain is a dispatch, which
@@ -83,8 +84,9 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Check the chain, the data and the seals
+      - name: Check the chain, the data, the seals and the served pages
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          SITE_URL: https://548-sable.vercel.app
         run: node scripts/live/watchdog.mjs

@@ -3,6 +3,7 @@ import { TeamLogo } from "@/components/live/TeamLogo";
 import { Tile } from "@/components/live/Tile";
 import { bracketView, outPoints, type BracketSide, type BracketView } from "@/lib/view/bracket";
 import type { DayGame } from "@/lib/view/day";
+import { OUT_DEFINITION, tileHelp } from "@/lib/view/how-to-read";
 import { pairColors, type TeamLine } from "@/lib/view/teams";
 
 function Arm({ side, color, large }: { side: BracketSide; color: string; large: boolean }) {
@@ -76,8 +77,9 @@ export function BracketContext({ view, marketLabel = "Market" }: { view: Bracket
   }
   for (const note of view.notes) parts.push(<span key={note}>{note}</span>);
   if (view.out.length > 0 || view.unfiled.length > 0) {
+    // "Out DET −5.4 pts": points of margin, so the figure is not read as a count of players.
     parts.push(
-      <span key="out">
+      <span key="out" title={OUT_DEFINITION}>
         Out{" "}
         {view.out.map((side, index) => (
           <span key={side.code}>
@@ -87,6 +89,7 @@ export function BracketContext({ view, marketLabel = "Market" }: { view: Bracket
             </b>
           </span>
         ))}
+        {view.out.length > 0 ? " pts" : null}
         {view.unfiled.map((code) => (
           <span key={code}> · {code} not filed</span>
         ))}
@@ -156,6 +159,7 @@ export function GameCard({
         href={`/game/${game.id}`}
         className="absolute inset-0 -m-2 outline-offset-0 group-hover:bg-ink/[0.025]"
         aria-label={cardLabel(view)}
+        title={view.tile.kind === "none" ? undefined : tileHelp(view.tile.kind)}
       />
     </article>
   );

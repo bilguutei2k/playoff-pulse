@@ -4,12 +4,15 @@ import { DateStrip, dayHref } from "@/components/live/DateStrip";
 import { FinalsChart, FinalsTable } from "@/components/live/DayFinals";
 import { GameCard } from "@/components/live/GameCard";
 import { RecordGlance, TitleRace } from "@/components/live/HomePanels";
+import { Tile } from "@/components/live/Tile";
 import { loadDayView } from "@/lib/live-data/day-loader";
 import { getGameCountsByDate, getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { formatLongDay, formatShortDay } from "@/lib/utils/dates";
+import type { TileKind } from "@/lib/view/bracket";
 import type { DayGame, DayView } from "@/lib/view/day";
 import { daySummary } from "@/lib/view/day-summary";
+import { OUT_DEFINITION, TILE_DEFINITION, TILE_GLYPHS } from "@/lib/view/how-to-read";
 import { basisSummary } from "@/lib/view/injury-report";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { recordsThrough, teamLines, type TeamLine } from "@/lib/view/teams";
@@ -43,18 +46,12 @@ function HowToRead({ view }: { view: DayView }) {
       "Team line",
       "Length is the team's chance in 548's number, in its color. The lines join into the tile, which names the side 548 favors.",
     ],
-    [
-      "Tile",
-      "Solid: sealed before tip and scored. Outline: the live estimate, from the score and the clock. Dashed: never scored (a provisional number or a projection). Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored.",
-    ],
+    ["Tile", TILE_DEFINITION],
     [
       "Grey tick",
       `The market: the ${provider} moneyline via ESPN, vig removed. Beside sealed numbers only, for reference, never as advice. On a live game a black tick marks the pregame seal.`,
     ],
-    [
-      "Out",
-      "Points of margin each side gives up to players on the NBA injury report, weighted by status. A team that has not filed counts the players who missed its last game. Unknown future injuries, minutes shifting to teammates and matchups are not modeled.",
-    ],
+    ["Out", OUT_DEFINITION],
   ];
   return (
     <section aria-labelledby="how-to-read" className="mt-16">
@@ -71,6 +68,44 @@ function HowToRead({ view }: { view: DayView }) {
         ))}
       </dl>
     </section>
+  );
+}
+
+/** Which tile styles the page's cards use, in the key's order. */
+function tileKinds(games: readonly DayGame[]): TileKind[] {
+  const live = (game: DayGame) => game.status === "in-progress" && game.inGameHomeProbability !== null;
+  const kinds: TileKind[] = [];
+  if (games.some((game) => game.forecast?.source === "sealed" && !live(game))) kinds.push("sealed");
+  if (games.some(live)) kinds.push("live");
+  if (games.some((game) => game.projection !== null || game.forecast?.source === "provisional")) kinds.push("dash");
+  return kinds;
+}
+
+/**
+ * The key above the cards: each tile style on the page and what it means, in the same
+ * words as "How to read a card" below, so a first visit learns which number is scored
+ * and which can change before scrolling past the games.
+ */
+function TileKey({ kinds }: { kinds: TileKind[] }) {
+  if (kinds.length === 0) return null;
+  return (
+    <p className="mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] leading-5 text-ink-2">
+      {kinds.map((kind) => (
+        <span key={kind} className="inline-flex items-center gap-2">
+          <span aria-hidden>
+            <Tile kind={kind} size="xs" className="!h-[18px] !min-w-[26px] !px-1 !text-[10.5px]">
+              %
+            </Tile>
+          </span>
+          <span>
+            <b className="font-semibold text-ink">{TILE_GLYPHS[kind].word}:</b> {TILE_GLYPHS[kind].text}
+          </span>
+        </span>
+      ))}
+      <Link href="#how-to-read" className="pp-link">
+        How to read a card
+      </Link>
+    </p>
   );
 }
 
@@ -231,6 +266,7 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
 
         <div className={`grid items-start gap-x-[72px] gap-y-4 ${home ? "lg:grid-cols-[minmax(0,1fr)_340px]" : ""}`}>
           <div className="min-w-0">
+            <TileKey kinds={tileKinds([...view.games, ...nextGames])} />
             {view.games.length === 0 ? (
               <section aria-labelledby="empty-day" className="mb-14">
                 <div className="sh">

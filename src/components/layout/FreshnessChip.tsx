@@ -20,7 +20,8 @@ const noTickOnServer = () => null;
  * model version and policy revision from 1280 px. Before hydration it shows the fixed ET stamp, because
  * the server cannot know "now". `stored` means the live data could not be read and
  * the page shows the copy bundled with the deployment, which can be days old; the
- * line then says so and is always amber.
+ * line then says so and is always amber. `data-state-stamp` marks the stamp for the
+ * watchdog's page probe (scripts/live/watchdog.mjs), which reads it from the served HTML.
  */
 export function FreshnessChip({
   iso,
@@ -50,7 +51,9 @@ export function FreshnessChip({
       {stale ? <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-[#f5c26b]" /> : null}
       <span>
         {stored ? <span className="font-semibold">Stored copy · </span> : null}
-        <time dateTime={iso}>{stored ? "updated" : "Updated"} {when}</time>
+        <time dateTime={iso} data-state-stamp="">
+          {stored ? "updated" : "Updated"} {when}
+        </time>
         <span className="hidden xl:inline">
           <span aria-hidden className="mx-1.5">·</span>
           <span className="num">{modelLabel}</span>
