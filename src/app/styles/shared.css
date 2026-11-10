@@ -6,13 +6,20 @@
  */
 @layer components {
   /*
-   * Figures in text and tables. Schibsted's tabular figures read as monospaced at
-   * small sizes, so v8 keeps its default figures here; tiles, scores and large
-   * figures, which stack, use tabular ones.
+   * Figures that line up (DS-9): table body cells marked .nm or .num set tabular
+   * figures, so decimals in a column align. Everywhere else .num keeps Schibsted's
+   * proportional figures: its tabular set also widens the period and comma, which
+   * reads as monospace in version strings, dates and prose ("2026 . 27"). Use
+   * .tabular for a stack of figures outside a table.
    */
   .num,
   .pp-number {
     letter-spacing: 0;
+  }
+
+  :is(td, tbody th).num,
+  .tb td.nm {
+    font-variant-numeric: tabular-nums;
   }
 
   .tabular {
@@ -95,7 +102,27 @@
 
   .sh > :is(a, span, p) {
     color: var(--color-ink-2);
-    font-size: 13px;
+    font-size: var(--text-13);
+  }
+
+  /*
+   * A link at the right of a heading reads as a link (VB-10): ink, an arrow, an
+   * underline on hover, and it stays on the heading's line on phones when it fits.
+   */
+  .sh > a {
+    color: var(--color-ink);
+    flex: none;
+    font-size: var(--text-14);
+    font-weight: 600;
+    margin-left: auto;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+
+  .sh > a::after {
+    content: "\2192";
+    content: "\2192" / "";
+    margin-left: 0.3em;
   }
 
   .sh > a:hover {
@@ -106,7 +133,7 @@
 
   .sh h2,
   .sh h3 {
-    font-size: 21px;
+    font-size: var(--text-21);
     font-weight: 800;
     line-height: 1.2;
   }
@@ -121,6 +148,21 @@
     .sh h3 {
       flex: 1 0 100%;
     }
+
+    .sh:has(> a) :is(h2, h3) {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  }
+
+  /* A heading inside a section (SectionHeading size="sub"). */
+  .sh-sub {
+    border-top-width: 1px;
+    padding-top: 10px;
+  }
+
+  .sh.sh-sub :is(h2, h3) {
+    font-size: var(--text-17);
   }
 
   /* A notice: stale data, missing scores, an explanation that must stay visible. */
@@ -199,14 +241,14 @@
   /* Plain v8 table: an ink rule under the head, hairlines between rows. */
   .tb {
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: var(--text-14);
     width: 100%;
   }
 
   .tb th {
     border-bottom: 2px solid var(--color-ink);
     color: var(--color-ink-2);
-    font-size: 12.5px;
+    font-size: var(--text-13);
     font-weight: 500;
     padding: 0 0 8px;
     text-align: left;
@@ -218,7 +260,7 @@
   .tb tbody th {
     border-bottom: 1px solid var(--color-line);
     color: var(--color-ink);
-    font-size: 14px;
+    font-size: var(--text-14);
     font-weight: 400;
     padding: 9px 0;
     vertical-align: middle;
@@ -370,6 +412,208 @@
     min-height: 40px;
     padding: 6px 10px;
     width: 100%;
+  }
+
+  /*
+   * TeamLink (src/components/live/TeamLink.tsx): a team's logo and name. The name
+   * never ellipsizes or clips. Hover underlines the name; color stays the text's.
+   */
+  .tl {
+    align-items: center;
+    color: inherit;
+    column-gap: var(--tl-gap, 0.4em);
+    display: inline-flex;
+    max-width: 100%;
+    text-decoration: none;
+  }
+
+  .tl-logo {
+    align-self: center;
+    display: flex;
+    flex: none;
+  }
+
+  .tl-t {
+    align-self: baseline;
+    min-width: 0;
+  }
+
+  .tl-code {
+    white-space: nowrap;
+  }
+
+  a.tl:hover :is(.tl-t, .tl-v) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  /* Above a sibling whole-card link (the card's absolute inset-0 cover). */
+  .tl-raised {
+    position: relative;
+    z-index: 1;
+  }
+
+  /*
+   * form="auto": the slot (.tl-n) asks for the full name's width and can shrink to
+   * the code's; inside it, each form prints only while the slot's width (100cqi)
+   * lies between its own width (--lo) and the next longer form's (--hi). The
+   * widths come from lib/view/team-name-widths.ts, measured at weight 900.
+   */
+  .tl-n {
+    align-self: baseline;
+    display: inline-grid;
+    flex: 0 1 auto;
+    grid-template-columns: minmax(var(--tl-min), var(--tl-max));
+    min-width: var(--tl-min);
+  }
+
+  .tl-box {
+    align-items: baseline;
+    container-type: inline-size;
+    display: grid;
+  }
+
+  .tl-v {
+    font-size: clamp(0px, min(100cqi - var(--lo), var(--hi) - 100cqi) * 100000, 1em);
+    grid-area: 1 / 1;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* SortHeader (src/components/live/SortHeader.tsx). */
+  .sort-head {
+    align-items: center;
+    display: inline-flex;
+    gap: 2px;
+    vertical-align: bottom;
+  }
+
+  .sort-btn {
+    align-items: center;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    gap: 2px;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  /* A 44px-tall touch area without a taller heading row. */
+  .sort-btn::before {
+    content: "";
+    inset: -12px -4px;
+    position: absolute;
+  }
+
+  .sort-btn:hover,
+  .sort-btn.is-active {
+    color: var(--color-ink);
+  }
+
+  .sort-arrow {
+    flex: none;
+    height: 12px;
+    opacity: 0;
+    width: 12px;
+  }
+
+  .sort-btn.is-active .sort-arrow {
+    opacity: 1;
+  }
+
+  .sort-btn:not(.is-active):hover .sort-arrow {
+    opacity: 0.35;
+  }
+
+  .sort-arrow.is-up {
+    transform: rotate(180deg);
+  }
+
+  /* Hint (src/components/live/Hint.tsx). */
+  .hint {
+    display: inline;
+  }
+
+  .hint-term,
+  .hint-icon {
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    position: relative;
+  }
+
+  .hint-term {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .hint-icon {
+    align-items: center;
+    border: 1px solid currentColor;
+    border-radius: 9999px;
+    display: inline-flex;
+    font-size: 10px;
+    font-weight: 700;
+    height: 14px;
+    justify-content: center;
+    line-height: 1;
+    margin-left: 3px;
+    vertical-align: 0.1em;
+    width: 14px;
+  }
+
+  .hint-term::before,
+  .hint-icon::before {
+    content: "";
+    inset: -12px -6px;
+    position: absolute;
+  }
+
+  .hint-icon::before {
+    inset: -15px;
+  }
+
+  .hint-pop {
+    background: var(--color-page);
+    border: 1px solid var(--color-ink);
+    box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.25);
+    color: var(--color-ink);
+    display: none;
+    font-size: var(--text-14);
+    font-variant-numeric: normal;
+    font-weight: 400;
+    inset: auto;
+    left: max(8px, min(var(--hx, 8px), 100% - min(20rem, 100% - 16px) - 8px));
+    letter-spacing: 0;
+    line-height: 1.45;
+    margin: 0;
+    max-width: min(20rem, calc(100% - 16px));
+    padding: 10px 12px;
+    position: fixed;
+    text-align: left;
+    text-transform: none;
+    white-space: normal;
+    width: max-content;
+    z-index: 60;
+  }
+
+  .hint-pop[data-open] {
+    display: block;
+  }
+
+  .hint-pop:popover-open {
+    display: block;
+  }
+
+  .hint-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 2px;
   }
 
   /* Horizontal scroll for wide tables, with the first column pinned. */

@@ -16,6 +16,8 @@ export type TeamDisplay = {
   shortName: string;
   /** "New York Knicks", for headings. */
   name: string;
+  /** "New York", "LA", "Portland": the name without the nickname (the full name if none). */
+  place: string;
   /** Lower-case ESPN abbreviation, the team page's URL segment. */
   slug: string;
   conference: Conference;
@@ -28,11 +30,18 @@ export function teamDisplay(id: string): TeamDisplay {
     code: canonicalTeamAbbreviation(team.abbreviation),
     shortName: team.shortName,
     name: team.name,
+    place: teamPlaceName(team.name, team.shortName),
     slug: team.abbreviation.toLowerCase(),
     conference: team.conference,
   };
 }
 
+function teamPlaceName(name: string, shortName: string): string {
+  const place = name.endsWith(shortName) ? name.slice(0, -shortName.length).trim() : "";
+  return place || name;
+}
+
+/** The team page: `/teams/{slug}`. Also exported from `@/lib/view/routes`. */
 export function teamHref(id: string): string {
   return `/teams/${teamDisplay(id).slug}`;
 }

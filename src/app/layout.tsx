@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { schibsted } from "@/app/fonts";
 import { Header } from "@/components/layout/Header";
+import { NavProgress } from "@/components/layout/NavProgress";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FreshnessGuard } from "@/components/live/FreshnessGuard";
 import { getLiveState } from "@/lib/live-data/published";
-
-const SITE_URL = "https://548-sable.vercel.app";
+import { SITE_URL } from "@/lib/view/routes";
 
 // Every page carries the header's "Updated N min ago" chip, read from the published state
 // at render time (src/lib/live-data/published.ts), so every page is regenerated about once
@@ -22,7 +22,9 @@ export const metadata: Metadata = {
   description:
     "Win probabilities for every NBA game, sealed before tip and scored in public, with playoff and title odds for all 30 teams.",
   applicationName: "548",
-  openGraph: { siteName: "548", type: "website", url: SITE_URL },
+  // No openGraph.url here: each page sets its own canonical URL (alternates.canonical,
+  // relative to metadataBase), so a shared link never claims to be the homepage.
+  openGraph: { siteName: "548", type: "website" },
   twitter: { card: "summary_large_image" },
 };
 
@@ -42,6 +44,7 @@ export default async function RootLayout({
       className={schibsted.variable}
     >
       <body className="flex min-h-screen flex-col antialiased">
+        <NavProgress />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:bg-panel focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-ink"
