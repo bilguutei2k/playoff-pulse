@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { formatAgeShort } from "@/lib/utils/format";
-import { freshnessNotice, serverIsNewer, shouldRefresh } from "@/lib/view/freshness";
+import { afterCheck, initialGuardState, readHealth, type HealthReading, type NoticeKind } from "@/lib/view/freshness";
 
 const TICK_MS = 30_000;
 /** A tab hidden at least this long is checked against the server when it comes back. */
@@ -13,8 +13,64 @@ const POLL_MS = 5 * 60_000;
 /** After asking for a fresh copy, look again this soon: the copy may still be the old one. */
 const RETRY_MS = 6_000;
 const HEALTH_URL = "/api/live/health";
+/** The frozen 2026 archive shows no live data, so it gets no freshness notice. */
+const ARCHIVE_PATHS = ["/retrospective", "/snapshot", "/evidence", "/methodology", "/lab"];
 
-function subscribe(onTick: () => void): () => void {
+// ---------------------------------------------------------------------------------------
+// A tiny shared store. The layout is not re-rendered on client navigation, so its stamp
+// can be older than the page below it; a page that renders <PageStamp> says which state
+// it actually shows (or, with null, that it shows no live data). The guard publishes its
+// verdict here too, so the masthead chip turns amber on the same rule as the notice.
+
+type Snapshot = { page: { path: string; generatedAt: string | null } | null; notice: NoticeKind | null };
+let snapshot: Snapshot = { page: null, notice: null };
+const listeners = new Set<() => void>();
+
+function update(next: Partial<Snapshot>) {
+  snapshot = { ...snapshot, ...next };
+  for (const listener of listeners) listener();
+}
+
+function subscribeStore(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
+const getStore = () => snapshot;
+const SERVER_SNAPSHOT: Snapshot = { page: null, notice: null };
+const getServerStore = () => SERVER_SNAPSHOT;
+
+/**
+ * The `generatedAt` this route's own content was rendered from: the page's stamp when it
+ * rendered <PageStamp>, else the layout's. `null` when the page shows no live data.
+ */
+export function useShownStamp(layoutStamp: string): { stamp: string | null; notice: NoticeKind | null } {
+  const pathname = usePathname() ?? "/";
+  const store = useSyncExternalStore(subscribeStore, getStore, getServerStore);
+  const page = store.page !== null && store.page.path === pathname ? store.page : null;
+  return { stamp: page ? page.generatedAt : layoutStamp, notice: store.notice };
+}
+
+/**
+ * Rendered by a page to say which published state its content came from. Pass the
+ * `generatedAt` of the state the page itself read, or null for a page with no live data
+ * (the 404, /about): the guard then stays silent there.
+ */
+export function PageStamp({ generatedAt }: { generatedAt: string | null }) {
+  const pathname = usePathname() ?? "/";
+  useEffect(() => {
+    const entry = { path: pathname, generatedAt };
+    update({ page: entry });
+    return () => {
+      if (snapshot.page === entry) update({ page: null });
+    };
+  }, [pathname, generatedAt]);
+  return null;
+}
+
+// ---------------------------------------------------------------------------------------
+
+function subscribeTick(onTick: () => void): () => void {
   const timer = setInterval(onTick, TICK_MS);
   return () => clearInterval(timer);
 }
@@ -22,14 +78,13 @@ function subscribe(onTick: () => void): () => void {
 const tickNow = () => Math.floor(Date.now() / TICK_MS) * TICK_MS;
 const noTickOnServer = () => null;
 
-/** The server's `generatedAt` from the health route, which is never cached; null if unreadable. */
-async function readServerStamp(signal: AbortSignal): Promise<string | null> {
+/** What /api/live/health says, read from its JSON body on a 503 as on a 200. */
+async function readServer(signal: AbortSignal): Promise<HealthReading> {
   try {
     const response = await fetch(HEALTH_URL, { cache: "no-store", signal });
-    const body = (await response.json()) as { generatedAt?: unknown };
-    return typeof body.generatedAt === "string" && Number.isFinite(Date.parse(body.generatedAt)) ? body.generatedAt : null;
+    return readHealth(await response.json());
   } catch {
-    return null;
+    return { kind: "unreachable" };
   }
 }
 
@@ -37,41 +92,47 @@ async function readServerStamp(signal: AbortSignal): Promise<string | null> {
  * Mounted in the layout on every page. The copy a reader gets can lag the server: the CDN
  * serves a regenerated route's old copy for up to `expireTime` (next.config.ts), and before
  * that bound existed for days. On arrival, on return to the tab after a minute away, after
- * a back-forward restore and every five minutes, this asks /api/live/health what the server
- * has and, when that is materially newer, re-renders the page from the server (twice at
- * most). A copy older than twenty minutes gets a line saying so and what is being done
- * about it. Nothing here touches seals, the record or the chip's own 12-hour rule.
+ * a back-forward restore and every five minutes while visible, this asks /api/live/health
+ * what the server has and applies the rule in src/lib/view/freshness.ts: a newer copy is
+ * loaded silently (twice at most, then a reload notice); a pipeline that is behind gets a
+ * notice at once; a healthy server that matches the copy gets nothing, however old the
+ * last publish. Nothing here touches seals or the record.
  */
 export function FreshnessGuard({ generatedAt }: { generatedAt: string }) {
   const router = useRouter();
-  const now = useSyncExternalStore(subscribe, tickNow, noTickOnServer);
-  const [serverAt, setServerAt] = useState<string | null>(null);
-  const [checked, setChecked] = useState(false);
-  const [refreshes, setRefreshes] = useState(0);
+  const pathname = usePathname() ?? "/";
+  const { stamp, notice } = useShownStamp(generatedAt);
+  const archive = ARCHIVE_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  const watched = archive ? null : stamp;
+  const now = useSyncExternalStore(subscribeTick, tickNow, noTickOnServer);
+  const state = useRef(initialGuardState(watched ?? ""));
 
   useEffect(() => {
+    if (watched === null) {
+      update({ notice: null });
+      return;
+    }
     const controller = new AbortController();
     let retry: ReturnType<typeof setTimeout> | null = null;
-    let asked = 0;
+    let running = false;
 
-    // Ask the server what it has; when that is materially newer, re-render from it and
-    // look again shortly, since the first answer can still be the old copy.
+    // One check at a time: a trigger while one is in flight is dropped, and a check
+    // replaces any follow-up already scheduled.
     async function check() {
-      const stamp = await readServerStamp(controller.signal);
-      if (controller.signal.aborted) return;
-      setServerAt(stamp);
-      setChecked(true);
-      if (!serverIsNewer(generatedAt, stamp)) {
-        asked = 0;
-        setRefreshes(0);
-        return;
-      }
-      if (!shouldRefresh({ renderedAt: generatedAt, serverAt: stamp, refreshes: asked })) return;
-      asked += 1;
-      setRefreshes(asked);
-      router.refresh();
+      if (running) return;
+      running = true;
       if (retry) clearTimeout(retry);
-      retry = setTimeout(() => void check(), RETRY_MS);
+      retry = null;
+      const reading = await readServer(controller.signal);
+      running = false;
+      if (controller.signal.aborted) return;
+      const step = afterCheck(state.current, watched as string, reading, Date.now());
+      state.current = step.state;
+      update({ notice: step.state.notice });
+      if (step.action === "refresh") {
+        router.refresh();
+        retry = setTimeout(() => void check(), RETRY_MS);
+      }
     }
 
     void check();
@@ -99,28 +160,40 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string }) {
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pageshow", onPageShow);
     };
-    // A new copy from the server re-runs this with its stamp, which ends the retry loop
-    // once the copy has caught up.
-  }, [generatedAt, router]);
+    // A new copy (a refresh, or navigation to a page with its own stamp) re-runs this with
+    // its stamp; the helper resets the counts for it.
+  }, [watched, router]);
 
-  const notice = now === null ? null : freshnessNotice({ renderedAt: generatedAt, serverAt, checked, refreshes, nowMs: now });
-  if (!notice) return null;
-  const age = formatAgeShort(notice.ageMs);
+  if (watched === null || notice === null || now === null) return null;
+  const ageMs = now - Date.parse(watched);
+  const age = Number.isFinite(ageMs) ? formatAgeShort(ageMs) : null;
+  const reload = (
+    <button type="button" className="pp-link inline-flex min-h-11 items-center font-semibold sm:min-h-0" onClick={() => window.location.reload()}>
+      Reload the page
+    </button>
+  );
   return (
     <div className="pp-container pt-4">
       <p role="status" className="notice text-[13.5px]">
-        This page shows data published <b>{age}</b>
-        {notice.kind === "loading" ? ". A newer forecast has been published; loading it." : null}
-        {notice.kind === "reload" ? (
+        {notice === "behind" ? <>A newer update is out, but this page has not loaded it. {reload}</> : null}
+        {notice === "stale" ? (
           <>
-            . A newer forecast has been published but did not load here.{" "}
-            <button type="button" className="pp-link font-semibold" onClick={() => window.location.reload()}>
-              Reload the page
-            </button>
+            Updates are running late{age ? <>: the last one was <b>{age}</b></> : null}. Scores, injuries and odds may be behind
+            until the next one.
           </>
         ) : null}
-        {notice.kind === "nothing-newer" ? "; the forecast job has published nothing newer." : null}
-        {notice.kind === "unknown" ? "; whether anything newer exists could not be checked." : null}
+        {notice === "unverified" ? (
+          <>
+            {age ? (
+              <>
+                This page was last updated <b>{age}</b>, and we could not check for a newer update.
+              </>
+            ) : (
+              "We could not check whether this page is up to date."
+            )}{" "}
+            {reload}
+          </>
+        ) : null}
       </p>
     </div>
   );

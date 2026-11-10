@@ -1,11 +1,11 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useShownStamp } from "@/components/live/FreshnessGuard";
+import { formatStampEt } from "@/lib/utils/dates";
 import { formatAgeShort } from "@/lib/utils/format";
 
 const TICK_MS = 30_000;
-/** Matches the slate's stale threshold: beyond this the line turns amber. */
-const STALE_AFTER_MS = 12 * 3_600_000;
 
 function subscribe(onTick: () => void): () => void {
   const timer = setInterval(onTick, TICK_MS);
@@ -15,49 +15,46 @@ function subscribe(onTick: () => void): () => void {
 const tickNow = () => Math.floor(Date.now() / TICK_MS) * TICK_MS;
 const noTickOnServer = () => null;
 
+function stampEt(iso: string): string | null {
+  return Number.isFinite(Date.parse(iso)) ? formatStampEt(iso) : null;
+}
+
 /**
- * "Updated 4 min ago" on the masthead: the real age of the published state, with the
- * model version and policy revision from 1280 px. Before hydration it shows the fixed ET stamp, because
- * the server cannot know "now". `stored` means the live data could not be read and
- * the page shows the copy bundled with the deployment, which can be days old; the
- * line then says so and is always amber. `data-state-stamp` marks the stamp for the
- * watchdog's page probe (scripts/live/watchdog.mjs), which reads it from the served HTML.
+ * "Updated 4 min ago" on the masthead, at every width: the age of the published state
+ * this page shows (the page's own stamp when it renders <PageStamp>, else the layout's).
+ * Before hydration it shows the fixed ET stamp, because the server cannot know "now";
+ * the exact stamp is always in the tooltip. It turns amber on the freshness guard's
+ * verdict (src/lib/view/freshness.ts), so the chip and the notice never disagree.
+ * `stored` means the live data could not be read and the page shows the copy bundled
+ * with the deployment, which can be days old; the line then says so and is always amber.
+ * The model version and policy revision are in the footer. `data-state-stamp` marks the
+ * stamp for the watchdog's page probe (scripts/live/watchdog.mjs), which reads it from
+ * the served HTML.
  */
-export function FreshnessChip({
-  iso,
-  stamp,
-  modelLabel,
-  stored = false,
-}: {
-  iso: string;
-  stamp: string;
-  /** The model version with its policy revision, e.g. "live-2026.27-v2, policy revision 3". */
-  modelLabel: string;
-  stored?: boolean;
-}) {
+export function FreshnessChip({ iso, stored = false }: { iso: string; stored?: boolean }) {
   const now = useSyncExternalStore(subscribe, tickNow, noTickOnServer);
-  const age = now === null ? null : now - Date.parse(iso);
-  const stale = stored || (age !== null && age > STALE_AFTER_MS);
-  const when = age === null ? stamp : formatAgeShort(age);
+  const shown = useShownStamp(iso);
+  const stamp = shown.stamp ?? iso;
+  const fixed = stampEt(stamp);
+  const ageMs = now === null ? NaN : now - Date.parse(stamp);
+  const warn = stored || shown.notice !== null;
+  const when = Number.isFinite(ageMs) ? formatAgeShort(ageMs) : fixed ? `${fixed}` : "time unknown";
+  const title = stored
+    ? `Live data could not be read. Showing the copy stored with this version of the site${fixed ? `, published ${fixed}` : ""}.`
+    : fixed
+      ? `Forecast data published ${fixed}`
+      : undefined;
   return (
     <p
-      className={`flex items-center gap-2 whitespace-nowrap text-[13px] leading-none ${stale ? "text-[#f5c26b]" : "text-masthead-2"}`}
-      title={
-        stored
-          ? `Live data could not be read. Showing the copy stored with this version of the site, published ${stamp}, model ${modelLabel}`
-          : `Forecast published ${stamp}, model ${modelLabel}`
-      }
+      className={`chip-fresh flex items-center justify-end gap-1.5 text-right text-[12px] leading-[1.15] sm:text-[13px] ${warn ? "text-warn-on-dark" : "text-masthead-2"}`}
+      title={title}
     >
-      {stale ? <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-[#f5c26b]" /> : null}
+      {warn ? <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-warn-on-dark" /> : null}
       <span>
         {stored ? <span className="font-semibold">Stored copy · </span> : null}
-        <time dateTime={iso} data-state-stamp="">
-          {stored ? "updated" : "Updated"} {when}
+        <time dateTime={stamp} data-state-stamp="">
+          {stored ? "updated" : "Updated"} <span className="whitespace-nowrap">{when}</span>
         </time>
-        <span className="hidden xl:inline">
-          <span aria-hidden className="mx-1.5">·</span>
-          <span className="num">{modelLabel}</span>
-        </span>
       </span>
     </p>
   );
