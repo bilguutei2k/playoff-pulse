@@ -13,13 +13,13 @@ import {
   WhereFrom,
 } from "@/components/live/GameSections";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
-import { Ticker } from "@/components/live/Ticker";
 import { loadDayView } from "@/lib/live-data/day-loader";
 import { getGameById, getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import { formatLongDay, formatShortDay } from "@/lib/utils/dates";
 import { buildGameDetail, nextGameFor } from "@/lib/view/game";
 import { seasonLine } from "@/lib/view/game-page";
 import { seasonLengths } from "@/lib/view/odds";
+import { gameHref } from "@/lib/view/routes";
 import { recordsThrough, teamDisplay, teamLines } from "@/lib/view/teams";
 
 // Rendered on demand from main's published data and re-rendered about once a minute
@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: `${away.name} at ${home.name}, ${formatLongDay(game.etDate)}`,
     description: `548's win probability for ${away.shortName} at ${home.shortName}, what moves it, the sealed forecasts and the result.`,
+    alternates: { canonical: gameHref(gameId) },
   };
 }
 
@@ -67,7 +68,6 @@ export default async function GamePage({ params }: Params) {
 
   return (
     <>
-      <Ticker />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
           <Link href={dayHref(game.etDate, day.todayEtDate)} className="text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">

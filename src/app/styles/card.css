@@ -8,6 +8,7 @@
    * join in a bracket that ends in the tile. --h is one team's row, --t the tile.
    */
   .gc {
+    container: gc / inline-size;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -15,13 +16,41 @@
     position: relative;
   }
 
+  /*
+   * The cover: the card's game link, a sibling under the raised team links. Hover
+   * washes the card (multiply keeps the ink and the tile as they are) and underlines
+   * the tile's team, the cue that the card opens the game.
+   */
+  .gc-cover {
+    inset: -8px;
+    outline-offset: 0;
+    position: absolute;
+  }
+
+  .gc-cover:hover {
+    background: var(--color-wash);
+    mix-blend-mode: multiply;
+  }
+
+  .gc:has(> .gc-cover:hover) .bk-who b {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  /* The status row: tip or status, the broadcast, the seal time. Only the broadcast gives way. */
   .gc-st {
-    align-items: baseline;
+    align-items: center;
     color: var(--color-ink-2);
     display: flex;
     font-size: 13px;
     gap: 10px;
+    line-height: 18px;
     white-space: nowrap;
+  }
+
+  .gc-st > * {
+    flex: none;
   }
 
   .gc-st b {
@@ -31,55 +60,96 @@
 
   .gc-st .r {
     margin-left: auto;
+  }
+
+  /*
+   * The broadcast prints whole or not at all: a zero-width first item lets it wrap to a
+   * second line, which the one-line box hides. Never an ellipsis.
+   */
+  .gc-st > .gc-st-drop {
+    display: flex;
+    flex: 1 1 0;
+    flex-wrap: wrap;
+    height: 18px;
+    min-width: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
+  }
+
+  .gc-st-drop::before {
+    content: "";
+    height: 18px;
+    width: 0;
   }
 
   .bk {
-    --h: 46px;
+    --h: 54px;
     --t: 34px;
     --lw: 4px;
     --jw: 2px;
     align-items: start;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 16px auto;
+    /* The arms never go below their content: logo, tricode, score (TeamLink's floor). */
+    grid-template-columns: minmax(min-content, 1fr) 16px auto;
   }
 
+  /*
+   * A team's row: the team link (logo and name, form="auto": full name, else nickname,
+   * else tricode), the record, the score at the right.
+   */
   .arm {
-    align-items: end;
+    align-items: flex-end;
     column-gap: 8px;
-    display: grid;
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    display: flex;
     height: var(--h);
     padding-bottom: 11px;
     position: relative;
   }
 
-  .arm-logo {
-    align-self: end;
-    display: flex;
-    margin-bottom: 1px;
+  .arm > .tl {
+    --tl-gap: 8px;
+    flex: 0 1 auto;
   }
 
   .arm-t {
     font-size: 16px;
     font-weight: 700;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 20px;
+  }
+
+  /* "at" over the home team's name: away team first, home team second. */
+  .arm-at {
+    color: var(--color-ink-2);
+    font-size: 12px;
+    font-weight: 400;
+    left: 28px;
+    line-height: 1;
+    position: absolute;
+    top: 8px;
+  }
+
+  /* The record, in a column at the right (before the score, if any). */
+  .arm-r {
+    color: var(--color-ink-2);
+    flex: none;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    line-height: 20px;
+    margin-left: auto;
     white-space: nowrap;
   }
 
-  .arm-r {
-    color: var(--color-ink-2);
-    font-size: 13px;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+  .arm-r:empty,
+  .arm-sc:empty {
+    display: none;
   }
 
   .arm-sc {
+    flex: none;
     font-size: 17px;
     font-variant-numeric: tabular-nums;
     font-weight: 700;
+    line-height: 20px;
+    margin-left: auto;
     padding-right: 12px;
     text-align: right;
   }
@@ -156,8 +226,12 @@
     font-weight: 700;
   }
 
-  .bk-who span {
+  .bk-who > span {
     color: var(--color-ink-2);
+  }
+
+  .bk-who .nowrap {
+    white-space: nowrap;
   }
 
   .bk-none {
@@ -196,7 +270,7 @@
 
   /* Large: the game page's header. */
   .bk-l {
-    --h: 72px;
+    --h: 80px;
     --t: 64px;
     --lw: 8px;
     --jw: 3px;
@@ -206,18 +280,47 @@
     padding-bottom: 18px;
   }
 
+  /* The header's name: the city (and record) on a small line over the nickname. */
+  .arm-nm {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .arm-city {
+    color: var(--color-ink-2);
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 1px;
+    padding-left: 44px;
+    white-space: nowrap;
+  }
+
+  .arm-city .arm-at {
+    font-size: inherit;
+    position: static;
+  }
+
+  .arm-rec {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bk-l .arm-nm > .tl {
+    --tl-gap: 8px;
+  }
+
   .bk-l .arm-t {
     font-size: 28px;
     font-weight: 800;
-  }
-
-  .bk-l .arm-r {
-    font-size: 15px;
+    line-height: 34px;
+    white-space: nowrap;
   }
 
   .bk-l .arm-sc {
     font-size: 34px;
     font-weight: 800;
+    line-height: 34px;
   }
 
   .bk-l .bk-stem {
@@ -239,28 +342,116 @@
     font-size: 18px;
   }
 
-  @media (max-width: 639px) {
+  /*
+   * Narrow cards (the card is its own container): the record goes first, then the
+   * tile's label wraps under the team code, then the spacing tightens. The team name
+   * never goes below its tricode and never ellipsizes.
+   */
+  @container gc (max-width: 369px) {
+    .arm-r {
+      display: none;
+    }
+  }
+
+  @container gc (max-width: 299px) {
+    .gc .bk {
+      grid-template-columns: minmax(min-content, 1fr) 12px auto;
+    }
+
+    .gc .bk-o {
+      gap: 8px;
+    }
+
+    .gc .tile {
+      min-width: 54px;
+      padding: 0 7px;
+    }
+
+    .gc .arm-sc {
+      padding-right: 4px;
+    }
+
+    .bk-who > span {
+      display: block;
+      line-height: 1.1;
+      white-space: normal;
+      width: min-content;
+    }
+  }
+
+  @container gc (max-width: 269px) {
+    .gc .arm {
+      column-gap: 6px;
+    }
+
+    .gc .bk-o {
+      gap: 6px;
+    }
+
+    .gc .tile {
+      min-width: 50px;
+      padding: 0 6px;
+    }
+  }
+
+  /*
+   * The game page header sits in .bk-host (a container). Mid widths: the tile's label
+   * wraps and the tile narrows, so the names keep the room. Phones: the arms take the
+   * full width and the tile sits under them.
+   */
+  .bk-host {
+    container: bkhost / inline-size;
+  }
+
+  @container bkhost (max-width: 899px) {
+    .bk-l .tile {
+      min-width: 96px;
+      padding: 0 12px;
+    }
+
+    .bk-l .bk-who > span {
+      display: block;
+      max-width: 6.5em;
+      white-space: normal;
+    }
+  }
+
+  @container bkhost (max-width: 599px) {
     .bk-l {
-      --h: 46px;
+      --h: 64px;
       --t: 44px;
       --lw: 5px;
-      --jw: 2px;
+      grid-template-columns: minmax(min-content, 1fr);
+    }
+
+    .bk-l .bk-j,
+    .bk-l .bk-stem {
+      display: none;
+    }
+
+    .bk-l .bk-o {
+      margin-top: 16px;
     }
 
     .bk-l .arm {
-      padding-bottom: 11px;
+      padding-bottom: 12px;
+    }
+
+    .bk-l .arm-city {
+      font-size: 13px;
+      line-height: 16px;
+      padding-left: 36px;
     }
 
     .bk-l .arm-t {
-      font-size: 18px;
-    }
-
-    .bk-l .arm-r {
-      font-size: 13px;
+      font-size: 22px;
+      line-height: 26px;
     }
 
     .bk-l .arm-sc {
-      font-size: 20px;
+      font-size: 24px;
+      line-height: 26px;
+      padding-right: 4px;
     }
 
     .bk-l .tile {
@@ -270,13 +461,18 @@
       padding: 0 10px;
     }
 
+    .bk-l .bk-who > span {
+      display: inline;
+      max-width: none;
+    }
+
     .bk-l .bk-who b {
       font-size: 15px;
     }
 
-    .bk-l .arm-logo img {
-      height: 24px;
-      width: 24px;
+    .bk-l .tl-logo img {
+      height: 28px;
+      width: 28px;
     }
   }
 }

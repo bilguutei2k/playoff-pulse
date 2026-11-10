@@ -1,28 +1,41 @@
 import Link from "next/link";
-import { TeamLogo } from "@/components/live/TeamLogo";
+import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
 import { bracketView, outPoints, type BracketSide, type BracketView } from "@/lib/view/bracket";
 import type { DayGame } from "@/lib/view/day";
 import { OUT_DEFINITION, tileHelp } from "@/lib/view/how-to-read";
-import { pairColors, type TeamLine } from "@/lib/view/teams";
+import { gameHref } from "@/lib/view/routes";
+import { pairColors, teamDisplay, type TeamLine } from "@/lib/view/teams";
 
-function Arm({ side, color, large }: { side: BracketSide; color: string; large: boolean }) {
+function Arm({ side, color, large, home }: { side: BracketSide; color: string; large: boolean; home: boolean }) {
+  const team = teamDisplay(side.teamId);
   return (
     <div className={`arm ${side.dim ? "arm-lo" : ""}`}>
-      <span className="arm-logo">
-        <TeamLogo teamId={side.teamId} size={large ? 36 : 20} />
-      </span>
-      <span className="arm-t">
-        {large ? (
-          <>
-            <span className="sm:hidden">{side.shortName}</span>
-            <span className="hidden sm:inline">{side.name}</span>
-          </>
-        ) : (
-          side.shortName
-        )}
-      </span>
-      <span className="arm-r">{side.record ?? ""}</span>
+      {large ? (
+        // The game page: the city (and the record) on a small line over the nickname, so
+        // the largest type never needs the whole name on one line.
+        <span className="arm-nm">
+          <span className="arm-city">
+            <span aria-hidden>
+              {home ? <span className="arm-at">at </span> : null}
+              {team.place}
+            </span>
+            {side.record ? <span className="arm-rec"> · {side.record}</span> : null}
+          </span>
+          <TeamLink teamId={side.teamId} form="short" logo={36} className="arm-t" />
+        </span>
+      ) : (
+        <>
+          {home ? (
+            <span aria-hidden className="arm-at">
+              at
+            </span>
+          ) : null}
+          {/* Above the card's game link (a sibling), so the name opens the team. */}
+          <TeamLink teamId={side.teamId} form="auto" logo={20} raised className="arm-t" />
+          <span className="arm-r">{side.record ?? ""}</span>
+        </>
+      )}
       <span className="arm-sc">{side.score ?? ""}</span>
       <span aria-hidden className="arm-ln">
         {side.percent !== null ? <i style={{ width: `${side.percent}%`, background: color }} /> : null}
@@ -35,15 +48,29 @@ function Arm({ side, color, large }: { side: BracketSide; color: string; large: 
   );
 }
 
-/** The two arms, the bracket and the tile. Shared by the card and the game page header. */
+/** "morning seal 6:00 AM": when the label wraps, the clock stays on one line. */
+function TileLabel({ label }: { label: string }) {
+  const match = /^(.*) (\d{1,2}:\d{2} [AP]M)$/.exec(label);
+  if (!match) return <>{label}</>;
+  return (
+    <>
+      {match[1]} <span className="nowrap">{match[2]}</span>
+    </>
+  );
+}
+
+/**
+ * The two arms, the bracket and the tile. Shared by the card and the game page header.
+ * Each team's logo and name link to its page; away team first, the home team marked "at".
+ */
 export function Bracket({ view, large = false }: { view: BracketView; large?: boolean }) {
   const [awayColor, homeColor] = pairColors(view.away.teamId, view.home.teamId);
   const { tile } = view;
   return (
     <div className={`bk ${view.dashed ? "bk-dash" : ""} ${large ? "bk-l" : ""}`}>
-      <div className="min-w-0">
-        <Arm side={view.away} color={awayColor} large={large} />
-        <Arm side={view.home} color={homeColor} large={large} />
+      <div className="bk-arms">
+        <Arm side={view.away} color={awayColor} large={large} home={false} />
+        <Arm side={view.home} color={homeColor} large={large} home />
       </div>
       <div aria-hidden className="bk-j" />
       <div className="bk-o">
@@ -54,8 +81,12 @@ export function Bracket({ view, large = false }: { view: BracketView; large?: bo
           <>
             <Tile kind={tile.kind}>{tile.percent}%</Tile>
             <span className="bk-who">
-              <b>{tile.code}</b>
-              <span>{tile.label}</span>
+              <b>
+                <Code view={view} code={tile.code} link={large} />
+              </b>
+              <span>
+                <TileLabel label={tile.label} />
+              </span>
             </span>
           </>
         )}
@@ -65,13 +96,35 @@ export function Bracket({ view, large = false }: { view: BracketView; large?: bo
 }
 
 /** The context row: absences first, then the market in grey, or the pregame seal on a live game. */
-export function BracketContext({ view, marketLabel = "Market" }: { view: BracketView; marketLabel?: string }) {
+/**
+ * A team's code in the tile or the context row: a team link on the game page, plain
+ * text on a card (whose links stay team, team, game).
+ */
+function Code({ view, code, link }: { view: BracketView; code: string; link: boolean }) {
+  const teamId = [view.away, view.home].find((side) => side.code === code)?.teamId;
+  if (!link || !teamId) return <>{code}</>;
+  return <TeamLink teamId={teamId} form="code" />;
+}
+
+export function BracketContext({
+  view,
+  marketLabel = "Market",
+  linkTeams = false,
+}: {
+  view: BracketView;
+  marketLabel?: string;
+  /** Team codes as team links (the game page; never on a card). */
+  linkTeams?: boolean;
+}) {
   const parts: React.ReactNode[] = [];
   if (view.pregame) {
     parts.push(
       <span key="pregame">
         <span aria-hidden className="gc-key" />
-        Pregame seal <b>{view.pregame.code} {view.pregame.percent}%</b>
+        Pregame seal{" "}
+        <b>
+          <Code view={view} code={view.pregame.code} link={linkTeams} /> {view.pregame.percent}%
+        </b>
       </span>,
     );
   }
@@ -85,13 +138,16 @@ export function BracketContext({ view, marketLabel = "Market" }: { view: Bracket
           <span key={side.code}>
             {index > 0 ? " " : ""}
             <b>
-              {side.code} {outPoints(side.points)}
+              <Code view={view} code={side.code} link={linkTeams} /> {outPoints(side.points)}
             </b>
           </span>
         ))}
         {view.out.length > 0 ? " pts" : null}
         {view.unfiled.map((code) => (
-          <span key={code}> · {code} not filed</span>
+          <span key={code}>
+            {" "}
+            · <Code view={view} code={code} link={linkTeams} /> not filed
+          </span>
         ))}
       </span>,
     );
@@ -106,7 +162,10 @@ export function BracketContext({ view, marketLabel = "Market" }: { view: Bracket
     parts.push(
       <span key="market">
         <span aria-hidden className="gc-key mk" />
-        {marketLabel} <b>{view.market.code} {view.market.percent}%</b>
+        {marketLabel}{" "}
+        <b>
+          <Code view={view} code={view.market.code} link={linkTeams} /> {view.market.percent}%
+        </b>
       </span>,
     );
   }
@@ -143,10 +202,19 @@ export function GameCard({
 }) {
   const view = bracketView({ game, lines, modelVersion, modelNote, future });
   return (
-    <article className="gc group">
+    <article className="gc">
       <div className="gc-st">
         <b>{view.status.lead}</b>
-        {view.status.detail ? <span>{view.status.detail}</span> : null}
+        {view.status.detail ? (
+          game.status === "scheduled" ? (
+            // The broadcast: shown whole when it fits, otherwise left out; never cut.
+            <span className="gc-st-drop">
+              <span>{view.status.detail}</span>
+            </span>
+          ) : (
+            <span>{view.status.detail}</span>
+          )
+        ) : null}
         {view.status.right ? (
           <span className="r" title={view.status.title ?? undefined}>
             {view.status.right}
@@ -155,9 +223,10 @@ export function GameCard({
       </div>
       <Bracket view={view} />
       <BracketContext view={view} />
+      {/* The whole card opens the game; the team links above sit over this cover. */}
       <Link
-        href={`/game/${game.id}`}
-        className="absolute inset-0 -m-2 outline-offset-0 group-hover:bg-ink/[0.025]"
+        href={gameHref(game.id)}
+        className="gc-cover"
         aria-label={cardLabel(view)}
         title={view.tile.kind === "none" ? undefined : tileHelp(view.tile.kind)}
       />

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
 import { PlayerLink } from "@/components/live/PlayerLink";
+import { TeamLink } from "@/components/live/TeamLink";
 import { TeamLogo } from "@/components/live/TeamLogo";
+import { placeLabels, possessive, type Box, type LabelAnchor } from "@/app/game/[gameId]/labels";
 import { sealPolicyRevision } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import type { SealRow, SeasonGame, TeamForecast } from "@/lib/season/types";
@@ -114,7 +116,7 @@ export function MatchupHeader({
           </span>
         ) : null}
       </p>
-      <div className="max-w-[1000px]">
+      <div className="bk-host max-w-[1000px]">
         <div className="sm:hidden">
           <Bracket view={base} large />
         </div>
@@ -122,7 +124,7 @@ export function MatchupHeader({
           <Bracket view={view} large />
         </div>
         <div className="mt-3.5">
-          <BracketContext view={context} marketLabel={`Market, ${provider}:`} />
+          <BracketContext view={context} marketLabel={`Market, ${provider}:`} linkTeams />
         </div>
         <Notes>
           {live ? (
@@ -191,7 +193,6 @@ export function MarginSection({ game }: { game: DayGame }) {
   const line = marginLine(game);
   if (!line) return null;
   const team = teamDisplay(line.teamId);
-  const other = teamDisplay(line.otherId);
   const x = (value: number) => ((value - line.min) / (line.max - line.min)) * 100;
   const model = line.marks.find((mark) => mark.key === "model")!;
   const market = line.marks.find((mark) => mark.key === "market");
@@ -199,11 +200,19 @@ export function MarginSection({ game }: { game: DayGame }) {
   const provider = game.market?.provider ?? game.marketLine?.provider ?? "DraftKings";
   const summary = line.marks.map((mark) => `${mark.label} ${signedPoints(mark.value)}`).join(", ");
   return (
-    <Section id="margin" title="Margin" note={`Points, ${team.shortName} positive`}>
+    <Section
+      id="margin"
+      title="Margin"
+      note={
+        <>
+          Points, <TeamLink teamId={line.teamId} /> positive
+        </>
+      }
+    >
       <div
         role="img"
         aria-label={`Margin in points toward the ${team.shortName}: ${summary}.`}
-        className="relative mx-1 h-[140px] sm:mx-2.5"
+        className="relative mx-1 h-[118px] sm:mx-2.5"
       >
         <span aria-hidden className="absolute top-[14px] h-[78px] w-px bg-line" style={{ left: `${x(0)}%` }} />
         <span aria-hidden className="absolute inset-x-0 top-[91px] h-0.5 bg-ink" />
@@ -218,12 +227,6 @@ export function MarginSection({ game }: { game: DayGame }) {
             </span>
           </span>
         ))}
-        <span aria-hidden className="absolute left-0 top-[122px] text-[12px] text-ink-2">
-          {other.shortName} by more
-        </span>
-        <span aria-hidden className="absolute right-0 top-[122px] text-[12px] text-ink-2">
-          {team.shortName} by more
-        </span>
         {result ? (
           <span aria-hidden>
             <span
@@ -245,6 +248,15 @@ export function MarginSection({ game }: { game: DayGame }) {
           <MarkLabel mark={model} at={x(model.value)} top={24} />
         </span>
       </div>
+      {/* The axis ends, outside the chart so each team is a link. */}
+      <p className="mx-1 flex justify-between gap-4 text-[12px] text-ink-2 sm:mx-2.5">
+        <span>
+          <TeamLink teamId={line.otherId} /> by more
+        </span>
+        <span className="text-right">
+          <TeamLink teamId={line.teamId} /> by more
+        </span>
+      </p>
       <Notes>
         {game.projection ? (
           <p>A projection is never compared with the market.</p>
@@ -278,7 +290,15 @@ export function WhereFrom({
   const pct = (value: number) => ((value - fall.min) / (fall.max - fall.min)) * 100;
   const forecast = game.forecast;
   return (
-    <Section id="where-from" title={`Where ${Math.abs(fall.total).toFixed(1)} comes from`} note={`Points toward the ${team.shortName}`}>
+    <Section
+      id="where-from"
+      title={`Where ${Math.abs(fall.total).toFixed(1)} comes from`}
+      note={
+        <>
+          Points toward the <TeamLink teamId={fall.teamId} />
+        </>
+      }
+    >
       <div className="grid grid-cols-[minmax(0,1fr)_64px] gap-x-3 gap-y-3 sm:grid-cols-[220px_minmax(0,1fr)_72px]">
         {fall.rows.map((row, index) => {
           const left = pct(Math.min(row.from, row.to));
@@ -312,7 +332,13 @@ export function WhereFrom({
           />
         </div>
         <p className="num whitespace-nowrap text-right text-[16px] font-extrabold">
-          {Math.abs(fall.total) < 0.05 ? "Even" : `${team.code} +${Math.abs(fall.total).toFixed(1)}`}
+          {Math.abs(fall.total) < 0.05 ? (
+            "Even"
+          ) : (
+            <>
+              <TeamLink teamId={fall.teamId} form="code" /> +{Math.abs(fall.total).toFixed(1)}
+            </>
+          )}
         </p>
         <span className="hidden sm:block" />
         <div aria-hidden className="relative h-4 text-[11.5px] text-ink-2">
@@ -373,18 +399,20 @@ function OutSide({
   return (
     <div>
       <div className="mb-1 flex items-baseline justify-between gap-3 border-b-2 border-ink pb-2">
-        <span className="flex items-center gap-2">
-          <TeamLogo teamId={side.teamId} size={20} />
-          <h3 className="text-[16px] font-bold">
-            <Link href={injuriesHref(side.teamId)} className="hover:underline hover:underline-offset-4" title={`${team.shortName} on the injury report`}>
-              {team.shortName}
-            </Link>
-          </h3>
-        </span>
+        <h3 className="whitespace-nowrap text-[16px] font-bold">
+          <TeamLink teamId={side.teamId} logo={20} />
+        </h3>
         <span className="whitespace-nowrap">
           <b className="num">{side.points >= 0.05 ? `−${side.points.toFixed(1)}` : "0.0"}</b>{" "}
           <span className="text-[13px] text-ink-2">
-            pts · {side.players.length} listed
+            pts ·{" "}
+            <Link
+              href={injuriesHref(side.teamId)}
+              className="underline underline-offset-2 hover:text-ink"
+              aria-label={`${side.players.length} listed: the ${team.shortName} on the injury report`}
+            >
+              {side.players.length} listed
+            </Link>
           </span>
         </span>
       </div>
@@ -401,8 +429,11 @@ function OutSide({
       ) : (
         <ul>
           {shown.map((player, index) => (
-            <li key={`${player.name}-${index}`} className="grid grid-cols-[minmax(0,1fr)_100px_44px] items-center gap-3 py-1.5 text-[15px]">
-              <PlayerLink athleteId={player.athleteId} name={player.name} className="truncate" />
+            <li
+              key={`${player.name}-${index}`}
+              className="grid grid-cols-[minmax(8.5rem,1fr)_minmax(40px,100px)_44px] items-center gap-3 py-1.5 text-[15px]"
+            >
+              <PlayerLink athleteId={player.athleteId} name={player.name} className="break-words" />
               <span aria-hidden className="block h-2.5" style={{ width: `${Math.min(100, ((player.points ?? 0) / scale) * 100)}%`, background: color }} />
               <span className="num text-right">{playerPoints(player.points ?? 0)}</span>
             </li>
@@ -471,7 +502,8 @@ export function OutSection({ game, today }: { game: DayGame; today: boolean }) {
   );
   return (
     <Section id="out" title="Out" note={reportNote(game)}>
-      <div className="grid gap-10 sm:grid-cols-2 sm:gap-14">
+      {/* Side by side only where each team gets room for full player names. */}
+      <div className="grid gap-10 md:grid-cols-2 md:gap-14 lg:grid-cols-1 lg:gap-10 xl:grid-cols-2 xl:gap-14">
         <OutSide side={sides.away} scale={scale} game={game} today={today} />
         <OutSide side={sides.home} scale={scale} game={game} today={today} />
       </div>
@@ -535,7 +567,7 @@ export function Result({ game, detail }: { game: DayGame; detail: GameDetail }) 
   return (
     <Section id="result" title="Result">
       <p className="text-[24px] font-extrabold leading-tight">
-        {winner.shortName} won <span className="num">{high}–{low}</span>
+        <TeamLink teamId={winner.id} /> won <span className="num">{high}–{low}</span>
       </p>
       {detail.results.length === 0 ? (
         <p className="mt-3 text-[14px] text-ink-2">No seal was scored for this game.</p>
@@ -561,7 +593,7 @@ export function Result({ game, detail }: { game: DayGame; detail: GameDetail }) 
       <Notes>
         {detail.results.length > 0 ? (
           <p>
-            Each tile is that model&apos;s sealed chance for the {winner.shortName}. Brier is the squared gap between the
+            Each tile is that model&apos;s sealed chance for the <TeamLink teamId={winner.id} />. Brier is the squared gap between the
             forecast and the result: 0 is perfect and an even 50% scores 0.25. One game says nothing about skill; see the{" "}
             <Link className="pp-link" href="/record">track record</Link>.
           </p>
@@ -597,64 +629,93 @@ function SealChart({ game, detail }: { game: DayGame; detail: GameDetail }) {
     const px = x(point.at);
     if (times.every((time) => Math.abs(time.x - px) >= 70)) times.push({ at: point.at, x: px });
   }
-  const anchor = (px: number) => (px <= left + 20 ? "start" : px >= right - 20 ? "end" : "middle");
+  const anchor = (px: number): LabelAnchor => (px <= left + 20 ? "start" : px >= right - 20 ? "end" : "middle");
+  // Each label has a preferred spot and fallbacks; placeLabels takes the first that
+  // collides with no square and no label placed before it (published seals first).
+  const ownSquares = own.map((point) => ({ px: x(point.at), py: y(point.percent), size: point.scored ? 16 : 11 }));
+  const refSquares = reference.map((point) => ({ px: x(point.at), py: y(point.percent), size: 10 }));
+  const squares: Box[] = [...ownSquares, ...refSquares].map(({ px, py, size }) => ({
+    left: px - size / 2,
+    right: px + size / 2,
+    top: py - size / 2,
+    bottom: py + size / 2,
+  }));
+  const ownText = (point: (typeof own)[number]) => `${point.percent}% ${point.label}`;
+  const refText = (point: (typeof reference)[number]) => `${point.label} ${point.percent}%`;
+  const spots = placeLabels(
+    [
+      ...own.map((point, index) => {
+        const { px, py, size } = ownSquares[index];
+        const above =
+          reference.some((ref) => yieldsBelow(ref, point)) ||
+          index === own.length - 1 ||
+          Boolean(own[index + 1] && own[index + 1].percent < point.percent && index > 0);
+        const up = { x: px, y: py - size / 2 - 6, anchor: anchor(px) };
+        const down = { x: px, y: py + size / 2 + 15, anchor: anchor(px) };
+        return { text: ownText(point), fontSize: 12.5, spots: above ? [up, down] : [down, up] };
+      }),
+      ...reference.map((point, index) => {
+        const { px, py } = refSquares[index];
+        const flip = px > right - 60;
+        const below = own.some((other) => yieldsBelow(point, other));
+        const side = { x: flip ? px - 12 : px + 12, y: py + 4, anchor: (flip ? "end" : "start") as LabelAnchor };
+        const under = { x: flip ? px + 5 : px - 5, y: py + 20, anchor: (flip ? "end" : "start") as LabelAnchor };
+        const over = { x: flip ? px + 5 : px - 5, y: py - 10, anchor: (flip ? "end" : "start") as LabelAnchor };
+        return { text: refText(point), fontSize: 12, spots: below ? [under, side, over] : [side, over, under] };
+      }),
+    ],
+    squares,
+    width,
+  );
   return (
     <svg
       viewBox={`0 0 ${width} 184`}
       className="block h-auto w-full max-w-[400px]"
       role="img"
-      aria-label={`${team.shortName}' chance in each seal: ${series.points.map((point) => `${point.label} ${point.percent}% at ${formatTimeEt(point.at)}`).join(", ")}.`}
+      aria-label={`${possessive(team.shortName)} chance in each seal: ${series.points.map((point) => `${point.label} ${point.percent}% at ${formatTimeEt(point.at)}`).join(", ")}.`}
     >
       {grid.map((tick) => (
         <g key={tick}>
-          <line x1={36} x2={394} y1={y(tick)} y2={y(tick)} stroke="#dcdcdc" />
-          <text x={28} y={y(tick) + 4} fontSize={11.5} fill="#666666" textAnchor="end">
+          <line x1={40} x2={394} y1={y(tick)} y2={y(tick)} stroke="var(--chart-track)" />
+          <text x={34} y={y(tick) + 4} fontSize={11.5} fill="var(--chart-text)" textAnchor="end">
             {tick}%
           </text>
         </g>
       ))}
       {own.length > 1 ? (
-        <polyline points={own.map((point) => `${x(point.at)},${y(point.percent)}`).join(" ")} fill="none" stroke="#111111" strokeWidth={2} />
+        <polyline
+          points={own.map((point) => `${x(point.at)},${y(point.percent)}`).join(" ")}
+          fill="none"
+          stroke="var(--chart-ink)"
+          strokeWidth={2}
+        />
       ) : null}
       {own.map((point, index) => {
-        const px = x(point.at);
-        const py = y(point.percent);
-        const size = point.scored ? 16 : 11;
-        const above =
-          reference.some((ref) => yieldsBelow(ref, point)) ||
-          index === own.length - 1 ||
-          (own[index + 1] && own[index + 1].percent < point.percent && index > 0);
+        const { px, py, size } = ownSquares[index];
+        const spot = spots[index];
         return (
           <g key={point.key}>
-            <rect x={px - size / 2} y={py - size / 2} width={size} height={size} fill="#111111" />
-            <text x={px} y={above ? py - size / 2 - 6 : py + size / 2 + 15} fontSize={12.5} fill="#111111" textAnchor={anchor(px)}>
-              <tspan fontWeight={700}>{point.percent}%</tspan> <tspan fill="#666666">{point.label}</tspan>
+            <rect x={px - size / 2} y={py - size / 2} width={size} height={size} fill="var(--chart-ink)" />
+            <text x={spot.x} y={spot.y} fontSize={12.5} fill="var(--chart-ink)" textAnchor={spot.anchor}>
+              <tspan fontWeight={700}>{point.percent}%</tspan> <tspan fill="var(--chart-text)">{point.label}</tspan>
             </text>
           </g>
         );
       })}
-      {reference.map((point) => {
-        const px = x(point.at);
-        const py = y(point.percent);
-        const flip = px > right - 60;
-        const below = own.some((other) => yieldsBelow(point, other));
+      {reference.map((point, index) => {
+        const { px, py } = refSquares[index];
+        const spot = spots[own.length + index];
         return (
           <g key={point.key}>
-            <rect x={px - 5} y={py - 5} width={10} height={10} fill="#ffffff" stroke="#111111" strokeWidth={2} />
-            <text
-              x={below ? (flip ? px + 5 : px - 5) : flip ? px - 12 : px + 12}
-              y={below ? py + 20 : py + 4}
-              fontSize={12}
-              fill="#666666"
-              textAnchor={flip ? "end" : "start"}
-            >
-              {point.label} {point.percent}%
+            <rect x={px - 5} y={py - 5} width={10} height={10} fill="var(--chart-surface)" stroke="var(--chart-ink)" strokeWidth={2} />
+            <text x={spot.x} y={spot.y} fontSize={12} fill="var(--chart-text)" textAnchor={spot.anchor}>
+              {refText(point)}
             </text>
           </g>
         );
       })}
       {times.map((time) => (
-        <text key={time.at} x={time.x} y={178} fontSize={11.5} fill="#666666" textAnchor={anchor(time.x)}>
+        <text key={time.at} x={time.x} y={178} fontSize={11.5} fill="var(--chart-text)" textAnchor={anchor(time.x)}>
           {formatTimeEt(time.at).replace(/ ET$/, "")}
         </text>
       ))}
@@ -662,15 +723,21 @@ function SealChart({ game, detail }: { game: DayGame; detail: GameDetail }) {
   );
 }
 
-function SealCell({ row, homeId, pending }: { row: SealRow | null; homeId: string; pending: string }) {
+/** One seal as the chart's team's chance (the same side the chart draws), its time under it. */
+/** "'s" or "'": the ending possessive() adds, for a name printed as a link. */
+function possessiveEnding(name: string): string {
+  return possessive(name).slice(name.length);
+}
+
+function SealCell({ row, teamId, pending }: { row: SealRow | null; teamId: string; pending: string }) {
   if (!row) return <span className="text-ink-2">{pending}</span>;
-  const { home } = splitPercents(row.homeWinProbability);
+  const percent = splitPercents(row.homeWinProbability)[teamId === row.homeId ? "home" : "away"];
   return (
     <span>
       <b className="num whitespace-nowrap">
-        {teamDisplay(homeId).code} {home}%
+        <TeamLink teamId={teamId} form="code" /> {percent}%
       </b>
-      <span className="block whitespace-nowrap text-[12.5px] text-ink-2 sm:ml-1.5 sm:inline">
+      <span className="block whitespace-nowrap text-[12.5px] text-ink-2">
         {formatTimeEt(row.issuedAt).replace(/ ET$/, "")}
       </span>
     </span>
@@ -687,11 +754,22 @@ function ScoredNote({ version, tipped }: { version: GameDetail["versions"][numbe
 export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
   const tipped = game.status === "in-progress" || game.status === "final";
   const series = sealSeries(game, detail);
+  // The table speaks for the same team as the chart above it.
+  const sideId = series?.teamId ?? game.homeId;
   return (
     <Section
       id="seals"
       title="Seals"
-      note={series ? `${teamDisplay(series.teamId).shortName}' chance · never edited` : "Never edited"}
+      note={
+        series ? (
+          <>
+            <TeamLink teamId={series.teamId} />
+            {possessiveEnding(teamDisplay(series.teamId).shortName)} chance · never edited
+          </>
+        ) : (
+          "Never edited"
+        )
+      }
     >
       {detail.versions.length === 0 ? (
         <p className="text-[14px] leading-6 text-ink-2">
@@ -706,19 +784,20 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
           <SealChart game={game} detail={detail} />
           <div className="table-scroll mt-5">
             <table className="tb">
-              <caption className="sr-only">Every seal for this game, by model version, as the home team&apos;s chance</caption>
+              <caption className="sr-only">
+                Every seal for this game, by model version, as the {possessive(teamDisplay(sideId).name)} chance
+              </caption>
               <thead>
                 <tr>
                   <th scope="col">Model</th>
                   <th scope="col">Morning</th>
                   <th scope="col">Final</th>
-                  <th scope="col" className="hidden sm:table-cell">Scored</th>
                 </tr>
               </thead>
               <tbody>
                 {detail.versions.map((version) => (
                   <tr key={version.modelVersion}>
-                    <th scope="row" className="text-left align-top">
+                    <th scope="row" className="whitespace-normal text-left align-top">
                       <b>{versionName(version.modelVersion)}</b>
                       <span className="block text-[12.5px] text-ink-2">
                         {[
@@ -728,28 +807,25 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                           .filter(Boolean)
                           .join(", ")}
                       </span>
-                      <span className="mt-1 block text-[12.5px] font-normal sm:hidden">
+                      <span className="mt-1 block text-[12.5px] font-normal">
                         Scored: <ScoredNote version={version} tipped={tipped} />
                       </span>
                     </th>
                     <td className="align-top">
-                      <SealCell row={version.morning} homeId={game.homeId} pending="None" />
+                      <SealCell row={version.morning} teamId={sideId} pending="None" />
                       {version.reissued ? (
                         <span className="mt-1 block">
-                          <SealCell row={version.reissued} homeId={game.homeId} pending="None" />
+                          <SealCell row={version.reissued} teamId={sideId} pending="None" />
                           <span className="block text-[12.5px] text-ink-2">Reissued with the report</span>
                         </span>
                       ) : null}
                     </td>
                     <td className="align-top">
                       {version.twoSeals ? (
-                        <SealCell row={version.final} homeId={game.homeId} pending={tipped ? "None" : "Due in the hour before tip"} />
+                        <SealCell row={version.final} teamId={sideId} pending={tipped ? "None" : "Due before tip"} />
                       ) : (
                         <span className="text-ink-2">Seals once</span>
                       )}
-                    </td>
-                    <td className="hidden align-top text-[13px] sm:table-cell">
-                      <ScoredNote version={version} tipped={tipped} />
                     </td>
                   </tr>
                 ))}
