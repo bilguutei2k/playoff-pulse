@@ -1,1 +1,334 @@
 /* teams.css: the teams index and team pages. Owned by package D. */
+
+@layer components {
+  /*
+   * Next games (src/components/live/TeamNextGames.tsx): HTML bars at real pixel
+   * sizes. The plot is 152px tall (20px head room over a 132px scale); the axis,
+   * the grid and the bars share that geometry with the component's lineTop().
+   */
+  .tng-frame {
+    column-gap: 8px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .tng-axis {
+    height: 152px;
+    position: relative;
+    width: 30px;
+  }
+
+  .tng-tick {
+    color: var(--chart-text);
+    font-size: var(--text-12);
+    line-height: 1;
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+
+  .tng-area {
+    min-width: 0;
+    position: relative;
+  }
+
+  .tng-grid {
+    border-top: 1px solid var(--chart-track);
+    height: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
+
+  .tng-grid-50 {
+    border-top-style: dashed;
+  }
+
+  .tng-grid-0 {
+    border-top-color: var(--chart-axis);
+  }
+
+  .tng-cols {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    position: relative;
+  }
+
+  .tng-col {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .tng-game {
+    align-items: flex-end;
+    display: flex;
+    height: 152px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .tng-game:hover {
+    background: rgb(17 17 17 / 0.04);
+  }
+
+  .tng-bar-slot {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+    align-items: flex-end;
+  }
+
+  .tng-bar {
+    box-sizing: border-box;
+    max-width: 47px;
+    position: relative;
+    width: 72%;
+  }
+
+  .tng-bar-dash {
+    background: var(--chart-surface);
+    border: 2px dashed;
+    border-bottom: 0;
+  }
+
+  .tng-pct {
+    bottom: 100%;
+    color: var(--chart-ink);
+    font-size: var(--text-12);
+    font-weight: 700;
+    left: 50%;
+    line-height: 1;
+    padding-bottom: 5px;
+    position: absolute;
+    transform: translateX(-50%);
+  }
+
+  .tng-opp {
+    align-items: center;
+    display: flex;
+    font-size: var(--text-12);
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1.1;
+    min-height: 30px;
+    padding-top: 6px;
+    position: relative;
+    width: 100%;
+  }
+
+  .tng-at {
+    color: var(--chart-text);
+    font-weight: 500;
+  }
+
+  /* The whole label slot is the team link's target (44px tall on phones). */
+  .tng-opp .tl::after {
+    content: "";
+    inset: 0;
+    position: absolute;
+  }
+
+  .tng-date {
+    color: var(--chart-text);
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  @media (max-width: 639px) {
+    .tng-late {
+      display: none;
+    }
+
+    .tng-opp {
+      min-height: 44px;
+      padding-top: 0;
+    }
+  }
+
+  /*
+   * Rating over time (src/components/live/RatingChart.tsx): the plot's focus ring is
+   * a stroke on the focusable rect, since outlines on SVG children are unreliable.
+   */
+  .rc-plot {
+    outline: none;
+  }
+
+  .rc-plot:focus-visible {
+    stroke: var(--chart-focus);
+    stroke-width: 2px;
+  }
+
+  .rc-legend {
+    color: var(--color-ink-2);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: var(--text-13);
+    gap: 4px 18px;
+    margin-bottom: 6px;
+  }
+
+  .rc-legend > span {
+    align-items: center;
+    display: inline-flex;
+    gap: 7px;
+  }
+
+  .rc-readout {
+    color: var(--color-ink-2);
+    font-size: var(--text-13);
+    min-height: 20px;
+  }
+
+  /*
+   * Seed chances (teams/[abbr]/page.tsx SeedChart): a value over every bar, faint
+   * 10-point grid lines, and a bracket per seed group under the axis.
+   */
+  .seed-plot {
+    border-bottom: 1px solid var(--chart-axis);
+    display: grid;
+    gap: 3px;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    height: 168px;
+    position: relative;
+  }
+
+  .seed-grid {
+    border-top: 1px solid var(--chart-grid);
+    height: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
+
+  .seed-col {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-width: 0;
+    position: relative;
+  }
+
+  .seed-val {
+    color: var(--chart-ink);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    white-space: nowrap;
+  }
+
+  .seed-val-low {
+    color: var(--chart-text);
+    font-weight: 500;
+  }
+
+  .seed-bar {
+    display: block;
+    max-width: 24px;
+    width: 100%;
+  }
+
+  .seed-axis {
+    display: grid;
+    gap: 3px;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    margin-top: 4px;
+  }
+
+  .seed-axis > span {
+    color: var(--chart-text);
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .seed-groups {
+    display: grid;
+    gap: 3px;
+    grid-template-columns: repeat(15, minmax(0, 1fr));
+    margin-top: 6px;
+  }
+
+  .seed-group {
+    border-top: 1px solid var(--chart-text);
+    color: var(--color-ink-2);
+    font-size: 12px;
+    line-height: 1.25;
+    padding-top: 4px;
+    position: relative;
+    text-align: center;
+  }
+
+  .seed-group::before,
+  .seed-group::after {
+    border-left: 1px solid var(--chart-text);
+    content: "";
+    height: 5px;
+    position: absolute;
+    top: -5px;
+  }
+
+  .seed-group::before {
+    left: 0;
+  }
+
+  .seed-group::after {
+    right: 0;
+  }
+
+  /* Teams index rows: standing, logo, name, playoff and title chances. */
+  .ti-row {
+    align-items: center;
+    column-gap: 10px;
+    display: grid;
+    grid-template-columns: 20px 28px minmax(0, 1fr) 54px 40px;
+  }
+
+  @media (min-width: 640px) {
+    .ti-row {
+      column-gap: 14px;
+      grid-template-columns: 24px 28px minmax(0, 1fr) 72px 56px;
+    }
+  }
+}
+
+/* Team page tables (.tt): on narrow phones the opponent shows as its code and cells tighten,
+   so the four columns fit in 284px without a sideways scroll. */
+@layer components {
+  .tt-none {
+    white-space: nowrap;
+  }
+
+  .tt-code {
+    display: none;
+  }
+
+  @media (max-width: 419px) {
+    .tt .tt-short {
+      display: none;
+    }
+
+    .tt .tt-code {
+      display: inline-flex;
+    }
+
+    .tt :is(td, th) + :is(td, th) {
+      padding-left: 10px;
+    }
+
+    .tt-none {
+      display: inline-block;
+      line-height: 1.2;
+      white-space: normal;
+      width: 4.5em;
+    }
+  }
+}

@@ -3,12 +3,14 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { lostPoints } from "@/components/live/AbsenceList";
 import { Badge } from "@/components/live/Badge";
+import { Hint } from "@/components/live/Hint";
 import { InjuryTable } from "@/components/live/InjuryTable";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { PlayersTable } from "@/components/live/PlayersTable";
 import { RatingChart, type RatingChartPoint } from "@/components/live/RatingChart";
+import { TeamLink } from "@/components/live/TeamLink";
 import { TeamLogo } from "@/components/live/TeamLogo";
-import { TeamNextGames } from "@/components/live/TeamNextGames";
+import { NEXT_GAMES_ON_PHONE, TeamNextGames, type NextGameColumn } from "@/components/live/TeamNextGames";
 import { Ticker } from "@/components/live/Ticker";
 import { Tile } from "@/components/live/Tile";
 import {
@@ -32,9 +34,10 @@ import { formatRating, oddsRows, type OddsRow } from "@/lib/view/odds";
 import { teamRoster } from "@/lib/view/players";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { ratingHistory } from "@/lib/view/rating-history";
+import { gameHref, teamHref } from "@/lib/view/routes";
 import { teamSchedule, type TeamGameRow } from "@/lib/view/team";
 import { gameBlocks, nextGameBars, possessive, recordBand, teamPercent } from "@/lib/view/team-page";
-import { conferenceOrder, formatRecord, ordinal, teamBySlug, teamColor, teamDisplay } from "@/lib/view/teams";
+import { conferenceOrder, formatRecord, ordinal, teamBySlug, teamColor } from "@/lib/view/teams";
 
 type Params = { params: Promise<{ abbr: string }> };
 
@@ -54,19 +57,55 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: `${team.name}: schedule, forecasts and odds`,
     description: `${team.name} record, 548 rating, playoff and title odds, and every game with its forecast.`,
+    alternates: { canonical: teamHref(team.id) },
   };
 }
 
 const RESULTS_SHOWN = 10;
 const UPCOMING_SHOWN = 10;
 
-function BigFigure({ label, value, note }: { label: string; value: string; note?: string }) {
+/** One header stat. Three sit in one row at every width (26px figures on phones). */
+function BigFigure({ label, value, note }: { label: React.ReactNode; value: string; note?: React.ReactNode }) {
   return (
-    <div>
-      <dt className="text-[13px] text-ink-2">{label}</dt>
-      <dd className="num text-[34px] font-extrabold leading-[1.1] sm:text-[46px]">{value}</dd>
-      {note ? <dd className="text-[13px] text-ink-2">{note}</dd> : null}
+    <div className="min-w-0">
+      <dt className="text-13 leading-[1.3] text-ink-2">{label}</dt>
+      <dd className="num mt-0.5 text-26 font-extrabold leading-[1.1] sm:text-46">{value}</dd>
+      {note ? <dd className="mt-0.5 text-13 leading-[1.3] text-ink-2">{note}</dd> : null}
     </div>
+  );
+}
+
+/** "−2.1", or "<0.1" for an absence the model counts at under a tenth of a point. */
+function pointsOut(points: number): string {
+  return points >= 0.05 ? lostPoints(points).replace(" pts", "") : "<0.1";
+}
+
+/** The next game under the header: date and tip (the game link), opponent, and the number with its kind. */
+function NextGameLine({ row, teamShortName }: { row: TeamGameRow; teamShortName: string }) {
+  const live = row.game.status === "in-progress";
+  const projection = row.forecast?.source === "projection";
+  return (
+    <p className="mt-7 flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-line pt-4 text-15">
+      <span className="text-ink-2">Next game</span>
+      <Link href={gameHref(row.game.id)} className="pp-link whitespace-nowrap">
+        {live ? "Live now" : `${formatWeekday(row.game.etDate)}, ${formatShortDay(row.game.etDate)}, ${formatTimeEt(row.game.tipUtc)}`}
+      </Link>
+      <span className="inline-flex items-center gap-1.5">
+        <span className="text-ink-2">{row.home ? "vs" : "at"}</span>
+        <TeamLink teamId={row.opponentId} form="full" logo={20} className="font-semibold" />
+      </span>
+      {row.forecast ? (
+        <span className="inline-flex items-center gap-1.5">
+          <Tile kind={projection ? "dash" : "sealed"} size="xs" className="!text-[13px]">
+            {teamPercent(row.forecast.probability)}%
+          </Tile>
+          <span className="text-13 text-ink-2">
+            {possessive(teamShortName)} chance,{" "}
+            {projection ? "a projection, never scored" : "sealed"}
+          </span>
+        </span>
+      ) : null}
+    </p>
   );
 }
 
@@ -122,13 +161,14 @@ function ProjectedRecord({ row, color }: { row: OddsRow; color: string }) {
 
 function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
   return (
-    <table className="tb">
+    <div className="table-scroll">
+    <table className="tb tt">
       <caption className="sr-only">Players the model counts as out now, the points of margin each costs, and the games each is expected to miss</caption>
       <thead>
         <tr>
           <th scope="col">Player</th>
-          <th scope="col" className="nm">Points</th>
-          <th scope="col">Games out, expected</th>
+          <th scope="col" className="nm">Pts lost</th>
+          <th scope="col" className="!whitespace-normal">Games out, expected</th>
         </tr>
       </thead>
       <tbody>
@@ -136,14 +176,14 @@ function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
           const { blocks, more } = gameBlocks(row.expectedGames);
           return (
             <tr key={row.athleteId}>
-              <th scope="row" className="text-left">
+              <th scope="row" className="!whitespace-normal text-left">
                 <PlayerLink athleteId={row.athleteId} name={row.name} />
               </th>
-              <td className="nm num">{lostPoints(row.points).replace(" pts", "")}</td>
+              <td className="nm num">{pointsOut(row.points)}</td>
               <td>
                 <span className="flex items-center gap-0.5">
                   {Array.from({ length: blocks }, (_, index) => (
-                    <i key={index} aria-hidden className="block h-3 w-[7px]" style={{ background: color }} />
+                    <i key={index} aria-hidden className="block h-3 w-[5px] sm:w-[7px]" style={{ background: color }} />
                   ))}
                   {more > 0 ? <span className="ml-1 text-[13px] text-ink-2">+{more}</span> : null}
                   <span className="sr-only">about {Math.round(row.expectedGames)} more games</span>
@@ -154,16 +194,43 @@ function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
         })}
       </tbody>
     </table>
+    </div>
   );
 }
 
+/** "at [logo] Trail Blazers": the opponent links to its team page (the game link is the date or result cell). */
 function Opponent({ row }: { row: TeamGameRow }) {
   return (
-    <Link href={`/game/${row.game.id}`} className="inline-flex items-center gap-2 whitespace-nowrap hover:underline hover:underline-offset-4">
-      <span className="w-5 text-ink-2">{row.home ? "vs" : "at"}</span>
-      <TeamLogo teamId={row.opponentId} size={18} />
-      {teamDisplay(row.opponentId).shortName}
-    </Link>
+    <span className="inline-flex items-center gap-2">
+      <span className="w-5 flex-none text-ink-2">{row.home ? "vs" : "at"}</span>
+      {/* The nickname, or the code on the narrowest phones (teams.css .tt-short / .tt-code). */}
+      <TeamLink teamId={row.opponentId} form="short" logo={18} className="tt-short" />
+      <TeamLink teamId={row.opponentId} form="code" logo={18} className="tt-code" />
+    </span>
+  );
+}
+
+const GAME_LINK =
+  "underline decoration-line decoration-1 underline-offset-4 hover:decoration-ink focus-visible:decoration-ink";
+
+function DateCell({ row, link }: { row: TeamGameRow; link: boolean }) {
+  const text = (
+    <>
+      <span className="hidden sm:inline">{formatWeekday(row.game.etDate)} </span>
+      {formatShortDay(row.game.etDate)}
+    </>
+  );
+  return (
+    <td className="whitespace-nowrap">
+      {link ? (
+        <Link href={gameHref(row.game.id)} className={GAME_LINK}>
+          {text}
+          <span className="sr-only">, game page</span>
+        </Link>
+      ) : (
+        text
+      )}
+    </td>
   );
 }
 
@@ -195,36 +262,37 @@ function NumberCell({ row, modelVersion }: { row: TeamGameRow; modelVersion: str
     );
   }
   if (row.missed) return <Badge tone="bad">Missed</Badge>;
-  return <span className="whitespace-nowrap text-[13px] text-ink-2">{row.result ? "Not in record" : "–"}</span>;
+  return <span className="tt-none text-[13px] text-ink-2">{row.result ? "Not in record" : "–"}</span>;
 }
 
 function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; modelVersion: string; caption: string }) {
   return (
-    <table className="tb">
+    <div className="table-scroll">
+    <table className="tb tt">
       <caption className="sr-only">{caption}</caption>
       <thead>
         <tr>
           <th scope="col">Date</th>
           <th scope="col">Opponent</th>
           <th scope="col">Result</th>
-          <th scope="col" className="nm">548 sealed</th>
+          <th scope="col" className="nm">
+            548<span className="hidden sm:inline"> sealed</span>
+          </th>
         </tr>
       </thead>
       <tbody>
         {rows.map((row) => (
           <tr key={row.game.id}>
-            <td className="whitespace-nowrap">
-              <span className="hidden sm:inline">{formatWeekday(row.game.etDate)} </span>
-              {formatShortDay(row.game.etDate)}
-            </td>
+            <DateCell row={row} link={false} />
             <th scope="row" className="text-left">
               <Opponent row={row} />
             </th>
             <td className="num whitespace-nowrap">
               {row.result ? (
-                <>
+                <Link href={gameHref(row.game.id)} className={GAME_LINK}>
                   <b>{row.result.won ? "W" : "L"}</b> {row.result.teamScore}–{row.result.opponentScore}
-                </>
+                  <span className="sr-only">, game page</span>
+                </Link>
               ) : null}
             </td>
             <td className="nm">
@@ -234,18 +302,22 @@ function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; mo
         ))}
       </tbody>
     </table>
+    </div>
   );
 }
 
 function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; caption: string; modelVersion: string }) {
   return (
-    <table className="tb">
+    <div className="table-scroll">
+    <table className="tb tt">
       <caption className="sr-only">{caption}</caption>
       <thead>
         <tr>
           <th scope="col">Date</th>
           <th scope="col">Opponent</th>
-          <th scope="col">Tip</th>
+          <th scope="col">
+            Tip<span className="sm:hidden">, ET</span>
+          </th>
           <th scope="col" className="nm">548</th>
         </tr>
       </thead>
@@ -264,15 +336,21 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
               </tr>
             ) : null,
             <tr key={row.game.id}>
-              <td className="whitespace-nowrap">
-                <span className="hidden sm:inline">{formatWeekday(row.game.etDate)} </span>
-                {formatShortDay(row.game.etDate)}
-              </td>
+              <DateCell row={row} link />
               <th scope="row" className="text-left">
                 <Opponent row={row} />
               </th>
-              <td className="num whitespace-nowrap text-ink-2">
-                {row.game.status === "postponed" ? "Postponed" : row.game.status === "in-progress" ? <b className="text-ink">Live</b> : formatTimeEt(row.game.tipUtc)}
+              <td className="whitespace-nowrap text-ink-2">
+                {row.game.status === "postponed" ? (
+                  "Postponed"
+                ) : row.game.status === "in-progress" ? (
+                  <b className="text-ink">Live</b>
+                ) : (
+                  <>
+                    {formatTimeEt(row.game.tipUtc).replace(/ ET$/, "")}
+                    <span className="hidden sm:inline"> ET</span>
+                  </>
+                )}
               </td>
               <td className="nm">
                 <NumberCell row={row} modelVersion={modelVersion} />
@@ -282,54 +360,83 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
         })}
       </tbody>
     </table>
+    </div>
   );
 }
 
-const SEED_COLORS = ["#111111", "#666666", "#8a8a8a"];
-const seedColor = (index: number) => SEED_COLORS[index < 6 ? 0 : index < 10 ? 1 : 2];
+// Straight in, play-in, out: three greys, and a bracket under the axis names each group.
+const SEED_GROUPS = [
+  { label: "Straight in", from: 0, to: 6, color: "var(--chart-ink)" },
+  { label: "Play-in", from: 6, to: 10, color: "var(--chart-text)" },
+  { label: "Out", from: 10, to: Number.POSITIVE_INFINITY, color: "var(--chart-mid)" },
+];
+const seedGroup = (index: number) => SEED_GROUPS.find((group) => index >= group.from && index < group.to)!;
+// Bar heights in px under 18px of head room for the values.
+const SEED_PLOT = 150;
 
 function SeedChart({ row }: { row: OddsRow }) {
-  const max = Math.max(0.05, ...row.seeds);
-  const top = [...row.seeds.keys()].sort((a, b) => row.seeds[b] - row.seeds[a]).slice(0, 3);
+  const count = row.seeds.length;
+  // The scale tops out at the next 10 points above the tallest bar.
+  const top = Math.max(0.1, Math.ceil(Math.max(...row.seeds) * 10 - 1e-9) / 10);
+  const gridLines = Array.from({ length: Math.round(top * 10) }, (_, i) => (i + 1) / 10);
   return (
     <div>
       <div
-        className="flex h-40 items-end gap-[3px] border-b border-ink"
+        className="seed-plot"
         role="img"
-        aria-label={`${row.shortName} seed chances: ${row.seeds.map((value, i) => `${ordinal(i + 1)} ${formatChance(value)}`).join(", ")}`}
+        aria-label={`${row.shortName} seed chances: ${row.seeds.map((value, i) => `${ordinal(i + 1)} ${formatChance(value, { exact: true })}`).join(", ")}`}
       >
-        {row.seeds.map((value, index) => (
-          <div key={index} className="flex h-full flex-1 flex-col items-center justify-end" title={`${ordinal(index + 1)} seed: ${formatChance(value)}`}>
-            {top.includes(index) && value >= 0.005 ? <span className="num mb-1 text-[11px] font-bold">{formatChance(value)}</span> : null}
-            <span
-              className="block w-full max-w-6"
-              style={{ height: `${(value / max) * 85}%`, minHeight: value > 0 ? 1 : 0, background: seedColor(index) }}
-            />
-          </div>
+        {gridLines.map((line) => (
+          <i key={line} aria-hidden className="seed-grid" style={{ bottom: (line / top) * SEED_PLOT }} />
         ))}
+        {row.seeds.map((value, index) => {
+          const text = formatChance(value, { exact: true }).replace("%", "");
+          const low = value < 0.005;
+          return (
+            <div key={index} className="seed-col" title={`${ordinal(index + 1)} seed: ${formatChance(value, { exact: true })}`}>
+              <span className={`seed-val num ${low ? "seed-val-low" : ""}`}>{text}</span>
+              <span
+                className="seed-bar"
+                style={{ height: (value / top) * SEED_PLOT, minHeight: value > 0 ? 1 : 0, background: seedGroup(index).color }}
+              />
+            </div>
+          );
+        })}
       </div>
-      <div aria-hidden className="mt-1 flex gap-[3px]">
+      <div aria-hidden className="seed-axis">
         {row.seeds.map((_, index) => (
-          <span key={index} className="num flex-1 text-center text-[11px] text-ink-2">
+          <span key={index} className="num">
             {index + 1}
           </span>
         ))}
       </div>
-      <p className="legend mt-3">
-        <span>
-          <i style={{ background: SEED_COLORS[0] }} />
-          Seeds 1–6, straight in
-        </span>
-        <span>
-          <i style={{ background: SEED_COLORS[1] }} />
-          7–10, play-in
-        </span>
-        <span>
-          <i style={{ background: SEED_COLORS[2] }} />
-          11–15, out
-        </span>
+      <div aria-hidden className="seed-groups" style={{ gridTemplateColumns: `repeat(${count}, minmax(0, 1fr))` }}>
+        {SEED_GROUPS.filter((group) => group.from < count).map((group) => (
+          <span key={group.label} className="seed-group" style={{ gridColumn: `${group.from + 1} / ${Math.min(group.to, count) + 1}` }}>
+            {group.label}
+          </span>
+        ))}
+      </div>
+      <p className="mt-3 text-[13px] text-ink-2">
+        Chance of each seed, in percent; grid lines every 10 points. Seeds 1–6 go straight to the playoffs, 7–10 to
+        the play-in, 11–15 are out.
       </p>
     </div>
+  );
+}
+
+const COUNT_WORDS = ["", "", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+const countText = (count: number) => (count === 1 ? "game" : `${COUNT_WORDS[count] ?? count} games`);
+
+/** "ten games", or "five games" on phones, where the chart shows the first five. */
+function GamesCount({ count }: { count: number }) {
+  const phone = Math.min(count, NEXT_GAMES_ON_PHONE);
+  if (phone === count) return <>{countText(count)}</>;
+  return (
+    <>
+      <span className="sm:hidden">{countText(phone)}</span>
+      <span className="hidden sm:inline">{countText(count)}</span>
+    </>
   );
 }
 
@@ -359,7 +466,11 @@ export default async function TeamPage({ params }: Params) {
   const played = schedule.filter((game) => game.result !== null).reverse();
   const upcoming = schedule.filter((game) => game.result === null);
   const anySealed = played.some((game) => game.forecast?.source === "sealed");
-  const bars = nextGameBars(upcoming);
+  const bars: NextGameColumn[] = nextGameBars(upcoming).map((bar) => {
+    const game = upcoming.find((candidate) => candidate.game.id === bar.gameId)!;
+    return { ...bar, opponentId: game.opponentId, home: game.home };
+  });
+  const nextGame = upcoming.find((game) => game.game.status === "scheduled" || game.game.status === "in-progress") ?? null;
   const anySealedBar = bars.some((bar) => bar.sealed);
   const chartPoints: RatingChartPoint[] = history.map((point) => {
     const values = Object.values(point.ratings).sort((a, b) => a - b);
@@ -401,20 +512,41 @@ export default async function TeamPage({ params }: Params) {
           <p className="mb-9 mt-2 text-ink-2">
             {team.conference}ern Conference · {division}
           </p>
-          <dl className="grid gap-6 sm:grid-cols-3 sm:gap-12">
+          <dl className={`grid gap-x-4 gap-y-6 sm:gap-x-12 ${showNow ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-3"}`}>
             <BigFigure label="Record" value={formatRecord(row.wins, row.losses)} note={`${ordinal(standing)} in the ${team.conference}`} />
-            <BigFigure label="Rating" value={formatRating(row.rating)} note={`${ordinal(row.ratingRank)} of 30`} />
+            <BigFigure
+              label={
+                <Hint term="Rating" label="Rating">
+                  Points per game better or worse than an average team: the model&apos;s estimate, updated
+                  after every game day. {ordinal(row.ratingRank)} of 30 teams.
+                </Hint>
+              }
+              value={formatRating(row.rating)}
+              note={
+                <>
+                  <span className="block sm:inline">pts vs. average</span>
+                  <span className="hidden sm:inline"> · </span>
+                  {ordinal(row.ratingRank)} of 30
+                </>
+              }
+            />
             {showNow ? (
               <BigFigure
-                label="Rating next game"
+                label={
+                  <Hint term="Rating next game" label="Rating next game">
+                    The same rating with the players the model counts out now taken off: the points of margin they
+                    cost, listed under Out now. Who is out can change before tip.
+                  </Hint>
+                }
                 value={formatRating(row.ratingNow!)}
                 note={absences.length > 0 ? `with ${absences.length} ${absences.length === 1 ? "player" : "players"} out` : "nobody counted out"}
               />
             ) : null}
           </dl>
+          {nextGame ? <NextGameLine row={nextGame} teamShortName={team.shortName} /> : null}
         </header>
 
-        <div className="mt-14 grid items-start gap-x-[72px] gap-y-16 sm:mt-[72px] lg:grid-cols-2">
+        <div className="mt-14 grid grid-cols-[minmax(0,1fr)] items-start gap-x-[72px] gap-y-16 sm:mt-[72px] lg:grid-cols-2">
           <div className="min-w-0">
             <section aria-labelledby="odds-title">
               <div className="sh">
@@ -436,14 +568,16 @@ export default async function TeamPage({ params }: Params) {
 
             <section aria-labelledby="next-title" className="mt-16">
               <div className="sh">
-                <h2 id="next-title">Next {bars.length === 1 ? "game" : `${bars.length === 10 ? "ten" : bars.length} games`}</h2>
+                <h2 id="next-title">
+                  Next <GamesCount count={bars.length} />
+                </h2>
                 <span>
                   {possessive(team.shortName)} chance · {anySealedBar ? "solid: sealed, dashed: projections, never scored" : "projections, never scored"}
                 </span>
               </div>
               {bars.length > 0 ? (
                 <>
-                  <TeamNextGames bars={bars} color={color} name={possessive(team.shortName)} />
+                  <TeamNextGames bars={bars} color={color} name={possessive(team.shortName)} scheduleHref="#upcoming-title" />
                   <p className="mt-3 text-[13px] text-ink-2">
                     {projectedWithInjuries
                       ? `${PROJECTION_WITH_INJURIES_LABEL}${projectedWithout ? " Games more than a week away are projected from ratings alone, before injuries." : ""}`
@@ -462,7 +596,10 @@ export default async function TeamPage({ params }: Params) {
                 <h2 id="out-title">Out now</h2>
                 {modeled ? (
                   <span>
-                    <b className="num text-ink">{lostPoints(liveState.absencePoints[team.id] ?? 0).replace(" pts", "")}</b> pts next game
+                    <b className="num text-ink">
+                      {absences.length > 0 ? pointsOut(liveState.absencePoints[team.id] ?? 0) : "0.0"}
+                    </b>{" "}
+                    pts next game
                   </span>
                 ) : null}
               </div>
@@ -475,7 +612,8 @@ export default async function TeamPage({ params }: Params) {
                 <>
                   <OutNow rows={absences} color={color} />
                   <p className="mt-3 text-[13px] leading-5 text-ink-2">
-                    Who the season simulation counts as out: listed out or doubtful on the NBA report, or missed the last
+                    Pts lost: the points of margin per game the model counts for each absence. Each block is one
+                    expected game out. Who the season simulation counts as out: listed out or doubtful on the NBA report, or missed the last
                     game and not listed. Expected games come from a return table fitted on past seasons, never reported
                     return dates. A game&apos;s seal counts the report in use at its seal instead, or these absences if
                     the team has not filed its report yet.
@@ -568,15 +706,15 @@ export default async function TeamPage({ params }: Params) {
           ) : null}
         </section>
 
-        <div className="mt-16 grid items-start gap-x-[72px] gap-y-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
-          <section aria-labelledby="seeds-title">
+        <div className="mt-16 grid grid-cols-[minmax(0,1fr)] items-start gap-x-[72px] gap-y-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+          <section aria-labelledby="seeds-title" className="min-w-0">
             <div className="sh">
               <h2 id="seeds-title">Seed chances</h2>
               <span>Where they finish</span>
             </div>
             <SeedChart row={row} />
           </section>
-          <section aria-labelledby="rating-title">
+          <section aria-labelledby="rating-title" className="min-w-0">
             <div className="sh">
               <h2 id="rating-title">Rating over time</h2>
               <span>Points per game vs. average</span>

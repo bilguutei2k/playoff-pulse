@@ -1,85 +1,108 @@
+import Link from "next/link";
+import { TeamLink } from "@/components/live/TeamLink";
+import { gameHref } from "@/lib/view/routes";
 import type { NextGameBar } from "@/lib/view/team-page";
+import { teamDisplay } from "@/lib/view/teams";
 
-function Bars({ bars, color, width }: { bars: NextGameBar[]; color: string; width: number }) {
-  const height = 194;
-  const left = 26;
-  const floor = 160;
-  const top = 20;
-  const y = (percent: number) => floor - (percent / 100) * (floor - top);
-  const slot = (width - left) / Math.max(bars.length, 1);
-  const bar = Math.min(47, slot * 0.8);
-  const dates = slot >= 40;
-  return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="block h-auto w-full" aria-hidden>
-      {[0, 50, 100].map((tick) => (
-        <g key={tick}>
-          <line
-            x1={left}
-            x2={width}
-            y1={y(tick)}
-            y2={y(tick)}
-            stroke={tick === 0 ? "#111111" : "#dcdcdc"}
-            strokeDasharray={tick === 50 ? "4 4" : undefined}
-          />
-          <text x={0} y={y(tick) + 4} fontSize={11} fill="#666666">
-            {tick}%
-          </text>
-        </g>
-      ))}
-      {bars.map((entry, index) => {
-        const x = left + index * slot + (slot - bar) / 2;
-        const barTop = y(entry.percent);
-        return (
-          <g key={entry.gameId}>
-            {entry.sealed ? (
-              <rect x={x} y={barTop} width={bar} height={floor - barTop} fill={color} />
-            ) : (
-              <rect
-                x={x + 1}
-                y={barTop}
-                width={bar - 2}
-                height={floor - barTop}
-                fill="#ffffff"
-                stroke={color}
-                strokeWidth={2}
-                strokeDasharray="5 3"
-              />
-            )}
-            <text x={x + bar / 2} y={barTop - 7} fontSize={11.5} fontWeight={700} fill="#111111" textAnchor="middle">
-              {entry.percent}
-            </text>
-            <text x={x + bar / 2} y={175} fontSize={10.5} fill="#666666" textAnchor="middle">
-              {entry.label}
-            </text>
-            {dates ? (
-              <text x={x + bar / 2} y={189} fontSize={10} fill="#666666" textAnchor="middle">
-                {entry.date}
-              </text>
-            ) : null}
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
+/** Games shown below the sm breakpoint; the rest stay in the Schedule table. */
+export const NEXT_GAMES_ON_PHONE = 5;
+
+/** A bar plus who it is against (the page adds these from its schedule rows). */
+export type NextGameColumn = NextGameBar & { opponentId: string; home: boolean };
+
+// Plot geometry in CSS px (teams.css draws the rest): the 0-to-100 scale is PLOT
+// tall, with HEAD px above it for the 100% bar's value.
+const PLOT = 132;
+const HEAD = 20;
+const lineTop = (tick: number) => HEAD + ((100 - tick) / 100) * PLOT;
 
 /**
- * The team's chance in each of its next games. Dashed outline: a projection, never
- * scored. Solid: a sealed number. Drawn at a fixed width per breakpoint so labels
- * stay legible.
+ * The team's chance in each of its next games, as HTML bars at real pixel sizes (no
+ * scaled SVG, so no label drops below 11px). Dashed outline: a projection, never
+ * scored. Solid: a sealed number. Each bar is its game's link and each opponent
+ * label a link to that team; they are siblings, never nested. Phones show the first
+ * five, with a link to the full schedule.
  */
-export function TeamNextGames({ bars, color, name }: { bars: NextGameBar[]; color: string; name: string }) {
+export function TeamNextGames({
+  bars,
+  color,
+  name,
+  scheduleHref,
+}: {
+  bars: NextGameColumn[];
+  color: string;
+  /** "Timberwolves'": heads the text summary. */
+  name: string;
+  /** Where "more games" points on phones, e.g. "#upcoming-title". */
+  scheduleHref: string;
+}) {
   const summary = bars
     .map((entry) => `${entry.label} ${entry.date}: ${entry.percent}%${entry.sealed ? ", sealed" : ", projection"}`)
     .join("; ");
+  const hiddenOnPhone = Math.max(0, bars.length - NEXT_GAMES_ON_PHONE);
   return (
-    <figure role="img" aria-label={`${name} chance in the next ${bars.length} games. ${summary}.`}>
-      <div className="sm:hidden">
-        <Bars bars={bars} color={color} width={360} />
+    <figure className="tng" aria-labelledby="tng-summary">
+      <figcaption id="tng-summary" className="sr-only">
+        {name} chance in the next {bars.length} games. {summary}.
+      </figcaption>
+      <div className="tng-frame">
+        <div aria-hidden className="tng-axis">
+          {[100, 50, 0].map((tick) => (
+            <span key={tick} className="tng-tick num" style={{ top: lineTop(tick) }}>
+              {tick}%
+            </span>
+          ))}
+        </div>
+        <div className="tng-area">
+          {[100, 50, 0].map((tick) => (
+            <i key={tick} aria-hidden className={`tng-grid tng-grid-${tick}`} style={{ top: lineTop(tick) }} />
+          ))}
+          <ol className="tng-cols">
+            {bars.map((entry, index) => {
+              const opponent = teamDisplay(entry.opponentId);
+              return (
+                <li key={entry.gameId} className={`tng-col ${index >= NEXT_GAMES_ON_PHONE ? "tng-late" : ""}`}>
+                  <Link
+                    href={gameHref(entry.gameId)}
+                    className="tng-game"
+                    aria-label={`${entry.date}, ${entry.home ? "vs" : "at"} ${opponent.name}: ${entry.percent}%, ${entry.sealed ? "sealed" : "projection, never scored"}`}
+                  >
+                    <span aria-hidden className="tng-bar-slot">
+                      <span
+                        className={`tng-bar ${entry.sealed ? "" : "tng-bar-dash"}`}
+                        style={{
+                          height: `${(entry.percent / 100) * PLOT}px`,
+                          ...(entry.sealed ? { background: color } : { borderColor: color }),
+                        }}
+                      >
+                        <span className="tng-pct num">{entry.percent}</span>
+                      </span>
+                    </span>
+                  </Link>
+                  <span className="tng-opp">
+                    {entry.home ? null : (
+                      <span aria-hidden className="tng-at">
+                        @
+                      </span>
+                    )}
+                    <TeamLink teamId={entry.opponentId} form="code" className="tng-team" />
+                  </span>
+                  <span aria-hidden className="tng-date num">
+                    {entry.date}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
-      <div className="hidden sm:block">
-        <Bars bars={bars} color={color} width={616} />
-      </div>
+      {hiddenOnPhone > 0 ? (
+        <p className="mt-3 text-13 sm:hidden">
+          <Link href={scheduleHref} className="pp-link">
+            {hiddenOnPhone} more {hiddenOnPhone === 1 ? "game" : "games"} in the schedule
+          </Link>
+        </p>
+      ) : null}
     </figure>
   );
 }
