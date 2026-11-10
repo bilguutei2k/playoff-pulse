@@ -12,6 +12,7 @@ import {
   estimateSeriesProbability,
 } from "@/lib/model/simulator";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
+import { ArchiveTeamBadge } from "@/components/forecast/ArchiveTeamBadge";
 
 type Overrides = Record<string, PlayerScenarioOverride>;
 
@@ -31,7 +32,7 @@ function PlayerControls({
   return (
     <div className="grid gap-2">
       <div className="flex items-center justify-between">
-        <span className="pp-team-badge" data-team={team.abbreviation}>{team.abbreviation}</span>
+        <ArchiveTeamBadge code={team.abbreviation} />
         <span className="pp-kicker">Player assumptions</span>
       </div>
       {team.players
@@ -42,8 +43,8 @@ function PlayerControls({
           const status = value.injuryStatus ?? player.injuryStatus;
           const minutes = value.projectedMinutes ?? (status === "out" ? 0 : player.projectedMinutes || player.healthyProjectedMinutes || 0);
           return (
-            <div key={player.id} className="grid gap-2 border-b border-[var(--color-border-subtle)] pb-2 sm:grid-cols-[1fr_116px_90px] sm:items-center">
-              <span className="text-xs font-bold text-[var(--color-text-primary)]">{player.name}</span>
+            <div key={player.id} className="grid gap-2 border-b border-[var(--color-border-subtle)] pb-2 sm:grid-cols-[minmax(0,1fr)_116px_140px] sm:items-center">
+              <span className="min-w-0 text-xs font-bold text-[var(--color-text-primary)]">{player.name}</span>
               <select
                 aria-label={`${player.name} availability`}
                 value={status}
@@ -62,8 +63,9 @@ function PlayerControls({
                 <option value="limited">Limited</option>
                 <option value="out">Out</option>
               </select>
-              <label className="grid grid-cols-[1fr_34px] items-center gap-1 text-[11px] text-[var(--color-text-muted)]">
+              <label className="grid min-w-0 grid-cols-[minmax(0,1fr)_34px] items-center gap-1 text-[11px] text-[var(--color-text-muted)]">
                 <input
+                  className="w-full min-w-0"
                   aria-label={`${player.name} minutes`}
                   type="range"
                   min="0"

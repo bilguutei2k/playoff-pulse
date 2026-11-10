@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
 import backtestSummary from "../../../docs/backtest/summary.json";
 import backtestResults from "../../../docs/backtest/results.json";
 import evidence from "../../../docs/backtest/evidence.json";
@@ -8,7 +10,7 @@ import externalBenchmark538 from "../../../docs/backtest/external-benchmark-538.
 import { formatNumber, formatSigned } from "@/lib/utils/format";
 import { ResearchEvidence } from "@/components/forecast/ResearchEvidence";
 
-export const metadata = { title: "2026 methodology" };
+export const metadata: Metadata = { title: "2026 methodology", alternates: { canonical: "/methodology" } };
 
 type SectionTable = {
   type: "table";
@@ -48,35 +50,35 @@ const sections: MethodologySection[] = [
     body: "Playoff Pulse is a retrospective forecasting experiment with an evidenced rating baseline and a preserved, unvalidated scenario overlay. Published game, series, Finals, and championship probabilities use the baseline only. It is not a betting product and does not make wagering recommendations.",
   },
   {
-    title: "Baseline and Overlay Formula",
+    title: "Baseline and overlay formula",
     body: "The published baseline uses baselineStrength = 0.25 × netRating + 0.20 × ratingProxy, plus the fixed home-court term before logistic conversion. The separate scenario overlay is 0.55 × playerMinuteWeightedImpact + manualAdjustment. The baseline coefficients were preserved rather than refit when this boundary was introduced; the overlay defaults to zero and never enters the backtest path.",
   },
   {
-    title: "Player-Minute Weighting",
+    title: "Player-minute weighting",
     body: "Each player's manual impact rating is weighted by projected playoff minutes and divided by a 240-minute team game. This creates an explicitly unvalidated scenario adjustment. It is shown only beside the baseline with its delta and never as the published probability by itself.",
   },
   {
-    title: "Injury Handling",
+    title: "Injury handling",
     body: "Players marked out are excluded from the scenario rotation. Limited and questionable players receive disclosed scenario multipliers. These are user-driven assumptions, not medical forecasts, and they have zero point-in-time historical support under the current availability contract.",
   },
   {
-    title: "Home Court",
+    title: "Home court",
     body: "Expected margin starts with the difference between the two teams' strength estimates. The configured home-court advantage is 2.2 points added to the expected margin when the home team has court advantage. This is a manual assumption, not empirically fitted to playoff data.",
   },
   {
-    title: "Exact Series Solver",
+    title: "Exact series solver",
     body: "Game margins are converted to win probabilities with a logistic function using a scale parameter of 6.5. Every possible remaining best-of-seven path is then solved exactly with dynamic programming, respecting the current score and home pattern. Monte Carlo is reserved for bracket-wide and input-uncertainty calculations.",
   },
   {
-    title: "Full Bracket Simulation",
+    title: "Full bracket simulation",
     body: "The published bracket simulation repeatedly resolves configured rounds with baseline probabilities and creates future series from winners. The scenario laboratory separately samples disclosed assumptions; its 10th–90th percentile range is sensitivity analysis, not validated coverage. A configured Finals score and home pattern are always respected.",
   },
   {
-    title: "Manual and Static Inputs",
+    title: "Manual and static inputs",
     body: "Team ratings, player impact, projected minutes, injury statuses, model weights, and the placeholder market odds remain manual configuration in static files. NBA Finals roster inputs were manually rechecked against public Game 2 notes on June 5, 2026, and projected minutes use Game 1 participation as the baseline, but the impacts are still subjective estimates. The 2026 playoffs are complete: the Knicks defeated the Spurs 4-1 in the NBA Finals, with the final series state verified against the ESPN public scoreboard on July 12, 2026. The daily scoreboard workflow is bookkeeping only - it does not adjust ratings, minutes, injuries, or rosters. No odds API, account system, database, or authentication is active.",
   },
   {
-    title: "Backtest Results",
+    title: "Backtest results",
     body: [
       `Across ${backtestSummary.totalSeries} playoff series from ${backtestSummary.firstSeason} through ${backtestSummary.lastSeason}, the rating-only Playoff Pulse baseline posts Brier ${backtestSummary.models.playoff_pulse.brierScore.toFixed(4)}. It conclusively beats coin flip (${backtestSummary.models.coinflip.brierScore.toFixed(4)}), directional higher-seed (${backtestSummary.models.higher_seed.brierScore.toFixed(4)}), and directional home-team (${backtestSummary.models.home_team.brierScore.toFixed(4)}) baselines. This number does not validate the scenario overlay.`,
       `The baseline conclusively trails SRS-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.srs_proxy_only.brierScore).toFixed(4)} Brier and net-rating-only by ${(backtestSummary.models.playoff_pulse.brierScore - backtestSummary.models.net_rating_only.brierScore).toFixed(4)}. Both paired season-clustered 95% intervals are above zero, so the precommitted retirement gate now fires. The baseline/overlay boundary was defined after historical results existed, so this evaluation remains descriptive rather than prospective.`,
@@ -85,7 +87,7 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "Round-Level Finding",
+    title: "Round-level finding",
     body: [
       "Round-by-round Brier score against the SRS-proxy-only baseline:",
       {
@@ -117,7 +119,7 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "Production Retirement Gate",
+    title: "Production retirement gate",
     body: [
       `Verdict: ${retirementDecision.decision === "retain_production_gate_not_met" ? "retain production" : "retire production to research-only"}. The gate was committed before this verdict and uses a symmetric 0.005 meaningful-deficit threshold, paired season-clustered inference, and log-loss and calibration-slope safeguards.`,
       ...retirementDecision.comparisons.map(
@@ -130,7 +132,7 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "Calibration, Bubble, and Caveats",
+    title: "Calibration, bubble, and caveats",
     body: [
       {
         type: "subsection",
@@ -155,22 +157,22 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "Future Versions",
+    title: "Future versions",
     body: "The research harness now supports rolling-origin game and series evaluation, rolling climatology baselines, grouped Murphy Brier decomposition, regularized expected-margin models, exact series solving, nested calibration, season-clustered uncertainty, feature ablations, and preregistered candidates. Matchup and player extensions remain research-only unless they improve genuinely future archived seasons.",
   },
   {
-    title: "Point-in-Time Reconstruction",
+    title: "Point-in-time reconstruction",
     body: [
       `The research archive reconstructs ${evidence.timeline.length} forecasts immediately before historical playoff games from ${backtestSummary.firstSeason}–${backtestSummary.lastSeason}. A Game N record includes the regular-season snapshot and Games 1 through N-1 only. It never includes Game N's result or a later result.`,
       "These are leakage-safe reconstructed forecasts, not claims about forecasts published at the time. Every record identifies its model version, information set, source snapshot, impact scale, rotation source, and availability assumption.",
     ],
   },
   {
-    title: "Replacement Minutes and Scenario Lab",
+    title: "Replacement minutes and scenario lab",
     body: "Scenario rotations conserve 240 minutes. Out players receive zero minutes; missing or vacated time becomes a disclosed replacement-level player rather than disappearing. Requests above 240 are proportionally scaled. The preserved Finals demonstration resets a completed series to 0–0 and is explicitly hypothetical, never presented as live 2026 state.",
   },
   {
-    title: "Calibration and Registered Challengers",
+    title: "Calibration and registered challengers",
     body: [
       `Nested calibration is trained only on earlier rolling-origin predictions. Across the expanded eligible sample, game calibration changes Brier ${evidence.calibration.game.raw.brier.toFixed(4)} → ${evidence.calibration.game.calibrated.brier.toFixed(4)}, but direct series-output calibration worsens ${evidence.calibration.series.raw.brier.toFixed(4)} → ${evidence.calibration.series.calibrated.brier.toFixed(4)} and also worsens log loss. The direct line is CLOSED, not research-only.`,
       `The coherent alternative calibrates each possible future game's probability and then reruns the exact series solver. It worsens the eligible series point estimate from ${evidence.calibration.gamePropagatedThroughExactSeries.raw.brier.toFixed(4)} to ${evidence.calibration.gamePropagatedThroughExactSeries.calibrated.brier.toFixed(4)}, and its season-clustered comparison interval includes zero. The nested line is also CLOSED and should not be revisited without materially new data or a new preregistered hypothesis.`,
@@ -180,7 +182,7 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "Rating Uncertainty Read",
+    title: "Rating uncertainty read",
     body: [
       `The decision rule was fixed before reading the expanded result: skip uncertainty work if grouped series reliability was below 0.002. The rolling SRS + home model's game reliability is ${evidence.brierDecomposition.game.reference.reliability.toFixed(6)} Brier and its series reliability is ${evidence.brierDecomposition.series.reference.reliability.toFixed(6)}, so the series threshold triggered the experiment.`,
       `The research-only uncertainty candidate fits the standard deviation of SRS-minus-net-rating residuals on prior seasons only, samples independent team-strength errors once per run, and averages 512 exact-solver probabilities. Its series Brier is ${evidence.ratingUncertaintyCandidate.metrics.series.brier.toFixed(6)} versus ${evidence.brierDecomposition.series.reference.brier.toFixed(6)} for the point estimate, while grouped reliability changes by ${formatSigned(evidence.ratingUncertaintyCandidate.comparisonToSrsHome.reliabilityChange, 6)} to ${evidence.ratingUncertaintyCandidate.metrics.series.decomposition.reliability.toFixed(6)}.`,
@@ -188,7 +190,7 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "External Model Benchmark",
+    title: "External model benchmark",
     body: [
       `On ${externalBenchmark538.coverage.matchedSeries} matched series from 2016–2022, the rating-only Playoff Pulse reconstruction scores Brier ${externalBenchmark538.metrics.playoffPulse.brier.toFixed(4)} and log loss ${externalBenchmark538.metrics.playoffPulse.logLoss.toFixed(4)}, versus FiveThirtyEight at Brier ${externalBenchmark538.metrics.fiveThirtyEight.brier.toFixed(4)} and log loss ${externalBenchmark538.metrics.fiveThirtyEight.logLoss.toFixed(4)}. Playoff Pulse minus FiveThirtyEight Brier is ${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.pointEstimate, 4)} with a season-clustered 95% interval [${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.ci95[0], 4)}, ${formatSigned(externalBenchmark538.pairedSeasonClusteredBootstrap.ci95[1], 4)}].`,
       "The mapping rule was committed before scoring: take the latest common forecast date strictly before series start, use the round-specific advancement field, and normalize the two teams' positive probabilities. Coverage is 105 of 105 eligible series.",
@@ -207,7 +209,7 @@ const sections: MethodologySection[] = [
     ],
   },
   {
-    title: "Prospective Issuance Protocol",
+    title: "Prospective issuance protocol",
     body: [
       "The archive command now distinguishes retrospective snapshots from prospective before-game issuance. Prospective issuance requires an explicit issue time, series ID, game ID, and scheduled start; it rejects forecasts issued before their data snapshot or at/after tipoff.",
       "Archive filenames include issue time and model version and are immutable: an existing issue cannot be overwritten. Each prospective archive also seals the registered primary challenger's probability beside the production estimate without replacing it. Promotion decisions begin with the 2027 postseason because no forecasts were issued contemporaneously in 2026.",
@@ -290,18 +292,18 @@ function SectionBody({ body }: { body: SectionBodyContent }) {
 export default function MethodologyPage() {
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">
+      <ArchiveHeader current="/methodology" />
       <div className="mx-auto grid max-w-7xl gap-[18px] px-3 py-3 md:px-[18px] md:py-[18px] xl:grid-cols-[1.4fr_0.8fr] xl:items-start">
         <div className="flex flex-col gap-[18px]">
           <div className="pp-card">
             <div className="pp-section-head">
-              <div className="pp-kicker text-[var(--color-accent)]">Methodology</div>
+              <div className="pp-kicker text-[var(--color-accent)]">Methodology, 2026 archive</div>
               <h1 className="mt-3 text-2xl font-bold tracking-normal">
-                How Playoff Pulse estimates probabilities
+                2026 playoff methodology
               </h1>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--color-text-muted)]">
-                The model is intentionally simple for the production MVP:
-                visible inputs, pure TypeScript calculations, and clear
-                limitations.
+                How the archived 2026 playoff model, then called Playoff Pulse, estimated probabilities. It was
+                intentionally simple: visible inputs, pure TypeScript calculations, and clear limitations.
               </p>
             </div>
             <div className="p-4">
@@ -375,7 +377,7 @@ export default function MethodologyPage() {
                   formatNumber(backtestSummary.models.playoff_pulse.brierScore, 3),
                 ],
                 [
-                  "vs Coinflip",
+                  "vs coin flip",
                   formatSigned(
                     backtestSummary.models.playoff_pulse.brierScore -
                       backtestSummary.models.coinflip.brierScore,
@@ -383,7 +385,7 @@ export default function MethodologyPage() {
                   ),
                 ],
                 [
-                  "vs Higher-Seed",
+                  "vs higher seed",
                   formatSigned(
                     backtestSummary.models.playoff_pulse.brierScore -
                       backtestSummary.models.higher_seed.brierScore,

@@ -13,7 +13,6 @@ import { validateConfig } from "@/lib/model/validation";
 import { Section } from "@/components/layout/Section";
 import { BacktestSummaryCard } from "@/components/forecast/BacktestSummaryCard";
 import { MethodologyNote } from "@/components/forecast/MethodologyNote";
-import { LiveDataPanel } from "@/components/forecast/LiveDataPanel";
 import { ProbabilityTable } from "@/components/forecast/ProbabilityTable";
 import { SeriesCard } from "@/components/forecast/SeriesCard";
 import { SimulationSummary } from "@/components/forecast/SimulationSummary";
@@ -126,7 +125,7 @@ export function ForecastDashboard() {
 
   return (
     <div className="flex flex-col gap-[18px]">
-      <Section title="Model Status">
+      <Section title="Model status">
         <SimulationSummary
           validationErrors={validation.errors}
           validationWarnings={validation.warnings}
@@ -142,7 +141,6 @@ export function ForecastDashboard() {
             : []),
           "Manual data snapshot",
           `Last updated ${dataLastUpdatedTimestamp}`,
-          "Read-only live scoreboard probe",
           "Probabilities are evidenced-baseline estimates",
           `Model ${snapshot.metadata.modelVersion}`,
           validationStatus,
@@ -166,14 +164,7 @@ export function ForecastDashboard() {
       ) : null}
 
       <Section
-        title="Engineering Appendix: Live Data Probe"
-        description="Preserved read-only NBA scoreboard feed, kept as a data-ingestion validation demo. It never fed the model, and with the season complete it typically shows no games."
-      >
-        <LiveDataPanel />
-      </Section>
-
-      <Section
-        title="Championship Estimate"
+        title="Championship estimate"
         description="Backtested rating-only baseline probabilities. With a finished Finals these terminal values are accounting, not forecasts; player and injury scenarios live in the clearly labeled lab overlay."
       >
         <div className={championshipGridClass}>
@@ -213,7 +204,7 @@ export function ForecastDashboard() {
       </Section>
 
       <Section
-        title="Active Series"
+        title="Active series"
         description="Each card shows the evidenced rating-only baseline. Player, minutes, injury, and manual assumptions are excluded from these published probabilities and appear only as a labeled scenario overlay in the lab."
       >
         {activeSeries.length === 0 ? (
@@ -248,13 +239,13 @@ export function ForecastDashboard() {
         )}
       </Section>
 
-      <Section title="Model Validation">
+      <Section title="Model validation">
         <BacktestSummaryCard />
       </Section>
 
       <div className="grid gap-[18px] xl:grid-cols-[1.4fr_1fr]">
         <Section
-          title="Probability Table"
+          title="Probability table"
           description="Backtested baseline title paths. Eliminated teams are shown as inactive rather than active future paths."
         >
           <ProbabilityTable
@@ -266,7 +257,7 @@ export function ForecastDashboard() {
         </Section>
 
         <Section
-          title="Team Strength"
+          title="Team strength"
           description="The rating-only baseline and the separately identified unvalidated scenario contribution."
         >
           <TeamStrengthTable
@@ -278,7 +269,7 @@ export function ForecastDashboard() {
       </div>
 
       <div className="grid gap-[18px]">
-        <Section title="What The Model Can't See">
+        <Section title="What the model can't see">
           <MethodologyNote />
         </Section>
       </div>

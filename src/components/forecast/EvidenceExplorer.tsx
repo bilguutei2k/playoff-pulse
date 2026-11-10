@@ -12,6 +12,20 @@ type CalibrationBlock = {
   calibrated: typeof evidence.calibration.game.calibrated;
 };
 
+const SERIES_META = new Map(evidence.seriesIndex.map((row) => [row.seriesId, row]));
+
+/**
+ * "2025 NBA Finals · OKC–IND · G1" for an archive row ID such as
+ * "2025-finals-finals-okc-ind:game-1"; the ID itself when it is not in the index.
+ */
+export function readableLabel(id: string): string {
+  const [seriesId, game] = id.split(":");
+  const meta = SERIES_META.get(seriesId);
+  if (!meta) return id;
+  const gameNumber = game?.match(/^game-(\d+)$/)?.[1];
+  return `${meta.season} ${meta.round} · ${meta.teamA}–${meta.teamB}${gameNumber ? ` · G${gameNumber}` : ""}`;
+}
+
 function ReliabilityPlot({ title, block }: { title: string; block: CalibrationBlock }) {
   const raw = block.raw.calibration;
   const calibrated = block.calibrated.calibration;
@@ -582,7 +596,7 @@ export function EvidenceExplorer() {
             <div className="divide-y divide-[var(--color-border-subtle)] p-4 pt-0">
               {evidence.worstForecasts[kind].slice(0, 8).map((row) => (
                 <div key={row.id} className="grid grid-cols-[1fr_58px_48px_56px] gap-2 py-2 text-xs">
-                  <span className="truncate" title={row.id}>{row.id}</span>
+                  <span className="min-w-0" title={row.id}>{readableLabel(row.id)}</span>
                   <span className="pp-number text-right">p {formatPercent(row.probability)}</span>
                   <span className="text-right">actual {row.outcome === 1 ? "W" : "L"}</span>
                   <span className="pp-number text-right text-[var(--color-danger)]">{formatNumber(row.brierLoss, 3)}</span>
@@ -618,7 +632,7 @@ export function EvidenceExplorer() {
               <div className="pp-kicker">Latest versus previous version</div>
               {versionDeltas.slice(0, 8).map((row) => (
                 <div key={row.seriesId} className="grid grid-cols-[1fr_58px_58px_62px] gap-2 text-xs">
-                  <span className="truncate">{row.seriesId}</span>
+                  <span className="min-w-0" title={row.seriesId}>{readableLabel(row.seriesId)}</span>
                   <span className="pp-number text-right">{formatPercent(row.previous)}</span>
                   <span className="pp-number text-right">{formatPercent(row.current)}</span>
                   <span className="pp-number text-right">{formatSigned(row.delta * 100)} pp</span>

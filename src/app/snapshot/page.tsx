@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
 import { ForecastDashboard } from "@/components/forecast/ForecastDashboard";
 
 export const metadata: Metadata = {
   title: "Final 2026 snapshot",
   description:
     "Frozen final state of the completed 2026 postseason dashboard. Terminal probabilities are accounting, not forecast skill.",
+  alternates: { canonical: "/snapshot" },
 };
 
 export default function SnapshotPage() {
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">
+      <ArchiveHeader current="/snapshot" />
       <div className="mx-auto flex max-w-7xl flex-col gap-[18px] px-3 py-3 md:px-[18px] md:py-[18px]">
         <section className="pp-card">
           <div className="p-4">
             <div className="pp-kicker text-[var(--color-warning)]">
-              Frozen snapshot / terminal state
+              Frozen snapshot, terminal state
             </div>
             <h1 className="mt-3 text-2xl font-bold tracking-normal text-[var(--color-text-primary)]">
               Final 2026 dashboard state

@@ -137,25 +137,47 @@ A table of contents, then 10 prose sections with test tables and a glossary (abo
 
 ## 5. Shared components
 
-548 mark (ink tile, orange square); freshness chip; panel with kicker, title, dek; game card; status pill; badge (good, warn, bad, quiet); split bar (away left, team colours ≥3:1); heat cell (9 teal bins, value printed, white text from 60%); seed sparkline and chart (teal 1–6, light teal 7–10, grey 11–15); diverging row; absence box and rows; team logo (18–56 px); sortable and plain tables; three charts; notice (amber, grey); date strip; segmented control; buttons; orange-underlined links. New: **injury table** (team, source line, note when needed, Player / Status badge / Reason / Source / 548 pts; reason and source fold under the name in a narrow container); **players table** (sortable, sticky first column and header, search and filters); **player link** (grey underline, orange on hover; plain text without an ID).
+As built in the v8 design (tokens in `src/app/styles/base.css`, shared classes in `src/app/styles/shared.css`, both frozen; each page area has its own partial beside them).
+
+- **Masthead**: black bar with the 548 mark (an ink tile on black), the section links (Games, Odds, Injuries, Players, Teams, Record, How it works), the "Updated" stamp and search. Its height is `--mast` (56 px, 68 px from 1024 px); anything sticky below it uses `top: var(--mast)`.
+- **TeamLink** (`components/live/TeamLink.tsx`): the one way to show a team. A link to `/teams/{abbr}` with an optional logo; forms `full`, `short`, `code`, a per-breakpoint form, or `auto` (the longest name its slot fits). The name never ellipsizes or clips, and the accessible name is always the full name. `raised` lifts it above a card's sibling whole-card link, so links never nest. **PlayerLink** is the same for players.
+- **Team logo** (`TeamLogo.tsx`): ESPN's logos, 18 to 56 px, always beside a name or code.
+- **Tile** (`Tile.tsx`): 548's number. Solid ink is sealed and scored, an outline is a live estimate, dashed is a number that is never scored (provisional, projection).
+- **Section heading** (`SectionHeading.tsx`, class `.sh`): a 2 px ink rule, a 21 px extra-bold title, an optional note at the right and an optional link that draws its own arrow.
+- **Tables** (`.tb`): ink rule under the head, `#dcdcdc` row rules, tabular figures on numeric cells (`.nm`, `.num`), sortable heads through `SortHeader.tsx` (arrow after the label, `aria-sort`, 44 px touch area); wide tables scroll inside `.table-scroll`, never the page.
+- **Hint** (`Hint.tsx`): a dotted-underlined term or a "?" button that opens a short definition.
+- **Split bar**: each side's chance in its team color (pairs kept apart, at least 3:1 against white); team color appears only in chips and bars, text stays ink.
+- **Heat cells** (`.heat`): plain figures; 50% and up print bold. The heat bins only set that weight; there is no colour ramp.
+- **Legend** (`.legend`): 12 px square swatches with a label each.
+- **Notice** (`.notice`, warn wash with a 3 px warn rule) for caveats that must be read; `.notice-quiet` (grey rule) for empty states.
+- **Links in text** (`.pp-link`): ink, semibold, ink underline that thickens on hover.
+- **Buttons** (`.pp-button`), selects (`.pp-select`): square, 1 px line, ink text.
+- **Focus**: a 2 px ink ring on light surfaces, white on the masthead.
+- The 2026 archive (`/retrospective`, `/snapshot`, `/evidence`, `/methodology`, `/lab`) keeps its older `pp-` card look on purpose, under a shared archive header (breadcrumb, a line saying it is frozen, links between its five pages).
 
 ## 6. Current tokens (current, open to change)
 
 | Role | Value |
 |---|---|
-| page, panel, wash, wash-2 | `#faf9f7` `#ffffff` `#f5f3ef` `#eeebe6` |
-| line, line-strong | `#e6e3de` `#d4d0c9` |
-| ink, ink-2, ink-3, ink-4 (decoration only) | `#121417` `#5c5a57` `#6b6863` `#8a8782` |
-| pulse (brand, live, active; never text), pulse-ink (text) | `#ff5a1f` `#b8400f` |
-| market | `#4b5563` |
+| page, panel | `#ffffff` |
+| wash, wash-2 | `#f4f4f4` `#ebebeb` |
+| line (rules, tracks; never a value mark), line-strong | `#dcdcdc` `#b8b8b8` |
+| grid (chart gridlines) | `#ececec` |
+| ink | `#111111` |
+| ink-2, ink-3 (secondary text, 5.7:1) | `#666666` |
+| ink-mid (decoration, 3.5:1), ink-4 (decoration, 2.8:1) | `#8a8a8a` `#9a9a9a` |
+| masthead, masthead text 2 | `#111111` `#bdbdbd` |
+| market | `#666666` |
 | good, bad, warn | `#0b6e55` `#b42318` `#8a4b00` |
-| heat 1–8 | `#eff4f2 #dbe7e2 #c2d6ce #a7c5b9 #8ab2a3 #377f68 #25765e #0b6e55` |
+| bad wash, warn wash, warn line | `#fdf0ee` `#fdf3e1` `#e8c98a` |
+| on the masthead: warn, focus | `#f5c26b` `#ffffff` |
+| pulse, pulse-ink | `#111111` (the old orange accent is gone; the names remain for the archive and the focus ring) |
 
-Team colours are in `site.teams`.
+Chart roles, usable directly in SVG (`fill="var(--chart-grid)"`): `--chart-ink`, `--chart-axis` (ink), `--chart-text` (ink-2), `--chart-grid` (grid), `--chart-track` (line), `--chart-mid` (ink-mid), `--chart-surface` (page), `--chart-focus` (ink). Team colours come from `src/lib/view/teams.ts` (`teamColor`, `pairColors`).
 
-**Type**: Archivo for the UI (15 px body, 700-weight headlines of 22–44 px); JetBrains Mono for every figure and label (11 px uppercase kickers); Archivo Black for the wordmark only. Card numbers are 30 px; game page numbers 60 px.
+**Type**: Schibsted Grotesk only, for text, figures and the wordmark. Scale utilities `text-12`, `13`, `14`, `15`, `17`, `21`, `26`, `32`, `46`, `56` (font size only): a page h1 is `text-32 sm:text-46` (the day page adds `lg:text-56`), a section h2 `text-21`, table body `text-14`, table head `text-13`. Kickers are 13 px, sentence case, no letter-spacing. Tabular figures apply automatically on numeric table cells and through `.tabular`; never on version strings or prose.
 
-**Space**: 76 rem container, 16/24 px gutters, 10 px card radius, 20/24 px panel padding, breakpoints at 640, 768, 1024 and 1280 px.
+**Space and shape**: container content up to 1312 px, with side gutters of 18 px on phones, 32 px from 768 px and 64 px from 1280 px; square corners everywhere (every `rounded-*` resolves to 0 except `rounded-full`); breakpoints at 640, 768, 1024 and 1280 px.
 
 ## 7. Non-negotiables
 

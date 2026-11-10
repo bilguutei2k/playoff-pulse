@@ -39,8 +39,8 @@ export function SimulationSummary({
     {
       icon: RadioTower,
       label: "Live APIs",
-      value: "Scoreboard probe",
-      subtext: "Read-only game status feed. Forecast inputs remain manual.",
+      value: "None in the archive",
+      subtext: "The read-only scoreboard probe is retired from this page. Forecast inputs remain manual.",
     },
     {
       icon: LineChart,

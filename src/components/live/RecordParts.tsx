@@ -1,30 +1,46 @@
 import Link from "next/link";
-import { TeamLogo } from "@/components/live/TeamLogo";
+import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
 import type { MissedRow } from "@/lib/season/types";
 import { formatShortDay, formatWeekday } from "@/lib/utils/dates";
 import { splitPercents } from "@/lib/view/card";
 import { CALIBRATION_MIN_GAMES, SMALL_SAMPLE_GAMES, type CalibrationBin, type ScoredGame } from "@/lib/view/record";
 import { brierShare, favoriteLost, scoredByDate, waffleCells } from "@/lib/view/record-page";
+import { gameHref } from "@/lib/view/routes";
 import { teamDisplay } from "@/lib/view/teams";
 
-/** "MIA at LAL" with both logos. */
+/**
+ * "MIA at LAL" with both logos, each team a link to its page (the code prints, the
+ * accessible name is the full name). Raised, so a cell's game cover stays beneath.
+ */
 export function Matchup({ awayId, homeId }: { awayId: string; homeId: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-      <TeamLogo teamId={awayId} size={18} />
-      <span>{teamDisplay(awayId).code}</span>
+      <TeamLink teamId={awayId} form="code" logo={18} raised />
       <span className="text-ink-2">at</span>
-      <TeamLogo teamId={homeId} size={18} />
-      <span>{teamDisplay(homeId).code}</span>
+      <TeamLink teamId={homeId} form="code" logo={18} raised />
     </span>
   );
 }
 
 /**
+ * Makes the rest of a cell open the game too. The real link is the tile's; this copy
+ * is hidden from the keyboard and screen readers. Each cell holds its own cover, never
+ * the row (Safari ignores position: relative on a <tr>; see DayFinals).
+ */
+function CellLink({ gameId }: { gameId: string }) {
+  return <Link href={gameHref(gameId)} aria-hidden tabIndex={-1} className="absolute inset-0" />;
+}
+
+/** "Thunder at Lakers, Nov 3": the game link's accessible name. */
+function gameLabel(awayId: string, homeId: string, etDate: string): string {
+  return `${teamDisplay(awayId).shortName} at ${teamDisplay(homeId).shortName}, ${formatShortDay(etDate)}: game details`;
+}
+
+/**
  * The record's progress toward 500 scored games, one cell a game: ink for scored,
- * an outline for sealed and not final yet. Cell 100, where calibration opens, is grey
- * until it is reached. 50 columns wide, 25 on a phone.
+ * an outline for sealed and not final yet. Cells 100 (calibration opens) and 500 (the
+ * market comparison) are grey until they are reached. 50 columns wide, 25 on a phone.
  */
 export function Waffle({ scored, pending }: { scored: number; pending: number }) {
   const cells = waffleCells(scored, pending);
@@ -43,7 +59,7 @@ export function Waffle({ scored, pending }: { scored: number; pending: number })
                 ? "bg-ink"
                 : cell === "pending"
                   ? "bg-white shadow-[inset_0_0_0_2px_#111111]"
-                  : index === CALIBRATION_MIN_GAMES - 1
+                  : index === CALIBRATION_MIN_GAMES - 1 || index === SMALL_SAMPLE_GAMES - 1
                     ? "bg-ink-2"
                     : "bg-line"
             }`}
@@ -63,7 +79,10 @@ export function Waffle({ scored, pending }: { scored: number; pending: number })
           <i className="bg-ink-2" />
           Game {CALIBRATION_MIN_GAMES}: calibration opens
         </span>
-        <span>Game {SMALL_SAMPLE_GAMES}: market comparison</span>
+        <span>
+          <i className="bg-ink-2" />
+          Game {SMALL_SAMPLE_GAMES}: market comparison
+        </span>
       </div>
     </div>
   );
@@ -130,22 +149,34 @@ export function ScoredSeals({ games, caption }: { games: ScoredGame[]; caption: 
               const result = `${winner} ${high}–${low}`;
               return (
                 <tr key={game.seal.gameId} className="hover:bg-wash">
-                  <th scope="row" className="text-left font-normal">
-                    <Link href={`/game/${game.seal.gameId}`} className="hover:underline hover:underline-offset-4">
-                      <Matchup awayId={game.seal.awayId} homeId={game.seal.homeId} />
-                    </Link>
+                  <th scope="row" className="relative text-left font-normal">
+                    <CellLink gameId={game.seal.gameId} />
+                    <Matchup awayId={game.seal.awayId} homeId={game.seal.homeId} />
                     <span className={`mt-0.5 block text-[12.5px] sm:hidden ${lost ? "text-ink-2" : ""}`}>{result}</span>
                     <Tags game={game} />
                   </th>
-                  <td>
-                    <Tile size="xs" className="min-w-[56px] !text-[13px] [--t:24px]">
-                      {home === away ? "Even" : `${favorite} ${Math.max(home, away)}%`}
-                    </Tile>
+                  <td className="relative">
+                    <Link
+                      href={gameHref(game.seal.gameId)}
+                      aria-label={`${gameLabel(game.seal.awayId, game.seal.homeId, group.etDate)}. Sealed ${home === away ? "even" : `${favorite} ${Math.max(home, away)}%`}, ${result}.`}
+                      className="inline-block after:absolute after:inset-0"
+                    >
+                      <Tile size="xs" className="min-w-[56px] !text-[13px] [--t:24px]">
+                        {home === away ? "Even" : `${favorite} ${Math.max(home, away)}%`}
+                      </Tile>
+                    </Link>
                   </td>
-                  <td className={`hidden whitespace-nowrap sm:table-cell ${lost ? "!text-ink-2" : ""}`}>{result}</td>
-                  <td className="nm num">{game.brier.toFixed(3)}</td>
-                  <td>
+                  <td className={`relative hidden whitespace-nowrap sm:table-cell ${lost ? "!text-ink-2" : ""}`}>
+                    {result}
+                    <CellLink gameId={game.seal.gameId} />
+                  </td>
+                  <td className="nm num relative">
+                    {game.brier.toFixed(3)}
+                    <CellLink gameId={game.seal.gameId} />
+                  </td>
+                  <td className="relative">
                     <BrierBar brier={game.brier} lost={lost} />
+                    <CellLink gameId={game.seal.gameId} />
                   </td>
                 </tr>
               );
@@ -170,11 +201,15 @@ export function MissedSeals({ missed, version }: { missed: MissedRow[]; version:
     <ul className="grid gap-1.5 text-[13px] sm:grid-cols-2">
       {missed.map((row) => (
         <li key={`${row.gameId}-${row.etDate}`} className="flex items-center gap-2">
-          <span className="font-bold text-bad">Missed</span>
-          <span className="text-ink-2">{formatShortDay(row.etDate)}</span>
-          <Link href={`/game/${row.gameId}`} className="hover:underline hover:underline-offset-4">
-            <Matchup awayId={row.awayId} homeId={row.homeId} />
+          <Link
+            href={gameHref(row.gameId)}
+            aria-label={gameLabel(row.awayId, row.homeId, row.etDate)}
+            className="inline-flex min-h-6 items-center gap-2 hover:underline hover:underline-offset-4"
+          >
+            <span className="font-bold text-bad">Missed</span>
+            <span className="text-ink-2">{formatShortDay(row.etDate)}</span>
           </Link>
+          <Matchup awayId={row.awayId} homeId={row.homeId} />
         </li>
       ))}
     </ul>
@@ -185,9 +220,9 @@ export function MissedSeals({ missed, version }: { missed: MissedRow[]; version:
 export function CalibrationPlaceholder() {
   return (
     <div>
-      <div className="relative mt-4 aspect-square w-full max-w-[200px] shadow-[inset_0_0_0_1px_#dcdcdc]">
+      <div className="relative mt-4 aspect-square w-full max-w-[200px] shadow-[inset_0_0_0_1px_var(--chart-track)]">
         <svg viewBox="0 0 200 200" className="block h-full w-full" aria-hidden>
-          <line x1={0} y1={200} x2={200} y2={0} stroke="#111111" strokeWidth={1.5} strokeDasharray="5 4" />
+          <line x1={0} y1={200} x2={200} y2={0} stroke="var(--chart-ink)" strokeWidth={1.5} strokeDasharray="5 4" />
         </svg>
       </div>
       <p className="mt-2 text-[13px] text-ink-2">Dashed: perfectly calibrated</p>
@@ -213,16 +248,16 @@ export function CalibrationChart({ bins }: { bins: CalibrationBin[] }) {
     >
       {[0, 0.25, 0.5, 0.75, 1].map((tick) => (
         <g key={tick}>
-          <line x1={scale(0)} x2={scale(1)} y1={flip(tick)} y2={flip(tick)} stroke="#dcdcdc" />
-          <text x={pad - 6} y={flip(tick)} dy="0.32em" textAnchor="end" fontSize={10} fill="#666666">
+          <line x1={scale(0)} x2={scale(1)} y1={flip(tick)} y2={flip(tick)} stroke="var(--chart-grid)" />
+          <text x={pad - 6} y={flip(tick)} dy="0.32em" textAnchor="end" fontSize={10} fill="var(--chart-text)">
             {tick * 100}%
           </text>
-          <text x={scale(tick)} y={size - pad + 16} textAnchor="middle" fontSize={10} fill="#666666">
+          <text x={scale(tick)} y={size - pad + 16} textAnchor="middle" fontSize={10} fill="var(--chart-text)">
             {tick * 100}%
           </text>
         </g>
       ))}
-      <line x1={scale(0)} y1={flip(0)} x2={scale(1)} y2={flip(1)} stroke="#111111" strokeWidth={1.5} strokeDasharray="5 4" />
+      <line x1={scale(0)} y1={flip(0)} x2={scale(1)} y2={flip(1)} stroke="var(--chart-ink)" strokeWidth={1.5} strokeDasharray="5 4" />
       {bins.map((bin) => (
         <rect
           key={bin.from}
@@ -230,7 +265,7 @@ export function CalibrationChart({ bins }: { bins: CalibrationBin[] }) {
           y={flip(bin.observed) - (4 + 5 * Math.sqrt(bin.count / maxCount))}
           width={2 * (4 + 5 * Math.sqrt(bin.count / maxCount))}
           height={2 * (4 + 5 * Math.sqrt(bin.count / maxCount))}
-          fill="#111111"
+          fill="var(--chart-ink)"
         >
           <title>{`${Math.round(bin.from * 100)}–${Math.round(bin.to * 100)}%: forecast ${Math.round(bin.forecast * 100)}%, home team won ${Math.round(bin.observed * 100)}% (${bin.count} games)`}</title>
         </rect>

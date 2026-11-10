@@ -9,6 +9,7 @@ import type {
 } from "@/lib/model/types";
 import { FOCUSABLE_SELECTOR, inertOthers, isTabbable, nextFocusIndex } from "@/lib/utils/focus";
 import { formatNumber, formatPercent, formatSigned } from "@/lib/utils/format";
+import { ArchiveTeamBadge } from "@/components/forecast/ArchiveTeamBadge";
 
 type TeamDetailDrawerProps = {
   team: Team | null;
@@ -177,9 +178,7 @@ export function TeamDetailDrawer({
         <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b-2 border-[var(--color-border-strong)] bg-[var(--color-bg-primary)] p-4">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="pp-team-badge" data-team={team.abbreviation}>
-                {team.abbreviation}
-              </span>
+              <ArchiveTeamBadge code={team.abbreviation} />
               <span className="pp-kicker text-[var(--color-accent)]">
                 {team.conference} / Seed {team.seed}
               </span>
