@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: { absolute: "548 · NBA forecasts, updated through the day." },
   description:
     "Win probabilities for every NBA game today, sealed before tip and scored in public, with the market's number beside each one for reference and live in-game estimates.",
+  alternates: { canonical: "/" },
 };
 
 // Re-rendered about once a minute; the page also refreshes itself while games are live.

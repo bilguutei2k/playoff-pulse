@@ -7,10 +7,11 @@ import { dayHref } from "@/lib/view/day-nav";
 export { dayHref };
 
 /**
- * The days row under the masthead: seven ET days around the one shown (five on a
- * phone, by weekday), each with its game count. Selecting an edge day recentres it. At
- * the right, "Today" whenever another day is shown, and a date control for any day of
- * the stored season, so a day two weeks back is one action away.
+ * The days row under the masthead: seven ET days around the one shown (five below
+ * 1024 px, and on a phone by weekday), each with its game count ("6 games", under the
+ * date from 768 px). Selecting an edge day recentres it. At the right, "Today" whenever
+ * another day is shown, and a date control for any day of the stored season, so a day
+ * two weeks back is one action away.
  */
 export function DateStrip({
   selected,
@@ -37,17 +38,17 @@ export function DateStrip({
             const active = day === selected;
             const label = `${formatWeekday(day)} ${formatShortDay(day)}`;
             return (
-              <li key={day} className={Math.abs(offset) === 3 ? "hidden md:block" : ""}>
+              <li key={day} className={Math.abs(offset) === 3 ? "hidden lg:block" : ""}>
                 <Link
                   href={dayHref(day, today)}
                   aria-current={active ? "date" : undefined}
                   aria-label={`${day === today ? "Today, " : ""}${label}: ${count === 0 ? "no games" : `${count} ${count === 1 ? "game" : "games"}`}`}
-                  className={`inline-flex h-11 items-center hover:text-ink ${active ? "font-bold text-ink" : ""}`}
+                  className={`group inline-flex h-11 items-center hover:text-ink md:flex-col md:items-start md:justify-center md:leading-[1.15] ${active ? "font-bold text-ink" : ""}`}
                 >
                   <span className="md:hidden">{day === today ? "Today" : formatWeekday(day)}</span>
-                  <span className="hidden md:inline">{label}</span>
-                  <span className="ml-1 hidden md:inline">
-                    {count === 0 ? <span className="font-normal text-ink-2">none</span> : <b className="font-bold text-ink">{count}</b>}
+                  <span className="hidden group-hover:underline group-hover:underline-offset-4 md:inline">{label}</span>
+                  <span className="hidden text-[12px] font-normal text-ink-2 md:inline">
+                    {count === 0 ? "No games" : `${count} ${count === 1 ? "game" : "games"}`}
                   </span>
                 </Link>
               </li>

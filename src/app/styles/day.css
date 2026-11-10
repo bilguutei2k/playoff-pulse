@@ -1,1 +1,32 @@
 /* day.css: the home page and day pages: date strip, finals, home panels. Owned by package A. */
+
+@layer components {
+  /*
+   * The card grid (DayPage CardGrid): as many columns as fit while each card keeps
+   * --card-min, capped at --cols. A card under about 340 px squeezes the longest team
+   * names, so beside the home sidebar the grid stays one column until about 1220 px.
+   */
+  .cards {
+    --card-min: 340px;
+    --card-gap: 48px;
+    --cols: 2;
+    column-gap: var(--card-gap);
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, max(var(--card-min), (100% - (var(--cols) - 1) * var(--card-gap)) / var(--cols))), 1fr)
+    );
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    row-gap: 40px;
+  }
+
+  .cards > li {
+    min-width: 0;
+  }
+
+  .cards-3 {
+    --cols: 3;
+  }
+}
