@@ -12,6 +12,7 @@ import { Ticker } from "@/components/live/Ticker";
 
 export const metadata: Metadata = {
   title: "NBA player stats",
+  alternates: { canonical: "/players" },
   description:
     "Every NBA player this season: games, minutes, points, rebounds, assists, shooting, injury status and 548's estimate of what his team loses without him.",
 };
@@ -39,12 +40,12 @@ export default async function PlayersPage() {
         title="Players"
         dek={
           index ? (
-            <>
+            <span className="block max-w-[64ch]">
               Every player this season, per game played, from {index.storedGames.toLocaleString("en-US")} stored box
               scores{index.throughEtDate ? ` through ${formatLongDay(index.throughEtDate)}` : ""}. Search, filter by
-              minutes or team, and select a column heading to sort. Status is his team&apos;s injury list for its next
-              game; the <Link href="/injuries" className="pp-link">injury report</Link> has every list.
-            </>
+              minutes or team, and sort by any column. Status is his team&apos;s injury list for its next
+              game; the <Link href="/injuries" className="pp-link">injuries page</Link> has every list.
+            </span>
           ) : undefined
         }
       />
@@ -59,22 +60,22 @@ export default async function PlayersPage() {
               teams={teams}
             />
           </div>
-          <p className="mt-4 text-[12.5px] leading-5 text-ink-3">
+          <p className="mt-4 max-w-[64ch] text-13 leading-5 text-ink-2">
             Box scores come from ESPN&apos;s public feeds; games, starts and averages count games he played. A player
             traded during the season is listed under his latest team with all his games; team pages count only his
             games for that team.
           </p>
         </>
       ) : (
-        <div className="panel mt-8 px-6 py-10 text-center">
-          <p className="headline text-[22px]">Player stats are not published yet</p>
-          <p className="mx-auto mt-2 max-w-md text-[15px] text-ink-2">
-            They appear here once the forecast job publishes them from the season&apos;s box scores.
+        <div className="mt-8">
+          <p className="notice-quiet">
+            Player stats are not published yet. They appear here once the forecast job publishes them from the
+            season&apos;s box scores.
           </p>
-          <div className="mt-5 flex flex-wrap justify-center gap-3 text-[14px]">
-            <Link className="pp-button" href="/teams">Teams</Link>
-            <Link className="pp-button" href="/injuries">Injury report</Link>
-          </div>
+          <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">
+            <Link className="pp-link" href="/teams">All teams</Link>
+            <Link className="pp-link" href="/injuries">Injuries</Link>
+          </p>
         </div>
       )}
     </main>

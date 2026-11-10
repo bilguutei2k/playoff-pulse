@@ -1,1 +1,24 @@
 /* players.css: players, a player, injuries. Owned by package E. */
+@layer components {
+  /*
+   * The players table and the game log: in a collapsed table a sticky head's border
+   * scrolls away, so the head's ink rule is drawn as a shadow that stays with it.
+   */
+  .players-tb thead th {
+    border-bottom-width: 0;
+    box-shadow: inset 0 -2px 0 var(--color-ink);
+    padding-top: 10px;
+  }
+
+  /* Player names in tables look like links at rest (VB-9): a light underline that darkens. */
+  .players-name {
+    text-decoration-color: var(--color-line-strong);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .players-name:hover {
+    text-decoration-color: currentColor;
+  }
+}

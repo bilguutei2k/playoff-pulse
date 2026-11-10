@@ -1,11 +1,13 @@
 "use client";
 
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
-import { TeamLogo } from "@/components/live/TeamLogo";
+import { SortHeader } from "@/components/live/SortHeader";
+import { TeamLink } from "@/components/live/TeamLink";
 import { useQueryState } from "@/components/live/useQueryState";
 import { parsePlayersQuery, serializePlayersQuery, type PlayersQuery, type PlayersQueryOptions } from "@/lib/view/filters";
+import { IMPACT_LABEL } from "@/lib/season/player-stats";
 import { formatAverage, formatImpact, formatShooting, type PlayerTableRow, type StatLine } from "@/lib/view/players";
 
 export type SortKey =
@@ -23,16 +25,24 @@ export type SortKey =
 type Column = {
   key: SortKey;
   label: string;
+  /** The column's full name, for the phone's sort menu and the mouse tooltip. */
   title: string;
+  /** A "?" explanation beside the heading. */
+  hint?: string;
+  /** Short unit for the phone's summary line: "29.9 pts", or with unitFirst "FG% 52.1". */
+  unit?: string;
+  unitFirst?: boolean;
   /** Null sorts last in either direction. */
   value: (row: PlayerTableRow) => number | string | null;
   cell: (row: PlayerTableRow) => React.ReactNode;
 };
 
-const stat = (key: keyof StatLine, label: string, title: string): Column => ({
+const stat = (key: keyof StatLine, label: string, title: string, unit: string, hint?: string): Column => ({
   key,
   label,
   title,
+  hint,
+  unit,
   value: (row) => row.perGame?.[key] ?? null,
   cell: (row) => formatAverage(row.perGame?.[key] ?? null),
 });
@@ -41,27 +51,48 @@ const shooting = (key: keyof PlayerTableRow["shooting"], label: string, title: s
   key,
   label,
   title,
+  unit: label,
+  unitFirst: true,
   value: (row) => row.shooting[key],
   cell: (row) => formatShooting(row.shooting[key]),
 });
 
 const COLUMNS: Column[] = [
-  { key: "games", label: "GP", title: "Games played", value: (row) => row.games, cell: (row) => row.games },
-  { key: "starts", label: "GS", title: "Games started", value: (row) => row.starts, cell: (row) => row.starts },
-  stat("minutes", "Min", "Minutes per game"),
-  stat("points", "Pts", "Points per game"),
-  stat("rebounds", "Reb", "Rebounds per game"),
-  stat("assists", "Ast", "Assists per game"),
-  stat("steals", "Stl", "Steals per game"),
-  stat("blocks", "Blk", "Blocks per game"),
-  stat("turnovers", "TO", "Turnovers per game"),
-  shooting("fieldGoal", "FG%", "Field goals made per attempt"),
-  shooting("threePoint", "3P%", "Three-pointers made per attempt"),
-  shooting("freeThrow", "FT%", "Free throws made per attempt"),
+  {
+    key: "games",
+    label: "GP",
+    title: "Games played",
+    hint: "Games he played: a stored box score shows him on the floor. Games he sat out are not counted.",
+    unit: "GP",
+    value: (row) => row.games,
+    cell: (row) => row.games,
+  },
+  {
+    key: "starts",
+    label: "GS",
+    title: "Games started",
+    hint: "Games he started, out of the games he played.",
+    unit: "GS",
+    value: (row) => row.starts,
+    cell: (row) => row.starts,
+  },
+  stat("minutes", "Min", "Minutes per game", "min"),
+  stat("points", "Pts", "Points per game", "pts"),
+  stat("rebounds", "Reb", "Rebounds per game", "reb"),
+  stat("assists", "Ast", "Assists per game", "ast"),
+  stat("steals", "Stl", "Steals per game", "stl"),
+  stat("blocks", "Blk", "Blocks per game", "blk"),
+  stat("turnovers", "TO", "Turnovers per game", "TO", "Turnovers: times per game he lost the ball to the other team."),
+  shooting("fieldGoal", "FG%", "Field goal percentage"),
+  shooting("threePoint", "3P%", "Three-point percentage"),
+  shooting("freeThrow", "FT%", "Free throw percentage"),
   {
     key: "impact",
     label: "548 impact",
-    title: "The model's estimate of the points of margin his team loses per game without him. Not validated per player.",
+    title: "548 impact",
+    hint: `${IMPACT_LABEL} It comes from box scores and is not a ranking of players.`,
+    unit: "548 impact",
+    unitFirst: true,
     value: (row) => row.impact,
     cell: (row) => formatImpact(row.impact),
   },
@@ -91,9 +122,35 @@ const SORT_KEYS = [
 /** Names, teams and statuses sort A to Z first; every number sorts largest first. */
 const defaultDescending = (key: string) => !(key === "name" || key === "team" || key === "status");
 
+/** The phone's summary line always shows these; a sort by another column adds it. */
+const SUMMARY_KEYS: SortKey[] = ["points", "rebounds", "assists", "impact"];
+
 /** Accents and case dropped, for the name search. */
 function searchKey(value: string): string {
   return value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+}
+
+/**
+ * True from the first render after hydration. A filtered list marked `data-qwait`
+ * stays hidden until then when the URL carries filters (QueryWaitScript), so a link
+ * with filters never shows the unfiltered list first (NAV-22).
+ */
+export function useHydrated(): boolean {
+  const [hydrated, setHydrated] = useState(false);
+  // Set in the same effect pass in which useQueryState reads the URL, so both land in one render.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setHydrated(true), []);
+  return hydrated;
+}
+
+/**
+ * An inline script that runs before the list is painted: when the URL has any of
+ * `keys`, it hides every `[data-qwait]` element until the component drops the
+ * attribute after hydration (with a four-second fallback, should hydration fail).
+ */
+export function QueryWaitScript({ keys }: { keys: readonly string[] }) {
+  const code = `(function(){try{var p=new URLSearchParams(location.search);if(!${JSON.stringify(keys)}.some(function(k){return p.has(k)}))return;if(document.getElementById("pp-qwait"))return;var s=document.createElement("style");s.id="pp-qwait";s.textContent="[data-qwait]{visibility:hidden}";document.head.appendChild(s);setTimeout(function(){s.remove()},4000)}catch(e){}})();`;
+  return <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: code }} />;
 }
 
 export function PlayersTable({
@@ -135,6 +192,7 @@ export function PlayersTable({
     [controls, defaults, options],
   );
   const [state, update] = useQueryState(defaults, parse, serialize);
+  const hydrated = useHydrated();
   const [localSort, setLocalSort] = useState(initialSort);
   const sort = useMemo(
     () => (controls ? { key: state.sort as SortKey, descending: state.desc } : localSort),
@@ -152,14 +210,9 @@ export function PlayersTable({
             {
               key: "team" as const,
               label: "Team",
-              title: "His team in his latest game",
+              title: "Team",
               value: (row: PlayerTableRow) => row.teamCode,
-              cell: (row: PlayerTableRow) => (
-                <span className="inline-flex items-center gap-1.5">
-                  <TeamLogo teamId={row.teamId} size={16} />
-                  {row.teamCode}
-                </span>
-              ),
+              cell: (row: PlayerTableRow) => <TeamLink teamId={row.teamId} form="code" logo={16} />,
             },
           ]
         : []),
@@ -167,16 +220,9 @@ export function PlayersTable({
       {
         key: "status",
         label: "Status",
-        title: "His status on his team's injury list for its next game",
+        title: "Injury status",
         value: (row) => row.status?.order ?? null,
-        cell: (row) =>
-          row.status ? (
-            <span title={row.status.label}>
-              <StatusTag tone={row.status.tone}>{row.status.short}</StatusTag>
-            </span>
-          ) : (
-            <span className="text-ink-3">–</span>
-          ),
+        cell: (row) => <StatusCell row={row} />,
       },
     ],
     [showTeam],
@@ -201,128 +247,188 @@ export function PlayersTable({
     });
   }, [rows, query, minutes, team, sort, columns]);
 
-  const sortBy = (key: SortKey) => {
-    const next = sort.key === key ? { key, descending: !sort.descending } : { key, descending: defaultDescending(key) };
+  const setSort = (next: { key: SortKey; descending: boolean }) => {
     if (controls) update({ ...state, sort: next.key, desc: next.descending }, "replace");
     else setLocalSort(next);
   };
+  const sortBy = (key: SortKey) =>
+    setSort(sort.key === key ? { key, descending: !sort.descending } : { key, descending: defaultDescending(key) });
 
-  const header = (key: SortKey, label: string, title: string, className = "") => {
-    const active = sort.key === key;
-    return (
-      <th
-        key={key}
-        scope="col"
-        aria-sort={active ? (sort.descending ? "descending" : "ascending") : "none"}
-        className={`sticky top-0 z-10 whitespace-nowrap border-b-2 border-ink bg-panel px-2 py-2.5 align-bottom xl:top-[68px] ${className}`}
-      >
-        <button
-          type="button"
-          onClick={() => sortBy(key)}
-          title={title}
-          className={`inline-flex items-center gap-1 text-[12.5px] font-medium leading-tight hover:text-ink ${active ? "text-ink" : "text-ink-3"}`}
-        >
-          {label}
-          <span aria-hidden className={`text-[9px] ${active ? "opacity-100" : "opacity-0"}`}>
-            {sort.descending ? "▼" : "▲"}
-          </span>
-        </button>
-      </th>
-    );
-  };
+  const filtered = query.trim() !== "" || minutes !== defaults.min || team !== "all";
+  const isText = sort.key === "name" || sort.key === "team" || sort.key === "status";
+  const summaryColumns = COLUMNS.filter((column) => SUMMARY_KEYS.includes(column.key) || column.key === sort.key);
+  // Sticky under the masthead where the table is not in its own scroll box (xl up).
+  const stickyHead = "sticky top-0 bg-panel xl:top-[var(--mast)]";
 
   return (
-    <div>
-      {controls ? (
-        <div className="mb-4 grid gap-3 rounded-[var(--radius-card)] border border-line bg-panel p-4 sm:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
-          <div>
-            <label htmlFor={`${ids}-search`} className="kicker block">Search</label>
-            <input
-              id={`${ids}-search`}
-              type="search"
-              value={query}
-              onChange={(event) => update({ ...state, q: event.target.value }, "replace")}
-              placeholder="Player name"
-              autoComplete="off"
-              className="pp-select mt-1.5"
-            />
-          </div>
-          <div>
-            <label htmlFor={`${ids}-minutes`} className="kicker block">Minutes per game</label>
-            <select id={`${ids}-minutes`} value={minutes} onChange={(event) => update({ ...state, min: Number(event.target.value) })} className="pp-select mt-1.5">
-              {MINUTE_FILTERS.map((value) => (
-                <option key={value} value={value}>{value === 0 ? "Any, including no games" : `At least ${value}`}</option>
-              ))}
-            </select>
-          </div>
-          {teams ? (
-            <div>
-              <label htmlFor={`${ids}-team`} className="kicker block">Team</label>
-              <select id={`${ids}-team`} value={team} onChange={(event) => update({ ...state, team: event.target.value })} className="pp-select mt-1.5">
-                <option value="all">All teams</option>
-                {teams.map((option) => (
-                  <option key={option.id} value={option.id}>{option.name}</option>
+    <div data-qwait={controls && !hydrated ? "" : undefined}>
+      {controls ? <QueryWaitScript keys={["q", "min", "team", "sort", "dir"]} /> : null}
+      <div className={`flex flex-wrap items-end gap-x-5 gap-y-3 ${controls ? "mb-5" : "mb-3 sm:hidden"}`}>
+        {controls ? (
+          <>
+            <div className="w-full sm:w-auto sm:min-w-[14rem] sm:flex-1 lg:max-w-[22rem]">
+              <label htmlFor={`${ids}-search`} className="kicker block">Search</label>
+              <input
+                id={`${ids}-search`}
+                type="search"
+                value={query}
+                onChange={(event) => update({ ...state, q: event.target.value }, "replace")}
+                placeholder="Player name"
+                autoComplete="off"
+                className="pp-select mt-1.5 min-h-11"
+              />
+            </div>
+            <div className="min-w-0 flex-1 sm:w-52 sm:flex-none">
+              <label htmlFor={`${ids}-minutes`} className="kicker block">Minutes per game</label>
+              <select id={`${ids}-minutes`} value={minutes} onChange={(event) => update({ ...state, min: Number(event.target.value) })} className="pp-select mt-1.5 min-h-11">
+                {MINUTE_FILTERS.map((value) => (
+                  <option key={value} value={value}>{value === 0 ? "Any, including no games" : `At least ${value}`}</option>
                 ))}
               </select>
             </div>
-          ) : null}
+            {teams ? (
+              <div className="min-w-0 flex-1 sm:w-60 sm:flex-none">
+                <label htmlFor={`${ids}-team`} className="kicker block">Team</label>
+                <select id={`${ids}-team`} value={team} onChange={(event) => update({ ...state, team: event.target.value })} className="pp-select mt-1.5 min-h-11">
+                  <option value="all">All teams</option>
+                  {teams.map((option) => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+          </>
+        ) : null}
+        {/* Phones: the column headings are hidden, so sorting is a menu and an order button. */}
+        <div className="flex w-full items-end gap-2 sm:hidden">
+          <div className="min-w-0 flex-1">
+            <label htmlFor={`${ids}-sort`} className="kicker block">Sort by</label>
+            <select
+              id={`${ids}-sort`}
+              value={sort.key}
+              onChange={(event) => {
+                const key = event.target.value as SortKey;
+                setSort({ key, descending: defaultDescending(key) });
+              }}
+              className="pp-select mt-1.5 min-h-11"
+            >
+              <option value="name">Name</option>
+              {columns.map((column) => (
+                <option key={column.key} value={column.key}>{column.title}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSort({ key: sort.key, descending: !sort.descending })}
+            className="pp-button min-h-11 flex-none px-3 text-14"
+            aria-label={`Order: ${orderText(isText, sort.descending)}. Reverse the order`}
+          >
+            {orderText(isText, sort.descending)}
+          </button>
         </div>
-      ) : null}
+      </div>
       {controls ? (
-        <p className="num mb-3 text-[12.5px] text-ink-2" role="status">
+        <p className="num mb-2 text-13 text-ink-2" role="status">
           {shown.length} of {rows.length} players
-          {query.trim() !== "" || minutes !== defaults.min || team !== "all" ? (
+          {filtered ? (
             <>
               {" · "}
-              <button type="button" className="pp-link font-normal" onClick={() => update({ ...defaults, sort: state.sort, desc: state.desc })}>
+              <button
+                type="button"
+                className="pp-link font-normal"
+                onClick={() => update({ ...defaults, sort: state.sort, desc: state.desc })}
+              >
                 Clear filters
               </button>
             </>
           ) : null}
         </p>
       ) : null}
-      <div className="max-h-[78vh] overflow-auto rounded-[var(--radius-card)] border border-line bg-panel xl:max-h-none xl:overflow-visible">
-        <table className="w-full border-separate border-spacing-0 text-[13.5px]">
+      <div className="sm:max-h-[78vh] sm:overflow-auto xl:max-h-none xl:overflow-visible">
+        <table className="tb players-tb">
           <caption className="sr-only">{caption} Column headings sort the table.</caption>
-          <thead>
+          <thead className="max-sm:hidden">
             <tr>
-              {header("name", "Player", "Sort by name", "sticky left-0 z-20 min-w-[8.5rem] pl-3 text-left sm:min-w-[12rem] sm:pl-4")}
-              {columns.map((column) =>
-                header(
-                  column.key,
-                  column.label,
-                  column.title,
-                  `${column.key === "team" || column.key === "status" ? "text-left" : "text-right"} ${column.key === "team" ? "hidden sm:table-cell" : ""}`,
-                ),
-              )}
+              <SortHeader
+                label="Player"
+                active={sort.key === "name"}
+                descending={sort.descending}
+                onSort={() => sortBy("name")}
+                title="Sort by name"
+                className={`${stickyHead} left-0 z-20 min-w-[11rem]`}
+              />
+              {columns.map((column) => (
+                <SortHeader
+                  key={column.key}
+                  label={column.label}
+                  active={sort.key === column.key}
+                  descending={sort.descending}
+                  onSort={() => sortBy(column.key)}
+                  align={column.key === "team" || column.key === "status" ? "left" : "right"}
+                  title={column.title === column.label ? undefined : column.title}
+                  hint={column.hint}
+                  hintLabel={column.title}
+                  className={`${stickyHead} z-10`}
+                />
+              ))}
             </tr>
           </thead>
           <tbody>
             {shown.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1} className="px-4 py-6 text-center text-[14px] text-ink-2">
+                <td colSpan={columns.length + 1} className="!py-6 text-center text-14 !text-ink-2">
                   No player matches.
                 </td>
               </tr>
             ) : (
               shown.map((row) => (
                 <tr key={`${row.teamId}-${row.athleteId}`} className="group">
-                  <th
-                    scope="row"
-                    className="sticky left-0 z-[1] border-b border-line bg-panel py-2 pl-3 pr-2 text-left font-normal group-hover:bg-wash sm:pl-4"
-                  >
-                    <PlayerLink athleteId={row.athleteId} name={row.name} className="font-medium text-ink" />
-                    <span className="block text-[11.5px] leading-4 text-ink-3">
-                      {showTeam ? <span className="sm:hidden">{row.teamCode}{row.position ? " · " : ""}</span> : null}
-                      {[row.position, row.nowWith ? `now with ${row.nowWith}` : null].filter(Boolean).join(" · ") || " "}
-                    </span>
+                  <th scope="row" className="bg-panel text-left group-hover:bg-wash max-sm:whitespace-normal sm:sticky sm:left-0 sm:z-[1]">
+                    <div className="flex items-center gap-3">
+                      {showTeam ? (
+                        <span className="w-[4.25rem] flex-none sm:hidden">
+                          <TeamLink teamId={row.teamId} form="code" logo={16} className="-my-3 py-3" />
+                        </span>
+                      ) : null}
+                      <div className="relative min-w-0 flex-1">
+                        <PlayerLink
+                          athleteId={row.athleteId}
+                          name={row.name}
+                          className="players-name font-medium text-ink max-sm:after:absolute max-sm:after:-inset-y-2 max-sm:after:inset-x-0 max-sm:after:content-['']"
+                        />
+                        <span className="block text-12 leading-4 text-ink-2">
+                          <span className="max-sm:hidden">{row.position ?? " "}</span>
+                          <span className="sm:hidden">
+                            {row.perGame === null ? <span>No games this season · </span> : null}
+                            {(row.perGame === null ? summaryColumns.filter((column) => column.key === "impact") : summaryColumns).map((column, index) => (
+                              <span key={column.key}>
+                                {index > 0 ? " · " : ""}
+                                <span className={`whitespace-nowrap ${column.key === sort.key ? "font-semibold text-ink" : ""}`}>
+                                  {column.unitFirst ? `${column.unit} ${column.cell(row)}` : `${column.cell(row)} ${column.unit}`}
+                                </span>
+                              </span>
+                            ))}
+                          </span>
+                        </span>
+                      </div>
+                      <span className="flex-none sm:hidden">
+                        <StatusCell row={row} />
+                      </span>
+                    </div>
+                    {row.nowWith ? (
+                      <span className="mt-0.5 block text-12 leading-4 text-ink-2">
+                        now with{" "}
+                        <TeamLink teamId={row.nowWithId ?? row.teamId} form="code" className="relative z-[2] font-medium text-ink" />
+                      </span>
+                    ) : null}
                   </th>
                   {columns.map((column) => (
                     <td
                       key={column.key}
-                      className={`num whitespace-nowrap border-b border-line px-2 py-2 group-hover:bg-wash ${
-                        column.key === "team" || column.key === "status" ? "text-left" : "text-right"
-                      } ${column.key === "team" ? "hidden sm:table-cell" : ""} ${column.key === sort.key ? "font-semibold text-ink" : "text-ink-2"}`}
+                      className={`whitespace-nowrap group-hover:bg-wash max-sm:hidden ${
+                        column.key === "team" || column.key === "status" ? "" : "nm"
+                      } ${column.key === sort.key ? "font-semibold" : "!text-ink-2"}`}
                     >
                       {column.cell(row)}
                     </td>
@@ -335,4 +441,14 @@ export function PlayersTable({
       </div>
     </div>
   );
+}
+
+function orderText(isText: boolean, descending: boolean): string {
+  if (isText) return descending ? "Z to A" : "A to Z";
+  return descending ? "High to low" : "Low to high";
+}
+
+function StatusCell({ row }: { row: PlayerTableRow }) {
+  if (!row.status) return <span className="text-ink-2" aria-label="Not on the injury list">–</span>;
+  return <StatusTag tone={row.status.tone} title={row.status.label}>{row.status.short}</StatusTag>;
 }

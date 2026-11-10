@@ -80,7 +80,12 @@ function missedText(games: number): string {
   return `Missed last ${games} games`;
 }
 
-/** How a list row's status reads, whatever its source. */
+/**
+ * How a list row's status reads. The label names where the status word comes from:
+ * the report covering the game ("Out"), the team's latest earlier report ("Out (earlier
+ * report)"; a box-score row carries a status only from an earlier report, when no report
+ * covers the game), or, with no status at all, the box scores ("Missed last 2 games").
+ */
 export function statusView(row: Pick<TeamInjuryRow, "status" | "source" | "gamesMissed">): StatusView {
   if (row.status === null) {
     return {
@@ -92,13 +97,44 @@ export function statusView(row: Pick<TeamInjuryRow, "status" | "source" | "games
     };
   }
   const word = STATUS_LABELS[row.status];
+  const fromCoveringReport = row.source === "report";
   return {
-    label: row.source === "report" ? word : `${word} (earlier report)`,
+    label: fromCoveringReport ? word : `${word} (earlier report)`,
     short: word,
     tone: STATUS_TONE[row.status],
     order: STATUS_ORDER[row.status],
     filter: row.status === "A" ? "P" : row.status,
   };
+}
+
+/** Where a row's status comes from, as its source column reads: "NBA report", "Earlier report" or "Box scores". */
+export function statusSourceLabel(row: Pick<TeamInjuryRow, "status" | "source">): "NBA report" | "Earlier report" | "Box scores" {
+  if (row.source === "report") return "NBA report";
+  return row.status !== null ? "Earlier report" : "Box scores";
+}
+
+/**
+ * The sentence under a player's status tag: where the status comes from, in the same
+ * terms as the tag. `reportTime` is the covering report's time as printed ("7:00 PM ET").
+ */
+export function statusSourceText(
+  status: Pick<CurrentStatus, "status" | "source" | "gamesMissed">,
+  reportTime: string | null,
+): string {
+  const missed =
+    status.gamesMissed > 1
+      ? `he missed his team's last ${status.gamesMissed} games`
+      : status.gamesMissed === 1
+        ? "he missed his team's last game"
+        : null;
+  if (status.source === "report") {
+    return `the NBA injury report${reportTime ? ` of ${reportTime}` : ""} covering this game`;
+  }
+  if (status.status !== null) {
+    return `his team's latest earlier NBA injury report, since no report covers this game yet${missed ? `; box scores also show ${missed}` : ""}`;
+  }
+  const notOn = reportTime ? `he is not on the report of ${reportTime}` : "no report covers this game yet";
+  return `box scores, the model's inference: ${missed ?? "he missed recent games"}, and ${notOn}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -180,8 +216,10 @@ export type PlayerTableRow = {
   impact: number | null;
   /** On his team's list for its next game; null when not listed. */
   status: StatusView | null;
-  /** On a team page: he has since played for another team. */
+  /** On a team page: he has since played for another team (its code). */
   nowWith: string | null;
+  /** That team's ID, for its link. */
+  nowWithId: string | null;
 };
 
 function statusFor(statuses: Map<string, CurrentStatus>, athleteId: string, teamId: string): StatusView | null {
@@ -216,6 +254,7 @@ export function playerTableRows(index: PlayerIndexFile, lists: TeamInjuriesFile 
     impact: player.impact,
     status: statusFor(statuses, player.athleteId, player.teamId),
     nowWith: null,
+    nowWithId: null,
   }));
 }
 
@@ -295,6 +334,7 @@ export function teamRoster(
       impact: entry?.impact ?? null,
       status: statusFor(statuses, player.athleteId, file.teamId),
       nowWith: movedTo ? teamDisplay(movedTo).code : null,
+      nowWithId: movedTo,
     };
   });
 }
