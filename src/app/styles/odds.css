@@ -1,1 +1,133 @@
 /* odds.css: the odds page: table, title chart, series, who is out. Owned by package C. */
+
+@layer components {
+  /* Title odds chart (TitleOddsChart.tsx). */
+
+  /* End labels: one row each beside the plot; the team link fills the row's height. */
+  .title-chart-label {
+    align-items: center;
+    column-gap: 5px;
+    display: flex;
+    font-size: var(--text-12);
+    line-height: 1;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  .title-chart-label .tl {
+    --tl-gap: 4px;
+    font-weight: 700;
+  }
+
+  /* The link fills the row (a taller target), so center the code rather than baseline it. */
+  .title-chart-label .tl-t {
+    align-self: center;
+  }
+
+  .title-chart-label.is-active .tl-t {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  /* The date readout: outside the plot, never over it. */
+  .title-chart-readout {
+    align-items: baseline;
+    column-gap: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: var(--text-13);
+    line-height: 1.4;
+    margin-top: 10px;
+    row-gap: 4px;
+  }
+
+  .title-chart-values {
+    display: grid;
+    gap: 4px 16px;
+    grid-template-columns: repeat(2, max-content);
+    width: 100%;
+  }
+
+  .title-chart-values > li {
+    align-items: center;
+    column-gap: 6px;
+    display: inline-flex;
+    white-space: nowrap;
+  }
+
+  .title-chart-values .tl {
+    min-height: 24px;
+  }
+
+  @media (min-width: 40rem) {
+    /* Above the plot; two lines reserved so the plot never moves while reading. */
+    .title-chart-readout {
+      margin-bottom: 8px;
+      margin-top: 0;
+      min-height: 44px;
+    }
+
+    .title-chart-values {
+      display: flex;
+      flex-wrap: wrap;
+      width: auto;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .title-chart-readout {
+      min-height: 26px;
+    }
+  }
+}
+
+@layer components {
+  /* Odds table (OddsTable.tsx). From 1024px every column shows; until 1280px the
+     columns sit closer and the range heading wraps, so the table fits 960px. */
+  /* The narrowest phones: closer columns and no logos, so four columns fit 288px
+     with the longest nickname ("Timberwolves") whole. */
+  @media (max-width: 23.4375rem) {
+    .odds-table td + td,
+    .odds-table th + th,
+    .odds-table th + td {
+      padding-left: 8px;
+    }
+
+    .odds-table tbody th .tl-logo {
+      display: none;
+    }
+  }
+
+  @media (min-width: 64rem) and (max-width: 79.999rem) {
+    .odds-table td + td,
+    .odds-table th + th,
+    .odds-table th + td {
+      padding-left: 8px;
+    }
+
+    .odds-table th.odds-range-head {
+      white-space: normal;
+      width: 8.5rem;
+    }
+  }
+}
+
+@layer components {
+  .odds-table thead[data-moved] th {
+    box-shadow: 0 2px 0 var(--color-ink);
+  }
+}
+
+@layer components {
+  /* Right-aligned headings: the "?" goes before the label, so it never reads as the
+     next column's and the label stays over its figures. */
+  .odds-table th.nm .sort-head > .hint {
+    order: -1;
+  }
+
+  .odds-table th.nm .sort-head > .hint .hint-icon {
+    margin-left: 0;
+    margin-right: 3px;
+  }
+}

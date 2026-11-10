@@ -1,4 +1,4 @@
-import { TeamLogo } from "@/components/live/TeamLogo";
+import { TeamLink } from "@/components/live/TeamLink";
 import type { PlayoffRound, SeriesForecast } from "@/lib/season/types";
 import { formatChance } from "@/lib/utils/format";
 import { pairColors, teamDisplay } from "@/lib/view/teams";
@@ -24,23 +24,22 @@ function SeriesRow({ series }: { series: SeriesForecast }) {
     <li className="border-b border-line py-3">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[14px]">
         <span className="flex items-center gap-2 font-bold">
-          <TeamLogo teamId={series.homeCourtId} size={20} />
-          {a.code}
+          <TeamLink teamId={series.homeCourtId} form="code" logo={20} />
           <span className="num px-1 font-normal text-ink-2">
             {series.homeCourtWins}–{series.otherWins}
           </span>
-          {b.code}
-          <TeamLogo teamId={series.otherId} size={20} />
+          <TeamLink teamId={series.otherId} form="code" logo={20} />
         </span>
         <span className="text-[13px]">
           {finished ? (
             <>
-              <b>{winner.code}</b> <span className="text-ink-2">won the series</span>
+              <TeamLink teamId={winner.id} form="code" className="font-bold" />{" "}
+              <span className="text-ink-2">won the series</span>
             </>
           ) : (
             <>
               <b>
-                {favorite.code} {formatChance(chance, { exact: true })}
+                <TeamLink teamId={favorite.id} form="code" /> {formatChance(chance, { exact: true })}
               </b>{" "}
               <span className="text-ink-2">to win</span>
             </>
