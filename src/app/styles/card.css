@@ -1,0 +1,282 @@
+/*
+ * card.css: the game card (.gc, the bracket .bk, team arms .arm) and the game page's
+ * large header (.bk-l), which shares it. Owned by package B.
+ */
+@layer components {
+  /*
+   * The game card: each team stands on a line as long as its chance; the two lines
+   * join in a bracket that ends in the tile. --h is one team's row, --t the tile.
+   */
+  .gc {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    position: relative;
+  }
+
+  .gc-st {
+    align-items: baseline;
+    color: var(--color-ink-2);
+    display: flex;
+    font-size: 13px;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .gc-st b {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .gc-st .r {
+    margin-left: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bk {
+    --h: 46px;
+    --t: 34px;
+    --lw: 4px;
+    --jw: 2px;
+    align-items: start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 16px auto;
+  }
+
+  .arm {
+    align-items: end;
+    column-gap: 8px;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    height: var(--h);
+    padding-bottom: 11px;
+    position: relative;
+  }
+
+  .arm-logo {
+    align-self: end;
+    display: flex;
+    margin-bottom: 1px;
+  }
+
+  .arm-t {
+    font-size: 16px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .arm-r {
+    color: var(--color-ink-2);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .arm-sc {
+    font-size: 17px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    padding-right: 12px;
+    text-align: right;
+  }
+
+  .arm-lo .arm-t,
+  .arm-lo .arm-sc {
+    color: var(--color-ink-2);
+  }
+
+  .arm-ln {
+    background: var(--color-line);
+    bottom: 0;
+    height: var(--lw);
+    left: 0;
+    position: absolute;
+    right: 0;
+  }
+
+  .arm-ln > i {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  /* A tick on a team's line: black for the pregame seal, grey for the market. */
+  .arm-ln > b {
+    background: var(--color-ink);
+    bottom: -5px;
+    position: absolute;
+    top: -5px;
+    width: 2px;
+  }
+
+  .arm-ln > b.mk {
+    background: var(--color-ink-2);
+  }
+
+  .bk-j {
+    border: var(--jw) solid var(--color-ink);
+    border-left: 0;
+    height: calc(var(--h) + var(--jw));
+    margin-top: calc(var(--h) - var(--lw) + 1px);
+  }
+
+  .bk-dash .bk-j {
+    border-style: dashed;
+  }
+
+  .bk-o {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    height: var(--t);
+    margin-top: calc(var(--h) * 1.5 - var(--lw) / 2 - var(--t) / 2);
+  }
+
+  .bk-stem {
+    background: var(--color-ink);
+    height: var(--jw);
+    margin-right: -10px;
+    width: 12px;
+  }
+
+  .bk-who {
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .bk-who b {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .bk-who span {
+    color: var(--color-ink-2);
+  }
+
+  .bk-none {
+    color: var(--color-ink-2);
+    font-size: 14px;
+    padding-left: 6px;
+    white-space: nowrap;
+  }
+
+  .gc-cx {
+    color: var(--color-ink-2);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 13px;
+    gap: 4px 18px;
+    margin-top: 6px;
+  }
+
+  .gc-cx b {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .gc-key {
+    background: var(--color-ink);
+    display: inline-block;
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: -1px;
+    width: 2px;
+  }
+
+  .gc-key.mk {
+    background: var(--color-ink-2);
+  }
+
+  /* Large: the game page's header. */
+  .bk-l {
+    --h: 72px;
+    --t: 64px;
+    --lw: 8px;
+    --jw: 3px;
+  }
+
+  .bk-l .arm {
+    padding-bottom: 18px;
+  }
+
+  .bk-l .arm-t {
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .bk-l .arm-r {
+    font-size: 15px;
+  }
+
+  .bk-l .arm-sc {
+    font-size: 34px;
+    font-weight: 800;
+  }
+
+  .bk-l .bk-stem {
+    width: 20px;
+  }
+
+  .bk-l .tile {
+    --t: 64px;
+    font-size: 40px;
+    min-width: 120px;
+    padding: 0 16px;
+  }
+
+  .bk-l .bk-who {
+    font-size: 14px;
+  }
+
+  .bk-l .bk-who b {
+    font-size: 18px;
+  }
+
+  @media (max-width: 639px) {
+    .bk-l {
+      --h: 46px;
+      --t: 44px;
+      --lw: 5px;
+      --jw: 2px;
+    }
+
+    .bk-l .arm {
+      padding-bottom: 11px;
+    }
+
+    .bk-l .arm-t {
+      font-size: 18px;
+    }
+
+    .bk-l .arm-r {
+      font-size: 13px;
+    }
+
+    .bk-l .arm-sc {
+      font-size: 20px;
+    }
+
+    .bk-l .tile {
+      --t: 44px;
+      font-size: 24px;
+      min-width: 76px;
+      padding: 0 10px;
+    }
+
+    .bk-l .bk-who b {
+      font-size: 15px;
+    }
+
+    .bk-l .arm-logo img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

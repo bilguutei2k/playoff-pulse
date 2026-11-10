@@ -1,0 +1,105 @@
+/*
+ * base.css: theme tokens (Tailwind @theme), font stacks and the base layer.
+ * Frozen after the foundation stage; ask the lead for changes.
+ */
+
+/*
+ * 548 design tokens, v8. Ink, one grey and one line on white; team colors appear
+ * only in chips and bars, and text stays ink. Light theme only; every color is a
+ * variable so a dark theme can be added by redefining this block under a selector.
+ *
+ * Contrast on white, WCAG 2.1: ink 18.9, ink-2 / ink-3 (#666666) 5.7, market 5.7.
+ *   ink-4 (#9a9a9a) is 2.8: decoration only, never text.
+ *   line (#dcdcdc) is a track and a rule, never a mark that carries a value.
+ * "pulse" was the orange accent; v8 has none, so it now resolves to ink and the
+ * names stay for the archive pages and the focus ring.
+ */
+@theme {
+  --color-page: #ffffff;
+  --color-panel: #ffffff;
+  --color-wash: #f4f4f4;
+  --color-wash-2: #ebebeb;
+  --color-line: #dcdcdc;
+  --color-line-strong: #b8b8b8;
+
+  --color-ink: #111111;
+  --color-ink-2: #666666;
+  --color-ink-3: #666666;
+  --color-ink-4: #9a9a9a;
+  --color-masthead: #111111;
+  --color-masthead-2: #bdbdbd;
+
+  --color-pulse: #111111;
+  --color-pulse-ink: #111111;
+  --color-pulse-ring: #111111;
+  --color-pulse-wash: #f4f4f4;
+
+  --color-market: #666666;
+  --color-teal: #111111;
+  --color-good: #0b6e55;
+  --color-bad: #b42318;
+  --color-bad-wash: #fdf0ee;
+  --color-warn: #8a4b00;
+  --color-warn-wash: #fdf3e1;
+  --color-warn-line: #e8c98a;
+
+  /* Heat cells became plain figures in v8; the steps stay for the archive's classes. */
+  --color-heat-1: #f4f4f4;
+  --color-heat-2: #ebebeb;
+  --color-heat-3: #dcdcdc;
+  --color-heat-4: #c8c8c8;
+  --color-heat-5: #b0b0b0;
+  --color-heat-6: #555555;
+  --color-heat-7: #333333;
+  --color-heat-8: #111111;
+
+  --radius-card: 0px;
+
+  /* v8 is square: every rounded-* utility resolves to 0 (rounded-full stays round). */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+@theme inline {
+  --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-schibsted), "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+  --color-background: var(--color-page);
+  --color-foreground: var(--color-ink);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-pulse-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: #dcdcdc;
+    color: var(--color-ink);
+  }
+}
