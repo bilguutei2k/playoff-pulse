@@ -7,7 +7,39 @@ import { OUT_DEFINITION, tileHelp } from "@/lib/view/how-to-read";
 import { gameHref } from "@/lib/view/routes";
 import { pairColors, teamDisplay, type TeamLine } from "@/lib/view/teams";
 
-function Arm({ side, color, large, home }: { side: BracketSide; color: string; large: boolean; home: boolean }) {
+/**
+ * A figure in a card arm (record or score) that takes the wider of the two teams'
+ * widths: the other team's figure sits under it, invisible, so both arms leave their
+ * names the same room and the pair's names switch form together.
+ */
+function Matched({ value, other }: { value: string | number | null; other: string | number | null }) {
+  if (value === null && other === null) return null;
+  return (
+    <>
+      <span>{value ?? ""}</span>
+      {other !== null ? (
+        <span aria-hidden className="arm-ghost">
+          {other}
+        </span>
+      ) : null}
+    </>
+  );
+}
+
+function Arm({
+  side,
+  other,
+  color,
+  large,
+  home,
+}: {
+  side: BracketSide;
+  /** The other team in the game: the card's names, records and scores are sized as a pair. */
+  other: BracketSide;
+  color: string;
+  large: boolean;
+  home: boolean;
+}) {
   const team = teamDisplay(side.teamId);
   return (
     <div className={`arm ${side.dim ? "arm-lo" : ""}`}>
@@ -32,11 +64,13 @@ function Arm({ side, color, large, home }: { side: BracketSide; color: string; l
             </span>
           ) : null}
           {/* Above the card's game link (a sibling), so the name opens the team. */}
-          <TeamLink teamId={side.teamId} form="auto" logo={20} raised className="arm-t" />
-          <span className="arm-r">{side.record ?? ""}</span>
+          <TeamLink teamId={side.teamId} pair={other.teamId} form="auto" logo={20} raised className="arm-t" />
+          <span className="arm-r">
+            <Matched value={side.record} other={other.record} />
+          </span>
         </>
       )}
-      <span className="arm-sc">{side.score ?? ""}</span>
+      <span className="arm-sc">{large ? (side.score ?? "") : <Matched value={side.score} other={other.score} />}</span>
       <span aria-hidden className="arm-ln">
         {side.percent !== null ? <i style={{ width: `${side.percent}%`, background: color }} /> : null}
         {side.marketPercent !== null ? (
@@ -69,8 +103,8 @@ export function Bracket({ view, large = false }: { view: BracketView; large?: bo
   return (
     <div className={`bk ${view.dashed ? "bk-dash" : ""} ${large ? "bk-l" : ""}`}>
       <div className="bk-arms">
-        <Arm side={view.away} color={awayColor} large={large} home={false} />
-        <Arm side={view.home} color={homeColor} large={large} home />
+        <Arm side={view.away} other={view.home} color={awayColor} large={large} home={false} />
+        <Arm side={view.home} other={view.away} color={homeColor} large={large} home />
       </div>
       <div aria-hidden className="bk-j" />
       <div className="bk-o">

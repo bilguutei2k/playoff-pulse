@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
 import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
@@ -53,6 +54,7 @@ export default async function OddsPage() {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={generatedAt} />
       <main className="pp-container pb-4 pt-8 sm:pt-11">
         <h1 className="headline text-32 sm:text-46">Playoff and title odds</h1>
         <p className="mt-2.5 text-[15px] text-ink-2 sm:text-[16px]">

@@ -134,8 +134,13 @@ export function basisSummary(bases: ReadonlyArray<ProjectionBasis | null>, etDat
 }
 
 /** "vs Pistons, Wed Nov 4, 7:00 PM ET". */
+/** "Thu Nov 12, 8:00 PM ET": when a block's game tips. */
+export function gameWhen(etDate: string, tipUtc: string): string {
+  return `${formatWeekday(etDate)} ${formatShortDay(etDate)}, ${formatTimeEt(tipUtc)}`;
+}
+
 function gameLabel(opponentId: string, home: boolean, etDate: string, tipUtc: string): string {
-  return `${home ? "vs" : "at"} ${teamDisplay(opponentId).shortName}, ${formatWeekday(etDate)} ${formatShortDay(etDate)}, ${formatTimeEt(tipUtc)}`;
+  return `${home ? "vs" : "at"} ${teamDisplay(opponentId).shortName}, ${gameWhen(etDate, tipUtc)}`;
 }
 
 function sortRows(rows: InjuryRowView[]): InjuryRowView[] {
@@ -180,8 +185,9 @@ export function blockFromList(list: TeamInjuryList): InjuryBlock | null {
       status: row.status,
       statusView: statusView(row),
       source: row.source,
-      // A status carried from an earlier report says so beside its reason.
-      reason: row.reason && row.source !== "report" ? `${reportReason(row.reason)} (earlier report)` : reportReason(row.reason),
+      // A status carried from an earlier report says so in its source tag ("Earlier report"),
+      // which InjuryTable prints beside the reason, so the reason itself stays as reported.
+      reason: reportReason(row.reason),
       points: row.points,
       pointsText: listPoints(row.points),
     };

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { InjuryReport } from "@/components/live/InjuryReport";
 import { SectionHeading } from "@/components/live/SectionHeading";
-import { getProjections, getTeamInjuryLists } from "@/lib/live-data/published";
+import { getLiveState, getProjections, getTeamInjuryLists } from "@/lib/live-data/published";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import { formatReportTime } from "@/lib/utils/dates";
 import { buildInjuryReport } from "@/lib/view/injury-report";
@@ -33,7 +34,7 @@ const SOURCES: Array<[string, string]> = [
 ];
 
 export default async function InjuriesPage() {
-  const [lists, projections] = await Promise.all([getTeamInjuryLists(), getProjections()]);
+  const [lists, projections, stamp] = await Promise.all([getTeamInjuryLists(), getProjections(), getLiveState()]);
   const view = lists ? buildInjuryReport({ lists, projections }) : null;
   const teams = SEASON_TEAMS.map((team) => teamDisplay(team.id))
     .map((team) => ({ id: team.id, code: team.code, name: team.name, shortName: team.shortName }))
@@ -43,6 +44,7 @@ export default async function InjuriesPage() {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={stamp.generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <SectionHeading
         as="h1"
@@ -53,7 +55,7 @@ export default async function InjuriesPage() {
             Every team&apos;s injury list for its next game, game by game for the next two days with games, then
             every other team.{" "}
             {latest ? <>The newest NBA report in use is from {latest}. </> : null}
-            Lists update with each run of the forecast job, about every ten minutes.
+            Lists update about every ten minutes.
           </span>
         }
       />
@@ -89,7 +91,7 @@ export default async function InjuriesPage() {
         ) : (
           <div>
             <p className="notice-quiet">
-              The injury lists are not published yet. They appear here once the forecast job publishes them. Each game
+              The injury lists are not published yet. They appear here once 548 publishes them. Each game
               page still lists the players its sealed forecast counts.
             </p>
             <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">

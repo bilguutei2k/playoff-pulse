@@ -9,11 +9,16 @@
  *   <TeamLink teamId={id} form="auto" logo={20} />   the longest name its slot fits
  *   <TeamLink teamId={id} link={false} />            same look, no link (inside another link)
  *   <TeamLink teamId={id} raised />                  above a card's absolute inset-0 game link
+ *   <TeamLink teamId={id} form="auto" pair={otherId} />   a game's two names change form together
  *
  * Forms: "full" (New York Knicks), "short" (Knicks), "code" (NYK). "full" and "short"
  * may wrap between words; add whitespace-nowrap only where the slot always fits.
  *
  * form="auto" picks full, else short, else code, from the width its slot gives it.
+ * With `pair` (the other team in a game card), each form's width is the wider of the
+ * two teams', so two equal slots always show the same form: both full names, both
+ * nicknames or both codes, never "Thunder" over "Portland Trail Blazers". The two
+ * slots must be equally wide (GameCard sizes the record and score as a pair).
  * It asks for the full name's width and shrinks to the code's (never below), so:
  *   - flex row: works as is; the name shrinks before the row overflows. Give the
  *     things beside it flex-none or a fixed width.
@@ -72,8 +77,10 @@ function textOf(teamId: string, form: TeamNameForm): string {
 }
 
 /** The forms "auto" chooses between, longest first, each narrower than the one before. */
-function autoForms(teamId: string): Array<{ form: TeamNameForm; width: number }> {
-  const [full, short, code] = TEAM_NAME_EM[teamId] ?? [99, 99, 99];
+function autoForms(teamId: string, pair?: string): Array<{ form: TeamNameForm; width: number }> {
+  const own = TEAM_NAME_EM[teamId] ?? [99, 99, 99];
+  const other = pair ? (TEAM_NAME_EM[pair] ?? [99, 99, 99]) : own;
+  const [full, short, code] = own.map((width, index) => Math.max(width, other[index]));
   const forms: Array<{ form: TeamNameForm; width: number }> = [{ form: "full", width: full }];
   for (const next of [
     { form: "short" as const, width: short },
@@ -84,8 +91,8 @@ function autoForms(teamId: string): Array<{ form: TeamNameForm; width: number }>
   return forms;
 }
 
-function AutoName({ teamId }: { teamId: string }) {
-  const forms = autoForms(teamId);
+function AutoName({ teamId, pair }: { teamId: string; pair?: string }) {
+  const forms = autoForms(teamId, pair);
   const narrowest = forms[forms.length - 1];
   // The slot's widest is a hair over the full name's threshold, so a slot sized to
   // its content always prints the full name.
@@ -148,6 +155,7 @@ export function TeamLink({
   logo,
   link = true,
   raised = false,
+  pair,
   className = "",
 }: {
   /** ESPN team ID. */
@@ -160,13 +168,15 @@ export function TeamLink({
   link?: boolean;
   /** Lift above a sibling whole-card link. */
   raised?: boolean;
+  /** form="auto" only: the other team of a pair shown together; both switch form at the same widths. */
+  pair?: string;
   className?: string;
 }) {
   const team = teamDisplay(teamId);
   const plainFull = form === "full";
   const name =
     form === "auto" ? (
-      <AutoName teamId={teamId} />
+      <AutoName teamId={teamId} pair={pair} />
     ) : typeof form === "object" ? (
       <BreakpointName teamId={teamId} form={form} />
     ) : (
@@ -195,7 +205,8 @@ export function TeamLink({
     );
   }
   return (
-    <Link href={teamHref(teamId)} className={classes} title={title}>
+    // No viewport prefetch: a page can show dozens of teams, and each refresh would refetch them all.
+    <Link href={teamHref(teamId)} className={classes} title={title} prefetch={false}>
       {content}
     </Link>
   );

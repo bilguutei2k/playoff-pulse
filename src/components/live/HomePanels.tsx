@@ -4,12 +4,9 @@ import { titleOddsChange } from "@/lib/season/history";
 import type { LiveState, RecordSummary } from "@/lib/season/types";
 import { formatChance, formatPointChange } from "@/lib/utils/format";
 import { formatShortDay } from "@/lib/utils/dates";
-import { CALIBRATION_MIN_GAMES, SMALL_SAMPLE_GAMES, gameBrier } from "@/lib/view/record";
+import { CALIBRATION_MIN_GAMES, SMALL_SAMPLE_GAMES } from "@/lib/view/record";
 import type { FavoriteSummary } from "@/lib/view/record-page";
 import { teamColor } from "@/lib/view/teams";
-
-/** A coin flip's Brier score, from the record's own formula: what "lower is better" is measured against. */
-const COIN_FLIP_BRIER = gameBrier(0.5, true);
 
 const missedSeals = (missed: number) => `${missed} missed ${missed === 1 ? "seal" : "seals"}`;
 
@@ -26,8 +23,8 @@ export function Standfirst({ record, favorites }: { record: RecordSummary; favor
   return (
     <section aria-label="About 548" className="max-w-[560px]">
       <p className="text-[17px] leading-[1.45] sm:text-[19px]">
-        <b>548 puts a win probability on every NBA game.</b> Each one is sealed before tip and scored after the final, in
-        public.
+        <b>548 puts a win probability on every NBA game.</b> Only forecasts sealed before tip are scored, in a public
+        record that counts every miss.
       </p>
       <p className="mt-3 text-[14px] leading-[1.5]">
         {favorites && favorites.decided > 0 ? (
@@ -51,13 +48,22 @@ export function Standfirst({ record, favorites }: { record: RecordSummary; favor
       </p>
       <p className="mt-1 flex flex-wrap gap-x-6 text-[14px] font-bold">
         <Link href="/how-it-works" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
-          How it works →
+          How it works
+          <span aria-hidden className="ml-[0.3em]">
+            →
+          </span>
         </Link>
         <Link href="/record" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
-          Track record →
+          Track record
+          <span aria-hidden className="ml-[0.3em]">
+            →
+          </span>
         </Link>
         <Link href="/about" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
-          About 548 →
+          About 548
+          <span aria-hidden className="ml-[0.3em]">
+            →
+          </span>
         </Link>
       </p>
     </section>
@@ -81,7 +87,10 @@ export function TitleStrip({ state }: { state: LiveState }) {
         </span>
       ))}
       <Link href="/odds" className="ml-auto inline-flex min-h-11 items-center font-bold hover:underline hover:underline-offset-4">
-        All odds →
+        All odds
+        <span aria-hidden className="ml-[0.3em]">
+          →
+        </span>
       </Link>
     </p>
   );
@@ -181,7 +190,8 @@ export function RecordGlance({ record, favorites = null }: { record: RecordSumma
           <dt className="text-ink-2">Brier score</dt>
           <dd className="num mt-0.5 text-[17px] font-bold">{record.brier === null ? "–" : record.brier.toFixed(3)}</dd>
           <dd className="mt-0.5 text-[12.5px] leading-[1.35] text-ink-2">
-            Lower is better. A coin flip scores {COIN_FLIP_BRIER.toFixed(3)}.
+            {/* The same baseline and words as /record: always the prior home-win rate, same games. */}
+            {record.baselineBrier !== null ? `Lower is better. Baseline ${record.baselineBrier.toFixed(3)}` : "Lower is better. After the first final"}
           </dd>
         </div>
         <div>

@@ -8,10 +8,14 @@ import { PageStamp } from "@/components/live/FreshnessGuard";
 
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 
+const DESCRIPTION =
+  "What 548 is: a win probability for every NBA game and playoff and title odds for all 30 teams. Forecasts sealed before tip are scored in a public record that counts every miss.";
+
 export const metadata: Metadata = {
   title: "About",
-  description:
-    "What 548 is: a win probability for every NBA game, sealed before tip and scored in public, with playoff and title odds for all 30 teams.",
+  description: DESCRIPTION,
+  // Replaces the layout's openGraph, so the site name and type are repeated here.
+  openGraph: { siteName: "548", type: "website", title: "About 548", description: DESCRIPTION },
   alternates: { canonical: "/about" },
 };
 
@@ -36,7 +40,7 @@ export default function AboutPage() {
       <PageStamp generatedAt={null} />
       <header className="max-w-3xl pb-10 sm:pb-14">
         <p className="text-15 text-ink-2">About</p>
-        <h1 className="headline mt-2.5 text-32 sm:text-46">Every NBA game, forecast before tip and scored in public</h1>
+        <h1 className="headline mt-2.5 text-32 sm:text-46">NBA forecasts, sealed before tip and scored in public</h1>
         <p className="mt-4 max-w-[60ch] text-[17px] leading-7 text-ink-2">
           548 puts a win probability on every game, playoff and title odds on all 30 teams, and its own record on the
           line. It updates automatically through the day.
@@ -58,16 +62,15 @@ export default function AboutPage() {
 
         <Block id="sealed-title" title="Sealed, then scored">
           <p>
-            Only a forecast sealed before tip is scored. Each game is sealed twice: in the morning,
-            and again in the hour before tip. The final seal is the one scored against the result, in a{" "}
+            548 aims to seal each game twice: in the morning, and again in the hour before tip. The{" "}
             <Link href="/record" className="pp-link">
-              public track record
-            </Link>
-            .
+              record
+            </Link>{" "}
+            scores the final seal when there is one, otherwise the reissued or original morning seal. A game that tips
+            without a seal is counted as missed, and the record shows it.
           </p>
           <p>
-            Seals are never edited or backfilled. A game that tips without one is counted as missed, and the record
-            shows it. Every sealed forecast is written to an append-only{" "}
+            Seals are never edited or backfilled. Every sealed forecast is written to an append-only{" "}
             <a href={LEDGER_URL} className="pp-link">
               ledger on GitHub
             </a>

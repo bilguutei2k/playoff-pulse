@@ -15,7 +15,7 @@ export default function NotFound() {
     <main className="pp-container pb-8 pt-12 sm:pt-20">
       <PageStamp generatedAt={null} />
       <div className="max-w-2xl">
-        <p className="kicker">404</p>
+        <p className="text-15 text-ink-2">404</p>
         <h1 className="headline mt-2 text-32 sm:text-46">Nothing here</h1>
         <p className="mt-3 text-[15px] text-ink-2">
           That page does not exist. The date may be outside the season, or the game, team or player may be written

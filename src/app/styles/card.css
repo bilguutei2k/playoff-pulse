@@ -143,6 +143,28 @@
     display: none;
   }
 
+  /*
+   * Record and score on a card take the wider of the two teams' (GameCard's Matched):
+   * the other team's figure is stacked under this one, invisible, so both arms leave
+   * the names the same room and a pair's names change form together.
+   */
+  .gc :is(.arm-r, .arm-sc) {
+    display: grid;
+    justify-items: end;
+  }
+
+  .gc :is(.arm-r, .arm-sc):empty {
+    display: none;
+  }
+
+  .gc :is(.arm-r, .arm-sc) > * {
+    grid-area: 1 / 1;
+  }
+
+  .arm-ghost {
+    visibility: hidden;
+  }
+
   .arm-sc {
     flex: none;
     font-size: 17px;
@@ -348,7 +370,8 @@
    * never goes below its tricode and never ellipsizes.
    */
   @container gc (max-width: 369px) {
-    .arm-r {
+    .arm-r,
+    .gc .arm-r {
       display: none;
     }
   }

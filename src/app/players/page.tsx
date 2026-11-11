@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { PlayersTable } from "@/components/live/PlayersTable";
 import { SectionHeading } from "@/components/live/SectionHeading";
-import { getPlayerIndex, getTeamInjuryLists } from "@/lib/live-data/published";
+import { getLiveState, getPlayerIndex, getTeamInjuryLists } from "@/lib/live-data/published";
 import { IMPACT_LABEL } from "@/lib/season/player-stats";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import { formatLongDay } from "@/lib/utils/dates";
@@ -24,7 +25,7 @@ export const revalidate = 60;
 const DEFAULT_MINUTES = 10;
 
 export default async function PlayersPage() {
-  const [index, lists] = await Promise.all([getPlayerIndex(), getTeamInjuryLists()]);
+  const [index, lists, stamp] = await Promise.all([getPlayerIndex(), getTeamInjuryLists(), getLiveState()]);
   const rows = index ? playerTableRows(index, lists) : [];
   const teams = SEASON_TEAMS.map((team) => teamDisplay(team.id))
     .map((team) => ({ id: team.id, code: team.code, name: team.name }))
@@ -33,6 +34,7 @@ export default async function PlayersPage() {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={stamp.generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <SectionHeading
         as="h1"
@@ -69,7 +71,7 @@ export default async function PlayersPage() {
       ) : (
         <div className="mt-8">
           <p className="notice-quiet">
-            Player stats are not published yet. They appear here once the forecast job publishes them from the
+            Player stats are not published yet. They appear here once 548 publishes them from the
             season&apos;s box scores.
           </p>
           <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">

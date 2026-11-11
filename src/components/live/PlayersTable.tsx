@@ -216,14 +216,16 @@ export function PlayersTable({
             },
           ]
         : []),
-      ...COLUMNS,
+      // Status beside the name, as on phones, so it shows without sideways scrolling
+      // wherever the stats need a scroll box (768 to 1100 px).
       {
         key: "status",
         label: "Status",
         title: "Injury status",
-        value: (row) => row.status?.order ?? null,
-        cell: (row) => <StatusCell row={row} />,
+        value: (row: PlayerTableRow) => row.status?.order ?? null,
+        cell: (row: PlayerTableRow) => <StatusCell row={row} />,
       },
+      ...COLUMNS,
     ],
     [showTeam],
   );

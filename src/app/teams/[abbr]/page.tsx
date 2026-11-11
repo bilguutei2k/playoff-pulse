@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { lostPoints } from "@/components/live/AbsenceList";
 import { Badge } from "@/components/live/Badge";
 import { Hint } from "@/components/live/Hint";
@@ -498,6 +499,7 @@ export default async function TeamPage({ params }: Params) {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
           <Link href="/teams" className="text-ink-2 hover:text-ink">
@@ -684,7 +686,7 @@ export default async function TeamPage({ params }: Params) {
           {roster && roster.length > 0 ? (
             <>
               <p className="mb-4 max-w-3xl text-[13px] leading-5 text-ink-2">
-                Per game played for the {team.shortName}, most minutes first; select a column heading to sort. A traded
+                Per game played for the {team.shortName}, most minutes first; sort by any column. A traded
                 player counts only his games here. {IMPACT_LABEL}
               </p>
               <PlayersTable

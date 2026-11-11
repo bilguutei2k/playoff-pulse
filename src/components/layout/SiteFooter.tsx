@@ -32,11 +32,6 @@ const MODEL_WORDS: Record<string, string> = {
   [REFERENCE_MODEL_VERSION]: "team ratings only",
 };
 
-/** "v2" from "live-2026.27-v2"; the full version goes in the tooltip. */
-function shortVersion(version: string): string {
-  return MODEL_WORDS[version] ? (version.split("-").at(-1) ?? version) : version;
-}
-
 /** Inline links get a taller hit area without moving the text (VA-18). */
 const PROSE_LINK = "py-3 text-ink underline underline-offset-4 hover:decoration-2";
 const LINK = "inline-flex min-h-11 items-center hover:text-ink hover:underline hover:underline-offset-4 lg:min-h-0";
@@ -74,9 +69,7 @@ export async function SiteFooter() {
         </p>
         <p>
           Forecasts by model{" "}
-          <span className="text-ink" title={version}>
-            {shortVersion(version)}
-          </span>
+          <span className="whitespace-nowrap text-ink">{version}</span>
           {MODEL_WORDS[version] ? ` (${MODEL_WORDS[version]})` : null}
           {revision !== null ? (
             <>
@@ -88,7 +81,7 @@ export async function SiteFooter() {
           ) : null}
           {sameModel ? null : (
             <>
-              ; model <span title={reference}>{shortVersion(reference)}</span>
+              ; model <span className="whitespace-nowrap">{reference}</span>
               {MODEL_WORDS[reference] ? ` (${MODEL_WORDS[reference]})` : null} keeps sealing beside it as a reference
             </>
           )}

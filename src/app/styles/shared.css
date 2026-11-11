@@ -8,9 +8,7 @@
   /*
    * Figures that line up (DS-9): table body cells marked .nm or .num set tabular
    * figures, so decimals in a column align. Everywhere else .num keeps Schibsted's
-   * proportional figures: its tabular set also widens the period and comma, which
-   * reads as monospace in version strings, dates and prose ("2026 . 27"). Use
-   * .tabular for a stack of figures outside a table.
+   * proportional figures. Use .tabular for a stack of figures outside a table.
    */
   .num,
   .pp-number {
@@ -24,6 +22,26 @@
 
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * Every place that sets tabular figures also takes the figures face first
+   * (src/app/fonts.ts): the same Schibsted file whose tabular set keeps the period,
+   * comma, colon and semicolon at their normal width, so "+0.8" never reads
+   * "+0 . 8". Digits stay digit-wide, so columns still line up. A new rule that sets
+   * tabular-nums belongs in this list.
+   */
+  :is(td, tbody th).num,
+  .tb td.nm,
+  .tabular,
+  .tile,
+  .heat,
+  .arm-r,
+  .arm-sc,
+  .arm-rec,
+  .pp-table,
+  .pp-heat {
+    font-family: var(--font-figures), var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
   }
 
   /* A large standalone figure. */
@@ -152,6 +170,17 @@
     .sh:has(> a) :is(h2, h3) {
       flex: 1 1 auto;
       min-width: 0;
+    }
+
+    /* A 44px touch area around the heading link, without moving the row. */
+    .sh > a {
+      position: relative;
+    }
+
+    .sh > a::before {
+      content: "";
+      inset: -12px -8px;
+      position: absolute;
     }
   }
 
@@ -482,6 +511,17 @@
     white-space: nowrap;
   }
 
+  /* Right-aligned headings (every table, not only /odds): the "?" goes before the
+     label, so it never reads as the next column's and the label stays over its figures. */
+  th.nm .sort-head > .hint {
+    order: -1;
+  }
+
+  th.nm .sort-head > .hint .hint-icon {
+    margin-left: 0;
+    margin-right: 4px;
+  }
+
   /* SortHeader (src/components/live/SortHeader.tsx). */
   .sort-head {
     align-items: center;
@@ -557,14 +597,14 @@
     border: 1px solid currentColor;
     border-radius: 9999px;
     display: inline-flex;
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 700;
-    height: 14px;
+    height: 16px;
     justify-content: center;
     line-height: 1;
-    margin-left: 3px;
-    vertical-align: 0.1em;
-    width: 14px;
+    margin-left: 4px;
+    vertical-align: 0.05em;
+    width: 16px;
   }
 
   .hint-term::before,
@@ -574,8 +614,9 @@
     position: absolute;
   }
 
+  /* 16px + 2 x 14px: a 44px touch area that never grows the row. */
   .hint-icon::before {
-    inset: -15px;
+    inset: -14px;
   }
 
   .hint-pop {

@@ -1,7 +1,7 @@
-// Heat bins for probability cells. Every cell prints its value; the fill repeats it
-// as magnitude on one ramp from the panel to teal (the --color-heat-* tokens in
-// globals.css). Text flips to white at 60%, where the ramp jumps to its dark steps,
-// so both sides of the flip keep AA contrast.
+// Bins for probability cells (class names .heat-0 to .heat-8 on a .heat cell). In the
+// v8 design there is no fill: every cell prints its value in ink, under 1% in grey
+// (.heat-0) and 50% and up in bold (.heat-5 to .heat-8); the rules are in
+// src/app/styles/shared.css. The labels name each bin for a legend.
 
 export const HEAT_BINS: Array<{ upTo: number; className: string; label: string }> = [
   { upTo: 0.005, className: "heat-0", label: "Under 1%" },

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { Ticker } from "@/components/live/Ticker";
 import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
@@ -26,6 +27,7 @@ export default async function TeamsPage() {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <header className="mb-12 sm:mb-[60px]">
           <h1 className="headline text-32 sm:text-46">Teams</h1>

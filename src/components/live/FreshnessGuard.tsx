@@ -3,15 +3,14 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { formatAgeShort } from "@/lib/utils/format";
-import { afterCheck, initialGuardState, readHealth, type HealthReading, type NoticeKind } from "@/lib/view/freshness";
+import { initialGuardState, readHealth, type HealthReading, type NoticeKind } from "@/lib/view/freshness";
+import { startFreshnessChecks } from "@/lib/view/freshness-checks";
 
 const TICK_MS = 30_000;
 /** A tab hidden at least this long is checked against the server when it comes back. */
 const HIDDEN_FOR_MS = 60_000;
 /** While visible, every page asks the server for its stamp this often. */
 const POLL_MS = 5 * 60_000;
-/** After asking for a fresh copy, look again this soon: the copy may still be the old one. */
-const RETRY_MS = 6_000;
 const HEALTH_URL = "/api/live/health";
 /** The frozen 2026 archive shows no live data, so it gets no freshness notice. */
 const ARCHIVE_PATHS = ["/retrospective", "/snapshot", "/evidence", "/methodology", "/lab"];
@@ -78,7 +77,7 @@ function subscribeTick(onTick: () => void): () => void {
 const tickNow = () => Math.floor(Date.now() / TICK_MS) * TICK_MS;
 const noTickOnServer = () => null;
 
-/** What /api/live/health says, read from its JSON body on a 503 as on a 200. */
+/** What /api/live/health says, read from its JSON body on a 503 as on a 200. The caller bounds its time. */
 async function readServer(signal: AbortSignal): Promise<HealthReading> {
   try {
     const response = await fetch(HEALTH_URL, { cache: "no-store", signal });
@@ -94,9 +93,11 @@ async function readServer(signal: AbortSignal): Promise<HealthReading> {
  * that bound existed for days. On arrival, on return to the tab after a minute away, after
  * a back-forward restore and every five minutes while visible, this asks /api/live/health
  * what the server has and applies the rule in src/lib/view/freshness.ts: a newer copy is
- * loaded silently (twice at most, then a reload notice); a pipeline that is behind gets a
- * notice at once; a healthy server that matches the copy gets nothing, however old the
- * last publish. Nothing here touches seals or the record.
+ * loaded silently (twice at most, six seconds apart, then a reload notice); a pipeline
+ * that is behind gets a notice at once; a healthy server that matches the copy gets
+ * nothing, however old the last publish. Each request gives up after ten seconds and
+ * counts as unreachable (src/lib/view/freshness-checks.ts). Nothing here touches seals or
+ * the record.
  */
 export function FreshnessGuard({ generatedAt }: { generatedAt: string }) {
   const router = useRouter();
@@ -112,51 +113,41 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string }) {
       update({ notice: null });
       return;
     }
-    const controller = new AbortController();
-    let retry: ReturnType<typeof setTimeout> | null = null;
-    let running = false;
+    // One check at a time: a trigger while one is in flight is dropped. The rule's own
+    // deadline keeps an early trigger from spending a refresh or showing the reload notice.
+    const checks = startFreshnessChecks({
+      renderedAt: watched,
+      read: readServer,
+      getState: () => state.current,
+      setState: (next) => {
+        state.current = next;
+      },
+      refresh: () => router.refresh(),
+      publish: (next) => update({ notice: next }),
+    });
+    const check = checks.check;
 
-    // One check at a time: a trigger while one is in flight is dropped, and a check
-    // replaces any follow-up already scheduled.
-    async function check() {
-      if (running) return;
-      running = true;
-      if (retry) clearTimeout(retry);
-      retry = null;
-      const reading = await readServer(controller.signal);
-      running = false;
-      if (controller.signal.aborted) return;
-      const step = afterCheck(state.current, watched as string, reading, Date.now());
-      state.current = step.state;
-      update({ notice: step.state.notice });
-      if (step.action === "refresh") {
-        router.refresh();
-        retry = setTimeout(() => void check(), RETRY_MS);
-      }
-    }
-
-    void check();
+    check();
     let hiddenAt: number | null = null;
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
         hiddenAt = Date.now();
         return;
       }
-      if (hiddenAt !== null && Date.now() - hiddenAt >= HIDDEN_FOR_MS) void check();
+      if (hiddenAt !== null && Date.now() - hiddenAt >= HIDDEN_FOR_MS) check();
       hiddenAt = null;
     };
     const onPageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) void check();
+      if (event.persisted) check();
     };
     const poll = setInterval(() => {
-      if (document.visibilityState === "visible") void check();
+      if (document.visibilityState === "visible") check();
     }, POLL_MS);
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pageshow", onPageShow);
     return () => {
-      controller.abort();
+      checks.stop();
       clearInterval(poll);
-      if (retry) clearTimeout(retry);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pageshow", onPageShow);
     };

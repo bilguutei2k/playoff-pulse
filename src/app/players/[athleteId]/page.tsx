@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { StatusTag } from "@/components/live/Badge";
 import { Hint } from "@/components/live/Hint";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLink } from "@/components/live/TeamLink";
-import { getPlayerIndex, getTeamInjuryLists, getTeamPlayers } from "@/lib/live-data/published";
+import { getLiveState, getPlayerIndex, getTeamInjuryLists, getTeamPlayers } from "@/lib/live-data/published";
 import { IMPACT_LABEL, type TeamPlayersFile } from "@/lib/season/player-stats";
 import { formatLongDay, formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
 import { STATUS_LABELS } from "@/lib/utils/injuries";
@@ -259,13 +260,13 @@ function InjuryHistory({ page }: { page: PlayerPageView }) {
 
 export default async function PlayerPage({ params }: Params) {
   const { athleteId } = await params;
-  const { page, published, listsPublished } = await load(athleteId);
+  const [{ page, published, listsPublished }, { generatedAt }] = await Promise.all([load(athleteId), getLiveState()]);
   if (!published) {
     return (
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <SectionHeading as="h1" kicker="Players" title="Player pages are not published yet" />
         <p className="mt-3 max-w-[64ch] text-15 text-ink-2">
-          They appear once the forecast job publishes the season&apos;s player files.
+          They appear once 548 publishes this season&apos;s player stats.
         </p>
         <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">
           <Link className="pp-link" href="/players">All players</Link>
@@ -286,6 +287,7 @@ export default async function PlayerPage({ params }: Params) {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
         <Link href="/players" className="text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</Link>

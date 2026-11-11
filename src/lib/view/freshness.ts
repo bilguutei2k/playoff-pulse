@@ -11,8 +11,11 @@
 // (`status`, "stale" with a 503 when it is not). The guard compares the two.
 //
 // The rule:
-// - Server materially newer than the copy: refresh silently, at most twice, six seconds
-//   apart; a further check that still finds the copy behind shows the reload notice.
+// - Server materially newer than the copy: refresh silently, at most twice, at least six
+//   seconds apart; a check at or after that deadline that still finds the copy behind
+//   shows the reload notice. A check that comes early (a tab coming back, a back-forward
+//   restore, the poll) still reads the server and may show the pipeline notice, but waits
+//   for the deadline before refreshing again or saying the copy cannot catch up.
 // - Server says "stale": the pipeline notice, at once.
 // - Server healthy and the copy matches it: nothing, however long since the last publish
 //   (a quiet afternoon publishes nothing new, and that is not a fault).
@@ -25,6 +28,8 @@
 export const MATERIAL_MS = 60_000;
 /** How many times a page asks the server for a newer copy of itself before saying so. */
 export const MAX_REFRESHES = 2;
+/** The least time between silent refreshes, and before the reload notice, for one copy and target. */
+export const RETRY_MS = 6_000;
 /** With no answer from the server, a copy older than this says it could not be verified. */
 export const UNVERIFIED_AFTER_MS = 36 * 3_600_000;
 
@@ -49,18 +54,25 @@ export type GuardState = {
   target: string | null;
   /** Refreshes asked for while chasing `target` on this copy. */
   refreshes: number;
+  /**
+   * The earliest time (ms) another silent refresh, or the reload notice, may follow for
+   * this copy and target; null when no refresh is waiting to land.
+   */
+  retryAt: number | null;
   notice: NoticeKind | null;
 };
 
 /** After a check: what to do now, and the state to keep. */
 export type GuardStep = {
-  /** refresh: re-render from the server and check again shortly. none: wait for the next trigger. */
+  /** refresh: re-render from the server now. none: change nothing on the page. */
   action: "refresh" | "none";
   state: GuardState;
+  /** When to check again on its own (ms), or null to wait for the next trigger. */
+  checkAt: number | null;
 };
 
 export function initialGuardState(renderedAt: string): GuardState {
-  return { renderedAt, target: null, refreshes: 0, notice: null };
+  return { renderedAt, target: null, refreshes: 0, retryAt: null, notice: null };
 }
 
 const validStamp = (iso: string | null): iso is string => iso !== null && Number.isFinite(Date.parse(iso));
@@ -90,7 +102,7 @@ export function forCopy(state: GuardState, renderedAt: string): GuardState {
   if (state.renderedAt === renderedAt) return state;
   // A new copy arrived: whether it is still behind is for this check to say. A
   // pipeline or unverified notice stays until an answer clears it.
-  return { renderedAt, target: null, refreshes: 0, notice: state.notice === "behind" ? null : state.notice };
+  return { renderedAt, target: null, refreshes: 0, retryAt: null, notice: state.notice === "behind" ? null : state.notice };
 }
 
 /** One health check's outcome for the copy stamped `renderedAt`. */
@@ -98,26 +110,39 @@ export function afterCheck(previous: GuardState, renderedAt: string, reading: He
   const state = forCopy(previous, renderedAt);
 
   if (reading.kind === "unreachable") {
-    if (state.notice !== null) return { action: "none", state };
+    // A follow-up a refresh was waiting for still happens.
+    const checkAt = state.retryAt !== null && state.retryAt > nowMs ? state.retryAt : null;
+    if (state.notice !== null) return { action: "none", state, checkAt };
     const age = nowMs - Date.parse(renderedAt);
     const unverified = !Number.isFinite(age) || age > UNVERIFIED_AFTER_MS;
-    return { action: "none", state: { ...state, notice: unverified ? "unverified" : null } };
+    return { action: "none", state: { ...state, notice: unverified ? "unverified" : null }, checkAt };
   }
 
   const target = reading.generatedAt;
-  const refreshes = target === state.target ? state.refreshes : 0;
+  const sameTarget = target === state.target;
+  const refreshes = sameTarget ? state.refreshes : 0;
+  const retryAt = sameTarget ? state.retryAt : null;
   const pipeline: NoticeKind | null = reading.status === "stale" ? "stale" : null;
 
   if (serverIsNewer(renderedAt, target)) {
-    if (refreshes < MAX_REFRESHES) {
-      // Refreshing silently; a notice already shown for this gap stays until it closes.
-      const notice = state.notice === "behind" ? "behind" : pipeline;
-      return { action: "refresh", state: { renderedAt, target, refreshes: refreshes + 1, notice } };
+    // While refreshing or waiting, a notice already shown for this gap stays until it closes.
+    const notice = state.notice === "behind" ? "behind" : pipeline;
+    if (retryAt !== null && nowMs < retryAt) {
+      // The last refresh may still be landing: look again at the deadline, not before.
+      return { action: "none", state: { renderedAt, target, refreshes, retryAt, notice }, checkAt: retryAt };
     }
-    return { action: "none", state: { renderedAt, target, refreshes, notice: "behind" } };
+    if (refreshes < MAX_REFRESHES) {
+      const next = nowMs + RETRY_MS;
+      return { action: "refresh", state: { renderedAt, target, refreshes: refreshes + 1, retryAt: next, notice }, checkAt: next };
+    }
+    return { action: "none", state: { renderedAt, target, refreshes, retryAt, notice: "behind" }, checkAt: null };
   }
 
   // The copy matches the server (or the server has nothing comparable).
   const unreadable = !validStamp(renderedAt) && pipeline === null;
-  return { action: "none", state: { renderedAt, target, refreshes: 0, notice: pipeline ?? (unreadable ? "unverified" : null) } };
+  return {
+    action: "none",
+    state: { renderedAt, target, refreshes: 0, retryAt: null, notice: pipeline ?? (unreadable ? "unverified" : null) },
+    checkAt: null,
+  };
 }

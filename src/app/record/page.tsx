@@ -7,6 +7,7 @@ import {
   ScoredSeals,
   Waffle,
 } from "@/components/live/RecordParts";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { Ticker } from "@/components/live/Ticker";
 import { getLiveState, getSeasonLedger } from "@/lib/live-data/published";
 import { POLICY_REVISIONS, currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
@@ -143,6 +144,7 @@ export default async function RecordPage() {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pt-8 sm:pt-11">
         <h1 className="headline text-32 sm:text-46">Track record</h1>
         <p className="mb-9 mt-3 text-[17px] sm:mb-11 sm:text-[19px]">

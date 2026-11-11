@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLink } from "@/components/live/TeamLink";
-import { TeamLogo } from "@/components/live/TeamLogo";
 import { placeLabels, possessive, type Box, type LabelAnchor } from "@/app/game/[gameId]/labels";
 import { sealPolicyRevision } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
@@ -27,7 +26,7 @@ import { basisSentence } from "@/lib/view/injury-report";
 import { filingNote, othersNote, playerPoints, type AbsenceSide } from "@/lib/view/injuries";
 import type { MarginBreakdown } from "@/lib/view/margin";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
-import { formatRecord, teamColor, teamDisplay, teamHref, type TeamLine } from "@/lib/view/teams";
+import { formatRecord, teamColor, teamDisplay, type TeamLine } from "@/lib/view/teams";
 
 const KIND_LABELS: Record<SeasonGame["kind"], string | null> = {
   regular: null,
@@ -299,7 +298,8 @@ export function WhereFrom({
         </>
       }
     >
-      <div className="grid grid-cols-[minmax(0,1fr)_64px] gap-x-3 gap-y-3 sm:grid-cols-[220px_minmax(0,1fr)_72px]">
+      {/* The value column grows to fit "OKC +2.0", so the predicted margin never runs past the edge. */}
+      <div className="grid grid-cols-[minmax(0,1fr)_minmax(64px,auto)] gap-x-3 gap-y-3 sm:grid-cols-[220px_minmax(0,1fr)_minmax(72px,auto)]">
         {fall.rows.map((row, index) => {
           const left = pct(Math.min(row.from, row.to));
           const width = Math.abs(pct(row.to) - pct(row.from));
@@ -861,20 +861,16 @@ function SeasonTeam({
   season: SeasonLine | null;
   next: SeasonGame | null;
 }) {
-  const team = teamDisplay(teamId);
   const color = teamColor(teamId);
   const opponent = next ? teamDisplay(next.homeId === teamId ? next.awayId : next.homeId) : null;
   const at = (wins: number) => `${season ? Math.min(100, Math.max(0, (wins / season.games) * 100)) : 0}%`;
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3">
-        <Link href={teamHref(teamId)} className="flex items-center gap-2 hover:underline hover:underline-offset-4">
-          <span className="self-center">
-            <TeamLogo teamId={teamId} size={20} />
-          </span>
-          <b>{team.shortName}</b>
+        <span className="flex items-baseline gap-2">
+          <TeamLink teamId={teamId} form="short" logo={20} className="font-bold [--tl-gap:8px]" />
           {line ? <span className="num text-[13px] text-ink-2">{formatRecord(line.wins, line.losses)}</span> : null}
-        </Link>
+        </span>
         {season ? (
           <span className="whitespace-nowrap text-[13px]">
             Playoffs <b className="num">{formatChance(season.playoffs)}</b>
@@ -904,8 +900,10 @@ function SeasonTeam({
                 {" "}
                 · Next{" "}
                 <Link href={`/game/${next.id}`} className="pp-link font-semibold">
-                  {formatWeekday(next.etDate)} {formatShortDay(next.etDate)} {next.homeId === teamId ? "vs" : "at"} {opponent.code}
-                </Link>
+                  {formatWeekday(next.etDate)} {formatShortDay(next.etDate)}
+                </Link>{" "}
+                {next.homeId === teamId ? "vs" : "at"}{" "}
+                <TeamLink teamId={opponent.id} form="code" className="font-semibold text-ink" />
               </>
             ) : null}
           </p>

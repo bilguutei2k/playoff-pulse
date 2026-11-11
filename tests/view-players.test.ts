@@ -269,7 +269,7 @@ describe("injury lists", () => {
     expect(unfiled).toMatchObject({ unfiled: true, sourceLabel: "Not yet submitted" });
     const noReport = blockFromList(lists.teams[2])!;
     expect(noReport.sourceLabel).toBe("No report yet");
-    expect(noReport.rows[0].reason).toBe("Right High Ankle Sprain (earlier report)");
+    expect(noReport.rows[0].reason).toBe("Right High Ankle Sprain");
     expect(blockFromList({ ...lists.teams[0], nextGame: null })).toBeNull();
   });
   it("groups the next two dates by game and puts every other team below", () => {

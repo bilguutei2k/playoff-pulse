@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { DateStrip, dayHref } from "@/components/live/DateStrip";
 import { FinalsChart, FinalsTable } from "@/components/live/DayFinals";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { GameCard } from "@/components/live/GameCard";
 import { RecordGlance, Standfirst, TitleRace, TitleStrip } from "@/components/live/HomePanels";
 import { Tile } from "@/components/live/Tile";
@@ -236,6 +237,7 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
 
   return (
     <>
+      <PageStamp generatedAt={liveState.generatedAt} />
       <DateStrip selected={view.etDate} today={today} counts={counts} first={first} last={last} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <header
@@ -277,12 +279,6 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
         </header>
 
         <div className="mb-10 space-y-3 empty:hidden">
-          {view.kind === "today" && view.stale ? (
-            <p role="alert" className="notice">
-              The forecast job last published {Math.round(view.stateAgeHours)} hours ago, so ratings
-              and season odds may be out of date. Sealed forecasts still show.
-            </p>
-          ) : null}
           {!view.scoresAvailable ? (
             <p role="status" className="notice">
               Live scores could not be loaded just now. Sealed forecasts still show, and this page

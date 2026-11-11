@@ -17,7 +17,8 @@ import { IMPACT_LABEL } from "@/lib/season/player-stats";
 import { POLICY_REVISIONS } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
-import { Ticker } from "@/components/live/Ticker";
+import { getLiveState } from "@/lib/live-data/published";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { OnThisPage } from "./OnThisPage";
 
 export const metadata: Metadata = {
@@ -80,8 +81,8 @@ function utc(iso: string): string {
 function Section({ id, children }: { id: Exclude<SectionId, "known-issues">; children: React.ReactNode }) {
   const title = SECTIONS.find((section) => section.id === id)?.title ?? id;
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="panel scroll-mt-4 pt-4 sm:pt-5">
-      <h2 id={`${id}-title`} className="headline text-[22px] sm:text-[24px]">
+    <section id={id} aria-labelledby={`${id}-title`} className="panel pt-4 sm:pt-5">
+      <h2 id={`${id}-title`} className="headline text-21">
         {title}
       </h2>
       <div className="mt-4 grid max-w-[68ch] gap-4 text-[15.5px] leading-7 text-ink-2">{children}</div>
@@ -103,7 +104,8 @@ function Version({ children }: { children: string }) {
   return <span className="num whitespace-nowrap text-[0.92em] text-ink">{children}</span>;
 }
 
-export default function HowItWorksPage() {
+export default async function HowItWorksPage() {
+  const { generatedAt } = await getLiveState();
   const gate = gameEvaluation.gameLevel.gateSeasons;
   const separate = gameEvaluation.gameLevel.reportedSeparately;
   const series = gameEvaluation.playoffs.seriesAgainstSrsHome;
@@ -121,7 +123,7 @@ export default function HowItWorksPage() {
 
   return (
     <>
-      <Ticker />
+      <PageStamp generatedAt={generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <div className="grid gap-10 lg:grid-cols-[13.5rem_minmax(0,1fr)]">
         <aside className="hidden lg:block">
@@ -130,15 +132,15 @@ export default function HowItWorksPage() {
 
         <div className="flex min-w-0 max-w-[50rem] flex-col gap-6">
           <header className="pb-2">
-            <p className="kicker">Methodology</p>
+            <p className="text-15 text-ink-2">Methodology</p>
             <h1 className="headline mt-1 text-32 sm:text-46">How it works</h1>
             <p className="mt-4 max-w-[64ch] text-[17px] leading-7 text-ink">
-              548 gives every NBA game a chance of each team winning, sealed before tip. The number comes from
-              injury-adjusted team ratings, home court, rest and the players on the NBA injury report. Each team&apos;s
-              rating is in points, kept up to date over every final score since{" "}
-              <span className="whitespace-nowrap">2004-05</span>. Each game is sealed twice, in the morning and in the
-              hour before tip, and the final seal is scored in a public record that is never backfilled. The same
-              ratings run {LIVE_SIMULATION_ITERATIONS.toLocaleString("en-US")} simulations of the rest of the season
+              548 gives every NBA game a chance of each team winning. The number comes from injury-adjusted team
+              ratings, home court, rest and the players on the NBA injury report. Each team&apos;s rating is in points,
+              kept up to date over every final score since <span className="whitespace-nowrap">2004-05</span>. For each
+              game the job attempts a morning seal and a final seal in the hour before tip. The public record scores
+              the final seal when there is one, otherwise the reissued or original morning seal; a game that tips
+              without a seal is counted as missed, and nothing is backfilled. The same ratings run {LIVE_SIMULATION_ITERATIONS.toLocaleString("en-US")} simulations of the rest of the season
               for the playoff and title odds.
             </p>
             <p className="mt-4 max-w-[64ch] border-l-[3px] border-warn pl-3 text-[15px] leading-6 text-ink">
@@ -250,7 +252,7 @@ export default function HowItWorksPage() {
             </p>
           </Section>
 
-          <aside id="known-issues" aria-labelledby="known-issues-title" className="notice scroll-mt-4">
+          <aside id="known-issues" aria-labelledby="known-issues-title" className="notice">
             <h2 id="known-issues-title" className="text-[16px] font-bold">
               Known issues
             </h2>
@@ -770,7 +772,7 @@ export default function HowItWorksPage() {
             </ul>
           </Section>
           <Section id="glossary">
-            <span id="terms" className="block scroll-mt-4" aria-hidden />
+            <span id="terms" className="block" aria-hidden />
             <dl>
               <Term term="548">
                 Our chance of each team winning, from injury-adjusted team ratings, home court, rest and the players

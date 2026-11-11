@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { Fragment } from "react";
 import "./globals.css";
-import { schibsted } from "@/app/fonts";
+import { figures, schibsted } from "@/app/fonts";
 import { Header } from "@/components/layout/Header";
+import { HydrationGate } from "@/components/layout/HydrationGate";
 import { NavProgress } from "@/components/layout/NavProgress";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FreshnessGuard } from "@/components/live/FreshnessGuard";
@@ -41,22 +43,37 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={schibsted.variable}
+      className={`${schibsted.variable} ${figures.variable}`}
+      // base.css scrolls smoothly for in-page anchors; this tells Next to jump, not glide, on route changes.
+      data-scroll-behavior="smooth"
     >
       <body className="flex min-h-screen flex-col antialiased">
-        <NavProgress />
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:bg-panel focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-ink"
-        >
-          Skip to content
-        </a>
-        <Header />
-        <div id="main" className="flex-1">
-          <FreshnessGuard generatedAt={liveState.generatedAt} />
-          {children}
-        </div>
-        <SiteFooter />
+        {/* Everything in <body> sits under the gate: see HydrationGate for the hydration failure it prevents. */}
+        <HydrationGate>
+          <NavProgress />
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:bg-panel focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:outline focus:outline-2 focus:outline-ink"
+          >
+            Skip to content
+          </a>
+          <Header />
+          <div id="main" className="flex-1">
+            {/*
+              Keep this keyed Fragment. The children slot can arrive as an element still waiting
+              for the error page's client module (src/app/error.tsx), even after the document has
+              parsed. Directly inside a DOM element, React 19.2 suspends there and, on resuming,
+              claims div#main a second time from a cursor already inside it (#418, "<main> where
+              div#main", shifted useId values). Under a Fragment the unit that resumes is the
+              Fragment, which claims no DOM node.
+            */}
+            <Fragment key="main">
+              <FreshnessGuard generatedAt={liveState.generatedAt} />
+              {children}
+            </Fragment>
+          </div>
+          <SiteFooter />
+        </HydrationGate>
       </body>
     </html>
   );

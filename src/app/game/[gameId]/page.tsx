@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { dayHref } from "@/components/live/DateStrip";
 import {
   MarginSection,
@@ -68,6 +69,7 @@ export default async function GamePage({ params }: Params) {
 
   return (
     <>
+      <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
           <Link href={dayHref(game.etDate, day.todayEtDate)} className="text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">

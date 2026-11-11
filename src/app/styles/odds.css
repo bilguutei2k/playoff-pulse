@@ -118,16 +118,3 @@
     box-shadow: 0 2px 0 var(--color-ink);
   }
 }
-
-@layer components {
-  /* Right-aligned headings: the "?" goes before the label, so it never reads as the
-     next column's and the label stays over its figures. */
-  .odds-table th.nm .sort-head > .hint {
-    order: -1;
-  }
-
-  .odds-table th.nm .sort-head > .hint .hint-icon {
-    margin-left: 0;
-    margin-right: 3px;
-  }
-}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Badge, StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLink } from "@/components/live/TeamLink";
-import { SOURCE_LABELS, totalPoints, type InjuryBlock, type InjuryRowView } from "@/lib/view/injury-report";
+import { SOURCE_LABELS, gameWhen, totalPoints, type InjuryBlock, type InjuryRowView } from "@/lib/view/injury-report";
 import { statusSourceLabel } from "@/lib/view/players";
 import { teamDisplay } from "@/lib/view/teams";
 
@@ -79,9 +79,13 @@ export function InjuryTable({
         {showGame ? (
           <>
             <span aria-hidden>·</span>
-            <Link href={`/game/${block.gameId}`} className="pp-link font-normal">
-              {block.gameLabel}
-            </Link>
+            {/* The opponent opens its team page, the date and time open the game. */}
+            <span>
+              {block.home ? "vs" : "at"} <TeamLink teamId={block.opponentId} className="font-medium text-ink" />,{" "}
+              <Link href={`/game/${block.gameId}`} className="pp-link font-normal">
+                {gameWhen(block.etDate, block.tipUtc)}
+              </Link>
+            </span>
           </>
         ) : null}
       </p>
