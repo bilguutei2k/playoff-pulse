@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Pages are regenerated about once a minute (`revalidate = 60` on each route). Without a
+  // bound, the CDN keeps serving a copy past that window while it regenerates in the
+  // background, for up to a year by default: a route nobody had visited for two days was
+  // served to its next visitor as rendered two days earlier (2026-11-09). After this many
+  // seconds past the copy's generation, the CDN renders fresh instead of serving it stale.
+  // Pages themselves also check for newer data (src/components/live/FreshnessGuard.tsx).
+  expireTime: 300,
   // Pages read main's data/live over the network at render time
   // (src/lib/live-data/published.ts). The copies traced here are the fallback when GitHub
   // cannot be read: the games store and the ledger, from which the day and month files are

@@ -9,6 +9,8 @@ import {
   logTotals,
   playerTableRows,
   reportReason,
+  statusSourceLabel,
+  statusSourceText,
   statusView,
   teamRoster,
 } from "@/lib/view/players";
@@ -191,6 +193,23 @@ describe("player statuses", () => {
     expect(statusView({ status: null, source: "box-score", gamesMissed: 1 })).toMatchObject({ label: "Missed last game", short: "Missed 1", filter: "missed" });
     expect(statusView({ status: null, source: "box-score", gamesMissed: 3 }).label).toBe("Missed last 3 games");
   });
+  it("names the same source in the tag, the source column and the line under the tag", () => {
+    expect(statusSourceLabel({ status: "O", source: "report" })).toBe("NBA report");
+    expect(statusSourceLabel({ status: "O", source: "earlier-report" })).toBe("Earlier report");
+    // A box-score row with a status took it from an earlier report.
+    expect(statusSourceLabel({ status: "O", source: "box-score" })).toBe("Earlier report");
+    expect(statusSourceLabel({ status: null, source: "box-score" })).toBe("Box scores");
+    expect(statusSourceText({ status: "O", source: "report", gamesMissed: 0 }, "5:30 PM ET")).toBe(
+      "the NBA injury report of 5:30 PM ET covering this game",
+    );
+    const earlier = statusSourceText({ status: "O", source: "box-score", gamesMissed: 7 }, null);
+    expect(earlier).toMatch(/^his team's latest earlier NBA injury report/);
+    expect(earlier).toContain("missed his team's last 7 games");
+    expect(earlier).not.toContain("not on the report");
+    expect(statusSourceText({ status: null, source: "box-score", gamesMissed: 1 }, "1:30 AM ET")).toBe(
+      "box scores, the model's inference: he missed his team's last game, and he is not on the report of 1:30 AM ET",
+    );
+  });
   it("cleans ESPN's capitals and the report's category prefix", () => {
     expect(espnReason("COACH'S DECISION")).toBe("Coach's decision");
     expect(espnReason("RIGHT ACL TEAR")).toBe("Right ACL tear");
@@ -250,7 +269,7 @@ describe("injury lists", () => {
     expect(unfiled).toMatchObject({ unfiled: true, sourceLabel: "Not yet submitted" });
     const noReport = blockFromList(lists.teams[2])!;
     expect(noReport.sourceLabel).toBe("No report yet");
-    expect(noReport.rows[0].reason).toBe("Right High Ankle Sprain (earlier report)");
+    expect(noReport.rows[0].reason).toBe("Right High Ankle Sprain");
     expect(blockFromList({ ...lists.teams[0], nextGame: null })).toBeNull();
   });
   it("groups the next two dates by game and puts every other team below", () => {

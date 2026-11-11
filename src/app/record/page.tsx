@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   CalibrationChart,
   CalibrationPlaceholder,
@@ -6,6 +7,7 @@ import {
   ScoredSeals,
   Waffle,
 } from "@/components/live/RecordParts";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { Ticker } from "@/components/live/Ticker";
 import { getLiveState, getSeasonLedger } from "@/lib/live-data/published";
 import { POLICY_REVISIONS, currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
@@ -34,6 +36,7 @@ export const metadata: Metadata = {
   title: "Track record",
   description:
     "Every 548 forecast is sealed before tip and scored after the final, in public: Brier score, log loss, accuracy, misses and every game, per model version.",
+  alternates: { canonical: "/record" },
 };
 
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
@@ -86,7 +89,7 @@ const METRICS: Metric[] = [
 function Stat({ title, value, note, extra }: { title: string; value: string; note: string; extra?: string }) {
   return (
     <div>
-      <h3 className="text-[16px] font-bold">{title}</h3>
+      <p className="text-[16px] font-bold">{title}</p>
       <p className="figure mt-1 text-[34px] [font-variant-numeric:normal]">{value}</p>
       <p className="mt-2 text-[13px] text-ink-2">{note}</p>
       {extra ? <p className="mt-0.5 text-[13px] text-ink-2">{extra}</p> : null}
@@ -141,8 +144,9 @@ export default async function RecordPage() {
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pt-8 sm:pt-11">
-        <h1 className="headline text-[32px] sm:text-[46px]">Track record</h1>
+        <h1 className="headline text-32 sm:text-46">Track record</h1>
         <p className="mb-9 mt-3 text-[17px] sm:mb-11 sm:text-[19px]">
           Sealed before tip. Scored after the final. Never backfilled.
         </p>
@@ -368,9 +372,9 @@ export default async function RecordPage() {
                   reissued, else original morning), so a game sealed in the morning under one revision and finally under
                   the next counts under the next. The revisions cover different games and dates and are not a comparison
                   of policies. The registered injury test covers revision 0&apos;s final-point endpoint only.{" "}
-                  <a className="pp-link" href="/how-it-works#policy-revisions">
+                  <Link className="pp-link" href="/how-it-works#policy-revisions">
                     What each revision changed
-                  </a>
+                  </Link>
                   .
                 </p>
               </section>
@@ -379,7 +383,7 @@ export default async function RecordPage() {
 
           <aside aria-label="Calibration, the market and the ledger" className="mt-16 grid gap-12 lg:mt-[72px]">
             <section aria-labelledby="calibration-title">
-              <h2 id="calibration-title" className="text-[21px] font-extrabold">Calibration</h2>
+              <h2 id="calibration-title" className="text-21 font-extrabold">Calibration</h2>
               {scored.length >= CALIBRATION_MIN_GAMES ? (
                 <>
                   <p className="mt-1.5 text-ink-2">Do the percentages hold?</p>
@@ -401,7 +405,7 @@ export default async function RecordPage() {
               )}
             </section>
             <section aria-labelledby="market-title">
-              <h2 id="market-title" className="text-[21px] font-extrabold">548 vs. the market</h2>
+              <h2 id="market-title" className="text-21 font-extrabold">548 vs. the market</h2>
               {market ? (
                 <>
                   <dl className="mt-3 grid grid-cols-2 gap-4">
@@ -430,7 +434,7 @@ export default async function RecordPage() {
               )}
             </section>
             <section aria-labelledby="ledger-title">
-              <h2 id="ledger-title" className="text-[21px] font-extrabold">The ledger</h2>
+              <h2 id="ledger-title" className="text-21 font-extrabold">The ledger</h2>
               <p className="mt-1.5 text-ink-2">Public and append-only</p>
               <p className="mt-2">
                 <a href={LEDGER_URL} className="font-semibold hover:underline hover:underline-offset-4">

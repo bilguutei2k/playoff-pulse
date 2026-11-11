@@ -1,0 +1,239 @@
+/*
+ * archive.css: the 2026 archive's legacy variables and pp- classes (cards, pills,
+ * action tiles, the pp-table, heat cells, probability bars, team badges).
+ * /how-it-works also uses .pp-table. Owned by package H.
+ */
+/* Legacy names, kept so the 2026 archive pages render in the new system. */
+:root {
+  color-scheme: light;
+
+  --color-bg-primary: var(--color-page);
+  --color-bg-secondary: var(--color-wash);
+  --color-panel-primary: var(--color-panel);
+  --color-panel-secondary: var(--color-wash);
+  --color-panel-tertiary: var(--color-wash-2);
+  --color-border-subtle: var(--color-line);
+  --color-border-strong: var(--color-line-strong);
+  --color-shadow-ink: rgba(18, 20, 23, 0.04);
+
+  --color-text-primary: var(--color-ink);
+  --color-text-secondary: var(--color-ink-2);
+  --color-text-muted: var(--color-ink-3);
+  --color-text-faint: var(--color-ink-3);
+
+  /* The archive uses its accent as text, so it takes the AA-safe orange. */
+  --color-accent: var(--color-pulse-ink);
+  --color-accent-hover: #963409;
+  --color-accent-soft: var(--color-pulse-wash);
+  --color-accent-text: #ffffff;
+
+  --color-info: var(--color-market);
+  --color-info-soft: var(--color-wash);
+  --color-success: var(--color-good);
+  --color-success-soft: var(--color-good);
+  --color-success-bg: #eaf3ef;
+  --color-danger: var(--color-bad);
+  --color-danger-soft: #d92d20;
+  --color-danger-bg: var(--color-bad-wash);
+  --color-warning: var(--color-warn);
+  --color-warning-bg: var(--color-warn-wash);
+  --color-live: var(--color-pulse-ink);
+  --color-live-bg: var(--color-pulse-wash);
+  --color-live-border: #f6c9b3;
+
+  --heat-1: var(--color-heat-1);
+  --heat-2: var(--color-heat-2);
+  --heat-3: var(--color-heat-3);
+  --heat-4: var(--color-heat-4);
+  --heat-5: var(--color-heat-5);
+
+  --color-stat-bg: var(--color-wash-2);
+  --color-stat-mid: var(--color-heat-2);
+  --color-court: #9a6b2f;
+  --color-court-soft: #c9a36a;
+  --overlay-accent-soft: rgba(255, 90, 31, 0.06);
+  --overlay-danger-soft: rgba(180, 35, 24, 0.06);
+  --overlay-info-soft: rgba(75, 85, 99, 0.08);
+  --overlay-row-hover: rgba(18, 20, 23, 0.025);
+  --overlay-selection: rgba(255, 90, 31, 0.2);
+
+  --font-sans-stack: var(--font-sans);
+  --font-pixel: var(--font-sans);
+  --font-code-stack: var(--font-mono);
+
+  --radius-sm-retro: 6px;
+  --radius-md-retro: 8px;
+  --radius-lg-retro: var(--radius-card);
+
+  --background: var(--color-page);
+  --foreground: var(--color-ink);
+  --muted: var(--color-ink-3);
+  --panel: var(--color-panel);
+  --line: var(--color-line);
+  --ink-soft: var(--color-ink-2);
+  --accent: var(--color-pulse-ink);
+  --accent-2: var(--color-bad);
+  --accent-3: var(--color-market);
+}
+
+@layer components {
+  /* ------------------------------------------------------------------------- */
+  /* Shared component classes. The 2026 archive uses these too.                */
+  /* ------------------------------------------------------------------------- */
+
+  .pp-card {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+
+  .pp-section-head {
+    border-bottom: 1px solid var(--color-line);
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+
+  .pp-kicker {
+    color: var(--color-ink-2);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .pp-pill {
+    align-items: center;
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-ink-2);
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 500;
+    gap: 4px;
+    line-height: 1.4;
+    padding: 2px 8px;
+  }
+
+  .pp-action-tile {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease;
+  }
+
+  .pp-action-tile:hover {
+    background: var(--color-wash);
+    border-color: var(--color-line-strong);
+  }
+
+  .pp-table {
+    background: transparent;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    width: 100%;
+  }
+
+  .pp-table th {
+    border-bottom: 2px solid var(--color-ink);
+    color: var(--color-ink-2);
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.3;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .pp-table tbody th {
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .pp-table td {
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    padding: 10px 12px;
+    vertical-align: middle;
+  }
+
+  .pp-table tbody tr:hover td,
+  .pp-table tbody tr:hover th {
+    background: var(--color-wash);
+  }
+
+  .pp-table .num,
+  .pp-table th.num {
+    text-align: right;
+  }
+
+  /* Archive heat classes, mapped onto the same grey steps. */
+  .pp-heat {
+    color: var(--color-ink);
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    min-width: 48px;
+    padding: 3px 7px;
+    text-align: right;
+  }
+
+  .pp-heat-zero { color: var(--color-ink-2); }
+  .pp-heat-1 { background: var(--color-heat-1); }
+  .pp-heat-2 { background: var(--color-heat-2); }
+  .pp-heat-3 { background: var(--color-heat-3); }
+  .pp-heat-4 { background: var(--color-heat-4); }
+  .pp-heat-5 { background: var(--color-heat-6); color: #ffffff; font-weight: 600; }
+  .pp-heat-low { background: var(--color-heat-1); }
+  .pp-heat-mid { background: var(--color-heat-3); }
+  .pp-heat-high { background: var(--color-heat-6); color: #ffffff; font-weight: 600; }
+
+  .pp-probbar {
+    background: var(--color-line);
+    display: block;
+    height: 8px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .pp-probbar-fill {
+    background: var(--color-ink);
+    display: block;
+    height: 100%;
+  }
+
+  .pp-team-badge {
+    background: var(--color-wash);
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-ink);
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1;
+    min-width: 40px;
+    padding: 6px 8px;
+    text-align: center;
+  }
+
+  .pp-team-badge[data-team] {
+    background: var(--team-bg, var(--color-wash));
+    border-color: var(--team-border, var(--color-line-strong));
+    color: var(--team-ink, var(--color-ink));
+  }
+
+  .pp-team-badge[data-team="NYK"] { --team-bg: #006bb6; --team-border: #006bb6; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="DET"] { --team-bg: #1d42ba; --team-border: #1d42ba; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="CLE"] { --team-bg: #6f263d; --team-border: #6f263d; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="PHI"] { --team-bg: #006bb6; --team-border: #006bb6; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="OKC"] { --team-bg: #007ac1; --team-border: #007ac1; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="LAL"] { --team-bg: #552583; --team-border: #552583; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="MIN"] { --team-bg: #0c2340; --team-border: #0c2340; --team-ink: #ffffff; }
+  .pp-team-badge[data-team="SAS"] { --team-bg: #c4ced4; --team-border: #c4ced4; --team-ink: #111111; }
+
+  .pp-scan-lite::before {
+    content: none;
+  }
+}

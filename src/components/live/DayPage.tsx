@@ -2,16 +2,22 @@ import Link from "next/link";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { DateStrip, dayHref } from "@/components/live/DateStrip";
 import { FinalsChart, FinalsTable } from "@/components/live/DayFinals";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { GameCard } from "@/components/live/GameCard";
-import { RecordGlance, TitleRace } from "@/components/live/HomePanels";
+import { RecordGlance, Standfirst, TitleRace, TitleStrip } from "@/components/live/HomePanels";
+import { Tile } from "@/components/live/Tile";
 import { loadDayView } from "@/lib/live-data/day-loader";
-import { getGameCountsByDate, getLiveState, getSeasonGames } from "@/lib/live-data/published";
+import { getGameCountsByDate, getLiveState, getSeasonGames, getSeasonLedger } from "@/lib/live-data/published";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
-import { formatLongDay, formatShortDay } from "@/lib/utils/dates";
+import { formatLongDay, formatShortDay, formatWeekday } from "@/lib/utils/dates";
+import type { TileKind } from "@/lib/view/bracket";
 import type { DayGame, DayView } from "@/lib/view/day";
-import { daySummary } from "@/lib/view/day-summary";
+import { daySummary, type SentencePart } from "@/lib/view/day-summary";
+import { OUT_DEFINITION, TILE_DEFINITION, TILE_GLYPHS } from "@/lib/view/how-to-read";
 import { basisSummary } from "@/lib/view/injury-report";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
+import { versionLedger } from "@/lib/view/record";
+import { favoriteSummary } from "@/lib/view/record-page";
 import { recordsThrough, teamLines, type TeamLine } from "@/lib/view/teams";
 
 /** How many of the next game day's cards the home page shows under today's. */
@@ -43,18 +49,12 @@ function HowToRead({ view }: { view: DayView }) {
       "Team line",
       "Length is the team's chance in 548's number, in its color. The lines join into the tile, which names the side 548 favors.",
     ],
-    [
-      "Tile",
-      "Solid: sealed before tip and scored. Outline: the live estimate, from the score and the clock. Dashed: never scored (a provisional number or a projection). Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored.",
-    ],
+    ["Tile", TILE_DEFINITION],
     [
       "Grey tick",
       `The market: the ${provider} moneyline via ESPN, vig removed. Beside sealed numbers only, for reference, never as advice. On a live game a black tick marks the pregame seal.`,
     ],
-    [
-      "Out",
-      "Points of margin each side gives up to players on the NBA injury report, weighted by status. A team that has not filed counts the players who missed its last game. Unknown future injuries, minutes shifting to teammates and matchups are not modeled.",
-    ],
+    ["Out", OUT_DEFINITION],
   ];
   return (
     <section aria-labelledby="how-to-read" className="mt-16">
@@ -74,18 +74,61 @@ function HowToRead({ view }: { view: DayView }) {
   );
 }
 
+/** Which tile styles the page's cards use, in the key's order. */
+function tileKinds(games: readonly DayGame[]): TileKind[] {
+  const live = (game: DayGame) => game.status === "in-progress" && game.inGameHomeProbability !== null;
+  const kinds: TileKind[] = [];
+  if (games.some((game) => game.forecast?.source === "sealed" && !live(game))) kinds.push("sealed");
+  if (games.some(live)) kinds.push("live");
+  if (games.some((game) => game.projection !== null || game.forecast?.source === "provisional")) kinds.push("dash");
+  return kinds;
+}
+
+/**
+ * The key above the cards: each tile style on the page and what it means, in the same
+ * words as "How to read a card" below, so a first visit learns which number is scored
+ * and which can change before scrolling past the games.
+ */
+function TileKey({ kinds }: { kinds: TileKind[] }) {
+  if (kinds.length === 0) return null;
+  return (
+    <p className="mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] leading-5 text-ink-2">
+      {kinds.map((kind) => (
+        <span key={kind} className="inline-flex items-center gap-2">
+          <span aria-hidden>
+            <Tile kind={kind} size="xs" className="!h-[18px] !min-w-[26px] !px-1 !text-[10.5px]">
+              %
+            </Tile>
+          </span>
+          <span>
+            <b className="font-semibold text-ink">{TILE_GLYPHS[kind].word}:</b> {TILE_GLYPHS[kind].text}
+          </span>
+        </span>
+      ))}
+      <Link href="#how-to-read" className="pp-link py-3">
+        How to read a card
+      </Link>
+    </p>
+  );
+}
+
 function nearestGameDay(counts: Record<string, number>, from: string, direction: 1 | -1): string | null {
   const days = Object.keys(counts).filter((day) => counts[day] > 0).sort();
   if (direction === 1) return days.find((day) => day > from) ?? null;
   return [...days].reverse().find((day) => day < from) ?? null;
 }
 
+/**
+ * The cards, as many columns as fit while every card keeps at least 340 px (where the
+ * longest team names print whole), up to `columns`. Beside the home sidebar that means
+ * one column until about 1220 px. Rules: `.cards` in styles/day.css.
+ */
 function CardGrid({
   games,
   lines,
   modelVersion,
   modelNote,
-  wide,
+  columns,
   future = false,
   label,
 }: {
@@ -93,15 +136,12 @@ function CardGrid({
   lines: Record<string, TeamLine>;
   modelVersion: string;
   modelNote: boolean;
-  wide: boolean;
+  columns: 2 | 3;
   future?: boolean;
   label: string;
 }) {
   return (
-    <ul
-      aria-label={label}
-      className={`grid grid-cols-[minmax(0,1fr)] gap-x-12 gap-y-10 md:grid-cols-2 ${wide ? "xl:grid-cols-3" : ""}`}
-    >
+    <ul aria-label={label} className={`cards ${columns === 3 ? "cards-3" : ""}`}>
       {games.map((game) => (
         <li key={game.id} className="min-w-0">
           <GameCard game={game} lines={lines} modelVersion={modelVersion} modelNote={modelNote} future={future} />
@@ -123,8 +163,39 @@ function Section({ id, title, note, children }: { id: string; title: string; not
   );
 }
 
+/** The day sentence, with the biggest miss's game and the favorite's team linked. */
+function DaySentence({ parts }: { parts: SentencePart[] }) {
+  return (
+    <p className="mt-4 max-w-[520px] text-[17px] leading-[1.4] sm:mt-5 sm:text-[20px]">
+      {parts.map((part, index) =>
+        part.href ? (
+          <Link key={index} href={part.href} className="underline decoration-line-strong decoration-1 underline-offset-[0.18em] hover:decoration-ink">
+            {part.text}
+          </Link>
+        ) : (
+          <span key={index}>{part.text}</span>
+        ),
+      )}
+    </p>
+  );
+}
+
+/** "Wed, Nov 25": a neighbouring day on the empty day's buttons. */
+function buttonDay(etDate: string): string {
+  return `${formatWeekday(etDate)}, ${formatShortDay(etDate)}`;
+}
+
+const gamesCount = (count: number) => `${count} ${count === 1 ? "game" : "games"}`;
+
 export async function DayPage({ view, home }: { view: DayView; home: boolean }) {
-  const [liveState, games, counts] = await Promise.all([getLiveState(), getSeasonGames(), getGameCountsByDate()]);
+  const [liveState, games, counts, ledger] = await Promise.all([
+    getLiveState(),
+    getSeasonGames(),
+    getGameCountsByDate(),
+    home ? getSeasonLedger() : Promise.resolve(null),
+  ]);
+  // The home page's record count: the same favorites as /record, from the season's ledger.
+  const favorites = ledger ? favoriteSummary(versionLedger(ledger, liveState.modelVersion).scored) : null;
   const known = Object.keys(counts).sort();
   const first = known[0] && known[0] < view.etDate ? known[0] : view.etDate;
   const last = known.at(-1) && known.at(-1)! > view.etDate ? known.at(-1)! : view.etDate;
@@ -166,34 +237,48 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
 
   return (
     <>
+      <PageStamp generatedAt={liveState.generatedAt} />
       <DateStrip selected={view.etDate} today={today} counts={counts} first={first} last={last} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
-        <header className="mb-12 grid items-start gap-x-[72px] gap-y-8 sm:mb-[60px] lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)]">
+        <header
+          className={`mb-12 grid items-start gap-x-[72px] gap-y-8 sm:mb-[60px] ${
+            // The finals chart sits beside the title from 1024 px; the home standfirst from 1280.
+            sums.scored.length > 0 ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)]" : home ? "xl:grid-cols-[minmax(0,1fr)_minmax(0,560px)]" : ""
+          }`}
+        >
           <div>
             <p className="text-[15px] text-ink-2">{view.games.length > 0 ? summary(view) : view.kind === "past" ? "Results" : "Schedule"}</p>
-            <h1 className="headline mt-2.5 text-[32px] sm:text-[46px] lg:text-[56px]">
+            <h1 className="headline mt-2.5 text-32 sm:text-46 xl:text-56">
               <span className="sm:hidden">{shortLongDay(view.etDate)}</span>
               <span className="hidden sm:inline">{formatLongDay(view.etDate)}</span>
             </h1>
-            {sums.sentence ? (
-              <p className="mt-4 max-w-[520px] text-[17px] leading-[1.4] sm:mt-5 sm:text-[20px]">{sums.sentence}</p>
-            ) : null}
+            {sums.sentenceParts ? <DaySentence parts={sums.sentenceParts} /> : null}
             {view.etDate !== today ? (
               <p className="mt-4 text-[14px]">
-                <Link href="/" className="pp-link">Back to today</Link>
+                <Link href="/" className="pp-link py-3">Back to today</Link>
               </p>
             ) : null}
+            {home && sums.scored.length > 0 ? (
+              <div className="mt-8">
+                <Standfirst record={liveState.record} favorites={favorites} />
+              </div>
+            ) : null}
           </div>
-          {sums.scored.length > 0 ? <FinalsChart rows={sums.finals} title={finalsTitle} /> : null}
+          {sums.scored.length > 0 ? (
+            <FinalsChart summary={sums} title={finalsTitle} />
+          ) : home ? (
+            <div className="xl:border-l xl:border-line xl:pl-10 xl:pt-1">
+              <Standfirst record={liveState.record} favorites={favorites} />
+            </div>
+          ) : null}
+          {home ? (
+            <div className="lg:hidden">
+              <TitleStrip state={liveState} />
+            </div>
+          ) : null}
         </header>
 
         <div className="mb-10 space-y-3 empty:hidden">
-          {view.kind === "today" && view.stale ? (
-            <p role="alert" className="notice">
-              The forecast job last published {Math.round(view.stateAgeHours)} hours ago, so ratings
-              and season odds may be out of date. Sealed forecasts still show.
-            </p>
-          ) : null}
           {!view.scoresAvailable ? (
             <p role="status" className="notice">
               Live scores could not be loaded just now. Sealed forecasts still show, and this page
@@ -231,23 +316,24 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
 
         <div className={`grid items-start gap-x-[72px] gap-y-4 ${home ? "lg:grid-cols-[minmax(0,1fr)_340px]" : ""}`}>
           <div className="min-w-0">
+            <TileKey kinds={tileKinds([...view.games, ...nextGames])} />
             {view.games.length === 0 ? (
               <section aria-labelledby="empty-day" className="mb-14">
                 <div className="sh">
-                  <h2 id="empty-day">No NBA games on {formatLongDay(view.etDate)}</h2>
+                  <h2 id="empty-day">No games</h2>
                 </div>
                 <p className="max-w-md text-[15px] text-ink-2">
                   {nextDay ? "Forecasts are sealed on the morning of each game day." : "The schedule has no later games this season."}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
                   {previousDay ? (
-                    <Link className="pp-button" href={dayHref(previousDay, today)}>
-                      Previous games: {formatLongDay(previousDay)}
+                    <Link className="pp-button min-h-11" href={dayHref(previousDay, today)}>
+                      <span aria-hidden>←</span> {buttonDay(previousDay)} · {gamesCount(counts[previousDay] ?? 0)}
                     </Link>
                   ) : null}
                   {nextDay ? (
-                    <Link className="pp-button pp-button-primary" href={dayHref(nextDay, today)}>
-                      Next games: {formatLongDay(nextDay)}
+                    <Link className="pp-button pp-button-primary min-h-11" href={dayHref(nextDay, today)}>
+                      {buttonDay(nextDay)} · {gamesCount(counts[nextDay] ?? 0)} <span aria-hidden>→</span>
                     </Link>
                   ) : null}
                 </div>
@@ -256,25 +342,25 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
 
             {liveGames.length > 0 ? (
               <Section id="live-games" title="Live" note="Outline tile: live estimate">
-                <CardGrid games={liveGames} lines={lines} modelVersion={view.modelVersion} modelNote={modelNote} wide={!home} label="Live games" />
+                <CardGrid games={liveGames} lines={lines} modelVersion={view.modelVersion} modelNote={modelNote} columns={home ? 2 : 3} label="Live games" />
               </Section>
             ) : null}
 
             {upcoming.length > 0 ? (
               <Section id="upcoming-games" title={view.kind === "future" ? "Games" : view.kind === "today" ? "Still to tip" : "Not played"} note={upcomingNote}>
-                <CardGrid games={upcoming} lines={lines} modelVersion={view.modelVersion} modelNote={modelNote} wide={!home} label="Games still to tip" />
+                <CardGrid games={upcoming} lines={lines} modelVersion={view.modelVersion} modelNote={modelNote} columns={home ? 2 : 3} label="Games still to tip" />
               </Section>
             ) : null}
 
             {sums.finals.length > 0 ? (
               <Section id="final-games" title="Final" note={`${sums.finals.length} ${sums.finals.length === 1 ? "game" : "games"} · tip order`}>
-                <FinalsTable rows={sums.finals} />
+                <FinalsTable rows={sums.finals} home={home} />
               </Section>
             ) : null}
 
             {stopped.length > 0 ? (
               <Section id="stopped-games" title="Postponed or canceled">
-                <CardGrid games={stopped} lines={lines} modelVersion={view.modelVersion} modelNote={modelNote} wide={!home} label="Postponed or canceled games" />
+                <CardGrid games={stopped} lines={lines} modelVersion={view.modelVersion} modelNote={modelNote} columns={home ? 2 : 3} label="Postponed or canceled games" />
               </Section>
             ) : null}
 
@@ -283,13 +369,13 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
                 id="next-day"
                 title={formatLongDay(nextDay)}
                 note={
-                  <Link href={dayHref(nextDay, today)} className="hover:text-ink hover:underline hover:underline-offset-4">
+                  <Link href={dayHref(nextDay, today)} className="py-3 hover:text-ink hover:underline hover:underline-offset-4">
                     {next.kind === "future" ? "Projections, never scored" : "Next games"}
                     {next.games.length > nextGames.length ? ` · all ${next.games.length} games` : ""}
                   </Link>
                 }
               >
-                <CardGrid games={nextGames} lines={teamLines(liveState)} modelVersion={next.modelVersion} modelNote future wide={false} label={`Games on ${formatLongDay(nextDay)}`} />
+                <CardGrid games={nextGames} lines={teamLines(liveState)} modelVersion={next.modelVersion} modelNote future columns={2} label={`Games on ${formatLongDay(nextDay)}`} />
               </Section>
             ) : null}
           </div>
@@ -297,7 +383,7 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
           {home ? (
             <aside aria-label="Season and record" className="grid gap-[60px]">
               <TitleRace state={liveState} />
-              <RecordGlance record={liveState.record} />
+              <RecordGlance record={liveState.record} favorites={favorites} />
             </aside>
           ) : null}
         </div>

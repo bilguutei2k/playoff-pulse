@@ -17,12 +17,15 @@ import { IMPACT_LABEL } from "@/lib/season/player-stats";
 import { POLICY_REVISIONS } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
-import { Ticker } from "@/components/live/Ticker";
+import { getLiveState } from "@/lib/live-data/published";
+import { PageStamp } from "@/components/live/FreshnessGuard";
+import { OnThisPage } from "./OnThisPage";
 
 export const metadata: Metadata = {
   title: "How it works",
   description:
     "The rating model, the injury adjustment from the NBA injury report, the two seals per game, the market reference and the validation results behind the live NBA forecasts, including what failed.",
+  alternates: { canonical: "/how-it-works" },
 };
 
 /** No claim about the model against the market before this many scored games. */
@@ -49,10 +52,11 @@ function share(value: number): string {
   return `${(value * 100).toFixed(1)}%`;
 }
 
+// In page order: the known issues follow "Game forecasts", just before "Injuries".
 const SECTIONS = [
-  { id: "known-issues", title: "Known issues" },
   { id: "limits", title: "What it does not do" },
   { id: "game-forecasts", title: "Game forecasts" },
+  { id: "known-issues", title: "Known issues" },
   { id: "injuries", title: "Injuries" },
   { id: "track-record", title: "Sealing and the track record" },
   { id: "policy-revisions", title: "Policy revisions" },
@@ -77,8 +81,8 @@ function utc(iso: string): string {
 function Section({ id, children }: { id: Exclude<SectionId, "known-issues">; children: React.ReactNode }) {
   const title = SECTIONS.find((section) => section.id === id)?.title ?? id;
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="panel scroll-mt-24 pt-4 sm:pt-5">
-      <h2 id={`${id}-title`} className="headline text-[22px] sm:text-[24px]">
+    <section id={id} aria-labelledby={`${id}-title`} className="panel pt-4 sm:pt-5">
+      <h2 id={`${id}-title`} className="headline text-21">
         {title}
       </h2>
       <div className="mt-4 grid max-w-[68ch] gap-4 text-[15.5px] leading-7 text-ink-2">{children}</div>
@@ -100,7 +104,8 @@ function Version({ children }: { children: string }) {
   return <span className="num whitespace-nowrap text-[0.92em] text-ink">{children}</span>;
 }
 
-export default function HowItWorksPage() {
+export default async function HowItWorksPage() {
+  const { generatedAt } = await getLiveState();
   const gate = gameEvaluation.gameLevel.gateSeasons;
   const separate = gameEvaluation.gameLevel.reportedSeparately;
   const series = gameEvaluation.playoffs.seriesAgainstSrsHome;
@@ -118,31 +123,37 @@ export default function HowItWorksPage() {
 
   return (
     <>
-      <Ticker />
+      <PageStamp generatedAt={generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <div className="grid gap-10 lg:grid-cols-[13.5rem_minmax(0,1fr)]">
         <aside className="hidden lg:block">
-          <nav aria-label="On this page" className="sticky top-24">
-            <p className="kicker">On this page</p>
-            <ul className="mt-3 grid gap-1 border-l border-line text-[14px]">
-              {SECTIONS.map((section) => (
-                <li key={section.id}>
-                  <a
-                    href={`#${section.id}`}
-                    className="-ml-px block border-l-2 border-transparent py-1 pl-3 text-ink-2 hover:border-pulse hover:text-ink"
-                  >
-                    {section.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <OnThisPage sections={SECTIONS} />
         </aside>
 
         <div className="flex min-w-0 max-w-[50rem] flex-col gap-6">
           <header className="pb-2">
-            <p className="kicker">Methodology</p>
-            <h1 className="headline mt-1 text-[32px] sm:text-[44px]">How the forecast works</h1>
+            <p className="text-15 text-ink-2">Methodology</p>
+            <h1 className="headline mt-1 text-32 sm:text-46">How it works</h1>
+            <p className="mt-4 max-w-[64ch] text-[17px] leading-7 text-ink">
+              548 gives every NBA game a chance of each team winning. The number comes from injury-adjusted team
+              ratings, home court, rest and the players on the NBA injury report. Each team&apos;s rating is in points,
+              kept up to date over every final score since <span className="whitespace-nowrap">2004-05</span>. For each
+              game the job attempts a morning seal and a final seal in the hour before tip. The public record scores
+              the final seal when there is one, otherwise the reissued or original morning seal; a game that tips
+              without a seal is counted as missed, and nothing is backfilled. The same ratings run {LIVE_SIMULATION_ITERATIONS.toLocaleString("en-US")} simulations of the rest of the season
+              for the playoff and title odds.
+            </p>
+            <p className="mt-4 max-w-[64ch] border-l-[3px] border-warn pl-3 text-[15px] leading-6 text-ink">
+              <strong>Known issues.</strong> Three confirmed defects in{" "}
+              <Version>{LIVE_MODEL_VERSION}</Version>&apos;s injury handling stay until the next model version: a
+              player still expected out when the regular season ends costs his team in every simulated playoff game,
+              a player inferred out from box scores can stay counted after he has left the team or the rotation, and
+              the return table assumes an absent player misses at least one more game.{" "}
+              <a href="#known-issues" className="pp-link">
+                The known issues in full
+              </a>
+              .
+            </p>
             <p className="mt-4 max-w-[64ch] text-[16px] leading-7 text-ink-2">
               What the numbers on the{" "}
               <Link href="/" className="pp-link">
@@ -184,31 +195,6 @@ export default function HowItWorksPage() {
               </ul>
             </nav>
           </header>
-
-          <aside id="known-issues" aria-labelledby="known-issues-title" className="notice scroll-mt-24">
-            <h2 id="known-issues-title" className="text-[16px] font-bold">
-              Known issues
-            </h2>
-            <p className="mt-1">
-              Three confirmed defects in <Version>{LIVE_MODEL_VERSION}</Version>&apos;s injury handling, found by an
-              independent review on 2026-11-05. They stay until the next model version, because fixing them changes
-              the forecasts, and that needs a new version with its own record.
-            </p>
-            <ul className="mt-2 grid list-disc gap-1 pl-5">
-              <li>
-                In the season simulation, a player still expected to be out when the regular season ends costs his team
-                in every playoff game, instead of returning after the games he is expected to miss.
-              </li>
-              <li>
-                A player inferred to be out from box scores, not from the report, can stay counted as out after he has
-                left the team or the rotation.
-              </li>
-              <li>
-                The table of how many more games an absent player misses answers the wrong question: it assumes he
-                misses at least one more game, so an inferred absence always costs the next game in full.
-              </li>
-            </ul>
-          </aside>
 
           <Section id="limits">
             <ul className="grid list-disc gap-2 pl-5">
@@ -265,6 +251,31 @@ export default function HowItWorksPage() {
               .
             </p>
           </Section>
+
+          <aside id="known-issues" aria-labelledby="known-issues-title" className="notice">
+            <h2 id="known-issues-title" className="text-[16px] font-bold">
+              Known issues
+            </h2>
+            <p className="mt-1">
+              Three confirmed defects in <Version>{LIVE_MODEL_VERSION}</Version>&apos;s injury handling, found by an
+              independent review on 2026-11-05. They stay until the next model version, because fixing them changes
+              the forecasts, and that needs a new version with its own record.
+            </p>
+            <ul className="mt-2 grid list-disc gap-1 pl-5">
+              <li>
+                In the season simulation, a player still expected to be out when the regular season ends costs his team
+                in every playoff game, instead of returning after the games he is expected to miss.
+              </li>
+              <li>
+                A player inferred to be out from box scores, not from the report, can stay counted as out after he has
+                left the team or the rotation.
+              </li>
+              <li>
+                The table of how many more games an absent player misses answers the wrong question: it assumes he
+                misses at least one more game, so an inferred absence always costs the next game in full.
+              </li>
+            </ul>
+          </aside>
 
           <Section id="injuries">
             <p>
@@ -661,7 +672,7 @@ export default function HowItWorksPage() {
             </p>
 
             <div className="table-scroll rounded-lg border border-line bg-panel">
-              <table className="pp-table">
+              <table className="pp-table method-wrap-head">
                 <caption className="sr-only">Season simulator checks by date</caption>
                 <thead>
                   <tr>
@@ -761,7 +772,7 @@ export default function HowItWorksPage() {
             </ul>
           </Section>
           <Section id="glossary">
-            <span id="terms" className="block scroll-mt-24" aria-hidden />
+            <span id="terms" className="block" aria-hidden />
             <dl>
               <Term term="548">
                 Our chance of each team winning, from injury-adjusted team ratings, home court, rest and the players

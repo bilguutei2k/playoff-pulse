@@ -1,28 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useMemo, useState } from "react";
+import { useCallback, useId, useMemo } from "react";
 import { InjuryTable } from "@/components/live/InjuryTable";
-import { TeamLogo } from "@/components/live/TeamLogo";
+import { QueryWaitScript, useHydrated } from "@/components/live/PlayersTable";
+import { SectionHeading } from "@/components/live/SectionHeading";
+import { TeamLink } from "@/components/live/TeamLink";
+import { useQueryState } from "@/components/live/useQueryState";
+import { INJURIES_DEFAULT, parseInjuriesQuery, serializeInjuriesQuery, type InjuriesQuery } from "@/lib/view/filters";
 import { STATUS_FILTERS, type InjuryBlock, type InjuryReportView, type InjuryRowView } from "@/lib/view/injury-report";
-import type { StatusFilterKey } from "@/lib/view/players";
-
-type StatusChoice = StatusFilterKey | "all";
 
 /**
  * The injuries page's lists with a team and a status filter. Everything is rendered on
- * the server first; filtering only hides rows, lists and games.
+ * the server first; filtering only hides rows, lists and games. The filters live in the
+ * URL ("/injuries?team=DET&status=out"), so a link reproduces the view, a game page can
+ * open a team's list, and Back restores the previous selection. A link that arrives with
+ * filters keeps the lists hidden until they are applied (QueryWaitScript).
  */
 export function InjuryReport({
   view,
   teams,
+  caveat,
+  definitions,
 }: {
   view: InjuryReportView;
   /** Every team for the team filter, by name. */
-  teams: Array<{ id: string; name: string; shortName: string }>;
+  teams: Array<{ id: string; code: string; name: string; shortName: string }>;
+  /** What the lists are and are not; always visible, under the filters. */
+  caveat?: React.ReactNode;
+  /** The source and column definitions, in a collapsed block. */
+  definitions?: React.ReactNode;
 }) {
-  const [team, setTeam] = useState<string>("all");
-  const [status, setStatus] = useState<StatusChoice>("all");
+  const parse = useCallback((search: string) => parseInjuriesQuery(search, teams), [teams]);
+  const serialize = useCallback((state: InjuriesQuery) => serializeInjuriesQuery(state, teams), [teams]);
+  const [{ team, status }, update] = useQueryState(INJURIES_DEFAULT, parse, serialize);
+  const hydrated = useHydrated();
   const selectId = useId();
 
   const rowsOf = useMemo(
@@ -33,23 +45,32 @@ export function InjuryReport({
   const teamMatches = (block: InjuryBlock) => team === "all" || block.teamId === team;
   const shows = (block: InjuryBlock) => teamMatches(block) && (status === "all" || rowsOf(block).length > 0);
 
-  const slates = view.slates.map((slate) => ({
-    ...slate,
-    games: slate.games.filter((game) => shows(game.away) || shows(game.home)),
-  }));
+  const slates = view.slates
+    .map((slate) => ({
+      ...slate,
+      games: slate.games.filter((game) => shows(game.away) || shows(game.home)),
+    }))
+    .filter((slate) => !(team !== "all" || status !== "all") || slate.games.length > 0);
   const others = view.others.filter(shows);
   const players = [...slates.flatMap((slate) => slate.games.flatMap((game) => [game.away, game.home])), ...others]
     .filter(teamMatches)
     .reduce((sum, block) => sum + rowsOf(block).length, 0);
   const filtered = team !== "all" || status !== "all";
   const emptyText = status === "all" ? undefined : "Nobody with this status.";
+  const nothing = filtered && slates.length === 0 && others.length === 0;
+  const clear = (
+    <button type="button" className="pp-link font-normal" onClick={() => update(INJURIES_DEFAULT)}>
+      Clear filters
+    </button>
+  );
 
   return (
-    <div>
-      <div className="flex flex-col gap-4 rounded-[var(--radius-card)] border border-line bg-panel p-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+    <div data-qwait={hydrated ? undefined : ""}>
+      <QueryWaitScript keys={["team", "status"]} />
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:gap-x-8">
         <div className="min-w-0 sm:w-64">
           <label htmlFor={selectId} className="kicker block">Team</label>
-          <select id={selectId} value={team} onChange={(event) => setTeam(event.target.value)} className="pp-select mt-1.5">
+          <select id={selectId} value={team} onChange={(event) => update({ team: event.target.value, status })} className="pp-select mt-1.5 min-h-11">
             <option value="all">All teams</option>
             {teams.map((option) => (
               <option key={option.id} value={option.id}>{option.name}</option>
@@ -64,8 +85,8 @@ export function InjuryReport({
                 key={option.key}
                 type="button"
                 aria-pressed={status === option.key}
-                onClick={() => setStatus(option.key)}
-                className={`pp-button pp-button-compact min-h-9 ${status === option.key ? "pp-button-active" : ""}`}
+                onClick={() => update({ team, status: option.key })}
+                className={`pp-button pp-button-compact min-h-11 ${status === option.key ? "pp-button-active" : ""}`}
               >
                 {option.label}
               </button>
@@ -73,83 +94,77 @@ export function InjuryReport({
           </div>
         </fieldset>
       </div>
-      <p className="num mt-3 text-[12.5px] text-ink-2" role="status">
+      {caveat ? <p className="mt-4 max-w-[64ch] text-13 leading-5 text-ink-2">{caveat}</p> : null}
+      {definitions ? (
+        <details className="group mt-3 max-w-5xl">
+          <summary className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 text-14 font-semibold text-ink">
+            <span aria-hidden className="inline-block transition-transform group-open:rotate-90 motion-reduce:transition-none">▸</span>
+            What Source, Status and 548 pts mean
+          </summary>
+          <div className="pb-2 pt-1">{definitions}</div>
+        </details>
+      ) : null}
+      <p className="num mt-3 text-13 text-ink-2" role="status">
         {players} {players === 1 ? "player" : "players"}
         {filtered ? (players === 1 ? " matches" : " match") : " listed or counted"}
-        {filtered ? (
-          <>
-            {" · "}
-            <button type="button" className="pp-link font-normal" onClick={() => { setTeam("all"); setStatus("all"); }}>
-              Clear filters
-            </button>
-          </>
-        ) : null}
+        {filtered && !nothing ? <>{" · "}{clear}</> : null}
       </p>
 
+      {nothing ? (
+        <p className="notice-quiet mt-8">
+          No player matches these filters. {clear}
+        </p>
+      ) : null}
+
       {slates.map((slate) => (
-        <section key={slate.etDate} aria-labelledby={`slate-${slate.etDate}`} className="mt-10">
-          <h2 id={`slate-${slate.etDate}`} className="headline text-[22px] sm:text-[26px]">{slate.title}</h2>
-          <p className="num mt-1 text-[13px] text-ink-2">
-            {slate.games.length} {slate.games.length === 1 ? "game" : "games"}
-            {filtered ? " shown" : ""} · in tip order · times ET
-          </p>
-          {slate.games.length === 0 ? (
-            <p className="notice-quiet mt-4">No game on this day matches the filters.</p>
-          ) : (
-            <ul className="mt-4 space-y-4">
-              {slate.games.map((game) => {
-                const sides = [game.away, game.home].filter((block) => teamMatches(block));
-                return (
-                  <li key={game.gameId}>
-                    <article id={`game-${game.gameId}`} aria-labelledby={`title-${game.gameId}`} className="panel overflow-hidden">
-                      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b border-line px-4 py-2.5 sm:px-5">
-                        <h3 id={`title-${game.gameId}`} className="flex min-w-0 items-center gap-2 text-[15px] font-semibold text-ink">
-                          <TeamLogo teamId={game.awayId} size={18} />
-                          <span className="truncate">
-                            {teamName(teams, game.awayId)} {game.neutral ? "vs" : "at"} {teamName(teams, game.homeId)}
-                          </span>
-                          <TeamLogo teamId={game.homeId} size={18} />
-                        </h3>
-                        <p className="num text-[12.5px] text-ink-2">{game.time}</p>
-                        <Link href={`/game/${game.gameId}`} className="pp-link ml-auto text-[13px]">
-                          Game page
-                        </Link>
-                      </header>
-                      <div className={`grid divide-y divide-line ${sides.length === 2 ? "lg:grid-cols-2 lg:divide-x lg:divide-y-0" : ""}`}>
-                        {sides.map((block) => (
-                          <InjuryTable key={block.teamId} block={block} rows={rowsOf(block)} headingLevel="h4" emptyText={emptyText} />
-                        ))}
-                      </div>
-                    </article>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+        <section key={slate.etDate} aria-labelledby={`slate-${slate.etDate}`} className="mt-12">
+          <SectionHeading
+            id={`slate-${slate.etDate}`}
+            title={slate.title}
+            note={`${slate.games.length} ${slate.games.length === 1 ? "game" : "games"}${filtered ? " shown" : ""} · in tip order · times ET`}
+          />
+          <ul className="mt-2">
+            {slate.games.map((game, index) => {
+              const sides = [game.away, game.home].filter((block) => teamMatches(block));
+              return (
+                <li key={game.gameId} className="mt-8 first:mt-0">
+                  <article id={`game-${game.gameId}`} aria-labelledby={`title-${game.gameId}`}>
+                    <header className={`flex flex-wrap items-baseline gap-x-4 gap-y-1 ${index === 0 ? "" : "border-t border-line-strong pt-4"}`}>
+                      <h3 id={`title-${game.gameId}`} className="min-w-0 text-17 font-bold leading-snug text-ink">
+                        <TeamLink teamId={game.awayId} form="full" logo={18} />{" "}
+                        <span className="font-normal text-ink-2">{game.neutral ? "vs" : "at"}</span>{" "}
+                        <TeamLink teamId={game.homeId} form="full" logo={18} />
+                      </h3>
+                      <p className="num text-13 text-ink-2">{game.time}</p>
+                      <Link href={`/game/${game.gameId}`} className="pp-link ml-auto inline-flex min-h-11 items-center text-13 sm:min-h-0">
+                        Game page
+                      </Link>
+                    </header>
+                    <div className={`grid gap-x-10 ${sides.length === 2 ? "lg:grid-cols-2" : ""}`}>
+                      {sides.map((block) => (
+                        <InjuryTable key={block.teamId} block={block} rows={rowsOf(block)} headingLevel="h4" emptyText={emptyText} />
+                      ))}
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
         </section>
       ))}
 
-      {view.others.length > 0 ? (
-        <section aria-labelledby="others-title" className="mt-12">
-          <h2 id="others-title" className="headline text-[22px] sm:text-[26px]">Teams not playing on these days</h2>
-          <p className="mt-1 text-[14px] text-ink-2">Each team&apos;s list for its next game.</p>
-          {others.length === 0 ? (
-            <p className="notice-quiet mt-4">No other team matches the filters.</p>
-          ) : (
-            <ul className="mt-4 grid gap-4 lg:grid-cols-2">
-              {others.map((block) => (
-                <li key={block.teamId} className="panel overflow-hidden">
-                  <InjuryTable block={block} rows={rowsOf(block)} showGame emptyText={emptyText} />
-                </li>
-              ))}
-            </ul>
-          )}
+      {view.others.length > 0 && others.length > 0 ? (
+        <section aria-labelledby="others-title" className="mt-14">
+          <SectionHeading id="others-title" title="Teams not playing on these days" note="Each team's list for its next game" />
+          <ul className="mt-2 grid gap-x-10 lg:grid-cols-2">
+            {others.map((block) => (
+              <li key={block.teamId} className="mt-4 border-t border-ink">
+                <InjuryTable block={block} rows={rowsOf(block)} showGame emptyText={emptyText} />
+              </li>
+            ))}
+          </ul>
         </section>
       ) : null}
     </div>
   );
-}
-
-function teamName(teams: Array<{ id: string; shortName: string }>, id: string): string {
-  return teams.find((team) => team.id === id)?.shortName ?? id;
 }

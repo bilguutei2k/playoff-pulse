@@ -1,0 +1,8 @@
+/* method.css: /how-it-works. Owned by package H. */
+@layer components {
+  /* A results table whose column heads may wrap, so it fits the reading column
+     instead of scrolling sideways (the season simulator checks). */
+  .pp-table.method-wrap-head thead th {
+    white-space: normal;
+  }
+}

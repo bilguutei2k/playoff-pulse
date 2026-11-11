@@ -1,0 +1,178 @@
+/*
+ * base.css: theme tokens (Tailwind @theme), font stacks and the base layer.
+ * Frozen after the foundation stage; ask the lead for changes.
+ */
+
+/*
+ * 548 design tokens, v8. Ink, one grey and one line on white; team colors appear
+ * only in chips and bars, and text stays ink. Light theme only; every color is a
+ * variable so a dark theme can be added by redefining this block under a selector.
+ *
+ * Contrast on white, WCAG 2.1: ink 18.9, ink-2 / ink-3 (#666666) 5.7, market 5.7.
+ *   ink-4 (#9a9a9a) is 2.8: decoration only, never text.
+ *   line (#dcdcdc) is a track and a rule, never a mark that carries a value.
+ * "pulse" was the orange accent; v8 has none, so it now resolves to ink and the
+ * names stay for the archive pages and the focus ring.
+ */
+@theme {
+  --color-page: #ffffff;
+  --color-panel: #ffffff;
+  --color-wash: #f4f4f4;
+  --color-wash-2: #ebebeb;
+  --color-line: #dcdcdc;
+  --color-line-strong: #b8b8b8;
+
+  --color-ink: #111111;
+  --color-ink-2: #666666;
+  --color-ink-3: #666666;
+  --color-ink-4: #9a9a9a;
+  --color-masthead: #111111;
+  --color-masthead-2: #bdbdbd;
+
+  --color-pulse: #111111;
+  --color-pulse-ink: #111111;
+  --color-pulse-ring: #111111;
+  --color-pulse-wash: #f4f4f4;
+
+  --color-market: #666666;
+  --color-teal: #111111;
+  --color-good: #0b6e55;
+  --color-bad: #b42318;
+  --color-bad-wash: #fdf0ee;
+  --color-warn: #8a4b00;
+  --color-warn-wash: #fdf3e1;
+  --color-warn-line: #e8c98a;
+
+  /* Heat cells became plain figures in v8; the steps stay for the archive's classes. */
+  --color-heat-1: #f4f4f4;
+  --color-heat-2: #ebebeb;
+  --color-heat-3: #dcdcdc;
+  --color-heat-4: #c8c8c8;
+  --color-heat-5: #b0b0b0;
+  --color-heat-6: #555555;
+  --color-heat-7: #333333;
+  --color-heat-8: #111111;
+
+  --radius-card: 0px;
+
+  /* v8 is square: every rounded-* utility resolves to 0 (rounded-full stays round). */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+
+  /*
+   * Type scale. Utilities: text-12 ... text-56 (font size only; line height stays
+   * with the element or a leading-* class). Use for h1, h2, section headings and
+   * tables: h1 is text-32 sm:text-46 (the day page adds lg:text-56), a section h2
+   * is text-21, a table body text-14, its head text-13. Other one-off sizes stay
+   * until their owner moves them.
+   */
+  --text-12: 12px;
+  --text-13: 13px;
+  --text-14: 14px;
+  --text-15: 15px;
+  --text-17: 17px;
+  --text-21: 21px;
+  --text-26: 26px;
+  --text-32: 32px;
+  --text-46: 46px;
+  --text-56: 56px;
+}
+
+/*
+ * Colors charts and the masthead used to write as hex. Always emitted (static), so
+ * inline SVG can use them as fill="var(--color-grid)" without a Tailwind class.
+ *   grid: chart gridlines. ink-mid (#8a8a8a, 3.5 on white): decoration, never body
+ *   text. warn-on-dark: the masthead's stale-data amber on black.
+ */
+@theme static {
+  --color-grid: #ececec;
+  --color-ink-mid: #8a8a8a;
+  --color-warn-on-dark: #f5c26b;
+  --color-focus-on-dark: #ffffff;
+}
+
+/*
+ * Roles for charts (SVG attributes or style: fill="var(--chart-axis)"). Team
+ * colors still come from lib/view/teams (teamColor, pairColors).
+ *
+ * --mast is the sticky masthead's height (Header.tsx: h-14, lg:h-[68px]; keep them
+ * equal). Anything sticky below the masthead uses top: var(--mast), for example
+ * the Tailwind class top-[var(--mast)].
+ */
+:root {
+  --mast: 56px;
+  --chart-ink: var(--color-ink);
+  --chart-axis: var(--color-ink);
+  --chart-text: var(--color-ink-2);
+  --chart-grid: var(--color-grid);
+  --chart-track: var(--color-line);
+  --chart-mid: var(--color-ink-mid);
+  --chart-surface: var(--color-page);
+  --chart-focus: var(--color-ink);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --mast: 68px;
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-schibsted), "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+  --color-background: var(--color-page);
+  --color-foreground: var(--color-ink);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* In-page anchors land below the sticky masthead, not under it. */
+    scroll-padding-top: calc(var(--mast) + 8px);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * The focus ring: ink on light surfaces, white inside the black masthead (DS-1,
+   * Header.tsx carries data-masthead). A light surface inside the masthead (a
+   * dialog, a sheet) gets the ink ring back with data-surface="light", or
+   * automatically when it is a <dialog>.
+   */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring, var(--color-pulse-ring));
+    outline-offset: 2px;
+  }
+
+  [data-masthead] {
+    --focus-ring: var(--color-focus-on-dark);
+  }
+
+  [data-masthead] :is(dialog, [data-surface="light"]) {
+    --focus-ring: var(--color-pulse-ring);
+  }
+
+  ::selection {
+    background: #dcdcdc;
+    color: var(--color-ink);
+  }
+}

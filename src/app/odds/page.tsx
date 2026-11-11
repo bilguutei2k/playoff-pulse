@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
 import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
@@ -7,16 +8,17 @@ import { Ticker } from "@/components/live/Ticker";
 import { TitleOddsChart } from "@/components/live/TitleOddsChart";
 import { WhoIsOut } from "@/components/live/WhoIsOut";
 import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
-import { distinctTeamColors } from "@/lib/season/team-colors";
 import type { SeasonPhase } from "@/lib/season/types";
 import { formatDateTimeEt, formatShortDay } from "@/lib/utils/dates";
 import { oddsRows, teamAbsences } from "@/lib/view/odds";
 import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
+import { titleChartStyles } from "./chart-colors";
 
 export const metadata: Metadata = {
   title: "NBA playoff and title odds",
   description:
     "Playoff, conference and championship chances for all 30 NBA teams from simulated seasons, updated after games finish and as the NBA injury report changes.",
+  alternates: { canonical: "/odds" },
 };
 
 const PHASE_LABELS: Record<SeasonPhase, string> = {
@@ -39,20 +41,22 @@ export default async function OddsPage() {
   const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
   const ranked = [...forecast.teams].sort((a, b) => b.champion - a.champion);
   const top = ranked.slice(0, CHART_TEAMS).map((team) => team.teamId);
-  const colors = distinctTeamColors(top, PANEL_COLOR);
+  const styles = titleChartStyles(top, PANEL_COLOR);
   const highlighted = top.map((teamId) => ({
     teamId,
     code: teamDisplay(teamId).code,
     name: teamDisplay(teamId).shortName,
-    color: colors[teamId],
+    color: styles[teamId].color,
+    dash: styles[teamId].dash,
   }));
   const others = ranked.slice(CHART_TEAMS).map((team) => team.teamId);
 
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={generatedAt} />
       <main className="pp-container pb-4 pt-8 sm:pt-11">
-        <h1 className="headline text-[32px] sm:text-[46px]">Playoff and title odds</h1>
+        <h1 className="headline text-32 sm:text-46">Playoff and title odds</h1>
         <p className="mt-2.5 text-[15px] text-ink-2 sm:text-[16px]">
           {PHASE_LABELS[forecast.phase]} · {forecast.iterations.toLocaleString("en-US")} simulations · run{" "}
           {formatDateTimeEt(generatedAt)}
@@ -107,7 +111,9 @@ export default async function OddsPage() {
         <section aria-labelledby="history-title" className="mt-14 sm:mt-[72px]">
           <div className="sh">
             <h2 id="history-title">Title odds over time</h2>
-            <span>Top {CHART_TEAMS} today in team colors, others grey</span>
+            <span>
+              Top {CHART_TEAMS} today in team colors{highlighted.some((team) => team.dash) ? ", dashed where colors are close" : ""}, others grey
+            </span>
           </div>
           {points.length < 2 ? (
             <p className="notice-quiet mb-4">
@@ -117,7 +123,6 @@ export default async function OddsPage() {
             </p>
           ) : null}
           <TitleOddsChart points={points} highlighted={highlighted} others={others} />
-          <p className="mt-2 text-[13px] text-ink-2">Hover or use the arrow keys to read a date.</p>
         </section>
       </main>
     </>

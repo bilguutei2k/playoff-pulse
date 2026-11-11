@@ -1,0 +1,709 @@
+/*
+ * shared.css: classes used by more than one area: figures and labels, the page
+ * container, links, section headings (.sh), notices, tiles, tables (.tb), bars,
+ * legends, heat figures, buttons and selects, horizontal table scroll, the live dot.
+ * Frozen after the foundation stage; ask the lead for changes.
+ */
+@layer components {
+  /*
+   * Figures that line up (DS-9): table body cells marked .nm or .num set tabular
+   * figures, so decimals in a column align. Everywhere else .num keeps Schibsted's
+   * proportional figures. Use .tabular for a stack of figures outside a table.
+   */
+  .num,
+  .pp-number {
+    letter-spacing: 0;
+  }
+
+  :is(td, tbody th).num,
+  .tb td.nm {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /*
+   * Every place that sets tabular figures also takes the figures face first
+   * (src/app/fonts.ts): the same Schibsted file whose tabular set keeps the period,
+   * comma, colon and semicolon at their normal width, so "+0.8" never reads
+   * "+0 . 8". Digits stay digit-wide, so columns still line up. A new rule that sets
+   * tabular-nums belongs in this list.
+   */
+  :is(td, tbody th).num,
+  .tb td.nm,
+  .tabular,
+  .tile,
+  .heat,
+  .arm-r,
+  .arm-sc,
+  .arm-rec,
+  .pp-table,
+  .pp-heat {
+    font-family: var(--font-figures), var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* A large standalone figure. */
+  .figure {
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  /* The small grey label above a figure, on a table head or beside a heading. */
+  .kicker {
+    color: var(--color-ink-2);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  .headline {
+    color: var(--color-ink);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.08;
+  }
+
+  /* 1312 px of content, with 18 / 32 / 64 px gutters. */
+  .pp-container {
+    --gutter: 18px;
+    margin-inline: auto;
+    max-width: calc(1312px + 2 * var(--gutter));
+    padding-inline: var(--gutter);
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .pp-container {
+      --gutter: 32px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .pp-container {
+      --gutter: 64px;
+    }
+  }
+
+  .pp-link {
+    color: var(--color-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--color-ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .pp-link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* A section: a 2px ink rule over its heading row. Used by pages not drawn in v8. */
+  .panel {
+    background: var(--color-panel);
+    border-top: 2px solid var(--color-ink);
+  }
+
+  /* Section heading row: the rule, the heading, and a grey link or note at the right. */
+  .sh {
+    align-items: baseline;
+    border-top: 2px solid var(--color-ink);
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    padding-top: 12px;
+  }
+
+  .sh > :is(a, span, p) {
+    color: var(--color-ink-2);
+    font-size: var(--text-13);
+  }
+
+  /*
+   * A link at the right of a heading reads as a link (VB-10): ink, an arrow, an
+   * underline on hover, and it stays on the heading's line on phones when it fits.
+   */
+  .sh > a {
+    color: var(--color-ink);
+    flex: none;
+    font-size: var(--text-14);
+    font-weight: 600;
+    margin-left: auto;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+
+  .sh > a::after {
+    content: "\2192";
+    content: "\2192" / "";
+    margin-left: 0.3em;
+  }
+
+  .sh > a:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .sh h2,
+  .sh h3 {
+    font-size: var(--text-21);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 639px) {
+    .sh {
+      flex-wrap: wrap;
+      row-gap: 2px;
+    }
+
+    .sh h2,
+    .sh h3 {
+      flex: 1 0 100%;
+    }
+
+    .sh:has(> a) :is(h2, h3) {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    /* A 44px touch area around the heading link, without moving the row. */
+    .sh > a {
+      position: relative;
+    }
+
+    .sh > a::before {
+      content: "";
+      inset: -12px -8px;
+      position: absolute;
+    }
+  }
+
+  /* A heading inside a section (SectionHeading size="sub"). */
+  .sh-sub {
+    border-top-width: 1px;
+    padding-top: 10px;
+  }
+
+  .sh.sh-sub :is(h2, h3) {
+    font-size: var(--text-17);
+  }
+
+  /* A notice: stale data, missing scores, an explanation that must stay visible. */
+  .notice {
+    background: var(--color-warn-wash);
+    border-left: 3px solid var(--color-warn);
+    color: var(--color-ink);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px 14px;
+  }
+
+  .notice-quiet {
+    border-left: 2px solid var(--color-line);
+    color: var(--color-ink-2);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 2px 0 2px 12px;
+  }
+
+  /*
+   * The tile: 548's number. Solid is sealed, outline is a live estimate, dashed is a
+   * number never scored (provisional, projection).
+   */
+  .tile {
+    --t: 34px;
+    align-items: center;
+    background: var(--color-ink);
+    color: #ffffff;
+    display: inline-flex;
+    flex: none;
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    height: var(--t);
+    justify-content: center;
+    line-height: 1;
+    min-width: 62px;
+    padding: 0 9px;
+    white-space: nowrap;
+  }
+
+  .tile-live {
+    background: #ffffff;
+    box-shadow: inset 0 0 0 2px var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .tile-dash {
+    background: #ffffff;
+    border: 2px dashed var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .tile-sm {
+    --t: 28px;
+    font-size: 16px;
+    min-width: 50px;
+    padding: 0 7px;
+  }
+
+  .tile-xs {
+    --t: 22px;
+    font-size: 12.5px;
+    min-width: 0;
+    padding: 0 6px;
+  }
+
+  .tile-lg {
+    --t: 64px;
+    font-size: 40px;
+    min-width: 120px;
+    padding: 0 16px;
+  }
+
+  /* Plain v8 table: an ink rule under the head, hairlines between rows. */
+  .tb {
+    border-collapse: collapse;
+    font-size: var(--text-14);
+    width: 100%;
+  }
+
+  .tb th {
+    border-bottom: 2px solid var(--color-ink);
+    color: var(--color-ink-2);
+    font-size: var(--text-13);
+    font-weight: 500;
+    padding: 0 0 8px;
+    text-align: left;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  .tb td,
+  .tb tbody th {
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-size: var(--text-14);
+    font-weight: 400;
+    padding: 9px 0;
+    vertical-align: middle;
+  }
+
+  .tb td + td,
+  .tb th + th,
+  .tb th + td,
+  .tb td + th {
+    padding-left: 14px;
+  }
+
+  .tb .nm {
+    text-align: right;
+  }
+
+  .tb tr.gap td,
+  .tb tr.gap th {
+    padding-top: 24px;
+  }
+
+  /* A track with an ink fill: playoff odds, progress toward 500 games. */
+  .bar {
+    background: var(--color-line);
+    height: 10px;
+    position: relative;
+  }
+
+  .bar > i {
+    background: var(--color-ink);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .legend {
+    color: var(--color-ink-2);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 13px;
+    gap: 8px 22px;
+  }
+
+  .legend span {
+    align-items: center;
+    display: inline-flex;
+    gap: 7px;
+  }
+
+  .legend i {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+  }
+
+  /* Probability cells: the value always prints. v8 sets 50% and up in bold. */
+  .heat {
+    color: var(--color-ink);
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    min-width: 2.75rem;
+    text-align: right;
+  }
+
+  .heat-0 {
+    color: var(--color-ink-2);
+  }
+
+  .heat-5,
+  .heat-6,
+  .heat-7,
+  .heat-8 {
+    font-weight: 700;
+  }
+
+  .pp-button {
+    align-items: center;
+    background: var(--color-panel);
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 600;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.25;
+    min-height: 40px;
+    padding: 8px 14px;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+  }
+
+  .pp-button:hover {
+    background: var(--color-wash);
+  }
+
+  .pp-button:disabled {
+    color: var(--color-ink-2);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .pp-button-primary,
+  .pp-button-active {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #ffffff;
+  }
+
+  .pp-button-primary:hover,
+  .pp-button-active:hover {
+    background: #333333;
+    border-color: #333333;
+    color: #ffffff;
+  }
+
+  .pp-button-danger {
+    border-color: rgba(180, 35, 24, 0.4);
+    color: var(--color-bad);
+  }
+
+  .pp-button-danger:hover {
+    background: var(--color-bad-wash);
+    border-color: var(--color-bad);
+    color: var(--color-bad);
+  }
+
+  .pp-button-compact {
+    font-size: 13px;
+    min-height: 32px;
+    padding: 4px 10px;
+  }
+
+  .pp-icon-button {
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    width: 36px;
+  }
+
+  .pp-select {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-ink);
+    font-size: 14px;
+    min-height: 40px;
+    padding: 6px 10px;
+    width: 100%;
+  }
+
+  /*
+   * TeamLink (src/components/live/TeamLink.tsx): a team's logo and name. The name
+   * never ellipsizes or clips. Hover underlines the name; color stays the text's.
+   */
+  .tl {
+    align-items: center;
+    color: inherit;
+    column-gap: var(--tl-gap, 0.4em);
+    display: inline-flex;
+    max-width: 100%;
+    text-decoration: none;
+  }
+
+  .tl-logo {
+    align-self: center;
+    display: flex;
+    flex: none;
+  }
+
+  .tl-t {
+    align-self: baseline;
+    min-width: 0;
+  }
+
+  .tl-code {
+    white-space: nowrap;
+  }
+
+  a.tl:hover :is(.tl-t, .tl-v) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  /* Above a sibling whole-card link (the card's absolute inset-0 cover). */
+  .tl-raised {
+    position: relative;
+    z-index: 1;
+  }
+
+  /*
+   * form="auto": the slot (.tl-n) asks for the full name's width and can shrink to
+   * the code's; inside it, each form prints only while the slot's width (100cqi)
+   * lies between its own width (--lo) and the next longer form's (--hi). The
+   * widths come from lib/view/team-name-widths.ts, measured at weight 900.
+   */
+  .tl-n {
+    align-self: baseline;
+    display: inline-grid;
+    flex: 0 1 auto;
+    grid-template-columns: minmax(var(--tl-min), var(--tl-max));
+    min-width: var(--tl-min);
+  }
+
+  .tl-box {
+    align-items: baseline;
+    container-type: inline-size;
+    display: grid;
+  }
+
+  .tl-v {
+    font-size: clamp(0px, min(100cqi - var(--lo), var(--hi) - 100cqi) * 100000, 1em);
+    grid-area: 1 / 1;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* Right-aligned headings (every table, not only /odds): the "?" goes before the
+     label, so it never reads as the next column's and the label stays over its figures. */
+  th.nm .sort-head > .hint {
+    order: -1;
+  }
+
+  th.nm .sort-head > .hint .hint-icon {
+    margin-left: 0;
+    margin-right: 4px;
+  }
+
+  /* SortHeader (src/components/live/SortHeader.tsx). */
+  .sort-head {
+    align-items: center;
+    display: inline-flex;
+    gap: 2px;
+    vertical-align: bottom;
+  }
+
+  .sort-btn {
+    align-items: center;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    gap: 2px;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  /* A 44px-tall touch area without a taller heading row. */
+  .sort-btn::before {
+    content: "";
+    inset: -12px -4px;
+    position: absolute;
+  }
+
+  .sort-btn:hover,
+  .sort-btn.is-active {
+    color: var(--color-ink);
+  }
+
+  .sort-arrow {
+    flex: none;
+    height: 12px;
+    opacity: 0;
+    width: 12px;
+  }
+
+  .sort-btn.is-active .sort-arrow {
+    opacity: 1;
+  }
+
+  .sort-btn:not(.is-active):hover .sort-arrow {
+    opacity: 0.35;
+  }
+
+  .sort-arrow.is-up {
+    transform: rotate(180deg);
+  }
+
+  /* Hint (src/components/live/Hint.tsx). */
+  .hint {
+    display: inline;
+  }
+
+  .hint-term,
+  .hint-icon {
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    position: relative;
+  }
+
+  .hint-term {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .hint-icon {
+    align-items: center;
+    border: 1px solid currentColor;
+    border-radius: 9999px;
+    display: inline-flex;
+    font-size: 11.5px;
+    font-weight: 700;
+    height: 16px;
+    justify-content: center;
+    line-height: 1;
+    margin-left: 4px;
+    vertical-align: 0.05em;
+    width: 16px;
+  }
+
+  .hint-term::before,
+  .hint-icon::before {
+    content: "";
+    inset: -12px -6px;
+    position: absolute;
+  }
+
+  /* 16px + 2 x 14px: a 44px touch area that never grows the row. */
+  .hint-icon::before {
+    inset: -14px;
+  }
+
+  .hint-pop {
+    background: var(--color-page);
+    border: 1px solid var(--color-ink);
+    box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.25);
+    color: var(--color-ink);
+    display: none;
+    font-size: var(--text-14);
+    font-variant-numeric: normal;
+    font-weight: 400;
+    inset: auto;
+    left: max(8px, min(var(--hx, 8px), 100% - min(20rem, 100% - 16px) - 8px));
+    letter-spacing: 0;
+    line-height: 1.45;
+    margin: 0;
+    max-width: min(20rem, calc(100% - 16px));
+    padding: 10px 12px;
+    position: fixed;
+    text-align: left;
+    text-transform: none;
+    white-space: normal;
+    width: max-content;
+    z-index: 60;
+  }
+
+  .hint-pop[data-open] {
+    display: block;
+  }
+
+  .hint-pop:popover-open {
+    display: block;
+  }
+
+  .hint-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  /* Horizontal scroll for wide tables, with the first column pinned. */
+  .table-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sticky-col {
+    background: var(--color-panel);
+    left: 0;
+    position: sticky;
+    z-index: 1;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+input[type="range"] {
+  accent-color: var(--color-ink);
+}
+
+@keyframes pp-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.pp-live-dot {
+  animation: pp-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .pp-live-dot {
+    animation: none !important;
+  }
+}

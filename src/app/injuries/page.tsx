@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageStamp } from "@/components/live/FreshnessGuard";
 import { InjuryReport } from "@/components/live/InjuryReport";
 import { SectionHeading } from "@/components/live/SectionHeading";
-import { getProjections, getTeamInjuryLists } from "@/lib/live-data/published";
+import { getLiveState, getProjections, getTeamInjuryLists } from "@/lib/live-data/published";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import { formatReportTime } from "@/lib/utils/dates";
 import { buildInjuryReport } from "@/lib/view/injury-report";
@@ -10,9 +11,10 @@ import { teamDisplay } from "@/lib/view/teams";
 import { Ticker } from "@/components/live/Ticker";
 
 export const metadata: Metadata = {
-  title: "NBA injury report",
+  title: "Injuries: every team's list for its next game",
   description:
-    "Every NBA team's injury list for its next game, from the NBA's injury report and from box scores, with the points of margin 548's model counts for each player.",
+    "Every NBA team's injury list for its next game, from the NBA's public injury report, read unofficially, and from box scores, with the points of margin 548's model counts for each player.",
+  alternates: { canonical: "/injuries" },
 };
 
 // Re-rendered about once a minute from the published data (src/lib/live-data/published.ts).
@@ -32,67 +34,70 @@ const SOURCES: Array<[string, string]> = [
 ];
 
 export default async function InjuriesPage() {
-  const [lists, projections] = await Promise.all([getTeamInjuryLists(), getProjections()]);
+  const [lists, projections, stamp] = await Promise.all([getTeamInjuryLists(), getProjections(), getLiveState()]);
   const view = lists ? buildInjuryReport({ lists, projections }) : null;
   const teams = SEASON_TEAMS.map((team) => teamDisplay(team.id))
-    .map((team) => ({ id: team.id, name: team.name, shortName: team.shortName }))
+    .map((team) => ({ id: team.id, code: team.code, name: team.name, shortName: team.shortName }))
     .sort((a, b) => a.name.localeCompare(b.name));
   const latest = view?.latestReportAt ? formatReportTime(view.latestReportAt, "") : null;
 
   return (
     <>
       <Ticker />
+      <PageStamp generatedAt={stamp.generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <SectionHeading
         as="h1"
-        kicker="Injury report"
+        kicker="Injury lists"
         title="Injuries"
         dek={
-          <>
+          <span className="block max-w-[64ch]">
             Every team&apos;s injury list for its next game, game by game for the next two days with games, then
             every other team.{" "}
             {latest ? <>The newest NBA report in use is from {latest}. </> : null}
-            Lists update with each run of the forecast job, about every ten minutes.
-          </>
+            Lists update about every ten minutes.
+          </span>
         }
       />
-
-      <section aria-labelledby="sources-title" className="mt-6">
-        <h2 id="sources-title" className="sr-only">What each part means</h2>
-        <dl className="grid gap-x-8 gap-y-3 rounded-[var(--radius-card)] border border-line bg-panel p-4 text-[13px] leading-5 text-ink-2 sm:p-5 md:grid-cols-2">
-          {SOURCES.map(([term, definition]) => (
-            <div key={term} className="flex gap-3">
-              <dt className="w-24 shrink-0 text-[13px] font-bold leading-5 text-ink">{term}</dt>
-              <dd>{definition}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="mt-3 text-[12.5px] leading-5 text-ink-3">
-          These lists are projections, not sealed forecasts: a game&apos;s seals count the report in use when they are
-          made. The model does not foresee new injuries, shift minutes to teammates or model matchups. The injury
-          reports are the NBA&apos;s public documents, read unofficially.{" "}
-          <Link href="/how-it-works#injuries" className="pp-link">How injuries work</Link>
-        </p>
-      </section>
 
       <div className="mt-8">
         {view ? (
           view.slates.length === 0 && view.others.length === 0 ? (
             <p className="notice-quiet">No team has a game scheduled, so there are no injury lists.</p>
           ) : (
-            <InjuryReport view={view} teams={teams} />
+            <InjuryReport
+              view={view}
+              teams={teams}
+              caveat={
+                <>
+                  These lists are projections, not sealed forecasts: a game&apos;s seals count the report in use when
+                  they are made. The model does not foresee new injuries, shift minutes to teammates or model
+                  matchups. The injury reports are the NBA&apos;s public documents, read unofficially.{" "}
+                  <Link href="/how-it-works#injuries" className="pp-link">How injuries work</Link>
+                </>
+              }
+              definitions={
+                <dl className="grid gap-x-10 gap-y-3 text-13 leading-5 text-ink-2 md:grid-cols-2">
+                  {SOURCES.map(([term, definition]) => (
+                    <div key={term} className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 border-t border-line pt-3">
+                      <dt className="font-semibold text-ink">{term}</dt>
+                      <dd>{definition}</dd>
+                    </div>
+                  ))}
+                </dl>
+              }
+            />
           )
         ) : (
-          <div className="panel px-6 py-10 text-center">
-            <p className="headline text-[22px]">The injury lists are not published yet</p>
-            <p className="mx-auto mt-2 max-w-md text-[15px] text-ink-2">
-              They appear here once the forecast job publishes them. Each game page still lists the players its
-              sealed forecast counts.
+          <div>
+            <p className="notice-quiet">
+              The injury lists are not published yet. They appear here once 548 publishes them. Each game
+              page still lists the players its sealed forecast counts.
             </p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3 text-[14px]">
-              <Link className="pp-button" href="/">Today&apos;s games</Link>
-              <Link className="pp-button" href="/odds#absences-title">Who the model counts as out</Link>
-            </div>
+            <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">
+              <Link className="pp-link" href="/">Today&apos;s games</Link>
+              <Link className="pp-link" href="/odds#absences-title">Who the model counts as out</Link>
+            </p>
           </div>
         )}
       </div>

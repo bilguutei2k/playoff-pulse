@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: `NBA games, ${formatLongDay(etDate)}`,
     description: `Every NBA game on ${formatLongDay(etDate)} with 548's win probabilities and the market reference.`,
+    alternates: { canonical: `/games/${etDate}` },
   };
 }
 

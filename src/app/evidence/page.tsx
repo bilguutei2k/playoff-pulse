@@ -1,12 +1,18 @@
+import type { Metadata } from "next";
+import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
 import { EvidenceExplorer } from "@/components/forecast/EvidenceExplorer";
 import externalBenchmark538 from "../../../docs/backtest/external-benchmark-538.json";
 import evidence from "../../../docs/backtest/evidence.json";
 
-export const metadata = { title: "Evidence from the 2026 archive" };
+export const metadata: Metadata = {
+  title: "Evidence from the 2026 archive",
+  alternates: { canonical: "/evidence" },
+};
 
 export default function EvidencePage() {
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">
+      <ArchiveHeader current="/evidence" />
       <div className="mx-auto max-w-7xl px-3 py-3 md:px-[18px] md:py-[18px]">
         <EvidenceExplorer />
         <section className="mt-4 border-2 border-[var(--color-border-strong)] bg-[var(--color-bg-secondary)] p-5 md:p-7">

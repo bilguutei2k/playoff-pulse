@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
+import { ArchiveTeamBadge } from "@/components/forecast/ArchiveTeamBadge";
 import backtestSummary from "../../../docs/backtest/summary.json";
 import significance from "../../../docs/backtest/significance.json";
 import evidence from "../../../docs/backtest/evidence.json";
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
   title: "The 2026 retrospective: a traceable NBA playoff forecasting experiment",
   description:
     "A retrospective on building and evaluating an NBA playoff forecasting system: rolling-origin evaluation, bootstrap comparisons, overconfidence analysis, and rejected model changes.",
+  alternates: { canonical: "/retrospective" },
 };
 
 const RESEARCH_MODEL_LABELS: Record<string, string> = {
@@ -85,18 +88,19 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[var(--color-bg-primary)]">
+      <ArchiveHeader current="/retrospective" />
       <div className="mx-auto flex max-w-7xl flex-col gap-[18px] px-3 py-3 md:px-[18px] md:py-[18px]">
         {/* 1. What this is */}
         <section className="pp-card">
           <div className="p-4">
             <div className="pp-kicker text-[var(--color-accent)]">Retrospective</div>
             <h1 className="mt-3 text-2xl font-bold tracking-normal text-[var(--color-text-primary)] md:text-3xl">
-              A traceable NBA playoff forecasting experiment
+              The 2026 retrospective: a traceable NBA playoff forecasting experiment
             </h1>
             <p className="mt-3 max-w-4xl text-sm leading-7 text-[var(--color-text-muted)]">
               I built a forecasting system, evaluated increasingly sophisticated
               variants, and found that a simple rating-and-home-court reference
-              captured most of the measurable skill. This site shows how those
+              captured most of the measurable skill. These pages show how those
               conclusions were reached — and where the forecasts stayed
               overconfident.
             </p>
@@ -344,9 +348,7 @@ export default function Home() {
               <>
                 <div>
                   <div className="flex items-center gap-3">
-                    <span className="pp-team-badge" data-team={scenario.teamA.abbreviation}>
-                      {scenario.teamA.abbreviation}
-                    </span>
+                    <ArchiveTeamBadge code={scenario.teamA.abbreviation} />
                     <span className="pp-number text-3xl font-bold">
                       {formatPercent(scenario.forecast.teamASeriesWinProbability)}
                     </span>
@@ -380,7 +382,7 @@ export default function Home() {
           <div className="pp-section-head">
             <div className="pp-kicker">05 / Verify the work</div>
           </div>
-          <div className="grid gap-6 p-4 lg:grid-cols-3">
+          <div className="grid gap-6 p-4 lg:grid-cols-3 [&>*]:min-w-0">
             <div>
               <h3 className="pp-kicker text-[var(--color-text-primary)]">Raw artifacts</h3>
               <ul className="mt-2 grid gap-1 text-xs leading-6">
