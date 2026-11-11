@@ -49,8 +49,10 @@
     width: 100%;
   }
 
+  /* Baseline, not center: the figures face sits lower in its line box than the name's,
+     so centered boxes put "19%" 3px below "OKC". The swatch stays centered. */
   .title-chart-values > li {
-    align-items: center;
+    align-items: baseline;
     column-gap: 6px;
     display: inline-flex;
     white-space: nowrap;
@@ -58,6 +60,10 @@
 
   .title-chart-values .tl {
     min-height: 24px;
+  }
+
+  .title-chart-values > li > :first-child {
+    align-self: center;
   }
 
   @media (min-width: 40rem) {

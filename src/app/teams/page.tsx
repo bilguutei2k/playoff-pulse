@@ -64,7 +64,7 @@ export default async function TeamsPage() {
                         </span>
                         <TeamLogo teamId={team.teamId} size={28} />
                         <span className="min-w-0">
-                          <span className="block text-[16px] font-bold leading-tight group-hover:underline group-hover:underline-offset-4">
+                          <span className="block text-[15px] font-bold leading-tight group-hover:underline group-hover:underline-offset-4 min-[360px]:text-[16px]">
                             {team.name}
                           </span>
                           <span className="num mt-0.5 block text-13 text-ink-2">

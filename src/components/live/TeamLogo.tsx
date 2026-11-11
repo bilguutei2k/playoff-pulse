@@ -29,7 +29,10 @@ export function TeamLogo({ teamId, size = 20, chip = true }: { teamId: string; s
       width={size}
       height={size}
       unoptimized
-      className="inline-block shrink-0 object-contain"
+      // max-w-none: the base reset's percentage max-width makes an image "compressible", so
+      // every engine counts it as 0px wide in a min-content size (CSS Sizing 3, 5.2.2) and an
+      // auto table column or flex row would leave no room for the logo beside the name.
+      className="inline-block max-w-none shrink-0 object-contain"
     />
   );
 }

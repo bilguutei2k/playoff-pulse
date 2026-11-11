@@ -292,6 +292,13 @@
     grid-template-columns: 20px 28px minmax(0, 1fr) 54px 40px;
   }
 
+  /* 320px phones: "Timberwolves" needs every pixel of the name column. */
+  @media (max-width: 359px) {
+    .ti-row {
+      column-gap: 8px;
+    }
+  }
+
   @media (min-width: 640px) {
     .ti-row {
       column-gap: 14px;
