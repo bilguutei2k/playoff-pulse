@@ -71,7 +71,7 @@ function Figure({ label, value, detail }: { label: React.ReactNode; value: strin
   return (
     <div>
       <dt className="text-13 text-ink-2">{label}</dt>
-      <dd className="num text-[28px] font-extrabold leading-[1.15] sm:text-32">{value}</dd>
+      <dd className="num text-[24px] font-extrabold leading-[1.15] min-[360px]:text-[28px] sm:text-32">{value}</dd>
       {detail ? <dd className="num text-13 text-ink-2">{detail}</dd> : null}
     </div>
   );

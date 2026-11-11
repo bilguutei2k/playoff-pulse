@@ -193,11 +193,11 @@ export function ScenarioLab() {
             </div>
           </div>
           <div className="grid gap-2">
-            <div className="grid grid-cols-[32px_1fr_60px_60px] gap-2 pp-kicker">
+            <div className="grid grid-cols-[40px_1fr_60px_60px] gap-2 pp-kicker">
               <span>Score</span><span /><span className="text-right">Base</span><span className="text-right">Adjusted</span>
             </div>
             {scoreRows.map((row) => (
-              <div key={row.score} className="grid grid-cols-[32px_1fr_60px_60px] items-center gap-2 text-xs">
+              <div key={row.score} className="grid grid-cols-[40px_1fr_60px_60px] items-center gap-2 text-xs">
                 <span className="pp-number font-bold">{row.score}</span>
                 <span className="pp-probbar"><span className="pp-probbar-fill" style={{ width: `${row.adjusted * 100}%` }} /></span>
                 <span className="pp-number text-right">{formatPercent(row.baseline)}</span>

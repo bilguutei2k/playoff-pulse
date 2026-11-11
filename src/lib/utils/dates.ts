@@ -4,16 +4,32 @@
 
 const ET = "America/New_York";
 
+/**
+ * "Nov 1, 9:28 PM EST" from a date-and-time format, joined the same way in every
+ * engine. Engines disagree on the joiner (Safari's ICU prints "Nov 1 at 9:28 PM"), and a
+ * client component that formats on both sides must print exactly what the server did,
+ * or React's hydration fails.
+ */
+function joinDateTime(format: Intl.DateTimeFormat, date: Date): string {
+  const parts = format.formatToParts(date);
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value;
+  const zone = part("timeZoneName");
+  return `${part("month")} ${part("day")}, ${part("hour")}:${part("minute")} ${part("dayPeriod")}${zone ? ` ${zone}` : ""}`;
+}
+
 /** "Nov 1, 9:28 PM EST": a fixed stamp in ET, used before hydration and in tooltips. */
 export function formatStampEt(iso: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
-    timeZone: ET,
-  }).format(new Date(iso));
+  return joinDateTime(
+    new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short",
+      timeZone: ET,
+    }),
+    new Date(iso),
+  );
 }
 
 /** "Nov 1" for an ET calendar date such as "2026-11-01". */
@@ -47,14 +63,17 @@ export function formatClock(iso: string, viewerZone: boolean): string {
 
 /** "Nov 1, 6:48 AM PST" in the viewer's zone, or in ET before hydration. */
 export function formatDateTime(iso: string, viewerZone: boolean): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    timeZoneName: "short",
-    timeZone: viewerZone ? undefined : ET,
-  }).format(new Date(iso));
+  return joinDateTime(
+    new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short",
+      timeZone: viewerZone ? undefined : ET,
+    }),
+    new Date(iso),
+  );
 }
 
 /**
@@ -87,7 +106,7 @@ export function formatTimeEt(iso: string): string {
 
 /** "Nov 2, 9:12 AM ET". */
 export function formatDateTimeEt(iso: string): string {
-  return `${ET_DATE_TIME.format(new Date(iso))} ET`;
+  return `${joinDateTime(ET_DATE_TIME, new Date(iso))} ET`;
 }
 
 /** "Mon" for an ET calendar date. */

@@ -433,26 +433,35 @@
     width: 36px;
   }
 
+  /* Drawn by us, not the system: Safari's native menulist ignores min-height (a 23px
+     target) and adds rounded system chrome beside the site's square controls. */
   .pp-select {
-    background: var(--color-panel);
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-panel)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23111' stroke-width='1.5'/%3E%3C/svg%3E")
+      no-repeat right 12px center;
     border: 1px solid var(--color-line-strong);
+    border-radius: 0;
     color: var(--color-ink);
     font-size: 14px;
     min-height: 40px;
-    padding: 6px 10px;
+    padding: 6px 32px 6px 10px;
     width: 100%;
   }
 
   /*
    * TeamLink (src/components/live/TeamLink.tsx): a team's logo and name. The name
    * never ellipsizes or clips. Hover underlines the name; color stays the text's.
+   * No max-width: a name that wraps still wraps (shrink-to-fit), and in a slot too
+   * narrow for its longest word the link's own box grows past the slot, where layout
+   * checks can see it, instead of the text spilling out of a box that looks fine.
    */
   .tl {
     align-items: center;
     color: inherit;
     column-gap: var(--tl-gap, 0.4em);
     display: inline-flex;
-    max-width: 100%;
     text-decoration: none;
   }
 
@@ -462,9 +471,16 @@
     flex: none;
   }
 
+  /* No min-width: 0 here. A fixed form's text box is never narrower than its text
+     (the longest word, or the whole name under nowrap), so a table column, flex row or
+     grid track sized from content always makes room for it. */
   .tl-t {
     align-self: baseline;
-    min-width: 0;
+  }
+
+  /* The logo keeps its size in intrinsic sizing too (see TeamLogo's max-w-none). */
+  .tl-logo {
+    min-width: max-content;
   }
 
   .tl-code {
