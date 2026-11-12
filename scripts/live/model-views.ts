@@ -3,8 +3,15 @@
 // what the run already computed (the published replay's tracker, current absences, the
 // state's ratings and the reports in use) and the stored player lines, then checked
 // against the same invariants `verify:live` runs. Never a model input, never a seal.
+//
+// The player index also carries the experimental 548 score (src/lib/score/live.ts), from
+// the stored player lines and the committed prior file. A score that cannot be computed
+// never stops the views: the index is published with every score null and the reason is
+// returned as `scoreProblem`. The score never reaches a forecast, a seal or the ledger.
 
 import { lostValue, type AvailabilityTracker, type CurrentAbsence, type ReportPoint } from "../../src/lib/season/injury-model";
+import { liveScoresFromDays, publishedScores, scoreProblems, type PriorPiece, type PublishedScore } from "../../src/lib/score/live";
+import { SCORE_BOOK, SCORE_COEFFICIENTS, SCORE_MODEL_VERSION } from "../../src/lib/score/params";
 import type { InjuryModel } from "../../src/lib/season/live-injury";
 import type { LiveReportDay } from "../../src/lib/season/live-reports";
 import {
@@ -45,6 +52,8 @@ export type ModelViews = {
   players: { index: PlayerIndexFile; teams: Map<string, TeamPlayersFile> };
   /** Path under data/live to exact content. */
   files: Map<string, string>;
+  /** Why the index carries no 548 score this run; null when it does. */
+  scoreProblem: string | null;
 };
 
 export type ViewReport = {
@@ -63,6 +72,29 @@ export function playedInStore(days: readonly PlayerGamesDay[]): (gameId: string,
     if (!game) return null;
     return (game.teams[teamId]?.lines ?? []).some((line) => line[0] === athleteId);
   };
+}
+
+/**
+ * The published 548 scores from the stored days and the prior's pieces, or the reason
+ * there are none: no prior, or a computation or invariant failure. Never throws.
+ */
+export function scoresFrom(
+  season: number,
+  days: readonly PlayerGamesDay[],
+  prior: ReadonlyMap<string, readonly PriorPiece[]> | null,
+  priorProblem: string | null = null,
+): { scores: Map<string, PublishedScore> | null; problem: string | null } {
+  if (!prior) return { scores: null, problem: priorProblem ?? "548 score prior not loaded" };
+  try {
+    const scores = publishedScores(
+      liveScoresFromDays({ season, days, prior, coefficients: SCORE_COEFFICIENTS, params: SCORE_BOOK }),
+    );
+    const problems = scoreProblems(scores);
+    if (problems.length > 0) return { scores: null, problem: `548 score failed its checks: ${problems.slice(0, 3).join("; ")}` };
+    return { scores, problem: null };
+  } catch (error) {
+    return { scores: null, problem: `548 score not computed: ${error instanceof Error ? error.message : String(error)}` };
+  }
 }
 
 /** 548 impact: beta times `lostValue` in the published replay's book, or null if the model has no record. */
@@ -92,6 +124,9 @@ export function buildModelViews(input: {
   nameOf: (athleteId: string) => string | undefined;
   playerDays: readonly PlayerGamesDay[];
   ledger: readonly LedgerRow[];
+  /** The 548 score's prior pieces (scripts/live/score-prior.ts); null when unusable, with the reason. */
+  scorePrior: ReadonlyMap<string, readonly PriorPiece[]> | null;
+  scorePriorProblem: string | null;
 }): ModelViews {
   const reports: SlateReport[] = [input.slateReport, input.nextReport]
     .filter((report): report is ViewReport => report !== null)
@@ -123,12 +158,15 @@ export function buildModelViews(input: {
     resolve: input.resolve,
     playedIn: playedInStore(input.playerDays),
   });
+  const score = scoresFrom(input.season, input.playerDays, input.scorePrior, input.scorePriorProblem);
   const players = derivePlayerFiles({
     season: input.season,
     seasonLabel: input.seasonLabel,
     days: input.playerDays,
     listings,
     impact: impactFrom(input.tracker, input.model),
+    score: (athleteId) => score.scores?.get(athleteId) ?? null,
+    scoreModel: score.scores ? SCORE_MODEL_VERSION : null,
     nameOf: input.nameOf,
   });
 
@@ -151,5 +189,5 @@ export function buildModelViews(input: {
     if (bytes > VIEW_FILE_LIMIT_BYTES) problems.push(`${relative} is ${bytes} bytes, over ${VIEW_FILE_LIMIT_BYTES}`);
   }
   if (problems.length > 0) throw new Error(`model views failed validation: ${problems.slice(0, 5).join("; ")}`);
-  return { projections, teamInjuries, players, files: content };
+  return { projections, teamInjuries, players, files: content, scoreProblem: score.problem };
 }

@@ -5,10 +5,12 @@ import { basisSummary, blockFromList, buildInjuryReport, listPoints } from "@/li
 import {
   buildPlayerPage,
   espnReason,
+  formatScore,
   formatShooting,
   logTotals,
   playerTableRows,
   reportReason,
+  scoreShareText,
   statusSourceLabel,
   statusSourceText,
   statusView,
@@ -81,6 +83,8 @@ const index: PlayerIndexFile = {
   throughEtDate: "2026-11-02",
   storedGames: 2,
   impactLabel: "",
+  scoreLabel: "",
+  scoreModel: "score-test",
   players: [
     {
       athleteId: "100",
@@ -97,6 +101,8 @@ const index: PlayerIndexFile = {
       reportListings: 1,
       reportListingsMissed: 1,
       impact: 2.359,
+      score: -1.25,
+      scoreShare: 0.3,
       lastEtDate: "2026-11-02",
     },
   ],
@@ -229,8 +235,8 @@ describe("player tables", () => {
     expect(totals.shooting).toEqual({ fieldGoal: 0.5, threePoint: 0.25, freeThrow: null });
     const roster = teamRoster(teamFile, index, lists);
     expect(roster.map((row) => row.athleteId)).toEqual(["100", "101"]);
-    expect(roster[0]).toMatchObject({ impact: 2.359, status: { label: "Missed last game" } });
-    expect(roster[1]).toMatchObject({ games: 0, perGame: null, impact: null, status: null });
+    expect(roster[0]).toMatchObject({ impact: 2.359, score: -1.25, status: { label: "Missed last game" } });
+    expect(roster[1]).toMatchObject({ games: 0, perGame: null, impact: null, score: null, status: null });
   });
   it("gives every index player his status on his own team's list", () => {
     const rows = playerTableRows(index, lists);
@@ -244,9 +250,40 @@ describe("player tables", () => {
     expect(page?.log[1].result).toEqual({ won: true, teamScore: 110, opponentScore: 100 });
     expect(page?.listings[0]).toMatchObject({ status: "O", played: false, opponentId: ATL });
     expect(page?.status).toMatchObject({ source: "box-score", points: 0 });
+    expect(page).toMatchObject({ score: -1.25, scoreShare: 0.3, scorePublished: true });
     // Known only from a list: still a page; unknown everywhere: none.
     expect(buildPlayerPage({ athleteId: "200", index, teamFiles: [], lists })?.name).toBe("Tyrese Haliburton");
     expect(buildPlayerPage({ athleteId: "999", index, teamFiles: [teamFile], lists })).toBeNull();
+  });
+});
+
+describe("548 score", () => {
+  it("prints signed to one decimal with a true minus sign, and a dash without a score", () => {
+    expect(formatScore(5.432)).toBe("+5.4");
+    expect(formatScore(-1.249)).toBe("−1.2");
+    expect(formatScore(-0.04)).toBe("0.0");
+    expect(formatScore(0)).toBe("0.0");
+    expect(formatScore(null)).toBe("–");
+  });
+
+  it("says how much of it comes from this season", () => {
+    expect(scoreShareText(null)).toBeNull();
+    expect(scoreShareText(0)).toMatch(/^None of it comes from this season/);
+    expect(scoreShareText(0.004)).toMatch(/^Less than 1% of its weight/);
+    expect(scoreShareText(0.418)).toMatch(/^About 42% of its weight/);
+  });
+
+  it("reads an index from before the score as no score, and a page says it is not published", () => {
+    const { scoreLabel: _label, scoreModel: _model, ...older } = index;
+    void _label;
+    void _model;
+    const legacy = { ...older, players: index.players.map(({ score: _s, scoreShare: _h, ...player }) => (void _s, void _h, player)) } as unknown as PlayerIndexFile;
+    expect(playerTableRows(legacy, null)[0].score).toBeNull();
+    expect(buildPlayerPage({ athleteId: "100", index: legacy, teamFiles: [teamFile], lists })).toMatchObject({
+      score: null,
+      scoreShare: null,
+      scorePublished: false,
+    });
   });
 });
 

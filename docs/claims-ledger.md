@@ -241,9 +241,10 @@ rating model. Each version's sealed record is reported separately.
 - In-game values between quarter ends, including the final minutes, are unvalidated interpolation.
 - A player's "548 impact" (beta times `lostValue` in the published replay's player book: the points
   of margin the model takes off his team per game while he is out) is the model's estimate from box
-  scores. It must be labelled as the model's estimate and is not validated per player: the v2 test
-  gated team-level absence terms on game outcomes, never any single player's value, and minutes
-  redistribution is not modeled.
+  scores through Game Score. It must be labelled as the model's estimate and is not validated per
+  player: the v2 test gated team-level absence terms on game outcomes, never any single player's
+  value, and minutes redistribution is not modeled. It is the number the forecast uses, shown on the
+  injury pages and below the 548 score on player pages; it is not the 548 score (next section).
 - Projections (games not yet sealed, through six days ahead) are not forecasts on the record. They
   must be labelled as projections with their basis (a stored report by the seal rules, or current
   absences), are never scored, and carry no performance claim of their own.
@@ -278,3 +279,53 @@ rating model. Each version's sealed record is reported separately.
 - That a player's 548 impact is validated, measures his true value, or ranks players reliably.
 - Betting value of any kind, official NBA data, or any affiliation with the NBA. The injury report
   PDFs are the NBA's public documents, read unofficially.
+
+## 548 score (Stage 1, `score-2026.27-s1`; display only)
+
+Sources: `docs/score/registration.md` (the frozen test and its pass rule), `docs/score/fit.json`
+(the frozen weights and book, hashed in `docs/score/freeze.json`), `docs/score/evaluation.json` (the
+one test run) and `docs/score/evaluation-training.json` (training era, optimistic). These claims
+appear on `/players`, `/players/{athleteId}`, team pages and `/how-it-works#score`. The score is a
+signed box-score rating in points per 100 possessions against an average player. It is not a
+forecast input, never changes a forecast, a seal, the ledger or the injury model, and has no record
+of its own.
+
+**May be stated plainly, with the numbers:**
+
+- In a test registered and frozen before any test season was read, and run once: predicting each
+  team's net rating per 100 possessions from its players' ratings at the end of the season before
+  (weighted by the minutes then played), over 180 team-seasons from 2020-21 to 2025-26, the 548
+  score's root-mean-square error was 3.28 against 4.89 for the rating part of the current number
+  (Game Score per minute, as 548 impact uses it). It passed all three registered conditions: at most
+  0.90 times the current number's error (ratio 0.672; bootstrap 95% interval 0.604 to 0.746 over
+  team-seasons, 0.612 to 0.730 over seasons), below team quality alone (3.66) and below last
+  season's team net rating (4.43).
+- Game level, reported and not gating: with ratings held before each game, mean absolute error on
+  7,230 test-season games was 10.77 points against 11.12 for the current number.
+- Most of the gain over the current number comes from adding team context, not from the new
+  weights: Game Score's own weights inside the same team frame scored 3.34.
+- A position-aware version scored 3.26, 0.03 better; the published score uses one set of weights
+  for every position by the owner's choice.
+- Measured gaps against three-season adjusted plus-minus (RAPM), test era, score mapped through its
+  team line: defence-first players about 2.6 points per 100 too low, low-usage role players about
+  1.2 too low, high-assist centres about 1.1 too low.
+
+**Required labels and disclosures, wherever the number appears:**
+
+- Experimental, from box scores only, not validated per player, and not used by the forecast
+  (`SCORE_LABEL` in `src/lib/season/player-stats.ts`).
+- Where it is explained: the test is about team-level prediction over those 180 team-seasons and
+  says nothing about any one player; it cannot see most defence; early in a season most of a score
+  comes from earlier seasons (the player page shows the share from this season).
+- "548 impact" stays the number the forecast uses, from Game Score, and must not be called the 548
+  score or said to come from it.
+
+**Never claim:**
+
+- That the 548 score ranks players reliably, or is validated for any single player.
+- That it measures defence, or impact beyond the box score (Stage 2, the on-court layer, is not
+  built or tested).
+- That it beats or matches any public metric (BPM, EPM, RAPM, RAPTOR, LEBRON or others); it was
+  compared only with the site's own Game Score number and team baselines.
+- That it feeds, improves or changes the forecast, the injury model, a seal or the record.
+- Any training-era number as a result: those seasons fitted the weights and are optimistic.

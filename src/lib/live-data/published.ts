@@ -52,7 +52,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import bundledStateJson from "../../../data/live/state.json";
 import type { LiveReportDay } from "@/lib/season/live-reports";
-import type { PlayerIndexFile, TeamPlayersFile } from "@/lib/season/player-stats";
+import { SCORE_LABEL, type PlayerIndexFile, type TeamPlayersFile } from "@/lib/season/player-stats";
 import type { ProjectionsFile, TeamInjuriesFile } from "@/lib/season/projections";
 import {
   deriveSiteFiles,
@@ -323,11 +323,40 @@ const parseTeamInjuries = (text: string, label: string) =>
     raw.teams.every((team) => isRecord(team) && isString(team.teamId) && Array.isArray(team.rows) && typeof team.absencePoints === "number"),
   );
 
-const parsePlayerIndex = (text: string, label: string) =>
-  parseView<PlayerIndexFile>(text, "player index", label, (raw) =>
+const isOptionalScore = (value: unknown) => value === undefined || value === null || (typeof value === "number" && Number.isFinite(value));
+
+/**
+ * The player index. Files written before the 548 score have no score keys (the bundled
+ * copy, and live-data until the job's first run with the score): they read as an index
+ * whose scores are all null, with no score model, so pages show a dash.
+ */
+const parsePlayerIndex = (text: string, label: string): PlayerIndexFile => {
+  const index = parseView<PlayerIndexFile>(text, "player index", label, (raw) =>
     Array.isArray(raw.players) &&
-    raw.players.every((player) => isRecord(player) && isString(player.athleteId) && isString(player.name) && isString(player.teamId)),
+    (raw.scoreLabel === undefined || isString(raw.scoreLabel)) &&
+    (raw.scoreModel === undefined || raw.scoreModel === null || isString(raw.scoreModel)) &&
+    raw.players.every(
+      (player) =>
+        isRecord(player) &&
+        isString(player.athleteId) &&
+        isString(player.name) &&
+        isString(player.teamId) &&
+        isOptionalScore(player.score) &&
+        (player.scoreShare === undefined || player.scoreShare === null || isProbability(player.scoreShare)),
+    ),
   );
+  const scored = index.scoreModel !== undefined && index.scoreModel !== null;
+  return {
+    ...index,
+    scoreLabel: index.scoreLabel ?? SCORE_LABEL,
+    scoreModel: index.scoreModel ?? null,
+    players: index.players.map((player) => ({
+      ...player,
+      score: scored ? (player.score ?? null) : null,
+      scoreShare: scored && player.score !== undefined && player.score !== null ? (player.scoreShare ?? null) : null,
+    })),
+  };
+};
 
 const parseTeamPlayers = (text: string, label: string, teamId: string) =>
   parseView<TeamPlayersFile>(text, `player file for team ${teamId}`, label, (raw) =>
@@ -756,7 +785,7 @@ export const getTeamInjuryLists = cache(async (): Promise<TeamInjuriesFile | nul
   return loadView(siteTeamInjuriesPath(state.seasonLabel), (text) => parseTeamInjuries(text, state.seasonLabel));
 });
 
-/** Every player of the live season with averages, shooting and 548 impact (`PlayerIndexFile`). Null when not published. */
+/** Every player of the live season with averages, shooting, 548 impact and the 548 score (`PlayerIndexFile`). Null when not published. */
 export const getPlayerIndex = cache(async (): Promise<PlayerIndexFile | null> => {
   const { value: state } = await loadState();
   return loadView(sitePlayerIndexPath(state.seasonLabel), (text) => parsePlayerIndex(text, state.seasonLabel));

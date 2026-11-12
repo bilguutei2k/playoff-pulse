@@ -7,8 +7,8 @@ import { SortHeader } from "@/components/live/SortHeader";
 import { TeamLink } from "@/components/live/TeamLink";
 import { useQueryState } from "@/components/live/useQueryState";
 import { parsePlayersQuery, serializePlayersQuery, type PlayersQuery, type PlayersQueryOptions } from "@/lib/view/filters";
-import { IMPACT_LABEL } from "@/lib/season/player-stats";
-import { formatAverage, formatImpact, formatShooting, type PlayerTableRow, type StatLine } from "@/lib/view/players";
+import { SCORE_LABEL } from "@/lib/season/player-stats";
+import { formatAverage, formatScore, formatShooting, type PlayerTableRow, type StatLine } from "@/lib/view/players";
 
 export type SortKey =
   | "name"
@@ -19,7 +19,7 @@ export type SortKey =
   | "fieldGoal"
   | "threePoint"
   | "freeThrow"
-  | "impact"
+  | "score"
   | "status";
 
 type Column = {
@@ -87,14 +87,14 @@ const COLUMNS: Column[] = [
   shooting("threePoint", "3P%", "Three-point percentage"),
   shooting("freeThrow", "FT%", "Free throw percentage"),
   {
-    key: "impact",
-    label: "548 impact",
-    title: "548 impact",
-    hint: `${IMPACT_LABEL} It comes from box scores and is not a ranking of players.`,
-    unit: "548 impact",
+    key: "score",
+    label: "548 score",
+    title: "548 score",
+    hint: `${SCORE_LABEL} It is not a reliable ranking of players and cannot see most defence. A dash means no box score this season or in the three before.`,
+    unit: "548 score",
     unitFirst: true,
-    value: (row) => row.impact,
-    cell: (row) => formatImpact(row.impact),
+    value: (row) => row.score,
+    cell: (row) => formatScore(row.score),
   },
 ];
 
@@ -115,7 +115,7 @@ const SORT_KEYS = [
   "fieldGoal",
   "threePoint",
   "freeThrow",
-  "impact",
+  "score",
   "status",
 ] as const satisfies ReadonlyArray<SortKey>;
 
@@ -123,7 +123,7 @@ const SORT_KEYS = [
 const defaultDescending = (key: string) => !(key === "name" || key === "team" || key === "status");
 
 /** The phone's summary line always shows these; a sort by another column adds it. */
-const SUMMARY_KEYS: SortKey[] = ["points", "rebounds", "assists", "impact"];
+const SUMMARY_KEYS: SortKey[] = ["points", "rebounds", "assists", "score"];
 
 /** Accents and case dropped, for the name search. */
 function searchKey(value: string): string {
@@ -403,7 +403,7 @@ export function PlayersTable({
                           <span className="max-sm:hidden">{row.position ?? " "}</span>
                           <span className="sm:hidden">
                             {row.perGame === null ? <span>No games this season · </span> : null}
-                            {(row.perGame === null ? summaryColumns.filter((column) => column.key === "impact") : summaryColumns).map((column, index) => (
+                            {(row.perGame === null ? summaryColumns.filter((column) => column.key === "score") : summaryColumns).map((column, index) => (
                               <span key={column.key}>
                                 {index > 0 ? " · " : ""}
                                 <span className={`whitespace-nowrap ${column.key === sort.key ? "font-semibold text-ink" : ""}`}>

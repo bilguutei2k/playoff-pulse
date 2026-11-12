@@ -10,7 +10,9 @@
 // Stored (by the job, data/live/players/{seasonLabel}/{etDate}.json): `PlayerGamesDay`.
 // Derived for the site (data/live/site/{seasonLabel}/players/):
 //   index.json            `PlayerIndexFile`: every player, per-game averages, shooting,
-//                         injury-report listings and the model's "548 impact";
+//                         injury-report listings, the model's "548 impact" and the
+//                         experimental "548 score" (injected; this folder never imports
+//                         src/lib/score/);
 //   teams/{teamId}.json   `TeamPlayersFile`: the team's players with every game line or
 //                         did-not-play row for that team, and their report listings.
 
@@ -314,6 +316,13 @@ export function injuryListings(input: {
 export const IMPACT_LABEL =
   "548 impact: the model's estimate of the points of margin his team loses per game without him. Not validated per player.";
 
+/**
+ * The label the site must show beside a 548 score. The score is computed in
+ * src/lib/score/live.ts and injected by the job; it is never a forecast input.
+ */
+export const SCORE_LABEL =
+  "548 score: experimental, from box scores only. An estimate of the points per 100 possessions his team gains with him against an average player. Not validated per player, and not used by the forecast.";
+
 export type PlayerAverages = {
   minutes: number;
   points: number;
@@ -365,6 +374,15 @@ export type PlayerIndexEntry = {
    * model has no record of him. The model's estimate, never validated per player.
    */
   impact: number | null;
+  /**
+   * 548 score: points per 100 possessions against an average player, from box scores
+   * (this season's to date and the last three seasons'), to three decimals. Null when he
+   * has no box-score piece at all, or when the score could not be computed this run
+   * (`scoreModel` null). Experimental; never validated per player; not a forecast input.
+   */
+  score: number | null;
+  /** The share of the score's weight from this season, 0 to 1, three decimals; null with no score. */
+  scoreShare: number | null;
   /** ET date of his latest stored game or listing. */
   lastEtDate: string;
 };
@@ -378,6 +396,9 @@ export type PlayerIndexFile = {
   /** Finished games of the season with a stored line set. */
   storedGames: number;
   impactLabel: string;
+  scoreLabel: string;
+  /** The score's model version (`SCORE_MODEL_VERSION`); null when no score was computed this run. */
+  scoreModel: string | null;
   /** Sorted by name, then athlete ID. */
   players: PlayerIndexEntry[];
 };
@@ -436,7 +457,9 @@ const ratio = (made: number, attempted: number) => (attempted > 0 ? three(made /
 
 /**
  * The player index and per-team files from the stored days and the report listings.
- * `impact` gives the 548 impact by athlete ID; `nameOf` names report-only players.
+ * `impact` gives the 548 impact by athlete ID; `score` the 548 score and its share from
+ * this season (both already rounded), under `scoreModel` (null: no score this run, so
+ * every score is null); `nameOf` names report-only players.
  * Deterministic: the same inputs give the same bytes.
  */
 export function derivePlayerFiles(input: {
@@ -445,6 +468,8 @@ export function derivePlayerFiles(input: {
   days: readonly PlayerGamesDay[];
   listings: readonly ResolvedListing[];
   impact: (athleteId: string) => number | null;
+  score: (athleteId: string) => { score: number; share: number } | null;
+  scoreModel: string | null;
   nameOf: (athleteId: string) => string | undefined;
 }): { index: PlayerIndexFile; teams: Map<string, TeamPlayersFile> } {
   const days = [...input.days].sort((a, b) => a.etDate.localeCompare(b.etDate));
@@ -602,6 +627,7 @@ export function derivePlayerFiles(input: {
 
   const entries: PlayerIndexEntry[] = [...players.values()].map((player) => {
     const sums = player.sums;
+    const score = input.scoreModel === null ? null : input.score(player.athleteId);
     const per = (value: number) => one(value / player.games);
     return {
       athleteId: player.athleteId,
@@ -644,6 +670,8 @@ export function derivePlayerFiles(input: {
       reportListings: player.listings,
       reportListingsMissed: player.listingsMissed,
       impact: input.impact(player.athleteId),
+      score: score ? score.score : null,
+      scoreShare: score ? score.share : null,
       lastEtDate: player.lastEtDate,
     };
   });
@@ -672,6 +700,8 @@ export function derivePlayerFiles(input: {
       throughEtDate: days.filter((day) => Object.keys(day.games).length > 0).at(-1)?.etDate ?? null,
       storedGames: games.length,
       impactLabel: IMPACT_LABEL,
+      scoreLabel: SCORE_LABEL,
+      scoreModel: input.scoreModel,
       players: entries,
     },
     teams: teamFiles,

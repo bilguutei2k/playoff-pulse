@@ -1,0 +1,3570 @@
+{
+  "version": 2,
+  "trainingSeasons": [
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020
+  ],
+  "inputs": {
+    "files": {
+      "2011": "ac252c57d8484cfb2101ff58eede85cbae6981271fd0c387447402b9a95340fb",
+      "2012": "ae2bab8ec3fc4139da49cc3d9e0bea4f2c03bc55d5b941d48d57eabeb356b2a7",
+      "2013": "e03ea4f24c2d0ce5d5fb6221dd7f05af4a9eacef656cd20b071516faccf0911d",
+      "2014": "34dffb371ce5cc67e7d3b84349d5a4b199d2cb30bea0caafcf15490233bce21d",
+      "2015": "325a9b63a3ee794921d3cd15a4b274ed4bfde0e77fb25b3ceee0406dc6ec2dc6",
+      "2016": "7989bb2598f6681f6348fdf740325acf16ecdf167659597780222fd7d08c669c",
+      "2017": "c196dfb8e447f7f6f3355797e585ccbce1bdab271a54aa41bd665d5d30513c09",
+      "2018": "114699b1d3eb3a7ce16dd13d821b01ac3e987ed339d11ba4bc51e5f11014dc3b",
+      "2019": "0aa36775083c8c0eeddf787f35bc187632d4fc835ac2c23a0bb3d52770d0784c",
+      "2020": "78ccfe781ad618fc97eddf18bc4636be543e8bd0f85771f619846da80a37a898"
+    },
+    "combined": "4aec8aab861a476f829b6d0b4c9f1fdb1f96b8da3ae475f3def0787041a91ef3"
+  },
+  "settings": {
+    "folds": 5,
+    "rapmSeed": "548-rapm",
+    "rapmLadder": [
+      250,
+      500,
+      1000,
+      2000,
+      4000,
+      8000,
+      16000
+    ],
+    "rapmStep": 2,
+    "lineupSeed": "548-lineup",
+    "lineupAlphas": [
+      0,
+      0.0001,
+      0.001,
+      0.01,
+      0.1
+    ],
+    "roleAlphas": [
+      0.01,
+      0.1,
+      1,
+      10
+    ],
+    "roleMinimumMultiple": 10,
+    "crossCheckSeed": "548-cross-check",
+    "crossCheckAlphas": [
+      0,
+      0.001,
+      0.01,
+      0.1,
+      1
+    ],
+    "crossCheckMinPossessions": 5000
+  },
+  "coverage": [
+    {
+      "season": 2011,
+      "games": 1230,
+      "gamesWithStints": 1141,
+      "stints": 33183,
+      "rejected": {
+        "lineup-count": 3,
+        "minutes": 1,
+        "period-start": 8,
+        "plays": 2,
+        "plus-minus": 67,
+        "points": 8
+      },
+      "teams": 30,
+      "players": 467,
+      "positions": {
+        "C": 7297,
+        "F": 3913,
+        "G": 3807,
+        "NA": 68,
+        "PF": 5618,
+        "PG": 4631,
+        "SF": 5130,
+        "SG": 4882
+      }
+    },
+    {
+      "season": 2012,
+      "games": 990,
+      "gamesWithStints": 941,
+      "stints": 27135,
+      "rejected": {
+        "minutes": 1,
+        "period-start": 14,
+        "plays": 3,
+        "plus-minus": 27,
+        "points": 4
+      },
+      "teams": 30,
+      "players": 483,
+      "positions": {
+        "C": 5503,
+        "F": 3574,
+        "G": 3693,
+        "NA": 66,
+        "PF": 4419,
+        "PG": 4075,
+        "SF": 3690,
+        "SG": 3505
+      }
+    },
+    {
+      "season": 2013,
+      "games": 1063,
+      "gamesWithStints": 613,
+      "stints": 17755,
+      "rejected": {
+        "lineup-count": 28,
+        "minutes": 15,
+        "period-start": 64,
+        "plus-minus": 31,
+        "points": 312
+      },
+      "teams": 28,
+      "players": 444,
+      "positions": {
+        "C": 4149,
+        "F": 3366,
+        "G": 4006,
+        "NA": 2,
+        "PF": 3135,
+        "PG": 2818,
+        "SF": 2398,
+        "SG": 2452
+      }
+    },
+    {
+      "season": 2014,
+      "games": 1067,
+      "gamesWithStints": 1009,
+      "stints": 29658,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 2,
+        "period-start": 7,
+        "plays": 1,
+        "plus-minus": 26,
+        "points": 20
+      },
+      "teams": 28,
+      "players": 452,
+      "positions": {
+        "C": 4249,
+        "F": 4116,
+        "G": 4252,
+        "PF": 2621,
+        "PG": 2718,
+        "SF": 2085,
+        "SG": 2236
+      }
+    },
+    {
+      "season": 2015,
+      "games": 1068,
+      "gamesWithStints": 987,
+      "stints": 30130,
+      "rejected": {
+        "lineup-count": 4,
+        "minutes": 1,
+        "period-start": 1,
+        "plays": 1,
+        "plus-minus": 34,
+        "points": 40
+      },
+      "teams": 28,
+      "players": 463,
+      "positions": {
+        "C": 4218,
+        "F": 4682,
+        "G": 4813,
+        "PF": 2660,
+        "PG": 2214,
+        "SF": 2157,
+        "SG": 1936
+      }
+    },
+    {
+      "season": 2016,
+      "games": 1068,
+      "gamesWithStints": 460,
+      "stints": 13887,
+      "rejected": {
+        "lineup-count": 5,
+        "period-start": 12,
+        "plus-minus": 24,
+        "points": 567
+      },
+      "teams": 28,
+      "players": 446,
+      "positions": {
+        "C": 4333,
+        "F": 5108,
+        "G": 5714,
+        "PF": 2118,
+        "PG": 1975,
+        "SF": 1656,
+        "SG": 1843
+      }
+    },
+    {
+      "season": 2017,
+      "games": 1067,
+      "gamesWithStints": 984,
+      "stints": 29912,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 6,
+        "minutes": 1,
+        "period-start": 5,
+        "plus-minus": 45,
+        "points": 24
+      },
+      "teams": 28,
+      "players": 462,
+      "positions": {
+        "C": 4145,
+        "F": 5901,
+        "G": 6401,
+        "PF": 1657,
+        "PG": 1598,
+        "SF": 1492,
+        "SG": 1559
+      }
+    },
+    {
+      "season": 2018,
+      "games": 1067,
+      "gamesWithStints": 916,
+      "stints": 27540,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 29,
+        "minutes": 5,
+        "period-start": 65,
+        "plays": 6,
+        "plus-minus": 36,
+        "points": 8
+      },
+      "teams": 28,
+      "players": 509,
+      "positions": {
+        "C": 3780,
+        "F": 6489,
+        "G": 7013,
+        "PF": 1349,
+        "PG": 1265,
+        "SF": 1371,
+        "SG": 1433
+      }
+    },
+    {
+      "season": 2019,
+      "games": 1230,
+      "gamesWithStints": 1094,
+      "stints": 33465,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 16,
+        "minutes": 28,
+        "period-start": 72,
+        "plus-minus": 13,
+        "points": 5
+      },
+      "teams": 30,
+      "players": 538,
+      "positions": {
+        "C": 4122,
+        "F": 6979,
+        "G": 8340,
+        "PF": 1544,
+        "PG": 1612,
+        "SF": 1844,
+        "SG": 1699
+      }
+    },
+    {
+      "season": 2020,
+      "games": 1059,
+      "gamesWithStints": 987,
+      "stints": 31267,
+      "rejected": {
+        "box": 1,
+        "lineup-count": 16,
+        "minutes": 1,
+        "period-start": 47,
+        "plays": 1,
+        "plus-minus": 5,
+        "points": 1
+      },
+      "teams": 30,
+      "players": 530,
+      "positions": {
+        "C": 3400,
+        "F": 5958,
+        "G": 7196,
+        "PF": 1217,
+        "PG": 1394,
+        "SF": 1752,
+        "SG": 1480
+      }
+    }
+  ],
+  "rapm": {
+    "windows": [
+      {
+        "seasons": [
+          2012,
+          2013,
+          2014
+        ],
+        "players": 645,
+        "rows": 135585,
+        "cells": [
+          {
+            "offence": 250,
+            "defence": 250,
+            "loss": 3674.578878917728
+          },
+          {
+            "offence": 500,
+            "defence": 500,
+            "loss": 3670.049557327846
+          },
+          {
+            "offence": 1000,
+            "defence": 1000,
+            "loss": 3666.3517260017
+          },
+          {
+            "offence": 2000,
+            "defence": 2000,
+            "loss": 3664.666533678576
+          },
+          {
+            "offence": 4000,
+            "defence": 4000,
+            "loss": 3665.7632875510385
+          },
+          {
+            "offence": 8000,
+            "defence": 8000,
+            "loss": 3669.43069826018
+          },
+          {
+            "offence": 16000,
+            "defence": 16000,
+            "loss": 3674.6934156316165
+          },
+          {
+            "offence": 1000,
+            "defence": 2000,
+            "loss": 3665.269098288482
+          },
+          {
+            "offence": 1000,
+            "defence": 4000,
+            "loss": 3665.4898081845868
+          },
+          {
+            "offence": 2000,
+            "defence": 1000,
+            "loss": 3665.744891364889
+          },
+          {
+            "offence": 2000,
+            "defence": 4000,
+            "loss": 3664.8768521044894
+          },
+          {
+            "offence": 4000,
+            "defence": 1000,
+            "loss": 3666.6927516806486
+          },
+          {
+            "offence": 4000,
+            "defence": 2000,
+            "loss": 3665.5923636417665
+          }
+        ],
+        "best": {
+          "offence": 2000,
+          "defence": 2000,
+          "loss": 3664.666533678576
+        },
+        "atLadderEdge": false,
+        "homeOffence": 3.0728679946922886
+      },
+      {
+        "seasons": [
+          2015,
+          2016,
+          2017
+        ],
+        "players": 643,
+        "rows": 134568,
+        "cells": [
+          {
+            "offence": 250,
+            "defence": 250,
+            "loss": 3900.2841038678253
+          },
+          {
+            "offence": 500,
+            "defence": 500,
+            "loss": 3895.992208180554
+          },
+          {
+            "offence": 1000,
+            "defence": 1000,
+            "loss": 3892.5149506361436
+          },
+          {
+            "offence": 2000,
+            "defence": 2000,
+            "loss": 3890.9499972223016
+          },
+          {
+            "offence": 4000,
+            "defence": 4000,
+            "loss": 3892.027243227971
+          },
+          {
+            "offence": 8000,
+            "defence": 8000,
+            "loss": 3895.685274867798
+          },
+          {
+            "offence": 16000,
+            "defence": 16000,
+            "loss": 3901.264944366341
+          },
+          {
+            "offence": 1000,
+            "defence": 2000,
+            "loss": 3891.453691144048
+          },
+          {
+            "offence": 1000,
+            "defence": 4000,
+            "loss": 3891.5003330411478
+          },
+          {
+            "offence": 2000,
+            "defence": 1000,
+            "loss": 3892.030843939228
+          },
+          {
+            "offence": 2000,
+            "defence": 4000,
+            "loss": 3890.9489103873675
+          },
+          {
+            "offence": 4000,
+            "defence": 1000,
+            "loss": 3893.2222097311665
+          },
+          {
+            "offence": 4000,
+            "defence": 2000,
+            "loss": 3892.100240816204
+          }
+        ],
+        "best": {
+          "offence": 2000,
+          "defence": 4000,
+          "loss": 3890.9489103873675
+        },
+        "atLadderEdge": false,
+        "homeOffence": 2.812251372918039
+      },
+      {
+        "seasons": [
+          2018,
+          2019,
+          2020
+        ],
+        "players": 767,
+        "rows": 169526,
+        "cells": [
+          {
+            "offence": 250,
+            "defence": 250,
+            "loss": 4004.8288504238017
+          },
+          {
+            "offence": 500,
+            "defence": 500,
+            "loss": 4000.6418641499013
+          },
+          {
+            "offence": 1000,
+            "defence": 1000,
+            "loss": 3996.7902034532094
+          },
+          {
+            "offence": 2000,
+            "defence": 2000,
+            "loss": 3994.2364855346577
+          },
+          {
+            "offence": 4000,
+            "defence": 4000,
+            "loss": 3993.8648430033354
+          },
+          {
+            "offence": 8000,
+            "defence": 8000,
+            "loss": 3995.86580600218
+          },
+          {
+            "offence": 16000,
+            "defence": 16000,
+            "loss": 3999.6646485041556
+          },
+          {
+            "offence": 2000,
+            "defence": 4000,
+            "loss": 3993.711996371826
+          },
+          {
+            "offence": 2000,
+            "defence": 8000,
+            "loss": 3994.235716775041
+          },
+          {
+            "offence": 4000,
+            "defence": 2000,
+            "loss": 3994.4079930917196
+          },
+          {
+            "offence": 4000,
+            "defence": 8000,
+            "loss": 3994.349568490566
+          },
+          {
+            "offence": 8000,
+            "defence": 2000,
+            "loss": 3996.009186993301
+          },
+          {
+            "offence": 8000,
+            "defence": 4000,
+            "loss": 3995.432938653732
+          }
+        ],
+        "best": {
+          "offence": 2000,
+          "defence": 4000,
+          "loss": 3993.711996371826
+        },
+        "atLadderEdge": false,
+        "homeOffence": 2.223553860925814
+      }
+    ],
+    "frozenPenalties": {
+      "offence": 2000,
+      "defence": 4000
+    }
+  },
+  "primary": {
+    "rows": 265457,
+    "cv": [
+      {
+        "alpha": 0,
+        "roleAlpha": 0,
+        "loss": 10105.191558618255
+      },
+      {
+        "alpha": 0.0001,
+        "roleAlpha": 0,
+        "loss": 10105.190937168856
+      },
+      {
+        "alpha": 0.001,
+        "roleAlpha": 0,
+        "loss": 10105.186505731432
+      },
+      {
+        "alpha": 0.01,
+        "roleAlpha": 0,
+        "loss": 10105.22169549584
+      },
+      {
+        "alpha": 0.1,
+        "roleAlpha": 0,
+        "loss": 10106.52509264182
+      }
+    ],
+    "alpha": 0.001,
+    "home": 2.6383224237669958,
+    "beta": {
+      "points": 0.48030929275536516,
+      "fieldGoalsAttempted": -0.41542755462374464,
+      "freeThrowsAttempted": 0.0697059087738173,
+      "threePointersMade": 0.7754914700092205,
+      "assists": 0.7385756414415388,
+      "turnovers": -0.8712462397697645,
+      "offensiveRebounds": 0.2530402697150996,
+      "defensiveRebounds": 0.21718030845939018,
+      "steals": 1.1669162279062186,
+      "blocks": 0.40488243606508434,
+      "fouls": -0.3537907611499167
+    },
+    "meanSquaredError": 10104.020108408715
+  },
+  "roleAware": {
+    "rows": 265457,
+    "alpha": 0.001,
+    "cv": [
+      {
+        "alpha": 0.001,
+        "roleAlpha": 0.01,
+        "loss": 10104.747159741366
+      },
+      {
+        "alpha": 0.001,
+        "roleAlpha": 0.1,
+        "loss": 10104.717328812629
+      },
+      {
+        "alpha": 0.001,
+        "roleAlpha": 1,
+        "loss": 10104.833768179495
+      },
+      {
+        "alpha": 0.001,
+        "roleAlpha": 10,
+        "loss": 10105.104819677294
+      }
+    ],
+    "roleAlpha": 0.1,
+    "home": 2.641090301152903,
+    "beta": {
+      "points": 0.4844431241953021,
+      "fieldGoalsAttempted": -0.4323852221588612,
+      "freeThrowsAttempted": 0.08085005144014638,
+      "threePointersMade": 0.8007209600425351,
+      "assists": 0.8708346558620629,
+      "turnovers": -0.8587735050960734,
+      "offensiveRebounds": 0.3422831773288793,
+      "defensiveRebounds": 0.19730837663807937,
+      "steals": 0.9795292735267588,
+      "blocks": 0.5402181867923284,
+      "fouls": -0.34187438241098583
+    },
+    "role": {
+      "assists": 0.096544343157589,
+      "offensiveRebounds": -0.04722906860141658,
+      "defensiveRebounds": 0.024529789102422636,
+      "steals": -0.1313187567474277,
+      "blocks": -0.11985487760733168
+    }
+  },
+  "gameScoreFrame": {
+    "rows": 265457,
+    "cv": [
+      {
+        "alpha": 0,
+        "roleAlpha": 0,
+        "loss": 10112.346415149364
+      },
+      {
+        "alpha": 0.0001,
+        "roleAlpha": 0,
+        "loss": 10112.346408259515
+      },
+      {
+        "alpha": 0.001,
+        "roleAlpha": 0,
+        "loss": 10112.346376067708
+      },
+      {
+        "alpha": 0.01,
+        "roleAlpha": 0,
+        "loss": 10112.348947827497
+      },
+      {
+        "alpha": 0.1,
+        "roleAlpha": 0,
+        "loss": 10112.61359044947
+      }
+    ],
+    "alpha": 0.001,
+    "home": 2.6758930970777124,
+    "s": 0.5083295421776121,
+    "meanSquaredError": 10112.24326213763
+  },
+  "crossCheck": {
+    "rows": 3188,
+    "minPossessions": 5000,
+    "cv": [
+      {
+        "alpha": 0,
+        "loss": 3.5610415686480525
+      },
+      {
+        "alpha": 0.001,
+        "loss": 3.561188411481996
+      },
+      {
+        "alpha": 0.01,
+        "loss": 3.5707501412414193
+      },
+      {
+        "alpha": 0.1,
+        "loss": 3.6907054169791134
+      },
+      {
+        "alpha": 1,
+        "loss": 4.166865925574494
+      }
+    ],
+    "alpha": 0,
+    "intercept": 0.7998349308089207,
+    "beta": {
+      "points": 0.3113068995394631,
+      "fieldGoalsAttempted": -0.2886609343363244,
+      "freeThrowsAttempted": 0.02340119180744146,
+      "threePointersMade": 0.38902140401549495,
+      "assists": 0.3307251989995328,
+      "turnovers": -0.6389343423101733,
+      "offensiveRebounds": 0.16759410185116694,
+      "defensiveRebounds": 0.14697078802149516,
+      "steals": 0.9692100955673062,
+      "blocks": 0.28300961047759754,
+      "fouls": -0.1565039486039482
+    }
+  },
+  "book": {
+    "method": "leave-one-season-out RMSE of game margins, home + g·Δ(Σ share·v) + c·Δu, over training games, ratings held before each game; ties keep the earlier grid point",
+    "grid": {
+      "decay": [
+        0,
+        0.25,
+        0.5,
+        0.75,
+        1
+      ],
+      "pseudoPossessions": [
+        0,
+        250,
+        500,
+        1000,
+        2000,
+        4000,
+        8000
+      ],
+      "replacement": [
+        -10,
+        -8,
+        -7,
+        -6,
+        -5,
+        -4,
+        -3,
+        -2,
+        -1,
+        0,
+        1
+      ]
+    },
+    "table": [
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -10,
+        "rmse": 12.781511526193531,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -8,
+        "rmse": 12.747261408829939,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -7,
+        "rmse": 12.731985020363094,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -6,
+        "rmse": 12.718124999363111,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -5,
+        "rmse": 12.70580754488635,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -4,
+        "rmse": 12.695146027195637,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -3,
+        "rmse": 12.686238343502461,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -2,
+        "rmse": 12.679164586991277,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": -1,
+        "rmse": 12.673985128703057,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": 0,
+        "rmse": 12.67073919535621,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 0,
+        "replacement": 1,
+        "rmse": 12.669444004276578,
+        "endpointRmse": 2.861687304006657
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -10,
+        "rmse": 12.496487424406787,
+        "endpointRmse": 2.841898038557384
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -8,
+        "rmse": 12.479756695810021,
+        "endpointRmse": 2.841178230407382
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -7,
+        "rmse": 12.474054270509278,
+        "endpointRmse": 2.841757595788609
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -6,
+        "rmse": 12.470468526304327,
+        "endpointRmse": 2.842987010623018
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -5,
+        "rmse": 12.469261698973279,
+        "endpointRmse": 2.844882235851704
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -4,
+        "rmse": 12.47069311189488,
+        "endpointRmse": 2.8474571104159128
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -3,
+        "rmse": 12.47501099494201,
+        "endpointRmse": 2.850723387806343
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -2,
+        "rmse": 12.48244308237166,
+        "endpointRmse": 2.854690584693557
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": -1,
+        "rmse": 12.493186309953051,
+        "endpointRmse": 2.8593658441841936
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": 0,
+        "rmse": 12.507396097560344,
+        "endpointRmse": 2.864753816113003
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 250,
+        "replacement": 1,
+        "rmse": 12.52517586111964,
+        "endpointRmse": 2.8708565565851094
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -10,
+        "rmse": 12.516462605117136,
+        "endpointRmse": 2.8583164734160373
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -8,
+        "rmse": 12.491753041249028,
+        "endpointRmse": 2.84775030277322
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -7,
+        "rmse": 12.482201323206402,
+        "endpointRmse": 2.844586371750491
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -6,
+        "rmse": 12.475086679511048,
+        "endpointRmse": 2.8429786578059817
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -5,
+        "rmse": 12.470881114954631,
+        "endpointRmse": 2.843026501837906
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -4,
+        "rmse": 12.470081386158537,
+        "endpointRmse": 2.844819866424259
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -3,
+        "rmse": 12.473193241226728,
+        "endpointRmse": 2.8484369949157724
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -2,
+        "rmse": 12.480710061279309,
+        "endpointRmse": 2.8539421452602243
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": -1,
+        "rmse": 12.493086045732117,
+        "endpointRmse": 2.861383488090883
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": 0,
+        "rmse": 12.510704908529709,
+        "endpointRmse": 2.870791259985931
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 500,
+        "replacement": 1,
+        "rmse": 12.53384606798328,
+        "endpointRmse": 2.882176258621148
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -10,
+        "rmse": 12.5770119965959,
+        "endpointRmse": 2.9102883064447496
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -8,
+        "rmse": 12.54280765818976,
+        "endpointRmse": 2.8808343747479515
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -7,
+        "rmse": 12.528004021535944,
+        "endpointRmse": 2.869306665032363
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -6,
+        "rmse": 12.51552413549638,
+        "endpointRmse": 2.8604343679236
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -5,
+        "rmse": 12.506090816622388,
+        "endpointRmse": 2.8546155828074333
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -4,
+        "rmse": 12.500525513400943,
+        "endpointRmse": 2.852236440100141
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -3,
+        "rmse": 12.499730526612474,
+        "endpointRmse": 2.8536541243285534
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -2,
+        "rmse": 12.504654607244095,
+        "endpointRmse": 2.859178323024957
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": -1,
+        "rmse": 12.516238494410725,
+        "endpointRmse": 2.869052324636543
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": 0,
+        "rmse": 12.535339275848342,
+        "endpointRmse": 2.8834352899222044
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 1000,
+        "replacement": 1,
+        "rmse": 12.562636654065946,
+        "endpointRmse": 2.902387364861485
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -10,
+        "rmse": 12.662166270046392,
+        "endpointRmse": 2.999785158437006
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -8,
+        "rmse": 12.62038128193169,
+        "endpointRmse": 2.9486797139012446
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -7,
+        "rmse": 12.600736850573893,
+        "endpointRmse": 2.9259093702753947
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -6,
+        "rmse": 12.582816531202061,
+        "endpointRmse": 2.906084181482215
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -5,
+        "rmse": 12.567525095032666,
+        "endpointRmse": 2.8901563200850737
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -4,
+        "rmse": 12.555981713196175,
+        "endpointRmse": 2.879150268509533
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -3,
+        "rmse": 12.549522977196684,
+        "endpointRmse": 2.8741106718952634
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -2,
+        "rmse": 12.549675042078174,
+        "endpointRmse": 2.8760300520757105
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": -1,
+        "rmse": 12.558078632145287,
+        "endpointRmse": 2.8857603478156473
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": 0,
+        "rmse": 12.576352149533932,
+        "endpointRmse": 2.903917293098757
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 2000,
+        "replacement": 1,
+        "rmse": 12.605887525135351,
+        "endpointRmse": 2.9307911663273636
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -10,
+        "rmse": 12.74939202100904,
+        "endpointRmse": 3.1048648727955173
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -8,
+        "rmse": 12.703510657175928,
+        "endpointRmse": 3.0385720939379675
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -7,
+        "rmse": 12.68067064396091,
+        "endpointRmse": 3.0062211937169327
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -6,
+        "rmse": 12.65874155410565,
+        "endpointRmse": 2.975800069065279
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -5,
+        "rmse": 12.638674849770762,
+        "endpointRmse": 2.948737231709797
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -4,
+        "rmse": 12.621750060474195,
+        "endpointRmse": 2.92676743906451
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -3,
+        "rmse": 12.609624956456633,
+        "endpointRmse": 2.9118766926726303
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -2,
+        "rmse": 12.604349972683535,
+        "endpointRmse": 2.9061742446068153
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": -1,
+        "rmse": 12.60830901608225,
+        "endpointRmse": 2.911681022873429
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": 0,
+        "rmse": 12.624039503367861,
+        "endpointRmse": 2.930046165946213
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 4000,
+        "replacement": 1,
+        "rmse": 12.653892127913547,
+        "endpointRmse": 2.962234636223726
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -10,
+        "rmse": 12.82114734652787,
+        "endpointRmse": 3.1969852290460383
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -8,
+        "rmse": 12.773945896043909,
+        "endpointRmse": 3.124205722070026
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -7,
+        "rmse": 12.749560436124105,
+        "endpointRmse": 3.0864409371889128
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -6,
+        "rmse": 12.725375498330651,
+        "endpointRmse": 3.049060901885912
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -5,
+        "rmse": 12.702291675192772,
+        "endpointRmse": 3.0136179393374034
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -4,
+        "rmse": 12.681612210365186,
+        "endpointRmse": 2.9822302176608773
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -3,
+        "rmse": 12.665146768990084,
+        "endpointRmse": 2.957604980300611
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -2,
+        "rmse": 12.655289184155361,
+        "endpointRmse": 2.942939776335308
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": -1,
+        "rmse": 12.655011390691408,
+        "endpointRmse": 2.941637430562334
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": 0,
+        "rmse": 12.66768496677951,
+        "endpointRmse": 2.9568030668812275
+      },
+      {
+        "decay": 0,
+        "pseudoPossessions": 8000,
+        "replacement": 1,
+        "rmse": 12.696631467760758,
+        "endpointRmse": 2.990573136231537
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -10,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -8,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -7,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -6,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -5,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -4,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -3,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -2,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": -1,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": 0,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 0,
+        "replacement": 1,
+        "rmse": 12.382656421649067,
+        "endpointRmse": 2.8560628776051
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -10,
+        "rmse": 12.308238515380502,
+        "endpointRmse": 2.846055419079804
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -8,
+        "rmse": 12.301181147285916,
+        "endpointRmse": 2.844805228363339
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -7,
+        "rmse": 12.300135017930478,
+        "endpointRmse": 2.8449087060541305
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -6,
+        "rmse": 12.30102267632008,
+        "endpointRmse": 2.845520121873289
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -5,
+        "rmse": 12.304062764908107,
+        "endpointRmse": 2.846655119640654
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -4,
+        "rmse": 12.309477292024964,
+        "endpointRmse": 2.8483283735959057
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -3,
+        "rmse": 12.317486880840145,
+        "endpointRmse": 2.8505534622225412
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -2,
+        "rmse": 12.328304971698298,
+        "endpointRmse": 2.8533427433440237
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": -1,
+        "rmse": 12.342131009685382,
+        "endpointRmse": 2.8567072319736635
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": 0,
+        "rmse": 12.359142733497547,
+        "endpointRmse": 2.860656482462592
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 250,
+        "replacement": 1,
+        "rmse": 12.379487783001167,
+        "endpointRmse": 2.865198476527285
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -10,
+        "rmse": 12.321597262428268,
+        "endpointRmse": 2.858512221657738
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -8,
+        "rmse": 12.307963189370149,
+        "endpointRmse": 2.849628647488086
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -7,
+        "rmse": 12.304130720342767,
+        "endpointRmse": 2.846850507197058
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -6,
+        "rmse": 12.302824511347396,
+        "endpointRmse": 2.8453008576737964
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -5,
+        "rmse": 12.304498386974767,
+        "endpointRmse": 2.8450663717245757
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -4,
+        "rmse": 12.3096408885124,
+        "endpointRmse": 2.846229608638844
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -3,
+        "rmse": 12.318764997714876,
+        "endpointRmse": 2.8488673789896795
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -2,
+        "rmse": 12.332392549129294,
+        "endpointRmse": 2.853049046826109
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": -1,
+        "rmse": 12.35103259775633,
+        "endpointRmse": 2.8588348154023056
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": 0,
+        "rmse": 12.37515346480817,
+        "endpointRmse": 2.866274049766897
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 500,
+        "replacement": 1,
+        "rmse": 12.405148935278858,
+        "endpointRmse": 2.875403694751828
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -10,
+        "rmse": 12.351622049614003,
+        "endpointRmse": 2.89614101271405
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -8,
+        "rmse": 12.331179462318765,
+        "endpointRmse": 2.8724042598543136
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -7,
+        "rmse": 12.323905215138943,
+        "endpointRmse": 2.8631557922321886
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -6,
+        "rmse": 12.319406204175854,
+        "endpointRmse": 2.8560749873349347
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -5,
+        "rmse": 12.31843075750228,
+        "endpointRmse": 2.8514926193170718
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -4,
+        "rmse": 12.32184349685841,
+        "endpointRmse": 2.8497410830183574
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -3,
+        "rmse": 12.33061714244732,
+        "endpointRmse": 2.851143147719606
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -2,
+        "rmse": 12.345808425802502,
+        "endpointRmse": 2.855998726291359
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": -1,
+        "rmse": 12.368512026455655,
+        "endpointRmse": 2.8645701883301475
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": 0,
+        "rmse": 12.399787003800958,
+        "endpointRmse": 2.877067040302969
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 1000,
+        "replacement": 1,
+        "rmse": 12.440552897232767,
+        "endpointRmse": 2.8936310589773107
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -10,
+        "rmse": 12.400666198285567,
+        "endpointRmse": 2.963962478133024
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -8,
+        "rmse": 12.374472318693227,
+        "endpointRmse": 2.9221873317119917
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -7,
+        "rmse": 12.36374809923394,
+        "endpointRmse": 2.903786482960986
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -6,
+        "rmse": 12.355591752619805,
+        "endpointRmse": 2.8879398910460528
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -5,
+        "rmse": 12.350999980751055,
+        "endpointRmse": 2.8754448650706825
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -4,
+        "rmse": 12.351214583066831,
+        "endpointRmse": 2.8671804169196617
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -3,
+        "rmse": 12.357742133582908,
+        "endpointRmse": 2.8640746681160016
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -2,
+        "rmse": 12.372345729758973,
+        "endpointRmse": 2.8670544925673602
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": -1,
+        "rmse": 12.396986612251377,
+        "endpointRmse": 2.8769774456674124
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": 0,
+        "rmse": 12.433688287646987,
+        "endpointRmse": 2.894549820155448
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 2000,
+        "replacement": 1,
+        "rmse": 12.484297747121365,
+        "endpointRmse": 2.9202392660615724
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -10,
+        "rmse": 12.464618249728678,
+        "endpointRmse": 3.0503697361523994
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -8,
+        "rmse": 12.434444405125447,
+        "endpointRmse": 2.994845207437636
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -7,
+        "rmse": 12.420887924278153,
+        "endpointRmse": 2.9680566409849236
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -6,
+        "rmse": 12.409364534976605,
+        "endpointRmse": 2.9431057246056196
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -5,
+        "rmse": 12.400989337810673,
+        "endpointRmse": 2.921219090261128
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -4,
+        "rmse": 12.397255147056994,
+        "endpointRmse": 2.903915162848735
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -3,
+        "rmse": 12.400109930366458,
+        "endpointRmse": 2.8929834122048215
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -2,
+        "rmse": 12.412007123981583,
+        "endpointRmse": 2.89040428841713
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": -1,
+        "rmse": 12.43588182227375,
+        "endpointRmse": 2.8981900148714224
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": 0,
+        "rmse": 12.47497928861447,
+        "endpointRmse": 2.9181398776899985
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 4000,
+        "replacement": 1,
+        "rmse": 12.532444979753844,
+        "endpointRmse": 2.951530900831442
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -10,
+        "rmse": 12.530407400689224,
+        "endpointRmse": 3.1332757115044854
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -8,
+        "rmse": 12.49807787777361,
+        "endpointRmse": 3.0713124472168882
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -7,
+        "rmse": 12.482656397342643,
+        "endpointRmse": 3.0394567086769917
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -6,
+        "rmse": 12.468668471449861,
+        "endpointRmse": 3.0081384259211874
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -5,
+        "rmse": 12.457226156854185,
+        "endpointRmse": 2.9787046558794943
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -4,
+        "rmse": 12.449912060161502,
+        "endpointRmse": 2.953028709100318
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -3,
+        "rmse": 12.448922958572721,
+        "endpointRmse": 2.9335769171207726
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -2,
+        "rmse": 12.457205375076313,
+        "endpointRmse": 2.923386103028536
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": -1,
+        "rmse": 12.478515929139887,
+        "endpointRmse": 2.925875973571183
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": 0,
+        "rmse": 12.517276983461114,
+        "endpointRmse": 2.9444252999898115
+      },
+      {
+        "decay": 0.25,
+        "pseudoPossessions": 8000,
+        "replacement": 1,
+        "rmse": 12.578031659485283,
+        "endpointRmse": 2.9816996981540123
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -10,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -8,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -7,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -6,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -5,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -4,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -3,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -2,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": -1,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": 0,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 0,
+        "replacement": 1,
+        "rmse": 12.406314380827576,
+        "endpointRmse": 2.8929069339674016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -10,
+        "rmse": 12.31980776622705,
+        "endpointRmse": 2.898325739351045
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -8,
+        "rmse": 12.31783724322586,
+        "endpointRmse": 2.8934892826729914
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -7,
+        "rmse": 12.319309333474397,
+        "endpointRmse": 2.8919213054911985
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -6,
+        "rmse": 12.322677291260892,
+        "endpointRmse": 2.890955115283825
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -5,
+        "rmse": 12.328142801116336,
+        "endpointRmse": 2.8906158814276086
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -4,
+        "rmse": 12.335910439429043,
+        "endpointRmse": 2.8909276862869104
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -3,
+        "rmse": 12.346183375009277,
+        "endpointRmse": 2.8919133094227827
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -2,
+        "rmse": 12.35915809711913,
+        "endpointRmse": 2.893594008584209
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": -1,
+        "rmse": 12.375018180757213,
+        "endpointRmse": 2.89598930006339
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": 0,
+        "rmse": 12.39392717193062,
+        "endpointRmse": 2.899116741227727
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 250,
+        "replacement": 1,
+        "rmse": 12.416020766337097,
+        "endpointRmse": 2.9029917182296683
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -10,
+        "rmse": 12.331560628572428,
+        "endpointRmse": 2.929569628225964
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -8,
+        "rmse": 12.323354949276903,
+        "endpointRmse": 2.912297963972037
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -7,
+        "rmse": 12.322307839161105,
+        "endpointRmse": 2.9055240529007667
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -6,
+        "rmse": 12.323824832628341,
+        "endpointRmse": 2.9001773330205274
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -5,
+        "rmse": 12.3283531600419,
+        "endpointRmse": 2.896397469498789
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -4,
+        "rmse": 12.336376032914343,
+        "endpointRmse": 2.8943214130917534
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -3,
+        "rmse": 12.348403036568383,
+        "endpointRmse": 2.89408063103375
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -2,
+        "rmse": 12.364955065786468,
+        "endpointRmse": 2.895798093834118
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": -1,
+        "rmse": 12.386542853215953,
+        "endpointRmse": 2.8995850930019667
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": 0,
+        "rmse": 12.4136385386023,
+        "endpointRmse": 2.905537985791578
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 500,
+        "replacement": 1,
+        "rmse": 12.446640459594457,
+        "endpointRmse": 2.913734981522485
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -10,
+        "rmse": 12.357373584946107,
+        "endpointRmse": 3.0032310270199596
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -8,
+        "rmse": 12.342509323175213,
+        "endpointRmse": 2.9629812502229016
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -7,
+        "rmse": 12.338171924102326,
+        "endpointRmse": 2.9453532035398093
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -6,
+        "rmse": 12.336728650473587,
+        "endpointRmse": 2.9300281933278396
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -5,
+        "rmse": 12.338955897947658,
+        "endpointRmse": 2.917537168079034
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -4,
+        "rmse": 12.345761002967105,
+        "endpointRmse": 2.908438758793335
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -3,
+        "rmse": 12.358177639089291,
+        "endpointRmse": 2.903301484486564
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -2,
+        "rmse": 12.377343865760592,
+        "endpointRmse": 2.9026805296842317
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": -1,
+        "rmse": 12.404454661964278,
+        "endpointRmse": 2.907089641200364
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": 0,
+        "rmse": 12.440680509047583,
+        "endpointRmse": 2.916969475746885
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 1000,
+        "replacement": 1,
+        "rmse": 12.487045930777327,
+        "endpointRmse": 2.9326545515868787
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -10,
+        "rmse": 12.39532022971545,
+        "endpointRmse": 3.1236875997353777
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -8,
+        "rmse": 12.37531964969298,
+        "endpointRmse": 3.05734530832673
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -7,
+        "rmse": 12.36789064370527,
+        "endpointRmse": 3.0251689861301894
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -6,
+        "rmse": 12.363207850856853,
+        "endpointRmse": 2.9948938215895478
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -5,
+        "rmse": 12.362336274089797,
+        "endpointRmse": 2.967740218296516
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -4,
+        "rmse": 12.366629906638664,
+        "endpointRmse": 2.945163845645364
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -3,
+        "rmse": 12.377768858881861,
+        "endpointRmse": 2.9288223053034637
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -2,
+        "rmse": 12.397767612014437,
+        "endpointRmse": 2.9204985811369024
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": -1,
+        "rmse": 12.428923325142142,
+        "endpointRmse": 2.92197331619989
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": 0,
+        "rmse": 12.473660584959287,
+        "endpointRmse": 2.934846941114896
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 2000,
+        "replacement": 1,
+        "rmse": 12.534223937074973,
+        "endpointRmse": 2.960326379924252
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -10,
+        "rmse": 12.441540310174316,
+        "endpointRmse": 3.2631703829637324
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -8,
+        "rmse": 12.41876258607645,
+        "endpointRmse": 3.181067182519801
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -7,
+        "rmse": 12.409182109019131,
+        "endpointRmse": 3.1374872358020203
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -6,
+        "rmse": 12.401874331499624,
+        "endpointRmse": 3.0934921185138617
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -5,
+        "rmse": 12.398044399348597,
+        "endpointRmse": 3.05069212222802
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -4,
+        "rmse": 12.399349061985864,
+        "endpointRmse": 3.011383851710505
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -3,
+        "rmse": 12.408017861526659,
+        "endpointRmse": 2.9786373698509228
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -2,
+        "rmse": 12.426957315820797,
+        "endpointRmse": 2.956266767936807
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": -1,
+        "rmse": 12.45977373018921,
+        "endpointRmse": 2.948594344398114
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": 0,
+        "rmse": 12.510594924486384,
+        "endpointRmse": 2.959932624126647
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 4000,
+        "replacement": 1,
+        "rmse": 12.58351255109718,
+        "endpointRmse": 2.9937806137605154
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -10,
+        "rmse": 12.490187613874069,
+        "endpointRmse": 3.381373478620811
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -8,
+        "rmse": 12.466526503266001,
+        "endpointRmse": 3.297396117881579
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -7,
+        "rmse": 12.455824419427564,
+        "endpointRmse": 3.2497776658370943
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -6,
+        "rmse": 12.446866064862773,
+        "endpointRmse": 3.1990421266417104
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -5,
+        "rmse": 12.440855644002022,
+        "endpointRmse": 3.146467090997427
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -4,
+        "rmse": 12.439556698452622,
+        "endpointRmse": 3.094369715102911
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -3,
+        "rmse": 12.445505411349707,
+        "endpointRmse": 3.0465025915647033
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -2,
+        "rmse": 12.462248109474722,
+        "endpointRmse": 3.008373591779793
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": -1,
+        "rmse": 12.494519380859638,
+        "endpointRmse": 2.987230692028447
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": 0,
+        "rmse": 12.548154699684885,
+        "endpointRmse": 2.991340730274035
+      },
+      {
+        "decay": 0.5,
+        "pseudoPossessions": 8000,
+        "replacement": 1,
+        "rmse": 12.629348026966781,
+        "endpointRmse": 3.028263253291909
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -10,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -8,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -7,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -6,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -5,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -4,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -3,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -2,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": -1,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": 0,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 0,
+        "replacement": 1,
+        "rmse": 12.469585529306368,
+        "endpointRmse": 2.9623218208602533
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -10,
+        "rmse": 12.37037250559489,
+        "endpointRmse": 2.972196912300322
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -8,
+        "rmse": 12.373824539738255,
+        "endpointRmse": 2.965618986225689
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -7,
+        "rmse": 12.377990286763803,
+        "endpointRmse": 2.9633752721431104
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -6,
+        "rmse": 12.38401288066254,
+        "endpointRmse": 2.9618753502822375
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -5,
+        "rmse": 12.392070337317918,
+        "endpointRmse": 2.9611530357007654
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -4,
+        "rmse": 12.402341111956062,
+        "endpointRmse": 2.9612406594939267
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -3,
+        "rmse": 12.41500003999497,
+        "endpointRmse": 2.962168757494202
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -2,
+        "rmse": 12.43021345040459,
+        "endpointRmse": 2.96396575291493
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": -1,
+        "rmse": 12.448133477294222,
+        "endpointRmse": 2.966657636355013
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": 0,
+        "rmse": 12.468891660323978,
+        "endpointRmse": 2.9702676469113864
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 250,
+        "replacement": 1,
+        "rmse": 12.49259200355075,
+        "endpointRmse": 2.9748159584425027
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -10,
+        "rmse": 12.377830402951284,
+        "endpointRmse": 3.0189053422045147
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -8,
+        "rmse": 12.376382862245498,
+        "endpointRmse": 2.995082010765633
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -7,
+        "rmse": 12.378825574399496,
+        "endpointRmse": 2.9854265440620895
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -6,
+        "rmse": 12.383874894596598,
+        "endpointRmse": 2.977537196961536
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -5,
+        "rmse": 12.391946560455095,
+        "endpointRmse": 2.9716121249025553
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -4,
+        "rmse": 12.40348506624443,
+        "endpointRmse": 2.9678464544935643
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -3,
+        "rmse": 12.418953581002299,
+        "endpointRmse": 2.9664280902860662
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -2,
+        "rmse": 12.438818732818895,
+        "endpointRmse": 2.9675331242769314
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": -1,
+        "rmse": 12.46352945175822,
+        "endpointRmse": 2.9713209509577334
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": 0,
+        "rmse": 12.493489467806107,
+        "endpointRmse": 2.9779292170732106
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 500,
+        "replacement": 1,
+        "rmse": 12.529023776155547,
+        "endpointRmse": 2.9874687595064797
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -10,
+        "rmse": 12.402693857267383,
+        "endpointRmse": 3.1310501183278086
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -8,
+        "rmse": 12.395007775528404,
+        "endpointRmse": 3.075136656230619
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -7,
+        "rmse": 12.394516760438957,
+        "endpointRmse": 3.0497168014783265
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -6,
+        "rmse": 12.397082048642602,
+        "endpointRmse": 3.0269084087841183
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -5,
+        "rmse": 12.403465643174268,
+        "endpointRmse": 3.007499188161635
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -4,
+        "rmse": 12.414552416730082,
+        "endpointRmse": 2.9923339731016654
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -3,
+        "rmse": 12.431343079588853,
+        "endpointRmse": 2.9822863270976026
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -2,
+        "rmse": 12.45492904385366,
+        "endpointRmse": 2.9782204895524416
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": -1,
+        "rmse": 12.486440783665067,
+        "endpointRmse": 2.9809446053762723
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": 0,
+        "rmse": 12.526961089627703,
+        "endpointRmse": 2.9911572784735476
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 1000,
+        "replacement": 1,
+        "rmse": 12.57739725724168,
+        "endpointRmse": 3.009390455069577
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -10,
+        "rmse": 12.444966215470068,
+        "endpointRmse": 3.3105997391955118
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -8,
+        "rmse": 12.43176074469751,
+        "endpointRmse": 3.2223007453124817
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -7,
+        "rmse": 12.428029313015589,
+        "endpointRmse": 3.1771205113014767
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -6,
+        "rmse": 12.427265318913767,
+        "endpointRmse": 3.1328354193255543
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -5,
+        "rmse": 12.430556876783271,
+        "endpointRmse": 3.0911722241226176
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -4,
+        "rmse": 12.43929021555157,
+        "endpointRmse": 3.0543339103345732
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -3,
+        "rmse": 12.455189244210832,
+        "endpointRmse": 3.0249710912323007
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -2,
+        "rmse": 12.48032320599251,
+        "endpointRmse": 3.0060637620607777
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": -1,
+        "rmse": 12.517045957378993,
+        "endpointRmse": 3.00069388363759
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": 0,
+        "rmse": 12.567814145755545,
+        "endpointRmse": 3.011710527504267
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 2000,
+        "replacement": 1,
+        "rmse": 12.634824018328706,
+        "endpointRmse": 3.0413131628774424
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -10,
+        "rmse": 12.500471683275268,
+        "endpointRmse": 3.496938801794691
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -8,
+        "rmse": 12.484080990500997,
+        "endpointRmse": 3.3995351801717697
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -7,
+        "rmse": 12.477915184052387,
+        "endpointRmse": 3.3439490763598494
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -6,
+        "rmse": 12.474187550368676,
+        "endpointRmse": 3.284611916701211
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -5,
+        "rmse": 12.474139241679369,
+        "endpointRmse": 3.22315128153205
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -4,
+        "rmse": 12.479500544668705,
+        "endpointRmse": 3.162438714449112
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -3,
+        "rmse": 12.49263803270556,
+        "endpointRmse": 3.106968939430163
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -2,
+        "rmse": 12.516690551038161,
+        "endpointRmse": 3.063056677493549
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": -1,
+        "rmse": 12.55561437982832,
+        "endpointRmse": 3.0385722854699093
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": 0,
+        "rmse": 12.613975183900589,
+        "endpointRmse": 3.0419527334267693
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 4000,
+        "replacement": 1,
+        "rmse": 12.696224677864747,
+        "endpointRmse": 3.0804318599342206
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -10,
+        "rmse": 12.5618021615613,
+        "endpointRmse": 3.624796230914333
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -8,
+        "rmse": 12.54470685572941,
+        "endpointRmse": 3.5397710297232647
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -7,
+        "rmse": 12.537415717396152,
+        "endpointRmse": 3.4873660661413415
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -6,
+        "rmse": 12.531931295549125,
+        "endpointRmse": 3.427662995381164
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -5,
+        "rmse": 12.52945888722304,
+        "endpointRmse": 3.360868002604727
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -4,
+        "rmse": 12.531810057465703,
+        "endpointRmse": 3.288541990766355
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -3,
+        "rmse": 12.541671871425384,
+        "endpointRmse": 3.214666557960676
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -2,
+        "rmse": 12.562936334512713,
+        "endpointRmse": 3.146986174862735
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": -1,
+        "rmse": 12.60099737137699,
+        "endpointRmse": 3.098018276921246
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": 0,
+        "rmse": 12.662729400550326,
+        "endpointRmse": 3.0843984095202783
+      },
+      {
+        "decay": 0.75,
+        "pseudoPossessions": 8000,
+        "replacement": 1,
+        "rmse": 12.755512273913386,
+        "endpointRmse": 3.1231206915822187
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -10,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -8,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -7,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -6,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -5,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -4,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -3,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -2,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": -1,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": 0,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 0,
+        "replacement": 1,
+        "rmse": 12.550789581980462,
+        "endpointRmse": 3.0531802629778357
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -10,
+        "rmse": 12.439814097591638,
+        "endpointRmse": 3.054808680154822
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -8,
+        "rmse": 12.448093368146745,
+        "endpointRmse": 3.0493466820600483
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -7,
+        "rmse": 12.454683760471955,
+        "endpointRmse": 3.047825033795262
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -6,
+        "rmse": 12.463113986104126,
+        "endpointRmse": 3.0471595012221635
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -5,
+        "rmse": 12.473539898413325,
+        "endpointRmse": 3.04738535256349
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -4,
+        "rmse": 12.486114549372585,
+        "endpointRmse": 3.0485357383149463
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -3,
+        "rmse": 12.500984146178784,
+        "endpointRmse": 3.0506413474149077
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -2,
+        "rmse": 12.518283324044747,
+        "endpointRmse": 3.0537300592413663
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": -1,
+        "rmse": 12.538129793865282,
+        "endpointRmse": 3.0578265938681555
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": 0,
+        "rmse": 12.560618484677013,
+        "endpointRmse": 3.0629521632951695
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 250,
+        "replacement": 1,
+        "rmse": 12.585815371623712,
+        "endpointRmse": 3.0691241267585
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -10,
+        "rmse": 12.441046678168886,
+        "endpointRmse": 3.1041263122105396
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -8,
+        "rmse": 12.445954355184044,
+        "endpointRmse": 3.0792005468077486
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -7,
+        "rmse": 12.45173304758488,
+        "endpointRmse": 3.069436237796088
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -6,
+        "rmse": 12.460194239733474,
+        "endpointRmse": 3.06177631342878
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -5,
+        "rmse": 12.471720543192964,
+        "endpointRmse": 3.0564471688567263
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -4,
+        "rmse": 12.486712732225872,
+        "endpointRmse": 3.0536675190105242
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -3,
+        "rmse": 12.50557819428092,
+        "endpointRmse": 3.0536432914906784
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -2,
+        "rmse": 12.52871460237387,
+        "endpointRmse": 3.056562238558877
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": -1,
+        "rmse": 12.556488310197887,
+        "endpointRmse": 3.0625883495203094
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": 0,
+        "rmse": 12.589207441149641,
+        "endpointRmse": 3.071856138314846
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 500,
+        "replacement": 1,
+        "rmse": 12.627090385671696,
+        "endpointRmse": 3.0844648860058483
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -10,
+        "rmse": 12.460887654370898,
+        "endpointRmse": 3.2342089519892196
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -8,
+        "rmse": 12.460475588990395,
+        "endpointRmse": 3.1712700315937483
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -7,
+        "rmse": 12.463994312046434,
+        "endpointRmse": 3.142710076631738
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -6,
+        "rmse": 12.47081111817571,
+        "endpointRmse": 3.1172578820410344
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -5,
+        "rmse": 12.481666446735728,
+        "endpointRmse": 3.095907366809649
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -4,
+        "rmse": 12.49740342057011,
+        "endpointRmse": 3.0797107556330334
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -3,
+        "rmse": 12.518953344283531,
+        "endpointRmse": 3.0697342611279104
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -2,
+        "rmse": 12.547301982354192,
+        "endpointRmse": 3.067003544825953
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": -1,
+        "rmse": 12.583429162710361,
+        "endpointRmse": 3.0724420152894325
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": 0,
+        "rmse": 12.628214994873046,
+        "endpointRmse": 3.086804712139256
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 1000,
+        "replacement": 1,
+        "rmse": 12.68230980234785,
+        "endpointRmse": 3.1106091411783177
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -10,
+        "rmse": 12.502579435842772,
+        "endpointRmse": 3.444411190200847
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -8,
+        "rmse": 12.496652016234162,
+        "endpointRmse": 3.346749318140792
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -7,
+        "rmse": 12.497092571862003,
+        "endpointRmse": 3.295540649525814
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -6,
+        "rmse": 12.500900089682853,
+        "endpointRmse": 3.244632348363328
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -5,
+        "rmse": 12.50918861552169,
+        "endpointRmse": 3.19621997250271
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -4,
+        "rmse": 12.523354500158398,
+        "endpointRmse": 3.153198674034651
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -3,
+        "rmse": 12.545100868270175,
+        "endpointRmse": 3.1191046941595584
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -2,
+        "rmse": 12.576421342624403,
+        "endpointRmse": 3.0978965660476447
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": -1,
+        "rmse": 12.619504073686533,
+        "endpointRmse": 3.0935660706023462
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": 0,
+        "rmse": 12.676503420656504,
+        "endpointRmse": 3.1096233062982117
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 2000,
+        "replacement": 1,
+        "rmse": 12.749126298670797,
+        "endpointRmse": 3.148512280589757
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -10,
+        "rmse": 12.566169923613126,
+        "endpointRmse": 3.64246549667025
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -8,
+        "rmse": 12.556356947573782,
+        "endpointRmse": 3.545966182234612
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -7,
+        "rmse": 12.553999025990782,
+        "endpointRmse": 3.4882009805630614
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -6,
+        "rmse": 12.554500829581416,
+        "endpointRmse": 3.424355664122656
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -5,
+        "rmse": 12.559175146349094,
+        "endpointRmse": 3.3558351519625598
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -4,
+        "rmse": 12.569836194332547,
+        "endpointRmse": 3.2857749461024484
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -3,
+        "rmse": 12.58894077253068,
+        "endpointRmse": 3.2197990494029343
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -2,
+        "rmse": 12.619702817174641,
+        "endpointRmse": 3.166511623829866
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": -1,
+        "rmse": 12.666082549922455,
+        "endpointRmse": 3.1370867312252715
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": 0,
+        "rmse": 12.732456027854832,
+        "endpointRmse": 3.1434208195451996
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 4000,
+        "replacement": 1,
+        "rmse": 12.82266928049971,
+        "endpointRmse": 3.1949921068340252
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -10,
+        "rmse": 12.647592506432236,
+        "endpointRmse": 3.7498889188008055
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -8,
+        "rmse": 12.636325914862233,
+        "endpointRmse": 3.6785568624099287
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -7,
+        "rmse": 12.63230341089955,
+        "endpointRmse": 3.6319297502995433
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -6,
+        "rmse": 12.630368058170149,
+        "endpointRmse": 3.576220696529806
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -5,
+        "rmse": 12.631779018912864,
+        "endpointRmse": 3.5104571777223588
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -4,
+        "rmse": 12.638434834381172,
+        "endpointRmse": 3.4348810234991602
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -3,
+        "rmse": 12.653166242735956,
+        "endpointRmse": 3.352612533888101
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -2,
+        "rmse": 12.68009414023349,
+        "endpointRmse": 3.272315796688408
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": -1,
+        "rmse": 12.72493204704179,
+        "endpointRmse": 3.210993998520062
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": 0,
+        "rmse": 12.794850648417944,
+        "endpointRmse": 3.193727229788293
+      },
+      {
+        "decay": 1,
+        "pseudoPossessions": 8000,
+        "replacement": 1,
+        "rmse": 12.897042891630548,
+        "endpointRmse": 3.246318228924063
+      }
+    ],
+    "chosen": {
+      "decay": 0.25,
+      "pseudoPossessions": 250,
+      "replacement": -7,
+      "rmse": 12.300135017930478,
+      "endpointRmse": 2.8449087060541305
+    }
+  },
+  "minPriorMinutes": 250,
+  "teamLines": {
+    "score": {
+      "a": 3.2958868309908373,
+      "b": 3.6112273377731245,
+      "c": -16.007892567393867
+    },
+    "crossCheck": {
+      "a": 3.920238069948918,
+      "b": 4.728752102703052,
+      "c": -16.42307024152991
+    },
+    "roleAware": {
+      "a": 3.268180244351671,
+      "b": 3.6196718332538516,
+      "c": -15.76469970712161
+    },
+    "teamNetOnly": {
+      "a": 5.031423451868523,
+      "b": 5.091232001004669,
+      "c": -20.127293474065603
+    },
+    "gameScoreFrame": {
+      "a": 3.5169887894872685,
+      "b": 3.8660797529218147,
+      "c": -17.32655220003971
+    },
+    "comparatorUnfloored": {
+      "a": -6.409278813765903,
+      "b": 129.45512995100853,
+      "c": -12.4951041778034
+    },
+    "comparatorFloored": {
+      "a": -6.634489696296578,
+      "b": 131.30017887140784,
+      "c": -12.188559325937822
+    },
+    "gameScorePlusTeamNet": {
+      "a": -3.9646833284251026,
+      "b": 86.45324603453305,
+      "c": -10.35704914680926,
+      "d": 0.366001953693365
+    },
+    "lastSeasonNet": {
+      "a": 0.028194839833934456,
+      "b": 0.6489615958911078,
+      "c": 0
+    }
+  },
+  "trainingRmse": {
+    "score": 2.8064620363484396,
+    "crossCheck": 2.724413952336077,
+    "roleAware": 2.7795217317918204,
+    "teamNetOnly": 3.0219798381384955,
+    "gameScoreFrame": 2.8819580142233128,
+    "comparatorUnfloored": 3.353928621560235,
+    "comparatorFloored": 3.3512839919223745,
+    "gameScorePlusTeamNet": 3.042274052226159,
+    "lastSeasonNet": 3.653030778006765,
+    "allZero": 4.816926079963099
+  },
+  "trainingPairs": 256,
+  "gameLines": {
+    "score": {
+      "a": 2.519858633155259,
+      "b": 3.9869004508278665,
+      "c": -26.35426054018301,
+      "trainingMae": 9.653284927057756,
+      "games": 9679
+    },
+    "comparatorUnfloored": {
+      "a": 2.5130046866103344,
+      "b": 198.0349132339644,
+      "c": -13.871667746443064,
+      "trainingMae": 9.971532692747653,
+      "games": 9679
+    },
+    "comparatorFloored": {
+      "a": 2.512961936571226,
+      "b": 200.6009596131517,
+      "c": -13.458766383753748,
+      "trainingMae": 9.969709820291756,
+      "games": 9679
+    }
+  }
+}

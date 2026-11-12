@@ -4,7 +4,6 @@ import { PageStamp } from "@/components/live/FreshnessGuard";
 import { PlayersTable } from "@/components/live/PlayersTable";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { getLiveState, getPlayerIndex, getTeamInjuryLists } from "@/lib/live-data/published";
-import { IMPACT_LABEL } from "@/lib/season/player-stats";
 import { SEASON_TEAMS } from "@/lib/season/teams";
 import { formatLongDay } from "@/lib/utils/dates";
 import { playerTableRows } from "@/lib/view/players";
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
   title: "NBA player stats",
   alternates: { canonical: "/players" },
   description:
-    "Every NBA player this season: games, minutes, points, rebounds, assists, shooting, injury status and 548's estimate of what his team loses without him.",
+    "Every NBA player this season: games, minutes, points, rebounds, assists, shooting, injury status and the experimental 548 score, a rating from box scores.",
 };
 
 // Re-rendered about once a minute from the published data (src/lib/live-data/published.ts).
@@ -53,11 +52,14 @@ export default async function PlayersPage() {
       />
       {index ? (
         <>
-          <p className="notice-quiet mt-5">{IMPACT_LABEL} It comes from box scores and is not a ranking of players.</p>
+          <p className="notice-quiet mt-5">
+            {index.scoreLabel} It cannot see most defence and is not a reliable ranking of players.{" "}
+            <Link href="/how-it-works#score" className="pp-link">About the 548 score</Link>
+          </p>
           <div className="mt-6">
             <PlayersTable
               rows={rows}
-              caption="Every player's season averages, shooting, 548 impact and injury status."
+              caption="Every player's season averages, shooting, 548 score and injury status."
               initialMinutes={DEFAULT_MINUTES}
               teams={teams}
             />
