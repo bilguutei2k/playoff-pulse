@@ -1,0 +1,2843 @@
+{
+  "era": "training",
+  "freeze": null,
+  "testSeasonUse": "Training era only; no test season was read.",
+  "inputs": {
+    "files": {
+      "2011": "ac252c57d8484cfb2101ff58eede85cbae6981271fd0c387447402b9a95340fb",
+      "2012": "ae2bab8ec3fc4139da49cc3d9e0bea4f2c03bc55d5b941d48d57eabeb356b2a7",
+      "2013": "e03ea4f24c2d0ce5d5fb6221dd7f05af4a9eacef656cd20b071516faccf0911d",
+      "2014": "34dffb371ce5cc67e7d3b84349d5a4b199d2cb30bea0caafcf15490233bce21d",
+      "2015": "325a9b63a3ee794921d3cd15a4b274ed4bfde0e77fb25b3ceee0406dc6ec2dc6",
+      "2016": "7989bb2598f6681f6348fdf740325acf16ecdf167659597780222fd7d08c669c",
+      "2017": "c196dfb8e447f7f6f3355797e585ccbce1bdab271a54aa41bd665d5d30513c09",
+      "2018": "114699b1d3eb3a7ce16dd13d821b01ac3e987ed339d11ba4bc51e5f11014dc3b",
+      "2019": "0aa36775083c8c0eeddf787f35bc187632d4fc835ac2c23a0bb3d52770d0784c",
+      "2020": "78ccfe781ad618fc97eddf18bc4636be543e8bd0f85771f619846da80a37a898"
+    },
+    "combined": "4aec8aab861a476f829b6d0b4c9f1fdb1f96b8da3ae475f3def0787041a91ef3"
+  },
+  "stage1FitSha256": "5213d2cdf96f2fd6465829b1e1d1eb2b4e86c534ebc6f4f12943166de082ee1d",
+  "params": {
+    "lambda": 16000,
+    "rho": 1
+  },
+  "coverage": [
+    {
+      "season": 2011,
+      "games": 1230,
+      "gamesWithStints": 1141,
+      "stints": 33183,
+      "rejected": {
+        "lineup-count": 3,
+        "minutes": 1,
+        "period-start": 8,
+        "plays": 2,
+        "plus-minus": 67,
+        "points": 8
+      },
+      "teams": 30,
+      "players": 467,
+      "positions": {
+        "C": 7297,
+        "F": 3913,
+        "G": 3807,
+        "NA": 68,
+        "PF": 5618,
+        "PG": 4631,
+        "SF": 5130,
+        "SG": 4882
+      }
+    },
+    {
+      "season": 2012,
+      "games": 990,
+      "gamesWithStints": 941,
+      "stints": 27135,
+      "rejected": {
+        "minutes": 1,
+        "period-start": 14,
+        "plays": 3,
+        "plus-minus": 27,
+        "points": 4
+      },
+      "teams": 30,
+      "players": 483,
+      "positions": {
+        "C": 5503,
+        "F": 3574,
+        "G": 3693,
+        "NA": 66,
+        "PF": 4419,
+        "PG": 4075,
+        "SF": 3690,
+        "SG": 3505
+      }
+    },
+    {
+      "season": 2013,
+      "games": 1063,
+      "gamesWithStints": 613,
+      "stints": 17755,
+      "rejected": {
+        "lineup-count": 28,
+        "minutes": 15,
+        "period-start": 64,
+        "plus-minus": 31,
+        "points": 312
+      },
+      "teams": 28,
+      "players": 444,
+      "positions": {
+        "C": 4149,
+        "F": 3366,
+        "G": 4006,
+        "NA": 2,
+        "PF": 3135,
+        "PG": 2818,
+        "SF": 2398,
+        "SG": 2452
+      }
+    },
+    {
+      "season": 2014,
+      "games": 1067,
+      "gamesWithStints": 1009,
+      "stints": 29658,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 2,
+        "period-start": 7,
+        "plays": 1,
+        "plus-minus": 26,
+        "points": 20
+      },
+      "teams": 28,
+      "players": 452,
+      "positions": {
+        "C": 4249,
+        "F": 4116,
+        "G": 4252,
+        "PF": 2621,
+        "PG": 2718,
+        "SF": 2085,
+        "SG": 2236
+      }
+    },
+    {
+      "season": 2015,
+      "games": 1068,
+      "gamesWithStints": 987,
+      "stints": 30130,
+      "rejected": {
+        "lineup-count": 4,
+        "minutes": 1,
+        "period-start": 1,
+        "plays": 1,
+        "plus-minus": 34,
+        "points": 40
+      },
+      "teams": 28,
+      "players": 463,
+      "positions": {
+        "C": 4218,
+        "F": 4682,
+        "G": 4813,
+        "PF": 2660,
+        "PG": 2214,
+        "SF": 2157,
+        "SG": 1936
+      }
+    },
+    {
+      "season": 2016,
+      "games": 1068,
+      "gamesWithStints": 460,
+      "stints": 13887,
+      "rejected": {
+        "lineup-count": 5,
+        "period-start": 12,
+        "plus-minus": 24,
+        "points": 567
+      },
+      "teams": 28,
+      "players": 446,
+      "positions": {
+        "C": 4333,
+        "F": 5108,
+        "G": 5714,
+        "PF": 2118,
+        "PG": 1975,
+        "SF": 1656,
+        "SG": 1843
+      }
+    },
+    {
+      "season": 2017,
+      "games": 1067,
+      "gamesWithStints": 984,
+      "stints": 29912,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 6,
+        "minutes": 1,
+        "period-start": 5,
+        "plus-minus": 45,
+        "points": 24
+      },
+      "teams": 28,
+      "players": 462,
+      "positions": {
+        "C": 4145,
+        "F": 5901,
+        "G": 6401,
+        "PF": 1657,
+        "PG": 1598,
+        "SF": 1492,
+        "SG": 1559
+      }
+    },
+    {
+      "season": 2018,
+      "games": 1067,
+      "gamesWithStints": 916,
+      "stints": 27540,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 29,
+        "minutes": 5,
+        "period-start": 65,
+        "plays": 6,
+        "plus-minus": 36,
+        "points": 8
+      },
+      "teams": 28,
+      "players": 509,
+      "positions": {
+        "C": 3780,
+        "F": 6489,
+        "G": 7013,
+        "PF": 1349,
+        "PG": 1265,
+        "SF": 1371,
+        "SG": 1433
+      }
+    },
+    {
+      "season": 2019,
+      "games": 1230,
+      "gamesWithStints": 1094,
+      "stints": 33465,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 16,
+        "minutes": 28,
+        "period-start": 72,
+        "plus-minus": 13,
+        "points": 5
+      },
+      "teams": 30,
+      "players": 538,
+      "positions": {
+        "C": 4122,
+        "F": 6979,
+        "G": 8340,
+        "PF": 1544,
+        "PG": 1612,
+        "SF": 1844,
+        "SG": 1699
+      }
+    },
+    {
+      "season": 2020,
+      "games": 1059,
+      "gamesWithStints": 987,
+      "stints": 31267,
+      "rejected": {
+        "box": 1,
+        "lineup-count": 16,
+        "minutes": 1,
+        "period-start": 47,
+        "plays": 1,
+        "plus-minus": 5,
+        "points": 1
+      },
+      "teams": 30,
+      "players": 530,
+      "positions": {
+        "C": 3400,
+        "F": 5958,
+        "G": 7196,
+        "PF": 1217,
+        "PG": 1394,
+        "SF": 1752,
+        "SG": 1480
+      }
+    }
+  ],
+  "targetSeasons": [
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020
+  ],
+  "teamSeasons": 256,
+  "expectedTeamSeasons": null,
+  "endpoint": {
+    "team": {
+      "rmseStage2": 2.714360957178395,
+      "rmseStage1": 2.8064620363484396,
+      "ratio": 0.9671824959763646,
+      "passed": true
+    },
+    "forward": {
+      "lossStage2": 10197.000395041081,
+      "lossStage1": 10200.541751156252,
+      "ratio": 0.9996528266633712,
+      "passed": true
+    },
+    "passed": true
+  },
+  "forward": {
+    "stints": 233347,
+    "games": 7991,
+    "possessions": 767089.5,
+    "stage1": 10200.541751156252,
+    "stage2": 10197.000395041081,
+    "ratio": 0.9996528266633712,
+    "improvement": 0.00034717333662881433,
+    "home": 2.6383224237669958,
+    "bySeason": [
+      {
+        "season": 2012,
+        "stints": 26230,
+        "games": 941,
+        "possessions": 86411.5,
+        "stage1": 9487.580458815533,
+        "stage2": 9483.35954904283,
+        "ratio": 0.999555112097228,
+        "improvement": 0.0004448879027719732
+      },
+      {
+        "season": 2013,
+        "stints": 17171,
+        "games": 613,
+        "possessions": 56480.5,
+        "stage1": 9801.841194626066,
+        "stage2": 9795.598461361082,
+        "ratio": 0.9993631060592568,
+        "improvement": 0.0006368939407431773
+      },
+      {
+        "season": 2014,
+        "stints": 28723,
+        "games": 1009,
+        "possessions": 95351.5,
+        "stage1": 9859.268546168927,
+        "stage2": 9852.019819222609,
+        "ratio": 0.9992647804538061,
+        "improvement": 0.0007352195461939326
+      },
+      {
+        "season": 2015,
+        "stints": 29177,
+        "games": 987,
+        "possessions": 93117.5,
+        "stage1": 10157.694146310567,
+        "stage2": 10153.03545795164,
+        "ratio": 0.9995413635917932,
+        "improvement": 0.00045863640820675844
+      },
+      {
+        "season": 2016,
+        "stints": 13453,
+        "games": 460,
+        "possessions": 43920.5,
+        "stage1": 10288.393808956584,
+        "stage2": 10283.179872109144,
+        "ratio": 0.999493221493631,
+        "improvement": 0.0005067785063690433
+      },
+      {
+        "season": 2017,
+        "stints": 28926,
+        "games": 984,
+        "possessions": 94541,
+        "stage1": 10514.177842549967,
+        "stage2": 10510.109321923093,
+        "ratio": 0.999613044339957,
+        "improvement": 0.00038695566004298687
+      },
+      {
+        "season": 2018,
+        "stints": 26777,
+        "games": 916,
+        "possessions": 88666,
+        "stage1": 10381.874742993365,
+        "stage2": 10382.387544695464,
+        "ratio": 1.0000493939403812,
+        "improvement": -0.00004939394038117051
+      },
+      {
+        "season": 2019,
+        "stints": 32518,
+        "games": 1094,
+        "possessions": 109479,
+        "stage1": 10246.761292297633,
+        "stage2": 10242.896332453849,
+        "ratio": 0.9996228115661591,
+        "improvement": 0.0003771884338409359
+      },
+      {
+        "season": 2020,
+        "stints": 30372,
+        "games": 987,
+        "possessions": 99122,
+        "stage1": 10866.483914609767,
+        "stage2": 10867.665062436708,
+        "ratio": 1.0001086964133221,
+        "improvement": -0.00010869641332211799
+      }
+    ],
+    "slope": {
+      "stage1": {
+        "gamma": 0.9246220844932429,
+        "loss": 10200.049963979345,
+        "lossAtOne": 10200.541751155526,
+        "lossAtZero": 10274.047537321512
+      },
+      "stage2": {
+        "gamma": 0.8633174122380941,
+        "loss": 10195.019476064132,
+        "lossAtOne": 10197.000395040379,
+        "lossAtZero": 10274.047537321512
+      }
+    }
+  },
+  "team": {
+    "rmse": {
+      "stage2": 2.714360957178395,
+      "stage1": 2.8064620363484396
+    },
+    "rmseLeaveSeasonOut": {
+      "stage2": 2.7480709340535854,
+      "stage1": 2.8449087060541305
+    }
+  },
+  "game": {
+    "games": 9679,
+    "rmse": {
+      "stage2": 12.276341855894268,
+      "stage1": 12.296484822604338
+    },
+    "meanAbsoluteError": {
+      "stage2": 9.63245131214861,
+      "stage1": 9.653284927057756
+    },
+    "rmseLeaveSeasonOut": {
+      "stage2": 12.280055344283333,
+      "stage1": 12.300135017930478
+    }
+  },
+  "endpointLeaveSeasonOut": {
+    "team": {
+      "rmseStage2": 2.7480709340535854,
+      "rmseStage1": 2.8449087060541305,
+      "ratio": 0.9659610265192452,
+      "passed": true
+    },
+    "forward": {
+      "lossStage2": 10197.000395041081,
+      "lossStage1": 10200.541751156252,
+      "ratio": 0.9996528266633712,
+      "passed": true
+    },
+    "passed": true
+  },
+  "stage1Reproduced": {
+    "team": {
+      "here": 2.8064620363484396,
+      "recorded": 2.8064620363484396
+    },
+    "gameMae": {
+      "here": 9.653284927057756,
+      "recorded": 9.653284927057756
+    }
+  },
+  "bootstrap": {
+    "forwardByGame": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-training-forward-game",
+      "cluster": "game",
+      "low": 0.9994975193838843,
+      "median": 0.9996506105882101,
+      "high": 0.999799351989755,
+      "shareBelowOne": 1
+    },
+    "forwardBySeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-training-forward-season-cluster",
+      "cluster": "season",
+      "low": 0.9994731238114004,
+      "median": 0.9996442099285602,
+      "high": 0.9998385369103091,
+      "shareBelowOne": 1
+    },
+    "teamBySeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-training-team-season-cluster",
+      "cluster": "season",
+      "low": 0.9349830843904692,
+      "median": 0.966976688222517,
+      "high": 0.9947104070876406,
+      "shareBelowOne": 0.9925
+    },
+    "teamByTeamSeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-training-team-season",
+      "cluster": "unit",
+      "low": 0.9393681354657727,
+      "median": 0.9671965801345637,
+      "high": 0.9944058189822442,
+      "shareBelowOne": 0.9905
+    },
+    "gameBySeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-training-game-season-cluster",
+      "cluster": "season",
+      "low": 0.996547252681008,
+      "median": 0.9984544847431909,
+      "high": 1.000219777543581,
+      "shareBelowOne": 0.9565
+    }
+  },
+  "deltaSize": {
+    "minMinutes": 1000,
+    "playerSeasons": 2460,
+    "sdDelta": 0.7505329934728042,
+    "sdBox": 2.5626795568156484,
+    "sdRating": 2.7949872012856285,
+    "meanDelta": 0.12987298239150424,
+    "shareOfVariance": 0.11571540518348906,
+    "varianceRatio": 0.07210741557931837,
+    "correlationBoxDelta": 0.1771175595215777,
+    "perSeason": [
+      {
+        "season": 2011,
+        "playerSeasons": 255,
+        "sdDelta": 0.407623691833268
+      },
+      {
+        "season": 2012,
+        "playerSeasons": 228,
+        "sdDelta": 0.5815785551489208
+      },
+      {
+        "season": 2013,
+        "playerSeasons": 238,
+        "sdDelta": 0.6585265446654172
+      },
+      {
+        "season": 2014,
+        "playerSeasons": 232,
+        "sdDelta": 0.7605741224065495
+      },
+      {
+        "season": 2015,
+        "playerSeasons": 248,
+        "sdDelta": 0.8585876397101536
+      },
+      {
+        "season": 2016,
+        "playerSeasons": 241,
+        "sdDelta": 0.8182406858810282
+      },
+      {
+        "season": 2017,
+        "playerSeasons": 251,
+        "sdDelta": 0.8089753108138334
+      },
+      {
+        "season": 2018,
+        "playerSeasons": 245,
+        "sdDelta": 0.8151342251396793
+      },
+      {
+        "season": 2019,
+        "playerSeasons": 276,
+        "sdDelta": 0.8567981742675087
+      },
+      {
+        "season": 2020,
+        "playerSeasons": 246,
+        "sdDelta": 0.7769381132381953
+      }
+    ]
+  },
+  "deltaVsRapm": {
+    "playerSeasons": 2205,
+    "correlation": 0.44194515204456486,
+    "boxVsRapm": 0.6252128328809837,
+    "ratingVsRapm": 0.7355589744907213
+  },
+  "ownerChecks": [
+    {
+      "group": "highAssistCentres",
+      "size": 79,
+      "stage2": -0.8507140049377182,
+      "stage1": -1.2523343357696246,
+      "stage2Mapped": -0.7502441784816168,
+      "stage1Mapped": -0.8468755114682551
+    },
+    {
+      "group": "highReboundGuards",
+      "size": 197,
+      "stage2": -0.0043640658839559955,
+      "stage1": -0.13233841470435215,
+      "stage2Mapped": 0.04014631626671097,
+      "stage1Mapped": 0.15067732984338997
+    },
+    {
+      "group": "inefficientVolumeScorers",
+      "size": 138,
+      "stage2": -0.16193824690155906,
+      "stage1": -0.13536525853274162,
+      "stage2Mapped": 0.3769619575479559,
+      "stage1Mapped": 0.5149823755944889
+    },
+    {
+      "group": "defenceFirstPlayers",
+      "size": 276,
+      "stage2": -2.330824043374284,
+      "stage1": -2.9277008667346847,
+      "stage2Mapped": -1.6954486439982617,
+      "stage1Mapped": -2.0241294825255802
+    },
+    {
+      "group": "statAccumulators",
+      "size": 225,
+      "stage2": 0.7585305847326271,
+      "stage1": 0.28058590777600284,
+      "stage2Mapped": -0.17003584432391755,
+      "stage1Mapped": -0.1466780907582432
+    },
+    {
+      "group": "lowUsageRolePlayers",
+      "size": 349,
+      "stage2": -1.6281322968044571,
+      "stage1": -1.8691549920054498,
+      "stage2Mapped": -0.9210990340286868,
+      "stage1Mapped": -1.0049600619414107
+    }
+  ],
+  "faceValidity": {
+    "season": 2020,
+    "minMinutes": 1500,
+    "positive": [
+      {
+        "athleteId": "2490620",
+        "name": "Robert Covington",
+        "minutes": 2137,
+        "box": -0.5867936470259972,
+        "delta": 2.2596651188569457,
+        "rating": 1.6728714718309483
+      },
+      {
+        "athleteId": "3988",
+        "name": "Danny Green",
+        "minutes": 1684,
+        "box": -0.5330806248135149,
+        "delta": 2.182554164594463,
+        "rating": 1.6494735397809481
+      },
+      {
+        "athleteId": "6609",
+        "name": "Khris Middleton",
+        "minutes": 1855,
+        "box": 3.542502141578676,
+        "delta": 2.1094848759676776,
+        "rating": 5.651987017546354
+      },
+      {
+        "athleteId": "4065648",
+        "name": "Jayson Tatum",
+        "minutes": 2268,
+        "box": 2.660838343243468,
+        "delta": 1.9943345823233973,
+        "rating": 4.655172925566865
+      },
+      {
+        "athleteId": "3112335",
+        "name": "Nikola Jokic",
+        "minutes": 2338,
+        "box": 5.417349966794787,
+        "delta": 1.7809798139699966,
+        "rating": 7.198329780764784
+      },
+      {
+        "athleteId": "3995",
+        "name": "Jrue Holiday",
+        "minutes": 2116,
+        "box": 2.183429087434647,
+        "delta": 1.6841983546443355,
+        "rating": 3.8676274420789825
+      },
+      {
+        "athleteId": "3032977",
+        "name": "Giannis Antetokounmpo",
+        "minutes": 1916,
+        "box": 8.561845718664214,
+        "delta": 1.6503169420583337,
+        "rating": 10.212162660722548
+      },
+      {
+        "athleteId": "2779",
+        "name": "Chris Paul",
+        "minutes": 2207,
+        "box": 6.072713797537269,
+        "delta": 1.5892148353761675,
+        "rating": 7.661928632913437
+      },
+      {
+        "athleteId": "4249",
+        "name": "Gordon Hayward",
+        "minutes": 1744,
+        "box": 1.5418812525902768,
+        "delta": 1.4874109585097965,
+        "rating": 3.0292922111000733
+      },
+      {
+        "athleteId": "1966",
+        "name": "LeBron James",
+        "minutes": 2317,
+        "box": 8.325171360590852,
+        "delta": 1.4465011956780849,
+        "rating": 9.771672556268937
+      },
+      {
+        "athleteId": "6479",
+        "name": "Kemba Walker",
+        "minutes": 1743,
+        "box": 4.923313290305549,
+        "delta": 1.353429838341806,
+        "rating": 6.276743128647355
+      },
+      {
+        "athleteId": "3059318",
+        "name": "Joel Embiid",
+        "minutes": 1508,
+        "box": 3.7767946180913436,
+        "delta": 1.3435490423916954,
+        "rating": 5.120343660483039
+      },
+      {
+        "athleteId": "6478",
+        "name": "Nikola Vucevic",
+        "minutes": 2001,
+        "box": 2.559862148342526,
+        "delta": 1.3095468973253461,
+        "rating": 3.8694090456678722
+      },
+      {
+        "athleteId": "3012",
+        "name": "Kyle Lowry",
+        "minutes": 2103,
+        "box": 4.826916391001092,
+        "delta": 1.2889278193139475,
+        "rating": 6.115844210315039
+      },
+      {
+        "athleteId": "3102531",
+        "name": "Kristaps Porzingis",
+        "minutes": 1815,
+        "box": 1.6409428758908235,
+        "delta": 1.2529665711514928,
+        "rating": 2.8939094470423163
+      }
+    ],
+    "negative": [
+      {
+        "athleteId": "6637",
+        "name": "Kent Bazemore",
+        "minutes": 1689,
+        "box": -2.5424020763597124,
+        "delta": -1.460752267807373,
+        "rating": -4.003154344167085
+      },
+      {
+        "athleteId": "3064440",
+        "name": "Zach LaVine",
+        "minutes": 2086,
+        "box": 1.9911582618197106,
+        "delta": -1.214494546530738,
+        "rating": 0.7766637152889726
+      },
+      {
+        "athleteId": "3074752",
+        "name": "Terry Rozier",
+        "minutes": 2165,
+        "box": 0.36199064308137585,
+        "delta": -1.0707596011925642,
+        "rating": -0.7087689581111883
+      },
+      {
+        "athleteId": "6429",
+        "name": "Alec Burks",
+        "minutes": 1755,
+        "box": 0.551309962886916,
+        "delta": -0.9961832428641786,
+        "rating": -0.44487327997726256
+      },
+      {
+        "athleteId": "2991070",
+        "name": "Jerami Grant",
+        "minutes": 1890,
+        "box": -1.198492372686682,
+        "delta": -0.9947760223158635,
+        "rating": -2.1932683950025456
+      },
+      {
+        "athleteId": "4023",
+        "name": "Garrett Temple",
+        "minutes": 1729,
+        "box": -1.5649183191653782,
+        "delta": -0.9704094203138394,
+        "rating": -2.5353277394792175
+      },
+      {
+        "athleteId": "4277905",
+        "name": "Trae Young",
+        "minutes": 2121,
+        "box": 5.770432960672531,
+        "delta": -0.9195371015825726,
+        "rating": 4.850895859089959
+      },
+      {
+        "athleteId": "6477",
+        "name": "Jonas Valanciunas",
+        "minutes": 1843,
+        "box": 0.2789360147720039,
+        "delta": -0.9156068234564904,
+        "rating": -0.6366708086844864
+      },
+      {
+        "athleteId": "3907387",
+        "name": "Ben Simmons",
+        "minutes": 2018,
+        "box": 3.2532014884688305,
+        "delta": -0.8250696135037026,
+        "rating": 2.428131874965128
+      },
+      {
+        "athleteId": "2994526",
+        "name": "Bryn Forbes",
+        "minutes": 1583,
+        "box": -1.5661374146611422,
+        "delta": -0.7948302106871865,
+        "rating": -2.3609676253483287
+      },
+      {
+        "athleteId": "6474",
+        "name": "Tristan Thompson",
+        "minutes": 1724,
+        "box": -2.611486911288375,
+        "delta": -0.7773886657426505,
+        "rating": -3.3888755770310257
+      },
+      {
+        "athleteId": "2528353",
+        "name": "Tony Snell",
+        "minutes": 1643,
+        "box": -2.605662713494767,
+        "delta": -0.682270063193601,
+        "rating": -3.287932776688368
+      },
+      {
+        "athleteId": "4238",
+        "name": "Eric Bledsoe",
+        "minutes": 1647,
+        "box": 3.190448120044707,
+        "delta": -0.6239740062778991,
+        "rating": 2.566474113766808
+      },
+      {
+        "athleteId": "6579",
+        "name": "Will Barton",
+        "minutes": 1919,
+        "box": 0.3384404540880349,
+        "delta": -0.6137292644608199,
+        "rating": -0.27528881037278496
+      },
+      {
+        "athleteId": "3945274",
+        "name": "Luka Doncic",
+        "minutes": 2048,
+        "box": 7.887120050964064,
+        "delta": -0.5905100492775688,
+        "rating": 7.296610001686496
+      }
+    ],
+    "topRating": [
+      {
+        "athleteId": "3992",
+        "name": "James Harden",
+        "minutes": 2478,
+        "box": 10.432385683149734,
+        "delta": -0.10133278072221685,
+        "rating": 10.331052902427517
+      },
+      {
+        "athleteId": "3032977",
+        "name": "Giannis Antetokounmpo",
+        "minutes": 1916,
+        "box": 8.561845718664214,
+        "delta": 1.6503169420583337,
+        "rating": 10.212162660722548
+      },
+      {
+        "athleteId": "1966",
+        "name": "LeBron James",
+        "minutes": 2317,
+        "box": 8.325171360590852,
+        "delta": 1.4465011956780849,
+        "rating": 9.771672556268937
+      },
+      {
+        "athleteId": "6606",
+        "name": "Damian Lillard",
+        "minutes": 2473,
+        "box": 8.383744297528734,
+        "delta": 0.5407592908221339,
+        "rating": 8.924503588350868
+      },
+      {
+        "athleteId": "2779",
+        "name": "Chris Paul",
+        "minutes": 2207,
+        "box": 6.072713797537269,
+        "delta": 1.5892148353761675,
+        "rating": 7.661928632913437
+      },
+      {
+        "athleteId": "6450",
+        "name": "Kawhi Leonard",
+        "minutes": 1853,
+        "box": 7.273899965485672,
+        "delta": 0.0754800611074149,
+        "rating": 7.349380026593087
+      },
+      {
+        "athleteId": "3945274",
+        "name": "Luka Doncic",
+        "minutes": 2048,
+        "box": 7.887120050964064,
+        "delta": -0.5905100492775688,
+        "rating": 7.296610001686496
+      },
+      {
+        "athleteId": "3112335",
+        "name": "Nikola Jokic",
+        "minutes": 2338,
+        "box": 5.417349966794787,
+        "delta": 1.7809798139699966,
+        "rating": 7.198329780764784
+      },
+      {
+        "athleteId": "6479",
+        "name": "Kemba Walker",
+        "minutes": 1743,
+        "box": 4.923313290305549,
+        "delta": 1.353429838341806,
+        "rating": 6.276743128647355
+      },
+      {
+        "athleteId": "3012",
+        "name": "Kyle Lowry",
+        "minutes": 2103,
+        "box": 4.826916391001092,
+        "delta": 1.2889278193139475,
+        "rating": 6.115844210315039
+      },
+      {
+        "athleteId": "6430",
+        "name": "Jimmy Butler III",
+        "minutes": 1957,
+        "box": 5.029804762635729,
+        "delta": 0.7620464821697901,
+        "rating": 5.791851244805519
+      },
+      {
+        "athleteId": "6583",
+        "name": "Anthony Davis",
+        "minutes": 2131,
+        "box": 5.813379880261855,
+        "delta": -0.09312525670103344,
+        "rating": 5.720254623560821
+      },
+      {
+        "athleteId": "6609",
+        "name": "Khris Middleton",
+        "minutes": 1855,
+        "box": 3.542502141578676,
+        "delta": 2.1094848759676776,
+        "rating": 5.651987017546354
+      },
+      {
+        "athleteId": "3059318",
+        "name": "Joel Embiid",
+        "minutes": 1508,
+        "box": 3.7767946180913436,
+        "delta": 1.3435490423916954,
+        "rating": 5.120343660483039
+      },
+      {
+        "athleteId": "4277905",
+        "name": "Trae Young",
+        "minutes": 2121,
+        "box": 5.770432960672531,
+        "delta": -0.9195371015825726,
+        "rating": 4.850895859089959
+      },
+      {
+        "athleteId": "4065648",
+        "name": "Jayson Tatum",
+        "minutes": 2268,
+        "box": 2.660838343243468,
+        "delta": 1.9943345823233973,
+        "rating": 4.655172925566865
+      },
+      {
+        "athleteId": "3428",
+        "name": "Danilo Gallinari",
+        "minutes": 1836,
+        "box": 3.719897317583982,
+        "delta": 0.7406852007871363,
+        "rating": 4.460582518371118
+      },
+      {
+        "athleteId": "4011",
+        "name": "Ricky Rubio",
+        "minutes": 2019,
+        "box": 3.371070513150764,
+        "delta": 0.5219972526450616,
+        "rating": 3.8930677657958257
+      },
+      {
+        "athleteId": "2991230",
+        "name": "Fred VanVleet",
+        "minutes": 1928,
+        "box": 3.5312565534345537,
+        "delta": 0.3544867110918348,
+        "rating": 3.8857432645263885
+      },
+      {
+        "athleteId": "6478",
+        "name": "Nikola Vucevic",
+        "minutes": 2001,
+        "box": 2.559862148342526,
+        "delta": 1.3095468973253461,
+        "rating": 3.8694090456678722
+      }
+    ]
+  },
+  "record": null,
+  "teams": [
+    {
+      "teamId": "1",
+      "season": 2012,
+      "actual": 3.6707751318730013,
+      "stage2": -1.0208399780826865,
+      "stage1": -0.4913989993165453
+    },
+    {
+      "teamId": "10",
+      "season": 2012,
+      "actual": 0.2392146105905092,
+      "stage2": -1.3965708825481205,
+      "stage1": -1.1850818936364038
+    },
+    {
+      "teamId": "11",
+      "season": 2012,
+      "actual": 3.530352938128135,
+      "stage2": -0.055592660309346176,
+      "stage1": 0.37423964529887366
+    },
+    {
+      "teamId": "12",
+      "season": 2012,
+      "actual": 2.7913030264992105,
+      "stage2": 4.19582148221623,
+      "stage1": 5.083798414713314
+    },
+    {
+      "teamId": "13",
+      "season": 2012,
+      "actual": 1.5184851333843805,
+      "stage2": 4.076110058241954,
+      "stage1": 4.491183167962616
+    },
+    {
+      "teamId": "14",
+      "season": 2012,
+      "actual": 6.359070126859422,
+      "stage2": 3.9507875684666196,
+      "stage1": 4.192201053699398
+    },
+    {
+      "teamId": "15",
+      "season": 2012,
+      "actual": 0.2836432398361173,
+      "stage2": 0.43473385109498186,
+      "stage1": 0.958174639928064
+    },
+    {
+      "teamId": "16",
+      "season": 2012,
+      "actual": -2.2850551092256337,
+      "stage2": -3.1564957200817005,
+      "stage1": -2.8084437849293624
+    },
+    {
+      "teamId": "17",
+      "season": 2012,
+      "actual": -6.479191134498166,
+      "stage2": -2.9323936558734585,
+      "stage1": -2.3112000864105555
+    },
+    {
+      "teamId": "18",
+      "season": 2012,
+      "actual": 3.347463542790422,
+      "stage2": -0.06654235171875511,
+      "stage1": -0.3289516757728874
+    },
+    {
+      "teamId": "19",
+      "season": 2012,
+      "actual": 0.8634718209292286,
+      "stage2": 4.18997966196423,
+      "stage1": 4.759403507037091
+    },
+    {
+      "teamId": "2",
+      "season": 2012,
+      "actual": 2.723624323605947,
+      "stage2": 3.067724212984665,
+      "stage1": 2.9258786220272657
+    },
+    {
+      "teamId": "20",
+      "season": 2012,
+      "actual": 4.624659344289371,
+      "stage2": 2.540954063349954,
+      "stage1": 2.8888211986740817
+    },
+    {
+      "teamId": "21",
+      "season": 2012,
+      "actual": -0.25661505496373704,
+      "stage2": -0.46220567468224627,
+      "stage1": -0.3857198936662962
+    },
+    {
+      "teamId": "22",
+      "season": 2012,
+      "actual": -0.6614845002887945,
+      "stage2": 1.3952488986682265,
+      "stage1": 1.6483278494393891
+    },
+    {
+      "teamId": "23",
+      "season": 2012,
+      "actual": -5.844763092269329,
+      "stage2": -3.647873099268972,
+      "stage1": -3.7781504983914767
+    },
+    {
+      "teamId": "24",
+      "season": 2012,
+      "actual": 7.526214457332887,
+      "stage2": 0.5463954574525234,
+      "stage1": 1.112450679198166
+    },
+    {
+      "teamId": "25",
+      "season": 2012,
+      "actual": 6.37238046266006,
+      "stage2": 3.1902016431290234,
+      "stage1": 3.763106671133286
+    },
+    {
+      "teamId": "26",
+      "season": 2012,
+      "actual": 0.6521497081232405,
+      "stage2": -3.34737626096612,
+      "stage1": -3.3501272420377637
+    },
+    {
+      "teamId": "27",
+      "season": 2012,
+      "actual": -5.07900496364586,
+      "stage2": -6.1810924720810405,
+      "stage1": -5.856367324089703
+    },
+    {
+      "teamId": "28",
+      "season": 2012,
+      "actual": -3.6017579222152465,
+      "stage2": -4.023445578688433,
+      "stage1": -3.8443385266620687
+    },
+    {
+      "teamId": "29",
+      "season": 2012,
+      "actual": 2.158488214329764,
+      "stage2": 1.0912356620430281,
+      "stage1": 1.7098226538426218
+    },
+    {
+      "teamId": "3",
+      "season": 2012,
+      "actual": -4.153074279743046,
+      "stage2": -6.005008543014187,
+      "stage1": -5.69348536513299
+    },
+    {
+      "teamId": "30",
+      "season": 2012,
+      "actual": -14.921831061465582,
+      "stage2": -6.069506381518824,
+      "stage1": -6.101009004532077
+    },
+    {
+      "teamId": "4",
+      "season": 2012,
+      "actual": 8.921107671161362,
+      "stage2": 3.886874267776739,
+      "stage1": 4.595699716176507
+    },
+    {
+      "teamId": "5",
+      "season": 2012,
+      "actual": -7.653291398667199,
+      "stage2": -6.541771986219136,
+      "stage1": -6.627725979607129
+    },
+    {
+      "teamId": "6",
+      "season": 2012,
+      "actual": 1.011755636924263,
+      "stage2": 2.2872597525339096,
+      "stage1": 2.34512801089274
+    },
+    {
+      "teamId": "7",
+      "season": 2012,
+      "actual": 2.9574193869736587,
+      "stage2": 1.0773558327108401,
+      "stage1": 1.4746499737414325
+    },
+    {
+      "teamId": "8",
+      "season": 2012,
+      "actual": -5.229727359086981,
+      "stage2": -5.572946159896079,
+      "stage1": -5.444259908682101
+    },
+    {
+      "teamId": "9",
+      "season": 2012,
+      "actual": -3.600172808294798,
+      "stage2": -4.702284620225146,
+      "stage1": -4.081899848500769
+    },
+    {
+      "teamId": "1",
+      "season": 2013,
+      "actual": 1.0084601630979895,
+      "stage2": 3.239979181581411,
+      "stage1": 3.3137738654919975
+    },
+    {
+      "teamId": "10",
+      "season": 2013,
+      "actual": 3.099987227520436,
+      "stage2": 0.9626433383819197,
+      "stage1": 1.3421615201078931
+    },
+    {
+      "teamId": "11",
+      "season": 2013,
+      "actual": 4.233155331058488,
+      "stage2": 0.2833096029208013,
+      "stage1": 0.21407366210560408
+    },
+    {
+      "teamId": "12",
+      "season": 2013,
+      "actual": 6.722191688157951,
+      "stage2": 4.3141083152447255,
+      "stage1": 4.763544611314514
+    },
+    {
+      "teamId": "13",
+      "season": 2013,
+      "actual": 0.855787569074282,
+      "stage2": 5.058637294189721,
+      "stage1": 5.137298432372413
+    },
+    {
+      "teamId": "14",
+      "season": 2013,
+      "actual": 8.355127244009775,
+      "stage2": 7.992177885255541,
+      "stage1": 8.22601425513124
+    },
+    {
+      "teamId": "15",
+      "season": 2013,
+      "actual": -1.6212224834948654,
+      "stage2": 0.6297976811037294,
+      "stage1": 0.9484382426892473
+    },
+    {
+      "teamId": "16",
+      "season": 2013,
+      "actual": -2.903471999469079,
+      "stage2": -2.3505691636747215,
+      "stage1": -1.711807151542168
+    },
+    {
+      "teamId": "17",
+      "season": 2013,
+      "actual": 2.0402826509881002,
+      "stage2": -0.7193216788508865,
+      "stage1": -0.017116954155644848
+    },
+    {
+      "teamId": "18",
+      "season": 2013,
+      "actual": 4.867189097496423,
+      "stage2": 3.979109692258468,
+      "stage1": 4.845362651893756
+    },
+    {
+      "teamId": "19",
+      "season": 2013,
+      "actual": -7.5682389013024025,
+      "stage2": -4.808800427964319,
+      "stage1": -4.5679145437864594
+    },
+    {
+      "teamId": "2",
+      "season": 2013,
+      "actual": -0.013964491092051131,
+      "stage2": 1.915221451670623,
+      "stage1": 1.6876507173340012
+    },
+    {
+      "teamId": "20",
+      "season": 2013,
+      "actual": -3.5369443585737486,
+      "stage2": -2.0666206061168086,
+      "stage1": -1.9223839991676104
+    },
+    {
+      "teamId": "21",
+      "season": 2013,
+      "actual": -7.180080752245296,
+      "stage2": -3.3900791022618963,
+      "stage1": -2.9762273298262514
+    },
+    {
+      "teamId": "22",
+      "season": 2013,
+      "actual": -3.385730885946849,
+      "stage2": -4.636462538910687,
+      "stage1": -4.656666924533448
+    },
+    {
+      "teamId": "23",
+      "season": 2013,
+      "actual": -5.686324591001356,
+      "stage2": -2.324358201113819,
+      "stage1": -2.191505021024116
+    },
+    {
+      "teamId": "24",
+      "season": 2013,
+      "actual": 6.596645598940203,
+      "stage2": 5.593610968601089,
+      "stage1": 5.8190247981084395
+    },
+    {
+      "teamId": "25",
+      "season": 2013,
+      "actual": 8.845399010420985,
+      "stage2": 4.0317876224984674,
+      "stage1": 4.453452949107985
+    },
+    {
+      "teamId": "26",
+      "season": 2013,
+      "actual": -0.4048662126580724,
+      "stage2": 0.49850164671645064,
+      "stage1": 1.1581015460113864
+    },
+    {
+      "teamId": "27",
+      "season": 2013,
+      "actual": -3.1556219897027056,
+      "stage2": -3.766657291801419,
+      "stage1": -3.420956635023698
+    },
+    {
+      "teamId": "28",
+      "season": 2013,
+      "actual": -2.0879078333877197,
+      "stage2": -0.6465930767855828,
+      "stage1": -1.1536820137118888
+    },
+    {
+      "teamId": "29",
+      "season": 2013,
+      "actual": 4.689402815373161,
+      "stage2": 3.1908432500937485,
+      "stage1": 3.3667939265304136
+    },
+    {
+      "teamId": "30",
+      "season": 2013,
+      "actual": -9.903912735217922,
+      "stage2": -7.006733160161346,
+      "stage1": -6.274842414167566
+    },
+    {
+      "teamId": "5",
+      "season": 2013,
+      "actual": -4.132394033610137,
+      "stage2": -6.5190406969439,
+      "stage1": -6.685182814069491
+    },
+    {
+      "teamId": "6",
+      "season": 2013,
+      "actual": -0.7785311166594734,
+      "stage2": 0.4763250045424082,
+      "stage1": 0.38281357064398447
+    },
+    {
+      "teamId": "7",
+      "season": 2013,
+      "actual": 4.9451027658289455,
+      "stage2": 4.202131334397827,
+      "stage1": 4.805436205772252
+    },
+    {
+      "teamId": "8",
+      "season": 2013,
+      "actual": -4.0198655483267665,
+      "stage2": -4.080750022931424,
+      "stage1": -3.4680213425812245
+    },
+    {
+      "teamId": "9",
+      "season": 2013,
+      "actual": 0.7122272991245083,
+      "stage2": -1.0837424998425638,
+      "stage1": -0.8257439520581616
+    },
+    {
+      "teamId": "1",
+      "season": 2014,
+      "actual": 0.1488687329646802,
+      "stage2": 2.259138670220997,
+      "stage1": 1.6222069048321082
+    },
+    {
+      "teamId": "10",
+      "season": 2014,
+      "actual": 4.889385924928714,
+      "stage2": 5.010247972211368,
+      "stage1": 4.82078406042099
+    },
+    {
+      "teamId": "11",
+      "season": 2014,
+      "actual": 4.394363982501166,
+      "stage2": 3.4480372245793136,
+      "stage1": 2.9495612919769636
+    },
+    {
+      "teamId": "12",
+      "season": 2014,
+      "actual": 6.141718826771486,
+      "stage2": 5.748476672163237,
+      "stage1": 7.207157927567071
+    },
+    {
+      "teamId": "13",
+      "season": 2014,
+      "actual": -6.591660195402095,
+      "stage2": -5.717997246005194,
+      "stage1": -5.681482948601882
+    },
+    {
+      "teamId": "14",
+      "season": 2014,
+      "actual": 5.375632903376517,
+      "stage2": 6.416281345659309,
+      "stage1": 6.472038570105043
+    },
+    {
+      "teamId": "15",
+      "season": 2014,
+      "actual": -8.88724977747214,
+      "stage2": -4.391247818565208,
+      "stage1": -4.328285113714797
+    },
+    {
+      "teamId": "16",
+      "season": 2014,
+      "actual": 2.6971361318163978,
+      "stage2": 2.675310205177362,
+      "stage1": 3.4054428330822755
+    },
+    {
+      "teamId": "17",
+      "season": 2014,
+      "actual": -0.9934953650681508,
+      "stage2": 4.024184104247026,
+      "stage1": 3.612878013093278
+    },
+    {
+      "teamId": "18",
+      "season": 2014,
+      "actual": -0.9052256982260404,
+      "stage2": 1.050478193631744,
+      "stage1": 1.6504649396260165
+    },
+    {
+      "teamId": "19",
+      "season": 2014,
+      "actual": -5.96385607047851,
+      "stage2": -5.544966024895462,
+      "stage1": -6.091913429337744
+    },
+    {
+      "teamId": "2",
+      "season": 2014,
+      "actual": -4.509119046191906,
+      "stage2": -4.438072816928167,
+      "stage1": -4.145955186574033
+    },
+    {
+      "teamId": "20",
+      "season": 2014,
+      "actual": -9.827049081222363,
+      "stage2": -7.433899689386822,
+      "stage1": -7.602940596101797
+    },
+    {
+      "teamId": "21",
+      "season": 2014,
+      "actual": 2.665366574963771,
+      "stage2": -4.9781341544787985,
+      "stage1": -3.9858250634181016
+    },
+    {
+      "teamId": "22",
+      "season": 2014,
+      "actual": 3.9119647172935648,
+      "stage2": 0.4731185603684076,
+      "stage1": 1.1300783586777179
+    },
+    {
+      "teamId": "23",
+      "season": 2014,
+      "actual": -3.736657695077901,
+      "stage2": -3.672389312747448,
+      "stage1": -3.3138829876057256
+    },
+    {
+      "teamId": "24",
+      "season": 2014,
+      "actual": 7.941812356756498,
+      "stage2": 5.055285133726585,
+      "stage1": 4.746525299990979
+    },
+    {
+      "teamId": "25",
+      "season": 2014,
+      "actual": 6.250198629193724,
+      "stage2": 3.6549216776704165,
+      "stage1": 2.9739966209808353
+    },
+    {
+      "teamId": "26",
+      "season": 2014,
+      "actual": -7.963956763875716,
+      "stage2": -4.935136556603294,
+      "stage1": -5.059563692241738
+    },
+    {
+      "teamId": "27",
+      "season": 2014,
+      "actual": 1.3120969987789468,
+      "stage2": 0.6385408179245566,
+      "stage1": 1.342814114959821
+    },
+    {
+      "teamId": "28",
+      "season": 2014,
+      "actual": 3.34386235446599,
+      "stage2": -0.8972488825108997,
+      "stage1": -1.8321491230877336
+    },
+    {
+      "teamId": "29",
+      "season": 2014,
+      "actual": 2.0930749121478085,
+      "stage2": 2.802732249148418,
+      "stage1": 2.4191313622587804
+    },
+    {
+      "teamId": "30",
+      "season": 2014,
+      "actual": 0.4621110915063981,
+      "stage2": -3.3132605921700207,
+      "stage1": -2.793982393031237
+    },
+    {
+      "teamId": "5",
+      "season": 2014,
+      "actual": -2.952573773525345,
+      "stage2": -2.1036094666679865,
+      "stage1": -1.2537633643118173
+    },
+    {
+      "teamId": "6",
+      "season": 2014,
+      "actual": 1.941359991031465,
+      "stage2": 5.115404309543786,
+      "stage1": 5.548063048082961
+    },
+    {
+      "teamId": "7",
+      "season": 2014,
+      "actual": -2.316632637034711,
+      "stage2": -2.8484817025109033,
+      "stage1": -1.4074717689087028
+    },
+    {
+      "teamId": "8",
+      "season": 2014,
+      "actual": -3.6568646501284636,
+      "stage2": 0.4951171129809211,
+      "stage1": 1.549473440557227
+    },
+    {
+      "teamId": "9",
+      "season": 2014,
+      "actual": 4.9393779790214,
+      "stage2": 2.1527906666767698,
+      "stage1": 2.6709386225760907
+    },
+    {
+      "teamId": "1",
+      "season": 2015,
+      "actual": 5.9918716600738,
+      "stage2": 1.3073737110946135,
+      "stage1": 0.6479706001129593
+    },
+    {
+      "teamId": "10",
+      "season": 2015,
+      "actual": 4.079967360261119,
+      "stage2": 3.174482296910803,
+      "stage1": 3.2534881819730614
+    },
+    {
+      "teamId": "11",
+      "season": 2015,
+      "actual": -0.08233615105939183,
+      "stage2": -2.8983934815797077,
+      "stage1": -3.632646627810421
+    },
+    {
+      "teamId": "12",
+      "season": 2015,
+      "actual": 7.027086468030782,
+      "stage2": 6.8443018475416,
+      "stage1": 7.960614449670023
+    },
+    {
+      "teamId": "13",
+      "season": 2015,
+      "actual": -6.575896694696708,
+      "stage2": -7.407542831134088,
+      "stage1": -6.727760601604497
+    },
+    {
+      "teamId": "14",
+      "season": 2015,
+      "actual": -2.5220398258111163,
+      "stage2": -0.9496165202316598,
+      "stage1": -1.5174552287852583
+    },
+    {
+      "teamId": "15",
+      "season": 2015,
+      "actual": 1.0282275521690187,
+      "stage2": -3.970405463845046,
+      "stage1": -3.3180495115655657
+    },
+    {
+      "teamId": "16",
+      "season": 2015,
+      "actual": -8.441299770472522,
+      "stage2": -6.1104633153034325,
+      "stage1": -5.91709033434101
+    },
+    {
+      "teamId": "17",
+      "season": 2015,
+      "actual": -2.119968172945352,
+      "stage2": -1.3032606555311204,
+      "stage1": -0.777326774059997
+    },
+    {
+      "teamId": "18",
+      "season": 2015,
+      "actual": -9.65445610468248,
+      "stage2": -5.539056176812408,
+      "stage1": -5.054568017184856
+    },
+    {
+      "teamId": "19",
+      "season": 2015,
+      "actual": -6.357252897836337,
+      "stage2": -5.010840877780665,
+      "stage1": -5.686384052856074
+    },
+    {
+      "teamId": "2",
+      "season": 2015,
+      "actual": 0.2928733269611198,
+      "stage2": -3.953506014701145,
+      "stage1": -4.385444536314384
+    },
+    {
+      "teamId": "20",
+      "season": 2015,
+      "actual": -9.355811983908534,
+      "stage2": -9.51874235106099,
+      "stage1": -9.607732308293526
+    },
+    {
+      "teamId": "21",
+      "season": 2015,
+      "actual": -0.7570200558106511,
+      "stage2": 2.1840393892946444,
+      "stage1": 2.4733019278024453
+    },
+    {
+      "teamId": "22",
+      "season": 2015,
+      "actual": 3.9342156324853805,
+      "stage2": 2.6899437711196152,
+      "stage1": 2.763699682191321
+    },
+    {
+      "teamId": "23",
+      "season": 2015,
+      "actual": -3.7935358149712894,
+      "stage2": -2.592110825542412,
+      "stage1": -2.4299127923790422
+    },
+    {
+      "teamId": "24",
+      "season": 2015,
+      "actual": 7.2283645927204505,
+      "stage2": 6.348377471592503,
+      "stage1": 6.122670679956239
+    },
+    {
+      "teamId": "25",
+      "season": 2015,
+      "actual": 2.339303235189537,
+      "stage2": -0.5653577912067624,
+      "stage1": -0.8528565812923414
+    },
+    {
+      "teamId": "26",
+      "season": 2015,
+      "actual": 0.2256317689530686,
+      "stage2": -5.7904167821169485,
+      "stage1": -5.722835662117198
+    },
+    {
+      "teamId": "27",
+      "season": 2015,
+      "actual": 0.5428483797332986,
+      "stage2": 0.7403269396537496,
+      "stage1": 0.45692059181660377
+    },
+    {
+      "teamId": "28",
+      "season": 2015,
+      "actual": 4.148009779413785,
+      "stage2": 3.8852626877851386,
+      "stage1": 4.072214856448678
+    },
+    {
+      "teamId": "29",
+      "season": 2015,
+      "actual": 3.2011396611503593,
+      "stage2": 5.013758041452453,
+      "stage1": 3.879370491643292
+    },
+    {
+      "teamId": "30",
+      "season": 2015,
+      "actual": -3.5403476127353724,
+      "stage2": -2.2338966651886207,
+      "stage1": -2.3405569509079425
+    },
+    {
+      "teamId": "5",
+      "season": 2015,
+      "actual": 4.940683957668776,
+      "stage2": 7.046956273031589,
+      "stage1": 8.007705462144468
+    },
+    {
+      "teamId": "6",
+      "season": 2015,
+      "actual": 2.995942714350969,
+      "stage2": 3.8327702284104332,
+      "stage1": 3.577584840278554
+    },
+    {
+      "teamId": "7",
+      "season": 2015,
+      "actual": -4.227909504181523,
+      "stage2": -1.4858402053693363,
+      "stage1": -0.5537406219851291
+    },
+    {
+      "teamId": "8",
+      "season": 2015,
+      "actual": -1.0484031165162118,
+      "stage2": -2.0397563597754664,
+      "stage1": -1.8783713673919065
+    },
+    {
+      "teamId": "9",
+      "season": 2015,
+      "actual": 10.1638026804075,
+      "stage2": 4.259508910280642,
+      "stage1": 4.156128842870536
+    },
+    {
+      "teamId": "1",
+      "season": 2016,
+      "actual": 3.001406826812216,
+      "stage2": 4.34462025932718,
+      "stage1": 4.106874055866226
+    },
+    {
+      "teamId": "10",
+      "season": 2016,
+      "actual": 0.21060390670246937,
+      "stage2": 6.120880009598261,
+      "stage1": 6.728182069429835
+    },
+    {
+      "teamId": "11",
+      "season": 2016,
+      "actual": 1.588861024974247,
+      "stage2": -1.6515875054832405,
+      "stage1": -1.9480914810120773
+    },
+    {
+      "teamId": "12",
+      "season": 2016,
+      "actual": 4.0455357982877045,
+      "stage2": 6.142491296426737,
+      "stage1": 6.771770799551326
+    },
+    {
+      "teamId": "13",
+      "season": 2016,
+      "actual": -9.956743334033453,
+      "stage2": -4.329081494934192,
+      "stage1": -3.768866478841427
+    },
+    {
+      "teamId": "14",
+      "season": 2016,
+      "actual": 0.8542415850314833,
+      "stage2": 1.764867020517758,
+      "stage1": 1.5801974299564603
+    },
+    {
+      "teamId": "15",
+      "season": 2016,
+      "actual": -4.3144043944318335,
+      "stage2": -1.1779662189831654,
+      "stage1": -1.8129135876686533
+    },
+    {
+      "teamId": "16",
+      "season": 2016,
+      "actual": -4.229309383409794,
+      "stage2": -4.173870926359556,
+      "stage1": -3.784860352628373
+    },
+    {
+      "teamId": "17",
+      "season": 2016,
+      "actual": -7.396627458310525,
+      "stage2": -2.489961802419147,
+      "stage1": -2.92122808489343
+    },
+    {
+      "teamId": "18",
+      "season": 2016,
+      "actual": -3.196588841847053,
+      "stage2": -5.064166636231183,
+      "stage1": -4.444922397543291
+    },
+    {
+      "teamId": "19",
+      "season": 2016,
+      "actual": -2.461394281141245,
+      "stage2": -3.0709251546761536,
+      "stage1": -2.8687698080067277
+    },
+    {
+      "teamId": "2",
+      "season": 2016,
+      "actual": 2.99219717166736,
+      "stage2": 3.6991794690324182,
+      "stage1": 1.3196044601849108
+    },
+    {
+      "teamId": "20",
+      "season": 2016,
+      "actual": -10.387247090255975,
+      "stage2": -5.5303025296299815,
+      "stage1": -5.665810702326719
+    },
+    {
+      "teamId": "21",
+      "season": 2016,
+      "actual": -7.446925877476399,
+      "stage2": -2.3906363446540215,
+      "stage1": -2.3891315424584
+    },
+    {
+      "teamId": "22",
+      "season": 2016,
+      "actual": 0.8564485220910187,
+      "stage2": -0.03018650121536537,
+      "stage1": 0.42503742734083105
+    },
+    {
+      "teamId": "23",
+      "season": 2016,
+      "actual": -1.9549738650862247,
+      "stage2": 0.10448623344233532,
+      "stage1": 1.5014581658354742
+    },
+    {
+      "teamId": "24",
+      "season": 2016,
+      "actual": 11.77159784242639,
+      "stage2": 7.351070077154758,
+      "stage1": 6.358457000506145
+    },
+    {
+      "teamId": "25",
+      "season": 2016,
+      "actual": 7.595259932463418,
+      "stage2": 6.331940712386243,
+      "stage1": 6.091763609108433
+    },
+    {
+      "teamId": "26",
+      "season": 2016,
+      "actual": 1.8636743250135919,
+      "stage2": 0.7242456506737218,
+      "stage1": 0.7566018897295015
+    },
+    {
+      "teamId": "27",
+      "season": 2016,
+      "actual": -1.151981278362686,
+      "stage2": 1.6262938812131393,
+      "stage1": 1.5964915288560757
+    },
+    {
+      "teamId": "28",
+      "season": 2016,
+      "actual": 4.801412473156369,
+      "stage2": 2.9251019455792315,
+      "stage1": 3.0516279206131767
+    },
+    {
+      "teamId": "29",
+      "season": 2016,
+      "actual": -3.026617727175176,
+      "stage2": 2.3360660795868595,
+      "stage1": 1.730172379590437
+    },
+    {
+      "teamId": "30",
+      "season": 2016,
+      "actual": 2.3195509992840226,
+      "stage2": 0.47502845053852405,
+      "stage1": 1.901816121585399
+    },
+    {
+      "teamId": "5",
+      "season": 2016,
+      "actual": 6.739879177349606,
+      "stage2": 6.560448795857214,
+      "stage1": 6.345303890599953
+    },
+    {
+      "teamId": "6",
+      "season": 2016,
+      "actual": -0.4584446859519065,
+      "stage2": 5.5972052990518595,
+      "stage1": 4.986468839189445
+    },
+    {
+      "teamId": "7",
+      "season": 2016,
+      "actual": -3.3767652172077853,
+      "stage2": -6.298204951330568,
+      "stage1": -5.911877427580712
+    },
+    {
+      "teamId": "8",
+      "season": 2016,
+      "actual": 0.9469594484908176,
+      "stage2": -0.027362666232060073,
+      "stage1": -0.5048888553633509
+    },
+    {
+      "teamId": "9",
+      "season": 2016,
+      "actual": 10.052026544466552,
+      "stage2": 7.641478032675475,
+      "stage1": 6.8646810836626475
+    },
+    {
+      "teamId": "1",
+      "season": 2017,
+      "actual": -1.0685644371069687,
+      "stage2": -0.032885360848792455,
+      "stage1": 0.043926518998153696
+    },
+    {
+      "teamId": "10",
+      "season": 2017,
+      "actual": 5.183017238044894,
+      "stage2": 0.33814269829694954,
+      "stage1": -0.07178023459827632
+    },
+    {
+      "teamId": "11",
+      "season": 2017,
+      "actual": -0.25355917003411044,
+      "stage2": 2.5559079458706204,
+      "stage1": 2.2228495894756697
+    },
+    {
+      "teamId": "12",
+      "season": 2017,
+      "actual": 3.8724752914929774,
+      "stage2": 3.6463145128004295,
+      "stage1": 4.2399308970208285
+    },
+    {
+      "teamId": "13",
+      "season": 2017,
+      "actual": -7.549781370914467,
+      "stage2": -4.663556679006014,
+      "stage1": -5.036326961839169
+    },
+    {
+      "teamId": "14",
+      "season": 2017,
+      "actual": 1.054171047926085,
+      "stage2": -2.3619576435692755,
+      "stage1": -2.117313091813993
+    },
+    {
+      "teamId": "15",
+      "season": 2017,
+      "actual": -0.7491595791630116,
+      "stage2": -2.3199882407945345,
+      "stage1": -2.655912211494525
+    },
+    {
+      "teamId": "16",
+      "season": 2017,
+      "actual": -0.9771376559404615,
+      "stage2": -0.31108472699930756,
+      "stage1": 0.14243117216824241
+    },
+    {
+      "teamId": "17",
+      "season": 2017,
+      "actual": -6.389272132082292,
+      "stage2": -6.848311881974749,
+      "stage1": -6.981481854839146
+    },
+    {
+      "teamId": "18",
+      "season": 2017,
+      "actual": -4.125676931457686,
+      "stage2": -4.064311276389681,
+      "stage1": -4.271654225326712
+    },
+    {
+      "teamId": "19",
+      "season": 2017,
+      "actual": -5.908364707721411,
+      "stage2": -1.0279697000061532,
+      "stage1": -0.37728062086518577
+    },
+    {
+      "teamId": "2",
+      "season": 2017,
+      "actual": 2.4904422654546514,
+      "stage2": 3.5835328015669026,
+      "stage1": 2.1827215126505166
+    },
+    {
+      "teamId": "20",
+      "season": 2017,
+      "actual": -5.624428768953153,
+      "stage2": -5.833209014714257,
+      "stage1": -6.320836989198722
+    },
+    {
+      "teamId": "21",
+      "season": 2017,
+      "actual": -5.957905987823372,
+      "stage2": -4.460355302115158,
+      "stage1": -4.235478148303308
+    },
+    {
+      "teamId": "22",
+      "season": 2017,
+      "actual": 0.03953412981426867,
+      "stage2": 1.6849142871396308,
+      "stage1": 2.3980728066299473
+    },
+    {
+      "teamId": "23",
+      "season": 2017,
+      "actual": -3.9452674118246054,
+      "stage2": -1.3598119813856089,
+      "stage1": -1.7598738741024844
+    },
+    {
+      "teamId": "24",
+      "season": 2017,
+      "actual": 7.60104883537167,
+      "stage2": 5.16434103826726,
+      "stage1": 4.59925343708767
+    },
+    {
+      "teamId": "25",
+      "season": 2017,
+      "actual": 0.4971206250114469,
+      "stage2": 0.8681613215807222,
+      "stage1": 1.2145265393463012
+    },
+    {
+      "teamId": "26",
+      "season": 2017,
+      "actual": 4.089877136752137,
+      "stage2": 3.936642063228189,
+      "stage1": 3.305059353904665
+    },
+    {
+      "teamId": "27",
+      "season": 2017,
+      "actual": 1.5134247354138755,
+      "stage2": 1.2514337102015158,
+      "stage1": 0.2457275313594336
+    },
+    {
+      "teamId": "28",
+      "season": 2017,
+      "actual": 4.706249361294729,
+      "stage2": 2.8435384291902888,
+      "stage1": 2.6134710740362905
+    },
+    {
+      "teamId": "29",
+      "season": 2017,
+      "actual": 0.6379549936620561,
+      "stage2": -0.02213493913765241,
+      "stage1": -1.6908359201719032
+    },
+    {
+      "teamId": "30",
+      "season": 2017,
+      "actual": 0.332133225279324,
+      "stage2": -0.3965708820737217,
+      "stage1": 1.0733470670763063
+    },
+    {
+      "teamId": "5",
+      "season": 2017,
+      "actual": 3.9486384509637604,
+      "stage2": 5.7338912252122025,
+      "stage1": 5.73085079697714
+    },
+    {
+      "teamId": "6",
+      "season": 2017,
+      "actual": -3.8932441747857323,
+      "stage2": -1.9295172874680109,
+      "stage1": -1.9791195137508342
+    },
+    {
+      "teamId": "7",
+      "season": 2017,
+      "actual": 0.28841262932684486,
+      "stage2": -2.0371980430376793,
+      "stage1": -1.9413625942742807
+    },
+    {
+      "teamId": "8",
+      "season": 2017,
+      "actual": -0.824489222168758,
+      "stage2": 1.1949435516757339,
+      "stage1": 1.2712236724946688
+    },
+    {
+      "teamId": "9",
+      "season": 2017,
+      "actual": 11.401276016399303,
+      "stage2": 12.768135354693708,
+      "stage1": 11.271702323868494
+    },
+    {
+      "teamId": "1",
+      "season": 2018,
+      "actual": -5.41651584880294,
+      "stage2": -6.441166476425899,
+      "stage1": -5.855657248310835
+    },
+    {
+      "teamId": "10",
+      "season": 2018,
+      "actual": 8.21699220976126,
+      "stage2": 7.433415577633418,
+      "stage1": 7.180017702067179
+    },
+    {
+      "teamId": "11",
+      "season": 2018,
+      "actual": 1.0074470485831264,
+      "stage2": -2.9392293877631364,
+      "stage1": -3.031516920690384
+    },
+    {
+      "teamId": "12",
+      "season": 2018,
+      "actual": 0.05249040737805166,
+      "stage2": -0.019789989528615326,
+      "stage1": 0.057266303869651924
+    },
+    {
+      "teamId": "13",
+      "season": 2018,
+      "actual": -1.3724329837196712,
+      "stage2": -5.061397927417346,
+      "stage1": -5.884738266726703
+    },
+    {
+      "teamId": "14",
+      "season": 2018,
+      "actual": 0.52346323274786,
+      "stage2": 1.1043470011584096,
+      "stage1": 0.6352157599830905
+    },
+    {
+      "teamId": "15",
+      "season": 2018,
+      "actual": -0.37530091090892526,
+      "stage2": 3.624697769952194,
+      "stage1": 2.507909471513446
+    },
+    {
+      "teamId": "16",
+      "season": 2018,
+      "actual": 1.5168925449429762,
+      "stage2": 0.2768140832418824,
+      "stage1": 0.374776117583856
+    },
+    {
+      "teamId": "17",
+      "season": 2018,
+      "actual": -4.339632968699909,
+      "stage2": -4.333191136898579,
+      "stage1": -4.0232012631518925
+    },
+    {
+      "teamId": "18",
+      "season": 2018,
+      "actual": -3.949016468861274,
+      "stage2": -4.615371348560369,
+      "stage1": -4.634228701182412
+    },
+    {
+      "teamId": "19",
+      "season": 2018,
+      "actual": -4.540800075811618,
+      "stage2": -3.9828584856711156,
+      "stage1": -3.44785404323517
+    },
+    {
+      "teamId": "2",
+      "season": 2018,
+      "actual": 3.9160443600802797,
+      "stage2": -3.8043940552053463,
+      "stage1": -3.3866257534932664
+    },
+    {
+      "teamId": "20",
+      "season": 2018,
+      "actual": 4.395531591768507,
+      "stage2": -0.5378645974252736,
+      "stage1": -1.8059423806272479
+    },
+    {
+      "teamId": "21",
+      "season": 2018,
+      "actual": -9.279791440187989,
+      "stage2": -6.053239903049611,
+      "stage1": -6.306014012955789
+    },
+    {
+      "teamId": "22",
+      "season": 2018,
+      "actual": 2.5688849166316565,
+      "stage2": 1.0083016982144455,
+      "stage1": 1.1917045069746226
+    },
+    {
+      "teamId": "23",
+      "season": 2018,
+      "actual": -7.8592793980636495,
+      "stage2": -5.015613574743941,
+      "stage1": -6.070218611375864
+    },
+    {
+      "teamId": "24",
+      "season": 2018,
+      "actual": 3.1198145004618416,
+      "stage2": 3.2731054716944805,
+      "stage1": 2.6354110416470657
+    },
+    {
+      "teamId": "25",
+      "season": 2018,
+      "actual": 3.2886289430792064,
+      "stage2": 6.659545537450463,
+      "stage1": 6.275143670700899
+    },
+    {
+      "teamId": "26",
+      "season": 2018,
+      "actual": 3.903432589475049,
+      "stage2": 0.8181625336999998,
+      "stage1": 0.5943612086213137
+    },
+    {
+      "teamId": "27",
+      "season": 2018,
+      "actual": 0.301152760392389,
+      "stage2": 0.4958994982081846,
+      "stage1": -0.3508942662680496
+    },
+    {
+      "teamId": "28",
+      "season": 2018,
+      "actual": 7.518360628060102,
+      "stage2": 2.781083515515183,
+      "stage1": 1.9688714289566995
+    },
+    {
+      "teamId": "29",
+      "season": 2018,
+      "actual": -6.524765503469431,
+      "stage2": -5.921210968795451,
+      "stage1": -5.855403041632452
+    },
+    {
+      "teamId": "30",
+      "season": 2018,
+      "actual": 0.4199254632302766,
+      "stage2": 1.3887191480677594,
+      "stage1": 1.023909979861572
+    },
+    {
+      "teamId": "5",
+      "season": 2018,
+      "actual": 0.7493157564013914,
+      "stage2": 5.044357591978744,
+      "stage1": 4.52127375852124
+    },
+    {
+      "teamId": "6",
+      "season": 2018,
+      "actual": -2.890134377743265,
+      "stage2": -2.3652171074307615,
+      "stage1": -2.5378953089895355
+    },
+    {
+      "teamId": "7",
+      "season": 2018,
+      "actual": 0.7577261943332532,
+      "stage2": 2.025730434518449,
+      "stage1": 2.0160801560958275
+    },
+    {
+      "teamId": "8",
+      "season": 2018,
+      "actual": -0.8304490854344591,
+      "stage2": -0.05585824757961433,
+      "stage1": -0.3095579396448729
+    },
+    {
+      "teamId": "9",
+      "season": 2018,
+      "actual": 5.297423655925177,
+      "stage2": 8.15457342863543,
+      "stage1": 7.653147913365612
+    },
+    {
+      "teamId": "1",
+      "season": 2019,
+      "actual": -5.6334301887997364,
+      "stage2": -6.998413929642269,
+      "stage1": -6.943818580955627
+    },
+    {
+      "teamId": "10",
+      "season": 2019,
+      "actual": 4.736615125187162,
+      "stage2": 7.847926143735998,
+      "stage1": 7.659280601225034
+    },
+    {
+      "teamId": "11",
+      "season": 2019,
+      "actual": 3.3286999780525264,
+      "stage2": 1.8405289105222116,
+      "stage1": 1.5034877156356905
+    },
+    {
+      "teamId": "12",
+      "season": 2019,
+      "actual": 0.8188302892342529,
+      "stage2": -0.07960173321515196,
+      "stage1": -1.1011285032159102
+    },
+    {
+      "teamId": "13",
+      "season": 2019,
+      "actual": -1.6296809986130372,
+      "stage2": 0.7650903356730749,
+      "stage1": 0.8462207979107386
+    },
+    {
+      "teamId": "14",
+      "season": 2019,
+      "actual": -0.23107439865928203,
+      "stage2": 0.6178838873421684,
+      "stage1": 0.12667482367836413
+    },
+    {
+      "teamId": "15",
+      "season": 2019,
+      "actual": 8.401166687467356,
+      "stage2": 4.476469021380792,
+      "stage1": 2.557418874190578
+    },
+    {
+      "teamId": "16",
+      "season": 2019,
+      "actual": -1.4546159813809152,
+      "stage2": 0.8478239869661639,
+      "stage1": -0.03171602284798869
+    },
+    {
+      "teamId": "17",
+      "season": 2019,
+      "actual": -0.07008461549243789,
+      "stage2": -1.0961798820205484,
+      "stage1": -0.7670145767965011
+    },
+    {
+      "teamId": "18",
+      "season": 2019,
+      "actual": -9.034947896472662,
+      "stage2": -6.815077394319273,
+      "stage1": -6.218582862706037
+    },
+    {
+      "teamId": "19",
+      "season": 2019,
+      "actual": 0.7055755063112514,
+      "stage2": -2.1589936133089225,
+      "stage1": -2.5835038837543562
+    },
+    {
+      "teamId": "2",
+      "season": 2019,
+      "actual": 4.347099147299783,
+      "stage2": 3.2782360414074443,
+      "stage1": 2.835089672627608
+    },
+    {
+      "teamId": "20",
+      "season": 2019,
+      "actual": 2.576213967975679,
+      "stage2": 4.324098860268348,
+      "stage1": 4.064846133615417
+    },
+    {
+      "teamId": "21",
+      "season": 2019,
+      "actual": -8.947009409544098,
+      "stage2": -7.384586667054922,
+      "stage1": -6.420189660759835
+    },
+    {
+      "teamId": "22",
+      "season": 2019,
+      "actual": 4.111586546506346,
+      "stage2": 1.6280141536693442,
+      "stage1": 1.220853458030101
+    },
+    {
+      "teamId": "23",
+      "season": 2019,
+      "actual": -1.0658189544316057,
+      "stage2": -4.000095158221569,
+      "stage1": -3.923816407740439
+    },
+    {
+      "teamId": "24",
+      "season": 2019,
+      "actual": 1.670657682240909,
+      "stage2": 1.9405410988745273,
+      "stage1": 1.8843805432494227
+    },
+    {
+      "teamId": "25",
+      "season": 2019,
+      "actual": 3.2174735336854496,
+      "stage2": 3.187246017131104,
+      "stage1": 4.195926803584945
+    },
+    {
+      "teamId": "26",
+      "season": 2019,
+      "actual": 5.126936280865702,
+      "stage2": 3.9665720669078737,
+      "stage1": 3.309441459821438
+    },
+    {
+      "teamId": "27",
+      "season": 2019,
+      "actual": -2.778990829330264,
+      "stage2": -0.6300387147237987,
+      "stage1": -0.1393023583619306
+    },
+    {
+      "teamId": "28",
+      "season": 2019,
+      "actual": 5.912840699303018,
+      "stage2": 2.7576699554084,
+      "stage1": 2.190132569343946
+    },
+    {
+      "teamId": "29",
+      "season": 2019,
+      "actual": -2.618341667773008,
+      "stage2": -1.2289997832617514,
+      "stage1": -1.1380996431065609
+    },
+    {
+      "teamId": "30",
+      "season": 2019,
+      "actual": -1.0830846250120345,
+      "stage2": 1.2358054742135978,
+      "stage1": 1.275946746675173
+    },
+    {
+      "teamId": "5",
+      "season": 2019,
+      "actual": -9.74128723446339,
+      "stage2": -5.098057921659963,
+      "stage1": -5.224279758565416
+    },
+    {
+      "teamId": "6",
+      "season": 2019,
+      "actual": -1.2627538135165168,
+      "stage2": -3.3087080634994406,
+      "stage1": -3.4611122885846886
+    },
+    {
+      "teamId": "7",
+      "season": 2019,
+      "actual": 3.9517496249496875,
+      "stage2": 0.7271684771945397,
+      "stage1": -0.056624599039354795
+    },
+    {
+      "teamId": "8",
+      "season": 2019,
+      "actual": -0.24401254224467128,
+      "stage2": 1.5792913631736134,
+      "stage1": 1.8810130668536698
+    },
+    {
+      "teamId": "9",
+      "season": 2019,
+      "actual": 6.2470680034606385,
+      "stage2": 6.435326952743623,
+      "stage1": 6.633371789228967
+    },
+    {
+      "teamId": "1",
+      "season": 2020,
+      "actual": -7.494337144124242,
+      "stage2": -4.349699678452145,
+      "stage1": -4.5645939638864625
+    },
+    {
+      "teamId": "10",
+      "season": 2020,
+      "actual": 2.7839352558606425,
+      "stage2": 6.255751359832551,
+      "stage1": 6.072734332729002
+    },
+    {
+      "teamId": "11",
+      "season": 2020,
+      "actual": 1.935335435585811,
+      "stage2": 0.22912369925515508,
+      "stage1": 0.16415636029631586
+    },
+    {
+      "teamId": "12",
+      "season": 2020,
+      "actual": 6.200920515959352,
+      "stage2": 5.502679435903144,
+      "stage1": 5.350524826080273
+    },
+    {
+      "teamId": "13",
+      "season": 2020,
+      "actual": 5.620989403546012,
+      "stage2": 5.961430381124661,
+      "stage1": 5.7233675816945215
+    },
+    {
+      "teamId": "14",
+      "season": 2020,
+      "actual": 2.9116221120771364,
+      "stage2": -1.2142637576243471,
+      "stage1": -1.8703138829994863
+    },
+    {
+      "teamId": "15",
+      "season": 2020,
+      "actual": 9.406087374372499,
+      "stage2": 6.127566127181619,
+      "stage1": 3.6878558691316616
+    },
+    {
+      "teamId": "16",
+      "season": 2020,
+      "actual": -4.030697794402165,
+      "stage2": -1.4343118210126966,
+      "stage1": -2.4652649007242875
+    },
+    {
+      "teamId": "17",
+      "season": 2020,
+      "actual": -0.5444135205761754,
+      "stage2": -1.828949043136062,
+      "stage1": -1.1667939162873036
+    },
+    {
+      "teamId": "18",
+      "season": 2020,
+      "actual": -6.379040807892041,
+      "stage2": -3.3678950914175436,
+      "stage1": -3.1302680429206085
+    },
+    {
+      "teamId": "19",
+      "season": 2020,
+      "actual": -1.0084189353821502,
+      "stage2": 1.077229811535462,
+      "stage1": 0.5667698276393933
+    },
+    {
+      "teamId": "2",
+      "season": 2020,
+      "actual": 6.174400987904159,
+      "stage2": 1.683354807417321,
+      "stage1": 0.37495689557024825
+    },
+    {
+      "teamId": "20",
+      "season": 2020,
+      "actual": 2.3568357718908057,
+      "stage2": 2.114183566164181,
+      "stage1": 2.7148333330503287
+    },
+    {
+      "teamId": "21",
+      "season": 2020,
+      "actual": 0.21169789651677579,
+      "stage2": -1.2697499106865568,
+      "stage1": -1.3739178780785475
+    },
+    {
+      "teamId": "22",
+      "season": 2020,
+      "actual": -1.1122451650048417,
+      "stage2": 0.996125715091664,
+      "stage1": 1.3775378653268404
+    },
+    {
+      "teamId": "23",
+      "season": 2020,
+      "actual": -2.0103883742112307,
+      "stage2": 0.5447909497639762,
+      "stage1": 1.2762136751904043
+    },
+    {
+      "teamId": "24",
+      "season": 2020,
+      "actual": -1.0782392217023622,
+      "stage2": 1.077581147764663,
+      "stage1": 0.5748386422429541
+    },
+    {
+      "teamId": "25",
+      "season": 2020,
+      "actual": 1.9616181291924442,
+      "stage2": 0.9068061161465439,
+      "stage1": 1.4667207128819713
+    },
+    {
+      "teamId": "26",
+      "season": 2020,
+      "actual": 2.45486090040988,
+      "stage2": 4.7547378750942855,
+      "stage1": 4.72386298251832
+    },
+    {
+      "teamId": "27",
+      "season": 2020,
+      "actual": -4.444326869659532,
+      "stage2": -3.7182671023192624,
+      "stage1": -4.588525357347745
+    },
+    {
+      "teamId": "28",
+      "season": 2020,
+      "actual": 6.04730093739899,
+      "stage2": 0.79741165485592,
+      "stage1": 0.7972526286549169
+    },
+    {
+      "teamId": "29",
+      "season": 2020,
+      "actual": -1.0180455092446363,
+      "stage2": -6.079344708240939,
+      "stage1": -5.963311910199346
+    },
+    {
+      "teamId": "3",
+      "season": 2020,
+      "actual": -1.2120201117143703,
+      "stage2": -0.8277817029407442,
+      "stage1": -1.8032502693991943
+    },
+    {
+      "teamId": "30",
+      "season": 2020,
+      "actual": -6.871550528592851,
+      "stage2": -4.855829382852701,
+      "stage1": -4.322691427689918
+    },
+    {
+      "teamId": "4",
+      "season": 2020,
+      "actual": -3.0286693843926606,
+      "stage2": -1.9125841729638948,
+      "stage1": -2.2228082230947948
+    },
+    {
+      "teamId": "5",
+      "season": 2020,
+      "actual": -7.805225392999949,
+      "stage2": -4.420411725999104,
+      "stage1": -4.591765697088839
+    },
+    {
+      "teamId": "6",
+      "season": 2020,
+      "actual": 4.848038177973963,
+      "stage2": 0.6750406149813148,
+      "stage1": 0.45128227071070626
+    },
+    {
+      "teamId": "7",
+      "season": 2020,
+      "actual": 2.106795372711254,
+      "stage2": 3.493227748250295,
+      "stage1": 3.7483780714630237
+    },
+    {
+      "teamId": "8",
+      "season": 2020,
+      "actual": -3.5608218679919994,
+      "stage2": -3.2717279975547253,
+      "stage1": -2.932056910153747
+    },
+    {
+      "teamId": "9",
+      "season": 2020,
+      "actual": -8.474627026573797,
+      "stage2": -5.682521549306697,
+      "stage1": -5.420952793923842
+    }
+  ]
+}

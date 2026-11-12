@@ -1,0 +1,804 @@
+{
+  "version": 2,
+  "trainingSeasons": [
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020
+  ],
+  "inputs": {
+    "files": {
+      "2011": "ac252c57d8484cfb2101ff58eede85cbae6981271fd0c387447402b9a95340fb",
+      "2012": "ae2bab8ec3fc4139da49cc3d9e0bea4f2c03bc55d5b941d48d57eabeb356b2a7",
+      "2013": "e03ea4f24c2d0ce5d5fb6221dd7f05af4a9eacef656cd20b071516faccf0911d",
+      "2014": "34dffb371ce5cc67e7d3b84349d5a4b199d2cb30bea0caafcf15490233bce21d",
+      "2015": "325a9b63a3ee794921d3cd15a4b274ed4bfde0e77fb25b3ceee0406dc6ec2dc6",
+      "2016": "7989bb2598f6681f6348fdf740325acf16ecdf167659597780222fd7d08c669c",
+      "2017": "c196dfb8e447f7f6f3355797e585ccbce1bdab271a54aa41bd665d5d30513c09",
+      "2018": "114699b1d3eb3a7ce16dd13d821b01ac3e987ed339d11ba4bc51e5f11014dc3b",
+      "2019": "0aa36775083c8c0eeddf787f35bc187632d4fc835ac2c23a0bb3d52770d0784c",
+      "2020": "78ccfe781ad618fc97eddf18bc4636be543e8bd0f85771f619846da80a37a898"
+    },
+    "combined": "4aec8aab861a476f829b6d0b4c9f1fdb1f96b8da3ae475f3def0787041a91ef3"
+  },
+  "stage1": {
+    "fitSha256": "5213d2cdf96f2fd6465829b1e1d1eb2b4e86c534ebc6f4f12943166de082ee1d",
+    "book": {
+      "decay": 0.25,
+      "pseudoPossessions": 250,
+      "replacement": -7
+    },
+    "criterionRecomputed": 12.300135017930478,
+    "criterionFrozen": 12.300135017930478,
+    "endpointRmseLeaveSeasonOut": 2.8449087060541305,
+    "forwardLoss": 10200.541751156252,
+    "home": 2.6383224237669958
+  },
+  "forwardData": {
+    "stints": 233347,
+    "games": 7991,
+    "possessions": 767089.5
+  },
+  "slope": {
+    "stage1": {
+      "gamma": 0.9246220844932429,
+      "loss": 10200.049963979345,
+      "lossAtOne": 10200.541751155526,
+      "lossAtZero": 10274.047537321512
+    },
+    "stage2Chosen": {
+      "gamma": 0.8633174122380941,
+      "loss": 10195.019476064132,
+      "lossAtOne": 10197.000395040379,
+      "lossAtZero": 10274.047537321512
+    }
+  },
+  "settings": {
+    "checkpointDays": 21,
+    "grid": {
+      "lambda": [
+        500,
+        1000,
+        2000,
+        4000,
+        8000,
+        16000,
+        32000
+      ],
+      "rho": [
+        0,
+        0.25,
+        0.5,
+        0.75,
+        1
+      ]
+    },
+    "lambdaExtensions": [],
+    "criterionSeasons": [
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020
+    ],
+    "minPriorMinutes": 250
+  },
+  "coverage": [
+    {
+      "season": 2011,
+      "games": 1230,
+      "gamesWithStints": 1141,
+      "stints": 33183,
+      "rejected": {
+        "lineup-count": 3,
+        "minutes": 1,
+        "period-start": 8,
+        "plays": 2,
+        "plus-minus": 67,
+        "points": 8
+      },
+      "teams": 30,
+      "players": 467,
+      "positions": {
+        "C": 7297,
+        "F": 3913,
+        "G": 3807,
+        "NA": 68,
+        "PF": 5618,
+        "PG": 4631,
+        "SF": 5130,
+        "SG": 4882
+      }
+    },
+    {
+      "season": 2012,
+      "games": 990,
+      "gamesWithStints": 941,
+      "stints": 27135,
+      "rejected": {
+        "minutes": 1,
+        "period-start": 14,
+        "plays": 3,
+        "plus-minus": 27,
+        "points": 4
+      },
+      "teams": 30,
+      "players": 483,
+      "positions": {
+        "C": 5503,
+        "F": 3574,
+        "G": 3693,
+        "NA": 66,
+        "PF": 4419,
+        "PG": 4075,
+        "SF": 3690,
+        "SG": 3505
+      }
+    },
+    {
+      "season": 2013,
+      "games": 1063,
+      "gamesWithStints": 613,
+      "stints": 17755,
+      "rejected": {
+        "lineup-count": 28,
+        "minutes": 15,
+        "period-start": 64,
+        "plus-minus": 31,
+        "points": 312
+      },
+      "teams": 28,
+      "players": 444,
+      "positions": {
+        "C": 4149,
+        "F": 3366,
+        "G": 4006,
+        "NA": 2,
+        "PF": 3135,
+        "PG": 2818,
+        "SF": 2398,
+        "SG": 2452
+      }
+    },
+    {
+      "season": 2014,
+      "games": 1067,
+      "gamesWithStints": 1009,
+      "stints": 29658,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 2,
+        "period-start": 7,
+        "plays": 1,
+        "plus-minus": 26,
+        "points": 20
+      },
+      "teams": 28,
+      "players": 452,
+      "positions": {
+        "C": 4249,
+        "F": 4116,
+        "G": 4252,
+        "PF": 2621,
+        "PG": 2718,
+        "SF": 2085,
+        "SG": 2236
+      }
+    },
+    {
+      "season": 2015,
+      "games": 1068,
+      "gamesWithStints": 987,
+      "stints": 30130,
+      "rejected": {
+        "lineup-count": 4,
+        "minutes": 1,
+        "period-start": 1,
+        "plays": 1,
+        "plus-minus": 34,
+        "points": 40
+      },
+      "teams": 28,
+      "players": 463,
+      "positions": {
+        "C": 4218,
+        "F": 4682,
+        "G": 4813,
+        "PF": 2660,
+        "PG": 2214,
+        "SF": 2157,
+        "SG": 1936
+      }
+    },
+    {
+      "season": 2016,
+      "games": 1068,
+      "gamesWithStints": 460,
+      "stints": 13887,
+      "rejected": {
+        "lineup-count": 5,
+        "period-start": 12,
+        "plus-minus": 24,
+        "points": 567
+      },
+      "teams": 28,
+      "players": 446,
+      "positions": {
+        "C": 4333,
+        "F": 5108,
+        "G": 5714,
+        "PF": 2118,
+        "PG": 1975,
+        "SF": 1656,
+        "SG": 1843
+      }
+    },
+    {
+      "season": 2017,
+      "games": 1067,
+      "gamesWithStints": 984,
+      "stints": 29912,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 6,
+        "minutes": 1,
+        "period-start": 5,
+        "plus-minus": 45,
+        "points": 24
+      },
+      "teams": 28,
+      "players": 462,
+      "positions": {
+        "C": 4145,
+        "F": 5901,
+        "G": 6401,
+        "PF": 1657,
+        "PG": 1598,
+        "SF": 1492,
+        "SG": 1559
+      }
+    },
+    {
+      "season": 2018,
+      "games": 1067,
+      "gamesWithStints": 916,
+      "stints": 27540,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 29,
+        "minutes": 5,
+        "period-start": 65,
+        "plays": 6,
+        "plus-minus": 36,
+        "points": 8
+      },
+      "teams": 28,
+      "players": 509,
+      "positions": {
+        "C": 3780,
+        "F": 6489,
+        "G": 7013,
+        "PF": 1349,
+        "PG": 1265,
+        "SF": 1371,
+        "SG": 1433
+      }
+    },
+    {
+      "season": 2019,
+      "games": 1230,
+      "gamesWithStints": 1094,
+      "stints": 33465,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 16,
+        "minutes": 28,
+        "period-start": 72,
+        "plus-minus": 13,
+        "points": 5
+      },
+      "teams": 30,
+      "players": 538,
+      "positions": {
+        "C": 4122,
+        "F": 6979,
+        "G": 8340,
+        "PF": 1544,
+        "PG": 1612,
+        "SF": 1844,
+        "SG": 1699
+      }
+    },
+    {
+      "season": 2020,
+      "games": 1059,
+      "gamesWithStints": 987,
+      "stints": 31267,
+      "rejected": {
+        "box": 1,
+        "lineup-count": 16,
+        "minutes": 1,
+        "period-start": 47,
+        "plays": 1,
+        "plus-minus": 5,
+        "points": 1
+      },
+      "teams": 30,
+      "players": 530,
+      "positions": {
+        "C": 3400,
+        "F": 5958,
+        "G": 7196,
+        "PF": 1217,
+        "PG": 1394,
+        "SF": 1752,
+        "SG": 1480
+      }
+    }
+  ],
+  "tuning": {
+    "method": "forward stint loss: possession-weighted mean squared error of each stint's home-minus-away margin per 100 possessions, predicted as h + Σ home five r − Σ away five r with h fixed at Stage 1's primary.home and r = Stage 1 value + δ, both held at the latest checkpoint before the stint's game (before a season's first checkpoint: the Stage 1 value at the season's start + ρ δ_prev; replacement value for a player without a Stage 1 value), over every stint of audit-accepted games in seasons 2012 to 2020; ties keep the earlier cell (λ, then ρ, ascending)",
+    "table": [
+      {
+        "lambda": 500,
+        "rho": 0,
+        "forwardLoss": 10246.129304034816,
+        "gameRmse": 12.589614061065932,
+        "endpointRmse": 3.043719968350878
+      },
+      {
+        "lambda": 500,
+        "rho": 0.25,
+        "forwardLoss": 10245.061781803446,
+        "gameRmse": 12.583875070220179,
+        "endpointRmse": 3.0377401100715438
+      },
+      {
+        "lambda": 500,
+        "rho": 0.5,
+        "forwardLoss": 10247.209738948719,
+        "gameRmse": 12.592161662412103,
+        "endpointRmse": 3.03903551909162
+      },
+      {
+        "lambda": 500,
+        "rho": 0.75,
+        "forwardLoss": 10253.464751556501,
+        "gameRmse": 12.614229145280696,
+        "endpointRmse": 3.053022803476775
+      },
+      {
+        "lambda": 500,
+        "rho": 1,
+        "forwardLoss": 10265.889302329027,
+        "gameRmse": 12.650262702715331,
+        "endpointRmse": 3.1013907015633855
+      },
+      {
+        "lambda": 1000,
+        "rho": 0,
+        "forwardLoss": 10221.074147802916,
+        "gameRmse": 12.476853953706085,
+        "endpointRmse": 2.9133186401782782
+      },
+      {
+        "lambda": 1000,
+        "rho": 0.25,
+        "forwardLoss": 10219.481287110075,
+        "gameRmse": 12.469099456860599,
+        "endpointRmse": 2.9041714513488284
+      },
+      {
+        "lambda": 1000,
+        "rho": 0.5,
+        "forwardLoss": 10220.161032522034,
+        "gameRmse": 12.474550754542275,
+        "endpointRmse": 2.904077955210926
+      },
+      {
+        "lambda": 1000,
+        "rho": 0.75,
+        "forwardLoss": 10224.139858175851,
+        "gameRmse": 12.494928377708025,
+        "endpointRmse": 2.919667613574623
+      },
+      {
+        "lambda": 1000,
+        "rho": 1,
+        "forwardLoss": 10234.012452010295,
+        "gameRmse": 12.533822517950611,
+        "endpointRmse": 2.9739572281315683
+      },
+      {
+        "lambda": 2000,
+        "rho": 0,
+        "forwardLoss": 10207.811875794308,
+        "gameRmse": 12.39159160190353,
+        "endpointRmse": 2.8163995162021473
+      },
+      {
+        "lambda": 2000,
+        "rho": 0.25,
+        "forwardLoss": 10206.049341052529,
+        "gameRmse": 12.382591560076294,
+        "endpointRmse": 2.8040905988247973
+      },
+      {
+        "lambda": 2000,
+        "rho": 0.5,
+        "forwardLoss": 10205.542145191714,
+        "gameRmse": 12.38337266093738,
+        "endpointRmse": 2.8000078937654163
+      },
+      {
+        "lambda": 2000,
+        "rho": 0.75,
+        "forwardLoss": 10207.198846143201,
+        "gameRmse": 12.397089099624948,
+        "endpointRmse": 2.811724625308727
+      },
+      {
+        "lambda": 2000,
+        "rho": 1,
+        "forwardLoss": 10213.848098506749,
+        "gameRmse": 12.431635701216809,
+        "endpointRmse": 2.863387748726002
+      },
+      {
+        "lambda": 4000,
+        "rho": 0,
+        "forwardLoss": 10202.032719458066,
+        "gameRmse": 12.337683962479911,
+        "endpointRmse": 2.7729860086789864
+      },
+      {
+        "lambda": 4000,
+        "rho": 0.25,
+        "forwardLoss": 10200.47977676189,
+        "gameRmse": 12.32873981347426,
+        "endpointRmse": 2.7588886941175153
+      },
+      {
+        "lambda": 4000,
+        "rho": 0.5,
+        "forwardLoss": 10199.392960536297,
+        "gameRmse": 12.325149146731228,
+        "endpointRmse": 2.7491282177363323
+      },
+      {
+        "lambda": 4000,
+        "rho": 0.75,
+        "forwardLoss": 10199.336152449052,
+        "gameRmse": 12.329703978215214,
+        "endpointRmse": 2.750149039197321
+      },
+      {
+        "lambda": 4000,
+        "rho": 1,
+        "forwardLoss": 10202.694063053825,
+        "gameRmse": 12.352307412940071,
+        "endpointRmse": 2.784503505333913
+      },
+      {
+        "lambda": 8000,
+        "rho": 0,
+        "forwardLoss": 10200.094106214443,
+        "gameRmse": 12.309632826475344,
+        "endpointRmse": 2.771323778413675
+      },
+      {
+        "lambda": 8000,
+        "rho": 0.25,
+        "forwardLoss": 10198.954102536693,
+        "gameRmse": 12.301962862805578,
+        "endpointRmse": 2.758303176599402
+      },
+      {
+        "lambda": 8000,
+        "rho": 0.5,
+        "forwardLoss": 10197.860508980883,
+        "gameRmse": 12.296181410859479,
+        "endpointRmse": 2.7457136327953506
+      },
+      {
+        "lambda": 8000,
+        "rho": 0.75,
+        "forwardLoss": 10197.03252089782,
+        "gameRmse": 12.293588799721078,
+        "endpointRmse": 2.736893412563158
+      },
+      {
+        "lambda": 8000,
+        "rho": 1,
+        "forwardLoss": 10197.934392112204,
+        "gameRmse": 12.302105580320514,
+        "endpointRmse": 2.7474178379376397
+      },
+      {
+        "lambda": 16000,
+        "rho": 0,
+        "forwardLoss": 10199.749541021363,
+        "gameRmse": 12.298431139650532,
+        "endpointRmse": 2.787352591216825
+      },
+      {
+        "lambda": 16000,
+        "rho": 0.25,
+        "forwardLoss": 10199.018779417489,
+        "gameRmse": 12.29266987696382,
+        "endpointRmse": 2.7774145050752344
+      },
+      {
+        "lambda": 16000,
+        "rho": 0.5,
+        "forwardLoss": 10198.196398585556,
+        "gameRmse": 12.28695742524217,
+        "endpointRmse": 2.766032900562445
+      },
+      {
+        "lambda": 16000,
+        "rho": 0.75,
+        "forwardLoss": 10197.307915902808,
+        "gameRmse": 12.281354018548758,
+        "endpointRmse": 2.7538836111396936
+      },
+      {
+        "lambda": 16000,
+        "rho": 1,
+        "forwardLoss": 10197.000395041081,
+        "gameRmse": 12.280055344283333,
+        "endpointRmse": 2.7480709340535854
+      },
+      {
+        "lambda": 32000,
+        "rho": 0,
+        "forwardLoss": 10199.910064292451,
+        "gameRmse": 12.295958231949442,
+        "endpointRmse": 2.8060422096774684
+      },
+      {
+        "lambda": 32000,
+        "rho": 0.25,
+        "forwardLoss": 10199.483263519438,
+        "gameRmse": 12.292111246161577,
+        "endpointRmse": 2.7994508588124676
+      },
+      {
+        "lambda": 32000,
+        "rho": 0.5,
+        "forwardLoss": 10198.958059031462,
+        "gameRmse": 12.287693845122096,
+        "endpointRmse": 2.7911433281271307
+      },
+      {
+        "lambda": 32000,
+        "rho": 0.75,
+        "forwardLoss": 10198.297501214878,
+        "gameRmse": 12.282232508421039,
+        "endpointRmse": 2.7805578822372454
+      },
+      {
+        "lambda": 32000,
+        "rho": 1,
+        "forwardLoss": 10197.698039648418,
+        "gameRmse": 12.277045836506364,
+        "endpointRmse": 2.769250434121978
+      }
+    ],
+    "chosen": {
+      "lambda": 16000,
+      "rho": 1,
+      "forwardLoss": 10197.000395041081,
+      "gameRmse": 12.280055344283333,
+      "endpointRmse": 2.7480709340535854
+    },
+    "onEdge": {
+      "lambda": false,
+      "rho": true
+    },
+    "chosenVsStage1": {
+      "ratio": 0.9996528266633712,
+      "improvement": 0.00034717333662881433
+    },
+    "chosenBySeason": [
+      {
+        "season": 2012,
+        "stints": 26230,
+        "games": 941,
+        "possessions": 86411.5,
+        "stage1": 9487.580458815533,
+        "stage2": 9483.35954904283,
+        "ratio": 0.999555112097228,
+        "improvement": 0.0004448879027719732
+      },
+      {
+        "season": 2013,
+        "stints": 17171,
+        "games": 613,
+        "possessions": 56480.5,
+        "stage1": 9801.841194626066,
+        "stage2": 9795.598461361082,
+        "ratio": 0.9993631060592568,
+        "improvement": 0.0006368939407431773
+      },
+      {
+        "season": 2014,
+        "stints": 28723,
+        "games": 1009,
+        "possessions": 95351.5,
+        "stage1": 9859.268546168927,
+        "stage2": 9852.019819222609,
+        "ratio": 0.9992647804538061,
+        "improvement": 0.0007352195461939326
+      },
+      {
+        "season": 2015,
+        "stints": 29177,
+        "games": 987,
+        "possessions": 93117.5,
+        "stage1": 10157.694146310567,
+        "stage2": 10153.03545795164,
+        "ratio": 0.9995413635917932,
+        "improvement": 0.00045863640820675844
+      },
+      {
+        "season": 2016,
+        "stints": 13453,
+        "games": 460,
+        "possessions": 43920.5,
+        "stage1": 10288.393808956584,
+        "stage2": 10283.179872109144,
+        "ratio": 0.999493221493631,
+        "improvement": 0.0005067785063690433
+      },
+      {
+        "season": 2017,
+        "stints": 28926,
+        "games": 984,
+        "possessions": 94541,
+        "stage1": 10514.177842549967,
+        "stage2": 10510.109321923093,
+        "ratio": 0.999613044339957,
+        "improvement": 0.00038695566004298687
+      },
+      {
+        "season": 2018,
+        "stints": 26777,
+        "games": 916,
+        "possessions": 88666,
+        "stage1": 10381.874742993365,
+        "stage2": 10382.387544695464,
+        "ratio": 1.0000493939403812,
+        "improvement": -0.00004939394038117051
+      },
+      {
+        "season": 2019,
+        "stints": 32518,
+        "games": 1094,
+        "possessions": 109479,
+        "stage1": 10246.761292297633,
+        "stage2": 10242.896332453849,
+        "ratio": 0.9996228115661591,
+        "improvement": 0.0003771884338409359
+      },
+      {
+        "season": 2020,
+        "stints": 30372,
+        "games": 987,
+        "possessions": 99122,
+        "stage1": 10866.483914609767,
+        "stage2": 10867.665062436708,
+        "ratio": 1.0001086964133221,
+        "improvement": -0.00010869641332211799
+      }
+    ],
+    "profileLambda": [
+      {
+        "lambda": 500,
+        "forwardLoss": 10245.061781803446,
+        "rho": 0.25
+      },
+      {
+        "lambda": 1000,
+        "forwardLoss": 10219.481287110075,
+        "rho": 0.25
+      },
+      {
+        "lambda": 2000,
+        "forwardLoss": 10205.542145191714,
+        "rho": 0.5
+      },
+      {
+        "lambda": 4000,
+        "forwardLoss": 10199.336152449052,
+        "rho": 0.75
+      },
+      {
+        "lambda": 8000,
+        "forwardLoss": 10197.03252089782,
+        "rho": 0.75
+      },
+      {
+        "lambda": 16000,
+        "forwardLoss": 10197.000395041081,
+        "rho": 1
+      },
+      {
+        "lambda": 32000,
+        "forwardLoss": 10197.698039648418,
+        "rho": 1
+      }
+    ],
+    "profileRho": [
+      {
+        "rho": 0,
+        "forwardLoss": 10199.749541021363,
+        "lambda": 16000
+      },
+      {
+        "rho": 0.25,
+        "forwardLoss": 10198.954102536693,
+        "lambda": 8000
+      },
+      {
+        "rho": 0.5,
+        "forwardLoss": 10197.860508980883,
+        "lambda": 8000
+      },
+      {
+        "rho": 0.75,
+        "forwardLoss": 10197.03252089782,
+        "lambda": 8000
+      },
+      {
+        "rho": 1,
+        "forwardLoss": 10197.000395041081,
+        "lambda": 16000
+      }
+    ],
+    "otherCriteria": {
+      "gameRmse": {
+        "lambda": 32000,
+        "rho": 1,
+        "forwardLoss": 10197.698039648418,
+        "gameRmse": 12.277045836506364,
+        "endpointRmse": 2.769250434121978,
+        "onEdge": true
+      },
+      "endpointRmse": {
+        "lambda": 8000,
+        "rho": 0.75,
+        "forwardLoss": 10197.03252089782,
+        "gameRmse": 12.293588799721078,
+        "endpointRmse": 2.736893412563158,
+        "onEdge": false
+      }
+    }
+  },
+  "teamLine": {
+    "a": 2.703231539532471,
+    "b": 3.326431463509288,
+    "c": -15.13939354964772
+  },
+  "trainingPairs": 256,
+  "teamTrainingRmse": 2.714360957178395,
+  "teamRmseLeaveSeasonOut": 2.7480709340535854,
+  "gameLine": {
+    "a": 2.518355307077713,
+    "b": 3.5881373968556978,
+    "c": -25.406407359760426,
+    "games": 9679,
+    "trainingRmse": 12.276341855894268,
+    "trainingMae": 9.63245131214861
+  }
+}
