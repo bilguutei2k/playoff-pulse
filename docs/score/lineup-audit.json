@@ -1,0 +1,875 @@
+{
+  "description": "Per-season audit of the 548 score's lineups rebuilt from ESPN play-by-play (scripts/score/build-games.ts). A game whose stints do not reconcile with its box score keeps its box lines and has no stints.",
+  "rule": {
+    "plusMinusTolerance": 1,
+    "maxPlusMinusMisses": 2,
+    "maxMinutesGap": 2,
+    "maxAssignments": 256
+  },
+  "seasons": {
+    "2011": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1141,
+      "shareWithStints": 0.9276,
+      "rejected": {
+        "plus-minus": 67,
+        "period-start": 8,
+        "points": 8,
+        "lineup-count": 3,
+        "plays": 2,
+        "minutes": 1
+      },
+      "source": {
+        "inferred": 1141
+      },
+      "gamesLoggingPeriodStarts": 2,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 6997,
+        "silentFill": 0,
+        "fromBox": 11,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 32783,
+        "exact": 31957,
+        "withinOne": 628,
+        "beyond": 198
+      },
+      "plusMinusAllGames": {
+        "players": 35084,
+        "exact": 33658,
+        "withinOne": 763,
+        "beyond": 663
+      },
+      "possessions": {
+        "teamGames": 2282,
+        "meanRatio": 0.9713,
+        "sdRatio": 0.0199,
+        "p05": 0.9358,
+        "p95": 1.0012
+      },
+      "stintsPerGame": {
+        "mean": 29.1,
+        "min": 17,
+        "max": 51
+      },
+      "gamesWithOffFloorActions": 32,
+      "scoreMismatches": 0
+    },
+    "2012": {
+      "gamesListed": 990,
+      "gamesStored": 990,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 941,
+      "shareWithStints": 0.9505,
+      "rejected": {
+        "plus-minus": 27,
+        "period-start": 14,
+        "points": 4,
+        "plays": 3,
+        "minutes": 1
+      },
+      "source": {
+        "inferred": 941
+      },
+      "gamesLoggingPeriodStarts": 0,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 5785,
+        "silentFill": 0,
+        "fromBox": 11,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 27114,
+        "exact": 26317,
+        "withinOne": 717,
+        "beyond": 80
+      },
+      "plusMinusAllGames": {
+        "players": 28063,
+        "exact": 26873,
+        "withinOne": 754,
+        "beyond": 436
+      },
+      "possessions": {
+        "teamGames": 1882,
+        "meanRatio": 0.9718,
+        "sdRatio": 0.0201,
+        "p05": 0.9367,
+        "p95": 1.001
+      },
+      "stintsPerGame": {
+        "mean": 28.8,
+        "min": 16,
+        "max": 53
+      },
+      "gamesWithOffFloorActions": 22,
+      "scoreMismatches": 0
+    },
+    "2013": {
+      "gamesListed": 1229,
+      "gamesStored": 1063,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 166,
+      "gamesWithStints": 613,
+      "shareWithStints": 0.5767,
+      "rejected": {
+        "points": 312,
+        "period-start": 64,
+        "plus-minus": 31,
+        "lineup-count": 28,
+        "minutes": 15
+      },
+      "source": {
+        "inferred": 613
+      },
+      "gamesLoggingPeriodStarts": 1,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 3768,
+        "silentFill": 0,
+        "fromBox": 6,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 12881,
+        "exact": 12335,
+        "withinOne": 479,
+        "beyond": 67
+      },
+      "plusMinusAllGames": {
+        "players": 20966,
+        "exact": 16358,
+        "withinOne": 1498,
+        "beyond": 3110
+      },
+      "possessions": {
+        "teamGames": 1226,
+        "meanRatio": 0.9649,
+        "sdRatio": 0.0235,
+        "p05": 0.9222,
+        "p95": 0.9988
+      },
+      "stintsPerGame": {
+        "mean": 29,
+        "min": 16,
+        "max": 47
+      },
+      "gamesWithOffFloorActions": 25,
+      "scoreMismatches": 0
+    },
+    "2014": {
+      "gamesListed": 1230,
+      "gamesStored": 1067,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 163,
+      "gamesWithStints": 1009,
+      "shareWithStints": 0.9456,
+      "rejected": {
+        "plus-minus": 26,
+        "points": 20,
+        "period-start": 7,
+        "box": 2,
+        "lineup-count": 2,
+        "plays": 1
+      },
+      "source": {
+        "inferred": 1009
+      },
+      "gamesLoggingPeriodStarts": 2,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 6201,
+        "silentFill": 0,
+        "fromBox": 9,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 21052,
+        "exact": 20002,
+        "withinOne": 944,
+        "beyond": 106
+      },
+      "plusMinusAllGames": {
+        "players": 22132,
+        "exact": 20657,
+        "withinOne": 1019,
+        "beyond": 456
+      },
+      "possessions": {
+        "teamGames": 2018,
+        "meanRatio": 0.9699,
+        "sdRatio": 0.02,
+        "p05": 0.9352,
+        "p95": 1.0012
+      },
+      "stintsPerGame": {
+        "mean": 29.4,
+        "min": 17,
+        "max": 48
+      },
+      "gamesWithOffFloorActions": 15,
+      "scoreMismatches": 0
+    },
+    "2015": {
+      "gamesListed": 1230,
+      "gamesStored": 1068,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 162,
+      "gamesWithStints": 987,
+      "shareWithStints": 0.9242,
+      "rejected": {
+        "points": 40,
+        "plus-minus": 34,
+        "lineup-count": 4,
+        "minutes": 1,
+        "plays": 1,
+        "period-start": 1
+      },
+      "source": {
+        "inferred": 987
+      },
+      "gamesLoggingPeriodStarts": 3,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 6063,
+        "silentFill": 0,
+        "fromBox": 9,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 20932,
+        "exact": 19753,
+        "withinOne": 1049,
+        "beyond": 130
+      },
+      "plusMinusAllGames": {
+        "players": 22662,
+        "exact": 20750,
+        "withinOne": 1154,
+        "beyond": 758
+      },
+      "possessions": {
+        "teamGames": 1974,
+        "meanRatio": 0.9696,
+        "sdRatio": 0.0198,
+        "p05": 0.9345,
+        "p95": 1
+      },
+      "stintsPerGame": {
+        "mean": 30.5,
+        "min": 14,
+        "max": 47
+      },
+      "gamesWithOffFloorActions": 18,
+      "scoreMismatches": 0
+    },
+    "2016": {
+      "gamesListed": 1230,
+      "gamesStored": 1069,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 161,
+      "gamesWithStints": 460,
+      "shareWithStints": 0.4303,
+      "rejected": {
+        "points": 568,
+        "plus-minus": 24,
+        "period-start": 12,
+        "lineup-count": 5
+      },
+      "source": {
+        "inferred": 460
+      },
+      "gamesLoggingPeriodStarts": 2,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 2814,
+        "silentFill": 0,
+        "fromBox": 2,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 9752,
+        "exact": 9068,
+        "withinOne": 618,
+        "beyond": 66
+      },
+      "plusMinusAllGames": {
+        "players": 22621,
+        "exact": 13409,
+        "withinOne": 1151,
+        "beyond": 8061
+      },
+      "possessions": {
+        "teamGames": 920,
+        "meanRatio": 0.9674,
+        "sdRatio": 0.0227,
+        "p05": 0.928,
+        "p95": 1
+      },
+      "stintsPerGame": {
+        "mean": 30.2,
+        "min": 18,
+        "max": 52
+      },
+      "gamesWithOffFloorActions": 5,
+      "scoreMismatches": 0
+    },
+    "2017": {
+      "gamesListed": 1230,
+      "gamesStored": 1067,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 163,
+      "gamesWithStints": 984,
+      "shareWithStints": 0.9222,
+      "rejected": {
+        "plus-minus": 45,
+        "points": 24,
+        "lineup-count": 6,
+        "period-start": 5,
+        "box": 2,
+        "minutes": 1
+      },
+      "source": {
+        "inferred": 984
+      },
+      "gamesLoggingPeriodStarts": 0,
+      "periodStarts": {
+        "substitutions": 0,
+        "inferred": 6019,
+        "silentFill": 0,
+        "fromBox": 5,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 20963,
+        "exact": 19602,
+        "withinOne": 1254,
+        "beyond": 107
+      },
+      "plusMinusAllGames": {
+        "players": 22652,
+        "exact": 20638,
+        "withinOne": 1406,
+        "beyond": 608
+      },
+      "possessions": {
+        "teamGames": 1968,
+        "meanRatio": 0.9684,
+        "sdRatio": 0.02,
+        "p05": 0.9318,
+        "p95": 0.9987
+      },
+      "stintsPerGame": {
+        "mean": 30.4,
+        "min": 18,
+        "max": 53
+      },
+      "gamesWithOffFloorActions": 30,
+      "scoreMismatches": 0
+    },
+    "2018": {
+      "gamesListed": 1230,
+      "gamesStored": 1067,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 163,
+      "gamesWithStints": 916,
+      "shareWithStints": 0.8585,
+      "rejected": {
+        "period-start": 65,
+        "plus-minus": 36,
+        "lineup-count": 29,
+        "points": 8,
+        "plays": 6,
+        "minutes": 5,
+        "box": 2
+      },
+      "source": {
+        "substitutions": 884,
+        "inferred": 32
+      },
+      "gamesLoggingPeriodStarts": 1062,
+      "periodStarts": {
+        "substitutions": 5447,
+        "inferred": 140,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 11
+      },
+      "plusMinus": {
+        "players": 19500,
+        "exact": 18698,
+        "withinOne": 708,
+        "beyond": 94
+      },
+      "plusMinusAllGames": {
+        "players": 21185,
+        "exact": 19991,
+        "withinOne": 803,
+        "beyond": 391
+      },
+      "possessions": {
+        "teamGames": 1832,
+        "meanRatio": 0.9775,
+        "sdRatio": 0.0183,
+        "p05": 0.9472,
+        "p95": 1.0058
+      },
+      "stintsPerGame": {
+        "mean": 30.1,
+        "min": 17,
+        "max": 50
+      },
+      "gamesWithOffFloorActions": 31,
+      "scoreMismatches": 0
+    },
+    "2019": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1094,
+      "shareWithStints": 0.8894,
+      "rejected": {
+        "period-start": 72,
+        "minutes": 28,
+        "lineup-count": 16,
+        "plus-minus": 13,
+        "points": 5,
+        "box": 2
+      },
+      "source": {
+        "substitutions": 1038,
+        "inferred": 56
+      },
+      "gamesLoggingPeriodStarts": 1228,
+      "periodStarts": {
+        "substitutions": 6384,
+        "inferred": 311,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 2
+      },
+      "plusMinus": {
+        "players": 23176,
+        "exact": 23048,
+        "withinOne": 98,
+        "beyond": 30
+      },
+      "plusMinusAllGames": {
+        "players": 24605,
+        "exact": 24278,
+        "withinOne": 190,
+        "beyond": 137
+      },
+      "possessions": {
+        "teamGames": 2188,
+        "meanRatio": 0.9719,
+        "sdRatio": 0.0182,
+        "p05": 0.9386,
+        "p95": 0.9992
+      },
+      "stintsPerGame": {
+        "mean": 30.6,
+        "min": 17,
+        "max": 52
+      },
+      "gamesWithOffFloorActions": 49,
+      "scoreMismatches": 0
+    },
+    "2020": {
+      "gamesListed": 1059,
+      "gamesStored": 1059,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 987,
+      "shareWithStints": 0.932,
+      "rejected": {
+        "period-start": 47,
+        "lineup-count": 16,
+        "plus-minus": 5,
+        "plays": 1,
+        "box": 1,
+        "minutes": 1,
+        "points": 1
+      },
+      "source": {
+        "substitutions": 955,
+        "inferred": 32
+      },
+      "gamesLoggingPeriodStarts": 1055,
+      "periodStarts": {
+        "substitutions": 5864,
+        "inferred": 192,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 20893,
+        "exact": 20767,
+        "withinOne": 100,
+        "beyond": 26
+      },
+      "plusMinusAllGames": {
+        "players": 21397,
+        "exact": 21220,
+        "withinOne": 118,
+        "beyond": 59
+      },
+      "possessions": {
+        "teamGames": 1974,
+        "meanRatio": 0.9713,
+        "sdRatio": 0.0184,
+        "p05": 0.94,
+        "p95": 1
+      },
+      "stintsPerGame": {
+        "mean": 31.7,
+        "min": 20,
+        "max": 53
+      },
+      "gamesWithOffFloorActions": 54,
+      "scoreMismatches": 0
+    },
+    "2021": {
+      "gamesListed": 1080,
+      "gamesStored": 1080,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1066,
+      "shareWithStints": 0.987,
+      "rejected": {
+        "plus-minus": 7,
+        "period-start": 4,
+        "box": 3
+      },
+      "source": {
+        "substitutions": 1036,
+        "inferred": 30
+      },
+      "gamesLoggingPeriodStarts": 1079,
+      "periodStarts": {
+        "substitutions": 6336,
+        "inferred": 183,
+        "silentFill": 0,
+        "fromBox": 1,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 22756,
+        "exact": 22616,
+        "withinOne": 118,
+        "beyond": 22
+      },
+      "plusMinusAllGames": {
+        "players": 22971,
+        "exact": 22793,
+        "withinOne": 121,
+        "beyond": 57
+      },
+      "possessions": {
+        "teamGames": 2132,
+        "meanRatio": 0.9722,
+        "sdRatio": 0.0177,
+        "p05": 0.9408,
+        "p95": 0.9988
+      },
+      "stintsPerGame": {
+        "mean": 29.7,
+        "min": 19,
+        "max": 45
+      },
+      "gamesWithOffFloorActions": 58,
+      "scoreMismatches": 0
+    },
+    "2022": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1219,
+      "shareWithStints": 0.9911,
+      "rejected": {
+        "plus-minus": 4,
+        "points": 3,
+        "period-start": 3,
+        "box": 1
+      },
+      "source": {
+        "substitutions": 1192,
+        "inferred": 27
+      },
+      "gamesLoggingPeriodStarts": 1228,
+      "periodStarts": {
+        "substitutions": 7282,
+        "inferred": 164,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 25822,
+        "exact": 25698,
+        "withinOne": 94,
+        "beyond": 30
+      },
+      "plusMinusAllGames": {
+        "players": 25986,
+        "exact": 25823,
+        "withinOne": 95,
+        "beyond": 68
+      },
+      "possessions": {
+        "teamGames": 2438,
+        "meanRatio": 0.9709,
+        "sdRatio": 0.0187,
+        "p05": 0.9371,
+        "p95": 0.9984
+      },
+      "stintsPerGame": {
+        "mean": 30.1,
+        "min": 18,
+        "max": 49
+      },
+      "gamesWithOffFloorActions": 59,
+      "scoreMismatches": 0
+    },
+    "2023": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1199,
+      "shareWithStints": 0.9748,
+      "rejected": {
+        "plus-minus": 12,
+        "minutes": 9,
+        "points": 5,
+        "period-start": 2,
+        "box": 1,
+        "plays": 1,
+        "lineup-count": 1
+      },
+      "source": {
+        "substitutions": 1177,
+        "inferred": 22
+      },
+      "gamesLoggingPeriodStarts": 1230,
+      "periodStarts": {
+        "substitutions": 7237,
+        "inferred": 128,
+        "silentFill": 0,
+        "fromBox": 1,
+        "carryOverContradicted": 1
+      },
+      "plusMinus": {
+        "players": 25230,
+        "exact": 25020,
+        "withinOne": 104,
+        "beyond": 106
+      },
+      "plusMinusAllGames": {
+        "players": 25839,
+        "exact": 25487,
+        "withinOne": 119,
+        "beyond": 233
+      },
+      "possessions": {
+        "teamGames": 2398,
+        "meanRatio": 0.9711,
+        "sdRatio": 0.0181,
+        "p05": 0.9389,
+        "p95": 0.9983
+      },
+      "stintsPerGame": {
+        "mean": 30,
+        "min": 19,
+        "max": 46
+      },
+      "gamesWithOffFloorActions": 59,
+      "scoreMismatches": 0
+    },
+    "2024": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1211,
+      "shareWithStints": 0.9846,
+      "rejected": {
+        "points": 7,
+        "plus-minus": 5,
+        "period-start": 5,
+        "minutes": 2
+      },
+      "source": {
+        "substitutions": 1194,
+        "inferred": 17
+      },
+      "gamesLoggingPeriodStarts": 1228,
+      "periodStarts": {
+        "substitutions": 7292,
+        "inferred": 104,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 26087,
+        "exact": 25940,
+        "withinOne": 127,
+        "beyond": 20
+      },
+      "plusMinusAllGames": {
+        "players": 26395,
+        "exact": 26140,
+        "withinOne": 138,
+        "beyond": 117
+      },
+      "possessions": {
+        "teamGames": 2422,
+        "meanRatio": 0.9709,
+        "sdRatio": 0.018,
+        "p05": 0.9388,
+        "p95": 0.9976
+      },
+      "stintsPerGame": {
+        "mean": 29.5,
+        "min": 18,
+        "max": 50
+      },
+      "gamesWithOffFloorActions": 53,
+      "scoreMismatches": 0
+    },
+    "2025": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1209,
+      "shareWithStints": 0.9829,
+      "rejected": {
+        "plus-minus": 10,
+        "minutes": 4,
+        "lineup-count": 4,
+        "points": 2,
+        "period-start": 1
+      },
+      "source": {
+        "substitutions": 1196,
+        "inferred": 13
+      },
+      "gamesLoggingPeriodStarts": 1229,
+      "periodStarts": {
+        "substitutions": 7296,
+        "inferred": 78,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 0
+      },
+      "plusMinus": {
+        "players": 25933,
+        "exact": 25715,
+        "withinOne": 188,
+        "beyond": 30
+      },
+      "plusMinusAllGames": {
+        "players": 26355,
+        "exact": 26038,
+        "withinOne": 202,
+        "beyond": 115
+      },
+      "possessions": {
+        "teamGames": 2418,
+        "meanRatio": 0.9712,
+        "sdRatio": 0.0186,
+        "p05": 0.9385,
+        "p95": 0.9996
+      },
+      "stintsPerGame": {
+        "mean": 30.2,
+        "min": 17,
+        "max": 50
+      },
+      "gamesWithOffFloorActions": 77,
+      "scoreMismatches": 0
+    },
+    "2026": {
+      "gamesListed": 1230,
+      "gamesStored": 1230,
+      "missingSummaries": 0,
+      "unparseableBox": 0,
+      "emptyBox": 0,
+      "gamesWithStints": 1180,
+      "shareWithStints": 0.9593,
+      "rejected": {
+        "box": 29,
+        "plus-minus": 11,
+        "period-start": 6,
+        "points": 2,
+        "minutes": 1,
+        "lineup-count": 1
+      },
+      "source": {
+        "substitutions": 1170,
+        "inferred": 10
+      },
+      "gamesLoggingPeriodStarts": 1230,
+      "periodStarts": {
+        "substitutions": 7149,
+        "inferred": 55,
+        "silentFill": 0,
+        "fromBox": 0,
+        "carryOverContradicted": 1
+      },
+      "plusMinus": {
+        "players": 25569,
+        "exact": 25391,
+        "withinOne": 158,
+        "beyond": 20
+      },
+      "plusMinusAllGames": {
+        "players": 26526,
+        "exact": 26252,
+        "withinOne": 171,
+        "beyond": 103
+      },
+      "possessions": {
+        "teamGames": 2360,
+        "meanRatio": 0.9735,
+        "sdRatio": 0.02,
+        "p05": 0.9381,
+        "p95": 1.0046
+      },
+      "stintsPerGame": {
+        "mean": 32.1,
+        "min": 15,
+        "max": 50
+      },
+      "gamesWithOffFloorActions": 77,
+      "scoreMismatches": 0
+    }
+  }
+}
