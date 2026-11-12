@@ -1,0 +1,3476 @@
+{
+  "era": "test",
+  "freeze": {
+    "stage1": {
+      "registrationSha256": "0d1d1accbc51c2d7e0d08e6cfcf57350448697a69d615d3d21fecfc908d1f628",
+      "fitSha256": "5213d2cdf96f2fd6465829b1e1d1eb2b4e86c534ebc6f4f12943166de082ee1d",
+      "frozenAt": "2026-11-12T09:03:28.116Z"
+    },
+    "stage2": {
+      "registrationSha256": "3d089133e705bbc65201e26d184aee38de3771ee926898050b7da835573b6826",
+      "fitSha256": "7abc76419cb2a452e33714a6269a7a64fa185263e6b5f59ad5cb5af9fe85489d",
+      "frozenAt": "2026-11-12T09:45:25.891Z"
+    }
+  },
+  "testSeasonUse": "Second use of the test seasons 2021 to 2026: Stage 1's registered test read them once, and its aggregate results were known to the builders. Stage 2's choices come from the training era only. The clean prospective check is the live 2026-27 season.",
+  "inputs": {
+    "files": {
+      "2011": "ac252c57d8484cfb2101ff58eede85cbae6981271fd0c387447402b9a95340fb",
+      "2012": "ae2bab8ec3fc4139da49cc3d9e0bea4f2c03bc55d5b941d48d57eabeb356b2a7",
+      "2013": "e03ea4f24c2d0ce5d5fb6221dd7f05af4a9eacef656cd20b071516faccf0911d",
+      "2014": "34dffb371ce5cc67e7d3b84349d5a4b199d2cb30bea0caafcf15490233bce21d",
+      "2015": "325a9b63a3ee794921d3cd15a4b274ed4bfde0e77fb25b3ceee0406dc6ec2dc6",
+      "2016": "7989bb2598f6681f6348fdf740325acf16ecdf167659597780222fd7d08c669c",
+      "2017": "c196dfb8e447f7f6f3355797e585ccbce1bdab271a54aa41bd665d5d30513c09",
+      "2018": "114699b1d3eb3a7ce16dd13d821b01ac3e987ed339d11ba4bc51e5f11014dc3b",
+      "2019": "0aa36775083c8c0eeddf787f35bc187632d4fc835ac2c23a0bb3d52770d0784c",
+      "2020": "78ccfe781ad618fc97eddf18bc4636be543e8bd0f85771f619846da80a37a898",
+      "2021": "c574e645e46af8475b42bf1651a0ee4dfed6db765f743b0774dcb2ad9e49e595",
+      "2022": "879407b8cb7ec91a6e53487c8ed13fea5149b4b86fcba1d6103f6aaa2ede71a2",
+      "2023": "a15220711e5565e22545181ffe3a27a5654e19fd82da38a4d196a33bd87cd15a",
+      "2024": "3f63413774e0b65614f3e32c0db4deb571a91780402cc0a2c0e7107c198537dc",
+      "2025": "7279d54eae3a6bba6c73445d2cbbcdfe0e36857d0cbfeb454f2acf74ca0e4da4",
+      "2026": "41d7a46e50ac7ba1f154688b06ef43f2efd374d0b7f7bd431fe77182c351588b"
+    },
+    "combined": "750175139da3f36f4c8a0459d6abbc5b50569d7cd450c9888a90744acac830ab"
+  },
+  "stage1FitSha256": "5213d2cdf96f2fd6465829b1e1d1eb2b4e86c534ebc6f4f12943166de082ee1d",
+  "params": {
+    "lambda": 16000,
+    "rho": 1
+  },
+  "coverage": [
+    {
+      "season": 2011,
+      "games": 1230,
+      "gamesWithStints": 1141,
+      "stints": 33183,
+      "rejected": {
+        "lineup-count": 3,
+        "minutes": 1,
+        "period-start": 8,
+        "plays": 2,
+        "plus-minus": 67,
+        "points": 8
+      },
+      "teams": 30,
+      "players": 467,
+      "positions": {
+        "C": 7297,
+        "F": 3913,
+        "G": 3807,
+        "NA": 68,
+        "PF": 5618,
+        "PG": 4631,
+        "SF": 5130,
+        "SG": 4882
+      }
+    },
+    {
+      "season": 2012,
+      "games": 990,
+      "gamesWithStints": 941,
+      "stints": 27135,
+      "rejected": {
+        "minutes": 1,
+        "period-start": 14,
+        "plays": 3,
+        "plus-minus": 27,
+        "points": 4
+      },
+      "teams": 30,
+      "players": 483,
+      "positions": {
+        "C": 5503,
+        "F": 3574,
+        "G": 3693,
+        "NA": 66,
+        "PF": 4419,
+        "PG": 4075,
+        "SF": 3690,
+        "SG": 3505
+      }
+    },
+    {
+      "season": 2013,
+      "games": 1063,
+      "gamesWithStints": 613,
+      "stints": 17755,
+      "rejected": {
+        "lineup-count": 28,
+        "minutes": 15,
+        "period-start": 64,
+        "plus-minus": 31,
+        "points": 312
+      },
+      "teams": 28,
+      "players": 444,
+      "positions": {
+        "C": 4149,
+        "F": 3366,
+        "G": 4006,
+        "NA": 2,
+        "PF": 3135,
+        "PG": 2818,
+        "SF": 2398,
+        "SG": 2452
+      }
+    },
+    {
+      "season": 2014,
+      "games": 1067,
+      "gamesWithStints": 1009,
+      "stints": 29658,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 2,
+        "period-start": 7,
+        "plays": 1,
+        "plus-minus": 26,
+        "points": 20
+      },
+      "teams": 28,
+      "players": 452,
+      "positions": {
+        "C": 4249,
+        "F": 4116,
+        "G": 4252,
+        "PF": 2621,
+        "PG": 2718,
+        "SF": 2085,
+        "SG": 2236
+      }
+    },
+    {
+      "season": 2015,
+      "games": 1068,
+      "gamesWithStints": 987,
+      "stints": 30130,
+      "rejected": {
+        "lineup-count": 4,
+        "minutes": 1,
+        "period-start": 1,
+        "plays": 1,
+        "plus-minus": 34,
+        "points": 40
+      },
+      "teams": 28,
+      "players": 463,
+      "positions": {
+        "C": 4218,
+        "F": 4682,
+        "G": 4813,
+        "PF": 2660,
+        "PG": 2214,
+        "SF": 2157,
+        "SG": 1936
+      }
+    },
+    {
+      "season": 2016,
+      "games": 1068,
+      "gamesWithStints": 460,
+      "stints": 13887,
+      "rejected": {
+        "lineup-count": 5,
+        "period-start": 12,
+        "plus-minus": 24,
+        "points": 567
+      },
+      "teams": 28,
+      "players": 446,
+      "positions": {
+        "C": 4333,
+        "F": 5108,
+        "G": 5714,
+        "PF": 2118,
+        "PG": 1975,
+        "SF": 1656,
+        "SG": 1843
+      }
+    },
+    {
+      "season": 2017,
+      "games": 1067,
+      "gamesWithStints": 984,
+      "stints": 29912,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 6,
+        "minutes": 1,
+        "period-start": 5,
+        "plus-minus": 45,
+        "points": 24
+      },
+      "teams": 28,
+      "players": 462,
+      "positions": {
+        "C": 4145,
+        "F": 5901,
+        "G": 6401,
+        "PF": 1657,
+        "PG": 1598,
+        "SF": 1492,
+        "SG": 1559
+      }
+    },
+    {
+      "season": 2018,
+      "games": 1067,
+      "gamesWithStints": 916,
+      "stints": 27540,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 29,
+        "minutes": 5,
+        "period-start": 65,
+        "plays": 6,
+        "plus-minus": 36,
+        "points": 8
+      },
+      "teams": 28,
+      "players": 509,
+      "positions": {
+        "C": 3780,
+        "F": 6489,
+        "G": 7013,
+        "PF": 1349,
+        "PG": 1265,
+        "SF": 1371,
+        "SG": 1433
+      }
+    },
+    {
+      "season": 2019,
+      "games": 1230,
+      "gamesWithStints": 1094,
+      "stints": 33465,
+      "rejected": {
+        "box": 2,
+        "lineup-count": 16,
+        "minutes": 28,
+        "period-start": 72,
+        "plus-minus": 13,
+        "points": 5
+      },
+      "teams": 30,
+      "players": 538,
+      "positions": {
+        "C": 4122,
+        "F": 6979,
+        "G": 8340,
+        "PF": 1544,
+        "PG": 1612,
+        "SF": 1844,
+        "SG": 1699
+      }
+    },
+    {
+      "season": 2020,
+      "games": 1059,
+      "gamesWithStints": 987,
+      "stints": 31267,
+      "rejected": {
+        "box": 1,
+        "lineup-count": 16,
+        "minutes": 1,
+        "period-start": 47,
+        "plays": 1,
+        "plus-minus": 5,
+        "points": 1
+      },
+      "teams": 30,
+      "players": 530,
+      "positions": {
+        "C": 3400,
+        "F": 5958,
+        "G": 7196,
+        "PF": 1217,
+        "PG": 1394,
+        "SF": 1752,
+        "SG": 1480
+      }
+    },
+    {
+      "season": 2021,
+      "games": 1080,
+      "gamesWithStints": 1066,
+      "stints": 31653,
+      "rejected": {
+        "box": 3,
+        "period-start": 4,
+        "plus-minus": 7
+      },
+      "teams": 30,
+      "players": 540,
+      "positions": {
+        "C": 3432,
+        "F": 6361,
+        "G": 7482,
+        "PF": 1054,
+        "PG": 1452,
+        "SF": 1751,
+        "SG": 1522
+      }
+    },
+    {
+      "season": 2022,
+      "games": 1230,
+      "gamesWithStints": 1219,
+      "stints": 36703,
+      "rejected": {
+        "box": 1,
+        "period-start": 3,
+        "plus-minus": 4,
+        "points": 3
+      },
+      "teams": 30,
+      "players": 605,
+      "positions": {
+        "C": 3754,
+        "F": 7642,
+        "G": 9047,
+        "PF": 894,
+        "PG": 1350,
+        "SF": 1642,
+        "SG": 1712
+      }
+    },
+    {
+      "season": 2023,
+      "games": 1230,
+      "gamesWithStints": 1199,
+      "stints": 36009,
+      "rejected": {
+        "box": 1,
+        "lineup-count": 1,
+        "minutes": 9,
+        "period-start": 2,
+        "plays": 1,
+        "plus-minus": 12,
+        "points": 5
+      },
+      "teams": 30,
+      "players": 540,
+      "positions": {
+        "C": 3618,
+        "F": 8863,
+        "G": 9685,
+        "PF": 573,
+        "PG": 1060,
+        "SF": 1218,
+        "SG": 881
+      }
+    },
+    {
+      "season": 2024,
+      "games": 1230,
+      "gamesWithStints": 1211,
+      "stints": 35734,
+      "rejected": {
+        "minutes": 2,
+        "period-start": 5,
+        "plus-minus": 5,
+        "points": 7
+      },
+      "teams": 30,
+      "players": 580,
+      "positions": {
+        "C": 3652,
+        "F": 9657,
+        "G": 10960,
+        "PF": 279,
+        "PG": 669,
+        "SF": 809,
+        "SG": 472
+      }
+    },
+    {
+      "season": 2025,
+      "games": 1230,
+      "gamesWithStints": 1209,
+      "stints": 36540,
+      "rejected": {
+        "lineup-count": 4,
+        "minutes": 4,
+        "period-start": 1,
+        "plus-minus": 10,
+        "points": 2
+      },
+      "teams": 30,
+      "players": 574,
+      "positions": {
+        "C": 3888,
+        "F": 9511,
+        "G": 12102,
+        "PF": 67,
+        "PG": 311,
+        "SF": 208,
+        "SG": 286
+      }
+    },
+    {
+      "season": 2026,
+      "games": 1230,
+      "gamesWithStints": 1180,
+      "stints": 37913,
+      "rejected": {
+        "box": 29,
+        "lineup-count": 1,
+        "minutes": 1,
+        "period-start": 6,
+        "plus-minus": 11,
+        "points": 2
+      },
+      "teams": 30,
+      "players": 582,
+      "positions": {
+        "C": 3978,
+        "F": 9726,
+        "G": 12896,
+        "PG": 28,
+        "SF": 4
+      }
+    }
+  ],
+  "targetSeasons": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "teamSeasons": 180,
+  "expectedTeamSeasons": 180,
+  "endpoint": {
+    "team": {
+      "rmseStage2": 3.142786541784627,
+      "rmseStage1": 3.28215432674296,
+      "ratio": 0.9575377111847649,
+      "passed": true
+    },
+    "forward": {
+      "lossStage2": 10646.703418680689,
+      "lossStage1": 10651.162649885551,
+      "ratio": 0.9995813385494672,
+      "passed": true
+    },
+    "passed": true
+  },
+  "forward": {
+    "stints": 208757,
+    "games": 7084,
+    "possessions": 701159,
+    "stage1": 10651.162649885551,
+    "stage2": 10646.703418680689,
+    "ratio": 0.9995813385494672,
+    "improvement": 0.0004186614505328201,
+    "home": 2.6383224237669958,
+    "bySeason": [
+      {
+        "season": 2021,
+        "stints": 30814,
+        "games": 1066,
+        "possessions": 105701,
+        "stage1": 10266.441487243555,
+        "stage2": 10268.512891565524,
+        "ratio": 1.0002017645865455,
+        "improvement": -0.00020176458654552754
+      },
+      {
+        "season": 2022,
+        "stints": 35700,
+        "games": 1219,
+        "possessions": 119674.5,
+        "stage1": 10541.529066437639,
+        "stage2": 10536.157815316126,
+        "ratio": 0.9994904675509918,
+        "improvement": 0.0005095324490081987
+      },
+      {
+        "season": 2023,
+        "stints": 35063,
+        "games": 1199,
+        "possessions": 119061.5,
+        "stage1": 10487.965910944902,
+        "stage2": 10482.279925205243,
+        "ratio": 0.9994578561955731,
+        "improvement": 0.0005421438044268534
+      },
+      {
+        "season": 2024,
+        "stints": 34780,
+        "games": 1211,
+        "possessions": 119316,
+        "stage1": 10426.07611181189,
+        "stage2": 10423.282972571147,
+        "ratio": 0.9997321006281953,
+        "improvement": 0.000267899371804714
+      },
+      {
+        "season": 2025,
+        "stints": 35586,
+        "games": 1209,
+        "possessions": 119670.5,
+        "stage1": 10742.77252512877,
+        "stage2": 10735.65576955077,
+        "ratio": 0.9993375308318824,
+        "improvement": 0.0006624691681176298
+      },
+      {
+        "season": 2026,
+        "stints": 36814,
+        "games": 1180,
+        "possessions": 117735.5,
+        "stage1": 11408.025535163468,
+        "stage2": 11400.883560847487,
+        "ratio": 0.9993739517593149,
+        "improvement": 0.0006260482406851287
+      }
+    ],
+    "slope": {
+      "stage1": {
+        "gamma": 0.902282201516694,
+        "loss": 10650.229793532262,
+        "lossAtOne": 10651.162649884665,
+        "lossAtZero": 10729.763680221698
+      },
+      "stage2": {
+        "gamma": 0.8437618573567255,
+        "loss": 10643.754384906348,
+        "lossAtOne": 10646.703418679806,
+        "lossAtZero": 10729.763680221698
+      }
+    }
+  },
+  "team": {
+    "rmse": {
+      "stage2": 3.142786541784627,
+      "stage1": 3.28215432674296
+    },
+    "rmseLeaveSeasonOut": null
+  },
+  "game": {
+    "games": 7230,
+    "rmse": {
+      "stage2": 13.682846669414761,
+      "stage1": 13.734019596782636
+    },
+    "meanAbsoluteError": {
+      "stage2": 10.730792849439386,
+      "stage1": 10.771324715472831
+    },
+    "rmseLeaveSeasonOut": null
+  },
+  "endpointLeaveSeasonOut": null,
+  "stage1Reproduced": {
+    "team": {
+      "here": 3.28215432674296,
+      "recorded": 3.28215432674296
+    },
+    "gameMae": {
+      "here": 10.771324715472831,
+      "recorded": 10.771324715472831
+    }
+  },
+  "bootstrap": {
+    "forwardByGame": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-test-forward-game",
+      "cluster": "game",
+      "low": 0.9993982906819218,
+      "median": 0.9995843467968064,
+      "high": 0.9997630496139863,
+      "shareBelowOne": 1
+    },
+    "forwardBySeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-test-forward-season-cluster",
+      "cluster": "season",
+      "low": 0.9993997001379566,
+      "median": 0.9995760328739602,
+      "high": 0.9998286756198426,
+      "shareBelowOne": 0.9995
+    },
+    "teamBySeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-test-team-season-cluster",
+      "cluster": "season",
+      "low": 0.9320510393164003,
+      "median": 0.9575377111847643,
+      "high": 0.9971273591592862,
+      "shareBelowOne": 0.983
+    },
+    "teamByTeamSeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-test-team-season",
+      "cluster": "unit",
+      "low": 0.9283636855074378,
+      "median": 0.9578480484253051,
+      "high": 0.9864097496591618,
+      "shareBelowOne": 0.9985
+    },
+    "gameBySeason": {
+      "draws": 2000,
+      "seed": "548-stage2-bootstrap-test-game-season-cluster",
+      "cluster": "season",
+      "low": 0.9939551381666551,
+      "median": 0.9962399250958981,
+      "high": 0.9996772716464446,
+      "shareBelowOne": 0.981
+    }
+  },
+  "deltaSize": {
+    "minMinutes": 1000,
+    "playerSeasons": 1602,
+    "sdDelta": 0.9019011057993502,
+    "sdBox": 2.684150153863197,
+    "sdRating": 2.9520763390984643,
+    "meanDelta": 0.1883223464590631,
+    "shareOfVariance": 0.13330944730204558,
+    "varianceRatio": 0.09333889840119373,
+    "correlationBoxDelta": 0.1438896491772404,
+    "perSeason": [
+      {
+        "season": 2021,
+        "playerSeasons": 251,
+        "sdDelta": 0.7841524879846147
+      },
+      {
+        "season": 2022,
+        "playerSeasons": 272,
+        "sdDelta": 0.8554956363770937
+      },
+      {
+        "season": 2023,
+        "playerSeasons": 263,
+        "sdDelta": 0.9058839421645091
+      },
+      {
+        "season": 2024,
+        "playerSeasons": 267,
+        "sdDelta": 0.9353680052908151
+      },
+      {
+        "season": 2025,
+        "playerSeasons": 270,
+        "sdDelta": 0.9532250323731825
+      },
+      {
+        "season": 2026,
+        "playerSeasons": 279,
+        "sdDelta": 0.9620718987199101
+      }
+    ]
+  },
+  "deltaVsRapm": {
+    "playerSeasons": 1602,
+    "correlation": 0.4525333774070854,
+    "boxVsRapm": 0.6008777354250495,
+    "ratingVsRapm": 0.7224196368116031
+  },
+  "ownerChecks": [
+    {
+      "group": "highAssistCentres",
+      "size": 45,
+      "stage2": -0.325744388970721,
+      "stage1": -1.1694041181755102,
+      "stage2Mapped": -0.7985467831309678,
+      "stage1Mapped": -1.1168837187092007
+    },
+    {
+      "group": "highReboundGuards",
+      "size": 158,
+      "stage2": -0.5809516063005241,
+      "stage1": -0.543405647160685,
+      "stage2Mapped": -0.24878473547343768,
+      "stage1Mapped": -0.06765874502865905
+    },
+    {
+      "group": "inefficientVolumeScorers",
+      "size": 82,
+      "stage2": 0.06783523290415848,
+      "stage1": 0.18301872829692517,
+      "stage2Mapped": 0.4005683395795383,
+      "stage1Mapped": 0.6376713307450461
+    },
+    {
+      "group": "defenceFirstPlayers",
+      "size": 161,
+      "stage2": -2.5734776396267276,
+      "stage1": -3.4580407662121844,
+      "stage2Mapped": -2.047061223189821,
+      "stage1Mapped": -2.564980333106736
+    },
+    {
+      "group": "statAccumulators",
+      "size": 163,
+      "stage2": 1.156509305850337,
+      "stage1": 0.7241681263615547,
+      "stage2Mapped": -0.06796227153652386,
+      "stage1Mapped": 0.038687414383835696
+    },
+    {
+      "group": "lowUsageRolePlayers",
+      "size": 265,
+      "stage2": -1.8357166659662674,
+      "stage1": -2.2462653201502834,
+      "stage2Mapped": -1.0115040190063782,
+      "stage1Mapped": -1.2377451484660804
+    }
+  ],
+  "faceValidity": null,
+  "record": [
+    {
+      "season": 2021,
+      "minMinutes": 1000,
+      "positive": [
+        {
+          "athleteId": "3015",
+          "name": "Paul Millsap",
+          "minutes": 1167,
+          "box": -0.11537616057886223,
+          "delta": 2.38547645477043,
+          "rating": 2.270100294191568
+        },
+        {
+          "athleteId": "2490620",
+          "name": "Robert Covington",
+          "minutes": 2241,
+          "box": -1.336166343058705,
+          "delta": 2.315055175898512,
+          "rating": 0.9788888328398069
+        },
+        {
+          "athleteId": "3195",
+          "name": "Mike Conley",
+          "minutes": 1497,
+          "box": 4.885363744182995,
+          "delta": 2.096965899970601,
+          "rating": 6.982329644153596
+        },
+        {
+          "athleteId": "3975",
+          "name": "Stephen Curry",
+          "minutes": 2152,
+          "box": 8.588568929365778,
+          "delta": 2.061980740270533,
+          "rating": 10.65054966963631
+        },
+        {
+          "athleteId": "4065648",
+          "name": "Jayson Tatum",
+          "minutes": 2290,
+          "box": 3.5073602984574457,
+          "delta": 2.0309637064016632,
+          "rating": 5.538324004859109
+        },
+        {
+          "athleteId": "3988",
+          "name": "Danny Green",
+          "minutes": 1936,
+          "box": 0.2974821234945211,
+          "delta": 1.9537226790612465,
+          "rating": 2.2512048025557676
+        },
+        {
+          "athleteId": "3032976",
+          "name": "Rudy Gobert",
+          "minutes": 2186,
+          "box": 2.0305651245725946,
+          "delta": 1.928725070593722,
+          "rating": 3.9592901951663166
+        },
+        {
+          "athleteId": "3155526",
+          "name": "Dillon Brooks",
+          "minutes": 1997,
+          "box": -2.8060759273534535,
+          "delta": 1.7390955411844498,
+          "rating": -1.0669803861690037
+        },
+        {
+          "athleteId": "2991350",
+          "name": "Alex Caruso",
+          "minutes": 1219,
+          "box": -0.2164663968706606,
+          "delta": 1.7026928348727126,
+          "rating": 1.486226438002052
+        },
+        {
+          "athleteId": "4249",
+          "name": "Gordon Hayward",
+          "minutes": 1497,
+          "box": 1.134499714786379,
+          "delta": 1.7007334511093193,
+          "rating": 2.835233165895698
+        },
+        {
+          "athleteId": "2579258",
+          "name": "Cody Zeller",
+          "minutes": 1004,
+          "box": -1.9669001082998037,
+          "delta": 1.6792159380018408,
+          "rating": -0.2876841702979629
+        },
+        {
+          "athleteId": "6426",
+          "name": "Davis Bertans",
+          "minutes": 1461,
+          "box": -0.18565462602488386,
+          "delta": 1.584260212540709,
+          "rating": 1.3986055865158251
+        },
+        {
+          "athleteId": "3136195",
+          "name": "Karl-Anthony Towns",
+          "minutes": 1689,
+          "box": 3.0655022179032994,
+          "delta": 1.5718908896328934,
+          "rating": 4.637393107536193
+        },
+        {
+          "athleteId": "3005",
+          "name": "Rudy Gay",
+          "minutes": 1356,
+          "box": -0.4334421585360731,
+          "delta": 1.5250715822768057,
+          "rating": 1.0916294237407327
+        },
+        {
+          "athleteId": "2779",
+          "name": "Chris Paul",
+          "minutes": 2200,
+          "box": 6.255670003038716,
+          "delta": 1.5232331145537552,
+          "rating": 7.778903117592471
+        }
+      ],
+      "negative": [
+        {
+          "athleteId": "3136776",
+          "name": "D'Angelo Russell",
+          "minutes": 1197,
+          "box": 2.902108486528559,
+          "delta": -1.6383823078625415,
+          "rating": 1.2637261786660174
+        },
+        {
+          "athleteId": "6427",
+          "name": "Bismack Biyombo",
+          "minutes": 1349,
+          "box": -5.039648866904001,
+          "delta": -1.6295009822018214,
+          "rating": -6.669149849105822
+        },
+        {
+          "athleteId": "2488653",
+          "name": "Mason Plumlee",
+          "minutes": 1498,
+          "box": -0.09092131289556125,
+          "delta": -1.5928375373058297,
+          "rating": -1.683758850201391
+        },
+        {
+          "athleteId": "2595516",
+          "name": "Norman Powell",
+          "minutes": 2206,
+          "box": 0.014296838465343355,
+          "delta": -1.5319764893565924,
+          "rating": -1.517679650891249
+        },
+        {
+          "athleteId": "3415",
+          "name": "D.J. Augustin",
+          "minutes": 1129,
+          "box": 0.4689126785705645,
+          "delta": -1.473022770405152,
+          "rating": -1.0041100918345873
+        },
+        {
+          "athleteId": "3209",
+          "name": "Jeff Green",
+          "minutes": 1839,
+          "box": -1.6150084660647852,
+          "delta": -1.1695237464237123,
+          "rating": -2.7845322124884975
+        },
+        {
+          "athleteId": "3133603",
+          "name": "Kelly Oubre Jr.",
+          "minutes": 1690,
+          "box": -1.7026893697586847,
+          "delta": -1.1105296837269536,
+          "rating": -2.8132190534856383
+        },
+        {
+          "athleteId": "2530530",
+          "name": "T.J. McConnell",
+          "minutes": 1796,
+          "box": 2.0615263190908175,
+          "delta": -1.1090835510959205,
+          "rating": 0.952442767994897
+        },
+        {
+          "athleteId": "4238",
+          "name": "Eric Bledsoe",
+          "minutes": 2110,
+          "box": 0.0015251713317890674,
+          "delta": -1.079068028123592,
+          "rating": -1.077542856791803
+        },
+        {
+          "athleteId": "4395725",
+          "name": "Tyler Herro",
+          "minutes": 1631,
+          "box": -0.9724024218947673,
+          "delta": -1.0788350325977745,
+          "rating": -2.051237454492542
+        },
+        {
+          "athleteId": "2994526",
+          "name": "Bryn Forbes",
+          "minutes": 1358,
+          "box": -1.2037054613532707,
+          "delta": -1.0667241999895254,
+          "rating": -2.270429661342796
+        },
+        {
+          "athleteId": "3134881",
+          "name": "Stanley Johnson",
+          "minutes": 1006,
+          "box": -3.2427003917155743,
+          "delta": -1.0576723166860202,
+          "rating": -4.300372708401595
+        },
+        {
+          "athleteId": "6461",
+          "name": "Markieff Morris",
+          "minutes": 1201,
+          "box": -2.7795413383367107,
+          "delta": -1.0467578659987908,
+          "rating": -3.8262992043355015
+        },
+        {
+          "athleteId": "2991280",
+          "name": "Nerlens Noel",
+          "minutes": 1544,
+          "box": -1.666023158685306,
+          "delta": -0.9950853599231013,
+          "rating": -2.6611085186084074
+        },
+        {
+          "athleteId": "3907387",
+          "name": "Ben Simmons",
+          "minutes": 1878,
+          "box": 2.896407283661561,
+          "delta": -0.9729194777119818,
+          "rating": 1.923487805949579
+        }
+      ]
+    },
+    {
+      "season": 2022,
+      "minMinutes": 1000,
+      "positive": [
+        {
+          "athleteId": "4065648",
+          "name": "Jayson Tatum",
+          "minutes": 2732,
+          "box": 4.549108224506413,
+          "delta": 2.8109599503358664,
+          "rating": 7.360068174842279
+        },
+        {
+          "athleteId": "3438",
+          "name": "George Hill",
+          "minutes": 1251,
+          "box": -1.9444428788837254,
+          "delta": 2.7130575282738443,
+          "rating": 0.7686146493901189
+        },
+        {
+          "athleteId": "3975",
+          "name": "Stephen Curry",
+          "minutes": 2211,
+          "box": 7.2146977409157556,
+          "delta": 2.4280915935293086,
+          "rating": 9.642789334445064
+        },
+        {
+          "athleteId": "2490620",
+          "name": "Robert Covington",
+          "minutes": 1937,
+          "box": -1.407885942181109,
+          "delta": 2.350745253260963,
+          "rating": 0.9428593110798542
+        },
+        {
+          "athleteId": "2991350",
+          "name": "Alex Caruso",
+          "minutes": 1147,
+          "box": -0.17825010920698237,
+          "delta": 2.210154826917038,
+          "rating": 2.0319047177100558
+        },
+        {
+          "athleteId": "4396907",
+          "name": "Darius Garland",
+          "minutes": 2429,
+          "box": 3.3752953655005085,
+          "delta": 2.06065366923952,
+          "rating": 5.4359490347400286
+        },
+        {
+          "athleteId": "3112335",
+          "name": "Nikola Jokic",
+          "minutes": 2474,
+          "box": 9.219642814288193,
+          "delta": 2.0400521329149495,
+          "rating": 11.259694947203142
+        },
+        {
+          "athleteId": "3133626",
+          "name": "Kenrich Williams",
+          "minutes": 1074,
+          "box": -1.8937976822018687,
+          "delta": 1.8868454510204182,
+          "rating": -0.006952231181450497
+        },
+        {
+          "athleteId": "3134908",
+          "name": "Jakob Poeltl",
+          "minutes": 1971,
+          "box": -0.9057907213390889,
+          "delta": 1.8685603246391036,
+          "rating": 0.9627696033000147
+        },
+        {
+          "athleteId": "3136195",
+          "name": "Karl-Anthony Towns",
+          "minutes": 2474,
+          "box": 3.2219261559331582,
+          "delta": 1.8099023301888733,
+          "rating": 5.0318284861220315
+        },
+        {
+          "athleteId": "3964",
+          "name": "Patrick Beverley",
+          "minutes": 1474,
+          "box": 1.2422032402673986,
+          "delta": 1.739356396429635,
+          "rating": 2.9815596366970336
+        },
+        {
+          "athleteId": "3149673",
+          "name": "Pascal Siakam",
+          "minutes": 2579,
+          "box": 1.7582808385941957,
+          "delta": 1.7334841075205942,
+          "rating": 3.49176494611479
+        },
+        {
+          "athleteId": "3431",
+          "name": "Eric Gordon",
+          "minutes": 1669,
+          "box": -2.0547392549303645,
+          "delta": 1.7271107220531052,
+          "rating": -0.32762853287725924
+        },
+        {
+          "athleteId": "2528779",
+          "name": "Reggie Bullock Jr.",
+          "minutes": 1901,
+          "box": -1.7680911847941185,
+          "delta": 1.7240852278354375,
+          "rating": -0.044005956958681036
+        },
+        {
+          "athleteId": "4249",
+          "name": "Gordon Hayward",
+          "minutes": 1564,
+          "box": -0.2505657721572461,
+          "delta": 1.641780785827223,
+          "rating": 1.391215013669977
+        }
+      ],
+      "negative": [
+        {
+          "athleteId": "2595516",
+          "name": "Norman Powell",
+          "minutes": 1458,
+          "box": -0.18531134398801483,
+          "delta": -2.683353390556728,
+          "rating": -2.868664734544743
+        },
+        {
+          "athleteId": "2528693",
+          "name": "Torrey Craig",
+          "minutes": 1598,
+          "box": -3.075802305471555,
+          "delta": -1.862214096792611,
+          "rating": -4.938016402264166
+        },
+        {
+          "athleteId": "3945274",
+          "name": "Luka Doncic",
+          "minutes": 2301,
+          "box": 8.247167083044815,
+          "delta": -1.699838415891155,
+          "rating": 6.54732866715366
+        },
+        {
+          "athleteId": "4277919",
+          "name": "Mo Bamba",
+          "minutes": 1825,
+          "box": -1.1233893625823277,
+          "delta": -1.5524802397005777,
+          "rating": -2.6758696022829054
+        },
+        {
+          "athleteId": "2968334",
+          "name": "Facundo Campazzo",
+          "minutes": 1186,
+          "box": 0.23268778422337946,
+          "delta": -1.436394696276708,
+          "rating": -1.2037069120533286
+        },
+        {
+          "athleteId": "4023",
+          "name": "Garrett Temple",
+          "minutes": 1100,
+          "box": -3.0936665298521215,
+          "delta": -1.4292492965806187,
+          "rating": -4.52291582643274
+        },
+        {
+          "athleteId": "3992",
+          "name": "James Harden",
+          "minutes": 2419,
+          "box": 7.217351264226754,
+          "delta": -1.3860192914536276,
+          "rating": 5.8313319727731265
+        },
+        {
+          "athleteId": "3452",
+          "name": "JaVale McGee",
+          "minutes": 1171,
+          "box": -1.6154480753915181,
+          "delta": -1.3823062367042542,
+          "rating": -2.9977543120957724
+        },
+        {
+          "athleteId": "4395627",
+          "name": "Cam Reddish",
+          "minutes": 1009,
+          "box": -2.266777198167637,
+          "delta": -1.3507204535621482,
+          "rating": -3.617497651729785
+        },
+        {
+          "athleteId": "4590530",
+          "name": "R.J. Hampton",
+          "minutes": 1403,
+          "box": -3.1920802828257675,
+          "delta": -1.3469112117702218,
+          "rating": -4.538991494595989
+        },
+        {
+          "athleteId": "6579",
+          "name": "Will Barton",
+          "minutes": 2277,
+          "box": -0.2763550824854792,
+          "delta": -1.3452183066424188,
+          "rating": -1.621573389127898
+        },
+        {
+          "athleteId": "2488653",
+          "name": "Mason Plumlee",
+          "minutes": 1790,
+          "box": -1.663506580646121,
+          "delta": -1.3208810705159637,
+          "rating": -2.9843876511620846
+        },
+        {
+          "athleteId": "4396993",
+          "name": "Tyrese Haliburton",
+          "minutes": 2696,
+          "box": 3.7225022507575893,
+          "delta": -1.3013347124456454,
+          "rating": 2.421167538311944
+        },
+        {
+          "athleteId": "3209",
+          "name": "Jeff Green",
+          "minutes": 1850,
+          "box": -2.8243834109711443,
+          "delta": -1.229326677741697,
+          "rating": -4.053710088712841
+        },
+        {
+          "athleteId": "3032979",
+          "name": "Dennis Schroder",
+          "minutes": 1836,
+          "box": -0.032819167387701666,
+          "delta": -1.1857273801356156,
+          "rating": -1.2185465475233173
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "minMinutes": 1000,
+      "positive": [
+        {
+          "athleteId": "2991350",
+          "name": "Alex Caruso",
+          "minutes": 1575,
+          "box": -0.40439690842068804,
+          "delta": 2.8604247612957936,
+          "rating": 2.4560278528751054
+        },
+        {
+          "athleteId": "4396907",
+          "name": "Darius Garland",
+          "minutes": 2449,
+          "box": 4.635084259099754,
+          "delta": 2.4571707320412886,
+          "rating": 7.092254991141043
+        },
+        {
+          "athleteId": "4065648",
+          "name": "Jayson Tatum",
+          "minutes": 2733,
+          "box": 5.673487487843938,
+          "delta": 2.4114478735385925,
+          "rating": 8.08493536138253
+        },
+        {
+          "athleteId": "2991235",
+          "name": "Steven Adams",
+          "minutes": 1133,
+          "box": -0.7443626926684613,
+          "delta": 2.3266682419795606,
+          "rating": 1.5823055493110991
+        },
+        {
+          "athleteId": "3975",
+          "name": "Stephen Curry",
+          "minutes": 1941,
+          "box": 7.204341207150829,
+          "delta": 2.307607970363609,
+          "rating": 9.511949177514438
+        },
+        {
+          "athleteId": "3112335",
+          "name": "Nikola Jokic",
+          "minutes": 2322,
+          "box": 9.595732339294436,
+          "delta": 2.176327510824798,
+          "rating": 11.772059850119234
+        },
+        {
+          "athleteId": "3995",
+          "name": "Jrue Holiday",
+          "minutes": 2180,
+          "box": 4.153247424074477,
+          "delta": 2.1511837048767157,
+          "rating": 6.304431128951193
+        },
+        {
+          "athleteId": "3155526",
+          "name": "Dillon Brooks",
+          "minutes": 2215,
+          "box": -2.805348267401907,
+          "delta": 2.096907724023473,
+          "rating": -0.7084405433784338
+        },
+        {
+          "athleteId": "3133626",
+          "name": "Kenrich Williams",
+          "minutes": 1205,
+          "box": -1.1755848916890725,
+          "delta": 2.068072381544873,
+          "rating": 0.8924874898558004
+        },
+        {
+          "athleteId": "4566434",
+          "name": "Franz Wagner",
+          "minutes": 2609,
+          "box": -0.12986823383419363,
+          "delta": 2.0625469874946964,
+          "rating": 1.9326787536605028
+        },
+        {
+          "athleteId": "4395724",
+          "name": "Immanuel Quickley",
+          "minutes": 2344,
+          "box": 2.2241107819793116,
+          "delta": 2.048681793020728,
+          "rating": 4.2727925750000395
+        },
+        {
+          "athleteId": "4249",
+          "name": "Gordon Hayward",
+          "minutes": 1576,
+          "box": -1.156012879675798,
+          "delta": 1.9367004044609026,
+          "rating": 0.7806875247851046
+        },
+        {
+          "athleteId": "4251",
+          "name": "Paul George",
+          "minutes": 1942,
+          "box": 3.514934733835414,
+          "delta": 1.9125198581182277,
+          "rating": 5.427454591953642
+        },
+        {
+          "athleteId": "3059318",
+          "name": "Joel Embiid",
+          "minutes": 2288,
+          "box": 7.132267937814311,
+          "delta": 1.9093290069194007,
+          "rating": 9.041596944733712
+        },
+        {
+          "athleteId": "3134908",
+          "name": "Jakob Poeltl",
+          "minutes": 1908,
+          "box": -0.41006135519681025,
+          "delta": 1.8915346039348069,
+          "rating": 1.4814732487379967
+        }
+      ],
+      "negative": [
+        {
+          "athleteId": "2595516",
+          "name": "Norman Powell",
+          "minutes": 1567,
+          "box": 0.5107507904101729,
+          "delta": -3.2521804096277664,
+          "rating": -2.7414296192175938
+        },
+        {
+          "athleteId": "2528693",
+          "name": "Torrey Craig",
+          "minutes": 1954,
+          "box": -2.5974859782909157,
+          "delta": -2.758112771311797,
+          "rating": -5.355598749602713
+        },
+        {
+          "athleteId": "3945274",
+          "name": "Luka Doncic",
+          "minutes": 2389,
+          "box": 9.154426459603268,
+          "delta": -2.0677556144994904,
+          "rating": 7.086670845103778
+        },
+        {
+          "athleteId": "3209",
+          "name": "Jeff Green",
+          "minutes": 1091,
+          "box": -3.6427976546525476,
+          "delta": -1.8560804519558967,
+          "rating": -5.498878106608444
+        },
+        {
+          "athleteId": "4277890",
+          "name": "Lonnie Walker IV",
+          "minutes": 1295,
+          "box": -1.8700570301838912,
+          "delta": -1.7358840549315573,
+          "rating": -3.6059410851154485
+        },
+        {
+          "athleteId": "2488653",
+          "name": "Mason Plumlee",
+          "minutes": 2046,
+          "box": -0.05741914168416767,
+          "delta": -1.720165211888918,
+          "rating": -1.7775843535730855
+        },
+        {
+          "athleteId": "3992",
+          "name": "James Harden",
+          "minutes": 2135,
+          "box": 7.9641074599461605,
+          "delta": -1.6669210741816451,
+          "rating": 6.297186385764515
+        },
+        {
+          "athleteId": "4431687",
+          "name": "Patrick Williams",
+          "minutes": 2328,
+          "box": -2.67634577296486,
+          "delta": -1.3935475478996753,
+          "rating": -4.069893320864535
+        },
+        {
+          "athleteId": "3136776",
+          "name": "D'Angelo Russell",
+          "minutes": 2307,
+          "box": 2.79135064066264,
+          "delta": -1.353559161312658,
+          "rating": 1.4377914793499817
+        },
+        {
+          "athleteId": "4396993",
+          "name": "Tyrese Haliburton",
+          "minutes": 1878,
+          "box": 7.138235881430889,
+          "delta": -1.344099434335754,
+          "rating": 5.794136447095135
+        },
+        {
+          "athleteId": "4277843",
+          "name": "Gary Trent Jr.",
+          "minutes": 2114,
+          "box": 0.6152355700114621,
+          "delta": -1.2702340098672318,
+          "rating": -0.6549984398557697
+        },
+        {
+          "athleteId": "4277883",
+          "name": "Jordan Nwora",
+          "minutes": 1188,
+          "box": -2.2485788777860103,
+          "delta": -1.2597665736603174,
+          "rating": -3.5083454514463277
+        },
+        {
+          "athleteId": "3133603",
+          "name": "Kelly Oubre Jr.",
+          "minutes": 1550,
+          "box": -1.1567625909078323,
+          "delta": -1.2518696999295769,
+          "rating": -2.408632290837409
+        },
+        {
+          "athleteId": "6475",
+          "name": "Klay Thompson",
+          "minutes": 2285,
+          "box": 0.6918898910992192,
+          "delta": -1.0677342741560922,
+          "rating": -0.37584438305687307
+        },
+        {
+          "athleteId": "3135045",
+          "name": "Grayson Allen",
+          "minutes": 1972,
+          "box": -0.36863966996940994,
+          "delta": -1.049822565880815,
+          "rating": -1.4184622358502248
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "minMinutes": 1000,
+      "positive": [
+        {
+          "athleteId": "4251",
+          "name": "Paul George",
+          "minutes": 2499,
+          "box": 3.517378080799705,
+          "delta": 2.623559224572903,
+          "rating": 6.140937305372608
+        },
+        {
+          "athleteId": "2991350",
+          "name": "Alex Caruso",
+          "minutes": 2040,
+          "box": 0.7842059706346138,
+          "delta": 2.5240642143807204,
+          "rating": 3.308270185015334
+        },
+        {
+          "athleteId": "3112335",
+          "name": "Nikola Jokic",
+          "minutes": 2737,
+          "box": 9.634049570914234,
+          "delta": 2.3294139594500063,
+          "rating": 11.96346353036424
+        },
+        {
+          "athleteId": "4566434",
+          "name": "Franz Wagner",
+          "minutes": 2339,
+          "box": 0.817124373085086,
+          "delta": 2.3084804398353502,
+          "rating": 3.1256048129204363
+        },
+        {
+          "athleteId": "3975",
+          "name": "Stephen Curry",
+          "minutes": 2420,
+          "box": 6.14463532128325,
+          "delta": 2.268950516866896,
+          "rating": 8.413585838150146
+        },
+        {
+          "athleteId": "3133626",
+          "name": "Kenrich Williams",
+          "minutes": 1029,
+          "box": -1.567428851728837,
+          "delta": 2.135214849564701,
+          "rating": 0.5677859978358641
+        },
+        {
+          "athleteId": "3934719",
+          "name": "OG Anunoby",
+          "minutes": 1705,
+          "box": -1.587916801194294,
+          "delta": 2.1042837404252968,
+          "rating": 0.5163669392310029
+        },
+        {
+          "athleteId": "3102530",
+          "name": "Jusuf Nurkic",
+          "minutes": 2078,
+          "box": 0.22320837734291818,
+          "delta": 2.061509701737813,
+          "rating": 2.284718079080731
+        },
+        {
+          "athleteId": "4396907",
+          "name": "Darius Garland",
+          "minutes": 1900,
+          "box": 2.340873810644433,
+          "delta": 2.008352562416889,
+          "rating": 4.349226373061322
+        },
+        {
+          "athleteId": "3155526",
+          "name": "Dillon Brooks",
+          "minutes": 2227,
+          "box": -3.3169197404133732,
+          "delta": 1.9505237899585668,
+          "rating": -1.3663959504548064
+        },
+        {
+          "athleteId": "4222252",
+          "name": "Isaiah Hartenstein",
+          "minutes": 1898,
+          "box": -0.038744818881053786,
+          "delta": 1.8869773073776006,
+          "rating": 1.8482324884965469
+        },
+        {
+          "athleteId": "3134908",
+          "name": "Jakob Poeltl",
+          "minutes": 1321,
+          "box": -1.5804580859199537,
+          "delta": 1.8742492574989598,
+          "rating": 0.293791171579006
+        },
+        {
+          "athleteId": "3922230",
+          "name": "Aaron Holiday",
+          "minutes": 1269,
+          "box": -1.432541661818332,
+          "delta": 1.8412606090778885,
+          "rating": 0.4087189472595565
+        },
+        {
+          "athleteId": "3078576",
+          "name": "Derrick White",
+          "minutes": 2380,
+          "box": 2.844630304368923,
+          "delta": 1.8230471881721777,
+          "rating": 4.667677492541101
+        },
+        {
+          "athleteId": "3934672",
+          "name": "Jalen Brunson",
+          "minutes": 2729,
+          "box": 5.588772078761295,
+          "delta": 1.7659711827254814,
+          "rating": 7.354743261486776
+        }
+      ],
+      "negative": [
+        {
+          "athleteId": "2528693",
+          "name": "Torrey Craig",
+          "minutes": 1052,
+          "box": -3.006064142252231,
+          "delta": -3.092875938604092,
+          "rating": -6.098940080856323
+        },
+        {
+          "athleteId": "2595516",
+          "name": "Norman Powell",
+          "minutes": 1990,
+          "box": -0.6392478359869553,
+          "delta": -2.1528664267476776,
+          "rating": -2.792114262734633
+        },
+        {
+          "athleteId": "3209",
+          "name": "Jeff Green",
+          "minutes": 1306,
+          "box": -3.0789836536209525,
+          "delta": -1.995361253567315,
+          "rating": -5.074344907188268
+        },
+        {
+          "athleteId": "4432808",
+          "name": "James Wiseman",
+          "minutes": 1089,
+          "box": -4.7977916031010395,
+          "delta": -1.8358202776870591,
+          "rating": -6.633611880788099
+        },
+        {
+          "athleteId": "3992",
+          "name": "James Harden",
+          "minutes": 2469,
+          "box": 6.449386348906821,
+          "delta": -1.7648935330166884,
+          "rating": 4.684492815890133
+        },
+        {
+          "athleteId": "4277905",
+          "name": "Trae Young",
+          "minutes": 1938,
+          "box": 6.0926690802632075,
+          "delta": -1.7516777695274026,
+          "rating": 4.340991310735805
+        },
+        {
+          "athleteId": "3945274",
+          "name": "Luka Doncic",
+          "minutes": 2624,
+          "box": 10.41806107153168,
+          "delta": -1.6879405630880662,
+          "rating": 8.730120508443614
+        },
+        {
+          "athleteId": "6475",
+          "name": "Klay Thompson",
+          "minutes": 2283,
+          "box": 0.39350345093132894,
+          "delta": -1.652672460359637,
+          "rating": -1.2591690094283081
+        },
+        {
+          "athleteId": "3133603",
+          "name": "Kelly Oubre Jr.",
+          "minutes": 2059,
+          "box": -1.7949119940419689,
+          "delta": -1.5547533798234736,
+          "rating": -3.3496653738654425
+        },
+        {
+          "athleteId": "3917376",
+          "name": "Jaylen Brown",
+          "minutes": 2342,
+          "box": 1.4035113279594056,
+          "delta": -1.5348515930618472,
+          "rating": -0.13134026510244157
+        },
+        {
+          "athleteId": "4395625",
+          "name": "RJ Barrett",
+          "minutes": 1838,
+          "box": -1.0250111591476447,
+          "delta": -1.3713472200070649,
+          "rating": -2.3963583791547096
+        },
+        {
+          "athleteId": "3593",
+          "name": "Bojan Bogdanovic",
+          "minutes": 1480,
+          "box": -1.0966884837221595,
+          "delta": -1.3340596873340531,
+          "rating": -2.4307481710562127
+        },
+        {
+          "athleteId": "4277843",
+          "name": "Gary Trent Jr.",
+          "minutes": 1994,
+          "box": -1.0655616859942576,
+          "delta": -1.3191713384487853,
+          "rating": -2.384733024443043
+        },
+        {
+          "athleteId": "3893016",
+          "name": "Cedi Osman",
+          "minutes": 1270,
+          "box": -1.9345228264338084,
+          "delta": -1.3131790649891082,
+          "rating": -3.2477018914229165
+        },
+        {
+          "athleteId": "3074752",
+          "name": "Terry Rozier",
+          "minutes": 2041,
+          "box": 1.842396817096811,
+          "delta": -1.29426595784786,
+          "rating": 0.5481308592489511
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "minMinutes": 1000,
+      "positive": [
+        {
+          "athleteId": "2578185",
+          "name": "Dorian Finney-Smith",
+          "minutes": 1819,
+          "box": -3.0397644607339283,
+          "delta": 3.025131097654523,
+          "rating": -0.014633363079405104
+        },
+        {
+          "athleteId": "4566434",
+          "name": "Franz Wagner",
+          "minutes": 2024,
+          "box": 2.2255363103091392,
+          "delta": 2.8370080351476874,
+          "rating": 5.062544345456827
+        },
+        {
+          "athleteId": "3134908",
+          "name": "Jakob Poeltl",
+          "minutes": 1687,
+          "box": -0.8584943554061615,
+          "delta": 2.6017000415745413,
+          "rating": 1.7432056861683798
+        },
+        {
+          "athleteId": "3112335",
+          "name": "Nikola Jokic",
+          "minutes": 2575,
+          "box": 10.578028618581673,
+          "delta": 2.577958256071529,
+          "rating": 13.155986874653202
+        },
+        {
+          "athleteId": "2991350",
+          "name": "Alex Caruso",
+          "minutes": 1040,
+          "box": 2.1290098286003047,
+          "delta": 2.433337810406277,
+          "rating": 4.562347639006582
+        },
+        {
+          "athleteId": "3133626",
+          "name": "Kenrich Williams",
+          "minutes": 1131,
+          "box": -0.6785744955165088,
+          "delta": 2.2321735704901378,
+          "rating": 1.5535990749736288
+        },
+        {
+          "athleteId": "3975",
+          "name": "Stephen Curry",
+          "minutes": 2249,
+          "box": 6.552591247528022,
+          "delta": 2.0896591897488053,
+          "rating": 8.642250437276827
+        },
+        {
+          "athleteId": "4251",
+          "name": "Paul George",
+          "minutes": 1335,
+          "box": 1.2026781609886212,
+          "delta": 2.0880797171906997,
+          "rating": 3.290757878179321
+        },
+        {
+          "athleteId": "3149673",
+          "name": "Pascal Siakam",
+          "minutes": 2553,
+          "box": 0.9310810369821358,
+          "delta": 2.065743217891205,
+          "rating": 2.996824254873341
+        },
+        {
+          "athleteId": "6450",
+          "name": "Kawhi Leonard",
+          "minutes": 1178,
+          "box": 3.5244589244918094,
+          "delta": 1.9032662490286274,
+          "rating": 5.427725173520437
+        },
+        {
+          "athleteId": "4222252",
+          "name": "Isaiah Hartenstein",
+          "minutes": 1589,
+          "box": 0.569136836572483,
+          "delta": 1.8878718984924232,
+          "rating": 2.4570087350649064
+        },
+        {
+          "athleteId": "6442",
+          "name": "Kyrie Irving",
+          "minutes": 1801,
+          "box": 3.0850171507474564,
+          "delta": 1.7683620119705048,
+          "rating": 4.853379162717961
+        },
+        {
+          "athleteId": "3155526",
+          "name": "Dillon Brooks",
+          "minutes": 2388,
+          "box": -2.023883668701935,
+          "delta": 1.7096108992669847,
+          "rating": -0.3142727694349501
+        },
+        {
+          "athleteId": "3037789",
+          "name": "Bogdan Bogdanovic",
+          "minutes": 1346,
+          "box": -1.0311422725986812,
+          "delta": 1.7032900244971847,
+          "rating": 0.6721477518985035
+        },
+        {
+          "athleteId": "4396907",
+          "name": "Darius Garland",
+          "minutes": 2300,
+          "box": 4.443104744824625,
+          "delta": 1.70313674098605,
+          "rating": 6.146241485810675
+        }
+      ],
+      "negative": [
+        {
+          "athleteId": "3917376",
+          "name": "Jaylen Brown",
+          "minutes": 2160,
+          "box": 1.153493987164712,
+          "delta": -1.8970905998932444,
+          "rating": -0.7435966127285323
+        },
+        {
+          "athleteId": "3074752",
+          "name": "Terry Rozier",
+          "minutes": 1655,
+          "box": -1.4693316006434156,
+          "delta": -1.8476943843662068,
+          "rating": -3.3170259850096224
+        },
+        {
+          "athleteId": "3468",
+          "name": "Russell Westbrook",
+          "minutes": 2094,
+          "box": 0.6069800055932747,
+          "delta": -1.7748509727762456,
+          "rating": -1.1678709671829708
+        },
+        {
+          "athleteId": "6475",
+          "name": "Klay Thompson",
+          "minutes": 1972,
+          "box": -0.2432554070570445,
+          "delta": -1.7689946705805664,
+          "rating": -2.012250077637611
+        },
+        {
+          "athleteId": "3133603",
+          "name": "Kelly Oubre Jr.",
+          "minutes": 2084,
+          "box": -2.7827106091610867,
+          "delta": -1.70315780720511,
+          "rating": -4.485868416366197
+        },
+        {
+          "athleteId": "4431679",
+          "name": "Precious Achiuwa",
+          "minutes": 1168,
+          "box": -3.021938740617666,
+          "delta": -1.6632667744424938,
+          "rating": -4.68520551506016
+        },
+        {
+          "athleteId": "3134907",
+          "name": "Kyle Kuzma",
+          "minutes": 1936,
+          "box": -3.3060051564062696,
+          "delta": -1.6349426217149357,
+          "rating": -4.940947778121205
+        },
+        {
+          "athleteId": "3992",
+          "name": "James Harden",
+          "minutes": 2790,
+          "box": 6.724476990787514,
+          "delta": -1.617318077851981,
+          "rating": 5.1071589129355335
+        },
+        {
+          "athleteId": "4277905",
+          "name": "Trae Young",
+          "minutes": 2738,
+          "box": 5.151220199599126,
+          "delta": -1.3970344272898023,
+          "rating": 3.7541857723093237
+        },
+        {
+          "athleteId": "4437244",
+          "name": "Jalen Green",
+          "minutes": 2698,
+          "box": 1.2906957445380531,
+          "delta": -1.389150922372976,
+          "rating": -0.09845517783492297
+        },
+        {
+          "athleteId": "3934673",
+          "name": "Donte DiVincenzo",
+          "minutes": 1605,
+          "box": 2.531799191300963,
+          "delta": -1.3886569293471382,
+          "rating": 1.1431422619538247
+        },
+        {
+          "athleteId": "4277843",
+          "name": "Gary Trent Jr.",
+          "minutes": 1894,
+          "box": -1.0369511774413729,
+          "delta": -1.34697338047821,
+          "rating": -2.383924557919583
+        },
+        {
+          "athleteId": "2530530",
+          "name": "T.J. McConnell",
+          "minutes": 1417,
+          "box": 2.011129309696226,
+          "delta": -1.3112852305121936,
+          "rating": 0.6998440791840324
+        },
+        {
+          "athleteId": "3064440",
+          "name": "Zach LaVine",
+          "minutes": 2610,
+          "box": 1.2473440171989385,
+          "delta": -1.3080397601962854,
+          "rating": -0.060695742997346924
+        },
+        {
+          "athleteId": "4278067",
+          "name": "Nic Claxton",
+          "minutes": 1885,
+          "box": -1.7379253833643529,
+          "delta": -1.2834872870561052,
+          "rating": -3.021412670420458
+        }
+      ]
+    },
+    {
+      "season": 2026,
+      "minMinutes": 1000,
+      "positive": [
+        {
+          "athleteId": "2991350",
+          "name": "Alex Caruso",
+          "minutes": 1022,
+          "box": 1.1488644257229583,
+          "delta": 2.7159463860587456,
+          "rating": 3.864810811781704
+        },
+        {
+          "athleteId": "4566434",
+          "name": "Franz Wagner",
+          "minutes": 1019,
+          "box": 1.765858369992509,
+          "delta": 2.6586185768145443,
+          "rating": 4.4244769468070535
+        },
+        {
+          "athleteId": "4277813",
+          "name": "Herbert Jones",
+          "minutes": 1589,
+          "box": -3.216556371809992,
+          "delta": 2.5771379526034925,
+          "rating": -0.6394184192064993
+        },
+        {
+          "athleteId": "3112335",
+          "name": "Nikola Jokic",
+          "minutes": 2265,
+          "box": 11.054225614604176,
+          "delta": 2.5554265148479303,
+          "rating": 13.609652129452106
+        },
+        {
+          "athleteId": "4066336",
+          "name": "Lauri Markkanen",
+          "minutes": 1444,
+          "box": 1.026418047113965,
+          "delta": 2.3569291012759956,
+          "rating": 3.3833471483899604
+        },
+        {
+          "athleteId": "3133602",
+          "name": "Svi Mykhailiuk",
+          "minutes": 1154,
+          "box": -2.99471302352527,
+          "delta": 2.332770765056957,
+          "rating": -0.6619422584683132
+        },
+        {
+          "athleteId": "4432194",
+          "name": "Day'Ron Sharpe",
+          "minutes": 1159,
+          "box": -0.29488931473059593,
+          "delta": 2.285866758995185,
+          "rating": 1.990977444264589
+        },
+        {
+          "athleteId": "6450",
+          "name": "Kawhi Leonard",
+          "minutes": 2087,
+          "box": 6.696688408379863,
+          "delta": 2.2446439641032594,
+          "rating": 8.941332372483123
+        },
+        {
+          "athleteId": "3134908",
+          "name": "Jakob Poeltl",
+          "minutes": 1150,
+          "box": -1.3300083001431384,
+          "delta": 2.1849005330837743,
+          "rating": 0.8548922329406359
+        },
+        {
+          "athleteId": "3078576",
+          "name": "Derrick White",
+          "minutes": 2623,
+          "box": 3.1838567646143696,
+          "delta": 2.1594822931236024,
+          "rating": 5.343339057737972
+        },
+        {
+          "athleteId": "4222252",
+          "name": "Isaiah Hartenstein",
+          "minutes": 1142,
+          "box": 1.2491777950609515,
+          "delta": 2.119293855705788,
+          "rating": 3.3684716507667396
+        },
+        {
+          "athleteId": "3149673",
+          "name": "Pascal Siakam",
+          "minutes": 2058,
+          "box": 0.6335280205751893,
+          "delta": 2.057885709482542,
+          "rating": 2.691413730057731
+        },
+        {
+          "athleteId": "4066261",
+          "name": "Bam Adebayo",
+          "minutes": 2363,
+          "box": 1.8980715706088194,
+          "delta": 2.0321950672237676,
+          "rating": 3.9302666378325872
+        },
+        {
+          "athleteId": "3912848",
+          "name": "Dean Wade",
+          "minutes": 1321,
+          "box": -2.131659686215824,
+          "delta": 1.9421369630063723,
+          "rating": -0.18952272320945185
+        },
+        {
+          "athleteId": "5104157",
+          "name": "Victor Wembanyama",
+          "minutes": 1868,
+          "box": 7.0833784422081605,
+          "delta": 1.922990600665604,
+          "rating": 9.006369042873764
+        }
+      ],
+      "negative": [
+        {
+          "athleteId": "3992",
+          "name": "James Harden",
+          "minutes": 2443,
+          "box": 6.420976286111831,
+          "delta": -2.455916479958056,
+          "rating": 3.9650598061537745
+        },
+        {
+          "athleteId": "3917376",
+          "name": "Jaylen Brown",
+          "minutes": 2443,
+          "box": 2.9796334392454,
+          "delta": -2.1466711978955866,
+          "rating": 0.8329622413498132
+        },
+        {
+          "athleteId": "4277843",
+          "name": "Gary Trent Jr.",
+          "minutes": 1377,
+          "box": -3.207526985132655,
+          "delta": -1.994047907685415,
+          "rating": -5.20157489281807
+        },
+        {
+          "athleteId": "3468",
+          "name": "Russell Westbrook",
+          "minutes": 1853,
+          "box": 0.9261680237204993,
+          "delta": -1.957370752392503,
+          "rating": -1.0312027286720036
+        },
+        {
+          "athleteId": "4065670",
+          "name": "Bruce Brown",
+          "minutes": 1996,
+          "box": -3.306590274342204,
+          "delta": -1.919422340972912,
+          "rating": -5.226012615315116
+        },
+        {
+          "athleteId": "3134907",
+          "name": "Kyle Kuzma",
+          "minutes": 1810,
+          "box": -2.5948401644295798,
+          "delta": -1.8733072750978446,
+          "rating": -4.468147439527424
+        },
+        {
+          "athleteId": "3133603",
+          "name": "Kelly Oubre Jr.",
+          "minutes": 1575,
+          "box": -2.072203528023464,
+          "delta": -1.6879120417667286,
+          "rating": -3.7601155697901927
+        },
+        {
+          "athleteId": "4845374",
+          "name": "Bub Carrington",
+          "minutes": 2272,
+          "box": -2.832532924079588,
+          "delta": -1.6160598938582056,
+          "rating": -4.448592817937794
+        },
+        {
+          "athleteId": "4432573",
+          "name": "Paolo Banchero",
+          "minutes": 2499,
+          "box": 1.9594675555596524,
+          "delta": -1.6118705057097615,
+          "rating": 0.3475970498498908
+        },
+        {
+          "athleteId": "3064440",
+          "name": "Zach LaVine",
+          "minutes": 1226,
+          "box": -0.5929039347457497,
+          "delta": -1.5874988853934207,
+          "rating": -2.1804028201391703
+        },
+        {
+          "athleteId": "4278067",
+          "name": "Nic Claxton",
+          "minutes": 1920,
+          "box": -1.2623983939907337,
+          "delta": -1.546258093867756,
+          "rating": -2.8086564878584896
+        },
+        {
+          "athleteId": "3945274",
+          "name": "Luka Doncic",
+          "minutes": 2293,
+          "box": 10.05468193983909,
+          "delta": -1.5087647323038471,
+          "rating": 8.545917207535243
+        },
+        {
+          "athleteId": "4683766",
+          "name": "Isaiah Collier",
+          "minutes": 1518,
+          "box": -0.39392655901364765,
+          "delta": -1.4834829214617211,
+          "rating": -1.8774094804753687
+        },
+        {
+          "athleteId": "5106060",
+          "name": "Jarace Walker",
+          "minutes": 1956,
+          "box": -2.1731985345001252,
+          "delta": -1.4659254578803838,
+          "rating": -3.639123992380509
+        },
+        {
+          "athleteId": "4433627",
+          "name": "Keyonte George",
+          "minutes": 1786,
+          "box": 1.5521640806688057,
+          "delta": -1.46004321482566,
+          "rating": 0.09212086584314583
+        }
+      ]
+    }
+  ],
+  "teams": [
+    {
+      "teamId": "1",
+      "season": 2021,
+      "actual": 2.3153989279841602,
+      "stage2": 0.8548436169385258,
+      "stage1": 2.444134735096241
+    },
+    {
+      "teamId": "10",
+      "season": 2021,
+      "actual": -7.664786167283621,
+      "stage2": -4.994481178432134,
+      "stage1": -5.515495226142729
+    },
+    {
+      "teamId": "11",
+      "season": 2021,
+      "actual": -0.03987315021810612,
+      "stage2": 2.227542471959771,
+      "stage1": 2.2890184115416092
+    },
+    {
+      "teamId": "12",
+      "season": 2021,
+      "actual": 6.277579026961146,
+      "stage2": 6.120783130807753,
+      "stage1": 6.184474411499318
+    },
+    {
+      "teamId": "13",
+      "season": 2021,
+      "actual": 2.7566798054689237,
+      "stage2": 4.058638912091714,
+      "stage1": 3.641046617674958
+    },
+    {
+      "teamId": "14",
+      "season": 2021,
+      "actual": 0.02818846809770123,
+      "stage2": 2.5465078440816677,
+      "stage1": 1.8502132943742513
+    },
+    {
+      "teamId": "15",
+      "season": 2021,
+      "actual": 5.649506734105433,
+      "stage2": 8.226861565290196,
+      "stage1": 6.829708993711563
+    },
+    {
+      "teamId": "16",
+      "season": 2021,
+      "actual": -5.326912627979076,
+      "stage2": -1.0582046828004597,
+      "stage1": -1.434982098196548
+    },
+    {
+      "teamId": "17",
+      "season": 2021,
+      "actual": 4.410239377992904,
+      "stage2": 1.780808200478306,
+      "stage1": 2.833211676297208
+    },
+    {
+      "teamId": "18",
+      "season": 2021,
+      "actual": 2.344506933243696,
+      "stage2": -2.5622599129948633,
+      "stage1": -2.0613021531720563
+    },
+    {
+      "teamId": "19",
+      "season": 2021,
+      "actual": -9.25572888174218,
+      "stage2": -5.349516664893102,
+      "stage1": -5.647256238554696
+    },
+    {
+      "teamId": "2",
+      "season": 2021,
+      "actual": 1.4494033979537182,
+      "stage2": 1.6262692412977922,
+      "stage1": 1.123906474731672
+    },
+    {
+      "teamId": "20",
+      "season": 2021,
+      "actual": 5.4760484180758615,
+      "stage2": 2.8047702398637586,
+      "stage1": 2.3334407666882866
+    },
+    {
+      "teamId": "21",
+      "season": 2021,
+      "actual": 5.827505827505826,
+      "stage2": 2.803973399868634,
+      "stage1": 2.515891779518772
+    },
+    {
+      "teamId": "22",
+      "season": 2021,
+      "actual": 1.781492365821862,
+      "stage2": 4.174847785545907,
+      "stage1": 3.545641031207674
+    },
+    {
+      "teamId": "23",
+      "season": 2021,
+      "actual": -3.614283648980772,
+      "stage2": -0.9762549436516053,
+      "stage1": -0.6437483081014603
+    },
+    {
+      "teamId": "24",
+      "season": 2021,
+      "actual": -1.7092708113976915,
+      "stage2": 0.29080744854519147,
+      "stage1": -0.028192731801424342
+    },
+    {
+      "teamId": "25",
+      "season": 2021,
+      "actual": -10.346960884165368,
+      "stage2": -7.60963352366736,
+      "stage1": -8.0487184941931
+    },
+    {
+      "teamId": "26",
+      "season": 2021,
+      "actual": 9.187220658831322,
+      "stage2": 4.16355419650278,
+      "stage1": 4.185697846712188
+    },
+    {
+      "teamId": "27",
+      "season": 2021,
+      "actual": -1.718606782768103,
+      "stage2": -0.7296300535604057,
+      "stage1": -0.8192490865187982
+    },
+    {
+      "teamId": "28",
+      "season": 2021,
+      "actual": -0.46764964788732405,
+      "stage2": 1.7668195228763368,
+      "stage1": 1.430241542596102
+    },
+    {
+      "teamId": "29",
+      "season": 2021,
+      "actual": 1.0000297306136128,
+      "stage2": -1.3381572654854654,
+      "stage1": -1.5896235579531668
+    },
+    {
+      "teamId": "3",
+      "season": 2021,
+      "actual": -0.28435325882375245,
+      "stage2": 1.209880811853708,
+      "stage1": 1.7553285660678206
+    },
+    {
+      "teamId": "30",
+      "season": 2021,
+      "actual": -1.923529330362703,
+      "stage2": -3.1484234345420763,
+      "stage1": -2.909953800758522
+    },
+    {
+      "teamId": "4",
+      "season": 2021,
+      "actual": -0.879693646687541,
+      "stage2": -1.349984692196632,
+      "stage1": -1.150743775322441
+    },
+    {
+      "teamId": "5",
+      "season": 2021,
+      "actual": -8.491501515341962,
+      "stage2": -5.058410124415483,
+      "stage1": -5.450372341303551
+    },
+    {
+      "teamId": "6",
+      "season": 2021,
+      "actual": 2.285666208598593,
+      "stage2": 4.7597018721459605,
+      "stage1": 3.994041491023806
+    },
+    {
+      "teamId": "7",
+      "season": 2021,
+      "actual": 4.9402301729776354,
+      "stage2": 3.5231547745101954,
+      "stage1": 2.909571779763716
+    },
+    {
+      "teamId": "8",
+      "season": 2021,
+      "actual": -4.460575164847343,
+      "stage2": -6.574304917703085,
+      "stage1": -5.883177986748083
+    },
+    {
+      "teamId": "9",
+      "season": 2021,
+      "actual": 1.0144912059630726,
+      "stage2": -5.750159727158983,
+      "stage1": -5.824461445841125
+    },
+    {
+      "teamId": "1",
+      "season": 2022,
+      "actual": 1.5696161552742778,
+      "stage2": 4.535723563476771,
+      "stage1": 5.334101305913572
+    },
+    {
+      "teamId": "10",
+      "season": 2022,
+      "actual": -8.238345408337446,
+      "stage2": -5.196340854878688,
+      "stage1": -5.7478288518433205
+    },
+    {
+      "teamId": "11",
+      "season": 2022,
+      "actual": -3.451708777513753,
+      "stage2": -2.2348900515790584,
+      "stage1": -1.7283990390816393
+    },
+    {
+      "teamId": "12",
+      "season": 2022,
+      "actual": 0.024364571963199758,
+      "stage2": -0.26476666625733636,
+      "stage1": -0.19769906106343693
+    },
+    {
+      "teamId": "13",
+      "season": 2022,
+      "actual": -2.9552923375180282,
+      "stage2": 2.790568517000944,
+      "stage1": 4.079458170694053
+    },
+    {
+      "teamId": "14",
+      "season": 2022,
+      "actual": 4.528592166155907,
+      "stage2": -0.13985301210596557,
+      "stage1": -0.09669912572131967
+    },
+    {
+      "teamId": "15",
+      "season": 2022,
+      "actual": 3.2895523816359247,
+      "stage2": 5.586960896069822,
+      "stage1": 4.870387466745256
+    },
+    {
+      "teamId": "16",
+      "season": 2022,
+      "actual": 2.5500265627766954,
+      "stage2": 0.13839030919777162,
+      "stage1": -0.15596332899369614
+    },
+    {
+      "teamId": "17",
+      "season": 2022,
+      "actual": 0.7713928945072006,
+      "stage2": 4.349751050934914,
+      "stage1": 4.038260767694371
+    },
+    {
+      "teamId": "18",
+      "season": 2022,
+      "actual": -0.12438862988411956,
+      "stage2": 3.527871492245346,
+      "stage1": 3.5107857483039533
+    },
+    {
+      "teamId": "19",
+      "season": 2022,
+      "actual": -7.890495321032502,
+      "stage2": -8.062921781311738,
+      "stage1": -7.451981361209607
+    },
+    {
+      "teamId": "2",
+      "season": 2022,
+      "actual": 7.325063496153422,
+      "stage2": 3.935632454658641,
+      "stage1": 3.4616023846805133
+    },
+    {
+      "teamId": "20",
+      "season": 2022,
+      "actual": 2.6553635862794636,
+      "stage2": 5.2163130279016805,
+      "stage1": 5.468649527839488
+    },
+    {
+      "teamId": "21",
+      "season": 2022,
+      "actual": 7.379303393759631,
+      "stage2": 3.6120626634238846,
+      "stage1": 3.5923660328804714
+    },
+    {
+      "teamId": "22",
+      "season": 2022,
+      "actual": -8.87103849640772,
+      "stage2": -1.4889108738509975,
+      "stage1": -2.0883944668348366
+    },
+    {
+      "teamId": "23",
+      "season": 2022,
+      "actual": -5.357377754923884,
+      "stage2": -2.1217531166232977,
+      "stage1": -1.3490527992951495
+    },
+    {
+      "teamId": "24",
+      "season": 2022,
+      "actual": 0.11899123986492117,
+      "stage2": -3.467226339047651,
+      "stage1": -3.8658986891414995
+    },
+    {
+      "teamId": "25",
+      "season": 2022,
+      "actual": -8.0310404551568,
+      "stage2": -7.815290076868823,
+      "stage1": -7.828710728673805
+    },
+    {
+      "teamId": "26",
+      "season": 2022,
+      "actual": 6.0980567525815115,
+      "stage2": 6.981767375767837,
+      "stage1": 5.936521012542709
+    },
+    {
+      "teamId": "27",
+      "season": 2022,
+      "actual": -3.3959312575243783,
+      "stage2": -1.7242534214154654,
+      "stage1": -2.6936384492512158
+    },
+    {
+      "teamId": "28",
+      "season": 2022,
+      "actual": 2.3221286508679584,
+      "stage2": -0.15757291535919915,
+      "stage1": -0.930904456402923
+    },
+    {
+      "teamId": "29",
+      "season": 2022,
+      "actual": 5.523159341961789,
+      "stage2": 0.7302122015626553,
+      "stage1": 0.191985255965192
+    },
+    {
+      "teamId": "3",
+      "season": 2022,
+      "actual": -0.9939479613022927,
+      "stage2": -0.662630638244655,
+      "stage1": -0.5268122848810268
+    },
+    {
+      "teamId": "30",
+      "season": 2022,
+      "actual": 0.427073620374259,
+      "stage2": -0.5176195565244234,
+      "stage1": 0.39888743603319754
+    },
+    {
+      "teamId": "4",
+      "season": 2022,
+      "actual": -0.39027721878696964,
+      "stage2": 1.770290732303876,
+      "stage1": 2.6939789018390092
+    },
+    {
+      "teamId": "5",
+      "season": 2022,
+      "actual": 2.1709457587954497,
+      "stage2": -3.057703470600875,
+      "stage1": -3.3558958658977196
+    },
+    {
+      "teamId": "6",
+      "season": 2022,
+      "actual": 3.399756120815541,
+      "stage2": 3.1127922524120324,
+      "stage1": 2.3943180075065067
+    },
+    {
+      "teamId": "7",
+      "season": 2022,
+      "actual": 2.3078839268706077,
+      "stage2": 1.7930789950614525,
+      "stage1": 2.190929889901338
+    },
+    {
+      "teamId": "8",
+      "season": 2022,
+      "actual": -7.672132101267298,
+      "stage2": -5.044959334434126,
+      "stage1": -5.731700059424166
+    },
+    {
+      "teamId": "9",
+      "season": 2022,
+      "actual": 5.520495142207471,
+      "stage2": 2.1489829161866343,
+      "stage1": 0.47813688593326464
+    },
+    {
+      "teamId": "1",
+      "season": 2023,
+      "actual": 0.28310967668874915,
+      "stage2": 3.60478705952799,
+      "stage1": 4.11380884438652
+    },
+    {
+      "teamId": "10",
+      "season": 2023,
+      "actual": -7.741650077416502,
+      "stage2": -7.359374799719309,
+      "stage1": -7.160642709131805
+    },
+    {
+      "teamId": "11",
+      "season": 2023,
+      "actual": -3.0804892902835945,
+      "stage2": -3.405284138603203,
+      "stage1": -3.351810553804913
+    },
+    {
+      "teamId": "12",
+      "season": 2023,
+      "actual": 0.49831787332516586,
+      "stage2": -0.0147560101688482,
+      "stage1": 0.19288662002228563
+    },
+    {
+      "teamId": "13",
+      "season": 2023,
+      "actual": 0.5504569964255432,
+      "stage2": 1.126751436987989,
+      "stage1": 1.7906171862462803
+    },
+    {
+      "teamId": "14",
+      "season": 2023,
+      "actual": -0.32186742528342904,
+      "stage2": 4.908943968298952,
+      "stage1": 4.545074051105585
+    },
+    {
+      "teamId": "15",
+      "season": 2023,
+      "actual": 3.525450677998586,
+      "stage2": 4.139580635247859,
+      "stage1": 3.942625075765788
+    },
+    {
+      "teamId": "16",
+      "season": 2023,
+      "actual": -0.03534193320374625,
+      "stage2": 2.9967215375725136,
+      "stage1": 2.9749238353447254
+    },
+    {
+      "teamId": "17",
+      "season": 2023,
+      "actual": 0.8525585281429571,
+      "stage2": 1.219415725407715,
+      "stage1": 0.4057100926481785
+    },
+    {
+      "teamId": "18",
+      "season": 2023,
+      "actual": 2.9187848125896925,
+      "stage2": 3.010332994925079,
+      "stage1": 2.697117655924331
+    },
+    {
+      "teamId": "19",
+      "season": 2023,
+      "actual": -2.521674391796153,
+      "stage2": -4.6637833550918515,
+      "stage1": -4.912871719619965
+    },
+    {
+      "teamId": "2",
+      "season": 2023,
+      "actual": 6.428017022830875,
+      "stage2": 7.817085374816063,
+      "stage1": 6.433161343729584
+    },
+    {
+      "teamId": "20",
+      "season": 2023,
+      "actual": 4.344507143891549,
+      "stage2": 6.05856838146859,
+      "stage1": 7.103917139984755
+    },
+    {
+      "teamId": "21",
+      "season": 2023,
+      "actual": 2.060720961411182,
+      "stage2": 2.3679906816307876,
+      "stage1": 1.7238595981930174
+    },
+    {
+      "teamId": "22",
+      "season": 2023,
+      "actual": -3.992931661399396,
+      "stage2": -1.6778560954405748,
+      "stage1": -1.198559063995579
+    },
+    {
+      "teamId": "23",
+      "season": 2023,
+      "actual": 2.5730289649546343,
+      "stage2": -0.7111533444022862,
+      "stage1": -0.538853478335759
+    },
+    {
+      "teamId": "24",
+      "season": 2023,
+      "actual": -9.61581152542056,
+      "stage2": -4.4257359473837035,
+      "stage1": -4.827445517362361
+    },
+    {
+      "teamId": "25",
+      "season": 2023,
+      "actual": 1.0441131959483718,
+      "stage2": -3.9453381318003675,
+      "stage1": -4.770106808406126
+    },
+    {
+      "teamId": "26",
+      "season": 2023,
+      "actual": -0.9092862929224461,
+      "stage2": -0.8919014839175081,
+      "stage1": -1.5356498571892185
+    },
+    {
+      "teamId": "27",
+      "season": 2023,
+      "actual": -1.2002851586558747,
+      "stage2": -0.7544453979084316,
+      "stage1": -0.5062073524386967
+    },
+    {
+      "teamId": "28",
+      "season": 2023,
+      "actual": 1.4808831448572963,
+      "stage2": 4.416187887776006,
+      "stage1": 3.706901470650103
+    },
+    {
+      "teamId": "29",
+      "season": 2023,
+      "actual": 3.8048343777976728,
+      "stage2": 2.685975461950588,
+      "stage1": 1.4469679983058814
+    },
+    {
+      "teamId": "3",
+      "season": 2023,
+      "actual": 1.8583438439662576,
+      "stage2": 1.1152307572343012,
+      "stage1": 0.6036387090336055
+    },
+    {
+      "teamId": "30",
+      "season": 2023,
+      "actual": -6.033580647290075,
+      "stage2": -2.882012990752273,
+      "stage1": -2.520346240429666
+    },
+    {
+      "teamId": "4",
+      "season": 2023,
+      "actual": 1.2803540541324028,
+      "stage2": 2.256593779863437,
+      "stage1": 2.8922631874557045
+    },
+    {
+      "teamId": "5",
+      "season": 2023,
+      "actual": 5.485047338072945,
+      "stage2": 4.555774459135434,
+      "stage1": 4.108382098609006
+    },
+    {
+      "teamId": "6",
+      "season": 2023,
+      "actual": 0.07362270327841897,
+      "stage2": 4.122005200961488,
+      "stage1": 4.2359792436238
+    },
+    {
+      "teamId": "7",
+      "season": 2023,
+      "actual": 3.3268745658611474,
+      "stage2": 1.056467167863672,
+      "stage1": 0.3847925961824967
+    },
+    {
+      "teamId": "8",
+      "season": 2023,
+      "actual": -8.088711806638985,
+      "stage2": -6.160142672878454,
+      "stage1": -5.918390232214232
+    },
+    {
+      "teamId": "9",
+      "season": 2023,
+      "actual": 1.730217072098613,
+      "stage2": 3.7814141832744244,
+      "stage1": 3.835940924195487
+    },
+    {
+      "teamId": "1",
+      "season": 2024,
+      "actual": -2.1240945898480152,
+      "stage2": 1.796015126966502,
+      "stage1": 2.760472943714654
+    },
+    {
+      "teamId": "10",
+      "season": 2024,
+      "actual": 1.1020181305939398,
+      "stage2": -2.0518532291926608,
+      "stage1": -2.701995516995454
+    },
+    {
+      "teamId": "11",
+      "season": 2024,
+      "actual": 2.9408996800301157,
+      "stage2": 1.2278896541689177,
+      "stage1": 1.4603106757293816
+    },
+    {
+      "teamId": "12",
+      "season": 2024,
+      "actual": 3.312114458795572,
+      "stage2": 5.37897671639548,
+      "stage1": 7.164578602458911
+    },
+    {
+      "teamId": "13",
+      "season": 2024,
+      "actual": 0.5779337805833121,
+      "stage2": 4.039869483530013,
+      "stage1": 4.840577464275749
+    },
+    {
+      "teamId": "14",
+      "season": 2024,
+      "actual": 1.7906394323673003,
+      "stage2": 1.2723944842425339,
+      "stage1": 1.0867378126604095
+    },
+    {
+      "teamId": "15",
+      "season": 2024,
+      "actual": 2.56445733697208,
+      "stage2": 7.822382947093878,
+      "stage1": 8.389798374013813
+    },
+    {
+      "teamId": "16",
+      "season": 2024,
+      "actual": 6.490797546012271,
+      "stage2": 4.589621834344062,
+      "stage1": 3.937299456711572
+    },
+    {
+      "teamId": "17",
+      "season": 2024,
+      "actual": -2.9121417881287854,
+      "stage2": 0.19376288541573183,
+      "stage1": 0.09193170963416941
+    },
+    {
+      "teamId": "18",
+      "season": 2024,
+      "actual": 4.707072376245309,
+      "stage2": 4.203602702203114,
+      "stage1": 3.0611354563328725
+    },
+    {
+      "teamId": "19",
+      "season": 2024,
+      "actual": 2.043675562811015,
+      "stage2": 0.19963926789441477,
+      "stage1": -0.7043542322649792
+    },
+    {
+      "teamId": "2",
+      "season": 2024,
+      "actual": 11.387597070081476,
+      "stage2": 10.006623761900107,
+      "stage1": 8.355089325398607
+    },
+    {
+      "teamId": "20",
+      "season": 2024,
+      "actual": 3.051310843138211,
+      "stage2": 2.507906132570334,
+      "stage1": 2.604233535640226
+    },
+    {
+      "teamId": "21",
+      "season": 2024,
+      "actual": 3.043730279416865,
+      "stage2": 5.428417848539374,
+      "stage1": 4.691691361244505
+    },
+    {
+      "teamId": "22",
+      "season": 2024,
+      "actual": -9.007407984458569,
+      "stage2": -6.818199684595493,
+      "stage1": -6.8472004414187975
+    },
+    {
+      "teamId": "23",
+      "season": 2024,
+      "actual": 1.7197959335846078,
+      "stage2": 1.9953153936633805,
+      "stage1": 2.2697429016231303
+    },
+    {
+      "teamId": "24",
+      "season": 2024,
+      "actual": -6.261387014919049,
+      "stage2": -5.237382677587446,
+      "stage1": -5.346826355091153
+    },
+    {
+      "teamId": "25",
+      "season": 2024,
+      "actual": 7.256114589325395,
+      "stage2": -0.04411775899542647,
+      "stage1": -0.30066560248163565
+    },
+    {
+      "teamId": "26",
+      "season": 2024,
+      "actual": -4.7871337126430475,
+      "stage2": -3.0624624010850336,
+      "stage1": -3.1196195211508595
+    },
+    {
+      "teamId": "27",
+      "season": 2024,
+      "actual": -8.881056775826742,
+      "stage2": -2.374896120081347,
+      "stage1": -2.48912294616862
+    },
+    {
+      "teamId": "28",
+      "season": 2024,
+      "actual": -6.326550663928358,
+      "stage2": -0.2415863244172316,
+      "stage1": -0.41000690897071745
+    },
+    {
+      "teamId": "29",
+      "season": 2024,
+      "actual": -6.96598560201164,
+      "stage2": -3.478073185883947,
+      "stage1": -3.5718793071383055
+    },
+    {
+      "teamId": "3",
+      "season": 2024,
+      "actual": 4.433644749927739,
+      "stage2": 2.4363134372548467,
+      "stage1": 1.8811424016563771
+    },
+    {
+      "teamId": "30",
+      "season": 2024,
+      "actual": -10.356408397567726,
+      "stage2": -7.131821092225016,
+      "stage1": -7.742570675400188
+    },
+    {
+      "teamId": "4",
+      "season": 2024,
+      "actual": -1.4480482028249206,
+      "stage2": 1.4940244585006084,
+      "stage1": 1.6047856787762524
+    },
+    {
+      "teamId": "5",
+      "season": 2024,
+      "actual": 2.432014149900508,
+      "stage2": 2.555208149679685,
+      "stage1": 2.1650017652705027
+    },
+    {
+      "teamId": "6",
+      "season": 2024,
+      "actual": 2.1655691259236565,
+      "stage2": 1.4547018836266363,
+      "stage1": 1.9234957840237392
+    },
+    {
+      "teamId": "7",
+      "season": 2024,
+      "actual": 5.335254520111806,
+      "stage2": 5.129888546186652,
+      "stage1": 3.8187621843477824
+    },
+    {
+      "teamId": "8",
+      "season": 2024,
+      "actual": -8.933312285636381,
+      "stage2": -6.455421916191278,
+      "stage1": -6.055829500626161
+    },
+    {
+      "teamId": "9",
+      "season": 2024,
+      "actual": 2.5607336621602546,
+      "stage2": 3.0143018119679805,
+      "stage1": 2.705276219986784
+    },
+    {
+      "teamId": "1",
+      "season": 2025,
+      "actual": -1.080420457819456,
+      "stage2": -2.1959131928539612,
+      "stage1": -1.2694222091097114
+    },
+    {
+      "teamId": "10",
+      "season": 2025,
+      "actual": 4.4541070478419265,
+      "stage2": 2.2942545441355104,
+      "stage1": 1.5610762972317955
+    },
+    {
+      "teamId": "11",
+      "season": 2025,
+      "actual": 2.18310396823882,
+      "stage2": 3.5257071231815043,
+      "stage1": 3.050117327099615
+    },
+    {
+      "teamId": "12",
+      "season": 2025,
+      "actual": 4.682325080837523,
+      "stage2": 0.11835879057018683,
+      "stage1": 1.5796387743434197
+    },
+    {
+      "teamId": "13",
+      "season": 2025,
+      "actual": 1.224799745241653,
+      "stage2": 1.9519677646086646,
+      "stage1": 2.014376404216295
+    },
+    {
+      "teamId": "14",
+      "season": 2025,
+      "actual": 0.5684739194052281,
+      "stage2": 0.5735082919071606,
+      "stage1": 0.9516471015793311
+    },
+    {
+      "teamId": "15",
+      "season": 2025,
+      "actual": 2.4484912228223505,
+      "stage2": 1.3023209419606177,
+      "stage1": 2.076192562895886
+    },
+    {
+      "teamId": "16",
+      "season": 2025,
+      "actual": 5.011048751393316,
+      "stage2": 4.00950716476431,
+      "stage1": 4.531927268451046
+    },
+    {
+      "teamId": "17",
+      "season": 2025,
+      "actual": -7.224699301323248,
+      "stage2": -6.191636340479093,
+      "stage1": -5.75734797892345
+    },
+    {
+      "teamId": "18",
+      "season": 2025,
+      "actual": 4.120282827985551,
+      "stage2": 6.417097863539901,
+      "stage1": 3.3963474561841487
+    },
+    {
+      "teamId": "19",
+      "season": 2025,
+      "actual": -0.12455906092432786,
+      "stage2": 0.6026888281324907,
+      "stage1": -0.9720248867808055
+    },
+    {
+      "teamId": "2",
+      "season": 2025,
+      "actual": 9.254762423930064,
+      "stage2": 8.756445421236796,
+      "stage1": 8.361259724248137
+    },
+    {
+      "teamId": "20",
+      "season": 2025,
+      "actual": -6.246791032004107,
+      "stage2": -1.1033209902929881,
+      "stage1": -1.3253400042463914
+    },
+    {
+      "teamId": "21",
+      "season": 2025,
+      "actual": -3.0181308690990036,
+      "stage2": 3.928280199116447,
+      "stage1": 4.3528219426739465
+    },
+    {
+      "teamId": "22",
+      "season": 2025,
+      "actual": -2.9399290561381863,
+      "stage2": -4.928285089948586,
+      "stage1": -5.224793958232841
+    },
+    {
+      "teamId": "23",
+      "season": 2025,
+      "actual": 0.47151105995686277,
+      "stage2": 4.694719962694959,
+      "stage1": 5.349787508703084
+    },
+    {
+      "teamId": "24",
+      "season": 2025,
+      "actual": -2.718790451030494,
+      "stage2": -0.7342360298854282,
+      "stage1": -0.36314260234717866
+    },
+    {
+      "teamId": "25",
+      "season": 2025,
+      "actual": 12.605172541513433,
+      "stage2": 5.92577517981666,
+      "stage1": 4.547916847100893
+    },
+    {
+      "teamId": "26",
+      "season": 2025,
+      "actual": -9.092614090940385,
+      "stage2": -5.335690293681373,
+      "stage1": -5.04178081516314
+    },
+    {
+      "teamId": "27",
+      "season": 2025,
+      "actual": -12.076980091927137,
+      "stage2": -8.520393794803883,
+      "stage1": -8.548402241617756
+    },
+    {
+      "teamId": "28",
+      "season": 2025,
+      "actual": -4.198583455195628,
+      "stage2": -6.097516815508256,
+      "stage1": -6.401357091684878
+    },
+    {
+      "teamId": "29",
+      "season": 2025,
+      "actual": 4.593890817758736,
+      "stage2": -0.3150268716467055,
+      "stage1": -0.4793851569823717
+    },
+    {
+      "teamId": "3",
+      "season": 2025,
+      "actual": -9.301530841854719,
+      "stage2": -1.9518962006272718,
+      "stage1": -1.8725551019274933
+    },
+    {
+      "teamId": "30",
+      "season": 2025,
+      "actual": -9.11302344987105,
+      "stage2": -5.651657143384321,
+      "stage1": -6.175259913678392
+    },
+    {
+      "teamId": "4",
+      "season": 2025,
+      "actual": -1.4877977338980766,
+      "stage2": -2.361890426800233,
+      "stage1": -1.8173693967538318
+    },
+    {
+      "teamId": "5",
+      "season": 2025,
+      "actual": 9.351270553064275,
+      "stage2": 3.787602301510015,
+      "stage1": 3.1124722748439044
+    },
+    {
+      "teamId": "6",
+      "season": 2025,
+      "actual": -1.1801058241834994,
+      "stage2": 0.4891350729773216,
+      "stage1": 0.9641123620018432
+    },
+    {
+      "teamId": "7",
+      "season": 2025,
+      "actual": 3.7938613183132897,
+      "stage2": 4.578027785146833,
+      "stage1": 5.192253687146135
+    },
+    {
+      "teamId": "8",
+      "season": 2025,
+      "actual": 1.859954931861267,
+      "stage2": -1.6189415570237364,
+      "stage1": -2.2519512119723752
+    },
+    {
+      "teamId": "9",
+      "season": 2025,
+      "actual": 3.2821193528774866,
+      "stage2": 4.131781538205017,
+      "stage1": 3.109306092911208
+    },
+    {
+      "teamId": "1",
+      "season": 2026,
+      "actual": 2.327505948070757,
+      "stage2": -0.15297550493873002,
+      "stage1": -0.428137785821777
+    },
+    {
+      "teamId": "10",
+      "season": 2026,
+      "actual": 5.255583443438626,
+      "stage2": 4.949403434179928,
+      "stage1": 3.7807276653076083
+    },
+    {
+      "teamId": "11",
+      "season": 2026,
+      "actual": -7.745191477687937,
+      "stage2": -3.724744390361682,
+      "stage1": -4.20648059332985
+    },
+    {
+      "teamId": "12",
+      "season": 2026,
+      "actual": 1.1476777419625537,
+      "stage2": 3.0702377864167163,
+      "stage1": 1.3772461374006508
+    },
+    {
+      "teamId": "13",
+      "season": 2026,
+      "actual": 1.7538902259595237,
+      "stage2": 3.664804724010782,
+      "stage1": 4.460138136218542
+    },
+    {
+      "teamId": "14",
+      "season": 2026,
+      "actual": 2.2073575503185072,
+      "stage2": -1.4443472312054002,
+      "stage1": -1.1055637571444246
+    },
+    {
+      "teamId": "15",
+      "season": 2026,
+      "actual": -6.239167261164925,
+      "stage2": -2.0105183369317343,
+      "stage1": -1.9676954970485516
+    },
+    {
+      "teamId": "16",
+      "season": 2026,
+      "actual": 3.2559560315697484,
+      "stage2": 2.7422900617859085,
+      "stage1": 3.6989082650629905
+    },
+    {
+      "teamId": "17",
+      "season": 2026,
+      "actual": -10.075461392160578,
+      "stage2": -7.760880899550079,
+      "stage1": -7.670172289960377
+    },
+    {
+      "teamId": "18",
+      "season": 2026,
+      "actual": 6.384596269624331,
+      "stage2": 5.209606967763259,
+      "stage1": 3.873913521189009
+    },
+    {
+      "teamId": "19",
+      "season": 2026,
+      "actual": 0.6167802174861933,
+      "stage2": 2.363334250581752,
+      "stage1": 2.2407725422736253
+    },
+    {
+      "teamId": "2",
+      "season": 2026,
+      "actual": 7.911947919069925,
+      "stage2": 1.5812725311187128,
+      "stage1": 2.04839456268565
+    },
+    {
+      "teamId": "20",
+      "season": 2026,
+      "actual": -0.17818239700463512,
+      "stage2": -1.7472381721671533,
+      "stage1": -1.474964957359429
+    },
+    {
+      "teamId": "21",
+      "season": 2026,
+      "actual": 1.4698281036032836,
+      "stage2": -1.7427520386257178,
+      "stage1": -1.9509864227845386
+    },
+    {
+      "teamId": "22",
+      "season": 2026,
+      "actual": -0.28345608556594365,
+      "stage2": -2.451439380680586,
+      "stage1": -3.489188457865825
+    },
+    {
+      "teamId": "23",
+      "season": 2026,
+      "actual": -9.843795767648006,
+      "stage2": -4.070640927970064,
+      "stage1": -2.4840371095255653
+    },
+    {
+      "teamId": "24",
+      "season": 2026,
+      "actual": 8.139429259873692,
+      "stage2": -0.9161667297860667,
+      "stage1": -0.07121836295930706
+    },
+    {
+      "teamId": "25",
+      "season": 2026,
+      "actual": 10.9373055457165,
+      "stage2": 8.30087987073103,
+      "stage1": 7.2513925804918005
+    },
+    {
+      "teamId": "26",
+      "season": 2026,
+      "actual": -8.016762109835444,
+      "stage2": -5.761904288052717,
+      "stage1": -6.104000320030394
+    },
+    {
+      "teamId": "27",
+      "season": 2026,
+      "actual": -11.53548866068513,
+      "stage2": -8.120786906904932,
+      "stage1": -8.149595943850692
+    },
+    {
+      "teamId": "28",
+      "season": 2026,
+      "actual": 2.811487349518775,
+      "stage2": 1.5410881191193988,
+      "stage1": 1.4016803627125345
+    },
+    {
+      "teamId": "29",
+      "season": 2026,
+      "actual": -5.790217937695846,
+      "stage2": -3.905821001254306,
+      "stage1": -4.485878232209156
+    },
+    {
+      "teamId": "3",
+      "season": 2026,
+      "actual": -4.367401431655496,
+      "stage2": -4.914678290681788,
+      "stage1": -4.904330185548182
+    },
+    {
+      "teamId": "30",
+      "season": 2026,
+      "actual": 4.853405104899734,
+      "stage2": -3.8169982328329457,
+      "stage1": -4.004641788183049
+    },
+    {
+      "teamId": "4",
+      "season": 2026,
+      "actual": -4.982799423068845,
+      "stage2": -1.7351488157471042,
+      "stage1": -1.9870649207937454
+    },
+    {
+      "teamId": "5",
+      "season": 2026,
+      "actual": 4.021566095691792,
+      "stage2": 4.0919458819600765,
+      "stage1": 4.454372528105506
+    },
+    {
+      "teamId": "6",
+      "season": 2026,
+      "actual": -5.2754311964724625,
+      "stage2": -3.9301020939721965,
+      "stage1": -3.648427659316565
+    },
+    {
+      "teamId": "7",
+      "season": 2026,
+      "actual": 5.072676305553019,
+      "stage2": 3.0268867752628985,
+      "stage1": 3.3908364988540134
+    },
+    {
+      "teamId": "8",
+      "season": 2026,
+      "actual": 7.999139106105171,
+      "stage2": 1.113496020657088,
+      "stage1": -0.35939274840340385
+    },
+    {
+      "teamId": "9",
+      "season": 2026,
+      "actual": -0.5517016397532212,
+      "stage2": 1.3255233721402386,
+      "stage1": 0.32897768451907483
+    }
+  ]
+}
