@@ -317,10 +317,18 @@ export const IMPACT_LABEL =
   "548 impact: the model's estimate of the points of margin his team loses per game without him. Not validated per player.";
 
 /**
- * The label the site must show beside a 548 score. The score is computed in
- * src/lib/score/live.ts and injected by the job; it is never a forecast input.
+ * The label the site must show beside a 548 score: box scores plus the on-court part
+ * (Stage 2). The score is computed in src/lib/score/ and injected by the job; it is never a
+ * forecast input.
  */
 export const SCORE_LABEL =
+  "548 score: experimental, from box scores plus a small on-court adjustment from lineup results. An estimate of the points per 100 possessions his team gains with him against an average player. Not validated per player, and not used by the forecast.";
+
+/**
+ * The label of a 548 score from box scores alone (Stage 1): the index carries it when the
+ * job could not compute the on-court part and published the box-score score instead.
+ */
+export const SCORE_LABEL_BOX =
   "548 score: experimental, from box scores only. An estimate of the points per 100 possessions his team gains with him against an average player. Not validated per player, and not used by the forecast.";
 
 export type PlayerAverages = {
@@ -381,8 +389,16 @@ export type PlayerIndexEntry = {
    * (`scoreModel` null). Experimental; never validated per player; not a forecast input.
    */
   score: number | null;
-  /** The share of the score's weight from this season, 0 to 1, three decimals; null with no score. */
+  /** The share of the box-score part's weight from this season, 0 to 1, three decimals; null with no score. */
   scoreShare: number | null;
+  /**
+   * The score's two parts, three decimals each. `scoreBox` is what his box-score line says
+   * (the Stage 1 value); `scoreOnCourt` is what his lineups' results add or take away (δ),
+   * null when the index carries box scores alone. Under Stage 2, score = scoreBox +
+   * scoreOnCourt to rounding. Both null with no score. Older files lack both keys.
+   */
+  scoreBox: number | null;
+  scoreOnCourt: number | null;
   /** ET date of his latest stored game or listing. */
   lastEtDate: string;
 };
@@ -397,8 +413,17 @@ export type PlayerIndexFile = {
   storedGames: number;
   impactLabel: string;
   scoreLabel: string;
-  /** The score's model version (`SCORE_MODEL_VERSION`); null when no score was computed this run. */
+  /**
+   * The score's model version: `SCORE_MODEL_VERSION_S2` with the on-court part,
+   * `SCORE_MODEL_VERSION` with box scores alone; null when no score was computed this run.
+   */
   scoreModel: string | null;
+  /**
+   * ET date of the on-court part's latest checkpoint (games before it were used), when its
+   * solve used this season's stints; null while the on-court part is the value carried from
+   * last season, or without the on-court part. Older files lack the key.
+   */
+  scoreCheckpoint: string | null;
   /** Sorted by name, then athlete ID. */
   players: PlayerIndexEntry[];
 };
@@ -457,9 +482,11 @@ const ratio = (made: number, attempted: number) => (attempted > 0 ? three(made /
 
 /**
  * The player index and per-team files from the stored days and the report listings.
- * `impact` gives the 548 impact by athlete ID; `score` the 548 score and its share from
- * this season (both already rounded), under `scoreModel` (null: no score this run, so
- * every score is null); `nameOf` names report-only players.
+ * `impact` gives the 548 impact by athlete ID; `score` the 548 score, the box part's share
+ * from this season and, under Stage 2, its box and on-court parts (all already rounded; a
+ * score without `box` is box scores alone, so its box part is the score), under
+ * `scoreModel` (null: no score this run, so every score is null) with `scoreLabel` (default
+ * `SCORE_LABEL`) and `scoreCheckpoint`; `nameOf` names report-only players.
  * Deterministic: the same inputs give the same bytes.
  */
 export function derivePlayerFiles(input: {
@@ -468,8 +495,10 @@ export function derivePlayerFiles(input: {
   days: readonly PlayerGamesDay[];
   listings: readonly ResolvedListing[];
   impact: (athleteId: string) => number | null;
-  score: (athleteId: string) => { score: number; share: number } | null;
+  score: (athleteId: string) => { score: number; share: number; box?: number; onCourt?: number | null } | null;
   scoreModel: string | null;
+  scoreLabel?: string;
+  scoreCheckpoint?: string | null;
   nameOf: (athleteId: string) => string | undefined;
 }): { index: PlayerIndexFile; teams: Map<string, TeamPlayersFile> } {
   const days = [...input.days].sort((a, b) => a.etDate.localeCompare(b.etDate));
@@ -672,6 +701,8 @@ export function derivePlayerFiles(input: {
       impact: input.impact(player.athleteId),
       score: score ? score.score : null,
       scoreShare: score ? score.share : null,
+      scoreBox: score ? (score.box ?? score.score) : null,
+      scoreOnCourt: score ? (score.onCourt ?? null) : null,
       lastEtDate: player.lastEtDate,
     };
   });
@@ -700,8 +731,9 @@ export function derivePlayerFiles(input: {
       throughEtDate: days.filter((day) => Object.keys(day.games).length > 0).at(-1)?.etDate ?? null,
       storedGames: games.length,
       impactLabel: IMPACT_LABEL,
-      scoreLabel: SCORE_LABEL,
+      scoreLabel: input.scoreLabel ?? SCORE_LABEL,
       scoreModel: input.scoreModel,
+      scoreCheckpoint: input.scoreModel === null ? null : (input.scoreCheckpoint ?? null),
       players: entries,
     },
     teams: teamFiles,

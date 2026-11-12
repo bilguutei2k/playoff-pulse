@@ -52,7 +52,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import bundledStateJson from "../../../data/live/state.json";
 import type { LiveReportDay } from "@/lib/season/live-reports";
-import { SCORE_LABEL, type PlayerIndexFile, type TeamPlayersFile } from "@/lib/season/player-stats";
+import { SCORE_LABEL, SCORE_LABEL_BOX, type PlayerIndexFile, type TeamPlayersFile } from "@/lib/season/player-stats";
 import type { ProjectionsFile, TeamInjuriesFile } from "@/lib/season/projections";
 import {
   deriveSiteFiles,
@@ -326,9 +326,12 @@ const parseTeamInjuries = (text: string, label: string) =>
 const isOptionalScore = (value: unknown) => value === undefined || value === null || (typeof value === "number" && Number.isFinite(value));
 
 /**
- * The player index. Files written before the 548 score have no score keys (the bundled
- * copy, and live-data until the job's first run with the score): they read as an index
- * whose scores are all null, with no score model, so pages show a dash.
+ * The player index, in any of its three shapes. Files written before the 548 score have no
+ * score keys (the bundled copy, and live-data until the job's first run with the score):
+ * they read as an index whose scores are all null, with no score model, so pages show a
+ * dash. Files written before the on-court part (Stage 2) have the score but no `scoreBox`,
+ * `scoreOnCourt` or `scoreCheckpoint`: the score reads as its own box part, with no
+ * on-court part, and the box-only label. Stage 2 files carry both parts.
  */
 const parsePlayerIndex = (text: string, label: string): PlayerIndexFile => {
   const index = parseView<PlayerIndexFile>(text, "player index", label, (raw) =>
@@ -342,19 +345,29 @@ const parsePlayerIndex = (text: string, label: string): PlayerIndexFile => {
         isString(player.name) &&
         isString(player.teamId) &&
         isOptionalScore(player.score) &&
+        isOptionalScore(player.scoreBox) &&
+        isOptionalScore(player.scoreOnCourt) &&
         (player.scoreShare === undefined || player.scoreShare === null || isProbability(player.scoreShare)),
-    ),
+    ) &&
+    (raw.scoreCheckpoint === undefined || raw.scoreCheckpoint === null || isString(raw.scoreCheckpoint)),
   );
   const scored = index.scoreModel !== undefined && index.scoreModel !== null;
+  const parts = "scoreCheckpoint" in index;
   return {
     ...index,
-    scoreLabel: index.scoreLabel ?? SCORE_LABEL,
+    scoreLabel: index.scoreLabel ?? (scored && !parts ? SCORE_LABEL_BOX : SCORE_LABEL),
     scoreModel: index.scoreModel ?? null,
-    players: index.players.map((player) => ({
-      ...player,
-      score: scored ? (player.score ?? null) : null,
-      scoreShare: scored && player.score !== undefined && player.score !== null ? (player.scoreShare ?? null) : null,
-    })),
+    scoreCheckpoint: scored ? (index.scoreCheckpoint ?? null) : null,
+    players: index.players.map((player) => {
+      const score = scored ? (player.score ?? null) : null;
+      return {
+        ...player,
+        score,
+        scoreShare: score !== null ? (player.scoreShare ?? null) : null,
+        scoreBox: score !== null ? (player.scoreBox ?? score) : null,
+        scoreOnCourt: score !== null ? (player.scoreOnCourt ?? null) : null,
+      };
+    }),
   };
 };
 

@@ -687,7 +687,7 @@ export default async function TeamPage({ params }: Params) {
             <>
               <p className="mb-4 max-w-3xl text-[13px] leading-5 text-ink-2">
                 Per game played for the {team.shortName}, most minutes first; sort by any column. A traded
-                player counts only his games here; his 548 score covers all his teams. {SCORE_LABEL}
+                player counts only his games here; his 548 score covers all his teams. {index?.scoreLabel ?? SCORE_LABEL}
               </p>
               <PlayersTable
                 rows={roster}
@@ -695,6 +695,7 @@ export default async function TeamPage({ params }: Params) {
                 showTeam={false}
                 controls={false}
                 initialSort={{ key: "minutes", descending: true }}
+                scoreLabel={index?.scoreLabel}
               />
             </>
           ) : (

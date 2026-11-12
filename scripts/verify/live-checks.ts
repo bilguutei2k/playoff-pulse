@@ -22,6 +22,8 @@ import {
 import { currentAbsences } from "../../src/lib/season/injury-model";
 import {
   derivePlayerFiles,
+  SCORE_LABEL,
+  SCORE_LABEL_BOX,
   toStoredLine,
   type PlayerBoxLine,
   type PlayerGamesDay,
@@ -31,9 +33,21 @@ import {
 } from "../../src/lib/season/player-stats";
 import { combinePieces } from "../../src/lib/score/book";
 import { SCORE_BOUND, scoreProblems, type PriorPiece } from "../../src/lib/score/live";
-import { SCORE_BOOK, SCORE_MODEL_VERSION } from "../../src/lib/score/params";
-import { scoresFrom } from "../live/model-views";
-import { loadScorePrior } from "../live/score-prior";
+import { liveOnCourt, onCourtProblems, publishedOnCourt, ON_COURT_BOUND, PARTS_TOLERANCE } from "../../src/lib/score/live-on-court";
+import { emptyStintDay, storeStint, type StintDay } from "../../src/lib/score/live-stints";
+import {
+  SCORE_BOOK,
+  SCORE_CHECKPOINT_DAYS,
+  SCORE_COEFFICIENTS,
+  SCORE_MODEL_VERSION,
+  SCORE_MODEL_VERSION_S2,
+  SCORE_ON_COURT,
+  SCORE_ON_COURT_REPLACEMENT,
+} from "../../src/lib/score/params";
+import type { Five, Stint } from "../../src/lib/score/types";
+import { scoresFrom, scoresWithOnCourt } from "../live/model-views";
+import { loadCarriedDelta, loadScorePrior } from "../live/score-prior";
+import { loadStintDays } from "../live/stint-collect";
 import {
   PROJECTION_ONLY_KEYS,
   projectionProblems,
@@ -675,20 +689,200 @@ function checkScoreInvariants(): void {
   );
 }
 
-/** A player index as files written before the 548 score have it: no score keys. */
-function withoutScoreFields(index: PlayerIndexFile): unknown {
-  const { scoreLabel: _label, scoreModel: _model, ...rest } = index;
-  void _label;
-  void _model;
+/**
+ * Stage 2 of the 548 score on a synthetic season (display only, never a forecast input):
+ * a lineup that outscores what its box values predict gets a positive on-court part and
+ * its opponents a negative one; every published value is finite, bounded and the score is
+ * the sum of its parts; before the first checkpoint the on-court part is the carried value;
+ * and each missing input falls back as the job does (no carried δ or no stints: box scores
+ * alone with the reason; no prior: no score).
+ */
+function checkOnCourtInvariants(): void {
+  const [home, away] = SEASON_TEAMS.slice(0, 2).map((team) => team.id);
+  const season = LIVE_SEASON;
+  const line = (athleteId: string): PlayerBoxLine => ({
+    athleteId,
+    name: athleteId,
+    position: null,
+    starter: true,
+    minutes: 24,
+    points: 10,
+    offensiveRebounds: 1,
+    defensiveRebounds: 4,
+    assists: 3,
+    steals: 1,
+    blocks: 0,
+    turnovers: 2,
+    fouls: 2,
+    fieldGoalsMade: 4,
+    fieldGoalsAttempted: 9,
+    threePointersMade: 1,
+    threePointersAttempted: 3,
+    freeThrowsMade: 1,
+    freeThrowsAttempted: 1,
+    plusMinus: 0,
+  });
+  // Ten players a side with identical box lines; two units each.
+  const ids = (prefix: string) => Array.from({ length: 10 }, (_, i) => `${prefix}${i}`);
+  const homeIds = ids("71");
+  const awayIds = ids("72");
+  const five = (list: string[], from: number) => [...list.slice(from, from + 5)].sort() as Five;
+  const days: PlayerGamesDay[] = [];
+  const stintDays: StintDay[] = [];
+  for (let index = 0; index < 8; index += 1) {
+    const etDate = `2026-10-${String(21 + index * 2).padStart(2, "0")}`;
+    const gameId = `97${index}`;
+    // Home's first unit beats away's first unit by 12 a stint; the second units break even.
+    const stints: Stint[] = [];
+    for (let k = 0; k < 4; k += 1) {
+      stints.push({ period: k + 1, seconds: 360, home: five(homeIds, 0), away: five(awayIds, 0), homePossessions: 12, awayPossessions: 12, homePoints: 24, awayPoints: 12, startMargin: 0 });
+      stints.push({ period: k + 1, seconds: 360, home: five(homeIds, 5), away: five(awayIds, 5), homePossessions: 12, awayPossessions: 12, homePoints: 14, awayPoints: 14, startMargin: 0 });
+    }
+    const homeScore = stints.reduce((sum, stint) => sum + stint.homePoints, 0);
+    const awayScore = stints.reduce((sum, stint) => sum + stint.awayPoints, 0);
+    const day: PlayerGamesDay = { version: 1, etDate, athletes: {}, games: {} };
+    const teams: PlayerGamesDay["games"][string]["teams"] = {};
+    for (const [teamId, list] of [[home, homeIds], [away, awayIds]] as const) {
+      for (const id of list) day.athletes[id] = { name: id, position: null };
+      teams[teamId] = { lines: list.map((id) => toStoredLine(line(id))), didNotPlay: [] };
+    }
+    day.games[gameId] = { gameId, etDate, homeId: home, awayId: away, homeScore, awayScore, teams };
+    days.push(day);
+    const stintDay = emptyStintDay(etDate);
+    stintDay.games[gameId] = {
+      gameId,
+      etDate,
+      kind: "regular",
+      homeId: home,
+      awayId: away,
+      homeScore,
+      awayScore,
+      audit: { source: "substitutions", wrongCountPlays: 0, maxPlusMinusGap: 0, plusMinusMisses: 0, maxMinutesGap: 0, homePointsGap: 0, awayPointsGap: 0, rejected: null },
+      stints: stints.map(storeStint),
+    };
+    stintDays.push(stintDay);
+  }
+  const prior = new Map<string, PriorPiece[]>([[homeIds[0], [{ season: season - 1, teamId: home, possessions: 3000, minutes: 1500, rating: 1 }]]]);
+  const carried = new Map<string, number>([[homeIds[9], 0.8], ["7999", -1.5]]);
+  const input = {
+    season,
+    days,
+    stintDays,
+    prior,
+    carried,
+    coefficients: SCORE_COEFFICIENTS,
+    book: SCORE_BOOK,
+    params: SCORE_ON_COURT,
+    checkpointDays: SCORE_CHECKPOINT_DAYS,
+    replacement: SCORE_ON_COURT_REPLACEMENT,
+  };
+  const late = liveOnCourt({ ...input, today: "2026-11-30" });
+  assert.equal(late.checkpoint, "2026-11-11", "The on-court part comes from the latest checkpoint, every 21 days from the first game.");
+  assert.ok(late.rows > 0 && late.stintGames === 8, "The checkpoint solves with the stints of games before it.");
+  for (const id of five(homeIds, 0)) {
+    assert.ok((late.ratings.get(id)?.delta ?? 0) > 0, `A lineup that outscores its box values gets a positive on-court part (${id}).`);
+  }
+  for (const id of five(awayIds, 0)) {
+    assert.ok((late.ratings.get(id)?.delta ?? 0) < 0, `Its opponents get a negative on-court part (${id}).`);
+  }
+  const published = publishedOnCourt(late);
+  assert.deepEqual(onCourtProblems(published), [], "Synthetic Stage 2 scores must be finite, bounded and the sum of their parts.");
+  const early = liveOnCourt({ ...input, today: "2026-11-10" });
+  assert.equal(early.checkpoint, null, "Before the first checkpoint there is none.");
+  assert.ok(
+    [...early.ratings].every(([id, value]) => value.delta === (carried.get(id) ?? 0) * SCORE_ON_COURT.rho),
+    "Before the first checkpoint the on-court part is ρ times the carried value.",
+  );
+  const bad = new Map(published);
+  bad.set("x", { score: 3, share: 0.5, box: 1, onCourt: 1 });
+  assert.ok(onCourtProblems(bad).length > 0, "A score that is not the sum of its parts must be caught.");
+  bad.set("x", { score: 12, share: 0.5, box: 1, onCourt: 11 });
+  assert.ok(onCourtProblems(bad).length > 0, `An on-court part outside ±${ON_COURT_BOUND} must be caught.`);
+
+  const full = scoresWithOnCourt({ season, today: "2026-11-30", days, prior, stintDays, carried });
+  assert.ok(full.model === SCORE_MODEL_VERSION_S2 && full.problem === null && full.checkpoint === "2026-11-11", `Stage 2 must compute: ${full.problem}`);
+  assert.equal(
+    scoresWithOnCourt({ season, today: "2026-11-30", days, prior, stintDays: [], carried }).checkpoint,
+    null,
+    "A checkpoint with no stints of this season leaves the carried value and names no checkpoint.",
+  );
+  const noCarried = scoresWithOnCourt({ season, today: "2026-11-30", days, prior, stintDays, carried: null, carriedProblem: "no δ" });
+  assert.ok(
+    noCarried.model === SCORE_MODEL_VERSION &&
+      noCarried.label === SCORE_LABEL_BOX &&
+      /no δ/.test(noCarried.problem ?? "") &&
+      [...(noCarried.scores ?? [])].every(([, value]) => value.onCourt === null && value.box === value.score),
+    "Without the carried δ the index carries box scores alone, and says why.",
+  );
+  const noStints = scoresWithOnCourt({ season, today: "2026-11-30", days, prior, stintDays: null, stintProblem: "unreadable", carried });
+  assert.ok(noStints.model === SCORE_MODEL_VERSION && /unreadable/.test(noStints.problem ?? ""), "Without readable stints the index carries box scores alone.");
+  const none = scoresWithOnCourt({ season, today: "2026-11-30", days, prior: null, priorProblem: "no prior", stintDays, carried });
+  assert.ok(none.model === null && none.scores === null && none.problem === "no prior", "Without the prior there is no score.");
+  const empty = scoresWithOnCourt({ season, today: "2026-11-30", days, prior, stintDays: [], carried });
+  assert.ok(
+    empty.model === SCORE_MODEL_VERSION_S2 &&
+      [...(empty.scores ?? [])].every(([id, value]) => value.onCourt === Number(((carried.get(id) ?? 0) * SCORE_ON_COURT.rho).toFixed(3))),
+    "With no stints stored, Stage 2 is published with the carried on-court part.",
+  );
+}
+
+/** The fields written only with the on-court part (Stage 2): absent from files written before it. */
+function withoutOnCourtFields(index: PlayerIndexFile): unknown {
+  const { scoreCheckpoint: _checkpoint, ...rest } = index;
+  void _checkpoint;
   return {
     ...rest,
     players: index.players.map((player) => {
-      const { score: _score, scoreShare: _share, ...kept } = player;
-      void _score;
-      void _share;
+      const { scoreBox: _box, scoreOnCourt: _onCourt, ...kept } = player;
+      void _box;
+      void _onCourt;
       return kept;
     }),
   };
+}
+
+/** A player index as files written before the 548 score have it: no score keys. */
+function withoutScoreFields(index: PlayerIndexFile): unknown {
+  const { scoreLabel: _label, scoreModel: _model, scoreCheckpoint: _checkpoint, ...rest } = index;
+  void _label;
+  void _model;
+  void _checkpoint;
+  return {
+    ...rest,
+    players: index.players.map((player) => {
+      const { score: _score, scoreShare: _share, scoreBox: _box, scoreOnCourt: _onCourt, ...kept } = player;
+      void _score;
+      void _share;
+      void _box;
+      void _onCourt;
+      return kept;
+    }),
+  };
+}
+
+/**
+ * The stored stints (display only): every day file well formed, five distinct players a
+ * side, accepted games adding up to their final score, rejections with a reason. Returns
+ * them for the 548 score's recomputation (an empty store when none is stored yet), or the
+ * reason they cannot be read. The caller fails only when a published Stage 2 score was
+ * computed from them: otherwise the job has already fallen back to box scores alone and
+ * reported `scoreProblem`, and a stint problem must not fail the run.
+ */
+function readStintStore(label: string): { days: StintDay[]; problem: null } | { days: null; problem: string } {
+  let days: Map<string, StintDay>;
+  try {
+    days = loadStintDays(label, path.join(process.cwd(), "data/live/stints", label));
+  } catch (error) {
+    return { days: null, problem: error instanceof Error ? error.message : String(error) };
+  }
+  const games = [...days.values()].flatMap((day) => Object.values(day.games));
+  const accepted = games.filter((game) => game.stints !== null);
+  console.log(
+    games.length === 0
+      ? "No 548 score stints stored yet."
+      : `548 score stints well formed: ${games.length} games over ${days.size} days, ${accepted.length} accepted (${accepted.reduce((sum, game) => sum + (game.stints?.length ?? 0), 0)} stints), ${games.length - accepted.length} rejected with a reason.`,
+  );
+  return { days: [...days.values()], problem: null };
 }
 
 function readLiveJson<T>(relative: string): T | null {
@@ -742,23 +936,54 @@ function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger:
     : [];
   const impact = new Map(index.players.map((player) => [player.athleteId, player.impact]));
   const names = new Map(index.players.map((player) => [player.athleteId, player.name]));
-  // The 548 score. An index written before it has no score keys and is compared without
-  // them. Otherwise, with a score model, every published score must be exactly what
-  // src/lib/score/live.ts gives from the stored days and the committed prior; without one
-  // (the job could not compute it, and reported scoreProblem), every score is null.
+  // The 548 score. Four shapes:
+  //  - written before the score: no score keys, compared without them;
+  //  - Stage 2 (`SCORE_MODEL_VERSION_S2`): every score, box part and on-court part exactly
+  //    what src/lib/score/live-on-court.ts gives from the stored days, the stored stints,
+  //    the committed prior and carried δ, on the published slate date;
+  //  - Stage 1 (`SCORE_MODEL_VERSION`, box scores alone, as the job publishes it when the
+  //    on-court part cannot be computed, or as files written before Stage 2 have it, without
+  //    the part keys): every score exactly what src/lib/score/live.ts gives;
+  //  - no score model (the job could not compute any score): every score null.
+  const stints = readStintStore(label);
   const legacy = !("scoreModel" in index);
   const scoreModel = legacy ? null : index.scoreModel;
-  let expectedScores: ReturnType<typeof scoresFrom>["scores"] = null;
+  const beforeParts = !legacy && !("scoreCheckpoint" in index);
+  type Expected = { score: number; share: number; box?: number; onCourt?: number | null };
+  let expectedScores: Map<string, Expected> | null = null;
+  let scoreLabel = SCORE_LABEL;
+  let scoreCheckpoint: string | null = null;
   let priorIds = new Set<string>();
   if (scoreModel !== null) {
-    assert.equal(scoreModel, SCORE_MODEL_VERSION, "The player index must carry the code's 548 score model.");
+    assert.ok(
+      scoreModel === SCORE_MODEL_VERSION || scoreModel === SCORE_MODEL_VERSION_S2,
+      `The player index must carry one of the code's 548 score models, not ${scoreModel}.`,
+    );
     const loaded = loadScorePrior(LIVE_SEASON);
     assert.ok(loaded.prior, `A published 548 score needs the prior it came from: ${loaded.problem}`);
     priorIds = new Set(loaded.prior.keys());
-    const computed = scoresFrom(LIVE_SEASON, days, loaded.prior);
-    assert.ok(computed.scores, `The 548 score must recompute: ${computed.problem}`);
-    expectedScores = computed.scores;
+    if (scoreModel === SCORE_MODEL_VERSION_S2) {
+      assert.ok(!beforeParts, "A Stage 2 player index must carry the score's parts.");
+      assert.ok(stints.days, `A published Stage 2 score needs well-formed stints: ${stints.problem}`);
+      const stintDays = stints.days;
+      const carried = loadCarriedDelta(LIVE_SEASON);
+      assert.ok(carried.carried, `A published Stage 2 score needs the carried δ it came from: ${carried.problem}`);
+      const computed = scoresWithOnCourt({ season: LIVE_SEASON, today: state.slateEtDate, days, prior: loaded.prior, stintDays, carried: carried.carried });
+      assert.ok(computed.scores && computed.model === SCORE_MODEL_VERSION_S2, `The Stage 2 548 score must recompute: ${computed.problem}`);
+      expectedScores = computed.scores;
+      scoreCheckpoint = computed.checkpoint;
+    } else {
+      const computed = scoresFrom(LIVE_SEASON, days, loaded.prior);
+      assert.ok(computed.scores, `The 548 score must recompute: ${computed.problem}`);
+      expectedScores = computed.scores;
+      scoreLabel = SCORE_LABEL_BOX;
+    }
   }
+  if (stints.problem !== null && scoreModel !== SCORE_MODEL_VERSION_S2) {
+    console.log(`548 score stints unreadable (${stints.problem}); the index carries no on-court part, as the job reported.`);
+  }
+  // Files written before the on-court part carry the box-only label whatever their model.
+  if (beforeParts) scoreLabel = SCORE_LABEL_BOX;
   const derived = derivePlayerFiles({
     season: LIVE_SEASON,
     seasonLabel: label,
@@ -767,12 +992,18 @@ function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger:
     impact: (athleteId) => impact.get(athleteId) ?? null,
     score: (athleteId) => expectedScores?.get(athleteId) ?? null,
     scoreModel,
+    scoreLabel,
+    scoreCheckpoint,
     nameOf: (athleteId) => names.get(athleteId),
   });
   assert.equal(
-    legacy ? JSON.stringify(withoutScoreFields(derived.index)) : siteFileContent(derived.index),
-    legacy ? JSON.stringify(index) : siteFileContent(index),
-    "The player index must be what the stored player lines (and, for the 548 score, the prior) give.",
+    legacy
+      ? JSON.stringify(withoutScoreFields(derived.index))
+      : beforeParts
+        ? JSON.stringify(withoutOnCourtFields(derived.index))
+        : siteFileContent(derived.index),
+    legacy || beforeParts ? JSON.stringify(index) : siteFileContent(index),
+    "The player index must be what the stored player lines (and, for the 548 score, the prior, the stints and the carried δ) give.",
   );
   assert.deepEqual([...derived.teams.keys()].sort(), [...teams.keys()].sort(), "Every team with stored lines has a player file, and no other.");
   for (const [teamId, file] of derived.teams) {
@@ -793,13 +1024,33 @@ function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger:
     if (scoreModel !== null && player.games === 0 && !priorIds.has(player.athleteId)) {
       assert.equal(player.score, null, `${player.name} has no games this season and no prior piece, so no 548 score.`);
     }
+    if (beforeParts) continue;
+    assert.ok(
+      (player.score === null) === (player.scoreBox === null) && (player.scoreOnCourt === null || player.score !== null),
+      `${player.name}'s 548 score parts must be present exactly when the score is.`,
+    );
+    if (scoreModel === SCORE_MODEL_VERSION_S2 && player.score !== null) {
+      assert.ok(
+        player.scoreBox !== null &&
+          player.scoreOnCourt !== null &&
+          Number.isFinite(player.scoreBox) &&
+          Number.isFinite(player.scoreOnCourt) &&
+          Math.abs(player.scoreOnCourt) <= ON_COURT_BOUND &&
+          Math.abs(player.score - (player.scoreBox + player.scoreOnCourt)) <= PARTS_TOLERANCE,
+        `${player.name}'s 548 score must be his box part plus his on-court part, each finite and bounded.`,
+      );
+    } else if (player.score !== null) {
+      assert.ok(player.scoreBox === player.score && player.scoreOnCourt === null, `${player.name}'s box-only 548 score has no on-court part.`);
+    }
   }
   console.log(
     legacy
       ? "Player index predates the 548 score; compared without its fields."
       : scoreModel === null
         ? "Player index carries no 548 score this run (the job reported why); every score is null."
-        : `548 scores match the stored lines and the prior (${index.players.filter((player) => player.score !== null).length} of ${index.players.length} players).`,
+        : scoreModel === SCORE_MODEL_VERSION_S2
+          ? `548 scores (box + on-court, ${scoreCheckpoint ? `checkpoint ${scoreCheckpoint}` : "on-court part carried from 2025-26"}) match the stored lines, stints, prior and carried δ (${index.players.filter((player) => player.score !== null).length} of ${index.players.length} players).`
+          : `548 scores (box scores only${beforeParts ? ", written before the on-court part" : ""}) match the stored lines and the prior (${index.players.filter((player) => player.score !== null).length} of ${index.players.length} players).`,
   );
   console.log(
     `Model views pass (${projections.games.length} projections, ${lists.teams.length} team lists, ${index.players.length} players from ${index.storedGames} stored games).`,
@@ -941,6 +1192,7 @@ export function runLiveChecks(): void {
   checkInjuryInvariants();
   checkProjectionInvariants();
   checkScoreInvariants();
+  checkOnCourtInvariants();
 
   assert.ok(raw.schemaVersion === 1 || raw.schemaVersion === 2, "Unknown live state schema.");
   if (raw.schemaVersion === 2) checkSchemaTwoState(raw);

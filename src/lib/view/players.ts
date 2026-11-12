@@ -12,6 +12,7 @@ import type {
   PlayerLogEntry,
   TeamPlayersFile,
 } from "@/lib/season/player-stats";
+import { SCORE_LABEL } from "@/lib/season/player-stats";
 import type { TeamInjuriesFile, TeamInjuryList, TeamInjuryRow } from "@/lib/season/projections";
 import { STATUS_LABELS } from "@/lib/utils/injuries";
 import type { Tone } from "@/lib/view/card";
@@ -169,14 +170,24 @@ export function formatScore(score: number | null): string {
  * How much of a 548 score comes from this season, in words: "About 40% of it comes from
  * this season's box scores and 60% from the three seasons before." Null with no share.
  */
-export function scoreShareText(share: number | null): string | null {
+export function scoreShareText(share: number | null, ofBoxPart = false): string | null {
   if (share === null) return null;
+  const subject = ofBoxPart ? "the box-score part" : "it";
   if (share <= 0) {
-    return "None of it comes from this season: he has not played yet, so it rests on his three seasons before this one, pulled toward a below-average value.";
+    return `None of ${subject} comes from this season: he has not played yet, so it rests on his three seasons before this one, pulled toward a below-average value.`;
   }
   const now = Math.round(share * 100);
   const part = now < 1 ? "Less than 1%" : `About ${Math.min(now, 99)}%`;
-  return `${part} of its weight comes from this season's box scores. The rest comes from his box scores in the three seasons before, where he has them, and a pull toward a below-average value that fades as he plays.`;
+  return `${part} of ${ofBoxPart ? "the box-score part's" : "its"} weight comes from this season's box scores. The rest comes from his box scores in the three seasons before, where he has them, and a pull toward a below-average value that fades as he plays.`;
+}
+
+/**
+ * A 548 score's two parts in words and numbers: "Box score +10.1, on the floor −1.5".
+ * Null when the score has no on-court part (box scores alone, or no score).
+ */
+export function scorePartsText(box: number | null, onCourt: number | null): string | null {
+  if (box === null || onCourt === null) return null;
+  return `Box score ${formatScore(box)}, on the floor ${formatScore(onCourt)}`;
 }
 
 /** Box-score minutes: whole minutes print whole, partial ones to one decimal. */
@@ -399,11 +410,18 @@ export type PlayerPage = {
   status: CurrentStatus | null;
   /** From the index, or the team list when he is not in it. */
   impact: number | null;
-  /** 548 score and the share of it from this season, from the index; null without one. */
+  /** 548 score and the share of its box part from this season, from the index; null without one. */
   score: number | null;
   scoreShare: number | null;
+  /** The score's parts: what his box score says, and what his lineups' results add (null with box scores alone). */
+  scoreBox: number | null;
+  scoreOnCourt: number | null;
   /** Whether the index carries the 548 score this run (a score model); false for an older index. */
   scorePublished: boolean;
+  /** The label the index carries for its score (box scores alone, or with the on-court part). */
+  scoreLabel: string;
+  /** ET date of the on-court part's checkpoint in use; null before the first or without it. */
+  scoreCheckpoint: string | null;
 };
 
 /**
@@ -473,7 +491,11 @@ export function buildPlayerPage(input: {
     impact: entry?.impact ?? null,
     score: entry?.score ?? null,
     scoreShare: entry?.score !== null && entry?.score !== undefined ? (entry.scoreShare ?? null) : null,
+    scoreBox: entry?.score !== null && entry?.score !== undefined ? (entry.scoreBox ?? entry.score) : null,
+    scoreOnCourt: entry?.score !== null && entry?.score !== undefined ? (entry.scoreOnCourt ?? null) : null,
     scorePublished: (input.index?.scoreModel ?? null) !== null,
+    scoreLabel: input.index?.scoreLabel ?? SCORE_LABEL,
+    scoreCheckpoint: input.index?.scoreCheckpoint ?? null,
   };
 }
 

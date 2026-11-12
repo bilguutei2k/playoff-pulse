@@ -53,7 +53,10 @@ export default async function PlayersPage() {
       {index ? (
         <>
           <p className="notice-quiet mt-5">
-            {index.scoreLabel} It cannot see most defence and is not a reliable ranking of players.{" "}
+            {index.scoreLabel}{" "}
+            {index.players.some((player) => player.scoreOnCourt !== null)
+              ? "It is not a reliable ranking of players; each player's page shows its box-score and on-court parts."
+              : "It cannot see most defence and is not a reliable ranking of players."}{" "}
             <Link href="/how-it-works#score" className="pp-link">About the 548 score</Link>
           </p>
           <div className="mt-6">
@@ -62,6 +65,7 @@ export default async function PlayersPage() {
               caption="Every player's season averages, shooting, 548 score and injury status."
               initialMinutes={DEFAULT_MINUTES}
               teams={teams}
+              scoreLabel={index.scoreLabel}
             />
           </div>
           <p className="mt-4 max-w-[64ch] text-13 leading-5 text-ink-2">

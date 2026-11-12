@@ -4,6 +4,7 @@ import gameEvaluation from "../../../docs/live/evaluation-games.json";
 import injuryEvaluation from "../../../docs/live/evaluation-injury.json";
 import seasonEvaluation from "../../../docs/live/evaluation-season.json";
 import scoreEvaluation from "../../../docs/score/evaluation.json";
+import stage2Evaluation from "../../../docs/score/evaluation-stage2.json";
 import {
   IN_GAME_SIGMA,
   INJURY_PARAMS,
@@ -15,7 +16,14 @@ import {
   REFERENCE_MODEL_VERSION,
 } from "@/lib/season/params";
 import { BOX_STATS, type BoxStat } from "@/lib/score/box-model";
-import { SCORE_BETA, SCORE_BOOK, SCORE_MODEL_VERSION } from "@/lib/score/params";
+import {
+  SCORE_BETA,
+  SCORE_BOOK,
+  SCORE_CHECKPOINT_DAYS,
+  SCORE_MODEL_VERSION,
+  SCORE_MODEL_VERSION_S2,
+  SCORE_ON_COURT,
+} from "@/lib/score/params";
 import { IMPACT_LABEL, SCORE_LABEL } from "@/lib/season/player-stats";
 import { POLICY_REVISIONS } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
@@ -39,6 +47,8 @@ const REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration.md";
 const SCORE_REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/score/registration.md";
+const SCORE_STAGE2_REGISTRATION_URL =
+  "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/score/registration-stage2.md";
 
 /** The 548 score's stats in plain words, in coefficient order. */
 const SCORE_STAT_NAMES: Record<BoxStat, string> = {
@@ -147,6 +157,13 @@ export default async function HowItWorksPage() {
     const row = scoreEvaluation.ownerChecks.find((check) => check.group === group);
     return row ? Math.abs(row.scoreMapped).toFixed(1) : "n/a";
   };
+  // Stage 2, the on-court part (docs/score/evaluation-stage2.json, a second use of the test seasons).
+  const onCourt = stage2Evaluation;
+  const onCourtCheck = (group: string) => {
+    const row = onCourt.ownerChecks.find((check) => check.group === group);
+    return row ? Math.abs(row.stage2Mapped).toFixed(1) : "n/a";
+  };
+  const worseSeasons = onCourt.forward.bySeason.filter((season) => season.ratio >= 1).map((season) => `${season.season - 1}-${String(season.season).slice(2)}`);
 
   return (
     <>
@@ -806,19 +823,22 @@ export default async function HowItWorksPage() {
                 players
               </Link>{" "}
               and team pages, in points per 100 possessions: about how many more points his team scores than it
-              allows, per 100 possessions with him on the floor, compared with an average player. 0 is average. It is
-              built from box scores only. A player&apos;s
-              rating starts from his team&apos;s net rating, opponent-adjusted and split evenly over the five on the
-              floor, and moves up or down by how his box-score rates per 100 possessions differ from his
-              teammates&apos;, using the weights below. His seasons are then combined: this season counts in full, each
-              earlier season a quarter as much as the one after it, back three seasons, and every score is pulled
-              toward a below-average {difference(SCORE_BOOK.replacement, 0)} with the weight of{" "}
-              {SCORE_BOOK.pseudoPossessions} possessions, so the pull fades as he plays. The player page says how much
-              of each score comes from this season.
+              allows, per 100 possessions with him on the floor, compared with an average player. 0 is average. It
+              has two parts, and each player&apos;s page shows both: what his box score says, and what the results of
+              the lineups he played in add or take away. The score is their sum.
+            </p>
+            <p>
+              <strong className="text-ink">The box-score part.</strong> A player&apos;s box-score value starts from his
+              team&apos;s net rating, opponent-adjusted and split evenly over the five on the floor, and moves up or
+              down by how his box-score rates per 100 possessions differ from his teammates&apos;, using the weights
+              below. His seasons are then combined: this season counts in full, each earlier season a quarter as much
+              as the one after it, back three seasons, and every value is pulled toward a below-average{" "}
+              {difference(SCORE_BOOK.replacement, 0)} with the weight of {SCORE_BOOK.pseudoPossessions} possessions, so
+              the pull fades as he plays. The player page says how much of it comes from this season.
             </p>
             <div className="table-scroll rounded-lg border border-line bg-panel">
               <table className="pp-table">
-                <caption className="sr-only">The 548 score&apos;s weights, the same for every position</caption>
+                <caption className="sr-only">The 548 score&apos;s box-score weights, the same for every position</caption>
                 <thead>
                   <tr>
                     <th scope="col">Per 100 possessions on the floor</th>
@@ -844,37 +864,73 @@ export default async function HowItWorksPage() {
               adds points and an attempt, so missed shots cost.
             </p>
             <p>
-              <strong className="text-ink">How it was tested.</strong> The test was written down and frozen before
-              any test season was read (
+              <strong className="text-ink">The on-court part.</strong> From each game&apos;s play-by-play, 548 works out
+              who was on the floor for every stretch of the game, and how many points each side scored in it. It then
+              asks how much better or worse each group of ten did than their box-score values predict, and shares that
+              gap among the players, solving for everyone at once so that each share takes account of who he played
+              with and against. Because the result of a single stretch is mostly luck, the answer is pulled
+              hard toward each player&apos;s value from earlier seasons (a penalty worth{" "}
+              {SCORE_ON_COURT.lambda.toLocaleString("en-US")} possessions), and it is carried from season to season, so
+              it reflects several seasons of lineups and moves slowly. It is refreshed every {SCORE_CHECKPOINT_DAYS} days
+              from the season&apos;s first game, with the games before that day; until this season&apos;s first refresh
+              with stored lineups it is the value carried from 2025-26. Games whose lineups cannot be rebuilt so that
+              they match the box score and the final score are left out of it. It is small by design: among regular
+              players in 2020-21 to 2025-26 its spread (standard deviation) was about{" "}
+              {fixed(onCourt.deltaSize.sdDelta, 1)} points per 100 possessions, against {fixed(onCourt.deltaSize.sdBox, 1)}{" "}
+              for the box-score part.
+            </p>
+            <p>
+              <strong className="text-ink">How the box-score part was tested.</strong> The test was written down and
+              frozen before any test season was read (
               <a href={SCORE_REGISTRATION_URL} className="pp-link">
                 registration
               </a>
               ), and run once. Each team&apos;s net rating in a season was predicted from its players&apos; ratings at
               the end of the season before, weighted by the minutes they then played. Over{" "}
-              {scoreEvaluation.teamSeasons} team-seasons from 2020-21 to 2025-26, the 548 score&apos;s error was{" "}
+              {scoreEvaluation.teamSeasons} team-seasons from 2020-21 to 2025-26, the box-score part&apos;s error was{" "}
               {fixed(scoreRmse.score, 2)} points per 100 possessions against {fixed(scoreRmse.comparatorUnfloored, 2)}{" "}
-              for the current number, the Game Score rating behind 548 impact. It also beat team quality alone (
+              for the old number, the Game Score rating behind 548 impact. It also beat team quality alone (
               {fixed(scoreRmse.teamNetOnly, 2)}) and last season&apos;s team rating ({fixed(scoreRmse.lastSeasonNet, 2)}).
               Predicting single games with the ratings held before each one, its average miss was{" "}
               {fixed(scoreGames.score.meanAbsoluteError, 2)} points against{" "}
-              {fixed(scoreGames.comparatorUnfloored.meanAbsoluteError, 2)}. The test is about teams. It says nothing
-              about whether any one player&apos;s score is right.
-            </p>
-            <p>
-              <strong className="text-ink">Where the gain comes from.</strong> Most of it comes from adding team
+              {fixed(scoreGames.comparatorUnfloored.meanAbsoluteError, 2)}. Most of the gain comes from adding team
               context, not from the new weights: Game Score&apos;s own weights inside the same team frame scored{" "}
               {fixed(scoreRmse.gameScoreFrame, 2)}. A version with different weights by position scored{" "}
-              {fixed(scoreRmse.roleAware, 2)}, a gap of {fixed(Math.abs(scoreEvaluation.roleAwareGap), 2)}; the published
-              score keeps one set of weights for everyone by choice.
+              {fixed(scoreRmse.roleAware, 2)}; the score keeps one set of weights for everyone by choice.
+            </p>
+            <p>
+              <strong className="text-ink">How the on-court part was tested.</strong> Its own test was also written down
+              and frozen first (
+              <a href={SCORE_STAGE2_REGISTRATION_URL} className="pp-link">
+                registration
+              </a>
+              ), with every setting chosen on 2010-11 to 2019-20, and run once. On the same {onCourt.teamSeasons}{" "}
+              team-seasons, the full score&apos;s error was {fixed(onCourt.team.rmse.stage2, 2)} points per 100
+              possessions against {fixed(onCourt.team.rmse.stage1, 2)} for the box-score part alone and{" "}
+              {fixed(scoreRmse.comparatorUnfloored, 2)} for the old number. Predicting the margin of every stretch of
+              play by five-man units in games the ratings had not seen ({onCourt.forward.stints.toLocaleString("en-US")}{" "}
+              stretches), its error was {fixed(onCourt.forward.improvement * 100, 2)}% lower than the box-score
+              part&apos;s; the gain is small because a stretch of play is mostly luck
+              {worseSeasons.length > 0 ? `, and it was slightly worse in ${worseSeasons.join(" and ")}` : ""}.
+              Resampling whole seasons, the ratio of the two errors fell between{" "}
+              {fixed(onCourt.bootstrap.teamBySeason.low, 3)} and {fixed(onCourt.bootstrap.teamBySeason.high, 3)} for
+              teams and between {fixed(onCourt.bootstrap.forwardBySeason.low, 4)} and{" "}
+              {fixed(onCourt.bootstrap.forwardBySeason.high, 4)} for the stretches, both below one. These seasons had
+              already been used once, to test the box-score part, and their overall results were known when the
+              on-court part was built, so this is supporting evidence, not confirmation. This season, 2026-27, is the
+              clean check.
             </p>
             <p>
               <strong className="text-ink">What it cannot see.</strong> Box scores record little defence beyond
               steals, blocks, rebounds and fouls. Against three-season adjusted plus-minus, which uses who was on the
-              floor, the score rates defence-first players about {ownerCheck("defenceFirstPlayers")} points per 100 too
-              low, low-usage role players about {ownerCheck("lowUsageRolePlayers")} too low, and high-assist centres
-              about {ownerCheck("highAssistCentres")} too low. These gaps are rough: adjusted plus-minus is itself
-              a noisy estimate, and the defence group is picked by it. Early in a season most of a score still comes
-              from earlier seasons.
+              floor, the box-score part alone rates defence-first players about {ownerCheck("defenceFirstPlayers")}{" "}
+              points per 100 too low, low-usage role players about {ownerCheck("lowUsageRolePlayers")} too low, and
+              high-assist centres about {ownerCheck("highAssistCentres")} too low. With the on-court part added, the
+              gaps were about {onCourtCheck("defenceFirstPlayers")}, {onCourtCheck("lowUsageRolePlayers")} and{" "}
+              {onCourtCheck("highAssistCentres")}. That comparison flatters the on-court part, because it and adjusted
+              plus-minus are built from the same lineup data. These gaps are rough: adjusted plus-minus is itself a
+              noisy estimate, and the defence group is picked by it. Early in a season most of a score still comes from
+              earlier seasons.
             </p>
             <p>
               <strong className="text-ink">What it is not.</strong> It is not a forecast input: no game, season or
@@ -882,11 +938,15 @@ export default async function HowItWorksPage() {
               <Link href="/injuries" className="pp-link">
                 injury pages
               </Link>{" "}
-              still comes from Game Score. It is not a reliable ranking of players. A second layer that reads who was
-              on the floor together is being built next, with its own test.
+              still comes from Game Score. The tests are about teams and five-man units, not players: they do not show
+              that any one player&apos;s score or rank is right. The on-court part does not isolate defence or any
+              single skill, does not fully remove the effect of teammates and opponents, and is slow by construction,
+              so it is late to follow a real change in a player. It is not a reliable ranking of players.
             </p>
             <p className="text-[13px] leading-6 text-ink-3">
-              Score model <Version>{SCORE_MODEL_VERSION}</Version>. Experimental.
+              Score model <Version>{SCORE_MODEL_VERSION_S2}</Version> (box-score part <Version>{SCORE_MODEL_VERSION}</Version>
+              ). Experimental. If the on-court part cannot be computed on an update, the box-score part is shown alone
+              under the box-score label.
             </p>
           </Section>
 
@@ -980,7 +1040,8 @@ export default async function HowItWorksPage() {
               </Term>
               <Term term="548 score">
                 {SCORE_LABEL} Shown on player and team pages, signed: +3.0 is three points per 100 possessions better
-                than an average player. It is never a forecast input. See{" "}
+                than an average player. A player&apos;s page splits it into its box-score part and its on-court part.
+                It is never a forecast input. See{" "}
                 <a href="#score" className="pp-link">
                   the 548 score
                 </a>

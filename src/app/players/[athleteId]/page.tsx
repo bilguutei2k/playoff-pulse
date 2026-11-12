@@ -7,7 +7,7 @@ import { Hint } from "@/components/live/Hint";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLink } from "@/components/live/TeamLink";
 import { getLiveState, getPlayerIndex, getTeamInjuryLists, getTeamPlayers } from "@/lib/live-data/published";
-import { IMPACT_LABEL, SCORE_LABEL, type TeamPlayersFile } from "@/lib/season/player-stats";
+import { IMPACT_LABEL, type TeamPlayersFile } from "@/lib/season/player-stats";
 import { formatLongDay, formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
 import { STATUS_LABELS } from "@/lib/utils/injuries";
 import {
@@ -21,6 +21,7 @@ import {
   listingOutcome,
   madeAttempted,
   reportReason,
+  scorePartsText,
   scoreShareText,
   statusSourceText,
   statusView,
@@ -350,24 +351,64 @@ export default async function PlayerPage({ params }: Params) {
       </section>
 
       <section aria-labelledby="score-title" className="mt-12">
-        <SectionHeading id="score-title" note="Experimental, box scores only" title="548 score" />
+        <SectionHeading
+          id="score-title"
+          note={page.scoreOnCourt !== null ? "Experimental, box scores plus lineups" : "Experimental, box scores only"}
+          title="548 score"
+        />
         <div className="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
-          <p>
-            <span className="figure num text-46">{formatScore(page.score)}</span>
-            {page.score !== null ? <span className="ml-2 text-14 text-ink-2">per 100 possessions</span> : null}
-          </p>
+          <div>
+            <p>
+              <span className="figure num text-46">{formatScore(page.score)}</span>
+              {page.score !== null ? <span className="ml-2 text-14 text-ink-2">per 100 possessions</span> : null}
+            </p>
+            {page.scoreOnCourt !== null ? (
+              <dl className="mt-3 grid grid-cols-[auto_auto] justify-start gap-x-4 gap-y-1 text-14">
+                <dt className="text-ink-2">Box score</dt>
+                <dd className="num font-semibold text-ink">{formatScore(page.scoreBox)}</dd>
+                <dt className="text-ink-2">On the floor</dt>
+                <dd className="num font-semibold text-ink">{formatScore(page.scoreOnCourt)}</dd>
+              </dl>
+            ) : null}
+          </div>
           <div className="max-w-[64ch] text-14 leading-6 text-ink-2">
-            <p className="font-medium text-ink">{SCORE_LABEL}</p>
-            <p className="mt-2">
-              {page.score !== null
-                ? `${formatScore(page.score)} means that, judged from box scores, his team ${page.score < 0 ? "loses" : "gains"} about ${Math.abs(page.score).toFixed(1)} points per 100 possessions with him on the floor compared with an average player.`
-                : page.scorePublished
+            <p className="font-medium text-ink">{page.scoreLabel}</p>
+            {page.score === null ? (
+              <p className="mt-2">
+                {page.scorePublished
                   ? "He has no box score this season or in the three seasons before, so there is no 548 score for him."
                   : "The 548 score is not published yet. It appears here after the next update."}
-              {page.score !== null ? ` ${scoreShareText(page.scoreShare) ?? ""}` : ""}
-            </p>
+              </p>
+            ) : page.scoreOnCourt !== null ? (
+              <>
+                <p className="mt-2">
+                  {scorePartsText(page.scoreBox, page.scoreOnCourt)}. Together, {formatScore(page.score)} means his team{" "}
+                  {page.score < 0 ? "loses" : "gains"} about {Math.abs(page.score).toFixed(1)} points per 100 possessions with him
+                  on the floor compared with an average player.
+                </p>
+                <p className="mt-2">
+                  <span className="font-medium text-ink">Box score:</span> what his box-score line says.{" "}
+                  {scoreShareText(page.scoreShare, true) ?? ""}
+                </p>
+                <p className="mt-2">
+                  <span className="font-medium text-ink">On the floor:</span> what his lineups&apos; results add or take away
+                  beyond that, measured over several seasons and updated every three weeks
+                  {page.scoreCheckpoint ? ` (last on ${formatLongDay(page.scoreCheckpoint)})` : " (so far this season it is the value carried from earlier seasons; this season's lineups enter at the next update)"}
+                  . It is small by design.
+                </p>
+              </>
+            ) : (
+              <p className="mt-2">
+                {formatScore(page.score)} means that, judged from box scores, his team {page.score < 0 ? "loses" : "gains"} about{" "}
+                {Math.abs(page.score).toFixed(1)} points per 100 possessions with him on the floor compared with an average
+                player. {scoreShareText(page.scoreShare) ?? ""}
+              </p>
+            )}
             <p className="mt-2">
-              It cannot see most defence and is not a reliable ranking of players. The forecast does not use it.{" "}
+              {page.scoreOnCourt !== null
+                ? "It is not a reliable ranking of players: the box score cannot see most defence, and the on-court part does not isolate defence or any single skill."
+                : "It cannot see most defence and is not a reliable ranking of players."}{" "}
+              The forecast does not use it.{" "}
               <Link href="/how-it-works#score" className="pp-link">How the 548 score works</Link>
             </p>
           </div>

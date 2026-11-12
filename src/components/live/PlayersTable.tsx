@@ -86,17 +86,19 @@ const COLUMNS: Column[] = [
   shooting("fieldGoal", "FG%", "Field goal percentage"),
   shooting("threePoint", "3P%", "Three-point percentage"),
   shooting("freeThrow", "FT%", "Free throw percentage"),
-  {
-    key: "score",
-    label: "548 score",
-    title: "548 score",
-    hint: `${SCORE_LABEL} It is not a reliable ranking of players and cannot see most defence. A dash means no box score this season or in the three before.`,
-    unit: "548 score",
-    unitFirst: true,
-    value: (row) => row.score,
-    cell: (row) => formatScore(row.score),
-  },
 ];
+
+/** The 548 score column: one number, the total the index carries, with the index's own label. */
+const scoreColumn = (label: string): Column => ({
+  key: "score",
+  label: "548 score",
+  title: "548 score",
+  hint: `${label} It is not a reliable ranking of players. Each player's page splits it into its parts. A dash means no box score this season or in the three before.`,
+  unit: "548 score",
+  unitFirst: true,
+  value: (row) => row.score,
+  cell: (row) => formatScore(row.score),
+});
 
 const MINUTE_FILTERS = [0, 10, 20, 30];
 /** Every column a link may sort by; a `sort` outside this list falls back to the default. */
@@ -161,6 +163,7 @@ export function PlayersTable({
   initialSort = { key: "points", descending: true },
   initialMinutes = 0,
   teams,
+  scoreLabel = SCORE_LABEL,
 }: {
   rows: PlayerTableRow[];
   caption: string;
@@ -171,6 +174,8 @@ export function PlayersTable({
   initialMinutes?: number;
   /** Team filter options; omit to hide the filter. */
   teams?: Array<{ id: string; code: string; name: string }>;
+  /** The player index's label for its 548 score (box scores alone, or with the on-court part). */
+  scoreLabel?: string;
 }) {
   // The filters and sort as one state, mirrored in the URL when the table has controls:
   // a link reproduces the view, and Back restores the previous selection. The team page's
@@ -203,6 +208,7 @@ export function PlayersTable({
   const team = state.team;
   const ids = useId();
 
+  const statColumns = useMemo<Column[]>(() => [...COLUMNS, scoreColumn(scoreLabel)], [scoreLabel]);
   const columns = useMemo<Column[]>(
     () => [
       ...(showTeam
@@ -225,9 +231,9 @@ export function PlayersTable({
         value: (row: PlayerTableRow) => row.status?.order ?? null,
         cell: (row: PlayerTableRow) => <StatusCell row={row} />,
       },
-      ...COLUMNS,
+      ...statColumns,
     ],
-    [showTeam],
+    [showTeam, statColumns],
   );
 
   const shown = useMemo(() => {
@@ -258,7 +264,7 @@ export function PlayersTable({
 
   const filtered = query.trim() !== "" || minutes !== defaults.min || team !== "all";
   const isText = sort.key === "name" || sort.key === "team" || sort.key === "status";
-  const summaryColumns = COLUMNS.filter((column) => SUMMARY_KEYS.includes(column.key) || column.key === sort.key);
+  const summaryColumns = statColumns.filter((column) => SUMMARY_KEYS.includes(column.key) || column.key === sort.key);
   // Sticky under the masthead where the table is not in its own scroll box (xl up).
   const stickyHead = "sticky top-0 bg-panel xl:top-[var(--mast)]";
 

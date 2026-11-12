@@ -4,19 +4,34 @@
 // state's ratings and the reports in use) and the stored player lines, then checked
 // against the same invariants `verify:live` runs. Never a model input, never a seal.
 //
-// The player index also carries the experimental 548 score (src/lib/score/live.ts), from
-// the stored player lines and the committed prior file. A score that cannot be computed
-// never stops the views: the index is published with every score null and the reason is
-// returned as `scoreProblem`. The score never reaches a forecast, a seal or the ledger.
+// The player index also carries the experimental 548 score: Stage 1's box value
+// (src/lib/score/live.ts, from the stored player lines and the committed prior) plus
+// Stage 2's on-court part (src/lib/score/live-on-court.ts, from the stored stints and the
+// committed carried δ). A part that cannot be computed never stops the views: without the
+// on-court part the index carries Stage 1 alone, without Stage 1 every score is null, and
+// the reason is returned as `scoreProblem`. The score never reaches a forecast, a seal or
+// the ledger.
 
 import { lostValue, type AvailabilityTracker, type CurrentAbsence, type ReportPoint } from "../../src/lib/season/injury-model";
 import { liveScoresFromDays, publishedScores, scoreProblems, type PriorPiece, type PublishedScore } from "../../src/lib/score/live";
-import { SCORE_BOOK, SCORE_COEFFICIENTS, SCORE_MODEL_VERSION } from "../../src/lib/score/params";
+import { liveOnCourt, onCourtProblems, publishedOnCourt } from "../../src/lib/score/live-on-court";
+import type { StintDay } from "../../src/lib/score/live-stints";
+import {
+  SCORE_BOOK,
+  SCORE_CHECKPOINT_DAYS,
+  SCORE_COEFFICIENTS,
+  SCORE_MODEL_VERSION,
+  SCORE_MODEL_VERSION_S2,
+  SCORE_ON_COURT,
+  SCORE_ON_COURT_REPLACEMENT,
+} from "../../src/lib/score/params";
 import type { InjuryModel } from "../../src/lib/season/live-injury";
 import type { LiveReportDay } from "../../src/lib/season/live-reports";
 import {
   derivePlayerFiles,
   injuryListings,
+  SCORE_LABEL,
+  SCORE_LABEL_BOX,
   type PlayerGamesDay,
   type PlayerIndexFile,
   type ResolvedListing,
@@ -52,8 +67,9 @@ export type ModelViews = {
   players: { index: PlayerIndexFile; teams: Map<string, TeamPlayersFile> };
   /** Path under data/live to exact content. */
   files: Map<string, string>;
-  /** Why the index carries no 548 score this run; null when it does. */
+  /** Why the index carries less than the full 548 score (Stage 2) this run; null when it carries it. */
   scoreProblem: string | null;
+  score: ScoreRun;
 };
 
 export type ViewReport = {
@@ -97,6 +113,96 @@ export function scoresFrom(
   }
 }
 
+/** One published 548 score: the total, the box part's share from this season, and its two parts (on-court null under Stage 1). */
+export type PublishedScoreParts = { score: number; share: number; box: number; onCourt: number | null };
+
+export type ScoreRun = {
+  scores: Map<string, PublishedScoreParts> | null;
+  /** `SCORE_MODEL_VERSION_S2`, `SCORE_MODEL_VERSION` (box scores alone), or null (no score). */
+  model: string | null;
+  label: string;
+  /**
+   * The on-court part's checkpoint in use, when its solve used this season's stints; null
+   * while δ is the carried value (before the first checkpoint, or none stored before it) or
+   * without the on-court part.
+   */
+  checkpoint: string | null;
+  /** Why the index carries less than Stage 2; null when it carries Stage 2. */
+  problem: string | null;
+  /** What the on-court solve used, for the log; null without it. */
+  onCourt: { firstGame: string | null; checkpoint: string | null; rows: number; stintGames: number } | null;
+};
+
+/**
+ * The published 548 scores with their parts: Stage 2 (box value + δ) when every input is
+ * usable and the result passes its checks; else Stage 1 alone (`SCORE_MODEL_VERSION`, no
+ * on-court part) with the reason; else no score with the reason. Never throws.
+ */
+export function scoresWithOnCourt(input: {
+  season: number;
+  /** The ET date the on-court part is for: the job's slate. */
+  today: string;
+  days: readonly PlayerGamesDay[];
+  prior: ReadonlyMap<string, readonly PriorPiece[]> | null;
+  priorProblem?: string | null;
+  /** The stored stint days, or null when they could not be read (with `stintProblem`). */
+  stintDays: readonly StintDay[] | null;
+  stintProblem?: string | null;
+  carried: ReadonlyMap<string, number> | null;
+  carriedProblem?: string | null;
+}): ScoreRun {
+  const stage1 = scoresFrom(input.season, input.days, input.prior, input.priorProblem ?? null);
+  if (!stage1.scores) return { scores: null, model: null, label: SCORE_LABEL, checkpoint: null, problem: stage1.problem, onCourt: null };
+  const boxOnly = (problem: string): ScoreRun => ({
+    scores: new Map([...stage1.scores!].map(([athleteId, value]) => [athleteId, { ...value, box: value.score, onCourt: null }])),
+    model: SCORE_MODEL_VERSION,
+    label: SCORE_LABEL_BOX,
+    checkpoint: null,
+    problem: `548 score published from box scores only: ${problem}`,
+    onCourt: null,
+  });
+  if (!input.carried) return boxOnly(input.carriedProblem ?? "carried δ not loaded");
+  if (!input.stintDays) return boxOnly(input.stintProblem ?? "stints not loaded");
+  try {
+    const result = liveOnCourt({
+      season: input.season,
+      today: input.today,
+      days: input.days,
+      stintDays: input.stintDays,
+      prior: input.prior as ReadonlyMap<string, readonly PriorPiece[]>,
+      carried: input.carried,
+      coefficients: SCORE_COEFFICIENTS,
+      book: SCORE_BOOK,
+      params: SCORE_ON_COURT,
+      checkpointDays: SCORE_CHECKPOINT_DAYS,
+      replacement: SCORE_ON_COURT_REPLACEMENT,
+    });
+    const scores = publishedOnCourt(result);
+    const problems = onCourtProblems(scores);
+    // The box part is Stage 1 itself: the same players and the same values.
+    if (scores.size !== stage1.scores.size) problems.push(`${scores.size} on-court scores for ${stage1.scores.size} box scores`);
+    for (const [athleteId, value] of stage1.scores) {
+      const parts = scores.get(athleteId);
+      if (!parts || parts.box !== value.score || parts.share !== value.share) {
+        problems.push(`the box part for ${athleteId} is not his Stage 1 score`);
+        break;
+      }
+    }
+    if (problems.length > 0) return boxOnly(`the on-court part failed its checks: ${problems.slice(0, 3).join("; ")}`);
+    return {
+      scores,
+      model: SCORE_MODEL_VERSION_S2,
+      label: SCORE_LABEL,
+      // Only a checkpoint whose solve used this season's stints moved δ; before one, δ is the carried value.
+      checkpoint: result.rows > 0 ? result.checkpoint : null,
+      problem: null,
+      onCourt: { firstGame: result.firstGame, checkpoint: result.checkpoint, rows: result.rows, stintGames: result.stintGames },
+    };
+  } catch (error) {
+    return boxOnly(`the on-court part was not computed: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
 /** 548 impact: beta times `lostValue` in the published replay's book, or null if the model has no record. */
 export function impactFrom(tracker: AvailabilityTracker, model: InjuryModel): (athleteId: string) => number | null {
   return (athleteId) =>
@@ -127,6 +233,12 @@ export function buildModelViews(input: {
   /** The 548 score's prior pieces (scripts/live/score-prior.ts); null when unusable, with the reason. */
   scorePrior: ReadonlyMap<string, readonly PriorPiece[]> | null;
   scorePriorProblem: string | null;
+  /** Stage 2's carried δ (scripts/live/score-prior.ts); null when unusable, with the reason. */
+  scoreCarried: ReadonlyMap<string, number> | null;
+  scoreCarriedProblem: string | null;
+  /** The stored stint days (scripts/live/stint-collect.ts); null when unreadable, with the reason. */
+  stintDays: readonly StintDay[] | null;
+  stintProblem: string | null;
 }): ModelViews {
   const reports: SlateReport[] = [input.slateReport, input.nextReport]
     .filter((report): report is ViewReport => report !== null)
@@ -158,7 +270,17 @@ export function buildModelViews(input: {
     resolve: input.resolve,
     playedIn: playedInStore(input.playerDays),
   });
-  const score = scoresFrom(input.season, input.playerDays, input.scorePrior, input.scorePriorProblem);
+  const score = scoresWithOnCourt({
+    season: input.season,
+    today: input.slate,
+    days: input.playerDays,
+    prior: input.scorePrior,
+    priorProblem: input.scorePriorProblem,
+    stintDays: input.stintDays,
+    stintProblem: input.stintProblem,
+    carried: input.scoreCarried,
+    carriedProblem: input.scoreCarriedProblem,
+  });
   const players = derivePlayerFiles({
     season: input.season,
     seasonLabel: input.seasonLabel,
@@ -166,7 +288,9 @@ export function buildModelViews(input: {
     listings,
     impact: impactFrom(input.tracker, input.model),
     score: (athleteId) => score.scores?.get(athleteId) ?? null,
-    scoreModel: score.scores ? SCORE_MODEL_VERSION : null,
+    scoreModel: score.model,
+    scoreLabel: score.label,
+    scoreCheckpoint: score.checkpoint,
     nameOf: input.nameOf,
   });
 
@@ -189,5 +313,5 @@ export function buildModelViews(input: {
     if (bytes > VIEW_FILE_LIMIT_BYTES) problems.push(`${relative} is ${bytes} bytes, over ${VIEW_FILE_LIMIT_BYTES}`);
   }
   if (problems.length > 0) throw new Error(`model views failed validation: ${problems.slice(0, 5).join("; ")}`);
-  return { projections, teamInjuries, players, files: content, scoreProblem: score.problem };
+  return { projections, teamInjuries, players, files: content, scoreProblem: score.problem, score };
 }

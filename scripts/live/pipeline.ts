@@ -90,6 +90,8 @@ import type {
 } from "../../src/lib/season/types";
 import { compareGames, gamesPath, LIVE_DIRECTORY, LIVE_SEASON, loadHistory } from "./game-store";
 import {
+  PLAYER_GAMES_BUDGET_MS,
+  PLAYER_GAMES_PER_RUN,
   collectBoxScores,
   collectPlayerGames,
   liveBoxScorePath,
@@ -104,7 +106,16 @@ import {
   timedFetchJson,
 } from "./live-availability";
 import { buildModelViews, type ModelViews } from "./model-views";
-import { loadScorePrior } from "./score-prior";
+import { loadCarriedDelta, loadScorePrior } from "./score-prior";
+import {
+  STINT_BACKFILL_PER_RUN,
+  addStintGame,
+  backfillStints,
+  loadStintDays,
+  stintDayPath,
+  stintGameFromSummary,
+} from "./stint-collect";
+import type { StintDay } from "../../src/lib/score/live-stints";
 import { parseReportPdf } from "./report-pdf";
 import { expectedSiteFiles, publishedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
@@ -700,22 +711,76 @@ async function main(): Promise<void> {
   // store. None of it is a model input, a seal or part of the record. A failure here is
   // logged and publishes no views, and never costs a seal.
   let playerDays = new Map<string, PlayerGamesDay>();
-  let playerRun: Awaited<ReturnType<typeof collectPlayerGames>> = { added: [], changedDates: [], failed: [], waiting: 0 };
+  let playerRun: Awaited<ReturnType<typeof collectPlayerGames>> = {
+    added: [],
+    changedDates: [],
+    failed: [],
+    waiting: 0,
+    requests: 0,
+    summaryProblems: [],
+  };
   let views: ModelViews | null = null;
   let viewsProblem: string | null = null;
-  // The 548 score (display only, never a forecast input) reads its prior from the code
-  // checkout. Without it the index is published with every score null and health.json
-  // says why (`scoreProblem`); seals and the other views are unaffected.
+  // The 548 score (display only, never a forecast input) reads its prior and its carried
+  // on-court δ from the code checkout. Without the prior the index is published with every
+  // score null; without the δ or the stints, with box scores alone. health.json says why
+  // (`scoreProblem`); seals and the other views are unaffected.
   const scorePrior = loadScorePrior(SEASON);
+  const scoreCarried = loadCarriedDelta(SEASON);
   let scoreProblem: string | null = null;
+  // The 548 score's stints (display only): built from the summary each new game's player
+  // lines come from, plus a small backfill of stored games without them inside the same
+  // request cap and time budget. Every step is caught here, so stints never fail the job,
+  // never cost a game its player lines, and never stop the views.
+  let stintDays: Map<string, StintDay> | null = null;
+  let stintProblem: string | null = null;
+  const stintChanged = new Set<string>();
+  try {
+    stintDays = loadStintDays(LABEL);
+  } catch (error) {
+    stintProblem = `stints unreadable: ${error instanceof Error ? error.message : String(error)}`;
+    log(`548 score stints not used this run, seals and views unaffected: ${stintProblem}`);
+  }
   try {
     playerDays = loadPlayerDays(LABEL);
     const started = Date.now();
-    playerRun = await collectPlayerGames(playerDays, seasonGames, timedFetchJson());
+    const stintRejected: string[] = [];
+    playerRun = await collectPlayerGames(playerDays, seasonGames, timedFetchJson(), {
+      onSummary: (game, payload) => {
+        if (!stintDays) return;
+        const stored = stintGameFromSummary(payload, game);
+        stintChanged.add(addStintGame(stintDays, stored));
+        if (stored.stints === null) stintRejected.push(`${game.id} (${stored.audit.rejected})`);
+      },
+    });
     log(
       `player lines: ${playerRun.added.length} games stored in ${((Date.now() - started) / 1000).toFixed(1)}s, ${playerRun.failed.length} failed, ${playerRun.waiting} still missing`,
     );
     for (const failure of playerRun.failed) log(`player lines ${failure.gameId} not stored: ${failure.problem}`);
+    for (const failure of playerRun.summaryProblems) log(`548 score stints ${failure.gameId} not built: ${failure.problem}`);
+    if (stintDays) {
+      try {
+        const backfill = await backfillStints({
+          stintDays,
+          playerDays,
+          games: seasonGames,
+          fetchJson: timedFetchJson(),
+          // Together with the player lines, never more summary requests or time than before.
+          maxRequests: Math.min(STINT_BACKFILL_PER_RUN, PLAYER_GAMES_PER_RUN - playerRun.requests),
+          deadline: started + PLAYER_GAMES_BUDGET_MS,
+        });
+        for (const etDate of backfill.changedDates) stintChanged.add(etDate);
+        for (const rejected of backfill.rejected) stintRejected.push(`${rejected.gameId} (${rejected.reason})`);
+        for (const failure of backfill.failed) log(`548 score stints ${failure.gameId} not fetched: ${failure.problem}`);
+        log(
+          `548 score stints: ${playerRun.added.length - playerRun.summaryProblems.length} with new games, ${backfill.added.length} backfilled ` +
+            `(${backfill.requests} requests), ${stintRejected.length} rejected, ${backfill.waiting} stored games still without stints`,
+        );
+      } catch (error) {
+        log(`548 score stint backfill stopped, seals and views unaffected: ${error instanceof Error ? error.message : String(error)}`);
+      }
+      for (const rejected of stintRejected) log(`548 score stints rejected: ${rejected}`);
+    }
     const nextReport =
       next && nextDay ? chooseReport(nextDay, nextSucceeded, nowIso) : null;
     views = buildModelViews({
@@ -748,9 +813,19 @@ async function main(): Promise<void> {
       ledger: fullLedger,
       scorePrior: scorePrior.prior,
       scorePriorProblem: scorePrior.problem,
+      scoreCarried: scoreCarried.carried,
+      scoreCarriedProblem: scoreCarried.problem,
+      stintDays: stintDays ? [...stintDays.values()] : null,
+      stintProblem,
     });
     scoreProblem = views.scoreProblem;
-    if (scoreProblem) log(`548 score not published, views and seals unaffected: ${scoreProblem}`);
+    if (scoreProblem) log(`548 score not fully published, views and seals unaffected: ${scoreProblem}`);
+    if (views.score.onCourt) {
+      const { checkpoint, rows, stintGames, firstGame } = views.score.onCourt;
+      log(
+        `548 score: ${views.score.model}, on-court part ${checkpoint ? `from the ${checkpoint} checkpoint (${stintGames} games, ${rows} stints)` : `carried (first checkpoint ${firstGame ? "after" : "once"} the season's first game${firstGame ? ` ${firstGame}` : " is stored"})`}`,
+      );
+    }
     log(
       `views: ${views.projections.games.length} projections through ${views.projections.throughEtDate}, ${views.players.index.players.length} players, ${views.players.teams.size} team files`,
     );
@@ -782,6 +857,16 @@ async function main(): Promise<void> {
   for (const etDate of playerRun.changedDates) {
     const day = playerDays.get(etDate);
     if (day) writeText(playerDayPath(LABEL, etDate), `${JSON.stringify(day)}\n`);
+  }
+  // The 548 score's stints, display only: a write that fails is logged and costs nothing else.
+  for (const etDate of [...stintChanged].sort()) {
+    const day = stintDays?.get(etDate);
+    if (!day) continue;
+    try {
+      writeText(stintDayPath(LABEL, etDate), `${JSON.stringify(day)}\n`);
+    } catch (error) {
+      log(`548 score stints ${etDate} not written: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
   // ESPN's injury list, kept for later study only: at every seal, as before, and
   // whenever it changes, with ESPN's return dates. Never a model input.

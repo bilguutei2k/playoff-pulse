@@ -40,3 +40,33 @@ export const SCORE_LIVE_SEASON = 2027;
 
 /** Completed seasons in the prior file, by ending year: 2023-24, 2024-25 and 2025-26. */
 export const SCORE_PRIOR_SEASONS = [2024, 2025, 2026] as const;
+
+// ---------------------------------------------------------------------------
+// Stage 2: the on-court correction δ (docs/score/registration-stage2.md)
+// ---------------------------------------------------------------------------
+//
+// Copied from docs/score/fit-stage2.json (version 2), whose SHA-256 is recorded in
+// docs/score/freeze-stage2.json; tests/score-live-stage2.test.ts checks each value against
+// the file. Stage 2's rating is the Stage 1 value plus δ. Changing any of these needs a
+// new registration and a new SCORE_MODEL_VERSION_S2.
+
+/** The model version the player index carries when Stage 2 was computed. */
+export const SCORE_MODEL_VERSION_S2 = "score-2026.27-s2";
+
+/** SHA-256 of docs/score/fit-stage2.json, as recorded in docs/score/freeze-stage2.json. */
+export const SCORE_FIT_STAGE2_SHA256 = "7abc76419cb2a452e33714a6269a7a64fa185263e6b5f59ad5cb5af9fe85489d";
+
+/** λ and ρ of the chosen cell (`tuning.chosen`): 16000 possessions, 1. */
+export const SCORE_ON_COURT: Readonly<{ lambda: number; rho: number }> = { lambda: 16000, rho: 1 };
+
+/** Days between checkpoints, counted from the season's first game date (`settings.checkpointDays`). */
+export const SCORE_CHECKPOINT_DAYS = 21;
+
+/**
+ * Stage 1 value given to a player on the floor who has none (`stage1.book.replacement`,
+ * the book's replacement value), in the on-court solve only.
+ */
+export const SCORE_ON_COURT_REPLACEMENT = -7;
+
+/** The completed season (by ending year) whose final δ the carried file holds: 2025-26. */
+export const SCORE_DELTA_SEASON = 2026;
