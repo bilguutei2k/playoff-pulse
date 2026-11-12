@@ -282,6 +282,11 @@ rating model. Each version's sealed record is reported separately.
 
 ## 548 score (Stage 1, `score-2026.27-s1`; display only)
 
+Since Stage 2 shipped, the published score is Stage 1's box-score value plus Stage 2's on-court
+part (next section), and Stage 1's value is shown as the score's "box score" part. Stage 1 is shown
+alone, under its own label (`SCORE_LABEL_BOX`), only when the job could not compute the on-court
+part. The claims below are about the box-score part.
+
 Sources: `docs/score/registration.md` (the frozen test and its pass rule), `docs/score/fit.json`
 (the frozen weights and book, hashed in `docs/score/freeze.json`), `docs/score/evaluation.json` (the
 one test run) and `docs/score/evaluation-training.json` (training era, optimistic). These claims
@@ -313,7 +318,8 @@ of its own.
 **Required labels and disclosures, wherever the number appears:**
 
 - Experimental, from box scores only, not validated per player, and not used by the forecast
-  (`SCORE_LABEL` in `src/lib/season/player-stats.ts`).
+  (`SCORE_LABEL_BOX` in `src/lib/season/player-stats.ts`) wherever Stage 1 is shown alone; the
+  Stage 2 label otherwise (next section).
 - Where it is explained: the test is about team-level prediction over those 180 team-seasons and
   says nothing about any one player; it cannot see most defence; early in a season most of a score
   comes from earlier seasons (the player page shows the share from this season).
@@ -323,9 +329,66 @@ of its own.
 **Never claim:**
 
 - That the 548 score ranks players reliably, or is validated for any single player.
-- That it measures defence, or impact beyond the box score (Stage 2, the on-court layer, is not
-  built or tested).
+- That the box-score part measures defence, or impact beyond the box score (that is what Stage 2
+  adds, with its own claims below).
 - That it beats or matches any public metric (BPM, EPM, RAPM, RAPTOR, LEBRON or others); it was
   compared only with the site's own Game Score number and team baselines.
 - That it feeds, improves or changes the forecast, the injury model, a seal or the record.
 - Any training-era number as a result: those seasons fitted the weights and are optimistic.
+
+## 548 score, Stage 2: the on-court part (`score-2026.27-s2`; display only)
+
+Sources: `docs/score/registration-stage2.md` (the frozen test, its pass rule, the stronger statement
+and "What a result means"), `docs/score/fit-stage2.json` (λ 16000, ρ 1, the 21-day checkpoints,
+hashed in `docs/score/freeze-stage2.json`), `docs/score/evaluation-stage2.json` (the one test run)
+and `docs/score/evaluation-stage2-training.json` (training era, optimistic). The rating is Stage 1's
+box-score value plus δ, the on-court correction from lineup results. These claims appear on
+`/players`, `/players/{athleteId}`, team pages and `/how-it-works#score`. It is not a forecast
+input, never changes a forecast, a seal, the ledger or the injury model, and has no record of its
+own.
+
+**Every Stage 2 result is a second use of the test seasons.** 2020-21 to 2025-26 were scored once
+for Stage 1, and their aggregate results were known when Stage 2 was built (Stage 2's choices came
+from the training era only). Wherever a Stage 2 test number appears it carries that label, and it
+is supporting evidence, not confirmation. The live 2026-27 season is the clean check.
+
+**May be stated, with the numbers and the second-use label:**
+
+- It is "a small, strongly regularised on-court adjustment" to the box-score rating.
+- It was accepted by its registered test: over the same 180 team-seasons, the team-prediction
+  root-mean-square error was 3.14 points per 100 possessions against 3.28 for the box-score part
+  alone (ratio 0.958) and 4.89 for the old Game Score number; and the forward prediction of five-man
+  unit margins in unseen games (208,757 stints) had a 0.04% lower possession-weighted error (ratio
+  0.99958), small because a stint's margin is mostly possession luck. 2020-21 was slightly worse for
+  Stage 2 on the stint measure (ratio 1.0002); the other five seasons were better.
+- Intervals resampling whole seasons: team ratio 0.932 to 0.997, stint ratio 0.9994 to 0.9998. Because
+  both lie entirely below one, it may be called an improvement on the box-score part on those
+  reused seasons, always with the second-use label.
+- Its size: among player-seasons with at least 1,000 minutes in the test era, δ's standard deviation
+  was about 0.9 points per 100 against 2.7 for the box-score part.
+- Measured gaps against three-season RAPM after adding it, test era, mapped through its team line:
+  defence-first players about 2.0 too low (box-score part alone 2.6), low-usage role players about
+  1.0 (1.2), high-assist centres about 0.8 (1.1). Always with the caveat that this comparison flatters
+  Stage 2, because Stage 2 and RAPM use the same lineup data.
+
+**Required labels and disclosures, wherever the number appears:**
+
+- Experimental, from box scores plus a small on-court adjustment from lineup results, not validated
+  per player, and not used by the forecast (`SCORE_LABEL` in `src/lib/season/player-stats.ts`).
+- Where the parts are shown: the box part is what his box-score line says; the on-court part is
+  what his lineups' results add or take away, measured over several seasons, updated every three
+  weeks, and small by design.
+- Where the test is explained: the second-use label; the tests are about team-level and stint-level
+  errors and say nothing about any one player; the comparison with RAPM flatters Stage 2.
+
+**Never claim:**
+
+- That any single player's rating or rank is right, or that the score ranks players reliably.
+- That δ isolates defence or any single skill.
+- That teammate and opponent effects are removed.
+- That δ reacts quickly to a real change in a player (it is slow by construction: ρ 1 and λ 16000).
+- That any forecast improves, or that the score feeds the forecast, the injury model, a seal or the
+  record.
+- Clean out-of-sample confirmation: the test seasons were reused; only 2026-27 can give that.
+- That it beats or matches any public metric (BPM, EPM, RAPM, RAPTOR, LEBRON or others).
+- Any training-era number as a result: λ, ρ and Stage 2's lines were chosen on those seasons.

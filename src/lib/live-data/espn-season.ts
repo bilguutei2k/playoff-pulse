@@ -733,7 +733,12 @@ export function parsePlayerBoxScore(payload: unknown, gameId: string): PlayerBox
   return output;
 }
 
+/** The same summary request as `fetchBoxScore`, unparsed: one request serves the player store and the 548 score's stints. */
+export async function fetchGameSummary(fetchJson: FetchJson, gameId: string): Promise<unknown> {
+  return fetchJson(`${SITE_API}/summary?event=${gameId}`);
+}
+
 /** The same summary request as `fetchBoxScore`, parsed for the player store. */
 export async function fetchPlayerBoxScore(fetchJson: FetchJson, gameId: string): Promise<PlayerBoxScore> {
-  return parsePlayerBoxScore(await fetchJson(`${SITE_API}/summary?event=${gameId}`), gameId);
+  return parsePlayerBoxScore(await fetchGameSummary(fetchJson, gameId), gameId);
 }

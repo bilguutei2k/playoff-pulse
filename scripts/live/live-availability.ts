@@ -7,7 +7,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { fetchBoxScore, fetchPlayerBoxScore, type FetchJson } from "../../src/lib/live-data/espn-season";
+import { fetchBoxScore, fetchGameSummary, parsePlayerBoxScore, type FetchJson } from "../../src/lib/live-data/espn-season";
 import {
   quarterReportNames,
   reportForSlate,
@@ -486,13 +486,30 @@ export function timedFetchJson(timeoutMs = PLAYER_FETCH_TIMEOUT_MS): FetchJson {
  * Stores full lines for final games that lack them, newest first, at most `limit` and
  * within `budgetMs`. A game that fails stays missing and is retried next run. Writes
  * nothing: the changed dates are returned for the job to write.
+ *
+ * `onSummary` sees each stored game's summary payload (the 548 score builds its stints from
+ * it, so a game is requested once). It runs only after the lines are stored, and anything
+ * it throws is caught and returned in `summaryProblems`: it never costs a game its lines.
+ * `requests` counts every summary request made, failed ones included.
  */
 export async function collectPlayerGames(
   days: Map<string, PlayerGamesDay>,
   games: readonly SeasonGame[],
   fetchJson: FetchJson,
-  options: { limit?: number; budgetMs?: number; now?: () => number } = {},
-): Promise<{ added: string[]; changedDates: string[]; failed: Array<{ gameId: string; problem: string }>; waiting: number }> {
+  options: {
+    limit?: number;
+    budgetMs?: number;
+    now?: () => number;
+    onSummary?: (game: SeasonGame, payload: unknown) => void;
+  } = {},
+): Promise<{
+  added: string[];
+  changedDates: string[];
+  failed: Array<{ gameId: string; problem: string }>;
+  waiting: number;
+  requests: number;
+  summaryProblems: Array<{ gameId: string; problem: string }>;
+}> {
   const limit = options.limit ?? PLAYER_GAMES_PER_RUN;
   const budgetMs = options.budgetMs ?? PLAYER_GAMES_BUDGET_MS;
   const now = options.now ?? Date.now;
@@ -509,10 +526,15 @@ export async function collectPlayerGames(
   const added: string[] = [];
   const changed = new Set<string>();
   const failed: Array<{ gameId: string; problem: string }> = [];
+  const summaryProblems: Array<{ gameId: string; problem: string }> = [];
+  let requests = 0;
   for (const game of queue.slice(0, limit)) {
     if (now() - started > budgetMs) break;
+    let payload: unknown;
     try {
-      const box = await fetchPlayerBoxScore(fetchJson, game.id);
+      requests += 1;
+      payload = await fetchGameSummary(fetchJson, game.id);
+      const box = parsePlayerBoxScore(payload, game.id);
       const stored = storePlayerGame(game, box);
       const day = days.get(game.etDate) ?? emptyPlayerGamesDay(game.etDate);
       addPlayerGame(day, stored, box);
@@ -521,7 +543,15 @@ export async function collectPlayerGames(
       added.push(game.id);
     } catch (error) {
       failed.push({ gameId: game.id, problem: error instanceof Error ? error.message : String(error) });
+      continue;
+    }
+    if (options.onSummary) {
+      try {
+        options.onSummary(game, payload);
+      } catch (error) {
+        summaryProblems.push({ gameId: game.id, problem: error instanceof Error ? error.message : String(error) });
+      }
     }
   }
-  return { added, changedDates: [...changed].sort(), failed, waiting: queue.length - added.length };
+  return { added, changedDates: [...changed].sort(), failed, waiting: queue.length - added.length, requests, summaryProblems };
 }

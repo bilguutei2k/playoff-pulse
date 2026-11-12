@@ -85,6 +85,7 @@ const index: PlayerIndexFile = {
   impactLabel: "",
   scoreLabel: "",
   scoreModel: "score-test",
+  scoreCheckpoint: "2026-11-11",
   players: [
     {
       athleteId: "100",
@@ -103,6 +104,8 @@ const index: PlayerIndexFile = {
       impact: 2.359,
       score: -1.25,
       scoreShare: 0.3,
+      scoreBox: -0.75,
+      scoreOnCourt: -0.5,
       lastEtDate: "2026-11-02",
     },
   ],
