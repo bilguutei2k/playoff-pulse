@@ -20,6 +20,7 @@ import {
   recordComparatorGame,
   teamFeature,
   walkDates,
+  walkPieces,
   type BookParams,
   type MinutesShare,
   type TeamLine,
@@ -27,6 +28,7 @@ import {
 } from "../../src/lib/score/book";
 import {
   BOX_STATS,
+  adjustedNetRatings,
   buildSeasonTotals,
   modalPosition,
   netRating,
@@ -106,9 +108,27 @@ export function loadSeasons(seasons: readonly number[], loader: GameLoader = loa
     const loaded = loader(season);
     if (loaded.length === 0) throw new Error(`Season ${season} has no built games (scripts/score/build-games.ts).`);
     if (loaded.some((game) => game.season !== season)) throw new Error(`Season ${season}'s file holds another season's game.`);
-    games.push(...loaded);
+    games.push(...withoutStrayTeams(loaded));
   }
   return chronological(games);
+}
+
+/** A team needs at least this many built games in a season for any of them to be used. */
+export const MIN_TEAM_SEASON_GAMES = 10;
+
+/**
+ * Drops the games of a team whose season is otherwise missing. ESPN's box scores are empty
+ * for every Chicago and New Orleans game from 2012-13 to 2017-18, bar one 2015-16 Chicago
+ * game; a one-game "season" would give that team a meaningless net rating and rates.
+ */
+export function withoutStrayTeams(seasonGames: readonly ScoreGame[]): ScoreGame[] {
+  const played = new Map<string, number>();
+  for (const game of seasonGames) {
+    played.set(game.homeId, (played.get(game.homeId) ?? 0) + 1);
+    played.set(game.awayId, (played.get(game.awayId) ?? 0) + 1);
+  }
+  const enough = (teamId: string) => (played.get(teamId) ?? 0) >= MIN_TEAM_SEASON_GAMES;
+  return seasonGames.filter((game) => enough(game.homeId) && enough(game.awayId));
 }
 
 export function sha256(bytes: Buffer | string): string {
@@ -186,7 +206,11 @@ export function coverage(games: readonly ScoreGame[]): SeasonCoverage[] {
     const teams = new Set<string>();
     const positions: Record<string, number> = {};
     for (const game of list) {
-      if (game.stints === null) rejected[game.audit.rejected ?? "unknown"] = (rejected[game.audit.rejected ?? "unknown"] ?? 0) + 1;
+      if (game.stints === null) {
+        // The reason's kind, without the game's own details.
+        const kind = (game.audit.rejected ?? "unknown").split(":")[0];
+        rejected[kind] = (rejected[kind] ?? 0) + 1;
+      }
       teams.add(game.homeId);
       teams.add(game.awayId);
       for (const lines of Object.values(game.box)) {
@@ -222,6 +246,8 @@ export type SeasonFacts = {
   /** Team to athlete to minutes for that team. */
   teamMinutes: Map<string, Map<string, number>>;
   net: Map<string, number>;
+  /** Opponent-adjusted net rating of each team over the whole season (`adjustedNetRatings`). */
+  adjusted: Map<string, number>;
 };
 
 export function seasonFacts(games: readonly ScoreGame[], season: number): SeasonFacts {
@@ -237,7 +263,7 @@ export function seasonFacts(games: readonly ScoreGame[], season: number): Season
     teamMinutes.set(piece.teamId, team);
   }
   const net = new Map([...totals.teams.values()].map((team) => [team.teamId, netRating(team)]));
-  return { season, totals, minutes, teamMinutes, net };
+  return { season, totals, minutes, teamMinutes, net, adjusted: adjustedNetRatings(totals.teams.values()) };
 }
 
 export type TeamTarget = {
@@ -248,6 +274,8 @@ export type TeamTarget = {
   actual: number;
   /** Net rating in N, or null if the team did not play in N. */
   lastNet: number | null;
+  /** Opponent-adjusted net rating in N, or null if the team did not play in N. */
+  lastAdjusted: number | null;
   shares: MinutesShare[];
 };
 
@@ -258,11 +286,15 @@ export function teamTargets(facts: ReadonlyMap<number, SeasonFacts>, targetSeaso
     const previous = facts.get(season - 1);
     if (!current || !previous) throw new Error(`Seasons ${season - 1} and ${season} are both needed.`);
     for (const teamId of [...current.teamMinutes.keys()].sort()) {
+      // A team with no built games in N (ESPN's box scores for Chicago and New Orleans are
+      // empty from 2012-13 to 2017-18) has no prior ratings to carry: it is not a pair.
+      if (!previous.teamMinutes.has(teamId)) continue;
       targets.push({
         teamId,
         season,
         actual: current.net.get(teamId) as number,
         lastNet: previous.net.get(teamId) ?? null,
+        lastAdjusted: previous.adjusted.get(teamId) ?? null,
         shares: minutesShares(current.teamMinutes.get(teamId) as Map<string, number>),
       });
     }
@@ -289,7 +321,8 @@ export function targetRows(targets: readonly TeamTarget[], values: ValuesBySeaso
     const prior = values.get(target.season - 1);
     if (!prior) throw new Error(`No values for season ${target.season - 1}.`);
     const feature = teamFeature(target.shares, (id) => prior.get(id) ?? null);
-    return { teamId: target.teamId, season: target.season, actual: target.actual, ...feature };
+    // teamNet is read only by a line with a d term ("Game Score plus team net").
+    return { teamId: target.teamId, season: target.season, actual: target.actual, ...feature, teamNet: target.lastAdjusted ?? 0 };
   });
 }
 
@@ -298,11 +331,14 @@ export function rmseOf(errors: readonly number[]): number {
 }
 
 /** Leave-one-season-out RMSE of the straight line: each season predicted from a line fitted on the others. */
-export function leaveSeasonOutRmse(rows: readonly TargetRow[]): number {
+export function leaveSeasonOutRmse(rows: readonly TargetRow[], options: { teamNet?: boolean } = {}): number {
   const seasons = [...new Set(rows.map((row) => row.season))].sort((a, b) => a - b);
   const errors: number[] = [];
   for (const season of seasons) {
-    const line = fitTeamLine(rows.filter((row) => row.season !== season));
+    const line = fitTeamLine(
+      rows.filter((row) => row.season !== season),
+      options,
+    );
     for (const row of rows) if (row.season === season) errors.push(row.actual - predictTeam(line, row));
   }
   return rmseOf(errors);
@@ -313,13 +349,29 @@ export type CoefficientSets = {
   crossCheck: BoxCoefficients;
   roleAware: BoxCoefficients;
   teamNetOnly: BoxCoefficients;
+  /** Hollinger Game Score in the score's frame: β all zero, `gameScore` = s. */
+  gameScoreFrame: BoxCoefficients;
 };
 
-export const BOOK_METRICS = ["score", "crossCheck", "roleAware", "teamNetOnly"] as const;
+/** Metrics whose values come from the score's book (same φ, k, r). */
+export const BOOK_METRICS = ["score", "crossCheck", "roleAware", "teamNetOnly", "gameScoreFrame"] as const;
 export const COMPARATOR_METRICS = ["comparatorUnfloored", "comparatorFloored"] as const;
+/**
+ * "Game Score plus team net": the unfloored comparator's values with a fourth term in the
+ * team line, d × the team's own adjusted net rating in season N.
+ */
+export const TEAM_NET_METRICS = ["gameScorePlusTeamNet"] as const;
 export type BookMetric = (typeof BOOK_METRICS)[number];
 export type ComparatorMetric = (typeof COMPARATOR_METRICS)[number];
-export type Metric = BookMetric | ComparatorMetric;
+export type TeamNetMetric = (typeof TEAM_NET_METRICS)[number];
+export type Metric = BookMetric | ComparatorMetric | TeamNetMetric;
+/** Every metric with a team line, in report order. */
+export const METRICS: readonly Metric[] = [...BOOK_METRICS, ...COMPARATOR_METRICS, ...TEAM_NET_METRICS];
+
+/** Whether a metric's team line carries the d × adjusted-net term. */
+export function usesTeamNet(metric: Metric): boolean {
+  return (TEAM_NET_METRICS as readonly string[]).includes(metric);
+}
 
 /** Values at the end of each season N in `seasonsN`, unrestricted (every player with a value). */
 export function endOfSeasonBookValues(
@@ -373,13 +425,16 @@ export function metricValues(
       [...values].map(([season, map]) => [season, qualifyingValues(map, (facts.get(season) as SeasonFacts).minutes)]),
     );
   const comparator = endOfSeasonComparator(games, seasonsN);
+  const unfloored = restrict(comparator.unfloored);
   return {
     score: restrict(endOfSeasonBookValues(games, seasonsN, coefficients.score, params)),
     crossCheck: restrict(endOfSeasonBookValues(games, seasonsN, coefficients.crossCheck, params)),
     roleAware: restrict(endOfSeasonBookValues(games, seasonsN, coefficients.roleAware, params)),
     teamNetOnly: restrict(endOfSeasonBookValues(games, seasonsN, coefficients.teamNetOnly, params)),
-    comparatorUnfloored: restrict(comparator.unfloored),
+    gameScoreFrame: restrict(endOfSeasonBookValues(games, seasonsN, coefficients.gameScoreFrame, params)),
+    comparatorUnfloored: unfloored,
     comparatorFloored: restrict(comparator.floored),
+    gameScorePlusTeamNet: unfloored,
   };
 }
 
@@ -390,17 +445,89 @@ export function metricValues(
 export const BOOK_GRID = {
   decay: [0, 0.25, 0.5, 0.75, 1],
   pseudoPossessions: [0, 250, 500, 1000, 2000, 4000, 8000],
-  replacement: [-4, -3, -2, -1, 0, 1],
+  replacement: [-10, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1],
 } as const;
 
 export type BookTuning = {
   method: string;
   grid: typeof BOOK_GRID;
-  table: Array<BookParams & { rmse: number }>;
-  chosen: BookParams & { rmse: number };
+  /**
+   * Per grid point: `rmse` is the criterion, the leave-one-season-out RMSE of game margins
+   * predicted from the ratings held before each game; `endpointRmse` is the
+   * leave-one-season-out RMSE of the season-to-season team prediction, reported so the
+   * cost of the choice on the registered endpoint can be seen. Neither reads a test season.
+   */
+  table: Array<BookParams & { rmse: number; endpointRmse: number }>;
+  chosen: BookParams & { rmse: number; endpointRmse: number };
 };
 
-/** Grid search of φ, k, r by leave-one-season-out RMSE of the team prediction on training pairs. */
+/** Each side of a game: every player's share of the team's minutes and his pieces before the date. */
+type SidePieces = Array<{ share: number; pieces: PieceRating[] }>;
+type GamePieces = { gameId: string; season: number; actual: number; home: SidePieces; away: SidePieces };
+
+/** One walk of the seasons, keeping what any (φ, k, r) needs to price every game. */
+function collectGamePieces(games: readonly ScoreGame[], seasons: readonly number[], coefficients: BoxCoefficients): GamePieces[] {
+  const collected: GamePieces[] = [];
+  walkPieces(games, seasons, coefficients, (_season, _date, day, piecesOf) => {
+    for (const game of day) {
+      const side = (teamId: string): SidePieces =>
+        minutesShares(new Map((game.box[teamId] ?? []).filter((l) => l.minutes > 0).map((l) => [l.athleteId, l.minutes]))).map(
+          ({ athleteId, share }) => ({ share, pieces: piecesOf(athleteId) }),
+        );
+      collected.push({
+        gameId: game.gameId,
+        season: game.season,
+        actual: game.homeScore - game.awayScore,
+        home: side(game.homeId),
+        away: side(game.awayId),
+      });
+    }
+  });
+  return collected;
+}
+
+function gameRowsFromPieces(collected: readonly GamePieces[], params: BookParams): GameRow[] {
+  const feature = (side: SidePieces, season: number) => {
+    let weighted = 0;
+    let unknown = 0;
+    for (const { share, pieces } of side) {
+      if (pieces.length === 0) unknown += share;
+      else weighted += share * combinePieces(pieces, season, params).value;
+    }
+    return { weighted, unknown };
+  };
+  return collected.map((game) => {
+    const home = feature(game.home, game.season);
+    const away = feature(game.away, game.season);
+    return {
+      gameId: game.gameId,
+      season: game.season,
+      actual: game.actual,
+      weighted: home.weighted - away.weighted,
+      unknown: home.unknown - away.unknown,
+    };
+  });
+}
+
+/** Leave-one-season-out RMSE of the game line: each season's games predicted from a line fitted on the others. */
+function leaveSeasonOutGameRmse(rows: readonly GameRow[]): number {
+  const seasons = [...new Set(rows.map((row) => row.season))].sort((a, b) => a - b);
+  const errors: number[] = [];
+  for (const season of seasons) {
+    const line = fitTeamLine(rows.filter((row) => row.season !== season));
+    for (const row of rows) if (row.season === season) errors.push(row.actual - predictTeam(line, row));
+  }
+  return rmseOf(errors);
+}
+
+/**
+ * Grid search of φ, k and r. The criterion is in-season: the leave-one-season-out RMSE of
+ * game margins predicted from the ratings each team's players held before the game, over
+ * every training game. The site shows the rating on a date, and a criterion that only
+ * looked at the end of a season would be blind to how the rating behaves in November (it
+ * chose φ = 0, which leaves a player with no rating at all when a season starts). The
+ * season-to-season team RMSE of each grid point is reported beside it.
+ */
 export function tuneBook(
   games: readonly ScoreGame[],
   targets: readonly TeamTarget[],
@@ -408,6 +535,8 @@ export function tuneBook(
   coefficients: BoxCoefficients,
 ): BookTuning {
   for (const target of targets) assertTrainingSeason(target.season);
+  const targetSeasons = [...new Set(targets.map((t) => t.season))].sort((a, b) => a - b);
+  const collected = collectGamePieces(games, targetSeasons, coefficients);
   const history = buildRatingHistory(games, coefficients);
   // For each N, every qualifying player's pieces from seasons ≤ N.
   const piecesByN = new Map<number, Map<string, PieceRating[]>>();
@@ -435,14 +564,19 @@ export function tuneBook(
             new Map([...map].map(([id, pieces]) => [id, combinePieces(pieces, season, params).value])),
           ]),
         );
-        table.push({ ...params, rmse: leaveSeasonOutRmse(targetRows(targets, values)) });
+        table.push({
+          ...params,
+          rmse: leaveSeasonOutGameRmse(gameRowsFromPieces(collected, params)),
+          endpointRmse: leaveSeasonOutRmse(targetRows(targets, values)),
+        });
       }
     }
   }
   let chosen = table[0];
   for (const row of table) if (row.rmse < chosen.rmse - 1e-12) chosen = row;
   return {
-    method: "leave-one-season-out RMSE of a + b·Σ share·v + c·u over training pairs; ties keep the earlier grid point",
+    method:
+      "leave-one-season-out RMSE of game margins, home + g·Δ(Σ share·v) + c·Δu, over training games, ratings held before each game; ties keep the earlier grid point",
     grid: BOOK_GRID,
     table,
     chosen,
@@ -471,6 +605,49 @@ export function lastNetRows(targets: readonly TeamTarget[]): TargetRow[] {
 
 export function rmseOfPredictions(predictions: readonly TeamPrediction[]): number {
   return rmseOf(predictions.map((p) => p.actual - p.predicted));
+}
+
+// ---------------------------------------------------------------------------
+// The pass rule: three conditions, all required
+// ---------------------------------------------------------------------------
+
+export type PassConditions = {
+  /** (i) RMSE(score) ≤ 0.90 × RMSE(comparator, unfloored): the owner's bar. */
+  barVsComparator: { rmseScore: number; rmseComparator: number; ratio: number; bar: number; passed: boolean };
+  /** (ii) RMSE(score) < RMSE(team-net-only ablation). */
+  beatsTeamNetOnly: { rmseScore: number; rmseTeamNetOnly: number; passed: boolean };
+  /** (iii) RMSE(score) < RMSE(last season's team net baseline). */
+  beatsLastSeasonNet: { rmseScore: number; rmseLastSeasonNet: number; passed: boolean };
+  /** All three hold. */
+  passed: boolean;
+};
+
+/**
+ * The registered pass rule. The score carries a share of last season's team net rating and
+ * the comparator does not, so (i) alone could be met by team quality; (ii) and (iii)
+ * require the box-score weights to add something beyond it.
+ */
+export function passConditions(rmse: Readonly<Record<"score" | "comparatorUnfloored" | "teamNetOnly" | "lastSeasonNet", number>>): PassConditions {
+  const ratio = rmse.score / rmse.comparatorUnfloored;
+  const barVsComparator = {
+    rmseScore: rmse.score,
+    rmseComparator: rmse.comparatorUnfloored,
+    ratio,
+    bar: BAR,
+    passed: ratio <= BAR,
+  };
+  const beatsTeamNetOnly = { rmseScore: rmse.score, rmseTeamNetOnly: rmse.teamNetOnly, passed: rmse.score < rmse.teamNetOnly };
+  const beatsLastSeasonNet = {
+    rmseScore: rmse.score,
+    rmseLastSeasonNet: rmse.lastSeasonNet,
+    passed: rmse.score < rmse.lastSeasonNet,
+  };
+  return {
+    barVsComparator,
+    beatsTeamNetOnly,
+    beatsLastSeasonNet,
+    passed: barVsComparator.passed && beatsTeamNetOnly.passed && beatsLastSeasonNet.passed,
+  };
 }
 
 /** Percentile with linear interpolation between order statistics (type 7). */

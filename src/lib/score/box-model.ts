@@ -25,7 +25,10 @@
 //   cross-check  regression of multi-season RAPM totals on the same deviations
 //                (`rapmTargetRows`, `fitRapmTargetModel`); reported, not published;
 //   role-aware   the primary plus position interactions for assists, rebounds, steals
-//                and blocks, with a stronger ridge; a comparison only.
+//                and blocks, with a stronger ridge; a comparison only;
+//   Game Score   the same frame with one regressor, Hollinger Game Score per 100 on-court
+//   frame        possessions minus the team's, fitted exactly as the primary
+//                (`lineupRows` with `gameScore: true`); a comparison only.
 
 import { createSeededRandom } from "@/lib/model/random";
 import { gameScore } from "@/lib/season/box-scores";
@@ -210,6 +213,8 @@ export type TeamSeason = {
   opponentPoints: number;
   /** Sums over the team's players, in `BOX_STATS` order. */
   stats: number[];
+  /** Hollinger Game Score summed over the team's players, unrounded. */
+  gameScore: number;
   /** Opponent ID to the possessions played against it. */
   opponents: Record<string, number>;
 };
@@ -243,6 +248,7 @@ export function addGameToTotals(totals: SeasonTotals, game: ScoreGame): void {
       points: 0,
       opponentPoints: 0,
       stats: new Array<number>(STAT_COUNT).fill(0),
+      gameScore: 0,
       opponents: {},
     };
     team.games += 1;
@@ -268,6 +274,7 @@ export function addGameToTotals(totals: SeasonTotals, game: ScoreGame): void {
       piece.minutes += line.minutes;
       piece.possessions += line.possessions;
       piece.gameScore += line.gameScore;
+      team.gameScore += line.gameScore;
       const position = line.position ?? "";
       piece.positions[position] = (piece.positions[position] ?? 0) + 1;
       for (let k = 0; k < STAT_COUNT; k += 1) {
@@ -351,7 +358,11 @@ export function teamWithoutGame(team: TeamSeason, side: TeamGame): TeamSeason {
   const opponents = { ...team.opponents };
   opponents[side.opponentId] = (opponents[side.opponentId] ?? 0) - side.possessions;
   const stats = team.stats.slice();
-  for (const line of side.lines) for (let k = 0; k < STAT_COUNT; k += 1) stats[k] -= line.stats[k];
+  let gameScoreSum = team.gameScore;
+  for (const line of side.lines) {
+    for (let k = 0; k < STAT_COUNT; k += 1) stats[k] -= line.stats[k];
+    gameScoreSum -= line.gameScore;
+  }
   return {
     ...team,
     games: team.games - 1,
@@ -360,6 +371,7 @@ export function teamWithoutGame(team: TeamSeason, side: TeamGame): TeamSeason {
     points: team.points - side.points,
     opponentPoints: team.opponentPoints - side.opponentPoints,
     stats,
+    gameScore: gameScoreSum,
     opponents,
   };
 }
@@ -373,10 +385,18 @@ export type BoxCoefficients = {
   beta: readonly number[];
   /** Role-aware variant only: one per `ROLE_STATS` entry, on (position − 3) × deviation. */
   role?: readonly number[] | null;
+  /** Game Score frame only: s, on the Game Score per 100 deviation (`gameScoreDeviation`). */
+  gameScore?: number | null;
 };
 
 /** Sums enough to compute rates: a piece or a team, possibly with a game left out. */
-type RateSums = { possessions: number; stats: readonly number[] };
+type RateSums = { possessions: number; stats: readonly number[]; gameScore: number };
+
+/** g_i − ḡ_t: Game Score per 100 on-court possessions minus the team's per 5 × 100; zero without possessions. */
+export function gameScoreDeviation(player: RateSums, team: RateSums): number {
+  if (!(player.possessions > 0) || !(team.possessions > 0)) return 0;
+  return (100 * player.gameScore) / player.possessions - (100 * team.gameScore) / (5 * team.possessions);
+}
 
 /** x_ik − x̄_tk for every stat; zero when either side has no possessions. */
 export function rateDeviation(player: RateSums, team: RateSums): number[] {
@@ -394,6 +414,8 @@ export type RatedPlayer = {
   deviation: number[];
   /** Role-aware regressors: (position − 3) × deviation, centred within the team. */
   role: number[];
+  /** Game Score per 100 deviation (`gameScoreDeviation`). */
+  gameScore: number;
 };
 
 /**
@@ -412,6 +434,7 @@ export function teamRegressors(
       possessions: player.possessions,
       deviation,
       role: ROLE_INDEX.map((k) => offset * deviation[k]),
+      gameScore: gameScoreDeviation(player, team),
     };
   });
   // Centre the role regressors so a team's possession-weighted sum stays zero.
@@ -438,6 +461,7 @@ export function ratingFromRegressors(adjustedNet: number, player: RatedPlayer, c
   if (coefficients.role) {
     for (let j = 0; j < ROLE_INDEX.length; j += 1) rating += coefficients.role[j] * player.role[j];
   }
+  if (coefficients.gameScore) rating += coefficients.gameScore * player.gameScore;
   return rating;
 }
 
@@ -519,6 +543,7 @@ function regressorsWithoutGame(totals: SeasonTotals, side: TeamGame, team: TeamS
       athleteId: piece.athleteId,
       possessions: line ? piece.possessions - line.possessions : piece.possessions,
       stats: line ? piece.stats.map((value, k) => value - line.stats[k]) : piece.stats,
+      gameScore: line ? piece.gameScore - line.gameScore : piece.gameScore,
       position: modalPosition(positions) ?? modalPosition(piece.positions),
     });
   }
@@ -529,13 +554,23 @@ function regressorsWithoutGame(totals: SeasonTotals, side: TeamGame, team: TeamS
 const MAIN_FEATURES = BOX_STATS.map((stat) => stat);
 const ROLE_FEATURES = ROLE_STATS.map((stat) => `position × ${stat}`);
 
+export type LineupRowOptions = {
+  roleAware: boolean;
+  /**
+   * The Game Score frame: one regressor, the Game Score per 100 deviation, in place of the
+   * eleven stat deviations. Cannot be combined with `roleAware`.
+   */
+  gameScore?: boolean;
+};
+
 /**
  * One row per stint with possessions: response margin − offset, weight mean possessions,
  * regressors the home five's sums minus the away five's, everything computed from season
  * sums with the stint's own game left out. Seasons are handled separately.
  */
-export function lineupRows(games: readonly ScoreGame[], options: { roleAware: boolean }): LineupRows {
-  const featureCount = STAT_COUNT + (options.roleAware ? ROLE_INDEX.length : 0);
+export function lineupRows(games: readonly ScoreGame[], options: LineupRowOptions): LineupRows {
+  if (options.gameScore && options.roleAware) throw new Error("The Game Score frame has no role-aware form.");
+  const featureCount = options.gameScore ? 1 : STAT_COUNT + (options.roleAware ? ROLE_INDEX.length : 0);
   const seasons = [...new Set(games.map((game) => game.season))].sort((a, b) => a - b);
   const totalsBySeason = new Map(seasons.map((season) => [season, buildSeasonTotals(games, season)]));
   const adjustedBySeason = new Map(
@@ -568,9 +603,11 @@ export function lineupRows(games: readonly ScoreGame[], options: { roleAware: bo
     const away = { regressors: regressorsWithoutGame(totals, awaySide, awayTeam), adjustedNet: adjustedWithout.get(game.awayId) ?? 0 };
     const vector = (player: RatedPlayer | undefined): number[] =>
       player
-        ? options.roleAware
-          ? [...player.deviation, ...player.role]
-          : player.deviation
+        ? options.gameScore
+          ? [player.gameScore]
+          : options.roleAware
+            ? [...player.deviation, ...player.role]
+            : player.deviation
         : new Array<number>(featureCount).fill(0);
     for (const stint of game.stints) {
       const possessions = (stint.homePossessions + stint.awayPossessions) / 2;
@@ -600,7 +637,11 @@ export function lineupRows(games: readonly ScoreGame[], options: { roleAware: bo
     offset: Float64Array.from(offset),
     features: Float64Array.from(features),
     featureCount,
-    featureNames: options.roleAware ? [...MAIN_FEATURES, ...ROLE_FEATURES] : [...MAIN_FEATURES],
+    featureNames: options.gameScore
+      ? ["gameScore"]
+      : options.roleAware
+        ? [...MAIN_FEATURES, ...ROLE_FEATURES]
+        : [...MAIN_FEATURES],
   };
 }
 
@@ -655,8 +696,12 @@ function solveLineup(
   return solveSymmetric(matrix, p, equations.rhs);
 }
 
+/**
+ * `beta` holds the first `min(featureCount, STAT_COUNT)` coefficients: the eleven stats, or
+ * the single Game Score coefficient s of the Game Score frame.
+ */
 function readLineupFit(rows: LineupRows, theta: Float64Array, penalty: LineupPenalty, mse: number): LineupFit {
-  const beta = Array.from(theta.slice(1, 1 + STAT_COUNT));
+  const beta = Array.from(theta.slice(1, 1 + Math.min(rows.featureCount, STAT_COUNT)));
   const role = rows.featureCount > STAT_COUNT ? Array.from(theta.slice(1 + STAT_COUNT)) : null;
   return { home: theta[0], beta, role, penalty, rows: rows.rowCount, meanSquaredError: mse };
 }

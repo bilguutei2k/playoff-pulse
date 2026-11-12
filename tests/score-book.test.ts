@@ -167,5 +167,24 @@ describe("team predictions", () => {
     expect(line.c).toBeCloseTo(-3, 9);
     expect(predictTeam(line, { weighted: 1, unknown: 0.1 })).toBeCloseTo(4.2, 9);
     expect(fitTeamLine(rows.map((r) => ({ ...r, unknown: 0, actual: 1 + 2 * r.weighted }))).c).toBe(0);
+    expect(line).not.toHaveProperty("d");
+  });
+
+  it("the four-term line (Game Score plus team net) recovers d and ignores teamNet without it", () => {
+    const rows = Array.from({ length: 60 }, (_, i) => {
+      const weighted = Math.sin(i) * 2;
+      const unknown = (i % 7) / 10;
+      const teamNet = Math.cos(1.7 * i) * 5;
+      return { weighted, unknown, teamNet, actual: 0.5 + 4 * weighted - 3 * unknown + 0.6 * teamNet };
+    });
+    const line = fitTeamLine(rows, { teamNet: true });
+    expect(line.a).toBeCloseTo(0.5, 9);
+    expect(line.b).toBeCloseTo(4, 9);
+    expect(line.c).toBeCloseTo(-3, 9);
+    expect(line.d).toBeCloseTo(0.6, 9);
+    expect(predictTeam(line, { weighted: 1, unknown: 0.1, teamNet: 2 })).toBeCloseTo(4.2 + 1.2, 9);
+    // A three-term line has no d, so a row's teamNet changes nothing.
+    const three = fitTeamLine(rows);
+    expect(predictTeam(three, { weighted: 1, unknown: 0.1, teamNet: 2 })).toBe(predictTeam(three, { weighted: 1, unknown: 0.1 }));
   });
 });

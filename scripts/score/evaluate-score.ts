@@ -8,8 +8,10 @@
 //                    read. Writes docs/score/evaluation.json with those hashes.
 //
 // Endpoint: RMSE over team-seasons N + 1 of a + b × Σ share × v + c × u against the team's
-// net rating in N + 1. Pass: RMSE(score) ≤ 0.90 × RMSE(comparator, unfloored). Everything
-// else is reported and does not gate.
+// net rating in N + 1. Pass: three conditions, all required (`passConditions`):
+// (i) RMSE(score) ≤ 0.90 × RMSE(comparator, unfloored); (ii) RMSE(score) < RMSE(team-net-only
+// ablation); (iii) RMSE(score) < RMSE(last season's team net baseline). Everything else is
+// reported and does not gate.
 //
 // Run: corepack pnpm exec tsx scripts/score/evaluate-score.ts --era training|test
 
@@ -19,15 +21,13 @@ import type { RapmPlayer } from "../../src/lib/score/rapm";
 import type { ScoreGame } from "../../src/lib/score/types";
 import { bookParamsFromFit, coefficientsFromFit, type ScoreFit } from "./fit-score";
 import {
-  BAR,
-  BOOK_METRICS,
-  COMPARATOR_METRICS,
   DEFAULT_FREEZE_PATHS,
   EVALUATION_PATH,
   FIRST_SEASON,
   FIT_PATH,
   LAST_TEST_SEASON,
   LAST_TRAINING_SEASON,
+  METRICS,
   TEST_RAPM_WINDOWS,
   TEST_TARGET_SEASONS,
   TRAINING_EVALUATION_PATH,
@@ -40,12 +40,14 @@ import {
   coverage,
   inputHashes,
   lastNetRows,
+  leaveSeasonOutRmse,
   loadSeasons,
   loadTrainingGames,
   meanAbsoluteError,
   metricValues,
   ownerCheckValues,
   ownerChecks,
+  passConditions,
   predictTargets,
   range,
   rmseOf,
@@ -53,6 +55,7 @@ import {
   seasonFacts,
   targetRows,
   teamTargets,
+  usesTeamNet,
   windowRapm,
   writeJson,
   type FreezePaths,
@@ -60,6 +63,7 @@ import {
   type GameLoader,
   type Metric,
   type OwnerCheckResult,
+  type PassConditions,
   type RatioInterval,
   type SeasonCoverage,
   type SeasonFacts,
@@ -79,14 +83,15 @@ export type ScoreEvaluation = {
   targetSeasons: number[];
   teamSeasons: number;
   expectedTeamSeasons: number | null;
-  endpoint: {
-    rmseScore: number;
-    rmseComparator: number;
-    ratio: number;
-    bar: number;
-    passed: boolean;
-  };
+  /** The three pass conditions and the overall result (all three required). */
+  endpoint: PassConditions;
   rmse: Record<Metric | "lastSeasonNet" | "allZero", number>;
+  /**
+   * Training era only (null on the test): each metric's RMSE with its team line refitted
+   * leaving each season out in turn. Still optimistic: β, the book and the RAPM penalties
+   * were fitted on the same seasons.
+   */
+  rmseLeaveSeasonOut: Record<Metric | "lastSeasonNet", number> | null;
   bootstrap: { teamSeason: RatioInterval; season: RatioInterval };
   roleAwareGap: number;
   gameLevel: Record<"score" | "comparatorUnfloored" | "comparatorFloored", { games: number; meanAbsoluteError: number }>;
@@ -133,15 +138,19 @@ export function runEvaluation(options: EvaluateOptions): ScoreEvaluation {
 
   const predictions = {} as Record<Metric | "lastSeasonNet", TeamPrediction[]>;
   const rmse = {} as ScoreEvaluation["rmse"];
-  for (const metric of [...BOOK_METRICS, ...COMPARATOR_METRICS]) {
-    predictions[metric] = predictTargets(targetRows(targets, values[metric]), fit.teamLines[metric]);
+  const loso = era === "training" ? ({} as Record<Metric | "lastSeasonNet", number>) : null;
+  for (const metric of METRICS) {
+    const rows = targetRows(targets, values[metric]);
+    predictions[metric] = predictTargets(rows, fit.teamLines[metric]);
     rmse[metric] = rmseOfPredictions(predictions[metric]);
+    if (loso) loso[metric] = leaveSeasonOutRmse(rows, { teamNet: usesTeamNet(metric) });
   }
-  predictions.lastSeasonNet = predictTargets(lastNetRows(targets), fit.teamLines.lastSeasonNet);
+  const lastRows = lastNetRows(targets);
+  predictions.lastSeasonNet = predictTargets(lastRows, fit.teamLines.lastSeasonNet);
   rmse.lastSeasonNet = rmseOfPredictions(predictions.lastSeasonNet);
+  if (loso) loso.lastSeasonNet = leaveSeasonOutRmse(lastRows);
   rmse.allZero = rmseOf(targets.map((target) => target.actual));
 
-  const ratio = rmse.score / rmse.comparatorUnfloored;
   const seed = `548-bootstrap-${era}`;
   const bootstrap = {
     teamSeason: bootstrapRatio(predictions.score, predictions.comparatorUnfloored, "team-season", `${seed}-team-season`),
@@ -179,7 +188,7 @@ export function runEvaluation(options: EvaluateOptions): ScoreEvaluation {
     fit.teamLines.comparatorUnfloored,
   );
 
-  const metrics = [...BOOK_METRICS, ...COMPARATOR_METRICS, "lastSeasonNet"] as const;
+  const metrics = [...METRICS, "lastSeasonNet"] as const;
   const teams = targets.map((target, index) => {
     const row = { teamId: target.teamId, season: target.season, actual: target.actual } as ScoreEvaluation["teams"][number];
     for (const metric of metrics) row[metric] = predictions[metric][index].predicted;
@@ -194,14 +203,9 @@ export function runEvaluation(options: EvaluateOptions): ScoreEvaluation {
     targetSeasons,
     teamSeasons: targets.length,
     expectedTeamSeasons: era === "test" ? EXPECTED_TEST_TEAM_SEASONS : null,
-    endpoint: {
-      rmseScore: rmse.score,
-      rmseComparator: rmse.comparatorUnfloored,
-      ratio,
-      bar: BAR,
-      passed: ratio <= BAR,
-    },
+    endpoint: passConditions(rmse),
     rmse,
+    rmseLeaveSeasonOut: loso,
     bootstrap,
     roleAwareGap: rmse.roleAware - rmse.score,
     gameLevel,
@@ -223,10 +227,14 @@ function main(): void {
   const file = era === "test" ? EVALUATION_PATH : TRAINING_EVALUATION_PATH;
   writeJson(file, evaluation);
   const { endpoint } = evaluation;
+  const verdict = (passed: boolean) => (passed ? "holds" : "fails");
   console.log(
-    `[evaluate] ${era}: ${evaluation.teamSeasons} team-seasons, RMSE score ${endpoint.rmseScore.toFixed(3)}, ` +
-      `comparator ${endpoint.rmseComparator.toFixed(3)}, ratio ${endpoint.ratio.toFixed(3)} (bar ${endpoint.bar}): ` +
-      `${endpoint.passed ? "PASS" : "FAIL"}`,
+    `[evaluate] ${era}: ${evaluation.teamSeasons} team-seasons, RMSE score ${endpoint.barVsComparator.rmseScore.toFixed(3)}\n` +
+      `  (i)   ≤ ${endpoint.barVsComparator.bar} × comparator ${endpoint.barVsComparator.rmseComparator.toFixed(3)} ` +
+      `(ratio ${endpoint.barVsComparator.ratio.toFixed(3)}): ${verdict(endpoint.barVsComparator.passed)}\n` +
+      `  (ii)  < team-net-only ${endpoint.beatsTeamNetOnly.rmseTeamNetOnly.toFixed(3)}: ${verdict(endpoint.beatsTeamNetOnly.passed)}\n` +
+      `  (iii) < last season's team net ${endpoint.beatsLastSeasonNet.rmseLastSeasonNet.toFixed(3)}: ${verdict(endpoint.beatsLastSeasonNet.passed)}\n` +
+      `  overall: ${endpoint.passed ? "PASS" : "FAIL"}`,
   );
   console.log(`[evaluate] wrote ${file}`);
 }

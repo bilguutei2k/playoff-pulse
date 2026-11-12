@@ -1,6 +1,6 @@
 // Fits Stage 1 of the 548 score on the training era only (seasons up to 2019-20) and
 // writes docs/score/fit.json: RAPM penalties by window, the primary lineup-regression
-// coefficients, the cross-check and role-aware variants, the book's φ, k and r, the
+// coefficients, the cross-check, role-aware and Game Score frame variants, the book's φ, k and r, the
 // straight-line maps of every metric, the game-level lines, coverage and input hashes.
 //
 // It refuses, in code, to load any season after 2020 (`loadTrainingGames`). Deterministic:
@@ -36,11 +36,10 @@ import {
 } from "../../src/lib/score/rapm";
 import type { ScoreGame } from "../../src/lib/score/types";
 import {
-  BOOK_METRICS,
-  COMPARATOR_METRICS,
   FIRST_SEASON,
   FIT_PATH,
   LAST_TRAINING_SEASON,
+  METRICS,
   MIN_PRIOR_MINUTES,
   TRAINING_RAPM_WINDOWS,
   TRAINING_TARGET_SEASONS,
@@ -60,6 +59,7 @@ import {
   targetRows,
   teamTargets,
   tuneBook,
+  usesTeamNet,
   writeJson,
   type BookTuning,
   type CoefficientSets,
@@ -70,7 +70,7 @@ import {
 } from "./score-data";
 import { loadScoreGames } from "./store";
 
-export const FIT_VERSION = 1;
+export const FIT_VERSION = 2;
 
 /** Settings of the fit itself, recorded in fit.json. */
 export const FIT_SETTINGS = {
@@ -134,6 +134,12 @@ export type ScoreFit = {
     beta: Named;
     role: Named;
   };
+  /**
+   * Hollinger Game Score in the score's frame: adj_t / 5 + s × (g_i − ḡ_t), g Game Score
+   * per 100 on-court possessions; s from a one-regressor lineup regression fitted exactly
+   * as the primary (same rows, leave-one-game-out, α grid, folds and seed).
+   */
+  gameScoreFrame: { rows: number; cv: PenaltyCvCell[]; alpha: number; home: number; s: number; meanSquaredError: number };
   crossCheck: {
     rows: number;
     minPossessions: number;
@@ -162,6 +168,7 @@ export function coefficientsFromFit(fit: ScoreFit): CoefficientSets {
       role: ROLE_STATS.map((stat) => fit.roleAware.role[stat]),
     },
     teamNetOnly: { beta: BOX_STATS.map(() => 0) },
+    gameScoreFrame: { beta: BOX_STATS.map(() => 0), gameScore: fit.gameScoreFrame.s },
   };
 }
 
@@ -233,6 +240,17 @@ export function runFit(options: FitOptions = {}): ScoreFit {
   );
   const role = fitLineupModel(roleRows, { alpha: primary.penalty.alpha, roleAlpha: roleCv.best.roleAlpha });
 
+  // Game Score frame: one regressor, fitted exactly as the primary.
+  const gameScoreRows = lineupRows(games, { roleAware: false, gameScore: true });
+  const gameScoreCv = crossValidateLineup(
+    gameScoreRows,
+    settings.lineupAlphas.map((alpha) => ({ alpha, roleAlpha: 0 })),
+    settings.folds,
+    settings.lineupSeed,
+  );
+  const gameScoreFit = fitLineupModel(gameScoreRows, { alpha: gameScoreCv.best.alpha, roleAlpha: 0 });
+  log(`[fit] Game Score frame: s ${gameScoreFit.beta[0]}, α ${gameScoreFit.penalty.alpha}`);
+
   // Cross-check: regression of window RAPM totals on within-team rates.
   const targetRowsAll = rapmByWindow.flatMap(({ seasons: window, players }) =>
     rapmTargetRows(
@@ -257,13 +275,14 @@ export function runFit(options: FitOptions = {}): ScoreFit {
     crossCheck: { beta: crossCheck.beta },
     roleAware: { beta: role.beta, role: role.role },
     teamNetOnly: { beta: BOX_STATS.map(() => 0) },
+    gameScoreFrame: { beta: BOX_STATS.map(() => 0), gameScore: gameScoreFit.beta[0] },
   };
   const values = metricValues(games, targetSeasons.map((season) => season - 1), facts, coefficientSets, params);
   const teamLines = {} as ScoreFit["teamLines"];
   const trainingRmse = {} as ScoreFit["trainingRmse"];
-  for (const metric of [...BOOK_METRICS, ...COMPARATOR_METRICS]) {
+  for (const metric of METRICS) {
     const metricRows = targetRows(targets, values[metric]);
-    teamLines[metric] = fitTeamLine(metricRows);
+    teamLines[metric] = fitTeamLine(metricRows, { teamNet: usesTeamNet(metric) });
     trainingRmse[metric] = rmseOfPredictions(predictTargets(metricRows, teamLines[metric]));
   }
   const lastRows = lastNetRows(targets);
@@ -313,6 +332,14 @@ export function runFit(options: FitOptions = {}): ScoreFit {
       home: role.home,
       beta: named(BOX_STATS, role.beta),
       role: named(ROLE_STATS, role.role ?? []),
+    },
+    gameScoreFrame: {
+      rows: gameScoreRows.rowCount,
+      cv: gameScoreCv.cells,
+      alpha: gameScoreFit.penalty.alpha,
+      home: gameScoreFit.home,
+      s: gameScoreFit.beta[0],
+      meanSquaredError: gameScoreFit.meanSquaredError,
     },
     crossCheck: {
       rows: crossCheck.rows,

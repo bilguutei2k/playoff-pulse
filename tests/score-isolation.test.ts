@@ -12,7 +12,14 @@ import type { ScoreGame } from "@/lib/score/types";
 import { runEvaluation } from "../scripts/score/evaluate-score";
 import { runFit, type FitSettings } from "../scripts/score/fit-score";
 import { freeze } from "../scripts/score/freeze-score";
-import { assertFrozen, assertTrainingSeason, loadTrainingGames, writeJson } from "../scripts/score/score-data";
+import {
+  METRICS,
+  assertFrozen,
+  assertTrainingSeason,
+  loadTrainingGames,
+  passConditions,
+  writeJson,
+} from "../scripts/score/score-data";
 import { simulateSeasons } from "./support/score-league";
 
 const ROOT = path.join(__dirname, "..");
@@ -148,6 +155,39 @@ describe("era guards", () => {
   });
 });
 
+describe("the pass rule", () => {
+  const base = { score: 9, comparatorUnfloored: 10, teamNetOnly: 9.5, lastSeasonNet: 9.5 };
+
+  it("passes only when all three conditions hold", () => {
+    const all = passConditions({ ...base, comparatorUnfloored: 10 / 0.9 + 0.1 });
+    expect(all.barVsComparator.passed).toBe(true);
+    expect(all.beatsTeamNetOnly.passed).toBe(true);
+    expect(all.beatsLastSeasonNet.passed).toBe(true);
+    expect(all.passed).toBe(true);
+    // Exactly at the bar still meets (i).
+    expect(passConditions({ ...base, comparatorUnfloored: 10 }).barVsComparator.passed).toBe(true);
+  });
+
+  it("fails on (i) alone even when the score beats both team baselines", () => {
+    const result = passConditions({ ...base, comparatorUnfloored: 9.5 });
+    expect(result.barVsComparator.ratio).toBeCloseTo(9 / 9.5, 12);
+    expect(result.barVsComparator.passed).toBe(false);
+    expect(result.beatsTeamNetOnly.passed && result.beatsLastSeasonNet.passed).toBe(true);
+    expect(result.passed).toBe(false);
+  });
+
+  it("fails when team quality alone does as well: (ii) and (iii) are strict", () => {
+    const tiedAblation = passConditions({ ...base, teamNetOnly: 9 });
+    expect(tiedAblation.barVsComparator.passed).toBe(true);
+    expect(tiedAblation.beatsTeamNetOnly.passed).toBe(false);
+    expect(tiedAblation.passed).toBe(false);
+    const lastSeasonBetter = passConditions({ ...base, lastSeasonNet: 8.9 });
+    expect(lastSeasonBetter.barVsComparator.passed && lastSeasonBetter.beatsTeamNetOnly.passed).toBe(true);
+    expect(lastSeasonBetter.beatsLastSeasonNet.passed).toBe(false);
+    expect(lastSeasonBetter.passed).toBe(false);
+  });
+});
+
 describe("the pipeline end to end on a simulated league", () => {
   const seasons = Array.from({ length: 16 }, (_, i) => 2011 + i);
   const games = simulateSeasons(seasons, {
@@ -189,14 +229,36 @@ describe("the pipeline end to end on a simulated league", () => {
     expect(fit.trainingPairs).toBe(9 * 6);
     expect(fit.rapm.windows.map((w) => w.seasons[0])).toEqual([2012, 2015, 2018]);
     expect(Object.values(fit.primary.beta).every(Number.isFinite)).toBe(true);
-    expect(fit.book.table.length).toBe(5 * 7 * 6);
+    expect(fit.book.table.length).toBe(5 * 7 * 11);
+    // The book is tuned on in-season game predictions; the season-to-season cost is kept beside it.
+    expect(fit.book.table.every((row) => Number.isFinite(row.rmse) && Number.isFinite(row.endpointRmse))).toBe(true);
     expect(fit.teamLines.score.b).toBeGreaterThan(0);
+    // The two added comparisons: the frame's single coefficient, and the four-term line.
+    expect(Number.isFinite(fit.gameScoreFrame.s)).toBe(true);
+    expect(fit.gameScoreFrame.rows).toBe(fit.primary.rows);
+    expect(fit.gameScoreFrame.cv.map((cell) => cell.alpha)).toEqual(settings.lineupAlphas);
+    expect(Number.isFinite(fit.teamLines.gameScorePlusTeamNet.d)).toBe(true);
+    expect(fit.teamLines.comparatorUnfloored).not.toHaveProperty("d");
+    // With a fourth regressor fitted on the same rows, in-sample error cannot rise.
+    expect(fit.trainingRmse.gameScorePlusTeamNet).toBeLessThanOrEqual(fit.trainingRmse.comparatorUnfloored + 1e-9);
+    for (const metric of METRICS) expect(Number.isFinite(fit.trainingRmse[metric])).toBe(true);
 
     asked.length = 0;
     const training = runEvaluation({ era: "training", loader, fit });
     expect(Math.max(...asked)).toBe(2020);
     expect(training.teamSeasons).toBe(54);
     expect(training.ownerChecks.length).toBe(6);
+    expect(training.endpoint.passed).toBe(
+      training.endpoint.barVsComparator.passed && training.endpoint.beatsTeamNetOnly.passed && training.endpoint.beatsLastSeasonNet.passed,
+    );
+    expect(training.endpoint.beatsTeamNetOnly.rmseTeamNetOnly).toBe(training.rmse.teamNetOnly);
+    expect(training.endpoint.beatsLastSeasonNet.rmseLastSeasonNet).toBe(training.rmse.lastSeasonNet);
+    // The frozen lines reproduce the fit's in-sample numbers, the new metrics included.
+    for (const metric of METRICS) expect(training.rmse[metric]).toBeCloseTo(fit.trainingRmse[metric], 9);
+    expect(training.rmseLeaveSeasonOut).not.toBeNull();
+    for (const metric of METRICS) expect(Number.isFinite(training.rmseLeaveSeasonOut?.[metric])).toBe(true);
+    expect(training.teams[0]).toHaveProperty("gameScoreFrame");
+    expect(training.teams[0]).toHaveProperty("gameScorePlusTeamNet");
 
     const paths = {
       registration: path.join(directory, "registration.md"),
@@ -212,12 +274,14 @@ describe("the pipeline end to end on a simulated league", () => {
     expect(test.freeze).toEqual(record);
     expect(test.teamSeasons).toBe(36);
     expect(test.targetSeasons).toEqual([2021, 2022, 2023, 2024, 2025, 2026]);
-    expect(Number.isFinite(test.endpoint.ratio)).toBe(true);
+    expect(Number.isFinite(test.endpoint.barVsComparator.ratio)).toBe(true);
+    expect(test.rmseLeaveSeasonOut).toBeNull();
+    expect(Number.isFinite(test.rmse.gameScoreFrame) && Number.isFinite(test.rmse.gameScorePlusTeamNet)).toBe(true);
     expect(test.bootstrap.season.low).toBeLessThanOrEqual(test.bootstrap.season.high);
     expect(test.gameLevel.score.games).toBe(6 * 60);
     console.log(
       `[pipeline sim] test RMSE score ${test.rmse.score.toFixed(2)}, comparator ${test.rmse.comparatorUnfloored.toFixed(2)}, ` +
-        `ratio ${test.endpoint.ratio.toFixed(3)}; team-net-only ${test.rmse.teamNetOnly.toFixed(2)}, ` +
+        `ratio ${test.endpoint.barVsComparator.ratio.toFixed(3)}, pass ${test.endpoint.passed}; team-net-only ${test.rmse.teamNetOnly.toFixed(2)}, ` +
         `last-season ${test.rmse.lastSeasonNet.toFixed(2)}, zero ${test.rmse.allZero.toFixed(2)}; ` +
         `game MAE score ${test.gameLevel.score.meanAbsoluteError.toFixed(2)}, comparator ${test.gameLevel.comparatorUnfloored.meanAbsoluteError.toFixed(2)}`,
     );

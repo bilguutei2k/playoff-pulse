@@ -12,6 +12,7 @@ import {
   buildSeasonTotals,
   crossValidateLineup,
   fitLineupModel,
+  gameScoreDeviation,
   fitRapmTargetModel,
   lineupRows,
   modalPosition,
@@ -24,7 +25,7 @@ import {
   teamPossessionEstimate,
   type TeamSeason,
 } from "@/lib/score/box-model";
-import { simulateLeague } from "./support/score-league";
+import { RATE_MEAN, simulateLeague } from "./support/score-league";
 
 /** True coefficients of the simulation, `BOX_STATS` order. */
 const TRUE_BETA = [0.6, -0.5, -0.15, 0.3, 0.5, -0.8, 0.4, 0.2, 1.2, 0.6, -0.3];
@@ -120,6 +121,28 @@ describe("team-season sums and ratings", () => {
         }
       }
     }
+    // The Game Score frame (β zero, one coefficient on the Game Score deviation) adds up too.
+    const frame = seasonPieceRatings(totals, { beta: BOX_STATS.map(() => 0), gameScore: 0.8 }, adjusted);
+    for (const teamId of league.teamIds) {
+      const team = frame.filter((r) => r.teamId === teamId);
+      const weight = team.reduce((s, r) => s + r.possessions, 0);
+      expect((5 * team.reduce((s, r) => s + r.possessions * r.rating, 0)) / weight).toBeCloseTo(adjusted.get(teamId) as number, 9);
+    }
+  });
+
+  it("the Game Score deviation is Game Score per 100 on-court possessions minus the team's", () => {
+    const piece = [...totals.pieces.values()][0];
+    const team = totals.teams.get(piece.teamId) as TeamSeason;
+    const pieces = [...totals.pieces.values()].filter((p) => p.teamId === team.teamId);
+    expect(team.gameScore).toBeCloseTo(pieces.reduce((s, p) => s + p.gameScore, 0), 9);
+    expect(gameScoreDeviation(piece, team)).toBeCloseTo(
+      (100 * piece.gameScore) / piece.possessions - (100 * team.gameScore) / (5 * team.possessions),
+      12,
+    );
+    const frame = seasonPieceRatings(totals, { beta: BOX_STATS.map(() => 0), gameScore: 2 });
+    const adjusted = adjustedNetRatings(totals.teams.values());
+    const rated = frame.find((r) => r.teamId === piece.teamId && r.athleteId === piece.athleteId);
+    expect(rated?.rating).toBeCloseTo((adjusted.get(team.teamId) as number) / 5 + 2 * gameScoreDeviation(piece, team), 9);
   });
 
   it("team possessions are the game sums; on-court possessions sum to five times them", () => {
@@ -143,6 +166,7 @@ describe("team-season sums and ratings", () => {
       points,
       opponentPoints,
       stats: BOX_STATS.map(() => 0),
+      gameScore: 0,
       opponents,
     });
     // A vs B (200 possessions, A +20) and A vs C (200 possessions, C +20); B vs C (200, even).
@@ -280,6 +304,49 @@ describe("lineup regression", () => {
     expect(fit.role).not.toBeNull();
     console.log(`[box role] interactions ${(fit.role ?? []).map((g) => g.toFixed(3)).join(" ")} (truth 0)`);
     for (const g of fit.role ?? []) expect(Math.abs(g)).toBeLessThan(0.35);
+  });
+
+  it("the Game Score frame has one regressor, left out by game like the primary's", () => {
+    const rows = lineupRows(league.games, { roleAware: false, gameScore: true });
+    const primary = lineupRows(league.games, { roleAware: false });
+    expect(rows.featureCount).toBe(1);
+    expect(rows.featureNames).toEqual(["gameScore"]);
+    expect(rows.rowCount).toBe(primary.rowCount);
+    expect(Array.from(rows.offset)).toEqual(Array.from(primary.offset));
+    expect(Array.from(rows.margin)).toEqual(Array.from(primary.margin));
+    expect(() => lineupRows(league.games, { roleAware: true, gameScore: true })).toThrow(/no role-aware form/);
+    const fit = fitLineupModel(rows, { alpha: 0, roleAlpha: 0 });
+    expect(fit.beta.length).toBe(1);
+    expect(fit.role).toBeNull();
+  });
+
+  it("the Game Score frame recovers s when the truth is a multiple of expected Game Score", () => {
+    // Expected Game Score per 100 as a function of the simulated rates: the simulator makes
+    // 46% of field goals and 77% of free throws, so FGM = 0.46 FGA and FTM = 0.77 FTA on average.
+    const expectedGameScore = [1, 0.4 * 0.46 - 0.7, -0.4 * 0.23, 0, 0.7, -1, 0.7, 0.3, 1, 0.7, -0.4];
+    const s = 0.5;
+    const gsLeague = simulateLeague({
+      seed: "game-score-frame",
+      teams: 16,
+      playersPerTeam: 10,
+      meetings: 30,
+      stintsPerGame: 24,
+      possessionsPerStint: 4,
+      boxBeta: expectedGameScore.map((w) => s * w),
+      home: 3,
+    });
+    expect(RATE_MEAN.length).toBe(expectedGameScore.length);
+    const rows = lineupRows(gsLeague.games, { roleAware: false, gameScore: true });
+    const grid = [0, 0.001, 0.01, 0.1].map((alpha) => ({ alpha, roleAlpha: 0 }));
+    const cv = crossValidateLineup(rows, grid, 5, "gs-cv");
+    const fit = fitLineupModel(rows, { alpha: cv.best.alpha, roleAlpha: 0 });
+    console.log(`[game score frame] alpha ${cv.best.alpha}, s ${fit.beta[0].toFixed(3)} (truth ${s})`);
+    expect(Math.abs(fit.beta[0] - s)).toBeLessThan(0.1);
+    // The eleven-stat model fits these stints no better than the one-stat frame out of sample
+    // by much: the truth is in the frame.
+    const full = lineupRows(gsLeague.games, { roleAware: false });
+    const fullCv = crossValidateLineup(full, grid, 5, "gs-cv");
+    expect(cv.best.loss).toBeLessThan(fullCv.best.loss * 1.01);
   });
 
   it("the cross-check regression on RAPM-like targets recovers the same coefficients", () => {

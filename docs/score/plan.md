@@ -105,12 +105,17 @@ per side, starting margin). `scripts/score/store.ts` reads and writes them:
   team's rate). The coefficients are the same for every position. They are identified from
   differences between teammates, and a team's players add up to its net rating.
 - Stats: points, shot attempts, free-throw attempts, three-pointers, assists, turnovers,
-  offensive and defensive rebounds, steals, blocks, fouls. Fitted to multi-season RAPM by
-  possession-weighted regularised least squares.
+  offensive and defensive rebounds, steals, blocks, fouls.
+- The published coefficients come from a lineup regression: each stint's margin is explained
+  by the two teams' net ratings plus the summed within-team deviations of the ten players on
+  the floor, with the stint's own game left out of every rate. This fits the weights
+  directly to lineup results on their own scale. A regression on multi-season RAPM totals is
+  reported beside it as a cross-check.
 - A role-aware variant adds a few regularised position interactions. It is a comparison only.
-- Time: a player's rating on a date uses decayed sums over his games to that date, across
-  seasons, shrunk toward replacement level for small samples. Decay and shrinkage are chosen in
-  the training era.
+- Time: a player's rating on a date combines his (team, season) pieces to that date, older
+  seasons weighted down and small samples shrunk toward a replacement value. The three
+  parameters are chosen in the training era on in-season game predictions, because the site
+  shows the rating on a date.
 
 ## 6. The Stage 1 test (frozen in `docs/score/registration.md` before it runs)
 
@@ -126,10 +131,15 @@ per side, starting margin). `scripts/score/store.ts` reads and writes them:
 - **Comparator:** the current number's rating part: Game Score per minute, decayed and shrunk
   exactly as production does, without the floor at replacement level (the stronger form). The
   floored production form is reported beside it.
-- **Bar:** the new score's error is at most 0.90 times the comparator's.
-- **Reported, not gating:** a season-clustered bootstrap interval; last season's team rating
-  and all-zero baselines; a BPM-style position-dependent formula; the role-aware variant; a
-  game-level check with ratings frozen before each game; the six owner checks.
+- **Pass, three conditions, all required:** the new score's error is at most 0.90 times the
+  comparator's (the owner's bar); it is lower than the same rating with every box-score weight
+  set to zero (team quality alone); and it is lower than last season's team net rating as a
+  predictor. The last two were added before any test data was read, because the score carries
+  team quality and the comparator does not.
+- **Reported, not gating:** bootstrap intervals; the floored comparator; the all-zero
+  baseline; the role-aware variant; the cross-check; Game Score inside the same team frame
+  and Game Score plus a team term; a game-level check with ratings frozen before each game;
+  the six owner checks.
 
 ## 7. Who builds what
 

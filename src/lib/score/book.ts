@@ -170,15 +170,16 @@ export function endOfSeasonValues(history: RatingHistory, season: number, params
 
 /**
  * Walks the given seasons date by date. Before each date's games are added, `visit` gets
- * the date's games and a lookup of each player's value from games before that date (null
- * when he has no piece yet). Earlier seasons in `games` give the past pieces.
+ * the date's games and a lookup of each player's pieces from games before that date (his
+ * completed seasons' pieces, then the current season's to date; empty when he has none).
+ * Earlier seasons in `games` give the past pieces. The pieces do not depend on the book's
+ * parameters, so one walk serves any number of (φ, k, r) choices.
  */
-export function walkDates(
+export function walkPieces(
   games: readonly ScoreGame[],
   seasons: readonly number[],
   coefficients: BoxCoefficients,
-  params: BookParams,
-  visit: (season: number, etDate: string, day: ScoreGame[], valueOf: (athleteId: string) => BookValue | null) => void,
+  visit: (season: number, etDate: string, day: ScoreGame[], piecesOf: (athleteId: string) => PieceRating[]) => void,
 ): void {
   const ordered = chronological(games);
   const history = buildRatingHistory(ordered, coefficients);
@@ -193,17 +194,41 @@ export function walkDates(
       const day = seasonGames.slice(cursor, end);
       cursor = end;
       const current = indexByAthlete(seasonPieceRatings(totals, coefficients));
-      const cache = new Map<string, BookValue | null>();
+      const cache = new Map<string, PieceRating[]>();
       visit(season, etDate, day, (athleteId) => {
-        if (cache.has(athleteId)) return cache.get(athleteId) as BookValue | null;
+        const cached = cache.get(athleteId);
+        if (cached) return cached;
         const pieces = [...pastPieces(history, season, athleteId), ...(current.get(athleteId) ?? [])];
-        const value = pieces.length > 0 ? combinePieces(pieces, season, params) : null;
-        cache.set(athleteId, value);
-        return value;
+        cache.set(athleteId, pieces);
+        return pieces;
       });
       for (const game of day) addGameToTotals(totals, game);
     }
   }
+}
+
+/**
+ * Walks the given seasons date by date. Before each date's games are added, `visit` gets
+ * the date's games and a lookup of each player's value from games before that date (null
+ * when he has no piece yet). Earlier seasons in `games` give the past pieces.
+ */
+export function walkDates(
+  games: readonly ScoreGame[],
+  seasons: readonly number[],
+  coefficients: BoxCoefficients,
+  params: BookParams,
+  visit: (season: number, etDate: string, day: ScoreGame[], valueOf: (athleteId: string) => BookValue | null) => void,
+): void {
+  walkPieces(games, seasons, coefficients, (season, etDate, day, piecesOf) => {
+    const cache = new Map<string, BookValue | null>();
+    visit(season, etDate, day, (athleteId) => {
+      if (cache.has(athleteId)) return cache.get(athleteId) as BookValue | null;
+      const pieces = piecesOf(athleteId);
+      const value = pieces.length > 0 ? combinePieces(pieces, season, params) : null;
+      cache.set(athleteId, value);
+      return value;
+    });
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -290,27 +315,38 @@ export function teamFeature(
   return { weighted, unknown };
 }
 
-export type TeamLine = { a: number; b: number; c: number };
+/** a + b × weighted + c × unknown, plus d × teamNet when the line has a d. */
+export type TeamLine = { a: number; b: number; c: number; d?: number };
 
-export type TeamLineRow = { weighted: number; unknown: number; actual: number };
+/** `teamNet`: the team's own adjusted net rating in season N, for lines with a d term. */
+export type TeamLineRow = { weighted: number; unknown: number; actual: number; teamNet?: number };
 
-/** Least squares of actual on [1, weighted, unknown]. With no unknown share anywhere, c is 0. */
-export function fitTeamLine(rows: readonly TeamLineRow[]): TeamLine {
+/**
+ * Least squares of actual on [1, weighted, unknown], and teamNet when `options.teamNet`
+ * (a missing teamNet counts as 0). With no unknown share anywhere, c is 0. A line fitted
+ * without teamNet has no d key.
+ */
+export function fitTeamLine(rows: readonly TeamLineRow[], options: { teamNet?: boolean } = {}): TeamLine {
   const useUnknown = rows.some((row) => row.unknown !== 0);
-  const p = useUnknown ? 3 : 2;
+  const useNet = options.teamNet === true;
+  const p = 2 + (useUnknown ? 1 : 0) + (useNet ? 1 : 0);
   const matrix = new Float64Array(p * p);
   const rhs = new Float64Array(p);
   for (const row of rows) {
-    const x = useUnknown ? [1, row.weighted, row.unknown] : [1, row.weighted];
+    const x = [1, row.weighted];
+    if (useUnknown) x.push(row.unknown);
+    if (useNet) x.push(row.teamNet ?? 0);
     for (let i = 0; i < p; i += 1) {
       rhs[i] += x[i] * row.actual;
       for (let j = 0; j <= i; j += 1) matrix[i * p + j] += x[i] * x[j];
     }
   }
   const theta = solveSymmetric(matrix, p, rhs);
-  return { a: theta[0], b: theta[1], c: useUnknown ? theta[2] : 0 };
+  const line: TeamLine = { a: theta[0], b: theta[1], c: useUnknown ? theta[2] : 0 };
+  if (useNet) line.d = theta[p - 1];
+  return line;
 }
 
-export function predictTeam(line: TeamLine, feature: { weighted: number; unknown: number }): number {
-  return line.a + line.b * feature.weighted + line.c * feature.unknown;
+export function predictTeam(line: TeamLine, feature: { weighted: number; unknown: number; teamNet?: number }): number {
+  return line.a + line.b * feature.weighted + line.c * feature.unknown + (line.d ?? 0) * (feature.teamNet ?? 0);
 }
