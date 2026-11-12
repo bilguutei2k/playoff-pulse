@@ -22,11 +22,18 @@ import {
 import { currentAbsences } from "../../src/lib/season/injury-model";
 import {
   derivePlayerFiles,
+  toStoredLine,
+  type PlayerBoxLine,
   type PlayerGamesDay,
   type PlayerIndexFile,
   type ResolvedListing,
   type TeamPlayersFile,
 } from "../../src/lib/season/player-stats";
+import { combinePieces } from "../../src/lib/score/book";
+import { SCORE_BOUND, scoreProblems, type PriorPiece } from "../../src/lib/score/live";
+import { SCORE_BOOK, SCORE_MODEL_VERSION } from "../../src/lib/score/params";
+import { scoresFrom } from "../live/model-views";
+import { loadScorePrior } from "../live/score-prior";
 import {
   PROJECTION_ONLY_KEYS,
   projectionProblems,
@@ -567,6 +574,123 @@ function checkProjectionInvariants(): void {
   assert.ok(projectionProblems(nobody, { ratings: replay.state, params: LIVE_PARAMS, games, ledger: [leaked] }).length > 0, "A projection key in the ledger must be caught.");
 }
 
+/**
+ * The 548 score on a synthetic season (display only, never a forecast input): every score
+ * finite, within ±SCORE_BOUND, with a share in [0, 1]; a player with no games and no prior
+ * piece has none; a prior-only player keeps his prior value with a share of 0; a better box
+ * line gives a higher score; and without a prior every score is null.
+ */
+function checkScoreInvariants(): void {
+  const [home, away] = SEASON_TEAMS.slice(0, 2).map((team) => team.id);
+  const season = LIVE_SEASON;
+  const line = (athleteId: string, minutes: number, points: number, extra: Partial<PlayerBoxLine> = {}): PlayerBoxLine => ({
+    athleteId,
+    name: athleteId,
+    position: null,
+    starter: minutes >= 30,
+    minutes,
+    points,
+    offensiveRebounds: 1,
+    defensiveRebounds: 4,
+    assists: 3,
+    steals: 1,
+    blocks: 0,
+    turnovers: 2,
+    fouls: 2,
+    fieldGoalsMade: Math.floor(points / 2.5),
+    fieldGoalsAttempted: Math.ceil(points / 1.1),
+    threePointersMade: 1,
+    threePointersAttempted: 3,
+    freeThrowsMade: 2,
+    freeThrowsAttempted: 3,
+    plusMinus: 0,
+    ...extra,
+  });
+  const roster = (prefix: string): PlayerBoxLine[] => [
+    line(`${prefix}1`, 36, 24),
+    line(`${prefix}2`, 34, 18),
+    line(`${prefix}3`, 32, 14),
+    line(`${prefix}4`, 30, 12),
+    line(`${prefix}5`, 28, 10),
+    line(`${prefix}6`, 24, 8),
+    line(`${prefix}7`, 20, 6),
+    line(`${prefix}8`, 16, 4),
+    line(`${prefix}9`, 20, 4),
+  ];
+  const build = (better: boolean): PlayerGamesDay[] =>
+    [0, 1, 2, 3].map((index) => {
+      const etDate = `2026-10-2${index + 1}`;
+      const homeId = index % 2 === 0 ? home : away;
+      const awayId = homeId === home ? away : home;
+      const box = (teamId: string) =>
+        roster(teamId === home ? "81" : "82").map((entry) =>
+          better && index === 2 && entry.athleteId === "813" ? { ...entry, assists: entry.assists + 4, steals: entry.steals + 2, turnovers: 0 } : entry,
+        );
+      const points = (teamId: string) => box(teamId).reduce((total, entry) => total + entry.points, 0) - (teamId === awayId ? 4 : 0);
+      const day: PlayerGamesDay = { version: 1, etDate, athletes: {}, games: {} };
+      const teams: PlayerGamesDay["games"][string]["teams"] = {};
+      for (const teamId of [homeId, awayId]) {
+        const lines = box(teamId).map((entry) => (teamId === awayId && entry.athleteId.endsWith("1") ? { ...entry, points: entry.points - 4 } : entry));
+        for (const entry of lines) day.athletes[entry.athleteId] = { name: entry.name, position: entry.position };
+        teams[teamId] = { lines: lines.map(toStoredLine), didNotPlay: [] };
+      }
+      day.games[`9${index}`] = { gameId: `9${index}`, etDate, homeId, awayId, homeScore: points(homeId), awayScore: points(awayId), teams };
+      return day;
+    });
+  const priorPiece: PriorPiece = { season: season - 1, teamId: home, possessions: 3000, minutes: 1500, rating: 2.4 };
+  const prior = new Map<string, PriorPiece[]>([
+    ["811", [{ ...priorPiece, rating: 4 }]],
+    ["8000", [priorPiece]],
+  ]);
+  const base = scoresFrom(season, build(false), prior);
+  assert.equal(base.problem, null, `The synthetic 548 score must compute: ${base.problem}`);
+  const scores = base.scores!;
+  assert.deepEqual(scoreProblems(scores), [], "Synthetic 548 scores must be finite, within bounds, with shares in [0, 1].");
+  assert.equal(scores.size, 19, "Every player with a piece, and only those, has a 548 score.");
+  assert.ok(!scores.has("8001"), "A player with no games this season and no prior piece has no 548 score.");
+  const priorOnly = scores.get("8000");
+  assert.ok(priorOnly && priorOnly.share === 0, "A player with no games this season takes nothing from this season.");
+  assert.ok(
+    Math.abs(priorOnly.score - combinePieces([priorPiece], season, SCORE_BOOK).value) < 0.0005,
+    "A prior-only player's 548 score is his prior pieces through the book.",
+  );
+  assert.ok((scores.get("811")?.share ?? 0) < (scores.get("821")?.share ?? 0), "Prior pieces lower the share from this season.");
+  const better = scoresFrom(season, build(true), prior).scores!;
+  assert.ok(better.get("813")!.score > scores.get("813")!.score, "A better box line must give a higher 548 score.");
+  const without = scoresFrom(season, build(false), null, "no prior");
+  assert.ok(without.scores === null && without.problem === "no prior", "Without a prior the 548 score is not computed, and says why.");
+  const files = derivePlayerFiles({
+    season,
+    seasonLabel: seasonLabel(season),
+    days: build(false),
+    listings: [],
+    impact: () => null,
+    score: () => ({ score: 1, share: 1 }),
+    scoreModel: null,
+    nameOf: () => undefined,
+  });
+  assert.ok(
+    files.index.scoreModel === null && files.index.players.every((player) => player.score === null && player.scoreShare === null),
+    "An index without a score model carries no 548 score.",
+  );
+}
+
+/** A player index as files written before the 548 score have it: no score keys. */
+function withoutScoreFields(index: PlayerIndexFile): unknown {
+  const { scoreLabel: _label, scoreModel: _model, ...rest } = index;
+  void _label;
+  void _model;
+  return {
+    ...rest,
+    players: index.players.map((player) => {
+      const { score: _score, scoreShare: _share, ...kept } = player;
+      void _score;
+      void _share;
+      return kept;
+    }),
+  };
+}
+
 function readLiveJson<T>(relative: string): T | null {
   const file = path.join(process.cwd(), "data/live", relative);
   return fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, "utf-8")) as T) : null;
@@ -618,22 +742,65 @@ function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger:
     : [];
   const impact = new Map(index.players.map((player) => [player.athleteId, player.impact]));
   const names = new Map(index.players.map((player) => [player.athleteId, player.name]));
+  // The 548 score. An index written before it has no score keys and is compared without
+  // them. Otherwise, with a score model, every published score must be exactly what
+  // src/lib/score/live.ts gives from the stored days and the committed prior; without one
+  // (the job could not compute it, and reported scoreProblem), every score is null.
+  const legacy = !("scoreModel" in index);
+  const scoreModel = legacy ? null : index.scoreModel;
+  let expectedScores: ReturnType<typeof scoresFrom>["scores"] = null;
+  let priorIds = new Set<string>();
+  if (scoreModel !== null) {
+    assert.equal(scoreModel, SCORE_MODEL_VERSION, "The player index must carry the code's 548 score model.");
+    const loaded = loadScorePrior(LIVE_SEASON);
+    assert.ok(loaded.prior, `A published 548 score needs the prior it came from: ${loaded.problem}`);
+    priorIds = new Set(loaded.prior.keys());
+    const computed = scoresFrom(LIVE_SEASON, days, loaded.prior);
+    assert.ok(computed.scores, `The 548 score must recompute: ${computed.problem}`);
+    expectedScores = computed.scores;
+  }
   const derived = derivePlayerFiles({
     season: LIVE_SEASON,
     seasonLabel: label,
     days,
     listings,
     impact: (athleteId) => impact.get(athleteId) ?? null,
+    score: (athleteId) => expectedScores?.get(athleteId) ?? null,
+    scoreModel,
     nameOf: (athleteId) => names.get(athleteId),
   });
-  assert.equal(siteFileContent(derived.index), siteFileContent(index), "The player index must be what the stored player lines give.");
+  assert.equal(
+    legacy ? JSON.stringify(withoutScoreFields(derived.index)) : siteFileContent(derived.index),
+    legacy ? JSON.stringify(index) : siteFileContent(index),
+    "The player index must be what the stored player lines (and, for the 548 score, the prior) give.",
+  );
   assert.deepEqual([...derived.teams.keys()].sort(), [...teams.keys()].sort(), "Every team with stored lines has a player file, and no other.");
   for (const [teamId, file] of derived.teams) {
     assert.equal(siteFileContent(file), siteFileContent(teams.get(teamId)), `Team ${teamId}'s player file must be what the stored lines give.`);
   }
   for (const player of index.players) {
     assert.ok(player.impact === null || player.impact >= 0, "A 548 impact is never negative.");
+    if (legacy) continue;
+    assert.ok(
+      player.score === null || (Number.isFinite(player.score) && Math.abs(player.score) <= SCORE_BOUND),
+      `${player.name}'s 548 score must be finite and within ±${SCORE_BOUND}.`,
+    );
+    assert.ok(
+      (player.score === null) === (player.scoreShare === null) &&
+        (player.scoreShare === null || (player.scoreShare >= 0 && player.scoreShare <= 1)),
+      `${player.name}'s 548 score share must be in [0, 1], and present exactly when the score is.`,
+    );
+    if (scoreModel !== null && player.games === 0 && !priorIds.has(player.athleteId)) {
+      assert.equal(player.score, null, `${player.name} has no games this season and no prior piece, so no 548 score.`);
+    }
   }
+  console.log(
+    legacy
+      ? "Player index predates the 548 score; compared without its fields."
+      : scoreModel === null
+        ? "Player index carries no 548 score this run (the job reported why); every score is null."
+        : `548 scores match the stored lines and the prior (${index.players.filter((player) => player.score !== null).length} of ${index.players.length} players).`,
+  );
   console.log(
     `Model views pass (${projections.games.length} projections, ${lists.teams.length} team lists, ${index.players.length} players from ${index.storedGames} stored games).`,
   );
@@ -773,6 +940,7 @@ export function runLiveChecks(): void {
   checkFrozenInjuryInputs();
   checkInjuryInvariants();
   checkProjectionInvariants();
+  checkScoreInvariants();
 
   assert.ok(raw.schemaVersion === 1 || raw.schemaVersion === 2, "Unknown live state schema.");
   if (raw.schemaVersion === 2) checkSchemaTwoState(raw);

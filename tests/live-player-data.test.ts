@@ -7,6 +7,7 @@ import {
   addPlayerGame,
   injuryListings,
   storePlayerGame,
+  SCORE_LABEL,
   type PlayerBoxScore,
 } from "@/lib/season/player-stats";
 import { pendingOrdinals } from "@/lib/season/projections";
@@ -235,10 +236,14 @@ describe("full player lines", () => {
       days: [day],
       listings,
       impact: (athleteId) => (athleteId === "1" ? 4.2 : null),
+      score: (athleteId) => (athleteId === "1" ? { score: 3.125, share: 0.42 } : null),
+      scoreModel: "score-test",
       nameOf: () => undefined,
     });
+    expect(files.index).toMatchObject({ scoreLabel: SCORE_LABEL, scoreModel: "score-test" });
+    expect(files.index.players.find((player) => player.athleteId === "3")).toMatchObject({ score: null, scoreShare: null });
     const star = files.index.players.find((player) => player.athleteId === "1");
-    expect(star).toMatchObject({ games: 1, starts: 1, impact: 4.2, shooting: { fieldGoal: 0.588, threePoint: 0.4, freeThrow: 0.889 } });
+    expect(star).toMatchObject({ games: 1, starts: 1, impact: 4.2, score: 3.125, scoreShare: 0.42, shooting: { fieldGoal: 0.588, threePoint: 0.4, freeThrow: 0.889 } });
     expect(star?.perGame?.rebounds).toBe(12);
     const injured = files.index.players.find((player) => player.athleteId === "3");
     expect(injured).toMatchObject({ games: 0, didNotPlay: 1, reportListings: 1, reportListingsMissed: 1, perGame: null });

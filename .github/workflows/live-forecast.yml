@@ -159,6 +159,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: bash scripts/live/report-alert.sh "Model views problem" viewsProblem
 
+      # Same for a player index published without the 548 score (health.json's
+      # scoreProblem, e.g. its prior file missing). Display only; never fails the job.
+      - name: Open an issue if the 548 score was not published
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/live/report-alert.sh "548 score problem" scoreProblem
+
       # Never fails the job: a refused code deploy must not cost seals or slow the chain.
       - name: Retry a production deploy Vercel refused
         if: always()

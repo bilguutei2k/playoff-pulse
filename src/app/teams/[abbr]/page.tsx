@@ -23,7 +23,7 @@ import {
   getTeamInjuryLists,
   getTeamPlayers,
 } from "@/lib/live-data/published";
-import { IMPACT_LABEL } from "@/lib/season/player-stats";
+import { SCORE_LABEL } from "@/lib/season/player-stats";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { teamById } from "@/lib/season/teams";
 import type { PublishedAbsence } from "@/lib/season/types";
@@ -687,11 +687,11 @@ export default async function TeamPage({ params }: Params) {
             <>
               <p className="mb-4 max-w-3xl text-[13px] leading-5 text-ink-2">
                 Per game played for the {team.shortName}, most minutes first; sort by any column. A traded
-                player counts only his games here. {IMPACT_LABEL}
+                player counts only his games here; his 548 score covers all his teams. {SCORE_LABEL}
               </p>
               <PlayersTable
                 rows={roster}
-                caption={`${team.name} roster: season averages, shooting, 548 impact and injury status.`}
+                caption={`${team.name} roster: season averages, shooting, 548 score and injury status.`}
                 showTeam={false}
                 controls={false}
                 initialSort={{ key: "minutes", descending: true }}

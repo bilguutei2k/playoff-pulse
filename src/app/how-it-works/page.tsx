@@ -3,6 +3,7 @@ import Link from "next/link";
 import gameEvaluation from "../../../docs/live/evaluation-games.json";
 import injuryEvaluation from "../../../docs/live/evaluation-injury.json";
 import seasonEvaluation from "../../../docs/live/evaluation-season.json";
+import scoreEvaluation from "../../../docs/score/evaluation.json";
 import {
   IN_GAME_SIGMA,
   INJURY_PARAMS,
@@ -13,7 +14,9 @@ import {
   LIVE_SIMULATION_ITERATIONS,
   REFERENCE_MODEL_VERSION,
 } from "@/lib/season/params";
-import { IMPACT_LABEL } from "@/lib/season/player-stats";
+import { BOX_STATS, type BoxStat } from "@/lib/score/box-model";
+import { SCORE_BETA, SCORE_BOOK, SCORE_MODEL_VERSION } from "@/lib/score/params";
+import { IMPACT_LABEL, SCORE_LABEL } from "@/lib/season/player-stats";
 import { POLICY_REVISIONS } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
@@ -34,6 +37,23 @@ const MARKET_CLAIM_GAMES = 500;
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 const REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration.md";
+const SCORE_REGISTRATION_URL =
+  "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/score/registration.md";
+
+/** The 548 score's stats in plain words, in coefficient order. */
+const SCORE_STAT_NAMES: Record<BoxStat, string> = {
+  points: "Points",
+  fieldGoalsAttempted: "Field-goal attempts",
+  freeThrowsAttempted: "Free-throw attempts",
+  threePointersMade: "Three-pointers made",
+  assists: "Assists",
+  turnovers: "Turnovers",
+  offensiveRebounds: "Offensive rebounds",
+  defensiveRebounds: "Defensive rebounds",
+  steals: "Steals",
+  blocks: "Blocks",
+  fouls: "Fouls",
+};
 
 function fixed(value: number, digits = 3): string {
   return value.toFixed(digits);
@@ -65,6 +85,7 @@ const SECTIONS = [
   { id: "market", title: "The market reference" },
   { id: "testing", title: "How it tested" },
   { id: "shortfalls", title: "Where it fell short" },
+  { id: "score", title: "The 548 score" },
   { id: "glossary", title: "Glossary" },
 ] as const;
 
@@ -120,6 +141,12 @@ export default async function HowItWorksPage() {
   const injurySeasons = injuryReported.perSeason;
   const injuryCheckpoints = injury.T4.checks;
   const checkpointLabel: Record<string, string> = { dec1: "Dec 1", feb1: "Feb 1", apr1: "Apr 1" };
+  const scoreRmse = scoreEvaluation.rmse;
+  const scoreGames = scoreEvaluation.gameLevel;
+  const ownerCheck = (group: string) => {
+    const row = scoreEvaluation.ownerChecks.find((check) => check.group === group);
+    return row ? Math.abs(row.scoreMapped).toFixed(1) : "n/a";
+  };
 
   return (
     <>
@@ -771,6 +798,98 @@ export default async function HowItWorksPage() {
               </li>
             </ul>
           </Section>
+          <Section id="score">
+            <p className="font-medium text-ink">{SCORE_LABEL}</p>
+            <p>
+              <strong className="text-ink">What it is.</strong> The 548 score is a player rating on the{" "}
+              <Link href="/players" className="pp-link">
+                players
+              </Link>{" "}
+              and team pages, in points per 100 possessions: about how many more points his team scores than it
+              allows, per 100 possessions with him on the floor, compared with an average player. 0 is average. It is
+              built from box scores only. A player&apos;s
+              rating starts from his team&apos;s net rating, opponent-adjusted and split evenly over the five on the
+              floor, and moves up or down by how his box-score rates per 100 possessions differ from his
+              teammates&apos;, using the weights below. His seasons are then combined: this season counts in full, each
+              earlier season a quarter as much as the one after it, back three seasons, and every score is pulled
+              toward a below-average {difference(SCORE_BOOK.replacement, 0)} with the weight of{" "}
+              {SCORE_BOOK.pseudoPossessions} possessions, so the pull fades as he plays. The player page says how much
+              of each score comes from this season.
+            </p>
+            <div className="table-scroll rounded-lg border border-line bg-panel">
+              <table className="pp-table">
+                <caption className="sr-only">The 548 score&apos;s weights, the same for every position</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Per 100 possessions on the floor</th>
+                    <th scope="col" className="num">
+                      Weight
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {BOX_STATS.map((stat) => (
+                    <tr key={stat}>
+                      <th scope="row">{SCORE_STAT_NAMES[stat]}</th>
+                      <td className="num">{difference(SCORE_BETA[stat], 2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[14px] leading-6 text-ink-3">
+              The same weights apply to every position. They were fitted to how lineups actually scored, over
+              2010-11 to 2019-20. A weight is the points per 100 possessions added for each extra one of that stat per
+              100 possessions, above his teammates&apos; rate. Points and attempts work together: a made two-pointer
+              adds points and an attempt, so missed shots cost.
+            </p>
+            <p>
+              <strong className="text-ink">How it was tested.</strong> The test was written down and frozen before
+              any test season was read (
+              <a href={SCORE_REGISTRATION_URL} className="pp-link">
+                registration
+              </a>
+              ), and run once. Each team&apos;s net rating in a season was predicted from its players&apos; ratings at
+              the end of the season before, weighted by the minutes they then played. Over{" "}
+              {scoreEvaluation.teamSeasons} team-seasons from 2020-21 to 2025-26, the 548 score&apos;s error was{" "}
+              {fixed(scoreRmse.score, 2)} points per 100 possessions against {fixed(scoreRmse.comparatorUnfloored, 2)}{" "}
+              for the current number, the Game Score rating behind 548 impact. It also beat team quality alone (
+              {fixed(scoreRmse.teamNetOnly, 2)}) and last season&apos;s team rating ({fixed(scoreRmse.lastSeasonNet, 2)}).
+              Predicting single games with the ratings held before each one, its average miss was{" "}
+              {fixed(scoreGames.score.meanAbsoluteError, 2)} points against{" "}
+              {fixed(scoreGames.comparatorUnfloored.meanAbsoluteError, 2)}. The test is about teams. It says nothing
+              about whether any one player&apos;s score is right.
+            </p>
+            <p>
+              <strong className="text-ink">Where the gain comes from.</strong> Most of it comes from adding team
+              context, not from the new weights: Game Score&apos;s own weights inside the same team frame scored{" "}
+              {fixed(scoreRmse.gameScoreFrame, 2)}. A version with different weights by position scored{" "}
+              {fixed(scoreRmse.roleAware, 2)}, a gap of {fixed(Math.abs(scoreEvaluation.roleAwareGap), 2)}; the published
+              score keeps one set of weights for everyone by choice.
+            </p>
+            <p>
+              <strong className="text-ink">What it cannot see.</strong> Box scores record little defence beyond
+              steals, blocks, rebounds and fouls. Against three-season adjusted plus-minus, which uses who was on the
+              floor, the score rates defence-first players about {ownerCheck("defenceFirstPlayers")} points per 100 too
+              low, low-usage role players about {ownerCheck("lowUsageRolePlayers")} too low, and high-assist centres
+              about {ownerCheck("highAssistCentres")} too low. These gaps are rough: adjusted plus-minus is itself
+              a noisy estimate, and the defence group is picked by it. Early in a season most of a score still comes
+              from earlier seasons.
+            </p>
+            <p>
+              <strong className="text-ink">What it is not.</strong> It is not a forecast input: no game, season or
+              injury number uses it, and 548 impact on the{" "}
+              <Link href="/injuries" className="pp-link">
+                injury pages
+              </Link>{" "}
+              still comes from Game Score. It is not a reliable ranking of players. A second layer that reads who was
+              on the floor together is being built next, with its own test.
+            </p>
+            <p className="text-[13px] leading-6 text-ink-3">
+              Score model <Version>{SCORE_MODEL_VERSION}</Version>. Experimental.
+            </p>
+          </Section>
+
           <Section id="glossary">
             <span id="terms" className="block" aria-hidden />
             <dl>
@@ -855,8 +974,17 @@ export default async function HowItWorksPage() {
               </Term>
               <Term term="548 impact">
                 {IMPACT_LABEL} It is beta times the player&apos;s lost value in the replay&apos;s player book, from box
-                scores; the injury test checked team-level absence terms on game outcomes, never any single
-                player&apos;s value, and minutes moving to teammates are not modeled.
+                scores through Game Score; the injury test checked team-level absence terms on game outcomes, never any
+                single player&apos;s value, and minutes moving to teammates are not modeled. It is the number the
+                forecast uses, and it is not the 548 score.
+              </Term>
+              <Term term="548 score">
+                {SCORE_LABEL} Shown on player and team pages, signed: +3.0 is three points per 100 possessions better
+                than an average player. It is never a forecast input. See{" "}
+                <a href="#score" className="pp-link">
+                  the 548 score
+                </a>
+                .
               </Term>
               <Term term="Live estimate">
                 During a game, the model&apos;s in-game estimate from the score and the time left. The sealed

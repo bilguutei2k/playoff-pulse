@@ -7,7 +7,7 @@ import { Hint } from "@/components/live/Hint";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLink } from "@/components/live/TeamLink";
 import { getLiveState, getPlayerIndex, getTeamInjuryLists, getTeamPlayers } from "@/lib/live-data/published";
-import { IMPACT_LABEL, type TeamPlayersFile } from "@/lib/season/player-stats";
+import { IMPACT_LABEL, SCORE_LABEL, type TeamPlayersFile } from "@/lib/season/player-stats";
 import { formatLongDay, formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
 import { STATUS_LABELS } from "@/lib/utils/injuries";
 import {
@@ -16,10 +16,12 @@ import {
   formatAverage,
   formatImpact,
   formatMinutes,
+  formatScore,
   formatShooting,
   listingOutcome,
   madeAttempted,
   reportReason,
+  scoreShareText,
   statusSourceText,
   statusView,
   type GameLogRow,
@@ -61,7 +63,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!page) return { title: "Player not found" };
   return {
     title: `${page.name}: stats, game log and injuries`,
-    description: `${page.name} of the ${teamDisplay(page.teamId).name}: season averages, shooting, his game log from stored box scores, his NBA injury report listings and 548's estimate of what his team loses without him.`,
+    description: `${page.name} of the ${teamDisplay(page.teamId).name}: season averages, shooting, the experimental 548 score, his game log from stored box scores, his NBA injury report listings and what the forecast takes off his team without him.`,
     alternates: { canonical: `/players/${athleteId}` },
   };
 }
@@ -347,21 +349,51 @@ export default async function PlayerPage({ params }: Params) {
         )}
       </section>
 
-      <section aria-labelledby="impact-title" className="mt-12">
-        <SectionHeading id="impact-title" note="The model's estimate" title="548 impact" />
+      <section aria-labelledby="score-title" className="mt-12">
+        <SectionHeading id="score-title" note="Experimental, box scores only" title="548 score" />
         <div className="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
           <p>
-            <span className="figure num text-46">{formatImpact(page.impact)}</span>
-            {page.impact !== null ? <span className="ml-2 text-14 text-ink-2">points per game</span> : null}
+            <span className="figure num text-46">{formatScore(page.score)}</span>
+            {page.score !== null ? <span className="ml-2 text-14 text-ink-2">per 100 possessions</span> : null}
           </p>
           <div className="max-w-[64ch] text-14 leading-6 text-ink-2">
-            <p className="font-medium text-ink">{IMPACT_LABEL}</p>
+            <p className="font-medium text-ink">{SCORE_LABEL}</p>
             <p className="mt-2">
+              {page.score !== null
+                ? `${formatScore(page.score)} means that, judged from box scores, his team ${page.score < 0 ? "loses" : "gains"} about ${Math.abs(page.score).toFixed(1)} points per 100 possessions with him on the floor compared with an average player.`
+                : page.scorePublished
+                  ? "He has no box score this season or in the three seasons before, so there is no 548 score for him."
+                  : "The 548 score is not published yet. It appears here after the next update."}
+              {page.score !== null ? ` ${scoreShareText(page.scoreShare) ?? ""}` : ""}
+            </p>
+            <p className="mt-2">
+              It cannot see most defence and is not a reliable ranking of players. The forecast does not use it.{" "}
+              <Link href="/how-it-works#score" className="pp-link">How the 548 score works</Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="impact-title" className="mt-8 border-t border-line pt-5">
+        <h3 id="impact-title" className="text-15 font-semibold text-ink">
+          548 impact <span className="font-normal text-ink-2">· what the forecast uses</span>
+        </h3>
+        <div className="mt-2 grid gap-x-10 gap-y-2 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start">
+          <p>
+            <span className="num text-21 font-bold text-ink">{formatImpact(page.impact)}</span>
+            {page.impact !== null ? <span className="ml-2 text-13 text-ink-2">points per game</span> : null}
+          </p>
+          <div className="max-w-[64ch] text-13 leading-5 text-ink-2">
+            <p>
+              What the forecast subtracts from his team&apos;s expected margin in a game he sits. It still comes from the
+              older Game Score method, not from the 548 score. {IMPACT_LABEL}
+            </p>
+            <p className="mt-1.5">
               {page.impact === null
                 ? "The model has no record of him yet, so it counts nothing when he is out."
                 : noGames
-                  ? "He has no box score this season, so it comes from his box scores in earlier seasons of the model's replay, which starts in 2020-21. It is what the model takes off his team's expected margin in a game he misses. It does not move minutes to teammates, and it is not a ranking of players."
-                  : "It comes from his box scores in the model's replay of the season, and is what the model takes off his team's expected margin in a game he misses. It does not move minutes to teammates, and it is not a ranking of players."}{" "}
+                  ? "He has no box score this season, so it comes from his box scores in earlier seasons of the model's replay, which starts in 2020-21. It does not move minutes to teammates, and it is not a ranking of players."
+                  : "It comes from his box scores in the model's replay of the season. It does not move minutes to teammates, and it is not a ranking of players."}{" "}
               <Link href="/how-it-works#injuries" className="pp-link">How injuries work</Link>
             </p>
           </div>

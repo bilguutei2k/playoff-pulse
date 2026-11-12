@@ -1,7 +1,8 @@
 // Players for the players table, the player page, team rosters and every player link.
 // Display and box-score arithmetic only: sums and per-game averages of stored lines, and
-// made-over-attempted shooting. The 548 impact and every injury number are the published
-// files' own (src/lib/season/player-stats.ts, src/lib/season/projections.ts).
+// made-over-attempted shooting. The 548 score, the 548 impact and every injury number are
+// the published files' own (src/lib/season/player-stats.ts, src/lib/season/projections.ts);
+// this file only formats them.
 
 import type { StatusCode } from "@/lib/season/availability";
 import type {
@@ -156,6 +157,28 @@ export function formatImpact(impact: number | null): string {
   return impact === null ? "–" : impact.toFixed(1);
 }
 
+/** 548 score signed to one decimal with a true minus sign: "+5.4", "−1.2", "0.0"; "–" with no score. */
+export function formatScore(score: number | null): string {
+  if (score === null) return "–";
+  const rounded = Number(score.toFixed(1));
+  if (rounded === 0) return "0.0";
+  return `${rounded > 0 ? "+" : "−"}${Math.abs(rounded).toFixed(1)}`;
+}
+
+/**
+ * How much of a 548 score comes from this season, in words: "About 40% of it comes from
+ * this season's box scores and 60% from the three seasons before." Null with no share.
+ */
+export function scoreShareText(share: number | null): string | null {
+  if (share === null) return null;
+  if (share <= 0) {
+    return "None of it comes from this season: he has not played yet, so it rests on his three seasons before this one, pulled toward a below-average value.";
+  }
+  const now = Math.round(share * 100);
+  const part = now < 1 ? "Less than 1%" : `About ${Math.min(now, 99)}%`;
+  return `${part} of its weight comes from this season's box scores. The rest comes from his box scores in the three seasons before, where he has them, and a pull toward a below-average value that fades as he plays.`;
+}
+
 /** Box-score minutes: whole minutes print whole, partial ones to one decimal. */
 export function formatMinutes(minutes: number): string {
   return Number.isInteger(minutes) ? String(minutes) : minutes.toFixed(1);
@@ -214,6 +237,8 @@ export type PlayerTableRow = {
   perGame: StatLine | null;
   shooting: { fieldGoal: number | null; threePoint: number | null; freeThrow: number | null };
   impact: number | null;
+  /** 548 score, from the index; null without one. */
+  score: number | null;
   /** On his team's list for its next game; null when not listed. */
   status: StatusView | null;
   /** On a team page: he has since played for another team (its code). */
@@ -252,6 +277,7 @@ export function playerTableRows(index: PlayerIndexFile, lists: TeamInjuriesFile 
       : null,
     shooting: player.shooting,
     impact: player.impact,
+    score: player.score ?? null,
     status: statusFor(statuses, player.athleteId, player.teamId),
     nowWith: null,
     nowWithId: null,
@@ -308,7 +334,8 @@ export function logTotals(log: readonly PlayerLogEntry[]): Pick<PlayerTableRow, 
 
 /**
  * A team's roster with its own stats for this team (a traded player counts only his games
- * here), in the file's order: most minutes first. 548 impact comes from the index.
+ * here), in the file's order: most minutes first. 548 impact and the 548 score come from
+ * the index (the score covers all his teams).
  */
 export function teamRoster(
   file: TeamPlayersFile,
@@ -332,6 +359,7 @@ export function teamRoster(
       perGame: totals.perGame,
       shooting: totals.shooting,
       impact: entry?.impact ?? null,
+      score: entry?.score ?? null,
       status: statusFor(statuses, player.athleteId, file.teamId),
       nowWith: movedTo ? teamDisplay(movedTo).code : null,
       nowWithId: movedTo,
@@ -371,6 +399,11 @@ export type PlayerPage = {
   status: CurrentStatus | null;
   /** From the index, or the team list when he is not in it. */
   impact: number | null;
+  /** 548 score and the share of it from this season, from the index; null without one. */
+  score: number | null;
+  scoreShare: number | null;
+  /** Whether the index carries the 548 score this run (a score model); false for an older index. */
+  scorePublished: boolean;
 };
 
 /**
@@ -438,6 +471,9 @@ export function buildPlayerPage(input: {
     listings,
     status,
     impact: entry?.impact ?? null,
+    score: entry?.score ?? null,
+    scoreShare: entry?.score !== null && entry?.score !== undefined ? (entry.scoreShare ?? null) : null,
+    scorePublished: (input.index?.scoreModel ?? null) !== null,
   };
 }
 

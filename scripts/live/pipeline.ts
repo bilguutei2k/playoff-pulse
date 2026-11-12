@@ -104,6 +104,7 @@ import {
   timedFetchJson,
 } from "./live-availability";
 import { buildModelViews, type ModelViews } from "./model-views";
+import { loadScorePrior } from "./score-prior";
 import { parseReportPdf } from "./report-pdf";
 import { expectedSiteFiles, publishedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
@@ -702,6 +703,11 @@ async function main(): Promise<void> {
   let playerRun: Awaited<ReturnType<typeof collectPlayerGames>> = { added: [], changedDates: [], failed: [], waiting: 0 };
   let views: ModelViews | null = null;
   let viewsProblem: string | null = null;
+  // The 548 score (display only, never a forecast input) reads its prior from the code
+  // checkout. Without it the index is published with every score null and health.json
+  // says why (`scoreProblem`); seals and the other views are unaffected.
+  const scorePrior = loadScorePrior(SEASON);
+  let scoreProblem: string | null = null;
   try {
     playerDays = loadPlayerDays(LABEL);
     const started = Date.now();
@@ -740,7 +746,11 @@ async function main(): Promise<void> {
       nameOf: live.nameOf,
       playerDays: [...playerDays.values()],
       ledger: fullLedger,
+      scorePrior: scorePrior.prior,
+      scorePriorProblem: scorePrior.problem,
     });
+    scoreProblem = views.scoreProblem;
+    if (scoreProblem) log(`548 score not published, views and seals unaffected: ${scoreProblem}`);
     log(
       `views: ${views.projections.games.length} projections through ${views.projections.throughEtDate}, ${views.players.index.players.length} players, ${views.players.teams.size} team files`,
     );
@@ -798,6 +808,8 @@ async function main(): Promise<void> {
     standingsLag: crossCheck.lagNotes,
     reportProblem: injuryReportProblem,
     viewsProblem,
+    // Only while the views are published: a views failure already says the index is missing.
+    scoreProblem: views ? scoreProblem : null,
   };
   const previousHealth = readJson<typeof healthBody & { generatedAt: string }>(HEALTH_PATH);
   if (

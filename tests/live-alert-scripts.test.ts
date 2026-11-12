@@ -77,6 +77,19 @@ describe("report-alert.sh", () => {
     expect(reportAlert({ reportProblem: null, viewsProblem: "views broken" }).calls).toEqual([]);
   });
 
+  it("opens one issue per slate for a 548 score problem, apart from the other two", () => {
+    const score = ["548 score problem", "scoreProblem"];
+    const result = reportAlert({ reportProblem: null, viewsProblem: null, scoreProblem: "548 score prior prior-2026.json is missing" }, {}, score);
+    expect(result.status, result.stderr).toBe(0);
+    const [create] = creates(result.calls);
+    expect(create[create.indexOf("--title") + 1]).toBe("548 score problem on 2026-11-04");
+    const body = create[create.indexOf("--body") + 1];
+    expect(body).toContain("prior-2026.json is missing");
+    expect(body).toContain("forecasts, seals, the record and every other view are unaffected");
+    expect(reportAlert({ reportProblem: null, viewsProblem: "views broken", scoreProblem: null }, {}, score).calls).toEqual([]);
+    expect(reportAlert({ reportProblem: null, viewsProblem: null, scoreProblem: "x" }, {}, views).calls).toEqual([]);
+  });
+
   it("refuses an unknown field", () => {
     const result = reportAlert({ reportProblem: "x" }, {}, ["Prefix", "stuckGames"]);
     expect(result.status).toBe(2);
