@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
+import { Hint } from "@/components/live/Hint";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLink } from "@/components/live/TeamLink";
 import { placeLabels, possessive, type Box, type LabelAnchor } from "@/app/game/[gameId]/labels";
@@ -26,7 +27,8 @@ import { basisSentence } from "@/lib/view/injury-report";
 import { filingNote, othersNote, playerPoints, type AbsenceSide } from "@/lib/view/injuries";
 import type { MarginBreakdown } from "@/lib/view/margin";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
-import { formatRecord, teamColor, teamDisplay, type TeamLine } from "@/lib/view/teams";
+import { formatRating } from "@/lib/view/odds";
+import { formatRecord, ordinal, teamColor, teamDisplay, type TeamLine } from "@/lib/view/teams";
 
 const KIND_LABELS: Record<SeasonGame["kind"], string | null> = {
   regular: null,
@@ -36,7 +38,7 @@ const KIND_LABELS: Record<SeasonGame["kind"], string | null> = {
 };
 
 /** A v8 section: the ink rule, the heading and a grey note at the right. */
-function Section({
+export function Section({
   id,
   title,
   note,
@@ -60,7 +62,7 @@ function Section({
   );
 }
 
-function Notes({ children }: { children: React.ReactNode }) {
+export function Notes({ children }: { children: React.ReactNode }) {
   return <div className="mt-4 space-y-1.5 text-[13px] leading-5 text-ink-2 empty:hidden">{children}</div>;
 }
 
@@ -853,11 +855,14 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
 function SeasonTeam({
   teamId,
   line,
+  rating,
   season,
   next,
 }: {
   teamId: string;
   line: TeamLine | undefined;
+  /** The published forecast's team rating now and its rank of 30; null without a forecast. */
+  rating: { value: number; rank: number } | null;
   season: SeasonLine | null;
   next: SeasonGame | null;
 }) {
@@ -894,6 +899,15 @@ function SeasonTeam({
             <i className="absolute top-0 h-3.5 w-[3px] -translate-x-1/2 bg-ink" style={{ left: at(season.projectedWins) }} />
           </div>
           <p className="mt-2.5 text-[13px] text-ink-2">
+            {rating ? (
+              <>
+                <Hint term="Rating" label="Rating">
+                  The forecast&apos;s team rating now: points per game better or worse than an average team, the
+                  model&apos;s estimate, updated after every game day. {ordinal(rating.rank)} of 30 teams.
+                </Hint>{" "}
+                <b className="num text-ink">{formatRating(rating.value)}</b> ({ordinal(rating.rank)}) ·{" "}
+              </>
+            ) : null}
             Title <b className="num text-ink">{formatChance(season.champion)}</b>
             {next && opponent ? (
               <>
@@ -917,19 +931,34 @@ export function SeasonSoFar({
   teams,
   today,
 }: {
-  teams: Array<{ teamId: string; line: TeamLine | undefined; forecast: TeamForecast | undefined; season: SeasonLine | null; next: SeasonGame | null }>;
+  teams: Array<{
+    teamId: string;
+    line: TeamLine | undefined;
+    forecast: TeamForecast | undefined;
+    ratingRank: number | null;
+    season: SeasonLine | null;
+    next: SeasonGame | null;
+  }>;
   today: boolean;
 }) {
   return (
     <Section id="season" title="Season so far" note={today ? undefined : "As of now"}>
       <div className="flex flex-col gap-[30px]">
         {teams.map((team) => (
-          <SeasonTeam key={team.teamId} teamId={team.teamId} line={team.line} season={team.season} next={team.next} />
+          <SeasonTeam
+            key={team.teamId}
+            teamId={team.teamId}
+            line={team.line}
+            rating={team.forecast && team.ratingRank !== null ? { value: team.forecast.rating, rank: team.ratingRank } : null}
+            season={team.season}
+            next={team.next}
+          />
         ))}
       </div>
       <Notes>
         <p>
-          From the season simulation. Midseason playoff odds are not claimed to be well calibrated, and no skill is
+          Odds and projected wins come from the season simulation. Rating is the forecast&apos;s team rating: points per
+          game against an average team. Midseason playoff odds are not claimed to be well calibrated, and no skill is
           claimed for title odds. <Link href="/odds" className="pp-link">Every team&apos;s odds</Link>
         </p>
       </Notes>

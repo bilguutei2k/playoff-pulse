@@ -290,7 +290,7 @@ part. The claims below are about the box-score part.
 Sources: `docs/score/registration.md` (the frozen test and its pass rule), `docs/score/fit.json`
 (the frozen weights and book, hashed in `docs/score/freeze.json`), `docs/score/evaluation.json` (the
 one test run) and `docs/score/evaluation-training.json` (training era, optimistic). These claims
-appear on `/players`, `/players/{athleteId}`, team pages and `/how-it-works#score`. The score is a
+appear on `/players`, `/players/{athleteId}`, team pages, the game page's Squads section and `/how-it-works#score`. The score is a
 signed box-score rating in points per 100 possessions against an average player. It is not a
 forecast input, never changes a forecast, a seal, the ledger or the injury model, and has no record
 of its own.
@@ -343,7 +343,7 @@ and "What a result means"), `docs/score/fit-stage2.json` (λ 16000, ρ 1, the 21
 hashed in `docs/score/freeze-stage2.json`), `docs/score/evaluation-stage2.json` (the one test run)
 and `docs/score/evaluation-stage2-training.json` (training era, optimistic). The rating is Stage 1's
 box-score value plus δ, the on-court correction from lineup results. These claims appear on
-`/players`, `/players/{athleteId}`, team pages and `/how-it-works#score`. It is not a forecast
+`/players`, `/players/{athleteId}`, team pages, the game page's Squads section and `/how-it-works#score`. It is not a forecast
 input, never changes a forecast, a seal, the ledger or the injury model, and has no record of its
 own.
 

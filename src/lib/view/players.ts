@@ -75,7 +75,7 @@ export type StatusView = {
 };
 
 const STATUS_ORDER: Record<StatusCode, number> = { O: 0, D: 1, Q: 2, P: 4, A: 5 };
-const STATUS_TONE: Record<StatusCode, Tone> = { O: "bad", D: "warn", Q: "warn", P: "quiet", A: "quiet" };
+export const STATUS_TONE: Record<StatusCode, Tone> = { O: "bad", D: "warn", Q: "warn", P: "quiet", A: "quiet" };
 
 function missedText(games: number): string {
   if (games <= 1) return "Missed last game";
