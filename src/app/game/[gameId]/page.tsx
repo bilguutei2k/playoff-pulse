@@ -13,15 +13,17 @@ import {
   SeasonSoFar,
   WhereFrom,
 } from "@/components/live/GameSections";
+import { SquadsSection } from "@/components/live/GameSquads";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { loadDayView } from "@/lib/live-data/day-loader";
-import { getGameById, getLiveState, getSeasonGames } from "@/lib/live-data/published";
+import { getGameById, getLiveState, getPlayerIndex, getSeasonGames, getTeamPlayers } from "@/lib/live-data/published";
 import { formatLongDay, formatShortDay } from "@/lib/utils/dates";
 import { buildGameDetail, nextGameFor } from "@/lib/view/game";
 import { seasonLine } from "@/lib/view/game-page";
 import { seasonLengths } from "@/lib/view/odds";
 import { gameHref } from "@/lib/view/routes";
-import { recordsThrough, teamDisplay, teamLines } from "@/lib/view/teams";
+import { buildSquads } from "@/lib/view/squads";
+import { ratingRanks, recordsThrough, teamDisplay, teamLines } from "@/lib/view/teams";
 
 // Rendered on demand from main's published data and re-rendered about once a minute
 // (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
@@ -57,7 +59,15 @@ export default async function GamePage({ params }: Params) {
   const game = day.games.find((row) => row.id === gameId);
   if (!game) notFound();
 
-  const [liveState, games] = await Promise.all([getLiveState(), getSeasonGames()]);
+  const [liveState, games, index, awayFile, homeFile] = await Promise.all([
+    getLiveState(),
+    getSeasonGames(),
+    getPlayerIndex(),
+    getTeamPlayers(game.awayId),
+    getTeamPlayers(game.homeId),
+  ]);
+  const squads = buildSquads({ game, index, awayFile, homeFile });
+  const ranks = ratingRanks(liveState.forecast.teams);
   const detail = buildGameDetail({ state: liveState, game, storeGames: games });
   const lines = day.kind === "past" ? recordsThrough(games, day.etDate) : teamLines(liveState);
   const current = teamLines(liveState);
@@ -85,6 +95,7 @@ export default async function GamePage({ params }: Params) {
           <div className="flex min-w-0 flex-col gap-14 sm:gap-[72px]">
             {hasNumber ? <MarginSection game={game} /> : <NoNumber game={game} />}
             {detail.breakdown ? <WhereFrom game={game} breakdown={detail.breakdown} detail={detail} /> : null}
+            <SquadsSection squads={squads} tagsShown={game.absences !== null} />
             <OutSection game={game} today={today} />
           </div>
           <aside aria-label="Result, seals and both teams" className="flex min-w-0 flex-col gap-14 sm:gap-[60px]">
@@ -98,6 +109,7 @@ export default async function GamePage({ params }: Params) {
                   teamId,
                   line: current[teamId],
                   forecast,
+                  ratingRank: forecast ? (ranks[teamId] ?? null) : null,
                   season: forecast ? seasonLine(forecast, lengths[teamId] ?? DEFAULT_SEASON_GAMES) : null,
                   next: nextGameFor(games, teamId, game.tipUtc),
                 };

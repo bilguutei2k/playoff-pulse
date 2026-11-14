@@ -1,1 +1,49 @@
 /* game.css: the game page below its header (the header lives in card.css). Owned by package B. */
+@layer components {
+  /*
+   * Squads (src/components/live/GameSquads.tsx): fixed columns, so the table behind
+   * "N more" lines up with the one above it. The team heading carries the ink rule, so
+   * the table head takes a hairline.
+   */
+  .squad-tb {
+    table-layout: fixed;
+  }
+
+  .squad-tb col.sq-fig {
+    width: 3.25rem;
+  }
+
+  .squad-tb col.sq-score {
+    width: 5.5rem;
+  }
+
+  .squad-tb thead th {
+    border-bottom: 1px solid var(--color-line);
+    padding-top: 8px;
+    white-space: normal;
+  }
+
+  .squad-tb td + td,
+  .squad-tb th + td {
+    padding-left: 10px;
+  }
+
+  .squad-tb tbody th.sq-player {
+    font-weight: 400;
+    overflow-wrap: anywhere;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .squad-tb tbody th.sq-group {
+    border-bottom: 0;
+    color: var(--color-ink-2);
+    font-size: 12.5px;
+    padding: 14px 0 2px;
+    text-align: left;
+  }
+
+  .squad-tb tbody:first-of-type th.sq-group {
+    padding-top: 8px;
+  }
+}
