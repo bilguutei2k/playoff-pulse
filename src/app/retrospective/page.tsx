@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { ArrowRight } from "lucide-react";
 import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
 import { ArchiveTeamBadge } from "@/components/forecast/ArchiveTeamBadge";
@@ -307,9 +307,9 @@ export default function Home() {
                 probabilities were too extreme. The individual failures on the
                 right are the tail of this measured pattern, not isolated bad
                 luck. Reliability plots are on the{" "}
-                <Link href="/evidence" className="underline decoration-2 underline-offset-2">
+                <SiteLink href="/evidence" className="underline decoration-2 underline-offset-2">
                   evidence page
-                </Link>
+                </SiteLink>
                 .
               </p>
             </div>
@@ -365,13 +365,13 @@ export default function Home() {
                   shows any player, minute, or injury adjustment beside this
                   value with a delta and an unvalidated label.
                 </p>
-                <Link
+                <SiteLink
                   href="/lab"
                   className="pp-button pp-button-primary w-fit"
                 >
                   Open the scenario lab
                   <ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
+                </SiteLink>
               </>
             ) : null}
           </div>
@@ -436,15 +436,15 @@ corepack pnpm backtest:all`}
                 <li>No official NBA data; this is not a betting product.</li>
               </ul>
               <div className="mt-3 flex flex-wrap gap-2">
-                <Link href="/methodology" className="pp-button">
+                <SiteLink href="/methodology" className="pp-button">
                   Methodology
-                </Link>
-                <Link href="/evidence" className="pp-button">
+                </SiteLink>
+                <SiteLink href="/evidence" className="pp-button">
                   Evidence archive
-                </Link>
-                <Link href="/snapshot" className="pp-button">
+                </SiteLink>
+                <SiteLink href="/snapshot" className="pp-button">
                   Final 2026 snapshot
-                </Link>
+                </SiteLink>
               </div>
             </div>
           </div>

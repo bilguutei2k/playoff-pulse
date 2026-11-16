@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import gameEvaluation from "../../../docs/live/evaluation-games.json";
 import injuryEvaluation from "../../../docs/live/evaluation-injury.json";
 import seasonEvaluation from "../../../docs/live/evaluation-season.json";
@@ -200,25 +200,25 @@ export default async function HowItWorksPage() {
             </p>
             <p className="mt-4 max-w-[64ch] text-[16px] leading-7 text-ink-2">
               What the numbers on the{" "}
-              <Link href="/" className="pp-link">
+              <SiteLink href="/" className="pp-link">
                 games
-              </Link>
+              </SiteLink>
               ,{" "}
-              <Link href="/odds" className="pp-link">
+              <SiteLink href="/odds" className="pp-link">
                 odds
-              </Link>{" "}
+              </SiteLink>{" "}
               and{" "}
-              <Link href="/record" className="pp-link">
+              <SiteLink href="/record" className="pp-link">
                 record
-              </Link>{" "}
+              </SiteLink>{" "}
               pages mean, how they were tested, and where they fall short. Every term is defined in the{" "}
               <a href="#glossary" className="pp-link">
                 glossary
               </a>
               . The archived{" "}
-              <Link href="/retrospective" className="pp-link">
+              <SiteLink href="/retrospective" className="pp-link">
                 2026 retrospective
-              </Link>{" "}
+              </SiteLink>{" "}
               is a separate project and stays as it was.
             </p>
             <p className="mt-4 text-[13px] leading-6 text-ink-3">
@@ -507,9 +507,9 @@ export default async function HowItWorksPage() {
             <p>
               <Version>{REFERENCE_MODEL_VERSION}</Version>, the model this one replaced, keeps writing its own morning
               seal for every game, so its record continues and stays on the{" "}
-              <Link href="/record" className="pp-link">
+              <SiteLink href="/record" className="pp-link">
                 record page
-              </Link>{" "}
+              </SiteLink>{" "}
               beside the current one. Each new seal also stores <Version>{REFERENCE_MODEL_VERSION}</Version>&apos;s
               number for the same game at the same moment, so the two are compared on identical
               games.
@@ -570,9 +570,9 @@ export default async function HowItWorksPage() {
               The registered test covers revision 0 only, and only its seal an hour before tip. It says nothing
               about the later morning, reissue and unfiled-team rules: the unfiled rule was checked against the
               test seasons after their results were known, so that check is exploratory, not a second test. The{" "}
-              <Link href="/record" className="pp-link">
+              <SiteLink href="/record" className="pp-link">
                 record page
-              </Link>{" "}
+              </SiteLink>{" "}
               splits the one record by revision for reference; the revisions cover different games and days, so
               that split is not a comparison of policies.
             </p>
@@ -611,9 +611,9 @@ export default async function HowItWorksPage() {
               : a player still expected out when the regular season ends costs his team in every simulated
               playoff game. Injuries that have not happened yet are not simulated, and how much leaving them out
               changes the season and title odds has not been measured.{" "}
-              <Link href="/odds#absences-title" className="pp-link">
+              <SiteLink href="/odds#absences-title" className="pp-link">
                 Who is counted as out
-              </Link>
+              </SiteLink>
               .
             </p>
             <p>
@@ -643,9 +643,9 @@ export default async function HowItWorksPage() {
             <p>
               The market number is for reference only. It is never a model input and is not part of the
               model&apos;s record. Once a version has {MARKET_CLAIM_GAMES} scored games, the{" "}
-              <Link href="/record" className="pp-link">
+              <SiteLink href="/record" className="pp-link">
                 record page
-              </Link>{" "}
+              </SiteLink>{" "}
               shows the market&apos;s Brier score beside the model&apos;s on the scored games with a stored line;
               until then no claim is made about the model against the market. This is not a betting product.
             </p>
@@ -807,9 +807,9 @@ export default async function HowItWorksPage() {
                   Prospective results are the real test.
                 </strong>{" "}
                 Everything above is reconstructed after the fact. The sealed{" "}
-                <Link href="/record" className="pp-link">
+                <SiteLink href="/record" className="pp-link">
                   track record
-                </Link>{" "}
+                </SiteLink>{" "}
                 is the only forecast record made in advance, and it needs at least 500 games to mean
                 much.
               </li>
@@ -819,9 +819,9 @@ export default async function HowItWorksPage() {
             <p className="font-medium text-ink">{SCORE_LABEL}</p>
             <p>
               <strong className="text-ink">What it is.</strong> The 548 score is a player rating on the{" "}
-              <Link href="/players" className="pp-link">
+              <SiteLink href="/players" className="pp-link">
                 players
-              </Link>{" "}
+              </SiteLink>{" "}
               and team pages, in points per 100 possessions: about how many more points his team scores than it
               allows, per 100 possessions with him on the floor, compared with an average player. 0 is average. It
               has two parts, and each player&apos;s page shows both: what his box score says, and what the results of
@@ -935,9 +935,9 @@ export default async function HowItWorksPage() {
             <p>
               <strong className="text-ink">What it is not.</strong> It is not a forecast input: no game, season or
               injury number uses it, and 548 impact on the{" "}
-              <Link href="/injuries" className="pp-link">
+              <SiteLink href="/injuries" className="pp-link">
                 injury pages
-              </Link>{" "}
+              </SiteLink>{" "}
               still comes from Game Score. The tests are about teams and five-man units, not players: they do not show
               that any one player&apos;s score or rank is right. The on-court part does not isolate defence or any
               single skill, does not fully remove the effect of teammates and opponents, and is slow by construction,
@@ -1025,9 +1025,9 @@ export default async function HowItWorksPage() {
               </Term>
               <Term term="Injury list">
                 A team&apos;s list for its next game on the{" "}
-                <Link href="/injuries" className="pp-link">
+                <SiteLink href="/injuries" className="pp-link">
                   injury report page
-                </Link>
+                </SiteLink>
                 : the NBA report&apos;s listings with their status and reason, and players the model infers from box
                 scores (they missed recent games and are not listed), each with the points the model counts. It is
                 the projection&apos;s own count for that game, never a seal.

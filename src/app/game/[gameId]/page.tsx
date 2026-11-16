@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { notFound } from "next/navigation";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { dayHref } from "@/components/live/DateStrip";
@@ -24,15 +24,6 @@ import { seasonLengths } from "@/lib/view/odds";
 import { gameHref } from "@/lib/view/routes";
 import { buildSquads } from "@/lib/view/squads";
 import { ratingRanks, recordsThrough, teamDisplay, teamLines } from "@/lib/view/teams";
-
-// Rendered on demand from main's published data and re-rendered about once a minute
-// (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
-export const revalidate = 60;
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-  return [];
-}
 
 type Params = { params: Promise<{ gameId: string }> };
 
@@ -82,10 +73,10 @@ export default async function GamePage({ params }: Params) {
       <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
-          <Link href={dayHref(game.etDate, day.todayEtDate)} className="text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">
+          <SiteLink href={dayHref(game.etDate, day.todayEtDate)} className="text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">
             <span aria-hidden>← </span>
             {weekday}, {formatShortDay(game.etDate)}
-          </Link>
+          </SiteLink>
         </nav>
         <h1 className="sr-only">
           {teamDisplay(game.awayId).name} at {teamDisplay(game.homeId).name}

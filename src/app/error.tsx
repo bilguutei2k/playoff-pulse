@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { useRouter } from "next/navigation";
 import { startTransition, useEffect } from "react";
 import { PageStamp } from "@/components/live/FreshnessGuard";
@@ -46,18 +46,18 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
           <button type="button" onClick={retry} className="pp-button pp-button-primary min-h-11">
             Try again
           </button>
-          <Link href="/" className="pp-button min-h-11">
+          <SiteLink href="/" className="pp-button min-h-11">
             Go to today&apos;s games
-          </Link>
+          </SiteLink>
         </div>
       </div>
       <nav aria-label="Other pages" className="mt-10 max-w-3xl">
         <ul className="grid border-t-2 border-ink sm:grid-cols-4 sm:gap-x-8">
           {DESTINATIONS.map(({ href, label }) => (
             <li key={href} className="border-b border-line">
-              <Link href={href} className="flex min-h-11 items-center py-2 text-17 font-semibold hover:underline hover:underline-offset-4">
+              <SiteLink href={href} className="flex min-h-11 items-center py-2 text-17 font-semibold hover:underline hover:underline-offset-4">
                 {label}
-              </Link>
+              </SiteLink>
             </li>
           ))}
         </ul>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 
 /**
  * The head of a page section in v8: an ink rule, the heading, and at the right
@@ -50,9 +50,9 @@ export function SectionHeading({
           {dek ? <div className="mt-3 text-15 leading-6 text-ink-2">{dek}</div> : null}
         </div>
         {href && linkLabel ? (
-          <Link href={href} className="pp-link shrink-0 text-14">
+          <SiteLink href={href} className="pp-link shrink-0 text-14">
             {linkLabel}
-          </Link>
+          </SiteLink>
         ) : null}
       </div>
     );
@@ -62,7 +62,7 @@ export function SectionHeading({
     <div className={className}>
       <div className={`sh !mb-0 ${size === "sub" ? "sh-sub" : ""}`}>
         <Tag id={id}>{title}</Tag>
-        {href && linkLabel ? <Link href={href}>{linkLabel}</Link> : right ? <span>{right}</span> : null}
+        {href && linkLabel ? <SiteLink href={href}>{linkLabel}</SiteLink> : right ? <span>{right}</span> : null}
       </div>
       {dek ? <div className="mt-2 max-w-3xl text-14 leading-6 text-ink-2">{dek}</div> : null}
     </div>

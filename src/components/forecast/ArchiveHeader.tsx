@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { dataLastUpdated } from "@/lib/data/playoff-config";
 import { formatFullDay } from "@/lib/utils/dates";
 
@@ -35,15 +35,15 @@ export function ArchiveHeader({ current }: { current: ArchivePath }) {
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-x-2 text-[13px] text-ink-2">
             <li>
-              <Link href="/" className="hover:text-ink hover:underline hover:underline-offset-4">
+              <SiteLink href="/" className="hover:text-ink hover:underline hover:underline-offset-4">
                 548
-              </Link>
+              </SiteLink>
             </li>
             <li aria-hidden>/</li>
             <li>
-              <Link href="/retrospective" className="hover:text-ink hover:underline hover:underline-offset-4">
+              <SiteLink href="/retrospective" className="hover:text-ink hover:underline hover:underline-offset-4">
                 2026 archive
-              </Link>
+              </SiteLink>
             </li>
             <li aria-hidden>/</li>
             <li aria-current="page" className="text-ink">
@@ -54,13 +54,13 @@ export function ArchiveHeader({ current }: { current: ArchivePath }) {
         <p className="mt-2 max-w-4xl text-[15px] leading-6 text-ink">
           <strong>The 2026 archive is frozen.</strong> It is an earlier project, the manually configured 2026 playoff
           forecast, kept as it was on {formatFullDay(dataLastUpdated)} and not updated since. Today&apos;s forecast is on{" "}
-          <Link href="/" className="pp-link">
+          <SiteLink href="/" className="pp-link">
             Games
-          </Link>{" "}
+          </SiteLink>{" "}
           and its scored results are on{" "}
-          <Link href="/record" className="pp-link">
+          <SiteLink href="/record" className="pp-link">
             Record
-          </Link>
+          </SiteLink>
           .
         </p>
         <nav aria-label="2026 archive pages" className="mt-2">
@@ -69,7 +69,7 @@ export function ArchiveHeader({ current }: { current: ArchivePath }) {
               const active = entry.href === current;
               return (
                 <li key={entry.href}>
-                  <Link
+                  <SiteLink
                     href={entry.href}
                     aria-current={active ? "page" : undefined}
                     className={`-mb-px inline-flex min-h-11 items-center border-b-2 ${
@@ -77,7 +77,7 @@ export function ArchiveHeader({ current }: { current: ArchivePath }) {
                     }`}
                   >
                     {entry.label}
-                  </Link>
+                  </SiteLink>
                 </li>
               );
             })}

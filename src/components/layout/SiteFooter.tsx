@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { getLiveState } from "@/lib/live-data/published";
 import { LIVE_MODEL_VERSION, REFERENCE_MODEL_VERSION } from "@/lib/season/params";
 import { currentPolicyRevision } from "@/lib/season/policy-revisions";
@@ -7,7 +7,8 @@ const REPO_URL = "https://github.com/bilguutei2k/playoff-pulse";
 const LEDGER_URL = `${REPO_URL}/tree/live-data/data/live/ledger`;
 export const ISSUES_URL = `${REPO_URL}/issues`;
 
-const FORECAST_LINKS = [
+/** The footer's live routes; with ARCHIVE_LINKS and NAV_ITEMS, the routes the watchdog probes. */
+export const FORECAST_LINKS = [
   { href: "/", label: "Games" },
   { href: "/odds", label: "Odds" },
   { href: "/injuries", label: "Injuries" },
@@ -18,7 +19,8 @@ const FORECAST_LINKS = [
   { href: "/about", label: "About" },
 ];
 
-const ARCHIVE_LINKS = [
+/** The footer's links to the frozen 2026 archive. */
+export const ARCHIVE_LINKS = [
   { href: "/retrospective", label: "Retrospective" },
   { href: "/snapshot", label: "Final 2026 snapshot" },
   { href: "/evidence", label: "Evidence" },
@@ -41,9 +43,9 @@ function LinkRow({ title, links }: { title: string; links: Array<{ href: string;
     <nav aria-label={title} className="flex flex-wrap items-center gap-x-5 lg:gap-y-1">
       <h2 className="w-full font-semibold text-ink sm:w-auto">{title}</h2>
       {links.map(({ href, label }) => (
-        <Link key={href} href={href} className={LINK}>
+        <SiteLink key={href} href={href} className={LINK}>
           {label}
-        </Link>
+        </SiteLink>
       ))}
     </nav>
   );
@@ -74,9 +76,9 @@ export async function SiteFooter() {
           {revision !== null ? (
             <>
               ,{" "}
-              <Link href="/how-it-works#policy-revisions" className={PROSE_LINK}>
+              <SiteLink href="/how-it-works#policy-revisions" className={PROSE_LINK}>
                 policy revision {revision}
-              </Link>
+              </SiteLink>
             </>
           ) : null}
           {sameModel ? null : (

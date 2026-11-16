@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
 import { Hint } from "@/components/live/Hint";
 import { PlayerLink } from "@/components/live/PlayerLink";
@@ -408,13 +408,13 @@ function OutSide({
           <b className="num">{side.points >= 0.05 ? `−${side.points.toFixed(1)}` : "0.0"}</b>{" "}
           <span className="text-[13px] text-ink-2">
             pts ·{" "}
-            <Link
+            <SiteLink
               href={injuriesHref(side.teamId)}
               className="underline underline-offset-2 hover:text-ink"
               aria-label={`${side.players.length} listed: the ${team.shortName} on the injury report`}
             >
               {side.players.length} listed
-            </Link>
+            </SiteLink>
           </span>
         </span>
       </div>
@@ -513,7 +513,7 @@ export function OutSection({ game, today }: { game: DayGame; today: boolean }) {
         {game.projection?.withInjuries ? (
           <p>
             {basisSentence(game.projection.basis, game.etDate)} The seals on game day count the report in use at each
-            seal. The <Link href="/injuries" className="pp-link">injury report</Link> has each team&apos;s full list,
+            seal. The <SiteLink href="/injuries" className="pp-link">injury report</SiteLink> has each team&apos;s full list,
             with reasons and the players the model infers from box scores.
           </p>
         ) : null}
@@ -597,7 +597,7 @@ export function Result({ game, detail }: { game: DayGame; detail: GameDetail }) 
           <p>
             Each tile is that model&apos;s sealed chance for the <TeamLink teamId={winner.id} />. Brier is the squared gap between the
             forecast and the result: 0 is perfect and an even 50% scores 0.25. One game says nothing about skill; see the{" "}
-            <Link className="pp-link" href="/record">track record</Link>.
+            <SiteLink className="pp-link" href="/record">track record</SiteLink>.
           </p>
         ) : null}
       </Notes>
@@ -913,9 +913,9 @@ function SeasonTeam({
               <>
                 {" "}
                 · Next{" "}
-                <Link href={`/game/${next.id}`} className="pp-link font-semibold">
+                <SiteLink href={`/game/${next.id}`} className="pp-link font-semibold">
                   {formatWeekday(next.etDate)} {formatShortDay(next.etDate)}
-                </Link>{" "}
+                </SiteLink>{" "}
                 {next.homeId === teamId ? "vs" : "at"}{" "}
                 <TeamLink teamId={opponent.id} form="code" className="font-semibold text-ink" />
               </>
@@ -959,7 +959,7 @@ export function SeasonSoFar({
         <p>
           Odds and projected wins come from the season simulation. Rating is the forecast&apos;s team rating: points per
           game against an average team. Midseason playoff odds are not claimed to be well calibrated, and no skill is
-          claimed for title odds. <Link href="/odds" className="pp-link">Every team&apos;s odds</Link>
+          claimed for title odds. <SiteLink href="/odds" className="pp-link">Every team&apos;s odds</SiteLink>
         </p>
       </Notes>
     </Section>

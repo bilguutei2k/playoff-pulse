@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { connection } from "next/server";
 import { Fragment } from "react";
 import "./globals.css";
 import { figures, schibsted } from "@/app/fonts";
@@ -7,22 +8,29 @@ import { HydrationGate } from "@/components/layout/HydrationGate";
 import { NavProgress } from "@/components/layout/NavProgress";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { FreshnessGuard } from "@/components/live/FreshnessGuard";
-import { getLiveState } from "@/lib/live-data/published";
+import { getDelivery, getLiveState } from "@/lib/live-data/published";
 import { SITE_URL } from "@/lib/view/routes";
 
-// Every page carries the header's "Updated N min ago" chip, read from the published state
-// at render time (src/lib/live-data/published.ts), so every page is regenerated about once
-// a minute; the CDN may serve the previous copy for up to `expireTime` (next.config.ts)
-// past that, and FreshnessGuard below asks the server for a newer one when the copy a
-// reader got lags it. Data commits do not deploy.
-export const revalidate = 60;
+// Every page renders at request time: `await connection()` below is the first statement
+// of RootLayout, so every route under it is dynamic and none has a build-time copy. Under
+// incremental regeneration, once a route's runtime copy was more than `expireTime`
+// (next.config.ts) old, Vercel served the copy built at deploy time (`x-vercel-cache:
+// PRERENDER`) to readers and the watchdog, days behind the published state (2026-11-14 to
+// 16). Data commits do not deploy, so a build-time copy is always wrong for live data.
+//
+// Trap: never export `revalidate`, `dynamicParams` or `generateStaticParams` from a page
+// or this layout. With `connection()` here they make every dynamic-segment URL
+// (/games/…, /teams/…, /players/…, /game/…) answer 500 DYNAMIC_SERVER_USAGE, and the build
+// still passes. `verify:rendering` (scripts/verify/rendering.ts) fails on both.
+// FreshnessGuard below still covers copies a reader keeps (an open tab, a back-forward
+// restore, the client router cache).
 const TAGLINE = "NBA forecasts, updated through the day.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: `548 · ${TAGLINE}`, template: "%s · 548" },
   description:
-    "Win probabilities for every NBA game, sealed before tip and scored in public, with playoff and title odds for all 30 teams.",
+    "Win probabilities for every NBA game, with playoff and title odds for all 30 teams. Forecasts sealed before tip are scored in public, and missed seals are counted.",
   applicationName: "548",
   // No openGraph.url here: each page sets its own canonical URL (alternates.canonical,
   // relative to metadataBase), so a shared link never claims to be the homepage.
@@ -39,7 +47,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const liveState = await getLiveState();
+  await connection();
+  const [liveState, { delivery }] = await Promise.all([getLiveState(), getDelivery()]);
   return (
     <html
       lang="en"
@@ -68,7 +77,7 @@ export default async function RootLayout({
               Fragment, which claims no DOM node.
             */}
             <Fragment key="main">
-              <FreshnessGuard generatedAt={liveState.generatedAt} />
+              <FreshnessGuard generatedAt={liveState.generatedAt} delivery={delivery} />
               {children}
             </Fragment>
           </div>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { Hint } from "@/components/live/Hint";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
@@ -96,14 +96,14 @@ function FinalsBars({ rows, width }: { rows: FinalRow[]; width: number }) {
         const top = row.even ? CHART_FLOOR - 24 : chartY(rowPercent(row)) - 18;
         return (
           <span key={row.game.id} aria-hidden>
-            <Link
+            <SiteLink
               href={gameHref(row.game.id)}
               tabIndex={-1}
               className="absolute hover:bg-ink/5"
               style={{ left, width: slotWidth, top: pct(top, CHART_HEIGHT), height: pct(CHART_FLOOR - top, CHART_HEIGHT) }}
             />
             {labels && row.favorite ? (
-              <Link
+              <SiteLink
                 href={teamHref(row.favorite.teamId)}
                 tabIndex={-1}
                 className="absolute hover:bg-ink/5"
@@ -214,7 +214,7 @@ function SplitCell({ row }: { row: FinalRow }) {
  * the top of the page and takes the clicks meant for the days row.
  */
 function CellLink({ gameId }: { gameId: string }) {
-  return <Link href={gameHref(gameId)} aria-hidden tabIndex={-1} className="absolute inset-0" />;
+  return <SiteLink href={gameHref(gameId)} aria-hidden tabIndex={-1} className="absolute inset-0" />;
 }
 
 /** A team line of the Final cell, and its score beside it: one fixed height so the two columns line up. */
@@ -270,14 +270,14 @@ export function FinalsTable({ rows, home = false }: { rows: FinalRow[]; home?: b
                       <TeamLink teamId={game.awayId} form={{ base: "code", xl: "short" }} logo={18} raised className={teamClass(!row.homeWon)} />
                       <TeamLink teamId={game.homeId} form={{ base: "code", xl: "short" }} logo={18} raised className={teamClass(row.homeWon)} />
                     </span>
-                    <Link
+                    <SiteLink
                       href={gameHref(game.id)}
                       className="num flex flex-none flex-col text-right after:absolute after:inset-0"
                       aria-label={`${away.shortName} ${game.awayScore}, ${home.shortName} ${game.homeScore}: game details`}
                     >
                       <span className={teamClass(!row.homeWon)}>{game.awayScore}</span>
                       <span className={teamClass(row.homeWon)}>{game.homeScore}</span>
-                    </Link>
+                    </SiteLink>
                   </span>
                 </th>
                 <td className="relative min-w-[88px] sm:min-w-[120px] sm:pr-6 lg:pr-10">

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { InjuryReport } from "@/components/live/InjuryReport";
 import { SectionHeading } from "@/components/live/SectionHeading";
@@ -16,9 +16,6 @@ export const metadata: Metadata = {
     "Every NBA team's injury list for its next game, from the NBA's public injury report, read unofficially, and from box scores, with the points of margin 548's model counts for each player.",
   alternates: { canonical: "/injuries" },
 };
-
-// Re-rendered about once a minute from the published data (src/lib/live-data/published.ts).
-export const revalidate = 60;
 
 const SOURCES: Array<[string, string]> = [
   ["NBA report", "Status and reason as printed on the NBA's injury report covering the game, with the report's time."],
@@ -73,7 +70,7 @@ export default async function InjuriesPage() {
                   These lists are projections, not sealed forecasts: a game&apos;s seals count the report in use when
                   they are made. The model does not foresee new injuries, shift minutes to teammates or model
                   matchups. The injury reports are the NBA&apos;s public documents, read unofficially.{" "}
-                  <Link href="/how-it-works#injuries" className="pp-link">How injuries work</Link>
+                  <SiteLink href="/how-it-works#injuries" className="pp-link">How injuries work</SiteLink>
                 </>
               }
               definitions={
@@ -95,8 +92,8 @@ export default async function InjuriesPage() {
               page still lists the players its sealed forecast counts.
             </p>
             <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">
-              <Link className="pp-link" href="/">Today&apos;s games</Link>
-              <Link className="pp-link" href="/odds#absences-title">Who the model counts as out</Link>
+              <SiteLink className="pp-link" href="/">Today&apos;s games</SiteLink>
+              <SiteLink className="pp-link" href="/odds#absences-title">Who the model counts as out</SiteLink>
             </p>
           </div>
         )}

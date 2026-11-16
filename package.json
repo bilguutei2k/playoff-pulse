@@ -32,7 +32,10 @@
     "refresh-data": "tsx scripts/refresh-data.ts",
     "live:pipeline": "tsx scripts/live/pipeline.ts",
     "verify:ledger": "tsx scripts/live/verify-ledger.ts",
-    "verify:live": "tsx scripts/verify/live-checks.ts"
+    "verify:live": "tsx scripts/verify/live-checks.ts",
+    "verify:rendering": "tsx scripts/verify/rendering.ts",
+    "verify:routes": "node scripts/verify/route-smoke.mjs",
+    "qa:hydration": "node scripts/qa/hydration-reload.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

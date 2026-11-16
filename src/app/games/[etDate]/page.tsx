@@ -5,15 +5,6 @@ import { loadDayView } from "@/lib/live-data/day-loader";
 import { formatLongDay, isEtDate } from "@/lib/utils/dates";
 import { getGameCountsByDate } from "@/lib/live-data/published";
 
-// Rendered on demand from main's published data and re-rendered about once a minute
-// (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
-export const revalidate = 60;
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-  return [];
-}
-
 type Params = { params: Promise<{ etDate: string }> };
 
 /** A real date within the stored season, with a week of slack at either end. */

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { StatusTag } from "@/components/live/Badge";
 import { Notes, Section } from "@/components/live/GameSections";
 import { Hint } from "@/components/live/Hint";
@@ -266,9 +266,9 @@ export function SquadsSection({ squads, tagsShown }: { squads: Squads; tagsShown
         {squads.showsScores ? (
           <p>
             {squads.scoreLabel} It is not a reliable ranking of players.{" "}
-            <Link href="/how-it-works#score" className="pp-link">
+            <SiteLink href="/how-it-works#score" className="pp-link">
               How the 548 score works
-            </Link>
+            </SiteLink>
           </p>
         ) : null}
       </Notes>

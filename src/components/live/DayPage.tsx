@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { DateStrip, dayHref } from "@/components/live/DateStrip";
 import { FinalsChart, FinalsTable } from "@/components/live/DayFinals";
@@ -60,7 +60,7 @@ function HowToRead({ view }: { view: DayView }) {
     <section aria-labelledby="how-to-read" className="mt-16">
       <div className="sh">
         <h2 id="how-to-read">How to read a card</h2>
-        <Link href="/how-it-works">How the forecast works</Link>
+        <SiteLink href="/how-it-works">How the forecast works</SiteLink>
       </div>
       <dl className="grid gap-x-12 gap-y-3 text-[13px] leading-5 text-ink-2 md:grid-cols-2">
         {items.map(([term, definition]) => (
@@ -105,9 +105,9 @@ function TileKey({ kinds }: { kinds: TileKind[] }) {
           </span>
         </span>
       ))}
-      <Link href="#how-to-read" className="pp-link py-3">
+      <SiteLink href="#how-to-read" className="pp-link py-3">
         How to read a card
-      </Link>
+      </SiteLink>
     </p>
   );
 }
@@ -169,9 +169,9 @@ function DaySentence({ parts }: { parts: SentencePart[] }) {
     <p className="mt-4 max-w-[520px] text-[17px] leading-[1.4] sm:mt-5 sm:text-[20px]">
       {parts.map((part, index) =>
         part.href ? (
-          <Link key={index} href={part.href} className="underline decoration-line-strong decoration-1 underline-offset-[0.18em] hover:decoration-ink">
+          <SiteLink key={index} href={part.href} className="underline decoration-line-strong decoration-1 underline-offset-[0.18em] hover:decoration-ink">
             {part.text}
-          </Link>
+          </SiteLink>
         ) : (
           <span key={index}>{part.text}</span>
         ),
@@ -255,7 +255,7 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
             {sums.sentenceParts ? <DaySentence parts={sums.sentenceParts} /> : null}
             {view.etDate !== today ? (
               <p className="mt-4 text-[14px]">
-                <Link href="/" className="pp-link py-3">Back to today</Link>
+                <SiteLink href="/" className="pp-link py-3">Back to today</SiteLink>
               </p>
             ) : null}
             {home && sums.scored.length > 0 ? (
@@ -297,7 +297,7 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
               {PROJECTION_WITH_INJURIES_LABEL}{" "}
               {basisSummary(withInjuries.map((projection) => projection.basis), view.etDate)} Projections are never
               compared with the market. Every team&apos;s list is on the{" "}
-              <Link href="/injuries" className="pp-link">injury report</Link>.
+              <SiteLink href="/injuries" className="pp-link">injury report</SiteLink>.
             </p>
           ) : null}
           {view.kind === "future" && ratingsOnly > 0 ? (
@@ -327,14 +327,14 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
                   {previousDay ? (
-                    <Link className="pp-button min-h-11" href={dayHref(previousDay, today)}>
+                    <SiteLink className="pp-button min-h-11" href={dayHref(previousDay, today)}>
                       <span aria-hidden>←</span> {buttonDay(previousDay)} · {gamesCount(counts[previousDay] ?? 0)}
-                    </Link>
+                    </SiteLink>
                   ) : null}
                   {nextDay ? (
-                    <Link className="pp-button pp-button-primary min-h-11" href={dayHref(nextDay, today)}>
+                    <SiteLink className="pp-button pp-button-primary min-h-11" href={dayHref(nextDay, today)}>
                       {buttonDay(nextDay)} · {gamesCount(counts[nextDay] ?? 0)} <span aria-hidden>→</span>
-                    </Link>
+                    </SiteLink>
                   ) : null}
                 </div>
               </section>
@@ -369,10 +369,10 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
                 id="next-day"
                 title={formatLongDay(nextDay)}
                 note={
-                  <Link href={dayHref(nextDay, today)} className="py-3 hover:text-ink hover:underline hover:underline-offset-4">
+                  <SiteLink href={dayHref(nextDay, today)} className="py-3 hover:text-ink hover:underline hover:underline-offset-4">
                     {next.kind === "future" ? "Projections, never scored" : "Next games"}
                     {next.games.length > nextGames.length ? ` · all ${next.games.length} games` : ""}
-                  </Link>
+                  </SiteLink>
                 }
               >
                 <CardGrid games={nextGames} lines={teamLines(liveState)} modelVersion={next.modelVersion} modelNote future columns={2} label={`Games on ${formatLongDay(nextDay)}`} />

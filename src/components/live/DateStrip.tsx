@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { DateJump } from "@/components/live/DateJump";
 import { addDays } from "@/lib/season/dates";
 import { formatShortDay, formatWeekday } from "@/lib/utils/dates";
@@ -39,7 +39,7 @@ export function DateStrip({
             const label = `${formatWeekday(day)} ${formatShortDay(day)}`;
             return (
               <li key={day} className={Math.abs(offset) === 3 ? "hidden lg:block" : ""}>
-                <Link
+                <SiteLink
                   href={dayHref(day, today)}
                   aria-current={active ? "date" : undefined}
                   aria-label={`${day === today ? "Today, " : ""}${label}: ${count === 0 ? "no games" : `${count} ${count === 1 ? "game" : "games"}`}`}
@@ -50,7 +50,7 @@ export function DateStrip({
                   <span className="hidden text-[12px] font-normal text-ink-2 md:inline">
                     {count === 0 ? "No games" : `${count} ${count === 1 ? "game" : "games"}`}
                   </span>
-                </Link>
+                </SiteLink>
               </li>
             );
           })}

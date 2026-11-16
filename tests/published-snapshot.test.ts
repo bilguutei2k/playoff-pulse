@@ -257,3 +257,50 @@ describe("the health endpoint's reader", () => {
     expect(snapshot.games.length).toBeGreaterThan(0);
   });
 });
+
+describe("delivery: which copy a render shows", () => {
+  it("is current at the head", async () => {
+    const { p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    expect(await p.getDelivery()).toEqual({ delivery: "current", commit: A, head: A, problem: null });
+    render.memoize = false;
+    expect((await p.getLiveHealthSnapshot()).delivery).toBe("current");
+  });
+
+  it("is older on the last complete snapshot when the head fails or is unknown", async () => {
+    const { site, p, later } = await serve(
+      { [A]: publication("2026-11-06T07:50:00Z", 0.111), [B]: publication("2026-11-06T08:00:00Z", 0.222) },
+      A,
+    );
+    await p.getDelivery();
+    site.head = B;
+    site.faults[`${B}:${MONTH}`] = "down";
+    later();
+    expect(await p.getDelivery()).toMatchObject({ delivery: "older", commit: A, head: B, problem: expect.stringContaining(MONTH) });
+    site.refsDown = true;
+    later();
+    expect(await p.getDelivery()).toMatchObject({ delivery: "older", commit: A, head: null });
+    render.memoize = false;
+    expect((await p.getLiveHealthSnapshot()).delivery).toBe("older");
+  });
+
+  it("is stored on the bundled copy when no snapshot was ever complete", async () => {
+    const { site, p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    site.faults[`${A}:state.json`] = "down";
+    expect(await p.getDelivery()).toMatchObject({ delivery: "stored", commit: null, head: A });
+    render.memoize = false;
+    expect((await p.getLiveHealthSnapshot()).delivery).toBe("stored");
+  });
+
+  it("is stored under LIVE_DATA_SOURCE=bundled, with nothing fetched", async () => {
+    vi.resetModules();
+    vi.stubEnv("LIVE_DATA_SOURCE", "bundled");
+    vi.stubEnv("LIVE_DATA_REFS_URL", "http://127.0.0.1:9/refs");
+    vi.stubEnv("LIVE_DATA_BASE_URL", "http://127.0.0.1:9");
+    const p = await import("@/lib/live-data/published");
+    expect(await p.getDelivery()).toEqual({ delivery: "stored", commit: null, head: null, problem: null });
+    render.memoize = false;
+    const health = await p.getLiveHealthSnapshot();
+    expect(health.delivery).toBe("stored");
+    expect(health.liveState.generatedAt).toBe(BUNDLED.generatedAt);
+  });
+});

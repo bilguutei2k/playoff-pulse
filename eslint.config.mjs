@@ -15,6 +15,25 @@ const eslintConfig = [
   },
   ...nextVitals,
   ...nextTypeScript,
+  {
+    // Link policy: every in-site link goes through SiteLink, which turns prefetching off
+    // (its header comment gives the measured cost of prefetching request-time pages).
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/components/layout/SiteLink.tsx"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "next/link",
+              message: "Import SiteLink from @/components/layout/SiteLink instead: it keeps prefetching off.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;

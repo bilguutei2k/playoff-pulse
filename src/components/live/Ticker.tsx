@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { AutoRefresh } from "@/components/live/AutoRefresh";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
@@ -77,14 +77,14 @@ export async function Ticker() {
             const status = statusText(game, card.status);
             return (
               <li key={game.id} className={`relative w-[104px] flex-none flex-col gap-[3px] ${VISIBILITY[index]}`}>
-                <Link
+                <SiteLink
                   href={gameHref(game.id)}
                   className="text-[13px] leading-5 after:absolute after:inset-0 hover:underline hover:underline-offset-4"
                   aria-label={`${card.away.shortName} at ${card.home.shortName}, ${status.lead}${status.detail ? ` ${status.detail}` : ""}: game details`}
                 >
                   <b className="font-bold">{status.lead}</b>
                   {status.detail ? <span className="text-ink-2"> {status.detail}</span> : null}
-                </Link>
+                </SiteLink>
                 <Row side={card.away} />
                 <Row side={card.home} />
                 <span className="mt-1">
@@ -100,9 +100,9 @@ export async function Ticker() {
             );
           })}
         </ul>
-        <Link href="/" className="inline-flex min-h-11 shrink-0 items-center self-center text-[13px] font-bold hover:underline hover:underline-offset-4">
+        <SiteLink href="/" className="inline-flex min-h-11 shrink-0 items-center self-center text-[13px] font-bold hover:underline hover:underline-offset-4">
           All {view.games.length} games
-        </Link>
+        </SiteLink>
       </div>
       {anyLive ? <AutoRefresh live /> : null}
     </nav>

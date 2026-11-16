@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { TeamLink } from "@/components/live/TeamLink";
 import { titleOddsChange } from "@/lib/season/history";
 import type { LiveState, RecordSummary } from "@/lib/season/types";
@@ -47,24 +47,24 @@ export function Standfirst({ record, favorites }: { record: RecordSummary; favor
         </span>
       </p>
       <p className="mt-1 flex flex-wrap gap-x-6 text-[14px] font-bold">
-        <Link href="/how-it-works" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
+        <SiteLink href="/how-it-works" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
           How it works
           <span aria-hidden className="ml-[0.3em]">
             →
           </span>
-        </Link>
-        <Link href="/record" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
+        </SiteLink>
+        <SiteLink href="/record" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
           Track record
           <span aria-hidden className="ml-[0.3em]">
             →
           </span>
-        </Link>
-        <Link href="/about" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
+        </SiteLink>
+        <SiteLink href="/about" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4 sm:min-h-8">
           About 548
           <span aria-hidden className="ml-[0.3em]">
             →
           </span>
-        </Link>
+        </SiteLink>
       </p>
     </section>
   );
@@ -86,12 +86,12 @@ export function TitleStrip({ state }: { state: LiveState }) {
           <span className="num">{formatChance(team.champion)}</span>
         </span>
       ))}
-      <Link href="/odds" className="ml-auto inline-flex min-h-11 items-center font-bold hover:underline hover:underline-offset-4">
+      <SiteLink href="/odds" className="ml-auto inline-flex min-h-11 items-center font-bold hover:underline hover:underline-offset-4">
         All odds
         <span aria-hidden className="ml-[0.3em]">
           →
         </span>
-      </Link>
+      </SiteLink>
     </p>
   );
 }
@@ -109,7 +109,7 @@ export function TitleRace({ state, count = 8, headingLevel = 2 }: { state: LiveS
     <section aria-labelledby="title-race">
       <div className="sh">
         <Heading id="title-race">Title race</Heading>
-        <Link href="/odds">All odds</Link>
+        <SiteLink href="/odds">All odds</SiteLink>
       </div>
       <table className="w-full text-[14px]">
         <caption className="sr-only">
@@ -171,7 +171,7 @@ export function RecordGlance({ record, favorites = null }: { record: RecordSumma
     <section aria-labelledby="record-glance">
       <div className="sh">
         <h2 id="record-glance">Track record</h2>
-        <Link href="/record">Full record</Link>
+        <SiteLink href="/record">Full record</SiteLink>
       </div>
       {favorites && favorites.decided > 0 ? (
         <>

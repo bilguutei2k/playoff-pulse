@@ -33,10 +33,10 @@
  *   It is calibrated for Schibsted Grotesk up to weight 900 (lib/view/team-name-widths).
  *
  * Raised links: a card that is one big link keeps that link as a sibling cover
- * (<Link className="absolute inset-0" />) and puts TeamLink raised in the card, so
+ * (<SiteLink className="absolute inset-0" />) and puts TeamLink raised in the card, so
  * links never nest. Hover underlines the name; focus uses the site's focus ring.
  */
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import type { CSSProperties } from "react";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { TEAM_NAME_EM } from "@/lib/view/team-name-widths";
@@ -205,9 +205,9 @@ export function TeamLink({
     );
   }
   return (
-    // No viewport prefetch: a page can show dozens of teams, and each refresh would refetch them all.
-    <Link href={teamHref(teamId)} className={classes} title={title} prefetch={false}>
+    // No prefetch (SiteLink): a page can show dozens of teams, and each would cost an invocation.
+    <SiteLink href={teamHref(teamId)} className={classes} title={title}>
       {content}
-    </Link>
+    </SiteLink>
   );
 }

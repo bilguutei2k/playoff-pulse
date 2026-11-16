@@ -3,8 +3,9 @@
 import { useCallback, useEffect, useState } from "react";
 
 /**
- * Filter state mirrored in the URL's query string. Pages are regenerated statically and
- * cannot read the query, so the server renders `initial` (the defaults); after hydration
+ * Filter state mirrored in the URL's query string. The server render does not read the
+ * query (pages were static when this was written, and a filter change stays client-side),
+ * so the server renders `initial` (the defaults); after hydration
  * the URL's state is applied, Back and Forward re-read it, and changes are written with
  * the History API, which Next's router follows without a server round trip. `parse` and
  * `serialize` must be stable (memoized), since the URL is re-read when they change.

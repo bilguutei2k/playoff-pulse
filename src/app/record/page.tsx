@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import {
   CalibrationChart,
   CalibrationPlaceholder,
@@ -35,14 +35,12 @@ import {
 export const metadata: Metadata = {
   title: "Track record",
   description:
-    "Every 548 forecast is sealed before tip and scored after the final, in public: Brier score, log loss, accuracy, misses and every game, per model version.",
+    "548's public record, per model version: forecasts sealed before tip, scored after the final, with Brier score, log loss, accuracy and every missed seal.",
   alternates: { canonical: "/record" },
 };
 
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 
-// Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
-export const revalidate = 60;
 const LIST_LIMIT = 100;
 
 const fixed = (value: number | null, digits: number) => (value === null ? null : value.toFixed(digits));
@@ -372,9 +370,9 @@ export default async function RecordPage() {
                   reissued, else original morning), so a game sealed in the morning under one revision and finally under
                   the next counts under the next. The revisions cover different games and dates and are not a comparison
                   of policies. The registered injury test covers revision 0&apos;s final-point endpoint only.{" "}
-                  <Link className="pp-link" href="/how-it-works#policy-revisions">
+                  <SiteLink className="pp-link" href="/how-it-works#policy-revisions">
                     What each revision changed
-                  </Link>
+                  </SiteLink>
                   .
                 </p>
               </section>

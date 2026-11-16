@@ -1,7 +1,7 @@
 // The one way the site reads what the live job publishes (data/live/**). The job commits
 // its data to the `live-data` branch, which Vercel never deploys (vercel.json), and pages
-// render with incremental static regeneration and read that branch's files over HTTPS at
-// render time. Scripts keep reading the filesystem.
+// render at request time (`await connection()` in src/app/layout.tsx) and read that
+// branch's files over HTTPS as they render. Scripts keep reading the filesystem.
 //
 // Freshness. raw.githubusercontent.com caches a branch URL for five minutes and ignores
 // query strings, so a cache buster does not work (measured 2026-11-03). Each render
@@ -34,8 +34,13 @@
 // and main's copy has no model views, so those are absent. A render never combines files
 // from two commits. A failed commit is tried again after 15 seconds. Main's data/live
 // stopped at the cutover to live-data, so the bundled copy only gets older: pages say when
-// they show it (`getLiveStateSource`), and /api/live/health reports the head, the commit
-// served and why they differ. Nothing here throws to a page. NBA reports are read from the
+// they show it (`getDelivery`), and /api/live/health reports the head, the commit
+// served, why they differ, and the same `delivery`. Nothing here throws to a page.
+//
+// Delivery, what a reader is told about the copy a render shows (`getDelivery`):
+// "current" when it is the data branch's head; "older" when it is the last complete snapshot
+// of an older commit (the head failed or is unknown); "stored" when it is the copy bundled
+// at build time, including under LIVE_DATA_SOURCE=bundled. NBA reports are read from the
 // bundled copy only (`getReportDay`).
 //
 // Environment overrides: LIVE_DATA_BASE_URL (raw base, default the repository on
@@ -97,6 +102,8 @@ const SNAPSHOT_RETRY_MS = 15_000;
 const LIVE_DIRECTORY = path.join(process.cwd(), "data", "live");
 
 export type DataVia = "network" | "bundled";
+/** Which copy a render shows: the head, an older complete snapshot, or the bundled copy. */
+export type Delivery = "current" | "older" | "stored";
 
 type NetworkSource = {
   kind: "network";
@@ -134,8 +141,9 @@ function sha256(content: Buffer): string {
 }
 
 /**
- * A GET that Next does not track. The patched `fetch` would turn an uncached request into
- * a dynamic render; this keeps pages static between regenerations.
+ * A GET that Next does not track. Pages render at request time anyway (src/app/layout.tsx);
+ * this keeps these reads out of Next's patched `fetch` and its data cache, which the
+ * content-hash cache above replaces.
  */
 function httpGet(url: string, timeoutMs: number): Promise<Buffer> {
   return new Promise((resolve, reject) => {
@@ -644,6 +652,12 @@ async function withFallback<T>(what: string, network: (() => Promise<T>) | null,
 
 const network = (source: Source) => (source.kind === "network" ? source : null);
 
+/** See "Delivery" at the top. A state that fell back to the bundled copy is stored too. */
+function deliveryOf(source: Source, state: DataVia): Delivery {
+  if (source.kind === "bundled" || state === "bundled") return "stored";
+  return source.commit !== null && source.head === source.commit ? "current" : "older";
+}
+
 const loadState = cache(async (): Promise<Loaded<LiveState>> => {
   const source = network(await renderSource());
   return withFallback("state.json", source && (() => fetchPublished(source, "state.json", parseState)), () => bundledState);
@@ -679,6 +693,25 @@ export const getLiveState = cache(async (): Promise<LiveState> => (await loadSta
  * deployment. The bundled copy can be days old, so pages label it.
  */
 export const getLiveStateSource = cache(async (): Promise<DataVia> => (await loadState()).via);
+
+/**
+ * Which copy this render shows ("Delivery" at the top), with the commit it read (null for
+ * the bundled copy), the data branch's head when resolved, and why they differ. The
+ * masthead chip and FreshnessGuard carry `delivery`, so a reader of the served page (the
+ * watchdog) can tell a stored copy from a current one.
+ */
+export const getDelivery = cache(
+  async (): Promise<{ delivery: Delivery; commit: string | null; head: string | null; problem: string | null }> => {
+    const source = await renderSource();
+    const { via } = await loadState();
+    return {
+      delivery: deliveryOf(source, via),
+      commit: source.kind === "network" ? source.commit : null,
+      head: source.head ?? null,
+      problem: source.problem ?? null,
+    };
+  },
+);
 
 /** Every game of the live season, in tip order. Empty if no copy can be read. */
 export const getSeasonGames = cache(async (): Promise<SeasonGame[]> => (await loadGames()).value);
@@ -823,6 +856,8 @@ export const getTeamPlayers = cache(async (teamId: string): Promise<TeamPlayersF
 export async function getLiveHealthSnapshot(): Promise<{
   liveState: LiveState;
   games: SeasonGame[];
+  /** As `getDelivery` says for a page rendered from the same source. */
+  delivery: Delivery;
   data: {
     source: DataVia;
     branch: string | null;
@@ -846,6 +881,7 @@ export async function getLiveHealthSnapshot(): Promise<{
   return {
     liveState,
     games,
+    delivery: deliveryOf(source, source.kind),
     data: {
       source: source.kind,
       branch: source.kind === "network" ? source.branch : null,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
 import { ForecastDashboard } from "@/components/forecast/ForecastDashboard";
 
@@ -30,13 +30,13 @@ export default function SnapshotPage() {
               terminal-state accounting after a finished bracket, not evidence
               of forecasting skill. No game-by-game forecasts were issued
               during the 2026 postseason. For evaluation evidence, see the{" "}
-              <Link href="/evidence" className="underline decoration-2 underline-offset-2">
+              <SiteLink href="/evidence" className="underline decoration-2 underline-offset-2">
                 research archive
-              </Link>{" "}
+              </SiteLink>{" "}
               or the{" "}
-              <Link href="/retrospective" className="underline decoration-2 underline-offset-2">
+              <SiteLink href="/retrospective" className="underline decoration-2 underline-offset-2">
                 retrospective
-              </Link>
+              </SiteLink>
               .
             </p>
           </div>

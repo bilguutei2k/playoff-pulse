@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { usePathname, useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
@@ -255,7 +255,6 @@ export function SiteSearch() {
       "aria-selected": selected,
       tabIndex: -1,
       href: option.href,
-      prefetch: false,
       className: `ss-option${option.kind === "more" ? " ss-option-more" : ""}`,
       onClick: onOptionClick,
       onMouseMove: () => {
@@ -264,7 +263,7 @@ export function SiteSearch() {
     };
     if (option.kind === "team") {
       return (
-        <Link key={option.key} {...common}>
+        <SiteLink key={option.key} {...common}>
           <TeamLogo teamId={option.team.id} size={24} />
           <span className="ss-option-name">
             <Highlight text={option.team.name} span={option.span} />
@@ -272,13 +271,13 @@ export function SiteSearch() {
           <span className="ss-option-meta" aria-hidden="true">
             {option.codeHit ? <mark className="ss-hit">{option.team.code}</mark> : option.team.code}
           </span>
-        </Link>
+        </SiteLink>
       );
     }
     if (option.kind === "player") {
       const team = teamDisplay(option.teamId);
       return (
-        <Link key={option.key} {...common}>
+        <SiteLink key={option.key} {...common}>
           <span className="ss-option-name">
             <Highlight text={option.name} span={option.span} />
             <span className="sr-only">, {team.name}</span>
@@ -287,18 +286,18 @@ export function SiteSearch() {
             <TeamLogo teamId={option.teamId} size={18} />
             {team.code}
           </span>
-        </Link>
+        </SiteLink>
       );
     }
     return (
-      <Link key={option.key} {...common}>
+      <SiteLink key={option.key} {...common}>
         <span className="ss-option-name">
           All {option.total} players matching &ldquo;{trimmed}&rdquo; on the players page
         </span>
         <span className="ss-option-meta" aria-hidden="true">
           &rarr;
         </span>
-      </Link>
+      </SiteLink>
     );
   };
 
@@ -396,13 +395,13 @@ export function SiteSearch() {
             {trimmed && !options.length && !loadingPlayers ? (
               <p className="ss-message">
                 No team or player matches <strong>&ldquo;{trimmed}&rdquo;</strong>. Check the spelling, or browse{" "}
-                <Link href="/teams" className="pp-link" onClick={onOptionClick}>
+                <SiteLink href="/teams" className="pp-link" onClick={onOptionClick}>
                   all teams
-                </Link>{" "}
+                </SiteLink>{" "}
                 and{" "}
-                <Link href="/players" className="pp-link" onClick={onOptionClick}>
+                <SiteLink href="/players" className="pp-link" onClick={onOptionClick}>
                   all players
-                </Link>
+                </SiteLink>
                 .
               </p>
             ) : null}

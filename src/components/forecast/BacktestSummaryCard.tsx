@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { ArrowRight } from "lucide-react";
 import backtestSummary from "../../../docs/backtest/summary.json";
 import { formatNumber } from "@/lib/utils/format";
@@ -27,13 +27,13 @@ export function BacktestSummaryCard() {
         </p>
       </div>
 
-      <Link
+      <SiteLink
         href="/methodology"
         className="pp-button pp-button-primary w-fit"
       >
         View methodology
         <ArrowRight className="h-4 w-4" aria-hidden />
-      </Link>
+      </SiteLink>
     </div>
   );
 }

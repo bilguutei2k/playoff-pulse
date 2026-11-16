@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 
-const NAV_ITEMS = [
+/** The masthead's routes; the watchdog's page probe covers each (tests/live-watchdog.test.ts). */
+export const NAV_ITEMS = [
   { href: "/", label: "Games", matches: ["/", "/games", "/game"] },
   { href: "/odds", label: "Odds", matches: ["/odds"] },
   { href: "/injuries", label: "Injuries", matches: ["/injuries"] },
@@ -30,7 +31,7 @@ export function NavLinks() {
           const active = isActive(pathname, matches);
           return (
             <li key={href}>
-              <Link
+              <SiteLink
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={`inline-flex h-11 items-center whitespace-nowrap text-[15px] font-semibold text-white decoration-2 underline-offset-[9px] ${
@@ -38,7 +39,7 @@ export function NavLinks() {
                 }`}
               >
                 {label}
-              </Link>
+              </SiteLink>
             </li>
           );
         })}
@@ -147,22 +148,22 @@ export function MobileMenu() {
               const active = isActive(pathname, matches);
               return (
                 <li key={href} className="border-b border-white/10">
-                  <Link
+                  <SiteLink
                     href={href}
                     aria-current={active ? "page" : undefined}
                     onClick={() => setOpen(false)}
                     className={`flex h-12 items-center text-[17px] font-semibold text-white ${active ? "underline decoration-2 underline-offset-[6px]" : ""}`}
                   >
                     {label}
-                  </Link>
+                  </SiteLink>
                 </li>
               );
             })}
           </ul>
           <p className="mt-3">
-            <Link href="/about" onClick={() => setOpen(false)} className="inline-flex h-11 items-center text-[14px] text-masthead-2 hover:text-white hover:underline hover:underline-offset-4">
+            <SiteLink href="/about" onClick={() => setOpen(false)} className="inline-flex h-11 items-center text-[14px] text-masthead-2 hover:text-white hover:underline hover:underline-offset-4">
               About 548
-            </Link>
+            </SiteLink>
           </p>
         </nav>
       </div>
