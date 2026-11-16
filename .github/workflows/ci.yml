@@ -1,6 +1,7 @@
 name: CI
 
-# Lint, full verification, and build on every push and pull request.
+# Lint, full verification, build, and the rendering and route checks on the build, on every
+# push and pull request.
 #
 # `corepack pnpm verify` includes scripts/verify/data-snapshot.ts, which pins the
 # frozen 2026 archive. Live data commits (data/live/**) go to the live-data branch,
@@ -48,3 +49,13 @@ jobs:
 
       - name: Build
         run: corepack pnpm build
+
+      # Pages must render at request time: a prerendered page is served to the first reader
+      # after a quiet spell as built at deploy time (scripts/verify/rendering.ts).
+      - name: No page is prerendered
+        run: corepack pnpm verify:rendering
+
+      # The built server on the bundled copy: status codes, 404s, redirects, stamps, private
+      # Cache-Control, and a cold server with the data host unreachable.
+      - name: Route smoke on the production build
+        run: corepack pnpm verify:routes

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
 import { bracketView, outPoints, type BracketSide, type BracketView } from "@/lib/view/bracket";
@@ -258,7 +258,7 @@ export function GameCard({
       <Bracket view={view} />
       <BracketContext view={view} />
       {/* The whole card opens the game; the team links above sit over this cover. */}
-      <Link
+      <SiteLink
         href={gameHref(game.id)}
         className="gc-cover"
         aria-label={cardLabel(view)}

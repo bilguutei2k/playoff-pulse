@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { Ticker } from "@/components/live/Ticker";
@@ -17,9 +17,6 @@ export const metadata: Metadata = {
 };
 
 const CONFERENCES: Conference[] = ["East", "West"];
-
-// Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
-export const revalidate = 60;
 
 export default async function TeamsPage() {
   const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
@@ -57,7 +54,7 @@ export default async function TeamsPage() {
                       key={team.teamId}
                       className={`border-b ${index === 5 || index === 9 ? "border-dashed border-ink-2" : "border-line"}`}
                     >
-                      <Link href={`/teams/${team.slug}`} className="group ti-row py-3 hover:bg-wash">
+                      <SiteLink href={`/teams/${team.slug}`} className="group ti-row py-3 hover:bg-wash">
                         <span className="num text-right text-15 font-bold text-ink-2">
                           <span className="sr-only">{ordinal(index + 1)} in the {conference}: </span>
                           {index + 1}
@@ -80,7 +77,7 @@ export default async function TeamsPage() {
                           <span className="sr-only">, title chance </span>
                           {formatChance(team.champion)}
                         </span>
-                      </Link>
+                      </SiteLink>
                     </li>
                   ))}
                 </ol>
@@ -93,7 +90,7 @@ export default async function TeamsPage() {
           tiebreakers decide seeds in the simulation, so a tied team&apos;s place here can differ from its seed. Playoff
           chance includes winning through the play-in. Odds from {liveState.forecast.iterations.toLocaleString("en-US")}{" "}
           simulations; midseason playoff odds are not claimed to be well calibrated, and no skill is claimed for title
-          odds. <Link href="/odds" className="pp-link">Every team&apos;s odds</Link>
+          odds. <SiteLink href="/odds" className="pp-link">Every team&apos;s odds</SiteLink>
         </p>
       </main>
     </>

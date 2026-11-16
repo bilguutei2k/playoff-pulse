@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   MAX_REFRESHES,
   RETRY_MS,
+  STORED_NOTICE,
   UNVERIFIED_AFTER_MS,
   afterCheck,
   initialGuardState,
@@ -12,13 +13,19 @@ import {
   type HealthReading,
 } from "@/lib/view/freshness";
 import { HEALTH_TIMEOUT_MS, startFreshnessChecks } from "@/lib/view/freshness-checks";
-import { OUT_DEFINITION, TILE_DEFINITION, tileHelp } from "@/lib/view/how-to-read";
+import { OUT_DEFINITION, SEALS_SENTENCE, TILE_DEFINITION, tileHelp } from "@/lib/view/how-to-read";
+import type { Delivery } from "@/lib/live-data/published";
 
 const rendered = "2026-11-09T07:00:00.000Z";
 const at = (minutesLater: number) => new Date(Date.parse(rendered) + minutesLater * 60_000).toISOString();
 const now = (minutesLater: number) => Date.parse(rendered) + minutesLater * 60_000;
-const ok = (generatedAt: string): HealthReading => ({ kind: "answer", status: "ok", generatedAt });
-const stale = (generatedAt: string | null): HealthReading => ({ kind: "answer", status: "stale", generatedAt });
+const ok = (generatedAt: string, delivery: Delivery | null = null): HealthReading => ({ kind: "answer", status: "ok", generatedAt, delivery });
+const stale = (generatedAt: string | null, delivery: Delivery | null = null): HealthReading => ({
+  kind: "answer",
+  status: "stale",
+  generatedAt,
+  delivery,
+});
 const unreachable: HealthReading = { kind: "unreachable" };
 
 /**
@@ -51,8 +58,18 @@ describe("reading the health answer", () => {
   it("reads a 503's body like a 200's: status and stamp", () => {
     // The 503 body /api/live/health sends when the pipeline is behind on a game day.
     const body = JSON.parse(JSON.stringify({ status: "stale", generatedAt: rendered, ageHours: 13.2, slate: "2026-11-09" }));
-    expect(readHealth(body)).toEqual({ kind: "answer", status: "stale", generatedAt: rendered });
+    expect(readHealth(body)).toEqual({ kind: "answer", status: "stale", generatedAt: rendered, delivery: null });
     expect(readHealth({ status: "ok", generatedAt: rendered })).toEqual(ok(rendered));
+  });
+
+  it("reads delivery when present, and null when absent or unknown (an older deployment)", () => {
+    for (const delivery of ["current", "older", "stored"] as const) {
+      expect(readHealth({ status: "stale", generatedAt: rendered, delivery })).toEqual(stale(rendered, delivery));
+      expect(readHealth({ status: "ok", generatedAt: rendered, delivery })).toEqual(ok(rendered, delivery));
+    }
+    expect(readHealth({ status: "stale", generatedAt: rendered })).toEqual(stale(rendered, null));
+    expect(readHealth({ status: "ok", generatedAt: rendered, delivery: "bundled" })).toEqual(ok(rendered, null));
+    expect(readHealth({ status: "ok", generatedAt: rendered, delivery: 1 })).toEqual(ok(rendered, null));
   });
 
   it("treats anything without a readable status, or an ok without a readable stamp, as unreachable", () => {
@@ -166,6 +183,46 @@ describe("the guard's rule", () => {
     expect(afterCheck(stuck.state, at(30), unreachable, now(31)).state.notice).toBeNull();
     const [pipeline] = run([stale(rendered)], now(13 * 60));
     expect(afterCheck(pipeline.state, at(1), unreachable, now(13 * 60)).state.notice).toBe("stale");
+  });
+});
+
+describe("a server that shows an older or stored copy", () => {
+  it("gets the stored-copy notice, not the pipeline notice, when stale with a non-current delivery", () => {
+    for (const delivery of ["older", "stored"] as const) {
+      const [step] = run([stale(rendered, delivery)], now(13 * 60));
+      expect(step.state.notice).toBe("stored");
+      expect(step.action).toBe("none");
+    }
+  });
+
+  it("keeps the pipeline notice for stale with a current delivery, or none given", () => {
+    expect(run([stale(rendered, "current")], now(13 * 60))[0].state.notice).toBe("stale");
+    expect(run([stale(rendered)], now(13 * 60))[0].state.notice).toBe("stale");
+  });
+
+  it("says nothing for a healthy server whose stored copy matches the page", () => {
+    const [step] = run([ok(rendered, "stored")], now(30));
+    expect(step).toEqual({ action: "none", state: { renderedAt: rendered, target: rendered, refreshes: 0, retryAt: null, notice: null }, checkAt: null });
+  });
+
+  it("still refreshes a page the stale server is materially ahead of, under the stored notice", () => {
+    const [step] = run([stale(at(30), "stored")], now(40));
+    expect(step.action).toBe("refresh");
+    expect(step.state.notice).toBe("stored");
+  });
+
+  it("keeps the stored notice on a new copy until an answer clears it", () => {
+    const [shown] = run([stale(rendered, "stored")], now(30));
+    const [next] = run([unreachable], now(31), shown.state, at(1));
+    expect(next.state.notice).toBe("stored");
+    const [cleared] = run([ok(at(1), "current")], now(32), next.state, at(1));
+    expect(cleared.state.notice).toBeNull();
+  });
+
+  it("words the notice as approved", () => {
+    expect(STORED_NOTICE).toBe(
+      "548 could not read the latest forecasts just now; this page shows a stored copy. Reload in a minute.",
+    );
   });
 });
 
@@ -319,16 +376,22 @@ describe("the checks over time", () => {
 describe("how-to-read copy is reused word for word", () => {
   it("keeps the published Tile and Out definitions", () => {
     expect(TILE_DEFINITION).toBe(
-      "Solid: sealed before tip and scored. Outline: the live estimate, from the score and the clock. Dashed: never scored (a provisional number or a projection). Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored.",
+      "Solid: sealed before tip and scored. Outline: the live estimate, from the score and the clock. Dashed: never scored (a provisional number or a projection). Games are sealed in the morning and again in the hour before tip, and the final seal is the one scored. A game without one is scored on its last earlier seal, and a game that tips unsealed is counted as missed.",
     );
     expect(OUT_DEFINITION).toBe(
       "Points of margin each side gives up to players on the NBA injury report, weighted by status. A team that has not filed counts the players who missed its last game. Unknown future injuries, minutes shifting to teammates and matchups are not modeled.",
     );
   });
 
+  it("keeps the approved sealing sentence (docs/claims-ledger.md, live section)", () => {
+    expect(SEALS_SENTENCE).toBe(
+      "Games are sealed in the morning and again in the hour before tip, and the final seal is the one scored. A game without one is scored on its last earlier seal, and a game that tips unsealed is counted as missed.",
+    );
+  });
+
   it("builds each tooltip from the same sentences", () => {
     expect(tileHelp("sealed")).toBe(
-      "Sealed before tip and scored. Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored.",
+      "Sealed before tip and scored. Games are sealed in the morning and again in the hour before tip, and the final seal is the one scored. A game without one is scored on its last earlier seal, and a game that tips unsealed is counted as missed.",
     );
     expect(tileHelp("live")).toBe("The live estimate, from the score and the clock.");
     expect(tileHelp("dash")).toBe("Never scored (a provisional number or a projection).");

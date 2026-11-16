@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { SectionHeading } from "@/components/live/SectionHeading";
 
 /** A player ID that no published file knows (VB-13). The title comes from the page's generateMetadata. */
@@ -6,9 +6,9 @@ export default function PlayerNotFound() {
   return (
     <main className="pp-container pb-16 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
-        <Link href="/players" className="text-ink-2 hover:text-ink">
+        <SiteLink href="/players" className="text-ink-2 hover:text-ink">
           <span aria-hidden>← </span>All players
-        </Link>
+        </SiteLink>
       </nav>
       <SectionHeading as="h1" kicker="Not found" title="No player with that ID" />
       <p className="mt-3 max-w-[64ch] text-15 leading-6 text-ink-2">
@@ -16,9 +16,9 @@ export default function PlayerNotFound() {
         mistyped, or he has not appeared yet.
       </p>
       <p className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-15">
-        <Link href="/players" className="pp-link">All players</Link>
-        <Link href="/injuries" className="pp-link">Injuries</Link>
-        <Link href="/teams" className="pp-link">All teams</Link>
+        <SiteLink href="/players" className="pp-link">All players</SiteLink>
+        <SiteLink href="/injuries" className="pp-link">Injuries</SiteLink>
+        <SiteLink href="/teams" className="pp-link">All teams</SiteLink>
       </p>
     </main>
   );

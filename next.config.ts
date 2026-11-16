@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Pages are regenerated about once a minute (`revalidate = 60` on each route). Without a
-  // bound, the CDN keeps serving a copy past that window while it regenerates in the
-  // background, for up to a year by default: a route nobody had visited for two days was
-  // served to its next visitor as rendered two days earlier (2026-11-09). After this many
-  // seconds past the copy's generation, the CDN renders fresh instead of serving it stale.
+  // Every page renders at request time (`await connection()` in src/app/layout.tsx), so no
+  // page has a build-time copy or a regeneration window. This bound now governs only an
+  // accidental ISR route, which `verify:rendering` (scripts/verify/rendering.ts) fails in CI:
+  // without it, the CDN keeps serving such a copy while it regenerates in the background, for
+  // up to a year by default (a day page rendered 44 hours earlier was served on 2026-11-09).
   // Pages themselves also check for newer data (src/components/live/FreshnessGuard.tsx).
   expireTime: 300,
   // Pages read main's data/live over the network at render time

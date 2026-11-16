@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { notFound } from "next/navigation";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { StatusTag } from "@/components/live/Badge";
@@ -30,15 +30,6 @@ import {
 } from "@/lib/view/players";
 import { teamDisplay } from "@/lib/view/teams";
 import { Ticker } from "@/components/live/Ticker";
-
-// Rendered on demand from the published data and re-rendered about once a minute
-// (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
-export const revalidate = 60;
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-  return [];
-}
 
 type Params = { params: Promise<{ athleteId: string }> };
 
@@ -87,7 +78,7 @@ function CurrentStatusLine({ page, listsPublished }: { page: PlayerPageView; lis
     return (
       <p className="mt-3 text-[14px] text-ink-2">
         Not on his team&apos;s injury list for its next game.{" "}
-        <Link href="/injuries" className="pp-link">Injury report</Link>
+        <SiteLink href="/injuries" className="pp-link">Injury report</SiteLink>
       </p>
     );
   }
@@ -101,9 +92,9 @@ function CurrentStatusLine({ page, listsPublished }: { page: PlayerPageView; lis
       <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <StatusTag tone={view.tone}>{view.label}</StatusTag>
         <span>
-          <Link href={`/game/${next.gameId}`} className="pp-link">
+          <SiteLink href={`/game/${next.gameId}`} className="pp-link">
             {formatWeekday(next.etDate)} {formatShortDay(next.etDate)}, {formatTimeEt(next.tipUtc)}
-          </Link>{" "}
+          </SiteLink>{" "}
           {next.home ? "vs" : "at"} <TeamLink teamId={next.opponentId} className="font-semibold text-ink" />
         </span>
         {reason ? <span>{reason}</span> : null}
@@ -137,9 +128,9 @@ function GameCells({ gameId, etDate, opponentId, home, teamId }: { gameId: strin
   return (
     <>
       <th scope="row" className="whitespace-nowrap bg-panel text-left font-normal group-hover:bg-wash">
-        <Link href={`/game/${gameId}`} className="players-name num text-ink">
+        <SiteLink href={`/game/${gameId}`} className="players-name num text-ink">
           {formatWeekday(etDate)} {formatShortDay(etDate)}
-        </Link>
+        </SiteLink>
       </th>
       <td className="whitespace-nowrap group-hover:bg-wash">
         {teamId ? <TeamLink teamId={teamId} form="code" className="mr-1.5 text-ink-2" /> : null}
@@ -272,8 +263,8 @@ export default async function PlayerPage({ params }: Params) {
           They appear once 548 publishes this season&apos;s player stats.
         </p>
         <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">
-          <Link className="pp-link" href="/players">All players</Link>
-          <Link className="pp-link" href="/teams">All teams</Link>
+          <SiteLink className="pp-link" href="/players">All players</SiteLink>
+          <SiteLink className="pp-link" href="/teams">All teams</SiteLink>
         </p>
       </main>
     );
@@ -293,7 +284,7 @@ export default async function PlayerPage({ params }: Params) {
       <PageStamp generatedAt={generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
-        <Link href="/players" className="text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</Link>
+        <SiteLink href="/players" className="text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</SiteLink>
       </nav>
 
       <header>
@@ -409,7 +400,7 @@ export default async function PlayerPage({ params }: Params) {
                 ? "It is not a reliable ranking of players: the box score cannot see most defence, and the on-court part does not isolate defence or any single skill."
                 : "It cannot see most defence and is not a reliable ranking of players."}{" "}
               The forecast does not use it.{" "}
-              <Link href="/how-it-works#score" className="pp-link">How the 548 score works</Link>
+              <SiteLink href="/how-it-works#score" className="pp-link">How the 548 score works</SiteLink>
             </p>
           </div>
         </div>
@@ -435,7 +426,7 @@ export default async function PlayerPage({ params }: Params) {
                 : noGames
                   ? "He has no box score this season, so it comes from his box scores in earlier seasons of the model's replay, which starts in 2020-21. It does not move minutes to teammates, and it is not a ranking of players."
                   : "It comes from his box scores in the model's replay of the season. It does not move minutes to teammates, and it is not a ranking of players."}{" "}
-              <Link href="/how-it-works#injuries" className="pp-link">How injuries work</Link>
+              <SiteLink href="/how-it-works#injuries" className="pp-link">How injuries work</SiteLink>
             </p>
           </div>
         </div>

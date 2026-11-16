@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
 import { OddsTable } from "@/components/live/OddsTable";
@@ -29,9 +29,6 @@ const PHASE_LABELS: Record<SeasonPhase, string> = {
 };
 
 const CHART_TEAMS = 8;
-
-// Re-rendered about once a minute from main's published data (src/lib/live-data/published.ts).
-export const revalidate = 60;
 
 export default async function OddsPage() {
   const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
@@ -91,9 +88,9 @@ export default async function OddsPage() {
                 ? "Known absences are carried for the games a return table expects them to last, except that one still running when the regular season ends currently costs every playoff game (a known issue); injuries that have not happened yet are not simulated."
                 : "This forecast comes from the model without the injury term."}{" "}
             </span>
-            <Link href="/how-it-works#season-odds" className="pp-link">
+            <SiteLink href="/how-it-works#season-odds" className="pp-link">
               How the season is simulated
-            </Link>
+            </SiteLink>
           </p>
         </section>
 

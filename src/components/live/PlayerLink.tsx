@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { playerHref } from "@/lib/view/players";
 
 /**
@@ -16,12 +16,11 @@ export function PlayerLink({
 }) {
   if (!athleteId) return <span className={className}>{name}</span>;
   return (
-    <Link
+    <SiteLink
       href={playerHref(athleteId)}
-      prefetch={false}
       className={`underline-offset-[3px] hover:underline ${className}`}
     >
       {name}
-    </Link>
+    </SiteLink>
   );
 }

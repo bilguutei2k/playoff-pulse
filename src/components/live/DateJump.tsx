@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarDays } from "lucide-react";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { dayHref, jumpDate } from "@/lib/view/day-nav";
@@ -64,9 +64,9 @@ export function DateJump({
   return (
     <div className="flex shrink-0 items-center gap-4 text-[14px]">
       {selected !== today ? (
-        <Link href="/" className="inline-flex h-11 items-center font-bold text-ink hover:underline hover:underline-offset-4">
+        <SiteLink href="/" className="inline-flex h-11 items-center font-bold text-ink hover:underline hover:underline-offset-4">
           Today
-        </Link>
+        </SiteLink>
       ) : null}
       <span className="relative inline-flex items-center">
         <label htmlFor={id} className="sr-only">

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { ArrowLeft } from "lucide-react";
 import { ArchiveHeader } from "@/components/forecast/ArchiveHeader";
 import backtestSummary from "../../../docs/backtest/summary.json";
@@ -307,13 +307,13 @@ export default function MethodologyPage() {
               </p>
             </div>
             <div className="p-4">
-              <Link
+              <SiteLink
                 href="/retrospective"
                 className="pp-button"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden />
                 Back to retrospective
-              </Link>
+              </SiteLink>
             </div>
           </div>
 

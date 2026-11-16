@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { lostPoints } from "@/components/live/AbsenceList";
@@ -42,15 +42,6 @@ import { conferenceOrder, formatRecord, ordinal, teamBySlug, teamColor } from "@
 
 type Params = { params: Promise<{ abbr: string }> };
 
-// Rendered on demand from main's published data and re-rendered about once a minute
-// (src/lib/live-data/published.ts). No paths are built ahead: data commits do not deploy.
-export const revalidate = 60;
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-  return [];
-}
-
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { abbr } = await params;
   const team = teamBySlug(abbr);
@@ -88,9 +79,9 @@ function NextGameLine({ row, teamShortName }: { row: TeamGameRow; teamShortName:
   return (
     <p className="mt-7 flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-line pt-4 text-15">
       <span className="text-ink-2">Next game</span>
-      <Link href={gameHref(row.game.id)} className="pp-link whitespace-nowrap">
+      <SiteLink href={gameHref(row.game.id)} className="pp-link whitespace-nowrap">
         {live ? "Live now" : `${formatWeekday(row.game.etDate)}, ${formatShortDay(row.game.etDate)}, ${formatTimeEt(row.game.tipUtc)}`}
-      </Link>
+      </SiteLink>
       <span className="inline-flex items-center gap-1.5">
         <span className="text-ink-2">{row.home ? "vs" : "at"}</span>
         <TeamLink teamId={row.opponentId} form="full" logo={20} className="font-semibold" />
@@ -224,10 +215,10 @@ function DateCell({ row, link }: { row: TeamGameRow; link: boolean }) {
   return (
     <td className="whitespace-nowrap">
       {link ? (
-        <Link href={gameHref(row.game.id)} className={GAME_LINK}>
+        <SiteLink href={gameHref(row.game.id)} className={GAME_LINK}>
           {text}
           <span className="sr-only">, game page</span>
-        </Link>
+        </SiteLink>
       ) : (
         text
       )}
@@ -290,10 +281,10 @@ function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; mo
             </th>
             <td className="num whitespace-nowrap">
               {row.result ? (
-                <Link href={gameHref(row.game.id)} className={GAME_LINK}>
+                <SiteLink href={gameHref(row.game.id)} className={GAME_LINK}>
                   <b>{row.result.won ? "W" : "L"}</b> {row.result.teamScore}–{row.result.opponentScore}
                   <span className="sr-only">, game page</span>
-                </Link>
+                </SiteLink>
               ) : null}
             </td>
             <td className="nm">
@@ -502,9 +493,9 @@ export default async function TeamPage({ params }: Params) {
       <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
-          <Link href="/teams" className="text-ink-2 hover:text-ink">
+          <SiteLink href="/teams" className="text-ink-2 hover:text-ink">
             <span aria-hidden>← </span>All teams
-          </Link>
+          </SiteLink>
         </nav>
         <header>
           <div className="flex items-center gap-4">
@@ -553,7 +544,7 @@ export default async function TeamPage({ params }: Params) {
             <section aria-labelledby="odds-title">
               <div className="sh">
                 <h2 id="odds-title">Season odds</h2>
-                <Link href="/odds">Every team&apos;s odds</Link>
+                <SiteLink href="/odds">Every team&apos;s odds</SiteLink>
               </div>
               <dl className="grid grid-cols-2 gap-[22px] sm:grid-cols-4">
                 <OddsFigure label="Make playoffs" value={row.makePlayoffs} color={color} />
@@ -661,7 +652,7 @@ export default async function TeamPage({ params }: Params) {
           <section aria-labelledby="injuries-title" className="mt-16">
             <div className="sh">
               <h2 id="injuries-title">Injury list for the next game</h2>
-              <Link href={injuriesHref(team.id)}>On the injury report</Link>
+              <SiteLink href={injuriesHref(team.id)}>On the injury report</SiteLink>
             </div>
             {injuryBlock ? (
               <>
@@ -681,7 +672,7 @@ export default async function TeamPage({ params }: Params) {
         <section aria-labelledby="roster-title" className="mt-16">
           <div className="sh">
             <h2 id="roster-title">Roster and season stats</h2>
-            <Link href="/players">Every player</Link>
+            <SiteLink href="/players">Every player</SiteLink>
           </div>
           {roster && roster.length > 0 ? (
             <>

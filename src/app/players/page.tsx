@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { PlayersTable } from "@/components/live/PlayersTable";
 import { SectionHeading } from "@/components/live/SectionHeading";
@@ -16,9 +16,6 @@ export const metadata: Metadata = {
   description:
     "Every NBA player this season: games, minutes, points, rebounds, assists, shooting, injury status and the experimental 548 score, a rating from box scores.",
 };
-
-// Re-rendered about once a minute from the published data (src/lib/live-data/published.ts).
-export const revalidate = 60;
 
 /** The default minimum, so the table opens on rotation players. */
 const DEFAULT_MINUTES = 10;
@@ -45,7 +42,7 @@ export default async function PlayersPage() {
               Every player this season, per game played, from {index.storedGames.toLocaleString("en-US")} stored box
               scores{index.throughEtDate ? ` through ${formatLongDay(index.throughEtDate)}` : ""}. Search, filter by
               minutes or team, and sort by any column. Status is his team&apos;s injury list for its next
-              game; the <Link href="/injuries" className="pp-link">injuries page</Link> has every list.
+              game; the <SiteLink href="/injuries" className="pp-link">injuries page</SiteLink> has every list.
             </span>
           ) : undefined
         }
@@ -57,7 +54,7 @@ export default async function PlayersPage() {
             {index.players.some((player) => player.scoreOnCourt !== null)
               ? "It is not a reliable ranking of players; each player's page shows its box-score and on-court parts."
               : "It cannot see most defence and is not a reliable ranking of players."}{" "}
-            <Link href="/how-it-works#score" className="pp-link">About the 548 score</Link>
+            <SiteLink href="/how-it-works#score" className="pp-link">About the 548 score</SiteLink>
           </p>
           <div className="mt-6">
             <PlayersTable
@@ -81,8 +78,8 @@ export default async function PlayersPage() {
             season&apos;s box scores.
           </p>
           <p className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-14">
-            <Link className="pp-link" href="/teams">All teams</Link>
-            <Link className="pp-link" href="/injuries">Injuries</Link>
+            <SiteLink className="pp-link" href="/teams">All teams</SiteLink>
+            <SiteLink className="pp-link" href="/injuries">Injuries</SiteLink>
           </p>
         </div>
       )}

@@ -3,7 +3,8 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { formatAgeShort } from "@/lib/utils/format";
-import { initialGuardState, readHealth, type HealthReading, type NoticeKind } from "@/lib/view/freshness";
+import type { Delivery } from "@/lib/live-data/published";
+import { initialGuardState, readHealth, STORED_NOTICE, type HealthReading, type NoticeKind } from "@/lib/view/freshness";
 import { startFreshnessChecks } from "@/lib/view/freshness-checks";
 
 const TICK_MS = 30_000;
@@ -88,18 +89,24 @@ async function readServer(signal: AbortSignal): Promise<HealthReading> {
 }
 
 /**
- * Mounted in the layout on every page. The copy a reader gets can lag the server: the CDN
- * serves a regenerated route's old copy for up to `expireTime` (next.config.ts), and before
- * that bound existed for days. On arrival, on return to the tab after a minute away, after
- * a back-forward restore and every five minutes while visible, this asks /api/live/health
- * what the server has and applies the rule in src/lib/view/freshness.ts: a newer copy is
- * loaded silently (twice at most, six seconds apart, then a reload notice); a pipeline
- * that is behind gets a notice at once; a healthy server that matches the copy gets
- * nothing, however old the last publish. Each request gives up after ten seconds and
- * counts as unreachable (src/lib/view/freshness-checks.ts). Nothing here touches seals or
- * the record.
+ * Mounted once in the layout on every page. Pages render at request time, so a fresh load
+ * matches the server; the guard remains for a tab left open, a back-forward restore and the
+ * client router cache, where the copy shown can lag it. On arrival, on return to the tab
+ * after a minute away, after a back-forward restore and every five minutes while visible,
+ * this asks /api/live/health what the server has and applies the rule in
+ * src/lib/view/freshness.ts: a newer copy is loaded silently (twice at most, six seconds
+ * apart, then a reload notice); a pipeline that is behind gets a notice at once, and so does
+ * a server showing an older or stored copy, with its own words; a healthy server that
+ * matches the copy gets nothing, however old the last publish. Each request gives up after
+ * ten seconds and counts as unreachable (src/lib/view/freshness-checks.ts). Nothing here
+ * touches seals or the record.
+ *
+ * `delivery` is which copy the layout's render showed (src/lib/live-data/published.ts,
+ * "Delivery"). The rule reads the server's own `delivery` from health, not this prop; the
+ * prop is here so the RSC payload carries "delivery" beside "generatedAt", which the
+ * watchdog's page probe reads (scripts/live/watchdog-decision.mjs).
  */
-export function FreshnessGuard({ generatedAt }: { generatedAt: string }) {
+export function FreshnessGuard({ generatedAt }: { generatedAt: string; delivery: Delivery }) {
   const router = useRouter();
   const pathname = usePathname() ?? "/";
   const { stamp, notice } = useShownStamp(generatedAt);
@@ -173,6 +180,7 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string }) {
             until the next one.
           </>
         ) : null}
+        {notice === "stored" ? STORED_NOTICE : null}
         {notice === "unverified" ? (
           <>
             {age ? (

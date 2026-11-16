@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { ISSUES_URL } from "@/components/layout/SiteFooter";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 
@@ -53,9 +53,9 @@ export default function AboutPage() {
             548 is an independent NBA forecast, live since November 2026. Every game gets a chance of each team winning,
             built from injury-adjusted team ratings, home court, rest and the players on the NBA injury report. The same
             ratings simulate the rest of the season for every team&apos;s{" "}
-            <Link href="/odds" className="pp-link">
+            <SiteLink href="/odds" className="pp-link">
               playoff and title odds
-            </Link>
+            </SiteLink>
             . During a game, a live estimate follows the score and the clock.
           </p>
         </Block>
@@ -63,9 +63,9 @@ export default function AboutPage() {
         <Block id="sealed-title" title="Sealed, then scored">
           <p>
             548 aims to seal each game twice: in the morning, and again in the hour before tip. The{" "}
-            <Link href="/record" className="pp-link">
+            <SiteLink href="/record" className="pp-link">
               record
-            </Link>{" "}
+            </SiteLink>{" "}
             scores the final seal when there is one, otherwise the reissued or original morning seal. A game that tips
             without a seal is counted as missed, and the record shows it.
           </p>
@@ -95,17 +95,17 @@ export default function AboutPage() {
             548 is not betting advice, and it does not make picks. Its numbers are a model&apos;s estimates with known
             limits: it does not foresee injuries that have not happened, how minutes shift between teammates, or
             matchups.{" "}
-            <Link href="/how-it-works" className="pp-link">
+            <SiteLink href="/how-it-works" className="pp-link">
               How it works
-            </Link>{" "}
+            </SiteLink>{" "}
             explains the model, what it leaves out and its known issues.
           </p>
           <p>
             Before the live forecast, 548 forecast the 2026 playoffs from hand-entered data. That work is kept as a
             frozen{" "}
-            <Link href="/retrospective" className="pp-link">
+            <SiteLink href="/retrospective" className="pp-link">
               2026 archive
-            </Link>
+            </SiteLink>
             .
           </p>
         </Block>

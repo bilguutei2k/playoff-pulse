@@ -28,7 +28,7 @@ export default async function OpengraphImage() {
             NBA forecasts, updated through the day.
           </div>
           <div style={{ display: "flex", fontSize: 28, color: "#666666", letterSpacing: -0.5 }}>
-            Every game&apos;s win probability, sealed before tip and scored in public.
+            Win probabilities for every game. Forecasts sealed before tip are scored in public.
           </div>
         </div>
         <div style={{ display: "flex", height: 8, width: 120, background: "#111111" }} />

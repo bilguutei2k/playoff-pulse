@@ -13,7 +13,7 @@ export const TILE_GLYPHS: Record<TileKind, { word: string; text: string }> = {
 };
 
 export const SEALS_SENTENCE =
-  "Each game is sealed in the morning and again in the hour before tip; the final seal is the one scored.";
+  "Games are sealed in the morning and again in the hour before tip, and the final seal is the one scored. A game without one is scored on its last earlier seal, and a game that tips unsealed is counted as missed.";
 
 /** The "Tile" entry of "How to read a card": the three styles, then how sealing works. */
 export const TILE_DEFINITION = `${TILE_GLYPHS.sealed.word}: ${TILE_GLYPHS.sealed.text} ${TILE_GLYPHS.live.word}: ${TILE_GLYPHS.live.text} ${TILE_GLYPHS.dash.word}: ${TILE_GLYPHS.dash.text} ${SEALS_SENTENCE}`;
@@ -22,7 +22,7 @@ export const TILE_DEFINITION = `${TILE_GLYPHS.sealed.word}: ${TILE_GLYPHS.sealed
 export const OUT_DEFINITION =
   "Points of margin each side gives up to players on the NBA injury report, weighted by status. A team that has not filed counts the players who missed its last game. Unknown future injuries, minutes shifting to teammates and matchups are not modeled.";
 
-/** "Sealed before tip and scored. Each game is sealed…": one tile's meaning as a tooltip. */
+/** "Sealed before tip and scored. Games are sealed…": one tile's meaning as a tooltip. */
 export function tileHelp(kind: TileKind): string {
   const { text } = TILE_GLYPHS[kind];
   const sentence = text.charAt(0).toUpperCase() + text.slice(1);

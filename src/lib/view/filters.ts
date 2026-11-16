@@ -1,9 +1,9 @@
 // Filter state the injuries and players pages keep in the URL, so a view can be shared
-// and Back restores the previous one. Pages are regenerated statically and cannot read
-// the query, so the server renders the defaults and the client applies the URL after
-// hydration (src/components/live/useQueryState.ts). Parsing is forgiving: anything
-// unknown falls back to its default and a malformed query renders the default view with
-// no error. Serializing omits defaults, so the plain route stays the plain route. Teams
+// and Back restores the previous one. The server render does not read the query (a
+// filter change stays client-side), so the server renders the defaults and the client
+// applies the URL after hydration (src/components/live/useQueryState.ts). Parsing is
+// forgiving: anything unknown falls back to its default and a malformed query renders the
+// default view with no error. Serializing omits defaults, so the plain route stays the plain route. Teams
 // travel as codes ("DET"), never as ESPN ids. Tests: tests/view-filters.test.ts.
 
 import type { StatusFilterKey } from "@/lib/view/players";

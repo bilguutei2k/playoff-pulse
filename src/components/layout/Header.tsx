@@ -1,9 +1,9 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { Mark548 } from "@/components/brand/Mark548";
 import { FreshnessChip } from "@/components/layout/FreshnessChip";
 import { MobileMenu, NavLinks } from "@/components/layout/NavLinks";
 import { SiteSearch } from "@/components/layout/SiteSearch";
-import { getLiveState, getLiveStateSource } from "@/lib/live-data/published";
+import { getDelivery, getLiveState } from "@/lib/live-data/published";
 
 /**
  * The black masthead on every page: the mark, the nav, how old the published state is
@@ -12,24 +12,24 @@ import { getLiveState, getLiveStateSource } from "@/lib/live-data/published";
  * wraps onto two lines on the narrowest phones rather than crowding the buttons.
  */
 export async function Header() {
-  const [liveState, source] = await Promise.all([getLiveState(), getLiveStateSource()]);
+  const [liveState, { delivery }] = await Promise.all([getLiveState(), getDelivery()]);
   return (
     <header data-masthead className="sticky top-0 z-40 bg-masthead text-white">
       <div className="pp-container flex h-14 items-center gap-3 sm:gap-6 lg:h-[68px] lg:gap-8 xl:gap-14">
-        <Link href="/" className="flex min-h-11 shrink-0 items-center" aria-label="548, NBA forecasts: today's games">
+        <SiteLink href="/" className="flex min-h-11 shrink-0 items-center" aria-label="548, NBA forecasts: today's games">
           <span className="lg:hidden">
             <Mark548 height={26} tone="light" />
           </span>
           <span className="hidden lg:block">
             <Mark548 height={34} tone="light" />
           </span>
-        </Link>
+        </SiteLink>
         <div className="hidden min-w-0 flex-1 lg:block">
           <NavLinks />
         </div>
         <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-4 lg:gap-5">
           <div className="min-w-0">
-            <FreshnessChip iso={liveState.generatedAt} stored={source === "bundled"} />
+            <FreshnessChip iso={liveState.generatedAt} delivery={delivery} />
           </div>
           <SiteSearch />
           <div className="lg:hidden">

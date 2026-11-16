@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { TeamLink } from "@/components/live/TeamLink";
 import { gameHref } from "@/lib/view/routes";
 import type { NextGameBar } from "@/lib/view/team-page";
@@ -62,7 +62,7 @@ export function TeamNextGames({
               const opponent = teamDisplay(entry.opponentId);
               return (
                 <li key={entry.gameId} className={`tng-col ${index >= NEXT_GAMES_ON_PHONE ? "tng-late" : ""}`}>
-                  <Link
+                  <SiteLink
                     href={gameHref(entry.gameId)}
                     className="tng-game"
                     aria-label={`${entry.date}, ${entry.home ? "vs" : "at"} ${opponent.name}: ${entry.percent}%, ${entry.sealed ? "sealed" : "projection, never scored"}`}
@@ -78,7 +78,7 @@ export function TeamNextGames({
                         <span className="tng-pct num">{entry.percent}</span>
                       </span>
                     </span>
-                  </Link>
+                  </SiteLink>
                   <span className="tng-opp">
                     {entry.home ? null : (
                       <span aria-hidden className="tng-at">
@@ -98,9 +98,9 @@ export function TeamNextGames({
       </div>
       {hiddenOnPhone > 0 ? (
         <p className="mt-3 text-13 sm:hidden">
-          <Link href={scheduleHref} className="pp-link">
+          <SiteLink href={scheduleHref} className="pp-link">
             {hiddenOnPhone} more {hiddenOnPhone === 1 ? "game" : "games"} in the schedule
-          </Link>
+          </SiteLink>
         </p>
       ) : null}
     </figure>

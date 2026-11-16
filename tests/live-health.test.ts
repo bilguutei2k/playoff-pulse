@@ -5,12 +5,14 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 const fixtures = vi.hoisted(() => ({
   games: [] as { etDate: string; status: string }[],
   generatedAt: "2026-11-05T00:00:00Z",
+  delivery: "current" as "current" | "older" | "stored",
 }));
 vi.mock("@/lib/live-data/published", () => ({
   getLiveHealthSnapshot: async () => ({
     liveState: { generatedAt: fixtures.generatedAt, nextSlateEtDate: "2026-11-02", modelVersion: "test", notes: [] },
     games: fixtures.games,
-    data: { source: "network" },
+    delivery: fixtures.delivery,
+    data: { source: fixtures.delivery === "stored" ? "bundled" : "network" },
   }),
 }));
 import { GET } from "@/app/api/live/health/route";
@@ -47,5 +49,31 @@ describe("health uses the published schedule", () => {
     fixtures.generatedAt = "garbage";
     expect((await GET()).status).toBe(503);
     fixtures.generatedAt = "2026-11-05T00:00:00Z";
+  });
+});
+
+describe("health says which copy it shows", () => {
+  it.each(["current", "older", "stored"] as const)("reports delivery %s at the top level, beside the unchanged fields", async (delivery) => {
+    at("2026-11-05T20:00:00Z");
+    fixtures.games = [];
+    fixtures.delivery = delivery;
+    const response = await GET();
+    const body = await response.json();
+    expect(body).toMatchObject({ status: "ok", generatedAt: "2026-11-05T00:00:00Z", delivery, slate: "2026-11-05" });
+    expect(Object.keys(body)).toEqual(["status", "generatedAt", "ageHours", "slate", "modelVersion", "notes", "delivery", "data", "deployment"]);
+    expect(response.status).toBe(200);
+    fixtures.delivery = "current";
+  });
+
+  it("keeps the 503 for old data whatever the delivery: a stored copy says why, not that it is fine", async () => {
+    at("2026-11-05T20:00:00Z");
+    fixtures.games = [{ etDate: "2026-11-05", status: "scheduled" }];
+    for (const delivery of ["current", "older", "stored"] as const) {
+      fixtures.delivery = delivery;
+      const response = await GET();
+      expect(response.status).toBe(503);
+      expect(await response.json()).toMatchObject({ status: "stale", delivery });
+    }
+    fixtures.delivery = "current";
   });
 });

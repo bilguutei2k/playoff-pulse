@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 
 export const metadata = { title: "Page not found", robots: { index: false } };
@@ -25,12 +25,12 @@ export default function NotFound() {
       <ul className="mt-8 grid max-w-3xl border-t-2 border-ink sm:grid-cols-2 sm:gap-x-8">
         {DESTINATIONS.map(({ href, label, note }) => (
           <li key={href} className="border-b border-line">
-            <Link href={href} className="group flex min-h-11 flex-col justify-center py-3">
+            <SiteLink href={href} className="group flex min-h-11 flex-col justify-center py-3">
               <span className="text-17 font-semibold group-hover:underline group-hover:underline-offset-4">
                 {label} <span aria-hidden>→</span>
               </span>
               <span className="text-[13px] text-ink-2">{note}</span>
-            </Link>
+            </SiteLink>
           </li>
         ))}
       </ul>

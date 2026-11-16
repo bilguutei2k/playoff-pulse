@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { useCallback, useId, useMemo } from "react";
 import { InjuryTable } from "@/components/live/InjuryTable";
 import { QueryWaitScript, useHydrated } from "@/components/live/PlayersTable";
@@ -136,9 +136,9 @@ export function InjuryReport({
                         <TeamLink teamId={game.homeId} form="full" logo={18} />
                       </h3>
                       <p className="num text-13 text-ink-2">{game.time}</p>
-                      <Link href={`/game/${game.gameId}`} className="pp-link ml-auto inline-flex min-h-11 items-center text-13 sm:min-h-0">
+                      <SiteLink href={`/game/${game.gameId}`} className="pp-link ml-auto inline-flex min-h-11 items-center text-13 sm:min-h-0">
                         Game page
-                      </Link>
+                      </SiteLink>
                     </header>
                     <div className={`grid gap-x-10 ${sides.length === 2 ? "lg:grid-cols-2" : ""}`}>
                       {sides.map((block) => (

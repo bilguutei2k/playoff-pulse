@@ -23,13 +23,46 @@
 //             as in scripts/live/chain-decision.sh).
 //   paused    live-forecast was disabled by hand, which is how the chain is stopped: no
 //             dispatch, no alerts.
-//   pages     (pageFreshnessAlerts) What readers get: a GET of `/`, `/record` and
-//             yesterday's day page as the CDN serves them, each compared with
-//             /api/live/health, which is never cached. A copy whose state stamp is more
-//             than 30 minutes behind the server's, or served with an `age` header over
-//             30 minutes, is reported once per day per route. On 2026-11-09 a day page
-//             was served as rendered 44 hours earlier while the homepage was current;
-//             `expireTime` (next.config.ts) now bounds that, and this probe observes it.
+//   site      (siteAlerts, on the probe planned by probePlan) What readers get, judged by the
+//             quiet-period rule at the top of src/lib/view/freshness.ts: a page whose state
+//             stamp matches a healthy /api/live/health is fine however long ago that state
+//             was published, so nothing is judged on age or on the `age` header. Each key
+//             names one cause and stays the same while the cause lasts:
+//               site-behind-publication  health's generatedAt is more than 15 minutes behind
+//                                        live-data's state.json (read from git): the server
+//                                        is not delivering what was published.
+//               site-stored-copy         health says delivery "stored": the server is
+//                                        rendering the copy bundled at build time.
+//               health-unknown           health could not be read; no page is then compared
+//                                        with it.
+//               page-behind-<path>-<kind>          the page's stamp is more than 15 minutes
+//                                                  behind health's (page and health render
+//                                                  from the same state within seconds).
+//               page-cached-<path>-<kind>          x-vercel-cache PRERENDER, HIT or STALE:
+//                                                  every page renders at request time, so a
+//                                                  cached copy is a regression.
+//               page-stamp-unreadable-<path>-<kind> a 200 without a readable stamp.
+//               page-error-<path>-<kind>           a status other than 200, or no answer.
+//             <kind> is `html` (a plain GET) or `rsc` (the same URL with `RSC: 1`, which is
+//             what a client-side navigation fetches). Before 2026-11-16 every page route was
+//             a static prerender, and Vercel served the build-time copy of a quiet route
+//             (`PRERENDER`, issues #25 to #33); `/` and `/record` were 2,710 minutes behind.
+//
+//             Seen twice. A publication takes some seconds to reach every server instance
+//             (each keeps the data branch's head for 15 seconds, HEAD_TTL_MS in
+//             src/lib/live-data/published.ts), so a reading taken just after one can show
+//             health on the previous publication, or a page and health on either side of
+//             it; after quiet hours that looks hours behind. `site-behind-publication` and
+//             `page-behind-*` therefore count only when a second reading of the site,
+//             PROBE_LIMITS.recheckSeconds later, shows them too (mustPersist,
+//             settledSiteAlerts); the runner reads again only when the first reading
+//             shows one.
+//
+// The probe (probePlan): PROBE_ROUTES (the nav, the footer's /about and the five archive
+// pages; tests/live-watchdog.test.ts keeps it equal to the links the site shows) plus
+// yesterday's ET day page. Each run reads health, `/` and one rotating route as HTML; the
+// run whose UTC minute is under 15 also reads both as RSC. PROBE_ALL=1 reads every route
+// in both forms (the production acceptance check after a deploy).
 
 export const LIMITS = Object.freeze({
   idleMinutes: 25,
@@ -40,8 +73,35 @@ export const LIMITS = Object.freeze({
   failureStreak: 3,
 });
 
-/** The page probe: routes a reader lands on cold, and how far behind the server a copy may be. */
-export const PAGE_LIMITS = Object.freeze({ staleMinutes: 30, paths: ["/", "/record"] });
+/**
+ * Every route the site links from its nav and footer. Yesterday's day page is added at run
+ * time (probeRoutes). tests/live-watchdog.test.ts fails when a nav or footer link is missing.
+ */
+export const PROBE_ROUTES = Object.freeze([
+  "/",
+  "/odds",
+  "/injuries",
+  "/players",
+  "/teams",
+  "/record",
+  "/how-it-works",
+  "/about",
+  "/retrospective",
+  "/snapshot",
+  "/evidence",
+  "/methodology",
+  "/lab",
+]);
+
+/**
+ * The probe's limits: how far behind (minutes) health may be of the publication and a page
+ * of health, the rotation step, the UTC minutes of the hour in which RSC is read too, and
+ * how long the runner waits before the second reading that a "behind" condition needs.
+ */
+export const PROBE_LIMITS = Object.freeze({ behindMinutes: 15, rotationMinutes: 15, rscBeforeMinute: 15, recheckSeconds: 45 });
+
+/** x-vercel-cache values that mean a stored copy was served instead of a render. */
+const CACHED = new Set(["PRERENDER", "HIT", "STALE"]);
 
 /** The v2 model's version and the first ET date it sealed (2026-11-02). */
 export const V2 = Object.freeze({ modelVersion: "live-2026.27-v2", firstEtDate: "2026-11-02" });
@@ -167,53 +227,174 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
   return { paused: false, dispatch, active, recent, streak, alerts };
 }
 
+const ET_DATE = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
+
+/** PROBE_ROUTES plus the day page of the ET date 24 hours before `now`. */
+export function probeRoutes(now) {
+  const time = Date.parse(now);
+  if (!Number.isFinite(time)) throw new Error(`Invalid watchdog clock: ${now}`);
+  return [...PROBE_ROUTES, `/games/${ET_DATE.format(new Date(time - 86_400_000))}`];
+}
+
+/** The route this run reads beside `/`: index floor(now / 15 min) mod the route count. */
+export function rotationIndex(nowMs, count) {
+  return Math.floor(nowMs / (PROBE_LIMITS.rotationMinutes * MINUTE)) % count;
+}
+
 /**
- * The state stamp a served page carries: the masthead chip's
- * `<time datetime="…" data-state-stamp>` (src/components/layout/FreshnessChip.tsx), or null
- * when the HTML has none.
+ * What one run reads, in order: `/` and the rotating route as HTML, plus both as RSC when
+ * the UTC minute is under 15; with `all`, every route in both forms.
+ * @param {{now: string, all?: boolean}} input
+ * @returns {Array<{path: string, kind: "html" | "rsc"}>}
+ */
+export function probePlan({ now, all = false }) {
+  const routes = probeRoutes(now);
+  const time = Date.parse(now);
+  if (all) return routes.flatMap((path) => [{ path, kind: "html" }, { path, kind: "rsc" }]);
+  const paths = [...new Set(["/", routes[rotationIndex(time, routes.length)]])];
+  const kinds = new Date(time).getUTCMinutes() < PROBE_LIMITS.rscBeforeMinute ? ["html", "rsc"] : ["html"];
+  return kinds.flatMap((kind) => paths.map((path) => ({ path, kind })));
+}
+
+/**
+ * The state stamp a served page's HTML carries: the masthead chip's
+ * `<time dateTime="…" data-state-stamp="" data-state-delivery="…">`
+ * (src/components/layout/FreshnessChip.tsx), or null when the HTML has none. `delivery` is
+ * null when the chip does not say.
+ * @returns {{generatedAt: string, delivery: string | null} | null}
  */
 export function renderedStamp(html) {
   for (const match of String(html ?? "").matchAll(/<time\b([^>]*)>/gi)) {
     const attributes = match[1];
     if (!/\bdata-state-stamp\b/i.test(attributes)) continue;
     const stamp = /\bdatetime="([^"]*)"/i.exec(attributes);
-    return stamp && stamp[1] ? stamp[1] : null;
+    if (!stamp || !stamp[1]) return null;
+    const delivery = /\bdata-state-delivery="([^"]*)"/i.exec(attributes);
+    return { generatedAt: stamp[1], delivery: delivery && delivery[1] ? delivery[1] : null };
   }
   return null;
 }
 
 /**
- * Alerts for served pages that lag the server. `health` is /api/live/health's body (its
- * `generatedAt` is the state the server has now), or null when it could not be read; each
- * page is one GET as a reader gets it: `status`, the `age` header in seconds (or null),
- * `x-vercel-cache` (or null) and the stamp from its HTML (`renderedAt`, or null).
+ * The state stamp of an RSC payload (a GET with `RSC: 1`): the layout's FreshnessGuard and
+ * each page's PageStamp render from one state in one request, so every `"generatedAt":"…"`
+ * in it must be the same readable time; otherwise (none, or two differing) null.
+ * `delivery` is the payload's `"delivery":"…"` when every one agrees, else null.
+ * @returns {{generatedAt: string, delivery: string | null} | null}
+ */
+export function rscStamp(text) {
+  const source = String(text ?? "");
+  const stamps = new Set([...source.matchAll(/"generatedAt":"([^"]*)"/g)].map((match) => match[1]));
+  if (stamps.size !== 1) return null;
+  const [generatedAt] = stamps;
+  if (!Number.isFinite(Date.parse(generatedAt))) return null;
+  const deliveries = new Set([...source.matchAll(/"delivery":"([^"]*)"/g)].map((match) => match[1]));
+  return { generatedAt, delivery: deliveries.size === 1 ? [...deliveries][0] : null };
+}
+
+const minutesBetween = (later, earlier) => (Date.parse(later) - Date.parse(earlier)) / MINUTE;
+
+/**
+ * Alerts for what readers get (the keys are listed at the top of this file).
+ * @param {object} input
+ * @param {object | null} input.health /api/live/health's body, whatever its HTTP status
+ *   (a 503 still says what the server has), or null when it could not be read.
+ * @param {string | null} [input.healthProblem] Why health could not be read.
+ * @param {string | null} input.publication live-data's state.json `generatedAt`, or null.
+ * @param {Array<{path: string, kind: "html" | "rsc", status: number | null, error?: string | null,
+ *   stamp: {generatedAt: string, delivery: string | null} | null, cache: string | null}>} input.pages
+ *   One GET per planned read; `status` null with `error` when it got no answer.
  * @returns {Array<{key: string, text: string}>}
  */
-export function pageFreshnessAlerts({ health, pages }) {
-  const serverStamp = health && typeof health.generatedAt === "string" ? health.generatedAt : null;
-  const serverAt = serverStamp === null ? NaN : Date.parse(serverStamp);
+export function siteAlerts({ health, healthProblem = null, publication, pages }) {
   const alerts = [];
-  for (const page of pages) {
-    if (page.status !== 200 || page.renderedAt === null) {
+  const serverStamp = health && typeof health.generatedAt === "string" && Number.isFinite(Date.parse(health.generatedAt)) ? health.generatedAt : null;
+  if (serverStamp === null) {
+    const why = healthProblem ?? (health ? "its answer has no readable generatedAt" : "no answer");
+    alerts.push({
+      key: "health-unknown",
+      text: `Could not read /api/live/health (${why}), so no served page was compared with the server.`,
+    });
+  } else {
+    const data = health.data && typeof health.data === "object" ? health.data : {};
+    const where = `delivery ${health.delivery ?? "(none)"}, data.commit ${data.commit ?? "null"}, data.head ${data.head ?? "null"}, data.problem ${data.problem ?? "null"}`;
+    if (publication !== null && Number.isFinite(Date.parse(publication))) {
+      const behind = minutesBetween(publication, serverStamp);
+      if (behind > PROBE_LIMITS.behindMinutes) {
+        alerts.push({
+          key: "site-behind-publication",
+          text: `/api/live/health serves state from ${serverStamp}, ${Math.round(behind)} minutes behind live-data's state.json (${publication}); the limit is ${PROBE_LIMITS.behindMinutes} minutes (${where}).`,
+        });
+      }
+    }
+    if (health.delivery === "stored") {
       alerts.push({
-        key: `unreadable-page-${page.path}`,
-        text: `GET ${page.path} returned ${page.status}${page.renderedAt === null ? " with no state stamp in the page" : ""}, so its freshness could not be checked.`,
+        key: "site-stored-copy",
+        text: `/api/live/health says the server is rendering the stored copy bundled at build time, state from ${serverStamp} (${where}).`,
+      });
+    }
+  }
+
+  for (const page of pages) {
+    const name = `${page.path}-${page.kind}`;
+    const request = `GET ${page.path}${page.kind === "rsc" ? " (RSC)" : ""}`;
+    if (page.status !== null && page.cache && CACHED.has(page.cache.trim().toUpperCase())) {
+      alerts.push({
+        key: `page-cached-${name}`,
+        text: `${request} was served from a stored copy (x-vercel-cache ${page.cache}); every page should render at request time.`,
+      });
+    }
+    if (page.status !== 200) {
+      alerts.push({
+        key: `page-error-${name}`,
+        text: page.status === null ? `${request} got no answer: ${page.error ?? "unknown error"}.` : `${request} returned ${page.status}.`,
       });
       continue;
     }
-    const renderedAt = Date.parse(page.renderedAt);
-    const lagMinutes = Number.isFinite(serverAt) && Number.isFinite(renderedAt) ? (serverAt - renderedAt) / MINUTE : null;
-    const lagging = lagMinutes !== null && lagMinutes > PAGE_LIMITS.staleMinutes;
-    const oldCopy = page.age !== null && Number.isFinite(page.age) && page.age > PAGE_LIMITS.staleMinutes * 60;
-    if (!lagging && !oldCopy) continue;
-    const served = page.age !== null ? ` (age ${page.age} s, x-vercel-cache ${page.cache ?? "none"})` : "";
-    const behind = lagMinutes !== null ? `, ${Math.round(lagMinutes)} minutes behind the server's ${serverStamp}` : "";
-    alerts.push({
-      key: `stale-page-${page.path}`,
-      text: `GET ${page.path} served a copy whose state is from ${page.renderedAt}${behind}${served}; the limit is ${PAGE_LIMITS.staleMinutes} minutes.`,
-    });
+    const pageStamp = page.stamp && Number.isFinite(Date.parse(page.stamp.generatedAt)) ? page.stamp.generatedAt : null;
+    if (pageStamp === null) {
+      alerts.push({
+        key: `page-stamp-unreadable-${name}`,
+        text: `${request} returned 200 without a readable state stamp${page.stamp ? ` (${page.stamp.generatedAt})` : ""}, so its freshness could not be checked.`,
+      });
+      continue;
+    }
+    if (serverStamp === null) continue;
+    const behind = minutesBetween(serverStamp, pageStamp);
+    if (behind > PROBE_LIMITS.behindMinutes) {
+      alerts.push({
+        key: `page-behind-${name}`,
+        text: `${request} showed state from ${pageStamp} (delivery ${page.stamp.delivery ?? "(none)"}, x-vercel-cache ${page.cache ?? "none"}), ${Math.round(behind)} minutes behind the server's ${serverStamp}; the limit is ${PROBE_LIMITS.behindMinutes} minutes.`,
+      });
+    }
   }
   return alerts;
+}
+
+/**
+ * True for the conditions a publication that landed seconds ago can cause without any
+ * fault ("Seen twice" at the top of this file): they count only when two readings agree.
+ */
+export function mustPersist(key) {
+  return key === "site-behind-publication" || key.startsWith("page-behind-");
+}
+
+/**
+ * The site alerts of a run that read the site twice. A condition that must persist counts
+ * only when both readings show it; every other condition counts from either reading, once.
+ * The second reading's alerts keep their order and text; what only the first reading
+ * showed follows.
+ * @param {Array<{key: string, text: string}>} first
+ * @param {Array<{key: string, text: string}>} second
+ * @returns {Array<{key: string, text: string}>}
+ */
+export function settledSiteAlerts(first, second) {
+  const firstKeys = new Set(first.map((alert) => alert.key));
+  const secondKeys = new Set(second.map((alert) => alert.key));
+  return [
+    ...second.filter((alert) => !mustPersist(alert.key) || firstKeys.has(alert.key)),
+    ...first.filter((alert) => !mustPersist(alert.key) && !secondKeys.has(alert.key)),
+  ];
 }
 
 /** The keys a watchdog issue or comment already reported, from its hidden markers. */

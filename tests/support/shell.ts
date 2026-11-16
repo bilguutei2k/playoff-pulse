@@ -14,7 +14,7 @@ export function liveScript(name: string): string {
 
 // Variables a developer's shell or a CI runner may set that would change what the scripts
 // or git do. Tests pass the ones a script needs explicitly.
-const DROPPED = /^(GIT_|GITHUB_|DATA_|RUNNER_|GH_|DRY_RUN$|HEALTH_FILE$|STATE_FILE$|SITE_URL$|LAG_MINUTES$|ALERT_DATE$)/;
+const DROPPED = /^(GIT_|GITHUB_|DATA_|RUNNER_|GH_|DRY_RUN$|HEALTH_FILE$|STATE_FILE$|SITE_URL$|PROBE_ALL$|LAG_MINUTES$|ALERT_DATE$)/;
 
 export function cleanEnv(extra: Record<string, string> = {}): NodeJS.ProcessEnv {
   const env: NodeJS.ProcessEnv = { ...process.env };

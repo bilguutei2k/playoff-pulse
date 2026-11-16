@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { ArrowRight } from "lucide-react";
 
 export function MethodologyNote() {
@@ -36,13 +36,13 @@ export function MethodologyNote() {
         ))}
       </div>
 
-      <Link
+      <SiteLink
         href="/methodology"
         className="pp-button pp-button-primary w-fit"
       >
         Open methodology
         <ArrowRight className="h-4 w-4" aria-hidden />
-      </Link>
+      </SiteLink>
     </div>
   );
 }

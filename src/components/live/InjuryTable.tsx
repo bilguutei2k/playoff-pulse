@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { Badge, StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLink } from "@/components/live/TeamLink";
@@ -82,9 +82,9 @@ export function InjuryTable({
             {/* The opponent opens its team page, the date and time open the game. */}
             <span>
               {block.home ? "vs" : "at"} <TeamLink teamId={block.opponentId} className="font-medium text-ink" />,{" "}
-              <Link href={`/game/${block.gameId}`} className="pp-link font-normal">
+              <SiteLink href={`/game/${block.gameId}`} className="pp-link font-normal">
                 {gameWhen(block.etDate, block.tipUtc)}
-              </Link>
+              </SiteLink>
             </span>
           </>
         ) : null}

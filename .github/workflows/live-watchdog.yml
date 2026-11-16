@@ -6,10 +6,21 @@ name: Live watchdog
 # it dispatches one on main, which restarts the chain. It reports, in one issue per UTC day
 # ("Live watchdog on <date>", each condition once), a restart, live-data's state.json older
 # than 2.5 hours, a game that tipped more than 10 minutes ago without a v2 final or morning
-# seal, three or more failed live runs in a row, live-forecast being disabled other than
-# by hand, and a served page (`/`, `/record`, yesterday's day page, read from SITE_URL as a
-# reader gets them) whose state is more than 30 minutes behind /api/live/health. While
-# live-forecast is disabled by hand (how the chain is stopped) it does nothing.
+# seal, three or more failed live runs in a row, and live-forecast being disabled other
+# than by hand. While live-forecast is disabled by hand (how the chain is stopped) it does
+# nothing.
+#
+# It also reads the site from SITE_URL as a reader gets it: /api/live/health, `/` and one
+# route that rotates every 15 minutes through the nav, /about, the archive pages and
+# yesterday's day page, as HTML, and in the run whose UTC minute is under 15 both as RSC
+# too (`RSC: 1`, what a client-side navigation fetches). It reports, each under its own
+# key (listed in scripts/live/watchdog-decision.mjs): the server more than 15 minutes
+# behind live-data's state.json, the server rendering its stored copy, health unreadable
+# (then no page is judged), a page more than 15 minutes behind health, a page served from
+# Vercel's cache (PRERENDER, HIT or STALE), a page without a readable stamp, and a page
+# that did not answer 200. A page matching a healthy server is fine however old its state
+# (the quiet-period rule in src/lib/view/freshness.ts). Run locally with PROBE_ALL=1 it
+# reads every route in both forms; that is the check after a production deploy.
 #
 # It cannot fail or slow the live job: it is a separate workflow with its own concurrency
 # group, it only reads live-data, and its only write to the chain is a dispatch, which

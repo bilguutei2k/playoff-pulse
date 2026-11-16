@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { connection } from "next/server";
 import { getGameCountsByDate, getLiveState } from "@/lib/live-data/published";
 import { slateDateAt } from "@/lib/season/live-state";
 import { SEASON_TEAMS } from "@/lib/season/teams";
@@ -7,9 +8,10 @@ import { SITE_URL, dayHref, teamHref } from "@/lib/view/routes";
 /**
  * /sitemap.xml (NAV-18): the live pages, the 30 team pages, game days from two weeks back
  * to one week ahead, and the frozen 2026 archive. Not every player or game: those are
- * reached from the team and day pages.
+ * reached from the team and day pages. Rendered at request time like every page (see
+ * the comment in src/app/layout.tsx): a build-time copy would list the days around the
+ * deploy, not today's.
  */
-export const revalidate = 3600;
 
 const LIVE_PATHS = ["/", "/odds", "/injuries", "/players", "/teams", "/record", "/how-it-works", "/about"];
 const ARCHIVE_PATHS = ["/retrospective", "/snapshot", "/evidence", "/methodology", "/lab"];
@@ -23,6 +25,7 @@ function shiftEtDate(etDate: string, days: number): string {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  await connection();
   const [state, counts] = await Promise.all([getLiveState(), getGameCountsByDate()]);
   const updated = Number.isFinite(Date.parse(state.generatedAt)) ? new Date(state.generatedAt) : undefined;
   const today = slateDateAt(Date.now());

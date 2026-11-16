@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SiteLink } from "@/components/layout/SiteLink";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
 import type { MissedRow } from "@/lib/season/types";
@@ -29,7 +29,7 @@ export function Matchup({ awayId, homeId }: { awayId: string; homeId: string }) 
  * the row (Safari ignores position: relative on a <tr>; see DayFinals).
  */
 function CellLink({ gameId }: { gameId: string }) {
-  return <Link href={gameHref(gameId)} aria-hidden tabIndex={-1} className="absolute inset-0" />;
+  return <SiteLink href={gameHref(gameId)} aria-hidden tabIndex={-1} className="absolute inset-0" />;
 }
 
 /** "Thunder at Lakers, Nov 3": the game link's accessible name. */
@@ -156,7 +156,7 @@ export function ScoredSeals({ games, caption }: { games: ScoredGame[]; caption: 
                     <Tags game={game} />
                   </th>
                   <td className="relative">
-                    <Link
+                    <SiteLink
                       href={gameHref(game.seal.gameId)}
                       aria-label={`${gameLabel(game.seal.awayId, game.seal.homeId, group.etDate)}. Sealed ${home === away ? "even" : `${favorite} ${Math.max(home, away)}%`}, ${result}.`}
                       className="inline-block after:absolute after:inset-0"
@@ -164,7 +164,7 @@ export function ScoredSeals({ games, caption }: { games: ScoredGame[]; caption: 
                       <Tile size="xs" className="min-w-[56px] !text-[13px] [--t:24px]">
                         {home === away ? "Even" : `${favorite} ${Math.max(home, away)}%`}
                       </Tile>
-                    </Link>
+                    </SiteLink>
                   </td>
                   <td className={`relative hidden whitespace-nowrap sm:table-cell ${lost ? "!text-ink-2" : ""}`}>
                     {result}
@@ -201,14 +201,14 @@ export function MissedSeals({ missed, version }: { missed: MissedRow[]; version:
     <ul className="grid gap-1.5 text-[13px] sm:grid-cols-2">
       {missed.map((row) => (
         <li key={`${row.gameId}-${row.etDate}`} className="flex items-center gap-2">
-          <Link
+          <SiteLink
             href={gameHref(row.gameId)}
             aria-label={gameLabel(row.awayId, row.homeId, row.etDate)}
             className="inline-flex min-h-6 items-center gap-2 hover:underline hover:underline-offset-4"
           >
             <span className="font-bold text-bad">Missed</span>
             <span className="text-ink-2">{formatShortDay(row.etDate)}</span>
-          </Link>
+          </SiteLink>
           <Matchup awayId={row.awayId} homeId={row.homeId} />
         </li>
       ))}

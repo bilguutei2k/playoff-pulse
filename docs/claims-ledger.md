@@ -256,6 +256,16 @@ rating model. Each version's sealed record is reported separately.
   morning); a score that substitutes reissues is never labeled "morning". Every v2 seal stores all
   its drivers only since policy revision 2; older rows keep at most three a side. Results below
   500 scored games carry a small-sample label.
+- How sealing is described in public. The approved sentence, used word for word as
+  `SEALS_SENTENCE` (`src/lib/view/how-to-read.ts`): "Games are sealed in the morning and again in
+  the hour before tip, and the final seal is the one scored. A game without one is scored on its
+  last earlier seal, and a game that tips unsealed is counted as missed." Short forms say that
+  forecasts sealed before tip are scored in public, with missed seals counted. Never state or
+  imply that every game or forecast is sealed ("Every 548 forecast is sealed", "Each game is
+  sealed in the morning", "Every game's win probability, sealed", "every NBA game, sealed"):
+  a game can tip unsealed, and the record counts it as missed. "Every game sealed before tip"
+  may be shown only where a version's missed count is zero. `tests/copy-claims.test.ts` enforces
+  this in `src/`.
 
 **Never claim:**
 
