@@ -158,6 +158,42 @@ describe("deploy-check.sh", () => {
 
   const issueCreates = (calls: string[][]) => calls.filter((args) => args[0] === "issue" && args[1] === "create");
 
+  const apiKey = (p: string) => p.replace(/[/?=&]/g, "_");
+  const iso = (minutesAgo: number) => new Date(Date.now() - minutesAgo * 60_000).toISOString().replace(/\.\d{3}Z$/, "Z");
+
+  /**
+   * GitHub's answers for the gate: Vercel's commit statuses on main's HEAD (null: none
+   * stored, so the call fails) and main's repository activity, each entry a commit that a
+   * push or merge made main's tip `minutesAgo` minutes ago (null: the call fails). Given
+   * oldest first; served newest first, as GitHub does.
+   */
+  function gate(repo: Repo, { statuses = [], activity = [] }: { statuses?: Array<{ state: string; context?: string; minutesAgo?: number }> | null; activity?: Array<{ after: string; minutesAgo: number }> | null }) {
+    const api = path.join(repo.root, "api");
+    fs.mkdirSync(api, { recursive: true });
+    const head = git(repo.seed, ["rev-parse", "HEAD"]);
+    const prefix = "repos/bilguutei2k/playoff-pulse";
+    if (statuses !== null) {
+      fs.writeFileSync(
+        path.join(api, `${apiKey(`${prefix}/commits/${head}/statuses`)}.json`),
+        JSON.stringify(
+          statuses
+            .map((status, index) => ({ context: "Vercel", created_at: iso(status.minutesAgo ?? statuses.length - index), ...status }))
+            .reverse(),
+        ),
+      );
+    }
+    if (activity !== null) {
+      let before = "0".repeat(40);
+      const entries = activity.map(({ after, minutesAgo }) => {
+        const entry = { before, after, ref: "refs/heads/main", timestamp: iso(minutesAgo), activity_type: "push" };
+        before = after;
+        return entry;
+      });
+      fs.writeFileSync(path.join(api, `${apiKey(`${prefix}/activity?ref=refs/heads/main&per_page=100`)}.json`), JSON.stringify(entries.reverse()));
+    }
+    return { FAKE_GH_API_DIR: api };
+  }
+
   function base(repo: Repo): string {
     return repo.commit("feat: deployed code", { "src/app.ts": "v1\n", "data/live/state.json": "{}\n" }, 180);
   }
@@ -192,14 +228,130 @@ describe("deploy-check.sh", () => {
   );
 
   it(
-    "waits while a deployable commit is under 20 minutes old",
+    "waits, with no Vercel status, while a deployable commit landed under 20 minutes ago, however old the commit",
     () => {
       const repo = makeRepo();
       const deployed = base(repo);
-      repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 5);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 300);
       publish(repo);
-      const result = deployCheck(repo, deployed);
-      expect(result.stderr).toContain("within 20 min; Vercel may still be building it.");
+      const result = deployCheck(repo, deployed, gate(repo, { activity: [{ after: deployed, minutesAgo: 400 }, { after: pending, minutesAgo: 5 }] }));
+      expect(result.stderr).toContain(`${pending} landed on main 5 min ago (repository activity)`);
+      expect(result.stderr).toContain("within 20 min of landing; Vercel may not have started on it yet.");
+      expect(result.pushes).toEqual([]);
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "does not retry a merge seconds old that Vercel is deploying (the #27 and #30 retries)",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      // A pull request's commit, authored an hour before its merge.
+      const pending = repo.commit("feat: merged pull request", { "src/app.ts": "v2\n" }, 60);
+      publish(repo);
+      const result = deployCheck(repo, deployed, gate(repo, { statuses: [{ state: "pending" }], activity: [{ after: pending, minutesAgo: 0.25 }] }));
+      expect(result.status).toBe(0);
+      expect(result.stderr).toContain(`Vercel is deploying ${pending} (commit status pending); waiting.`);
+      expect(result.pushes).toEqual([]);
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "treats a Vercel status pending for over 60 minutes as stuck and retries",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 120);
+      publish(repo);
+      const result = deployCheck(repo, deployed, gate(repo, { statuses: [{ state: "pending", minutesAgo: 90 }], activity: [{ after: pending, minutesAgo: 95 }] }));
+      expect(result.status).toBe(0);
+      expect(result.stderr).toContain(`Vercel's commit status of ${pending} has been pending for 90 minutes`);
+      expect(result.pushes).toHaveLength(1);
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "retries with no Vercel status once the commit landed over 20 minutes ago, dated by the push that first reached it",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 30);
+      const later = repo.commit("docs: notes", { "docs/notes.md": "x\n" }, 2);
+      publish(repo);
+      const env = gate(repo, { activity: [{ after: deployed, minutesAgo: 180 }, { after: pending, minutesAgo: 25 }, { after: later, minutesAgo: 2 }] });
+      const result = deployCheck(repo, deployed, env);
+      expect(result.stderr).toContain(`${pending} landed on main 25 min ago`);
+      expect(result.stderr).toContain("(retry 1 of 3 today)");
+      expect(result.pushes).toHaveLength(1);
+    },
+    TIMEOUT,
+  );
+
+  it.each(["failure", "error"])(
+    "retries at once when Vercel reports %s on main's head",
+    (state) => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 3);
+      publish(repo);
+      const result = deployCheck(repo, deployed, gate(repo, { statuses: [{ state: "pending" }, { state }], activity: [{ after: pending, minutesAgo: 2 }] }));
+      expect(result.stderr).toContain(`Vercel's commit status of ${pending} is ${state}; a retry is due.`);
+      expect(result.pushes).toHaveLength(1);
+      const originGit = (args: string[]) => git(repo.root, ["--git-dir", repo.origin, ...args]);
+      expect(originGit(["log", "-1", "--format=%b", result.originMain])).toContain(`Vercel's commit status of ${pending} is ${state}`);
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "leaves a rollback or a promotion alone: Vercel deployed main's head, yet production is older",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 300);
+      publish(repo);
+      const result = deployCheck(repo, deployed, gate(repo, { statuses: [{ state: "pending" }, { state: "success" }], activity: [{ after: pending, minutesAgo: 300 }] }));
+      expect(result.status).toBe(0);
+      expect(result.stderr).toContain(`Vercel reports ${pending} deployed (commit status success), yet production is at ${deployed}: a rollback or a manual promotion.`);
+      expect(result.pushes).toEqual([]);
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "reads only Vercel's own status, the newest one",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 60);
+      publish(repo);
+      const statuses = [{ state: "success", minutesAgo: 50 }, { state: "pending", minutesAgo: 1 }, { state: "success", context: "ci/other", minutesAgo: 0 }];
+      const result = deployCheck(repo, deployed, gate(repo, { statuses, activity: [{ after: pending, minutesAgo: 60 }] }));
+      expect(result.stderr).toContain("(commit status pending); waiting.");
+      expect(result.pushes).toEqual([]);
+    },
+    TIMEOUT,
+  );
+
+  const unreadable: Array<[string, Parameters<typeof gate>[1], string]> = [
+    ["the repository activity cannot be read", { activity: null }, "cannot read main's repository activity"],
+    ["no activity entry reaches the commit", { activity: [] }, "no push or merge in main's repository activity made"],
+    ["Vercel's statuses cannot be read", { statuses: null }, "cannot read Vercel's commit status"],
+  ];
+  it.each(unreadable)(
+    "does not retry when %s",
+    (_, answers, logged) => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 600);
+      publish(repo);
+      const result = deployCheck(repo, deployed, gate(repo, { activity: [{ after: pending, minutesAgo: 600 }], ...answers }));
+      expect(result.status).toBe(0);
+      expect(result.stderr).toContain(logged);
+      expect(result.stderr).toContain("no retry this run.");
       expect(result.pushes).toEqual([]);
     },
     TIMEOUT,
@@ -212,7 +364,7 @@ describe("deploy-check.sh", () => {
       const deployed = base(repo);
       const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 60);
       publish(repo);
-      const result = deployCheck(repo, deployed);
+      const result = deployCheck(repo, deployed, gate(repo, { activity: [{ after: pending, minutesAgo: 60 }] }));
       expect(result.status).toBe(0);
       expect(result.stderr).toContain("(retry 1 of 3 today)");
       expect(result.pushes).toHaveLength(1);
@@ -232,7 +384,7 @@ describe("deploy-check.sh", () => {
       const deployed = base(repo);
       const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 60);
       publish(repo);
-      const result = deployCheck(repo, deployed, { DRY_RUN: "1" });
+      const result = deployCheck(repo, deployed, { ...gate(repo, { activity: [{ after: pending, minutesAgo: 60 }] }), DRY_RUN: "1" });
       expect(result.stderr).toContain("Dry run: would push empty commit");
       expect(result.pushes).toEqual([]);
       expect(result.originMain).toBe(pending);
@@ -245,10 +397,10 @@ describe("deploy-check.sh", () => {
     () => {
       const repo = makeRepo();
       const deployed = base(repo);
-      repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 90);
-      repo.commit(RETRY_SUBJECT, {}, 30);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 90);
+      const retry = repo.commit(RETRY_SUBJECT, {}, 30);
       publish(repo);
-      const result = deployCheck(repo, deployed);
+      const result = deployCheck(repo, deployed, gate(repo, { statuses: [{ state: "failure" }], activity: [{ after: pending, minutesAgo: 90 }, { after: retry, minutesAgo: 30 }] }));
       expect(result.stderr).toContain("already retried within the hour; waiting.");
       expect(result.pushes).toEqual([]);
     },
@@ -260,17 +412,19 @@ describe("deploy-check.sh", () => {
     () => {
       const repo = makeRepo();
       const deployed = base(repo);
-      repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 170);
-      for (const minutesAgo of [160, 120, 80]) repo.commit(RETRY_SUBJECT, {}, minutesAgo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 170);
+      const pushes = [{ after: pending, minutesAgo: 170 }];
+      for (const minutesAgo of [160, 120, 80]) pushes.push({ after: repo.commit(RETRY_SUBJECT, {}, minutesAgo), minutesAgo });
       publish(repo);
-      const result = deployCheck(repo, deployed);
+      const env = gate(repo, { activity: pushes });
+      const result = deployCheck(repo, deployed, env);
       expect(result.status).toBe(0);
       expect(result.stderr).toContain("three retries in 24 hours already; opening an issue instead.");
       const [create] = issueCreates(result.calls);
       expect(create[create.indexOf("--title") + 1]).toBe(`Production deploy stuck on ${today()}`);
       expect(result.pushes).toEqual([]);
 
-      const again = deployCheck(repo, deployed, { FAKE_GH_ISSUES: JSON.stringify([{ title: `Production deploy stuck on ${today()}` }]) });
+      const again = deployCheck(repo, deployed, { ...env, FAKE_GH_ISSUES: JSON.stringify([{ title: `Production deploy stuck on ${today()}` }]) });
       expect(again.stderr).toContain(`Already reported: Production deploy stuck on ${today()}`);
       expect(issueCreates(again.calls)).toEqual([]);
     },

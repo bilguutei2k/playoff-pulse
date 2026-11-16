@@ -72,8 +72,13 @@ fs.appendFileSync(process.env.CALL_LOG, JSON.stringify(args) + "\\n");
 const env = (name, fallback) => process.env[name] ?? fallback;
 const fail = (what) => { console.error("fake gh: " + what + " failing on purpose"); process.exit(1); };
 const path = args.find((arg) => arg.startsWith("repos/")) ?? "";
+const flag = (name) => args[args.indexOf(name) + 1];
 if (args[0] === "workflow") { if (env("FAIL_DISPATCH") === "1") fail("dispatch"); process.exit(0); }
-if (args[0] === "issue" && args[1] === "list") { if (env("FAIL_ISSUES") === "1") fail("issue list"); console.log(env("ISSUES", "[]")); process.exit(0); }
+if (args[0] === "issue" && args[1] === "list") {
+  if (env("FAIL_ISSUES") === "1") fail("issue list");
+  console.log(flag("--state") === "closed" ? env("CLOSED_ISSUES", "[]") : env("OPEN_ISSUES", "[]"));
+  process.exit(0);
+}
 if (args[0] === "issue") { if (env("FAIL_POST") === "1") fail("post"); process.exit(0); }
 if (path.endsWith("/actions/workflows/live-forecast.yml")) { console.log(env("WORKFLOW_STATE", "active")); process.exit(0); }
 if (path.includes("/runs?")) {
@@ -81,7 +86,6 @@ if (path.includes("/runs?")) {
   console.log(JSON.stringify([{ workflow_runs: path.includes("created=") ? JSON.parse(env("RUNS", "[]")) : [] }]));
   process.exit(0);
 }
-if (/\\/issues\\/\\d+$/.test(path)) { console.log(env("ISSUE_BODY", "")); process.exit(0); }
 if (path.includes("/comments")) { console.log(JSON.stringify([JSON.parse(env("COMMENTS", "[]")).map((body) => ({ body }))])); process.exit(0); }
 fail("unhandled call " + args.join(" "));
 `;
@@ -104,7 +108,6 @@ interface Options {
 
 /** The test's clock is real, so fixtures are built relative to now. */
 const minutesAgo = (minutes: number) => new Date(Date.now() - minutes * 60_000).toISOString();
-const today = () => new Date().toISOString().slice(0, 10);
 const FRESH = JSON.stringify({ season: 2027, seasonLabel: "2026-27", generatedAt: minutesAgo(5) });
 const STALE = JSON.stringify({ season: 2027, seasonLabel: "2026-27", generatedAt: "2026-11-01T00:00:00.000Z" });
 const busy = JSON.stringify([{ id: 9, created_at: minutesAgo(3), status: "in_progress", conclusion: null, display_title: "Live forecast" }]);
@@ -130,14 +133,15 @@ async function watchdog({ dry = false, env = {} }: Options = {}) {
   });
   const calls = fs.readFileSync(log, "utf8").trim().split("\n").filter(Boolean).map((line) => JSON.parse(line) as string[]);
   const writes = calls.filter((args) => args[0] === "workflow" || (args[0] === "issue" && args[1] !== "list"));
-  const posted = writes.find((args) => args[0] === "issue")?.find((_, index, all) => all[index - 1] === "--body") ?? "";
-  // The dry run's issue text, or what was posted, ends with the marker of its keys.
-  const marker = /<!-- live-watchdog: ([^>]*?) -->/.exec(posted || result.stdout);
-  const keys = marker ? marker[1].split(" ") : [];
+  const posted = writes.find((args) => args[0] === "issue")?.find((_, index, all) => all[index - 1] === "--body" || all[index - 1] === "--comment") ?? "";
   const logged = JSON.parse(result.stdout.slice(result.stdout.indexOf("{"), result.stdout.indexOf("\n}") + 2)) as {
     now: string;
+    incident: { number: number; open: string[] } | null;
+    alerts: Array<{ key: string; kind: string }>;
     site: { url: string | null; probeAll: boolean; health: unknown; pages: Array<{ path: string; kind: Kind; status: number | null; stamp: unknown; cache: string | null }> };
   };
+  // The keys this run raised, as logged before any dispatch failure is added.
+  const keys = logged.alerts.map((alert) => alert.key);
   return { ...result, calls, writes, posted, keys, logged };
 }
 
@@ -145,52 +149,107 @@ async function watchdog({ dry = false, env = {} }: Options = {}) {
 // on a loaded runner that is well over vitest's five-second default.
 const SLOW = { timeout: 60_000 };
 
+const MARKER = "<!-- live-watchdog-incident -->";
+const openIssue = (number: number, open: string[], title = "Live watchdog incident from 2026-11-15 10:03 UTC") =>
+  JSON.stringify([{ number, title, url: `https://github.com/example/repo/issues/${number}`, body: `first\n${MARKER}\n<!-- live-watchdog-open: ${open.join(" ")} -->` }]);
+const STALE_KEY = "stale-2026-11-01T00:00:00.000Z";
+const minuteTitle = (now: string) => `Live watchdog incident from ${now.slice(0, 10)} ${now.slice(11, 16)} UTC`;
+
 describe("watchdog side effects", SLOW, () => {
-  it("dry run logs the dispatch and the issue it would open, and writes nothing", async () => {
+  it("dry run logs the dispatch and the incident it would open, and writes nothing", async () => {
     const result = await watchdog({ dry: true });
     expect(result.status, result.stderr).toBe(0);
     expect(result.stdout).toContain('"dispatch": true');
     expect(result.stdout).toContain("Dry run: would dispatch live-forecast.yml on main.");
-    expect(result.stdout).toContain(`Dry run: would open "Live watchdog on ${today()}"`);
-    expect(result.stdout).toContain("Dry run: no dispatch and no issue create/comment.");
+    expect(result.stdout).toContain(`Dry run: would open "${minuteTitle(result.logged.now)}"`);
+    expect(result.stdout).toContain("Dry run: no dispatch and no issue create, comment or close.");
     expect(result.writes).toEqual([]);
   });
 
-  it("restarts an idle chain on main and opens the day's issue with every alert's key", async () => {
+  it("restarts an idle chain and opens an incident with the states open and the restart as an event", async () => {
     const result = await watchdog();
     expect(result.status, result.stderr).toBe(0);
     expect(result.writes[0]).toEqual(["workflow", "run", "live-forecast.yml", "--ref", "main"]);
-    expect(result.writes[1].slice(0, 4)).toEqual(["issue", "create", "--title", `Live watchdog on ${today()}`]);
-    expect(result.posted).toContain("started the chain");
+    expect(result.writes[1].slice(0, 4)).toEqual(["issue", "create", "--title", minuteTitle(result.logged.now)]);
+    expect(result.posted).toContain("Events:\n- No real live-forecast run");
     expect(result.posted).toContain("https://github.com/example/repo/actions/runs/123");
-    expect(result.posted).toMatch(/<!-- live-watchdog: restart stale-2026-11-01T00:00:00.000Z -->$/);
+    expect(result.posted).toContain(MARKER);
+    expect(result.posted).toMatch(new RegExp(`<!-- live-watchdog-open: ${STALE_KEY} -->$`));
+    expect(result.posted).not.toContain("previous incident");
   });
 
-  it("does nothing on a healthy, busy chain", async () => {
+  it("links the newest closed incident when a condition recurs", async () => {
+    const closed = JSON.stringify([
+      { number: 40, title: "Live watchdog incident from 2026-11-14 08:03 UTC", body: MARKER, closedAt: "2026-11-14T09:03:00Z" },
+      { number: 44, title: "Live watchdog incident from 2026-11-14 12:03 UTC", body: MARKER, closedAt: "2026-11-14T13:03:00Z" },
+      { number: 50, title: "Live watchdog incident from 2026-11-14 18:03 UTC", body: "no marker: not an incident" },
+    ]);
+    const result = await watchdog({ env: { RUNS: busy, CLOSED_ISSUES: closed } });
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.writes.map((args) => args.slice(0, 2))).toEqual([["issue", "create"]]);
+    expect(result.posted).toContain("The previous incident was #44, closed 2026-11-14T13:03:00Z.");
+  });
+
+  it("does nothing on a healthy, busy chain with no incident", async () => {
     const result = await watchdog({ env: { RUNS: busy, STATE: FRESH } });
     expect(result.status, result.stderr).toBe(0);
     expect(result.stdout).toContain("No alerts.");
     expect(result.writes).toEqual([]);
   });
 
-  it("does not repeat a condition already reported in the day's issue", async () => {
-    const issue = JSON.stringify([{ number: 42, title: `Live watchdog on ${today()}` }]);
-    const reported = {
-      ISSUES: issue,
-      RUNS: busy,
-      ISSUE_BODY: "first\n<!-- live-watchdog: restart -->",
-      COMMENTS: JSON.stringify(["later\n<!-- live-watchdog: stale-2026-11-01T00:00:00.000Z -->"]),
-    };
-    const quiet = await watchdog({ env: reported });
+  it("leaves an open incident alone while its condition still fires, and comments only on a new one", async () => {
+    const quiet = await watchdog({ env: { RUNS: busy, OPEN_ISSUES: openIssue(42, [STALE_KEY]) } });
     expect(quiet.status, quiet.stderr).toBe(0);
-    expect(quiet.stdout).toContain("Already reported in #42");
+    expect(quiet.logged.incident).toEqual({ number: 42, url: "https://github.com/example/repo/issues/42", open: [STALE_KEY] });
+    expect(quiet.stdout).toContain(`Incident #42 unchanged; open: ${STALE_KEY}.`);
     expect(quiet.writes).toEqual([]);
 
-    // A new condition the same day is appended to that issue, alone.
-    const fresh = await watchdog({ env: { ...reported, COMMENTS: "[]" } });
-    expect(fresh.status, fresh.stderr).toBe(0);
-    expect(fresh.writes.map((args) => args.slice(0, 3))).toEqual([["issue", "comment", "42"]]);
-    expect(fresh.posted).toMatch(/<!-- live-watchdog: stale-2026-11-01T00:00:00.000Z -->$/);
+    // A restart is an event: reported on the open incident, never added to its open keys.
+    const restarted = await watchdog({ env: { OPEN_ISSUES: openIssue(42, [STALE_KEY]) } });
+    expect(restarted.writes.map((args) => args.slice(0, 3))).toEqual([["workflow", "run", "live-forecast.yml"], ["issue", "comment", "42"]]);
+    expect(restarted.posted).toContain("Events:");
+    expect(restarted.posted).not.toContain("live-watchdog-open");
+  });
+
+  it("closes the incident on a run that finds its condition clear and raises nothing", async () => {
+    const result = await watchdog({ env: { RUNS: busy, STATE: FRESH, OPEN_ISSUES: openIssue(42, [STALE_KEY]), COMMENTS: JSON.stringify(["later"]) } });
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.writes.map((args) => args.slice(0, 4))).toEqual([["issue", "close", "42", "--comment"]]);
+    expect(result.posted).toContain(`recovered: ${STALE_KEY}`);
+    expect(result.posted).toContain("the incident is closed");
+    expect(result.posted).toMatch(new RegExp(`<!-- live-watchdog-resolved: ${STALE_KEY} -->$`));
+  });
+
+  it("closes an incident of events only on the next clean run", async () => {
+    const result = await watchdog({ env: { RUNS: busy, STATE: FRESH, OPEN_ISSUES: openIssue(43, []) } });
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.writes.map((args) => args.slice(0, 3))).toEqual([["issue", "close", "43"]]);
+  });
+
+  it("keeps an incident open while a read it needs fails, and reports the read problem", async () => {
+    const result = await watchdog({ env: { RUNS: busy, OPEN_ISSUES: openIssue(42, [STALE_KEY]), FAILED_READ: "state.json" } });
+    expect(result.status, result.stderr).toBe(0);
+    // The stale state was not checked, so it is not recovered; the read problem is new.
+    expect(result.writes.map((args) => args.slice(0, 3))).toEqual([["issue", "comment", "42"]]);
+    expect(result.posted).toContain("Could not read state.json");
+    expect(result.posted).not.toContain("recovered");
+    expect(result.posted).toMatch(/<!-- live-watchdog-open: unreadable-state.json -->$/);
+  });
+
+  it("rereads the route an open page condition names, even off the rotation, and closes once it is clear", async () => {
+    const result = await watchdog({ env: { RUNS: busy, STATE: FRESH, OPEN_ISSUES: openIssue(42, ["page-behind-/lab-rsc"]) } });
+    expect(result.status, result.stderr).toBe(0);
+    expect(requests).toContainEqual({ path: "/lab", rsc: "1" });
+    expect(result.writes.map((args) => args.slice(0, 3))).toEqual([["issue", "close", "42"]]);
+    expect(result.posted).toContain("recovered: page-behind-/lab-rsc");
+  });
+
+  it("retires a condition on a day page no longer probed", async () => {
+    const result = await watchdog({ env: { RUNS: busy, STATE: FRESH, OPEN_ISSUES: openIssue(42, ["page-cached-/games/2026-01-01-html"]) } });
+    expect(result.status, result.stderr).toBe(0);
+    expect(requests.some((request) => request.path === "/games/2026-01-01")).toBe(false);
+    expect(result.writes.map((args) => args.slice(0, 3))).toEqual([["issue", "close", "42"]]);
+    expect(result.posted).toContain("No longer watched");
   });
 
   it.each(["state.json", "2027.json", "2026-27.jsonl"])("still restarts and alerts when %s is unreadable", async (file) => {
@@ -204,7 +263,7 @@ describe("watchdog side effects", SLOW, () => {
     const result = await watchdog({ env: { FAIL_DISPATCH: "1" } });
     expect(result.status).toBe(1);
     expect(result.posted).toContain("Could not dispatch live-forecast.yml");
-    expect(result.posted).toContain("dispatch-failed");
+    expect(result.posted).toContain("Events:");
   });
 
   it("neither dispatches nor guesses when runs cannot be listed, reports it and fails", async () => {
@@ -214,14 +273,21 @@ describe("watchdog side effects", SLOW, () => {
     expect(result.posted).toContain("runs-unreadable");
   });
 
-  it("opens nothing when it cannot look up the day's issue, and fails", async () => {
+  it("opens, comments on or closes nothing when it cannot read the open incident, and fails", async () => {
     const result = await watchdog({ env: { FAIL_ISSUES: "1" } });
     expect(result.status).toBe(1);
     expect(result.writes).toEqual([["workflow", "run", "live-forecast.yml", "--ref", "main"]]);
+    expect(result.stderr).toContain("could not read the open incident");
   });
 
-  it("stays idle and silent while live-forecast is disabled by hand", async () => {
-    const result = await watchdog({ env: { WORKFLOW_STATE: "disabled_manually" } });
+  it("fails the run when it cannot write the incident", async () => {
+    const result = await watchdog({ env: { FAIL_POST: "1" } });
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("could not create the incident");
+  });
+
+  it("stays idle and silent while live-forecast is disabled by hand, leaving an open incident as it is", async () => {
+    const result = await watchdog({ env: { WORKFLOW_STATE: "disabled_manually", OPEN_ISSUES: openIssue(42, [STALE_KEY]) } });
     expect(result.status, result.stderr).toBe(0);
     expect(result.stdout).toContain("disabled by hand");
     expect(result.writes).toEqual([]);
@@ -281,6 +347,7 @@ describe("served pages", SLOW, () => {
     expect(result.status, result.stderr).toBe(0);
     expect(result.writes.map((args) => args.slice(0, 2))).toEqual([["issue", "create"]]);
     expect(result.keys).toEqual(["page-cached-/-html", "page-behind-/-html"]);
+    expect(result.posted).toMatch(/<!-- live-watchdog-open: page-cached-\/-html page-behind-\/-html -->$/);
     expect(result.posted).toMatch(/GET \/ showed state from \S+ \(delivery current, x-vercel-cache PRERENDER\), 2700 minutes behind/);
   });
 

@@ -15,12 +15,14 @@
 //             minutes, and on 2026-11-04 run 41860183917, whose job had finished at 15:50,
 //             was not marked completed until 16:15, which is how the chain stalled then. A
 //             duplicate dispatch is harmless: the concurrency group keeps one pending run.
-//   alerts    Each with a stable key, so one condition is reported once per daily issue:
-//             the chain restarted; live-forecast disabled other than by hand; state.json
+//   alerts    Each with a stable key and a kind. A `state` persists until a run checks it
+//             and finds it clear; an `event` happened once. States: live-forecast disabled
+//             other than by hand; live-forecast disabled other than by hand; state.json
 //             older than 2.5 hours (or unreadable); a game that tipped more than 10 minutes
 //             ago (within the last 24 hours) without a v2 final or v2 morning seal; three or
 //             more failed real runs in a row (cancelled, skipped and stale runs are neutral,
-//             as in scripts/live/chain-decision.sh).
+//             as in scripts/live/chain-decision.sh); a read that failed (`unreadable-*`,
+//             `runs-unreadable`). Events: the chain restarted; the dispatch failed.
 //   paused    live-forecast was disabled by hand, which is how the chain is stopped: no
 //             dispatch, no alerts.
 //   site      (siteAlerts, on the probe planned by probePlan) What readers get, judged by the
@@ -50,8 +52,10 @@
 //
 // The probe (probePlan): PROBE_ROUTES (the nav, the footer's /about and the five archive
 // pages; tests/live-watchdog.test.ts keeps it equal to the links the site shows) plus
-// yesterday's ET day page. Each run reads health, `/` and one rotating route as HTML; the
-// run whose UTC minute is under 15 also reads both as RSC. PROBE_ALL=1 reads every route
+// yesterday's ET day page. Each run reads health, `/` and one route rotating every 15
+// minutes as HTML; the run whose UTC minute is under 15 also reads `/` and one route
+// rotating every hour as RSC. While an incident is open, each run also rereads the routes
+// its open page conditions name, so they can be seen clear. PROBE_ALL=1 reads every route
 // in both forms (the production acceptance check after a deploy).
 
 export const LIMITS = Object.freeze({
@@ -143,7 +147,7 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
   const alerts = [];
   const enabled = workflowState === null || workflowState === "active";
   if (!enabled) {
-    alerts.push({
+    alerts.push({ kind: "state",
       key: `workflow-${workflowState}`,
       text: `live-forecast.yml is ${workflowState}, so the chain cannot run; enable it in the Actions tab.`,
     });
@@ -154,7 +158,7 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
   let streak = null;
   let dispatch = false;
   if (runs === null) {
-    alerts.push({ key: "runs-unreadable", text: "Could not list live-forecast runs, so the chain was not checked or restarted." });
+    alerts.push({ kind: "state", key: "runs-unreadable", text: "Could not list live-forecast runs, so the chain was not checked or restarted." });
   } else {
     const real = runs.filter((run) => !isDryRun(run));
     const createdWithin = (run, minutes) => Date.parse(run.created_at) >= time - minutes * MINUTE;
@@ -162,7 +166,7 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
     recent = real.some((run) => createdWithin(run, LIMITS.idleMinutes));
     dispatch = enabled && !active && !recent;
     if (dispatch) {
-      alerts.push({
+      alerts.push({ kind: "event",
         key: "restart",
         text: `No real live-forecast run was created in the last ${LIMITS.idleMinutes} minutes and none is queued or running, so the watchdog started the chain.`,
       });
@@ -170,7 +174,7 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
     const failing = failureStreak(runs);
     streak = failing.streak;
     if (streak >= LIMITS.failureStreak) {
-      alerts.push({
+      alerts.push({ kind: "state",
         key: `failing-since-${failing.since.id}`,
         text: `The live job has failed ${streak} real runs in a row (cancelled runs not counted), since run ${failing.since.id}${failing.since.html_url ? ` (${failing.since.html_url})` : ""}.`,
       });
@@ -181,7 +185,7 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
     const age = time - Date.parse(state.generatedAt);
     if (!Number.isFinite(age) || age > LIMITS.staleMinutes * MINUTE) {
       const hours = Number.isFinite(age) ? `${(age / 3_600_000).toFixed(1)} hours old` : "unreadable";
-      alerts.push({
+      alerts.push({ kind: "state",
         key: `stale-${state.generatedAt}`,
         text: `live-data's state.json was generated at ${state.generatedAt ?? "(missing)"}, ${hours}; the limit is ${LIMITS.staleMinutes / 60} hours.`,
       });
@@ -205,7 +209,7 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
         tip >= time - LIMITS.tipLookbackHours * 60 * MINUTE &&
         !sealed.has(game.id)
       ) {
-        alerts.push({
+        alerts.push({ kind: "state",
           key: `unsealed-${game.id}`,
           text: `Game ${game.id} (${game.awayId ?? "?"} at ${game.homeId ?? "?"}, ET ${game.etDate}) tipped at ${game.tipUtc} and has neither a v2 final nor a v2 morning seal.`,
         });
@@ -231,18 +235,40 @@ export function rotationIndex(nowMs, count) {
 }
 
 /**
- * What one run reads, in order: `/` and the rotating route as HTML, plus both as RSC when
- * the UTC minute is under 15; with `all`, every route in both forms.
- * @param {{now: string, all?: boolean}} input
+ * The route read as RSC in the run whose UTC minute is under 15: index floor(now / 1 hour)
+ * mod the route count. Not the HTML rotation's route: that run is always quarter 4h of the
+ * day, and 4h mod 14 is always even, so half the routes would never be read as RSC.
+ */
+export function rscRotationIndex(nowMs, count) {
+  return Math.floor(nowMs / (60 * MINUTE)) % count;
+}
+
+/**
+ * What one run reads, in order: `/` and the rotating route as HTML, plus `/` and the hourly
+ * rotating route as RSC when the UTC minute is under 15; with `all`, every route in both
+ * forms. `also` adds reads an open incident is waiting to recheck (incidentRechecks), so a
+ * condition on a route the rotation skipped this run can still be seen clear.
+ * @param {{now: string, all?: boolean, also?: Array<{path: string, kind: "html" | "rsc"}>}} input
  * @returns {Array<{path: string, kind: "html" | "rsc"}>}
  */
-export function probePlan({ now, all = false }) {
+export function probePlan({ now, all = false, also = [] }) {
   const routes = probeRoutes(now);
   const time = Date.parse(now);
-  if (all) return routes.flatMap((path) => [{ path, kind: "html" }, { path, kind: "rsc" }]);
-  const paths = [...new Set(["/", routes[rotationIndex(time, routes.length)]])];
-  const kinds = new Date(time).getUTCMinutes() < PROBE_LIMITS.rscBeforeMinute ? ["html", "rsc"] : ["html"];
-  return kinds.flatMap((kind) => paths.map((path) => ({ path, kind })));
+  const reads = all
+    ? routes.flatMap((path) => [{ path, kind: "html" }, { path, kind: "rsc" }])
+    : [
+        { path: "/", kind: "html" },
+        { path: routes[rotationIndex(time, routes.length)], kind: "html" },
+        ...(new Date(time).getUTCMinutes() < PROBE_LIMITS.rscBeforeMinute
+          ? [{ path: "/", kind: "rsc" }, { path: routes[rscRotationIndex(time, routes.length)], kind: "rsc" }]
+          : []),
+      ];
+  const plan = [];
+  for (const read of [...reads, ...also]) {
+    if (!routes.includes(read.path) || plan.some((entry) => entry.path === read.path && entry.kind === read.kind)) continue;
+    plan.push({ path: read.path, kind: read.kind });
+  }
+  return plan;
 }
 
 /**
@@ -281,6 +307,12 @@ export function rscStamp(text) {
   return { generatedAt, delivery: deliveries.size === 1 ? [...deliveries][0] : null };
 }
 
+/** Health's generatedAt when it is a readable time, else null (health-unknown). */
+const healthStamp = (health) =>
+  health && typeof health.generatedAt === "string" && Number.isFinite(Date.parse(health.generatedAt)) ? health.generatedAt : null;
+/** A page's stamp when it is a readable time, else null. */
+const pageStampOf = (page) => (page.stamp && Number.isFinite(Date.parse(page.stamp.generatedAt)) ? page.stamp.generatedAt : null);
+
 const minutesBetween = (later, earlier) => (Date.parse(later) - Date.parse(earlier)) / MINUTE;
 
 /**
@@ -297,10 +329,10 @@ const minutesBetween = (later, earlier) => (Date.parse(later) - Date.parse(earli
  */
 export function siteAlerts({ health, healthProblem = null, publication, pages }) {
   const alerts = [];
-  const serverStamp = health && typeof health.generatedAt === "string" && Number.isFinite(Date.parse(health.generatedAt)) ? health.generatedAt : null;
+  const serverStamp = healthStamp(health);
   if (serverStamp === null) {
     const why = healthProblem ?? (health ? "its answer has no readable generatedAt" : "no answer");
-    alerts.push({
+    alerts.push({ kind: "state",
       key: "health-unknown",
       text: `Could not read /api/live/health (${why}), so no served page was compared with the server.`,
     });
@@ -310,14 +342,14 @@ export function siteAlerts({ health, healthProblem = null, publication, pages })
     if (publication !== null && Number.isFinite(Date.parse(publication))) {
       const behind = minutesBetween(publication, serverStamp);
       if (behind > PROBE_LIMITS.behindMinutes) {
-        alerts.push({
+        alerts.push({ kind: "state",
           key: "site-behind-publication",
           text: `/api/live/health serves state from ${serverStamp}, ${Math.round(behind)} minutes behind live-data's state.json (${publication}); the limit is ${PROBE_LIMITS.behindMinutes} minutes (${where}).`,
         });
       }
     }
     if (health.delivery === "stored") {
-      alerts.push({
+      alerts.push({ kind: "state",
         key: "site-stored-copy",
         text: `/api/live/health says the server is rendering the stored copy bundled at build time, state from ${serverStamp} (${where}).`,
       });
@@ -328,21 +360,21 @@ export function siteAlerts({ health, healthProblem = null, publication, pages })
     const name = `${page.path}-${page.kind}`;
     const request = `GET ${page.path}${page.kind === "rsc" ? " (RSC)" : ""}`;
     if (page.status !== null && page.cache && CACHED.has(page.cache.trim().toUpperCase())) {
-      alerts.push({
+      alerts.push({ kind: "state",
         key: `page-cached-${name}`,
         text: `${request} was served from a stored copy (x-vercel-cache ${page.cache}); every page should render at request time.`,
       });
     }
     if (page.status !== 200) {
-      alerts.push({
+      alerts.push({ kind: "state",
         key: `page-error-${name}`,
         text: page.status === null ? `${request} got no answer: ${page.error ?? "unknown error"}.` : `${request} returned ${page.status}.`,
       });
       continue;
     }
-    const pageStamp = page.stamp && Number.isFinite(Date.parse(page.stamp.generatedAt)) ? page.stamp.generatedAt : null;
+    const pageStamp = pageStampOf(page);
     if (pageStamp === null) {
-      alerts.push({
+      alerts.push({ kind: "state",
         key: `page-stamp-unreadable-${name}`,
         text: `${request} returned 200 without a readable state stamp${page.stamp ? ` (${page.stamp.generatedAt})` : ""}, so its freshness could not be checked.`,
       });
@@ -351,7 +383,7 @@ export function siteAlerts({ health, healthProblem = null, publication, pages })
     if (serverStamp === null) continue;
     const behind = minutesBetween(serverStamp, pageStamp);
     if (behind > PROBE_LIMITS.behindMinutes) {
-      alerts.push({
+      alerts.push({ kind: "state",
         key: `page-behind-${name}`,
         text: `${request} showed state from ${pageStamp} (delivery ${page.stamp.delivery ?? "(none)"}, x-vercel-cache ${page.cache ?? "none"}), ${Math.round(behind)} minutes behind the server's ${serverStamp}; the limit is ${PROBE_LIMITS.behindMinutes} minutes.`,
       });
@@ -360,27 +392,203 @@ export function siteAlerts({ health, healthProblem = null, publication, pages })
   return alerts;
 }
 
-/** The keys a watchdog issue or comment already reported, from its hidden markers. */
-export function reportedKeys(texts) {
-  const keys = new Set();
+
+// Incidents (planIncident). One open issue per incident, "Live watchdog incident from
+// <YYYY-MM-DD HH:MM> UTC", carrying the marker INCIDENT_MARKER. Which state keys are open
+// is written in the issue itself: every body or comment that opens keys ends with
+// `<!-- live-watchdog-open: … -->`, and every one that clears keys with
+// `<!-- live-watchdog-resolved: … -->`; read in order, they give the keys still open.
+//   - No open incident and some alert: open one listing every alert; its open keys are the
+//     states. It links the newest closed incident, so a recurrence reads as one.
+//   - An open incident: one comment for what changed. A state not already open, or any
+//     event (an event is an occurrence, so each is reported), is new. An open state that
+//     this run positively checked (checkedKeys) and that did not fire is "recovered"; one
+//     whose route or game is no longer watched (yesterday's day page after midnight ET, a
+//     game past the 24-hour lookback) is "no longer watched". An open state this run did
+//     not check stays open: a route the rotation skipped is never counted as recovered.
+//   - Closed, with a final comment, only by a run with no alert at all (so no read
+//     problem and no event) that leaves no state open. Events never hold an incident open:
+//     an incident of events only closes on the next clean run.
+
+export const INCIDENT_TITLE_PREFIX = "Live watchdog incident from ";
+export const INCIDENT_MARKER = "<!-- live-watchdog-incident -->";
+
+/** The incident title for a run at `now`: its UTC date and minute. */
+export const incidentTitle = (now) => `${INCIDENT_TITLE_PREFIX}${new Date(Date.parse(now)).toISOString().slice(0, 16).replace("T", " ")} UTC`;
+
+/** True for an issue that is a watchdog incident: its title and its marker. */
+export const isIncident = (issue) =>
+  typeof issue?.title === "string" && issue.title.startsWith(INCIDENT_TITLE_PREFIX) && String(issue.body ?? "").includes(INCIDENT_MARKER);
+
+const markerKeys = (text, name) =>
+  [...String(text ?? "").matchAll(new RegExp(`<!-- live-watchdog-${name}:([^>]*?)-->`, "g"))].flatMap((match) => match[1].split(/\s+/).filter(Boolean));
+
+/** The state keys still open in an incident, from its body and comments in order. */
+export function openKeys(texts) {
+  const open = new Set();
   for (const text of texts) {
-    for (const match of (text ?? "").matchAll(/<!-- live-watchdog: ([^>]*?) -->/g)) {
-      for (const key of match[1].split(/\s+/).filter(Boolean)) keys.add(key);
-    }
+    for (const key of markerKeys(text, "open")) open.add(key);
+    for (const key of markerKeys(text, "resolved")) open.delete(key);
   }
-  return keys;
+  return [...open];
 }
 
-/** The issue or comment body for new alerts, ending with the marker of their keys. */
-export function alertBody({ now, dataCommit, runUrl, alerts }) {
+const PAGE_KEY = /^page-(behind|cached|stamp-unreadable|error)-(.+)-(html|rsc)$/;
+
+/** The (path, kind) reads an incident's open page keys need to be seen clear. */
+export function incidentRechecks(keys) {
+  const reads = [];
+  for (const key of keys) {
+    const match = PAGE_KEY.exec(key);
+    if (match && !reads.some((read) => read.path === match[2] && read.kind === match[3])) reads.push({ path: match[2], kind: match[3] });
+  }
+  return reads;
+}
+
+/**
+ * What this run positively checked, for deciding that an open state recovered.
+ * `has(key)`: the condition behind `key` was checked this run (so its absence means it is
+ * clear). `retired(key)`: the condition can no longer be checked because what it watched
+ * left the probe (yesterday's day page after midnight ET) or the lookback (a game more
+ * than 24 hours past tip). Events, and keys this code does not know, are neither.
+ * @param {object} input
+ * @param {string} input.now
+ * @param {string | null} input.workflowState
+ * @param {Array<object> | null} input.runs
+ * @param {object | null} input.state
+ * @param {Array<object> | null} input.games
+ * @param {Array<object> | null} input.ledger
+ * @param {Iterable<string>} input.attempted Labels of the reads this run attempted (`unreadable-<label>`).
+ * @param {{enabled: boolean, health: object | null, publication: string | null,
+ *   pages: Array<{path: string, kind: string, status: number | null, stamp: object | null}>}} input.site
+ */
+export function checkedKeys({ now, workflowState, runs, state, games, ledger, attempted, site }) {
+  const time = Date.parse(now);
+  const routes = probeRoutes(now);
+  const tried = new Set(attempted);
+  const healthRead = site.enabled && healthStamp(site.health) !== null;
+  const publicationRead = site.publication !== null && Number.isFinite(Date.parse(site.publication));
+  const pageOf = (path, kind) => site.pages.find((page) => page.path === path && page.kind === kind) ?? null;
+  const watchedGame = (id) => {
+    const game = (games ?? []).find((entry) => entry.id === id);
+    const tip = game ? Date.parse(game.tipUtc) : NaN;
+    return Number.isFinite(tip) && tip >= time - LIMITS.tipLookbackHours * 60 * MINUTE;
+  };
+  const has = (key) => {
+    if (key.startsWith("unreadable-")) return tried.has(key.slice("unreadable-".length));
+    if (key === "runs-unreadable") return true;
+    if (key.startsWith("workflow-")) return workflowState !== null;
+    if (key.startsWith("failing-since-")) return runs !== null;
+    if (key.startsWith("stale-")) return state !== null;
+    if (key.startsWith("unsealed-")) return games !== null && ledger !== null && watchedGame(key.slice("unsealed-".length));
+    if (key === "health-unknown") return site.enabled;
+    if (key === "site-stored-copy") return healthRead;
+    if (key === "site-behind-publication") return healthRead && publicationRead;
+    const match = PAGE_KEY.exec(key);
+    if (!match) return false;
+    const [, condition, path, kind] = match;
+    const page = pageOf(path, kind);
+    if (!site.enabled || page === null) return false;
+    if (condition === "error") return true;
+    if (condition === "cached") return page.status !== null;
+    if (condition === "stamp-unreadable") return page.status === 200;
+    return page.status === 200 && pageStampOf(page) !== null && healthRead;
+  };
+  const retired = (key) => {
+    if (key.startsWith("unsealed-")) return games !== null && ledger !== null && !watchedGame(key.slice("unsealed-".length));
+    const match = PAGE_KEY.exec(key);
+    return Boolean(match) && !routes.includes(match[2]);
+  };
+  return { has, retired };
+}
+
+const bullets = (lines) => lines.map((line) => `- ${line}`);
+
+function runLine({ now, dataCommit, runUrl }) {
+  return `Live watchdog at ${now}; live-data ${dataCommit ?? "unreadable"}.${runUrl ? ` Run: ${runUrl}` : ""}`;
+}
+
+const FOOTER = [
+  "A condition stays open until a watchdog run checks it and finds it clear; this issue closes itself after a run with no alert and nothing open. Events (a restart, a failed dispatch) are reported but never keep it open.",
+  "",
+  "The watchdog runs on GitHub Actions like the job it watches: a second path, not an external monitor. An issue notifies only people who watch the repository or are mentioned; it does not prove anyone read it.",
+];
+
+/** The body of a new incident. */
+export function incidentBody({ context, alerts, previous }) {
+  const states = alerts.filter((alert) => alert.kind !== "event");
+  const events = alerts.filter((alert) => alert.kind === "event");
   return [
-    `Live watchdog at ${now}; live-data ${dataCommit ?? "unreadable"}.${runUrl ? ` Run: ${runUrl}` : ""}`,
+    runLine(context),
+    ...(previous ? ["", `The previous incident was #${previous.number}${previous.closedAt ? `, closed ${previous.closedAt}` : ""}.`] : []),
+    ...(states.length > 0 ? ["", "Open conditions:", ...bullets(states.map((alert) => alert.text))] : []),
+    ...(events.length > 0 ? ["", "Events:", ...bullets(events.map((alert) => alert.text))] : []),
     "",
-    ...alerts.map((alert) => `- ${alert.text}`),
-    "",
-    "The watchdog runs on GitHub Actions like the job it watches: a second path, not an external monitor. It reports each condition once per daily issue. An issue notifies only people who watch the repository or are mentioned; it does not prove anyone read it.",
+    ...FOOTER,
     "",
     "cc @bilguutei2k",
-    `<!-- live-watchdog: ${alerts.map((alert) => alert.key).join(" ")} -->`,
+    INCIDENT_MARKER,
+    `<!-- live-watchdog-open: ${states.map((alert) => alert.key).join(" ")} -->`,
   ].join("\n");
+}
+
+/** A comment on an open incident: what is new, what recovered, and, when closing, that. */
+export function incidentComment({ context, fresh, recovered, retired, closing }) {
+  const states = fresh.filter((alert) => alert.kind !== "event");
+  const events = fresh.filter((alert) => alert.kind === "event");
+  const resolved = [...recovered, ...retired];
+  return [
+    runLine(context),
+    ...(states.length > 0 ? ["", "New conditions:", ...bullets(states.map((alert) => alert.text))] : []),
+    ...(events.length > 0 ? ["", "Events:", ...bullets(events.map((alert) => alert.text))] : []),
+    ...(recovered.length > 0 ? ["", "Checked this run and clear:", ...bullets(recovered.map((key) => `recovered: ${key}`))] : []),
+    ...(retired.length > 0 ? ["", "No longer watched (left the probe or the 24-hour lookback, so not checked again):", ...bullets(retired)] : []),
+    ...(closing ? ["", "This run raised no alert and no condition is open, so the incident is closed. A recurrence opens a new incident that links this one."] : []),
+    ...(states.length > 0 ? [`<!-- live-watchdog-open: ${states.map((alert) => alert.key).join(" ")} -->`] : []),
+    ...(resolved.length > 0 ? [`<!-- live-watchdog-resolved: ${resolved.join(" ")} -->`] : []),
+  ].join("\n");
+}
+
+/**
+ * What to do with incidents this run. Pure.
+ * @param {object} input
+ * @param {{number: number, open: string[]} | null} input.incident The open incident and its open keys.
+ * @param {{number: number, closedAt?: string | null} | null} [input.previous] The newest closed incident.
+ * @param {Array<{key: string, text: string, kind: "state" | "event"}>} input.alerts
+ * @param {{has: (key: string) => boolean, retired: (key: string) => boolean}} input.checked
+ * @param {string} input.now
+ * @param {{dataCommit?: string | null, runUrl?: string | null}} [input.context]
+ * @returns {{action: "none"} | {action: "create", title: string, body: string, open: string[]}
+ *   | {action: "comment" | "close", number: number, body: string, open: string[], recovered: string[], retired: string[]}}
+ */
+export function planIncident({ incident, previous = null, alerts, checked, now, context = {} }) {
+  const ctx = { now, dataCommit: context.dataCommit ?? null, runUrl: context.runUrl ?? null };
+  if (!incident) {
+    if (alerts.length === 0) return { action: "none" };
+    return {
+      action: "create",
+      title: incidentTitle(now),
+      body: incidentBody({ context: ctx, alerts, previous }),
+      open: alerts.filter((alert) => alert.kind !== "event").map((alert) => alert.key),
+    };
+  }
+  const firing = new Set(alerts.map((alert) => alert.key));
+  const wasOpen = new Set(incident.open);
+  const fresh = alerts.filter((alert) => alert.kind === "event" || !wasOpen.has(alert.key));
+  const recovered = incident.open.filter((key) => !firing.has(key) && checked.has(key));
+  const retired = incident.open.filter((key) => !firing.has(key) && !recovered.includes(key) && checked.retired(key));
+  const open = [
+    ...incident.open.filter((key) => !recovered.includes(key) && !retired.includes(key)),
+    ...fresh.filter((alert) => alert.kind !== "event").map((alert) => alert.key),
+  ];
+  const closing = alerts.length === 0 && open.length === 0;
+  if (!closing && fresh.length === 0 && recovered.length === 0 && retired.length === 0) return { action: "none" };
+  return {
+    action: closing ? "close" : "comment",
+    number: incident.number,
+    body: incidentComment({ context: ctx, fresh, recovered, retired, closing }),
+    open,
+    recovered,
+    retired,
+  };
 }

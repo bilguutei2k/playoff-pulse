@@ -3,24 +3,34 @@ name: Live watchdog
 # Watches the live chain from outside it (scripts/live/watchdog.mjs, decisions in
 # scripts/live/watchdog-decision.mjs). Every 15 minutes, if live-forecast.yml is enabled
 # and no real run of it was created in the last 25 minutes and none is queued or running,
-# it dispatches one on main, which restarts the chain. It reports, in one issue per UTC day
-# ("Live watchdog on <date>", each condition once), a restart, live-data's state.json older
-# than 2.5 hours, a game that tipped more than 10 minutes ago without a v2 final or morning
-# seal, three or more failed live runs in a row, and live-forecast being disabled other
-# than by hand. While live-forecast is disabled by hand (how the chain is stopped) it does
-# nothing.
+# it dispatches one on main, which restarts the chain. It reports a restart, live-data's
+# state.json older than 2.5 hours, a game that tipped more than 10 minutes ago without a v2
+# final or morning seal, three or more failed live runs in a row, and live-forecast being
+# disabled other than by hand. While live-forecast is disabled by hand (how the chain is
+# stopped) it does nothing.
+#
+# Reports are incidents, not daily issues: one open issue, "Live watchdog incident from
+# <YYYY-MM-DD HH:MM> UTC". A condition is a state (it lasts until a run checks it and finds
+# it clear) or an event (a restart or a failed dispatch, reported once). A run comments
+# only on what changed: a new condition, or an open one it checked and found clear
+# ("recovered"; a route the rotation did not read this run is never counted). A run with
+# no alert that leaves nothing open closes the issue; events never keep it open. A
+# recurrence opens a new incident that links the last one. The rules are planIncident's,
+# in watchdog-decision.mjs.
 #
 # It also reads the site from SITE_URL as a reader gets it: /api/live/health, `/` and one
 # route that rotates every 15 minutes through the nav, /about, the archive pages and
-# yesterday's day page, as HTML, and in the run whose UTC minute is under 15 both as RSC
-# too (`RSC: 1`, what a client-side navigation fetches). It reports, each under its own
-# key (listed in scripts/live/watchdog-decision.mjs): the server more than 15 minutes
-# behind live-data's state.json, the server rendering its stored copy, health unreadable
-# (then no page is judged), a page more than 15 minutes behind health, a page served from
-# Vercel's cache (PRERENDER, HIT or STALE), a page without a readable stamp, and a page
-# that did not answer 200. A page matching a healthy server is fine however old its state
-# (the quiet-period rule in src/lib/view/freshness.ts). Run locally with PROBE_ALL=1 it
-# reads every route in both forms; that is the check after a production deploy.
+# yesterday's day page, as HTML; in the run whose UTC minute is under 15 also `/` and a
+# route rotating every hour as RSC (`RSC: 1`, what a client-side navigation fetches); and,
+# while an incident is open, the routes its open page conditions name. It reports, each
+# under its own key (listed in scripts/live/watchdog-decision.mjs): the server more than
+# 15 minutes behind live-data's state.json, the server rendering its stored copy, health
+# unreadable (then no page is judged), a page more than 15 minutes behind health, a page
+# served from Vercel's cache (PRERENDER, HIT or STALE), a page without a readable stamp,
+# and a page that did not answer 200. A page matching a healthy server is fine however old
+# its state (the quiet-period rule in src/lib/view/freshness.ts). Run locally with
+# PROBE_ALL=1 it reads every route in both forms; that is the check after a production
+# deploy.
 #
 # It cannot fail or slow the live job: it is a separate workflow with its own concurrency
 # group, it only reads live-data, and its only write to the chain is a dispatch, which
@@ -33,9 +43,10 @@ name: Live watchdog
 # The minutes avoid the start of the hour, which GitHub names as a high-load time when
 # scheduled runs are delayed or dropped.
 #
-# Dry runs log every decision and the issue text they would post, and dispatch nothing
-# and write no issue or comment: workflow_dispatch with dry_run=true, and every pull
-# request that changes the watchdog, which runs the pull request's code. GitHub's events
+# Dry runs log every decision and the issue they would open, comment on or close, and
+# dispatch nothing and write no issue, comment or close: workflow_dispatch with
+# dry_run=true, and every pull request that changes the watchdog, which runs the pull
+# request's code. GitHub's events
 # reference says workflow_dispatch "will only trigger a workflow run if the workflow file
 # exists on the default branch", and dispatching this file from its branch returned 404
 # before it had ever run (2026-11-06); once the pull request run had registered it,
