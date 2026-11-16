@@ -48,6 +48,16 @@
 //             a static prerender, and Vercel served the build-time copy of a quiet route
 //             (`PRERENDER`, issues #25 to #33); `/` and `/record` were 2,710 minutes behind.
 //
+//             Seen twice. A publication takes some seconds to reach every server instance
+//             (each keeps the data branch's head for 15 seconds, HEAD_TTL_MS in
+//             src/lib/live-data/published.ts), so a reading taken just after one can show
+//             health on the previous publication, or a page and health on either side of
+//             it; after quiet hours that looks hours behind. `site-behind-publication` and
+//             `page-behind-*` therefore count only when a second reading of the site,
+//             PROBE_LIMITS.recheckSeconds later, shows them too (mustPersist,
+//             settledSiteAlerts); the runner reads again only when the first reading
+//             shows one.
+//
 // The probe (probePlan): PROBE_ROUTES (the nav, the footer's /about and the five archive
 // pages; tests/live-watchdog.test.ts keeps it equal to the links the site shows) plus
 // yesterday's ET day page. Each run reads health, `/` and one rotating route as HTML; the
@@ -85,9 +95,10 @@ export const PROBE_ROUTES = Object.freeze([
 
 /**
  * The probe's limits: how far behind (minutes) health may be of the publication and a page
- * of health, the rotation step, and the UTC minutes of the hour in which RSC is read too.
+ * of health, the rotation step, the UTC minutes of the hour in which RSC is read too, and
+ * how long the runner waits before the second reading that a "behind" condition needs.
  */
-export const PROBE_LIMITS = Object.freeze({ behindMinutes: 15, rotationMinutes: 15, rscBeforeMinute: 15 });
+export const PROBE_LIMITS = Object.freeze({ behindMinutes: 15, rotationMinutes: 15, rscBeforeMinute: 15, recheckSeconds: 45 });
 
 /** x-vercel-cache values that mean a stored copy was served instead of a render. */
 const CACHED = new Set(["PRERENDER", "HIT", "STALE"]);
@@ -358,6 +369,32 @@ export function siteAlerts({ health, healthProblem = null, publication, pages })
     }
   }
   return alerts;
+}
+
+/**
+ * True for the conditions a publication that landed seconds ago can cause without any
+ * fault ("Seen twice" at the top of this file): they count only when two readings agree.
+ */
+export function mustPersist(key) {
+  return key === "site-behind-publication" || key.startsWith("page-behind-");
+}
+
+/**
+ * The site alerts of a run that read the site twice. A condition that must persist counts
+ * only when both readings show it; every other condition counts from either reading, once.
+ * The second reading's alerts keep their order and text; what only the first reading
+ * showed follows.
+ * @param {Array<{key: string, text: string}>} first
+ * @param {Array<{key: string, text: string}>} second
+ * @returns {Array<{key: string, text: string}>}
+ */
+export function settledSiteAlerts(first, second) {
+  const firstKeys = new Set(first.map((alert) => alert.key));
+  const secondKeys = new Set(second.map((alert) => alert.key));
+  return [
+    ...second.filter((alert) => !mustPersist(alert.key) || firstKeys.has(alert.key)),
+    ...first.filter((alert) => !mustPersist(alert.key) && !secondKeys.has(alert.key)),
+  ];
 }
 
 /** The keys a watchdog issue or comment already reported, from its hidden markers. */

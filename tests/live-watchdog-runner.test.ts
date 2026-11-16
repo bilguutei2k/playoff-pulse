@@ -126,6 +126,8 @@ async function watchdog({ dry = false, env = {} }: Options = {}) {
     DRY_RUN: dry ? "1" : "0",
     STATE: STALE,
     SITE_URL: siteUrl,
+    // The second reading a "behind" condition needs comes at once in tests (45 s in production).
+    RECHECK_SECONDS: "0",
     ...env,
   });
   const calls = fs.readFileSync(log, "utf8").trim().split("\n").filter(Boolean).map((line) => JSON.parse(line) as string[]);
@@ -282,6 +284,30 @@ describe("served pages", SLOW, () => {
     expect(result.writes.map((args) => args.slice(0, 2))).toEqual([["issue", "create"]]);
     expect(result.keys).toEqual(["page-cached-/-html", "page-behind-/-html"]);
     expect(result.posted).toMatch(/GET \/ showed state from \S+ \(delivery current, x-vercel-cache PRERENDER\), 2700 minutes behind/);
+  });
+
+  it("reads the site again before calling it behind, and stays quiet when the second reading has caught up", async () => {
+    // A publication after quiet hours that one server instance had not picked up yet:
+    // health answers with the previous state once, then with the new one.
+    let healthReads = 0;
+    site.health = () => (++healthReads === 1 ? { body: { status: "ok", generatedAt: hoursAgo(6), delivery: "current", data: { source: "network", commit: "c0", head: "c0", problem: null } } } : freshSite.health());
+    site.page = (path, kind) => (healthReads === 1 ? { status: 200, stamp: hoursAgo(6), age: "0", cache: "MISS" } : freshSite.page(path, kind));
+    const result = await watchdog({ env: healthy });
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain("The site looked behind (site-behind-publication); reading it again in 0 s");
+    expect(requests.filter((request) => request.path === "/api/live/health")).toHaveLength(2);
+    expect(result.stdout).toContain("No alerts.");
+    expect(result.writes).toEqual([]);
+  });
+
+  it("reports a server still behind the publication at the second reading, once", async () => {
+    site.health = () => ({ body: { status: "ok", generatedAt: hoursAgo(6), delivery: "older", data: { source: "network", commit: "c0", head: "c1", problem: "manifest hash mismatch" } } });
+    site.page = () => ({ status: 200, stamp: hoursAgo(6), delivery: "older", age: "0", cache: "MISS" });
+    const result = await watchdog({ env: healthy });
+    expect(result.status, result.stderr).toBe(0);
+    expect(requests.filter((request) => request.path === "/api/live/health")).toHaveLength(2);
+    expect(result.keys).toEqual(["site-behind-publication"]);
+    expect(result.writes.map((args) => args.slice(0, 2))).toEqual([["issue", "create"]]);
   });
 
   it("reports a server on its stored copy and behind the publication, read from a 503, without judging matching pages", async () => {
