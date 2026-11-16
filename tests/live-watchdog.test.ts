@@ -12,6 +12,7 @@ import {
   isIncident,
   openKeys,
   planIncident,
+  mustPersist,
   PROBE_ROUTES,
   probePlan,
   probeRoutes,
@@ -19,6 +20,7 @@ import {
   rotationIndex,
   rscRotationIndex,
   rscStamp,
+  settledSiteAlerts,
   siteAlerts,
   // @ts-expect-error a plain Node module with no types, run by the watchdog workflow without a build
 } from "../scripts/live/watchdog-decision.mjs";
@@ -351,6 +353,27 @@ describe("served pages", () => {
     expect(pageKeys([], { health: health(), publication: ago(30) })).toEqual([]);
     expect(pageKeys([], { health: health({ generatedAt: ago(600) }), publication: null })).toEqual([]);
     expect(pageKeys([], { health: health({ generatedAt: ago(600) }), publication: "garbage" })).toEqual([]);
+  });
+
+  it("counts a behind condition only when two readings show it, and every other condition from either", () => {
+    expect(["site-behind-publication", "page-behind-/-html", "page-behind-/record-rsc"].every(mustPersist)).toBe(true);
+    expect(["site-stored-copy", "page-cached-/-html", "page-error-/-html", "page-stamp-unreadable-/-rsc", "health-unknown"].some(mustPersist)).toBe(false);
+    const alert = (key: string, text = key): Alert => ({ key, text });
+    const keys = (first: Alert[], second: Alert[]) => (settledSiteAlerts(first, second) as Alert[]).map((entry) => entry.key);
+    // A publication that had not reached the server yet: behind once, then not.
+    expect(keys([alert("site-behind-publication"), alert("page-behind-/-html")], [])).toEqual([]);
+    // Behind in the second reading only (a publication landed between the two): not yet.
+    expect(keys([alert("page-behind-/-html")], [alert("page-behind-/odds-html")])).toEqual([]);
+    // Behind both times: reported, with the second reading's text.
+    expect(settledSiteAlerts([alert("site-behind-publication", "first")], [alert("site-behind-publication", "second")])).toEqual([alert("site-behind-publication", "second")]);
+    // Everything else counts from either reading, once: the second reading's order, then
+    // what only the first showed.
+    expect(keys([alert("page-error-/-html"), alert("page-behind-/-html"), alert("health-unknown")], [alert("page-cached-/lab-rsc"), alert("page-error-/-html"), alert("page-behind-/-html")])).toEqual([
+      "page-cached-/lab-rsc",
+      "page-error-/-html",
+      "page-behind-/-html",
+      "health-unknown",
+    ]);
   });
 
   it("reports a server rendering its stored copy, with a 503 body still read", () => {

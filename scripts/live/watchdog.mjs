@@ -8,9 +8,12 @@
 // probePlan picks for this run (`/` and one rotating route as HTML, both as RSC too in the
 // run whose UTC minute is under 15; PROBE_ALL=1 reads every route in both forms), and
 // reports what siteAlerts finds: the server behind the publication or on its stored copy,
-// a page behind the server, served from a cache, without a stamp or failing. While an
-// incident is open it also rereads the routes its open page conditions name. A second path
-// on the same platform, not an external monitor; see watchdog-decision.mjs.
+// a page behind the server, served from a cache, without a stamp or failing. A reading
+// that shows the server or a page behind is taken again RECHECK_SECONDS later (default
+// PROBE_LIMITS.recheckSeconds) and counts only if it still does: a publication takes some
+// seconds to reach every server instance. While an incident is open it also rereads the
+// routes its open page conditions name. A second path on the same platform, not an
+// external monitor; see watchdog-decision.mjs.
 // tests/live-watchdog-runner.test.ts runs it against fake gh and git and a local fake site.
 //
 // Needs gh (with GH_TOKEN; only GITHUB_TOKEN's actions and issues permissions), git with
@@ -28,11 +31,14 @@ import {
   INCIDENT_TITLE_PREFIX,
   incidentRechecks,
   isIncident,
+  mustPersist,
   openKeys,
   planIncident,
+  PROBE_LIMITS,
   probePlan,
   renderedStamp,
   rscStamp,
+  settledSiteAlerts,
   siteAlerts,
 } from "./watchdog-decision.mjs";
 
@@ -67,6 +73,8 @@ function attempt(label, read) {
 // a few at a time so PROBE_ALL (28 reads) stays well inside the job's timeout.
 const SITE_URL = (process.env.SITE_URL ?? "https://548-sable.vercel.app").replace(/\/+$/, "");
 const PROBE_ALL = process.env.PROBE_ALL === "1";
+const recheckSeconds = Number(process.env.RECHECK_SECONDS);
+const RECHECK_MS = (process.env.RECHECK_SECONDS && Number.isFinite(recheckSeconds) && recheckSeconds >= 0 ? recheckSeconds : PROBE_LIMITS.recheckSeconds) * 1000;
 const FETCH_TIMEOUT_MS = 20_000;
 const PARALLEL_READS = 4;
 async function fetchPage(url, headers = {}) {
@@ -185,10 +193,21 @@ try {
 }
 
 const publication = state && typeof state.generatedAt === "string" ? state.generatedAt : null;
-const site = await probeSite(publication, incident ? incidentRechecks(incident.open) : []);
+const rechecks = incident ? incidentRechecks(incident.open) : [];
+let site = await probeSite(publication, rechecks);
+// What the first reading showed, when a second one was needed (logged, never reported).
+let firstReading = null;
+const lagging = site.alerts.filter((alert) => mustPersist(alert.key)).map((alert) => alert.key);
+if (lagging.length > 0) {
+  log(`The site looked behind (${lagging.join(", ")}); reading it again in ${RECHECK_MS / 1000} s, since a publication takes some seconds to reach every server instance.`);
+  await new Promise((resolve) => setTimeout(resolve, RECHECK_MS));
+  const again = await probeSite(publication, rechecks);
+  firstReading = { health: site.health, pages: site.pages, alerts: site.alerts.map((alert) => alert.key) };
+  site = { ...again, alerts: settledSiteAlerts(site.alerts, again.alerts) };
+}
 const decision = decideWatchdog({ now, workflowState, runs, state, games, ledger });
 const alerts = [...decision.alerts, ...site.alerts, ...readProblems];
-log(JSON.stringify({ now, dryRun: dry, workflowState, dataCommit, ...decision, incident, site: { url: SITE_URL || null, probeAll: PROBE_ALL, health: site.health, pages: site.pages }, alerts }, null, 2));
+log(JSON.stringify({ now, dryRun: dry, workflowState, dataCommit, ...decision, incident, site: { url: SITE_URL || null, probeAll: PROBE_ALL, health: site.health, pages: site.pages, firstReading }, alerts }, null, 2));
 
 if (decision.paused) {
   log("live-forecast.yml is disabled by hand (how the chain is stopped): no dispatch and no alerts.");
