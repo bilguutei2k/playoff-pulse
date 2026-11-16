@@ -2,11 +2,13 @@
 // live-data's published files, decides (scripts/live/watchdog-decision.mjs), restarts an
 // idle chain and reports problems in one issue per UTC day, "Live watchdog on <date>",
 // each condition once per issue. It also reads the site as a reader does (SITE_URL, default
-// the production deployment; empty disables it): /api/live/health for the server's stamp,
-// then `/`, `/record` and yesterday's day page, and reports a served copy more than 30
-// minutes behind the server. A second path on the same platform, not an external monitor;
-// see watchdog-decision.mjs. tests/live-watchdog-runner.test.ts runs it against fake gh
-// and git and a local fake site.
+// the production deployment; empty disables it): /api/live/health, then the routes
+// probePlan picks for this run (`/` and one rotating route as HTML, both as RSC too in the
+// run whose UTC minute is under 15; PROBE_ALL=1 reads every route in both forms), and
+// reports what siteAlerts finds: the server behind the publication or on its stored copy,
+// a page behind the server, served from a cache, without a stamp or failing. A second path
+// on the same platform, not an external monitor; see watchdog-decision.mjs.
+// tests/live-watchdog-runner.test.ts runs it against fake gh and git and a local fake site.
 //
 // Needs gh (with GH_TOKEN; only GITHUB_TOKEN's actions and issues permissions), git with
 // origin/live-data fetched, and GITHUB_REPOSITORY. DRY_RUN=1 logs every decision and the
@@ -16,7 +18,7 @@
 // not list runs, dispatch, or post, so GitHub reports the failed watchdog run; that never
 // touches the live job.
 import { execFileSync } from "node:child_process";
-import { alertBody, decideWatchdog, PAGE_LIMITS, pageFreshnessAlerts, renderedStamp, reportedKeys } from "./watchdog-decision.mjs";
+import { alertBody, decideWatchdog, probePlan, renderedStamp, reportedKeys, rscStamp, siteAlerts } from "./watchdog-decision.mjs";
 
 const repo = process.env.GITHUB_REPOSITORY;
 if (!repo) throw new Error("GITHUB_REPOSITORY is required");
@@ -41,25 +43,19 @@ function attempt(label, read) {
     return null;
   }
 }
-async function attemptAsync(label, read) {
-  try {
-    return await read();
-  } catch (error) {
-    readProblems.push({ key: `unreadable-${label}`, text: `Could not read ${label}: ${reason(error)}` });
-    return null;
-  }
-}
 
 // The site as a reader gets it. No cache-busting headers: the point is to see what the
-// CDN serves. A fetch that fails is a read problem, never a stop.
+// CDN serves. A page that cannot be fetched is a page-error alert, never a stop. Reads run
+// a few at a time so PROBE_ALL (28 reads) stays well inside the job's timeout.
 const SITE_URL = (process.env.SITE_URL ?? "https://548-sable.vercel.app").replace(/\/+$/, "");
+const PROBE_ALL = process.env.PROBE_ALL === "1";
 const FETCH_TIMEOUT_MS = 20_000;
-const ET_DATE = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
-async function fetchPage(url) {
+const PARALLEL_READS = 4;
+async function fetchPage(url, headers = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch(url, { signal: controller.signal, redirect: "follow", headers: { "user-agent": "548-live-watchdog" } });
+    const response = await fetch(url, { signal: controller.signal, redirect: "follow", headers: { "user-agent": "548-live-watchdog", ...headers } });
     const age = response.headers.get("age");
     return {
       status: response.status,
@@ -71,19 +67,42 @@ async function fetchPage(url) {
     clearTimeout(timer);
   }
 }
-async function probeSite() {
-  if (!SITE_URL) return { health: null, pages: [], alerts: [] };
-  const health = await attemptAsync("site-health", async () => {
-    const response = await fetchPage(`${SITE_URL}/api/live/health`);
-    return JSON.parse(response.text);
-  });
-  const yesterday = ET_DATE.format(new Date(Date.parse(now) - 86_400_000));
-  const pages = [];
-  for (const path of [...PAGE_LIMITS.paths, `/games/${yesterday}`]) {
-    const page = await attemptAsync(`page-${path}`, () => fetchPage(`${SITE_URL}${path}`));
-    if (page) pages.push({ path, status: page.status, renderedAt: renderedStamp(page.text), age: page.age, cache: page.cache });
+async function readPage({ path, kind }) {
+  try {
+    const page = await fetchPage(`${SITE_URL}${path}`, kind === "rsc" ? { RSC: "1" } : {});
+    const stamp = page.status === 200 ? (kind === "rsc" ? rscStamp(page.text) : renderedStamp(page.text)) : null;
+    return { path, kind, status: page.status, error: null, stamp, cache: page.cache, age: page.age };
+  } catch (error) {
+    const cause = error?.cause ? `: ${error.cause.code ?? error.cause.message ?? error.cause}` : "";
+    return { path, kind, status: null, error: `${reason(error)}${cause}`, stamp: null, cache: null, age: null };
   }
-  return { health: health ? { generatedAt: health.generatedAt, status: health.status } : null, pages, alerts: pageFreshnessAlerts({ health, pages }) };
+}
+async function probeSite(publication) {
+  if (!SITE_URL) return { health: null, pages: [], alerts: [] };
+  let health = null;
+  let healthProblem = null;
+  try {
+    health = JSON.parse((await fetchPage(`${SITE_URL}/api/live/health`)).text);
+    if (!health || typeof health !== "object") throw new Error("the answer is not a JSON object");
+  } catch (error) {
+    health = null;
+    healthProblem = reason(error);
+  }
+  const plan = probePlan({ now, all: PROBE_ALL });
+  const pages = new Array(plan.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < plan.length) {
+      const index = next++;
+      pages[index] = await readPage(plan[index]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(PARALLEL_READS, plan.length) }, worker));
+  return {
+    health: health ? { generatedAt: health.generatedAt ?? null, status: health.status ?? null, delivery: health.delivery ?? null, data: health.data ?? null } : null,
+    pages,
+    alerts: siteAlerts({ health, healthProblem, publication, pages }),
+  };
 }
 
 // live-forecast's state and runs. Non-completed runs are listed by status as well, so an
@@ -111,10 +130,10 @@ const ledger = state
   ? attempt("ledger", () => show(`ledger/${state.seasonLabel}.jsonl`).split("\n").filter(Boolean).map((line) => JSON.parse(line)))
   : null;
 
-const site = await probeSite();
+const site = await probeSite(state && typeof state.generatedAt === "string" ? state.generatedAt : null);
 const decision = decideWatchdog({ now, workflowState, runs, state, games, ledger });
 const alerts = [...decision.alerts, ...site.alerts, ...readProblems];
-log(JSON.stringify({ now, dryRun: dry, workflowState, dataCommit, ...decision, site: { url: SITE_URL || null, health: site.health, pages: site.pages }, alerts }, null, 2));
+log(JSON.stringify({ now, dryRun: dry, workflowState, dataCommit, ...decision, site: { url: SITE_URL || null, probeAll: PROBE_ALL, health: site.health, pages: site.pages }, alerts }, null, 2));
 
 if (decision.paused) {
   log("live-forecast.yml is disabled by hand (how the chain is stopped): no dispatch and no alerts.");
