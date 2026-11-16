@@ -1,7 +1,9 @@
 // The live watchdog (.github/workflows/live-watchdog.yml): reads live-forecast's runs and
 // live-data's published files, decides (scripts/live/watchdog-decision.mjs), restarts an
-// idle chain and reports problems in one issue per UTC day, "Live watchdog on <date>",
-// each condition once per issue. It also reads the site as a reader does (SITE_URL, default
+// idle chain and reports problems as incidents: one open issue per incident, "Live
+// watchdog incident from <YYYY-MM-DD HH:MM> UTC", commented when a condition starts or is
+// checked and found clear, and closed by a run with no alert that leaves nothing open
+// (planIncident in watchdog-decision.mjs has the rules). It also reads the site as a reader does (SITE_URL, default
 // the production deployment; empty disables it): /api/live/health, then the routes
 // probePlan picks for this run (`/` and one rotating route as HTML, both as RSC too in the
 // run whose UTC minute is under 15; PROBE_ALL=1 reads every route in both forms), and
@@ -9,19 +11,36 @@
 // a page behind the server, served from a cache, without a stamp or failing. A reading
 // that shows the server or a page behind is taken again RECHECK_SECONDS later (default
 // PROBE_LIMITS.recheckSeconds) and counts only if it still does: a publication takes some
-// seconds to reach every server instance. A second path on the same platform, not an
+// seconds to reach every server instance. While an incident is open it also rereads the
+// routes its open page conditions name. A second path on the same platform, not an
 // external monitor; see watchdog-decision.mjs.
 // tests/live-watchdog-runner.test.ts runs it against fake gh and git and a local fake site.
 //
 // Needs gh (with GH_TOKEN; only GITHUB_TOKEN's actions and issues permissions), git with
 // origin/live-data fetched, and GITHUB_REPOSITORY. DRY_RUN=1 logs every decision and the
 // issue text it would post, and dispatches nothing and writes no issue or comment (it
-// still reads). A read that fails never stops the chain check or the other alerts; a
-// failed dispatch never stops the alerts. Exits 1, after everything else, when it could
-// not list runs, dispatch, or post, so GitHub reports the failed watchdog run; that never
-// touches the live job.
+// still reads), and logs the issue it would open, comment on or close. A read that fails
+// never stops the chain check or the other alerts; a failed dispatch never stops the
+// alerts. Exits 1, after everything else, when it could not list runs, dispatch, or read
+// or write incidents, so GitHub reports the failed watchdog run; that never touches the
+// live job.
 import { execFileSync } from "node:child_process";
-import { alertBody, decideWatchdog, mustPersist, PROBE_LIMITS, probePlan, renderedStamp, reportedKeys, rscStamp, settledSiteAlerts, siteAlerts } from "./watchdog-decision.mjs";
+import {
+  checkedKeys,
+  decideWatchdog,
+  INCIDENT_TITLE_PREFIX,
+  incidentRechecks,
+  isIncident,
+  mustPersist,
+  openKeys,
+  planIncident,
+  PROBE_LIMITS,
+  probePlan,
+  renderedStamp,
+  rscStamp,
+  settledSiteAlerts,
+  siteAlerts,
+} from "./watchdog-decision.mjs";
 
 const repo = process.env.GITHUB_REPOSITORY;
 if (!repo) throw new Error("GITHUB_REPOSITORY is required");
@@ -38,11 +57,13 @@ const reason = (error) => (error?.stderr?.toString().trim() || error?.message ||
 
 const problems = [];
 const readProblems = [];
+const attempted = new Set();
 function attempt(label, read) {
+  attempted.add(label);
   try {
     return read();
   } catch (error) {
-    readProblems.push({ key: `unreadable-${label}`, text: `Could not read ${label}: ${reason(error)}` });
+    readProblems.push({ kind: "state", key: `unreadable-${label}`, text: `Could not read ${label}: ${reason(error)}` });
     return null;
   }
 }
@@ -82,7 +103,7 @@ async function readPage({ path, kind }) {
     return { path, kind, status: null, error: `${reason(error)}${cause}`, stamp: null, cache: null, age: null };
   }
 }
-async function probeSite(publication) {
+async function probeSite(publication, also) {
   if (!SITE_URL) return { health: null, pages: [], alerts: [] };
   let health = null;
   let healthProblem = null;
@@ -93,7 +114,7 @@ async function probeSite(publication) {
     health = null;
     healthProblem = reason(error);
   }
-  const plan = probePlan({ now, all: PROBE_ALL });
+  const plan = probePlan({ now, all: PROBE_ALL, also });
   const pages = new Array(plan.length);
   let next = 0;
   const worker = async () => {
@@ -135,21 +156,58 @@ const ledger = state
   ? attempt("ledger", () => show(`ledger/${state.seasonLabel}.jsonl`).split("\n").filter(Boolean).map((line) => JSON.parse(line)))
   : null;
 
+// The open incident, if any, and its open keys, before the site is read, so the routes its
+// open page conditions name are reread this run.
+// Open issues are listed directly (no search index, which can lag behind a new issue and
+// so open a duplicate); closed incidents, only needed for the link, by search.
+const listIncidents = (state) =>
+  JSON.parse(
+    gh(
+      "issue",
+      "list",
+      "--state",
+      state,
+      ...(state === "closed" ? ["--search", `"${INCIDENT_TITLE_PREFIX.trim()}" in:title`] : []),
+      "--json",
+      "number,title,body,url,closedAt",
+      "--limit",
+      state === "closed" ? "50" : "200",
+    ),
+  )
+    .filter(isIncident)
+    .sort((a, b) => b.number - a.number);
+let incident = null;
+let incidentsRead = true;
+try {
+  const [current, ...others] = listIncidents("open");
+  if (others.length > 0) log(`More than one open incident (${[current, ...others].map((entry) => `#${entry.number}`).join(", ")}); using the newest, #${current.number}.`);
+  if (current) {
+    const comments = JSON.parse(gh("api", "--paginate", "--slurp", `repos/${repo}/issues/${current.number}/comments?per_page=100`))
+      .flat()
+      .map((comment) => comment.body);
+    incident = { number: current.number, url: current.url ?? null, open: openKeys([current.body, ...comments]) };
+  }
+} catch (error) {
+  incidentsRead = false;
+  problems.push(`could not read the open incident: ${reason(error)}`);
+}
+
 const publication = state && typeof state.generatedAt === "string" ? state.generatedAt : null;
-let site = await probeSite(publication);
+const rechecks = incident ? incidentRechecks(incident.open) : [];
+let site = await probeSite(publication, rechecks);
 // What the first reading showed, when a second one was needed (logged, never reported).
 let firstReading = null;
 const lagging = site.alerts.filter((alert) => mustPersist(alert.key)).map((alert) => alert.key);
 if (lagging.length > 0) {
   log(`The site looked behind (${lagging.join(", ")}); reading it again in ${RECHECK_MS / 1000} s, since a publication takes some seconds to reach every server instance.`);
   await new Promise((resolve) => setTimeout(resolve, RECHECK_MS));
-  const again = await probeSite(publication);
+  const again = await probeSite(publication, rechecks);
   firstReading = { health: site.health, pages: site.pages, alerts: site.alerts.map((alert) => alert.key) };
   site = { ...again, alerts: settledSiteAlerts(site.alerts, again.alerts) };
 }
 const decision = decideWatchdog({ now, workflowState, runs, state, games, ledger });
 const alerts = [...decision.alerts, ...site.alerts, ...readProblems];
-log(JSON.stringify({ now, dryRun: dry, workflowState, dataCommit, ...decision, site: { url: SITE_URL || null, probeAll: PROBE_ALL, health: site.health, pages: site.pages, firstReading }, alerts }, null, 2));
+log(JSON.stringify({ now, dryRun: dry, workflowState, dataCommit, ...decision, incident, site: { url: SITE_URL || null, probeAll: PROBE_ALL, health: site.health, pages: site.pages, firstReading }, alerts }, null, 2));
 
 if (decision.paused) {
   log("live-forecast.yml is disabled by hand (how the chain is stopped): no dispatch and no alerts.");
@@ -163,47 +221,63 @@ if (decision.paused) {
         log("Dispatched live-forecast.yml on main.");
       } catch (error) {
         const text = `Could not dispatch live-forecast.yml: ${reason(error)}`;
-        alerts.push({ key: "dispatch-failed", text });
+        alerts.push({ kind: "event", key: "dispatch-failed", text });
         problems.push(text);
       }
     }
   }
-  if (alerts.length === 0) {
-    log("No alerts.");
-  } else {
-    const title = `Live watchdog on ${now.slice(0, 10)}`;
+  if (alerts.length === 0) log("No alerts.");
+  if (incidentsRead) {
+    const checked = checkedKeys({
+      now,
+      workflowState,
+      runs,
+      state,
+      games,
+      ledger,
+      attempted,
+      site: { enabled: Boolean(SITE_URL), health: site.health, publication, pages: site.pages },
+    });
+    let previous = null;
+    if (!incident && alerts.length > 0) {
+      try {
+        const [closed] = listIncidents("closed");
+        previous = closed ? { number: closed.number, closedAt: closed.closedAt ?? null } : null;
+      } catch (error) {
+        log(`Could not look up the previous incident, so the new one does not link it: ${reason(error)}`);
+      }
+    }
+    const plan = planIncident({ incident, previous, alerts, checked, now, context: { dataCommit, runUrl } });
+    if (plan.action === "none" && incident) {
+      log(`Incident #${incident.number} unchanged; open: ${incident.open.join(", ") || "(none)"}.`);
+    }
     try {
-      const issue = JSON.parse(gh("issue", "list", "--state", "all", "--search", `"${title}" in:title`, "--json", "number,title", "--limit", "20"))
-        .find((entry) => entry.title === title);
-      const posted = issue
-        ? reportedKeys([
-            gh("api", `repos/${repo}/issues/${issue.number}`, "--jq", ".body"),
-            ...JSON.parse(gh("api", "--paginate", "--slurp", `repos/${repo}/issues/${issue.number}/comments?per_page=100`))
-              .flat()
-              .map((comment) => comment.body),
-          ])
-        : new Set();
-      const fresh = alerts.filter((alert) => !posted.has(alert.key));
-      if (fresh.length === 0) {
-        log(`Already reported in #${issue.number}: ${alerts.map((alert) => alert.key).join(", ")}`);
-      } else {
-        const body = alertBody({ now, dataCommit, runUrl, alerts: fresh });
-        const where = issue ? `comment on #${issue.number}` : `open "${title}"`;
-        if (dry) {
-          log(`Dry run: would ${where}:\n${body}`);
-        } else {
-          if (issue) gh("issue", "comment", String(issue.number), "--body", body);
-          else gh("issue", "create", "--title", title, "--body", body);
-          log(`Reported (${where}): ${fresh.map((alert) => alert.key).join(", ")}`);
+      if (plan.action === "create") {
+        if (dry) log(`Dry run: would open "${plan.title}":\n${plan.body}`);
+        else {
+          gh("issue", "create", "--title", plan.title, "--body", plan.body);
+          log(`Opened "${plan.title}"; open: ${plan.open.join(", ") || "(none, events only)"}.`);
+        }
+      } else if (plan.action === "comment") {
+        if (dry) log(`Dry run: would comment on #${plan.number}:\n${plan.body}`);
+        else {
+          gh("issue", "comment", String(plan.number), "--body", plan.body);
+          log(`Commented on #${plan.number}; open: ${plan.open.join(", ") || "(none)"}.`);
+        }
+      } else if (plan.action === "close") {
+        if (dry) log(`Dry run: would close #${plan.number} with comment:\n${plan.body}`);
+        else {
+          gh("issue", "close", String(plan.number), "--comment", plan.body);
+          log(`Closed #${plan.number}.`);
         }
       }
     } catch (error) {
-      problems.push(`could not report to the daily issue: ${reason(error)}`);
+      problems.push(`could not ${plan.action} the incident: ${reason(error)}`);
     }
   }
 }
 
-if (dry) log("Dry run: no dispatch and no issue create/comment.");
+if (dry) log("Dry run: no dispatch and no issue create, comment or close.");
 if (problems.length > 0) {
   for (const problem of problems) console.error(`[watchdog] ${problem}`);
   process.exit(1);

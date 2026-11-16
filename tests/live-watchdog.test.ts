@@ -3,16 +3,22 @@ import { describe, expect, it } from "vitest";
 import * as navLinks from "@/components/layout/NavLinks";
 import * as siteFooter from "@/components/layout/SiteFooter";
 import {
-  alertBody,
+  checkedKeys,
   decideWatchdog,
   failureStreak,
+  INCIDENT_MARKER,
+  incidentRechecks,
+  incidentTitle,
+  isIncident,
+  openKeys,
+  planIncident,
   mustPersist,
   PROBE_ROUTES,
   probePlan,
   probeRoutes,
   renderedStamp,
-  reportedKeys,
   rotationIndex,
+  rscRotationIndex,
   rscStamp,
   settledSiteAlerts,
   siteAlerts,
@@ -20,7 +26,7 @@ import {
 } from "../scripts/live/watchdog-decision.mjs";
 import { liveScript, run as runCommand } from "./support/shell";
 
-type Alert = { key: string; text: string };
+type Alert = { key: string; text: string; kind: "state" | "event" };
 const now = "2026-11-05T20:00:00Z";
 let nextId = 1;
 const run = (minutesAgo: number, conclusion: string | null = "success", status = "completed", title = "Live forecast") => ({
@@ -163,19 +169,10 @@ describe("failure streak", () => {
   });
 });
 
-describe("issue text", () => {
-  it("round-trips its keys through the hidden marker", () => {
-    const body = alertBody({ now, dataCommit: "abc", runUrl: "https://example.test/run", alerts: [{ key: "restart", text: "a" }, { key: "unsealed-g1", text: "b" }] });
-    expect(body).toContain("- a\n- b");
-    expect(body).toContain("cc @bilguutei2k");
-    expect([...reportedKeys(["unrelated", body, "<!-- live-watchdog: stale-x -->"])]).toEqual(["restart", "unsealed-g1", "stale-x"]);
-    expect(reportedKeys([null, ""]).size).toBe(0);
-  });
-});
-
 describe("probe plan", () => {
   // 2026-11-05T20:00Z is quarter-hour 1,970,560; 14 routes with the day page.
-  const at = (iso: string, all = false) => (probePlan({ now: iso, all }) as Array<{ path: string; kind: string }>).map(({ path, kind }) => `${kind} ${path}`);
+  const at = (iso: string, all = false, also: Array<{ path: string; kind: string }> = []) =>
+    (probePlan({ now: iso, all, also }) as Array<{ path: string; kind: string }>).map(({ path, kind }) => `${kind} ${path}`);
 
   it("probes the linked routes plus yesterday's ET day page", () => {
     expect(probeRoutes(now)).toEqual([...PROBE_ROUTES, "/games/2026-11-04"]);
@@ -199,17 +196,31 @@ describe("probe plan", () => {
     expect(seen.size).toBe(14);
   });
 
-  it("reads RSC too only in the run whose UTC minute is under 15, and never reads a route twice", () => {
-    const quarter = 15 * 60_000;
-    // Find a time in the first quarter hour whose rotation lands on `/`, and one that does not.
-    const hours = Array.from({ length: 14 }, (_, hour) => Date.parse("2026-11-05T00:05:00Z") + hour * 3_600_000);
-    const onHome = hours.find((time) => rotationIndex(time, 14) === 0)!;
-    const elsewhere = hours.find((time) => rotationIndex(time, 14) !== 0)!;
-    const other = probeRoutes(new Date(elsewhere).toISOString())[rotationIndex(elsewhere, 14)];
-    expect(at(new Date(elsewhere).toISOString())).toEqual(["html /", `html ${other}`, "rsc /", `rsc ${other}`]);
-    expect(at(new Date(onHome).toISOString())).toEqual(["html /", "rsc /"]);
-    expect(at(new Date(elsewhere + quarter).toISOString())).toHaveLength(2);
-    expect(at(new Date(elsewhere + quarter).toISOString()).every((read) => read.startsWith("html "))).toBe(true);
+  it("reads RSC only in the run whose UTC minute is under 15: `/` and a route rotating hourly", () => {
+    expect(at("2026-11-05T20:05:00Z")).toEqual(["html /", "html /evidence", "rsc /", "rsc /how-it-works"]);
+    // The HTML rotation lands on `/` here, and `/` is read once per form.
+    expect(at("2026-11-05T21:05:00Z")).toEqual(["html /", "rsc /", "rsc /about"]);
+    expect(at("2026-11-05T20:20:00Z")).toEqual(["html /", "html /methodology"]);
+    expect(rscRotationIndex(Date.parse("2026-11-05T20:59:59Z"), 14)).toBe(rscRotationIndex(Date.parse("2026-11-05T20:00:00Z"), 14));
+  });
+
+  it("reads every route as RSC within 14 hourly runs (the quarter-hour index alone would skip half)", () => {
+    // 01:03 to 14:03 in New York, so yesterday's day page is the same in every run.
+    const start = Date.parse("2026-11-05T06:03:00Z");
+    const runs = Array.from({ length: 14 }, (_, hour) => new Date(start + hour * 3_600_000).toISOString());
+    const rsc = new Set(runs.flatMap((iso) => at(iso).filter((read) => read.startsWith("rsc ")).map((read) => read.slice(4))));
+    expect(rsc).toEqual(new Set(probeRoutes(runs[0])));
+    // The quarter-hour index at minute 3 of each hour only ever lands on even indexes.
+    expect(new Set(runs.map((iso) => rotationIndex(Date.parse(iso), 14) % 2)).size).toBe(1);
+  });
+
+  it("adds the reads an open incident waits for, once, and only for routes still probed", () => {
+    const also = [
+      { path: "/lab", kind: "rsc" },
+      { path: "/", kind: "html" },
+      { path: "/games/2026-11-01", kind: "html" },
+    ];
+    expect(at("2026-11-05T20:20:00Z", false, also)).toEqual(["html /", "html /methodology", "rsc /lab"]);
   });
 
   it("reads every route in both forms with PROBE_ALL", () => {
@@ -313,7 +324,7 @@ describe("served pages", () => {
     expect(pageKeys([page({ status: 500, stamp: null })])).toEqual(["page-error-/-html"]);
     expect(pageKeys([page({ status: 404, stamp: null, cache: "HIT" })])).toEqual(["page-cached-/-html", "page-error-/-html"]);
     const [noAnswer] = check([page({ path: "/odds", kind: "rsc", status: null, error: "fetch failed: ECONNREFUSED", stamp: null, cache: null })]);
-    expect(noAnswer).toEqual({ key: "page-error-/odds-rsc", text: "GET /odds (RSC) got no answer: fetch failed: ECONNREFUSED." });
+    expect(noAnswer).toEqual({ kind: "state", key: "page-error-/odds-rsc", text: "GET /odds (RSC) got no answer: fetch failed: ECONNREFUSED." });
   });
 
   it("judges no page against a health it could not read", () => {
@@ -370,5 +381,155 @@ describe("served pages", () => {
     const alerts = check([page({ stamp: { generatedAt: "2026-11-03T06:00:14Z", delivery: "stored" } })], { health: stored, publication: now });
     expect(alerts.map((alert) => alert.key)).toEqual(["site-behind-publication", "site-stored-copy"]);
     expect(alerts[1].text).toContain("data.problem the head commit of live-data is unknown");
+  });
+});
+
+describe("alert kinds", () => {
+  it("marks restarts as events and every other condition as a state", () => {
+    const decision = decide({ runs: [run(1, "failure"), run(2, "failure"), run(3, "failure"), run(40)].map((entry) => ({ ...entry, created_at: new Date(Date.parse(now) - 30 * 60_000).toISOString() })), state: { generatedAt: "2026-11-05T10:00:00Z" }, games: [game], workflowState: "disabled_inactivity" });
+    const kinds = Object.fromEntries((decision.alerts as Alert[]).map((alert) => [alert.key.replace(/-.*/, ""), alert.kind]));
+    expect(kinds).toEqual({ workflow: "state", failing: "state", stale: "state", unsealed: "state" });
+    expect((decide({ runs: [] }).alerts as Alert[]).map((alert) => [alert.key, alert.kind])).toEqual([["restart", "event"]]);
+    expect((decide({ runs: null }).alerts as Alert[])[0].kind).toBe("state");
+    const site = siteAlerts({ health: null, publication: null, pages: [{ path: "/", kind: "html", status: 500, stamp: null, cache: "HIT" }] }) as Alert[];
+    expect(site.every((alert) => alert.kind === "state")).toBe(true);
+  });
+});
+
+describe("incidents", () => {
+  const state = (key: string): Alert => ({ key, text: `text of ${key}`, kind: "state" });
+  const event = (key: string): Alert => ({ key, text: `text of ${key}`, kind: "event" });
+  const healthy = { generatedAt: now, status: "ok", delivery: "current" };
+  const read = (path: string, kind = "html", overrides: Record<string, unknown> = {}) => ({ path, kind, status: 200, stamp: { generatedAt: now, delivery: "current" }, cache: "MISS", ...overrides });
+  const checker = (overrides: Record<string, unknown> = {}, site: Record<string, unknown> = {}) =>
+    checkedKeys({
+      now,
+      workflowState: "active",
+      runs: [],
+      state: { generatedAt: now },
+      games: [game],
+      ledger: [],
+      attempted: ["live-forecast-state", "live-data", "state.json", "games", "ledger"],
+      site: { enabled: true, health: healthy, publication: now, pages: [read("/")], ...site },
+      ...overrides,
+    });
+  const plan = (input: Record<string, unknown>) => planIncident({ now, checked: checker(), context: { dataCommit: "abc", runUrl: "https://example.test/run" }, ...input });
+
+  it("titles an incident by its UTC date and minute and recognises it by title and marker", () => {
+    expect(incidentTitle("2026-11-05T20:07:59.123Z")).toBe("Live watchdog incident from 2026-11-05 20:07 UTC");
+    expect(isIncident({ title: "Live watchdog incident from 2026-11-05 20:07 UTC", body: `x\n${INCIDENT_MARKER}` })).toBe(true);
+    expect(isIncident({ title: "Live watchdog incident from 2026-11-05 20:07 UTC", body: "x" })).toBe(false);
+    expect(isIncident({ title: "Live watchdog on 2026-11-05", body: INCIDENT_MARKER })).toBe(false);
+  });
+
+  it("does nothing with no incident and no alert", () => {
+    expect(plan({ incident: null, alerts: [] })).toEqual({ action: "none" });
+  });
+
+  it("opens an incident listing every alert, with only the states open, linking the previous one", () => {
+    const result = plan({ incident: null, alerts: [event("restart"), state("stale-x"), state("page-behind-/-html")], previous: { number: 40, closedAt: "2026-11-04T10:00:00Z" } });
+    expect(result).toMatchObject({ action: "create", title: "Live watchdog incident from 2026-11-05 20:00 UTC", open: ["stale-x", "page-behind-/-html"] });
+    expect(result.body).toContain("The previous incident was #40, closed 2026-11-04T10:00:00Z.");
+    expect(result.body).toContain("Open conditions:\n- text of stale-x\n- text of page-behind-/-html");
+    expect(result.body).toContain("Events:\n- text of restart");
+    expect(result.body).toContain("https://example.test/run");
+    expect(result.body).toContain("cc @bilguutei2k");
+    expect(result.body).toContain(INCIDENT_MARKER);
+    expect(openKeys([result.body])).toEqual(["stale-x", "page-behind-/-html"]);
+    expect(plan({ incident: null, alerts: [state("stale-x")] }).body).not.toContain("previous incident");
+  });
+
+  it("reads the open keys from the body and comments in order", () => {
+    expect(
+      openKeys([
+        "<!-- live-watchdog-open: a b -->",
+        "<!-- live-watchdog-resolved: a -->",
+        "<!-- live-watchdog-open: c -->\n<!-- live-watchdog-open: a -->",
+        null,
+        "<!-- live-watchdog-open: -->",
+      ]),
+    ).toEqual(["b", "c", "a"]);
+  });
+
+  it("comments only on new keys, and says nothing while the open ones still fire", () => {
+    const incident = { number: 7, open: ["stale-x"] };
+    expect(plan({ incident, alerts: [state("stale-x")] })).toEqual({ action: "none" });
+    const result = plan({ incident, alerts: [state("stale-x"), state("unsealed-g1")] });
+    expect(result).toMatchObject({ action: "comment", number: 7, open: ["stale-x", "unsealed-g1"], recovered: [] });
+    expect(result.body).toContain("New conditions:\n- text of unsealed-g1");
+    expect(result.body).not.toContain("text of stale-x");
+    expect(openKeys(["<!-- live-watchdog-open: stale-x -->", result.body])).toEqual(["stale-x", "unsealed-g1"]);
+  });
+
+  it("reports every event, but an event never keeps an incident open", () => {
+    const incident = { number: 7, open: [] };
+    const again = plan({ incident, alerts: [event("restart")] });
+    expect(again).toMatchObject({ action: "comment", open: [] });
+    expect(again.body).toContain("Events:\n- text of restart");
+    expect(again.body).not.toContain("live-watchdog-open");
+    // An incident of events only closes on the next clean run.
+    const created = plan({ incident: null, alerts: [event("restart")] });
+    expect(created).toMatchObject({ action: "create", open: [] });
+    const closed = plan({ incident: { number: 8, open: openKeys([created.body]) }, alerts: [] });
+    expect(closed.action).toBe("close");
+    expect(closed.body).toContain("the incident is closed");
+  });
+
+  it("counts an open state as recovered only when this run checked it", () => {
+    const incident = { number: 7, open: ["page-behind-/lab-html", "stale-x"] };
+    // The rotation read `/` only, so /lab is neither recovered nor closed; stale-x was checked.
+    const partial = plan({ incident, alerts: [] });
+    expect(partial).toMatchObject({ action: "comment", recovered: ["stale-x"], open: ["page-behind-/lab-html"] });
+    expect(partial.body).toContain("recovered: stale-x");
+    expect(partial.body).toContain("<!-- live-watchdog-resolved: stale-x -->");
+    // Unchanged on the next run that again skips /lab.
+    expect(plan({ incident: { number: 7, open: ["page-behind-/lab-html"] }, alerts: [] })).toEqual({ action: "none" });
+    // The run that reads /lab and finds it current closes the incident.
+    const checked = checker({}, { pages: [read("/"), read("/lab")] });
+    const closed = plan({ incident: { number: 7, open: ["page-behind-/lab-html"] }, alerts: [], checked });
+    expect(closed).toMatchObject({ action: "close", recovered: ["page-behind-/lab-html"], open: [] });
+    expect(closed.body).toContain("recovered: page-behind-/lab-html");
+  });
+
+  it("never closes while a state is open or the run had a read problem", () => {
+    const incident = { number: 7, open: ["stale-x"] };
+    const reading = plan({ incident, alerts: [state("unreadable-state.json")], checked: checker({ state: null }) });
+    expect(reading).toMatchObject({ action: "comment", recovered: [], open: ["stale-x", "unreadable-state.json"] });
+    const healthLost = plan({ incident: { number: 7, open: ["page-behind-/-html"] }, alerts: [state("health-unknown")], checked: checker({}, { health: null }) });
+    expect(healthLost).toMatchObject({ action: "comment", recovered: [], open: ["page-behind-/-html", "health-unknown"] });
+    // A clean run after both recover closes it.
+    expect(plan({ incident: { number: 7, open: ["stale-x", "unreadable-state.json"] }, alerts: [] }).action).toBe("close");
+  });
+
+  it("retires a condition on yesterday's day page after midnight ET, and a game past the lookback", () => {
+    const incident = { number: 7, open: ["page-behind-/games/2026-11-03-html", "unsealed-old", "page-behind-/games/2026-11-04-rsc"] };
+    const result = plan({ incident, alerts: [] });
+    expect(result).toMatchObject({ action: "comment", retired: ["page-behind-/games/2026-11-03-html", "unsealed-old"], open: ["page-behind-/games/2026-11-04-rsc"] });
+    expect(result.body).toContain("No longer watched");
+    expect(result.body).toContain("<!-- live-watchdog-resolved: page-behind-/games/2026-11-03-html unsealed-old -->");
+  });
+
+  it("checks each kind of key only when its read happened", () => {
+    const c = checker({}, { pages: [read("/"), read("/odds", "rsc", { status: 500, stamp: null }), read("/lab", "html", { stamp: null }), read("/teams", "html", { status: null, stamp: null, cache: null })] });
+    const yes = ["runs-unreadable", "workflow-disabled_inactivity", "failing-since-3", "stale-x", "unsealed-g1", "unreadable-state.json", "health-unknown", "site-stored-copy", "site-behind-publication", "page-behind-/-html", "page-cached-/-html", "page-stamp-unreadable-/-html", "page-error-/-html", "page-error-/odds-rsc", "page-cached-/odds-rsc", "page-stamp-unreadable-/lab-html", "page-error-/teams-html"];
+    const no = ["restart", "dispatch-failed", "page-behind-/-rsc", "page-behind-/odds-rsc", "page-stamp-unreadable-/odds-rsc", "page-behind-/lab-html", "page-cached-/teams-html", "unreadable-elsewhere", "something-else", "unsealed-unknown"];
+    for (const key of yes) expect(c.has(key), key).toBe(true);
+    for (const key of no) expect(c.has(key), key).toBe(false);
+    const blind = checker({ workflowState: null, runs: null, state: null, games: null, attempted: [] }, { health: null, publication: null });
+    for (const key of ["workflow-disabled_inactivity", "failing-since-3", "stale-x", "unsealed-g1", "unreadable-state.json", "site-stored-copy", "site-behind-publication", "page-behind-/-html"]) {
+      expect(blind.has(key), key).toBe(false);
+    }
+    expect(blind.has("page-error-/-html")).toBe(true);
+    const off = checker({}, { enabled: false, pages: [] });
+    expect(off.has("health-unknown")).toBe(false);
+    expect(off.has("site-stored-copy")).toBe(false);
+  });
+
+  it("names the reads an incident's open page keys need", () => {
+    expect(incidentRechecks(["stale-x", "page-behind-/how-it-works-rsc", "page-error-/how-it-works-rsc", "page-cached-/-html", "page-stamp-unreadable-/games/2026-11-04-html"])).toEqual([
+      { path: "/how-it-works", kind: "rsc" },
+      { path: "/", kind: "html" },
+      { path: "/games/2026-11-04", kind: "html" },
+    ]);
   });
 });
