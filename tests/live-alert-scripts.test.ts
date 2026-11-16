@@ -163,11 +163,24 @@ describe("deploy-check.sh", () => {
 
   /**
    * GitHub's answers for the gate: Vercel's commit statuses on main's HEAD (null: none
-   * stored, so the call fails) and main's repository activity, each entry a commit that a
-   * push or merge made main's tip `minutesAgo` minutes ago (null: the call fails). Given
-   * oldest first; served newest first, as GitHub does.
+   * stored, so the call fails), main's repository activity, each entry a commit that a
+   * push or merge made main's tip `minutesAgo` minutes ago (null: the call fails; `timestamp`
+   * replaces the time with a raw string), and GitHub's Production deployments, each a commit
+   * with the states its deployment went through (null: the call fails). Given oldest first;
+   * served newest first, as GitHub does.
    */
-  function gate(repo: Repo, { statuses = [], activity = [] }: { statuses?: Array<{ state: string; context?: string; minutesAgo?: number }> | null; activity?: Array<{ after: string; minutesAgo: number }> | null }) {
+  function gate(
+    repo: Repo,
+    {
+      statuses = [],
+      activity = [],
+      deployments = [],
+    }: {
+      statuses?: Array<{ state: string; context?: string; minutesAgo?: number }> | null;
+      activity?: Array<{ after: string; minutesAgo: number; timestamp?: string }> | null;
+      deployments?: Array<{ sha: string; states: string[] }> | null;
+    },
+  ) {
     const api = path.join(repo.root, "api");
     fs.mkdirSync(api, { recursive: true });
     const head = git(repo.seed, ["rev-parse", "HEAD"]);
@@ -184,12 +197,19 @@ describe("deploy-check.sh", () => {
     }
     if (activity !== null) {
       let before = "0".repeat(40);
-      const entries = activity.map(({ after, minutesAgo }) => {
-        const entry = { before, after, ref: "refs/heads/main", timestamp: iso(minutesAgo), activity_type: "push" };
+      const entries = activity.map(({ after, minutesAgo, timestamp }) => {
+        const entry = { before, after, ref: "refs/heads/main", timestamp: timestamp ?? iso(minutesAgo), activity_type: "push" };
         before = after;
         return entry;
       });
       fs.writeFileSync(path.join(api, `${apiKey(`${prefix}/activity?ref=refs/heads/main&per_page=100`)}.json`), JSON.stringify(entries.reverse()));
+    }
+    if (deployments !== null) {
+      const listed = deployments.map(({ sha }, index) => ({ id: index + 1, sha, environment: "Production" }));
+      fs.writeFileSync(path.join(api, `${apiKey(`${prefix}/deployments?environment=Production&per_page=100`)}.json`), JSON.stringify(listed.reverse()));
+      deployments.forEach(({ states }, index) =>
+        fs.writeFileSync(path.join(api, `${apiKey(`${prefix}/deployments/${index + 1}/statuses?per_page=100`)}.json`), JSON.stringify(states.map((state) => ({ state })).reverse())),
+      );
     }
     return { FAKE_GH_API_DIR: api };
   }
@@ -322,6 +342,50 @@ describe("deploy-check.sh", () => {
   );
 
   it(
+    "leaves a rollback alone whatever main's head says: a later commit was live in production before",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 301);
+      // What Vercel deployed was main's tip at the time: a commit that changes no file
+      // itself, as a merge commit or an empty retry commit does not.
+      const live = repo.commit("Merge pull request #1", {}, 300);
+      // Rolled back from `live` to `deployed`; then a commit Vercel set no status on.
+      const head = repo.commit("docs: a note", { "docs/note.md": "x\n" }, 200);
+      publish(repo);
+      const env = gate(repo, {
+        activity: [{ after: live, minutesAgo: 300 }, { after: head, minutesAgo: 200 }],
+        deployments: [{ sha: deployed, states: ["success", "inactive"] }, { sha: live, states: ["success", "inactive"] }],
+      });
+      const result = deployCheck(repo, deployed, env);
+      expect(result.status).toBe(0);
+      expect(result.stderr).toContain(`production is at ${deployed}, yet ${live}, a later commit on main, was live in production before`);
+      expect(result.stderr).toContain("a rollback. Leaving it alone; this is never retried.");
+      expect(result.pushes).toEqual([]);
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "does not take a deployment that never succeeded for a rollback",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 60);
+      publish(repo);
+      const env = gate(repo, {
+        statuses: [{ state: "failure" }],
+        activity: [{ after: pending, minutesAgo: 60 }],
+        deployments: [{ sha: deployed, states: ["success"] }, { sha: pending, states: ["failure"] }],
+      });
+      const result = deployCheck(repo, deployed, env);
+      expect(result.stderr).toContain("(retry 1 of 3 today)");
+      expect(result.pushes).toHaveLength(1);
+    },
+    TIMEOUT,
+  );
+
+  it(
     "reads only Vercel's own status, the newest one",
     () => {
       const repo = makeRepo();
@@ -340,6 +404,8 @@ describe("deploy-check.sh", () => {
     ["the repository activity cannot be read", { activity: null }, "cannot read main's repository activity"],
     ["no activity entry reaches the commit", { activity: [] }, "no push or merge in main's repository activity made"],
     ["Vercel's statuses cannot be read", { statuses: null }, "cannot read Vercel's commit status"],
+    ["GitHub's Production deployments cannot be read", { deployments: null }, "cannot read GitHub's Production deployments, so a rollback cannot be ruled out"],
+    ["the landing time in the repository activity cannot be read", { activity: [{ after: "HEAD", minutesAgo: 600, timestamp: "last Tuesday" }] }, "cannot read main's repository activity"],
   ];
   it.each(unreadable)(
     "does not retry when %s",
@@ -348,7 +414,8 @@ describe("deploy-check.sh", () => {
       const deployed = base(repo);
       const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 600);
       publish(repo);
-      const result = deployCheck(repo, deployed, gate(repo, { activity: [{ after: pending, minutesAgo: 600 }], ...answers }));
+      const given = { ...answers, ...(answers.activity ? { activity: answers.activity.map((entry) => ({ ...entry, after: pending })) } : {}) };
+      const result = deployCheck(repo, deployed, gate(repo, { activity: [{ after: pending, minutesAgo: 600 }], ...given }));
       expect(result.status).toBe(0);
       expect(result.stderr).toContain(logged);
       expect(result.stderr).toContain("no retry this run.");
@@ -448,6 +515,23 @@ describe("deploy-check.sh", () => {
       const result = deployCheck(repo, null, { FAKE_GH_API_DIR: api });
       expect(result.stderr).toContain(`GitHub's last successful Production deployment is ${deployed}.`);
       expect(result.stderr).toContain("production is current");
+    },
+    TIMEOUT,
+  );
+
+  it(
+    "fetches a full clone without a depth, so a local dry run never cuts its history",
+    () => {
+      const repo = makeRepo();
+      const deployed = base(repo);
+      const pending = repo.commit("feat: new code", { "src/app.ts": "v2\n" }, 60);
+      git(repo.seed, ["push", "-q", "origin", "main"]);
+      fs.writeFileSync(repo.pushLog, "");
+      git(repo.root, ["clone", "-q", "--branch", "main", `file://${repo.origin}`, repo.work]);
+      const result = deployCheck(repo, deployed, { ...gate(repo, { activity: [{ after: pending, minutesAgo: 60 }] }), DRY_RUN: "1" });
+      expect(result.stderr).toContain("Dry run: would push empty commit");
+      expect(git(repo.work, ["rev-parse", "--is-shallow-repository"])).toBe("false");
+      expect(git(repo.work, ["rev-list", "--count", "origin/main"])).toBe("2");
     },
     TIMEOUT,
   );

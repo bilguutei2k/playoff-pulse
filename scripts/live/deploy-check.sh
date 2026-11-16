@@ -9,8 +9,15 @@
 #      alone.
 #   2. Main is deployable past it when a commit since changes a file outside data/live/
 #      and docs/design/.
-#   3. Vercel's own word comes first: the newest commit status with context "Vercel" on
-#      main's HEAD (gh api repos/$GITHUB_REPOSITORY/commits/<main>/statuses).
+#   3. A rollback is never retried. GitHub's Production deployments (gh api
+#      "repos/$GITHUB_REPOSITORY/deployments?environment=Production&per_page=100") say
+#      whether a commit newer than the one production runs was live before: any commit
+#      since (merge and retry commits included; Vercel deploys main's tip) with a
+#      deployment that reached "success". If one was, production was
+#      moved back on purpose (a Vercel Instant Rollback), whatever main's HEAD says now, and
+#      a retry would undo it. Unreadable: no retry this run.
+#   4. Then Vercel's own word: the newest commit status with context "Vercel" on main's
+#      HEAD (gh api repos/$GITHUB_REPOSITORY/commits/<main>/statuses).
 #        pending          Vercel is deploying: wait, unless the status has been pending for
 #                         over PENDING_MAX_MINUTES (60; a build takes about a minute), when
 #                         it counts as stuck and a retry is due.
@@ -19,16 +26,17 @@
 #        failure, error   eligible for a retry.
 #        none             eligible only when the oldest deployable commit landed on main
 #                         more than LAG_MINUTES (20) ago.
-#      Unreadable: no retry this run.
-#   4. When it landed is the timestamp GitHub's repository activity records for the push
+#      Unreadable, or an age that is not a number: no retry this run.
+#   5. When it landed is the timestamp GitHub's repository activity records for the push
 #      or merge that first made that commit reachable from main (gh api
 #      "repos/$GITHUB_REPOSITORY/activity?ref=refs/heads/main&per_page=100", walked
 #      oldest-first with git merge-base --is-ancestor), never the commit's own time: a
 #      commit authored an hour before its merge is not an hour late. On 2026-11-12 and
 #      2026-11-14 the committer time made this push a retry 15 and 25 seconds after a merge
-#      Vercel was already deploying. Activity unreadable, or no entry found: no retry this
-#      run (a retry is cheap to postpone and scarce to spend).
-#   5. Then it pushes an empty commit to main, which Vercel builds (vercel.json's ignore
+#      Vercel was already deploying. Activity unreadable, a timestamp that cannot be read,
+#      or no entry found: no retry this run (a retry is cheap to postpone and scarce to
+#      spend). Every unreadable answer ends the run without a push: nothing here fails open.
+#   6. Then it pushes an empty commit to main, which Vercel builds (vercel.json's ignore
 #      step diffs against the last successful deploy). At most one retry an hour and three
 #      a day, counted from the retry commits on main. Past three, it opens one issue a day
 #      instead.
@@ -65,6 +73,28 @@ deployed_commit() {
   done
 }
 
+# True for a whole number, with an optional minus sign (a clock a little ahead of ours).
+is_whole_number() {
+  case "$1" in '' | - | *[!0-9-]* | ?*-*) return 1 ;; *) return 0 ;; esac
+}
+
+# The first of the commits in $1 (one per line) that GitHub records a Production deployment
+# for with a "success" status, or nothing: that commit was live in production once. A
+# deployment that never succeeded (a failed build) does not count. Fails when GitHub's
+# deployments cannot be read.
+deployed_before() {
+  local json sha id states
+  json=$(gh api "repos/$GITHUB_REPOSITORY/deployments?environment=Production&per_page=100" 2>/dev/null) || return 1
+  printf '%s' "$json" | jq -e 'type == "array"' >/dev/null 2>&1 || return 1
+  for sha in $1; do
+    for id in $(printf '%s' "$json" | jq -r --arg sha "$sha" '.[] | select(.sha == $sha) | .id' 2>/dev/null); do
+      states=$(gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses?per_page=100" --jq '[.[].state] | join(" ")' 2>/dev/null) || return 1
+      case " $states " in *" success "*) echo "$sha"; return 0 ;; esac
+    done
+  done
+  return 0
+}
+
 # The newest "Vercel" commit status of $1 and its age in whole minutes: "pending 3",
 # "success 50", "failure 0", "error 0", or "none 0". Fails when the statuses cannot be read.
 vercel_status() {
@@ -79,14 +109,17 @@ vercel_status() {
 # Minutes since GitHub recorded the push or merge that first made $1 reachable from main.
 # Returns 1 when the activity cannot be read, 2 when no entry made it reachable.
 landed_minutes() {
-  local json entries after timestamp
+  local json entries after timestamp minutes
   json=$(gh api "repos/$GITHUB_REPOSITORY/activity?ref=refs/heads/main&per_page=100" 2>/dev/null) || return 1
   entries=$(printf '%s' "$json" | jq -er 'sort_by(.timestamp) | .[] | select((.after // "") != "" and (.timestamp // "") != "") | "\(.after) \(.timestamp)"' 2>/dev/null)
   case $? in 0 | 4) ;; *) return 1 ;; esac
   while read -r after timestamp; do
     [ -n "$after" ] || continue
     if git merge-base --is-ancestor "$1" "$after" 2>/dev/null; then
-      jq -nr --arg t "$timestamp" '((now - ($t | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601)) / 60) | floor'
+      # A timestamp jq cannot read must not look like "landed, age unknown": that is unreadable.
+      minutes=$(jq -nr --arg t "$timestamp" '((now - ($t | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601)) / 60) | floor' 2>/dev/null) || return 1
+      is_whole_number "$minutes" || return 1
+      echo "$minutes"
       return 0
     fi
   done <<< "$entries"
@@ -109,7 +142,13 @@ open_issue_once() {
 }
 
 check() {
-  git fetch -q --no-tags --depth=200 origin main || { log "cannot fetch main; skipping."; return; }
+  # The job's checkout is shallow and needs more of main than it has. A full clone must not
+  # be given a depth: `git fetch --depth` there cuts its history (a local dry run on
+  # 2026-11-16 turned a developer's repository shallow).
+  local depth=""
+  [ "$(git rev-parse --is-shallow-repository 2>/dev/null)" = "true" ] && depth="--depth=200"
+  # shellcheck disable=SC2086
+  git fetch -q --no-tags $depth origin main || { log "cannot fetch main; skipping."; return; }
   local main deployed
   main=$(git rev-parse origin/main)
   deployed=$(deployed_commit)
@@ -134,6 +173,17 @@ check() {
   oldest=$(echo "$pending" | tail -n 1)
   count=$(echo "$pending" | wc -l | tr -d ' ')
   log "production is at $deployed; main has $count deployable commit(s) since, the oldest $oldest."
+  # Every commit since, not only the deployable ones: Vercel deploys main's tip, which is
+  # usually a merge commit or an empty retry commit that changes no file itself.
+  local rolled
+  if ! rolled=$(deployed_before "$(git log --format='%H' "$deployed..$main")"); then
+    log "cannot read GitHub's Production deployments, so a rollback cannot be ruled out; no retry this run."
+    return
+  fi
+  if [ -n "$rolled" ]; then
+    log "production is at $deployed, yet $rolled, a later commit on main, was live in production before (GitHub's Production deployments): a rollback. Leaving it alone; this is never retried."
+    return
+  fi
   local status_age
   if ! status=$(vercel_status "$main"); then
     log "cannot read Vercel's commit status of $main; no retry this run."
@@ -141,6 +191,10 @@ check() {
   fi
   status_age=${status#* }
   status=${status%% *}
+  if ! is_whole_number "$status_age"; then
+    log "cannot read the age of Vercel's commit status of $main (\"$status_age\"); no retry this run."
+    return
+  fi
   case "$status" in
     pending)
       if [ "$status_age" -le "$PENDING_MAX_MINUTES" ]; then
@@ -162,6 +216,10 @@ check() {
         1) log "cannot read main's repository activity, so when $oldest landed is unknown; no retry this run."; return ;;
         *) log "no push or merge in main's repository activity made $oldest reachable; no retry this run."; return ;;
       esac
+      if ! is_whole_number "$landed"; then
+        log "cannot read when $oldest landed on main (\"$landed\"); no retry this run."
+        return
+      fi
       log "Vercel has set no status on $main; $oldest landed on main $landed min ago (repository activity)."
       if [ "$landed" -le "$LAG_MINUTES" ]; then
         log "within $LAG_MINUTES min of landing; Vercel may not have started on it yet."

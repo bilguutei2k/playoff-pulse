@@ -66,8 +66,10 @@ permissions:
   contents: write
   actions: write
   issues: write
-  # The deploy check reads Vercel's commit status on main (scripts/live/deploy-check.sh).
+  # The deploy check reads Vercel's commit status on main and GitHub's Production
+  # deployments, to tell a refused deploy from a rollback (scripts/live/deploy-check.sh).
   statuses: read
+  deployments: read
 
 concurrency:
   # Real runs share one group, so they never overlap. A dry run pushes nothing and gets
