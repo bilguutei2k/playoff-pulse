@@ -208,15 +208,15 @@ describe("player statuses", () => {
     // A box-score row with a status took it from an earlier report.
     expect(statusSourceLabel({ status: "O", source: "box-score" })).toBe("Earlier report");
     expect(statusSourceLabel({ status: null, source: "box-score" })).toBe("Box scores");
-    expect(statusSourceText({ status: "O", source: "report", gamesMissed: 0 }, "5:30 PM ET")).toBe(
-      "the NBA injury report of 5:30 PM ET covering this game",
+    expect(statusSourceText({ status: "O", source: "report", gamesMissed: 0 }, "2:30 PM PST")).toBe(
+      "the NBA injury report of 2:30 PM PST covering this game",
     );
     const earlier = statusSourceText({ status: "O", source: "box-score", gamesMissed: 7 }, null);
     expect(earlier).toMatch(/^his team's latest earlier NBA injury report/);
     expect(earlier).toContain("missed his team's last 7 games");
     expect(earlier).not.toContain("not on the report");
-    expect(statusSourceText({ status: null, source: "box-score", gamesMissed: 1 }, "1:30 AM ET")).toBe(
-      "box scores, the model's inference: he missed his team's last game, and he is not on the report of 1:30 AM ET",
+    expect(statusSourceText({ status: null, source: "box-score", gamesMissed: 1 }, "10:30 PM PST")).toBe(
+      "box scores, the model's inference: he missed his team's last game, and he is not on the report of 10:30 PM PST",
     );
   });
   it("cleans ESPN's capitals and the report's category prefix", () => {
@@ -298,7 +298,7 @@ describe("injury lists", () => {
   });
   it("names the source of each team's list", () => {
     const filed = blockFromList(lists.teams[0])!;
-    expect(filed.sourceLabel).toBe("NBA report, 1:30 AM ET");
+    expect(filed.sourceLabel).toBe("NBA report, Nov 3, 10:30 PM PST");
     expect(filed.note).toBeNull();
     expect(filed.rows.map((row) => [row.name, row.source, row.reason])).toEqual([
       ["Tyrese Haliburton", "report", "Left Hamstring Strain"],
@@ -338,7 +338,7 @@ describe("injury lists", () => {
   });
   it("states a day's basis", () => {
     const report = { kind: "report" as const, reportAt: "2026-11-04T01:30", stale: false };
-    expect(basisSummary([report, report], "2026-11-04")).toMatch(/report of 1:30 AM ET, counted as a seal/);
+    expect(basisSummary([report, report], "2026-11-04")).toMatch(/report of Nov 3, 10:30 PM PST, counted as a seal/);
     expect(basisSummary([report, { kind: "current-absences" }], "2026-11-04")).toMatch(/current absences otherwise/);
     expect(basisSummary([{ kind: "current-absences" }], "2026-11-05")).toMatch(/No NBA injury report covers this day yet/);
   });

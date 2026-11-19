@@ -4,7 +4,7 @@
 // in-game estimate, already computed upstream; whole percents come from
 // `splitPercents`, so a game's two sides always add to 100.
 
-import { formatTimeEt, formatWeekday } from "@/lib/utils/dates";
+import { formatClockPt, formatWeekday } from "@/lib/utils/dates";
 import { forecastBadge, splitPercents } from "@/lib/view/card";
 import type { DayGame } from "@/lib/view/day";
 import { formatRecord, teamDisplay, type TeamLine } from "@/lib/view/teams";
@@ -50,9 +50,9 @@ export type BracketView = {
   notes: string[];
 };
 
-/** "7:30 PM": the card's clock. Day pages say "All times ET" once, above the cards. */
+/** "7:30 PM": the card's clock, Pacific. Day pages say "All times PST" once, above the cards. */
 export function cardClock(iso: string): string {
-  return formatTimeEt(iso).replace(/ ET$/, "");
+  return formatClockPt(iso);
 }
 
 /** ESPN's "0:20 - 4th" as "4th · 0:20"; anything else ("Halftime") as it is. */

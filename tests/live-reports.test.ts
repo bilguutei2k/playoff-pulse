@@ -203,9 +203,9 @@ describe("choosing the report a run uses", () => {
     expect(gameAvailabilityFromDay(null, { etDate: "2026-11-01", tipUtc: "2026-11-01T17:00Z", homeId: ORL, awayId: BOS }, () => null)).toBeNull();
   });
 
-  it("prints a report time in Eastern time", () => {
-    expect(formatReportTime("2026-11-01T13:15")).toBe("1:15 PM ET");
-    expect(formatReportTime("2026-11-01T00:05")).toBe("12:05 AM ET");
+  it("prints a report's Eastern stamp in Pacific time", () => {
+    expect(formatReportTime("2026-11-01T13:15")).toBe("10:15 AM PST");
+    expect(formatReportTime("2026-11-01T00:05")).toBe("9:05 PM PDT");
   });
 });
 

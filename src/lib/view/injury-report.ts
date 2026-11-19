@@ -12,7 +12,7 @@ import type {
   TeamInjuryList,
   TeamInjuryRow,
 } from "@/lib/season/projections";
-import { formatLongDay, formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
+import { formatLongDay, formatReportTime, formatShortDay, formatTimePt, formatWeekday } from "@/lib/utils/dates";
 import { displayName } from "@/lib/utils/injuries";
 import { reportReason, statusView, type StatusFilterKey, type StatusView } from "@/lib/view/players";
 import { teamDisplay } from "@/lib/view/teams";
@@ -49,9 +49,9 @@ export type InjuryBlock = {
   tipUtc: string;
   opponentId: string;
   home: boolean;
-  /** "vs Pistons, Wed Nov 4, 7:00 PM ET". */
+  /** "vs Pistons, Wed Nov 4, 4:00 PM PST". */
   gameLabel: string;
-  /** "NBA report, 1:30 AM ET", "Not yet submitted", "No report yet". */
+  /** "NBA report, Nov 3, 10:30 PM PST", "Not yet submitted", "No report yet". */
   sourceLabel: string;
   /** What the list is and how the model counts it, when that needs saying; null for a filed team on a current report. */
   note: string | null;
@@ -71,7 +71,7 @@ export type InjuryGame = {
   awayId: string;
   homeId: string;
   neutral: boolean;
-  /** "7:00 PM ET". */
+  /** "4:00 PM PST". */
   time: string;
   away: InjuryBlock;
   home: InjuryBlock;
@@ -83,7 +83,7 @@ export type InjuryReportView = {
   slates: InjurySlate[];
   /** Teams not playing on those dates, with their list for their next game, by date then name. */
   others: InjuryBlock[];
-  /** Newest report time any list uses, for the page header; Eastern wall clock. */
+  /** Newest report time any list uses, for the page header; the NBA's Eastern wall-clock stamp. */
   latestReportAt: string | null;
 };
 
@@ -98,7 +98,7 @@ export function totalPoints(points: number): string {
   return points >= 0.05 ? `−${points.toFixed(1)} pts` : "0.0 pts";
 }
 
-/** "the NBA's injury report of 1:30 AM ET" or "current absences", for a projection's basis. */
+/** "the NBA's injury report of Nov 3, 10:30 PM PST" or "current absences", for a projection's basis. */
 export function basisText(basis: ProjectionBasis | null, etDate: string): string {
   if (!basis) return "no injury term";
   if (basis.kind === "current-absences") return "current absences";
@@ -133,10 +133,10 @@ export function basisSummary(bases: ReadonlyArray<ProjectionBasis | null>, etDat
   return "";
 }
 
-/** "vs Pistons, Wed Nov 4, 7:00 PM ET". */
-/** "Thu Nov 12, 8:00 PM ET": when a block's game tips. */
+/** "vs Pistons, Wed Nov 4, 4:00 PM PST". */
+/** "Thu Nov 12, 5:00 PM PST": when a block's game tips. */
 export function gameWhen(etDate: string, tipUtc: string): string {
-  return `${formatWeekday(etDate)} ${formatShortDay(etDate)}, ${formatTimeEt(tipUtc)}`;
+  return `${formatWeekday(etDate)} ${formatShortDay(etDate)}, ${formatTimePt(tipUtc)}`;
 }
 
 function gameLabel(opponentId: string, home: boolean, etDate: string, tipUtc: string): string {
@@ -330,7 +330,7 @@ export function buildInjuryReport(input: {
             awayId: game.awayId,
             homeId: game.homeId,
             neutral: game.neutral,
-            time: formatTimeEt(game.tipUtc),
+            time: formatTimePt(game.tipUtc),
             away,
             home,
           },

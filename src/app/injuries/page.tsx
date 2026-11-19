@@ -5,7 +5,7 @@ import { InjuryReport } from "@/components/live/InjuryReport";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { getLiveState, getProjections, getTeamInjuryLists } from "@/lib/live-data/published";
 import { SEASON_TEAMS } from "@/lib/season/teams";
-import { formatReportTime } from "@/lib/utils/dates";
+import { formatDateTimePt, reportInstant } from "@/lib/utils/dates";
 import { buildInjuryReport } from "@/lib/view/injury-report";
 import { teamDisplay } from "@/lib/view/teams";
 import { Ticker } from "@/components/live/Ticker";
@@ -36,7 +36,7 @@ export default async function InjuriesPage() {
   const teams = SEASON_TEAMS.map((team) => teamDisplay(team.id))
     .map((team) => ({ id: team.id, code: team.code, name: team.name, shortName: team.shortName }))
     .sort((a, b) => a.name.localeCompare(b.name));
-  const latest = view?.latestReportAt ? formatReportTime(view.latestReportAt, "") : null;
+  const latest = view?.latestReportAt ? formatDateTimePt(reportInstant(view.latestReportAt)) : null;
 
   return (
     <>

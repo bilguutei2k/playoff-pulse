@@ -9,7 +9,7 @@ import { TitleOddsChart } from "@/components/live/TitleOddsChart";
 import { WhoIsOut } from "@/components/live/WhoIsOut";
 import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import type { SeasonPhase } from "@/lib/season/types";
-import { formatDateTimeEt, formatShortDay } from "@/lib/utils/dates";
+import { formatDateTimePt, formatShortDay } from "@/lib/utils/dates";
 import { oddsRows, teamAbsences } from "@/lib/view/odds";
 import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
 import { titleChartStyles } from "./chart-colors";
@@ -56,7 +56,7 @@ export default async function OddsPage() {
         <h1 className="headline text-32 sm:text-46">Playoff and title odds</h1>
         <p className="mt-2.5 text-[15px] text-ink-2 sm:text-[16px]">
           {PHASE_LABELS[forecast.phase]} · {forecast.iterations.toLocaleString("en-US")} simulations · run{" "}
-          {formatDateTimeEt(generatedAt)}
+          {formatDateTimePt(generatedAt)}
         </p>
         <p className="mt-2 max-w-3xl text-[14px] text-ink-2">
           Every team&apos;s chances from simulations of the rest of the season.{" "}

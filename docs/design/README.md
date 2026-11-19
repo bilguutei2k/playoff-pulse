@@ -47,7 +47,7 @@ Out of scope: the frozen 2026 archive (`/retrospective`, `/snapshot`, `/evidence
 
 ### Day page (`/`, `/games/{date}`) [dateStrip, dayPage, lifecycleAtlInd, futureDay, emptyDay]
 1. **Date strip**: 3/5/7 days by width, with arrows. Each day shows "Today" or the weekday, the date, and the game count or "No games".
-2. **Header**: kicker, long date, "15 games · 2 live · 13 final · times ET", "Back to today".
+2. **Header**: kicker, long date, "15 games · 2 live · 13 final · times PST", "Back to today".
 3. **Notices**, shown only when true: state stale or scores unavailable (amber); nothing sealed yet (provisional), future-day projections (with the injury term and its basis, or, past seven days, before injuries), or v1 numbers (grey).
 4. **Game grid**: 1 column, 2 from 768 px.
 5. **Home only**: the Title race (top 8, heat cell, change since the previous day in percentage points) [titleRace] and the Record glance (scored, Brier, missed, no final seal, small-sample label) [record].

@@ -117,7 +117,7 @@ export function statusSourceLabel(row: Pick<TeamInjuryRow, "status" | "source">)
 
 /**
  * The sentence under a player's status tag: where the status comes from, in the same
- * terms as the tag. `reportTime` is the covering report's time as printed ("7:00 PM ET").
+ * terms as the tag. `reportTime` is the covering report's time as printed ("4:00 PM PST").
  */
 export function statusSourceText(
   status: Pick<CurrentStatus, "status" | "source" | "gamesMissed">,

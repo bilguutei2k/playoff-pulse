@@ -7,7 +7,7 @@ import { placeLabels, possessive, type Box, type LabelAnchor } from "@/app/game/
 import { sealPolicyRevision } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import type { SealRow, SeasonGame, TeamForecast } from "@/lib/season/types";
-import { formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
+import { formatClockPt, formatReportTime, formatShortDay, formatTimePt, formatWeekday } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
 import { bracketView, type BracketView } from "@/lib/view/bracket";
 import { splitPercents, statusLabel } from "@/lib/view/card";
@@ -91,7 +91,7 @@ export function MatchupHeader({
   const meta = [
     kind,
     `${formatWeekday(game.etDate)}, ${formatShortDay(game.etDate)}`,
-    formatTimeEt(game.tipUtc),
+    formatTimePt(game.tipUtc),
     place,
     game.status === "scheduled" ? (game.extras?.broadcast ?? null) : null,
   ].filter((part): part is string => Boolean(part));
@@ -674,7 +674,7 @@ function SealChart({ game, detail }: { game: DayGame; detail: GameDetail }) {
       viewBox={`0 0 ${width} 184`}
       className="block h-auto w-full max-w-[400px]"
       role="img"
-      aria-label={`${possessive(team.shortName)} chance in each seal: ${series.points.map((point) => `${point.label} ${point.percent}% at ${formatTimeEt(point.at)}`).join(", ")}.`}
+      aria-label={`${possessive(team.shortName)} chance in each seal: ${series.points.map((point) => `${point.label} ${point.percent}% at ${formatTimePt(point.at)}`).join(", ")}.`}
     >
       {grid.map((tick) => (
         <g key={tick}>
@@ -718,7 +718,7 @@ function SealChart({ game, detail }: { game: DayGame; detail: GameDetail }) {
       })}
       {times.map((time) => (
         <text key={time.at} x={time.x} y={178} fontSize={11.5} fill="var(--chart-text)" textAnchor={anchor(time.x)}>
-          {formatTimeEt(time.at).replace(/ ET$/, "")}
+          {formatClockPt(time.at)}
         </text>
       ))}
     </svg>
@@ -740,7 +740,7 @@ function SealCell({ row, teamId, pending }: { row: SealRow | null; teamId: strin
         <TeamLink teamId={teamId} form="code" /> {percent}%
       </b>
       <span className="block whitespace-nowrap text-[12.5px] text-ink-2">
-        {formatTimeEt(row.issuedAt).replace(/ ET$/, "")}
+        {formatClockPt(row.issuedAt)}
       </span>
     </span>
   );

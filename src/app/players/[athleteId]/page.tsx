@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLink } from "@/components/live/TeamLink";
 import { getLiveState, getPlayerIndex, getTeamInjuryLists, getTeamPlayers } from "@/lib/live-data/published";
 import { IMPACT_LABEL, type TeamPlayersFile } from "@/lib/season/player-stats";
-import { formatLongDay, formatReportTime, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
+import { formatLongDay, formatReportTime, formatShortDay, formatTimePt, formatWeekday } from "@/lib/utils/dates";
 import { STATUS_LABELS } from "@/lib/utils/injuries";
 import {
   buildPlayerPage,
@@ -93,7 +93,7 @@ function CurrentStatusLine({ page, listsPublished }: { page: PlayerPageView; lis
         <StatusTag tone={view.tone}>{view.label}</StatusTag>
         <span>
           <SiteLink href={`/game/${next.gameId}`} className="pp-link">
-            {formatWeekday(next.etDate)} {formatShortDay(next.etDate)}, {formatTimeEt(next.tipUtc)}
+            {formatWeekday(next.etDate)} {formatShortDay(next.etDate)}, {formatTimePt(next.tipUtc)}
           </SiteLink>{" "}
           {next.home ? "vs" : "at"} <TeamLink teamId={next.opponentId} className="font-semibold text-ink" />
         </span>
