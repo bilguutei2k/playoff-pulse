@@ -6,6 +6,7 @@ import { loadDayView, todayEtDate } from "@/lib/live-data/day-loader";
 import { getLiveState } from "@/lib/live-data/published";
 import { bracketView, type BracketSide, type BracketView } from "@/lib/view/bracket";
 import type { DayGame } from "@/lib/view/day";
+import { pacificZone } from "@/lib/utils/dates";
 import { gameHref } from "@/lib/view/routes";
 import { teamLines } from "@/lib/view/teams";
 
@@ -26,13 +27,13 @@ function tickerOrder(games: readonly DayGame[]): DayGame[] {
 }
 
 /**
- * The status line, time or state only: "7:30 PM ET", "Live 3rd 4:12", "Final OT".
+ * The status line, time or state only: "7:30 PM PST", "Live 3rd 4:12", "Final OT".
  * The broadcast list the card shows is left out; it does not fit a ticker cell.
  */
 function statusText(game: DayGame, status: BracketView["status"]): { lead: string; detail: string | null } {
   switch (game.status) {
     case "scheduled":
-      return { lead: `${status.lead} ET`, detail: null };
+      return { lead: `${status.lead} ${pacificZone(game.tipUtc)}`, detail: null };
     case "in-progress":
       return { lead: status.lead, detail: status.detail ? status.detail.replace(" · ", " ") : null };
     case "final":

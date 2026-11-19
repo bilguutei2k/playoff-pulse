@@ -7,6 +7,7 @@ import { QueryWaitScript, useHydrated } from "@/components/live/PlayersTable";
 import { SectionHeading } from "@/components/live/SectionHeading";
 import { TeamLink } from "@/components/live/TeamLink";
 import { useQueryState } from "@/components/live/useQueryState";
+import { pacificZoneOfDay } from "@/lib/utils/dates";
 import { INJURIES_DEFAULT, parseInjuriesQuery, serializeInjuriesQuery, type InjuriesQuery } from "@/lib/view/filters";
 import { STATUS_FILTERS, type InjuryBlock, type InjuryReportView, type InjuryRowView } from "@/lib/view/injury-report";
 
@@ -121,7 +122,7 @@ export function InjuryReport({
           <SectionHeading
             id={`slate-${slate.etDate}`}
             title={slate.title}
-            note={`${slate.games.length} ${slate.games.length === 1 ? "game" : "games"}${filtered ? " shown" : ""} · in tip order · times ET`}
+            note={`${slate.games.length} ${slate.games.length === 1 ? "game" : "games"}${filtered ? " shown" : ""} · in tip order · times ${pacificZoneOfDay(slate.etDate)}`}
           />
           <ul className="mt-2">
             {slate.games.map((game, index) => {

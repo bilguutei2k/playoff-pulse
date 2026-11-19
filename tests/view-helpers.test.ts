@@ -33,9 +33,9 @@ describe("card wording", () => {
     expect(marginSentence(0.01, "2", "10")).toBe("548 has it even");
   });
   it("dates a report from another day", () => {
-    expect(formatReportTime("2026-11-02T18:30", "2026-11-02")).toBe("6:30 PM ET");
-    expect(formatReportTime("2026-11-01T17:30", "2026-11-02")).toBe("Nov 1, 5:30 PM ET");
-    expect(formatReportTime("2026-11-01T00:15")).toBe("12:15 AM ET");
+    expect(formatReportTime("2026-11-02T18:30", "2026-11-02")).toBe("3:30 PM PST");
+    expect(formatReportTime("2026-11-01T17:30", "2026-11-02")).toBe("Nov 1, 2:30 PM PST");
+    expect(formatReportTime("2026-11-01T00:15")).toBe("9:15 PM PDT");
   });
   it("finds a team's next game after both the game shown and now, skipping postponed games", () => {
     const game = (id: string, tipUtc: string, status: SeasonGame["status"] = "scheduled"): SeasonGame => ({

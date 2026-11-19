@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { useShownStamp } from "@/components/live/FreshnessGuard";
 import type { Delivery } from "@/lib/live-data/published";
-import { formatStampEt } from "@/lib/utils/dates";
+import { formatDateTimePt } from "@/lib/utils/dates";
 import { formatAgeShort } from "@/lib/utils/format";
 
 const TICK_MS = 30_000;
@@ -16,14 +16,14 @@ function subscribe(onTick: () => void): () => void {
 const tickNow = () => Math.floor(Date.now() / TICK_MS) * TICK_MS;
 const noTickOnServer = () => null;
 
-function stampEt(iso: string): string | null {
-  return Number.isFinite(Date.parse(iso)) ? formatStampEt(iso) : null;
+function stampPt(iso: string): string | null {
+  return Number.isFinite(Date.parse(iso)) ? formatDateTimePt(iso) : null;
 }
 
 /**
  * "Updated 4 min ago" on the masthead, at every width: the age of the published state
  * this page shows (the page's own stamp when it renders <PageStamp>, else the layout's).
- * Before hydration it shows the fixed ET stamp, because the server cannot know "now";
+ * Before hydration it shows the fixed Pacific stamp, because the server cannot know "now";
  * the exact stamp is always in the tooltip. It turns amber on the freshness guard's
  * verdict (src/lib/view/freshness.ts), so the chip and the notice never disagree.
  * `delivery` is which copy the render showed (src/lib/live-data/published.ts, "Delivery").
@@ -39,7 +39,7 @@ export function FreshnessChip({ iso, delivery }: { iso: string; delivery: Delive
   const now = useSyncExternalStore(subscribe, tickNow, noTickOnServer);
   const shown = useShownStamp(iso);
   const stamp = shown.stamp ?? iso;
-  const fixed = stampEt(stamp);
+  const fixed = stampPt(stamp);
   const ageMs = now === null ? NaN : now - Date.parse(stamp);
   const warn = stored || shown.notice !== null;
   const when = Number.isFinite(ageMs) ? formatAgeShort(ageMs) : fixed ? `${fixed}` : "time unknown";

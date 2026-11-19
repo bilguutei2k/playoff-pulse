@@ -9,7 +9,7 @@ import { Tile } from "@/components/live/Tile";
 import { loadDayView } from "@/lib/live-data/day-loader";
 import { getGameCountsByDate, getLiveState, getSeasonGames, getSeasonLedger } from "@/lib/live-data/published";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
-import { formatLongDay, formatShortDay, formatWeekday } from "@/lib/utils/dates";
+import { formatLongDay, formatShortDay, formatWeekday, pacificZoneOfDay } from "@/lib/utils/dates";
 import type { TileKind } from "@/lib/view/bracket";
 import type { DayGame, DayView } from "@/lib/view/day";
 import { daySummary, type SentencePart } from "@/lib/view/day-summary";
@@ -37,7 +37,7 @@ function summary(view: DayView): string {
   if (live > 0) parts.push(`${live} live`);
   if (final > 0 && final < count) parts.push(`${final} final`);
   if (final === count && count > 0) parts.push("all final");
-  parts.push("All times ET");
+  parts.push(`All times ${pacificZoneOfDay(view.etDate)}`);
   return parts.join(" · ");
 }
 

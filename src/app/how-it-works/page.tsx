@@ -450,7 +450,7 @@ export default async function HowItWorksPage() {
                     `${checkpointLabel[row.checkpoint]}: ${fixed(row.makePlayoffsBrier.injury, 4)} against ${fixed(row.makePlayoffsBrier.plain, 4)}`,
                 )
                 .join("; ")}
-              ). Using the 06:00 ET report instead of the one an hour before tip, Brier was{" "}
+              ). Using the 3:00 AM Pacific report instead of the one an hour before tip, Brier was{" "}
               {fixed(injuryReported.morningPoint.injuryBrier, 4)} against{" "}
               {fixed(injuryReported.overall.injury.brier, 4)}.
             </p>
@@ -489,7 +489,7 @@ export default async function HowItWorksPage() {
 
           <Section id="track-record">
             <p>
-              From 06:00 ET, once every earlier game is final, each game gets a morning seal. It uses
+              From 3:00 AM Pacific, once every earlier game is final, each game gets a morning seal. It uses
               only results through the previous day, so an afternoon result can never change an
               evening number. If an earlier game is still unresolved within six hours of tip, the
               forecast is sealed anyway and marked as sealed before that result was in. The first
@@ -973,7 +973,7 @@ export default async function HowItWorksPage() {
                 Only sealed forecasts count in the track record.
               </Term>
               <Term term="Morning seal">
-                The first seal, from 06:00 ET, with the injury report available then.
+                The first seal, from 3:00 AM Pacific, with the injury report available then.
               </Term>
               <Term term="Reissued morning seal">
                 A morning seal issued again, once, because the first one was made before any usable injury

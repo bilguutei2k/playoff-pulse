@@ -27,7 +27,7 @@ import { SCORE_LABEL } from "@/lib/season/player-stats";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { teamById } from "@/lib/season/teams";
 import type { PublishedAbsence } from "@/lib/season/types";
-import { formatLongDay, formatShortDay, formatTimeEt, formatWeekday } from "@/lib/utils/dates";
+import { formatClockPt, formatLongDay, formatShortDay, formatTimePt, formatWeekday, pacificZone, pacificZoneOfAll } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
 import { injuriesHref } from "@/lib/view/filters";
 import { blockFromList } from "@/lib/view/injury-report";
@@ -80,7 +80,7 @@ function NextGameLine({ row, teamShortName }: { row: TeamGameRow; teamShortName:
     <p className="mt-7 flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-line pt-4 text-15">
       <span className="text-ink-2">Next game</span>
       <SiteLink href={gameHref(row.game.id)} className="pp-link whitespace-nowrap">
-        {live ? "Live now" : `${formatWeekday(row.game.etDate)}, ${formatShortDay(row.game.etDate)}, ${formatTimeEt(row.game.tipUtc)}`}
+        {live ? "Live now" : `${formatWeekday(row.game.etDate)}, ${formatShortDay(row.game.etDate)}, ${formatTimePt(row.game.tipUtc)}`}
       </SiteLink>
       <span className="inline-flex items-center gap-1.5">
         <span className="text-ink-2">{row.home ? "vs" : "at"}</span>
@@ -308,7 +308,7 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
           <th scope="col">Date</th>
           <th scope="col">Opponent</th>
           <th scope="col">
-            Tip<span className="sm:hidden">, ET</span>
+            Tip<span className="sm:hidden">, {pacificZoneOfAll(rows.map((row) => row.game.tipUtc))}</span>
           </th>
           <th scope="col" className="nm">548</th>
         </tr>
@@ -339,8 +339,8 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
                   <b className="text-ink">Live</b>
                 ) : (
                   <>
-                    {formatTimeEt(row.game.tipUtc).replace(/ ET$/, "")}
-                    <span className="hidden sm:inline"> ET</span>
+                    {formatClockPt(row.game.tipUtc)}
+                    <span className="hidden sm:inline"> {pacificZone(row.game.tipUtc)}</span>
                   </>
                 )}
               </td>
@@ -748,7 +748,7 @@ export default async function TeamPage({ params }: Params) {
                 </details>
               ) : null}
               <p className="mt-3 text-[13px] text-ink-2">
-                Times ET. Solid tile: sealed. Dashed tile: a projection, never sealed or scored.
+                Times {pacificZoneOfAll(upcoming.map((row) => row.game.tipUtc))}. Solid tile: sealed. Dashed tile: a projection, never sealed or scored.
               </p>
             </>
           )}

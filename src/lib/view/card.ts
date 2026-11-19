@@ -2,7 +2,7 @@
 // Formatting only: every probability and margin comes from a seal, a provisional
 // number, a projection or the in-game estimate already computed upstream.
 
-import { formatReportTime, formatTimeEt } from "@/lib/utils/dates";
+import { formatReportTime, formatTimePt } from "@/lib/utils/dates";
 import type { DayGame } from "@/lib/view/day";
 import { cardInjuryLines } from "@/lib/view/injuries";
 import { teamDisplay } from "@/lib/view/teams";
@@ -68,9 +68,9 @@ export function statusLabel(game: Pick<DayGame, "status" | "statusDetail">): {
   }
 }
 
-/** "7:30 PM ET · Rocket Arena, Cleveland, OH · NBCSN". */
+/** "4:30 PM PST · Rocket Arena, Cleveland, OH · NBCSN". */
 export function metaLine(game: Pick<DayGame, "tipUtc" | "extras" | "neutral">): string[] {
-  const parts = [formatTimeEt(game.tipUtc)];
+  const parts = [formatTimePt(game.tipUtc)];
   if (game.extras?.venue) parts.push(game.extras.city ? `${game.extras.venue}, ${game.extras.city}` : game.extras.venue);
   else if (game.neutral) parts.push("Neutral site");
   if (game.extras?.broadcast) parts.push(game.extras.broadcast);
@@ -107,7 +107,7 @@ export function forecastBadge(game: DayGame, modelVersion: string): Badge | null
       detail: "Not sealed yet. From the latest ratings and published absences; replaced by the seal and never scored.",
     };
   }
-  const time = forecast.issuedAt ? formatTimeEt(forecast.issuedAt) : "";
+  const time = forecast.issuedAt ? formatTimePt(forecast.issuedAt) : "";
   const incomplete = forecast.inputsIncomplete ? " An earlier result was missing from its ratings; it still counts." : "";
   if (forecast.modelVersion !== modelVersion) {
     return {
@@ -163,7 +163,7 @@ export function injuryNotes(game: Pick<DayGame, "absences">, threshold = 1): str
   return cardInjuryLines(game.absences, threshold);
 }
 
-/** "From the NBA report of 1:30 AM ET" or "From current absences": a card's projection basis. */
+/** "From the NBA report of 10:30 PM PST" or "From current absences": a card's projection basis. */
 export function projectionBasisLine(game: Pick<DayGame, "projection" | "etDate">): string | null {
   const basis = game.projection?.basis;
   if (!game.projection) return null;
