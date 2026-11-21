@@ -321,3 +321,16 @@ export function buildV4Season(
     players,
   };
 }
+
+/**
+ * Points a team's full-health strength loses when one player does not play (his minutes
+ * rescaled to his teammates), at regular-season or playoff weights. Display and drivers
+ * only: never an input to a forecast.
+ */
+export function lostPoints(state: RosterState, teamId: string, athleteId: string, params: V4RatingParams, playoff = false): number {
+  const terms = fullHealthTerms(state, teamId);
+  const kappa = playoff ? params.kappa : 1;
+  const full = meanStrength(state, teamId, weightsFromTerms(state, teamId, terms, kappa, params));
+  const without = (term: WeightTerm) => (term.athleteId === athleteId ? 0 : 1);
+  return full - meanStrength(state, teamId, weightsFromTerms(state, teamId, terms, kappa, params, without));
+}

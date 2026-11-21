@@ -20,6 +20,8 @@ import {
   sealKindOf,
 } from "../../src/lib/season/live-state";
 import { POLICY_MODEL_VERSION, policyRevisionAt } from "../../src/lib/season/policy-revisions";
+import { REFERENCE_MODEL_VERSION } from "../../src/lib/season/params";
+import { V4_FIRST_ET_DATE, V4_MODEL_VERSION } from "../../src/lib/season/params-v4";
 import type { LedgerRow, SealRow } from "../../src/lib/season/types";
 import { LIVE_SEASON } from "./game-store";
 
@@ -160,6 +162,18 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
           `seal for ${row.gameId} stores policy revision ${String(row.policyRevision)}, but its version and issue time give ${derived ?? "none"}`,
         );
       }
+    }
+    if (row.modelVersion === V4_MODEL_VERSION) {
+      // v4, the shadow model (registration-v4.md, W3): never before its cutover, always in
+      // v2's row shape with v1's reference, never with a policy revision.
+      if (V4_FIRST_ET_DATE === null || row.etDate < V4_FIRST_ET_DATE) {
+        problems.push(`v4 seal for ${row.gameId} on ${row.etDate}, before v4's first ET date (${V4_FIRST_ET_DATE ?? "not set"})`);
+      }
+      if (row.sealKind === undefined) problems.push(`v4 seal for ${row.gameId} has no seal kind`);
+      if (row.referenceModelVersion !== REFERENCE_MODEL_VERSION) {
+        problems.push(`v4 seal for ${row.gameId} does not carry v1's reference`);
+      }
+      if (row.policyRevision !== undefined) problems.push(`v4 seal for ${row.gameId} stores a policy revision`);
     }
     if (!(row.homeWinProbability >= 0 && row.homeWinProbability <= 1)) {
       problems.push(`seal for ${row.gameId} has probability ${row.homeWinProbability}`);

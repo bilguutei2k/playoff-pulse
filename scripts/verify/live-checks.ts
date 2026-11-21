@@ -75,6 +75,7 @@ import {
   REFERENCE_MODEL_VERSION,
 } from "../../src/lib/season/params";
 import { sealKindOf, summarizeRecord } from "../../src/lib/season/live-state";
+import { V4_FIRST_ET_DATE, V4_FROZEN, V4_MODEL_VERSION } from "../../src/lib/season/params-v4";
 import { clampProbability } from "../../src/lib/season/math";
 import { impliedHomeProbability } from "../../src/lib/season/market";
 import { POLICY_MODEL_VERSION, POLICY_REVISIONS, policyRevisionAt } from "../../src/lib/season/policy-revisions";
@@ -1302,9 +1303,49 @@ export function runLiveChecks(): void {
         .map((line) => JSON.parse(line) as LedgerRow)
     : [];
   assert.deepEqual(ledgerProblems(ledgerRows), [], "Ledger rows must be valid.");
-  if (raw.schemaVersion === 2) checkRecordSplit(raw, ledgerRows);
+  // v4's shadow rows are not part of v1's or v2's record or views (registration-v4.md, W2).
+  const publishedRows = ledgerRows.filter((row) => row.type === "result" || row.modelVersion !== V4_MODEL_VERSION);
+  if (raw.schemaVersion === 2) checkRecordSplit(raw, publishedRows);
   checkSiteFiles();
-  if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, ledgerRows);
+  if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, publishedRows);
+  checkShadowV4(raw as LiveState, ledgerRows);
+}
+
+/**
+ * v4, the shadow model (registration-v4.md, W3): its parameters equal the frozen fit, its
+ * shadow file's sums hold and its record matches the ledger, the published state is v2's,
+ * and no v4 key reaches state.json or the projections.
+ */
+function checkShadowV4(state: LiveState, ledgerRows: readonly LedgerRow[]): void {
+  const fit = JSON.parse(fs.readFileSync(path.join(process.cwd(), "docs/live/v4-fit.json"), "utf-8"));
+  assert.deepEqual(V4_FROZEN.ratings, fit.frozen.ratings, "v4 rating parameters must equal docs/live/v4-fit.json.");
+  assert.deepEqual(V4_FROZEN.hazards, fit.hazards.frozen, "v4 hazards must equal docs/live/v4-fit.json.");
+  assert.equal(state.modelVersion, LIVE_MODEL_VERSION, "The published state must stay v2's.");
+  const stateText = fs.readFileSync(path.join(process.cwd(), "data/live/state.json"), "utf-8");
+  assert.ok(!stateText.includes(V4_MODEL_VERSION), "No v4 key may appear in state.json.");
+  const projections = path.join(process.cwd(), "data/live", siteProjectionsPath(seasonLabel(LIVE_SEASON)));
+  if (fs.existsSync(projections)) {
+    assert.ok(!fs.readFileSync(projections, "utf-8").includes(V4_MODEL_VERSION), "No v4 key may appear in the projections.");
+  }
+  const v4Seals = ledgerRows.filter((row) => row.type === "seal" && row.modelVersion === V4_MODEL_VERSION);
+  const shadowFile = path.join(process.cwd(), "data/live", `site/${seasonLabel(LIVE_SEASON)}/shadow-v4.json`);
+  if (V4_FIRST_ET_DATE === null) {
+    assert.equal(v4Seals.length, 0, "No v4 seal may exist before v4's first ET date is set.");
+    return;
+  }
+  if (!fs.existsSync(shadowFile)) {
+    console.log("Shadow v4: no shadow file yet.");
+    return;
+  }
+  const shadow = JSON.parse(fs.readFileSync(shadowFile, "utf-8"));
+  assert.equal(shadow.modelVersion, V4_MODEL_VERSION, "The shadow file must be v4's.");
+  const sum = (key: string) => shadow.teams.reduce((total: number, team: Record<string, number>) => total + team[key], 0);
+  assert.equal(shadow.teams.length, SEASON_TEAMS.length, "The shadow file must cover 30 teams.");
+  assert.ok(Math.abs(sum("champion") - 1) < 0.01, "v4 title odds must sum to 1.");
+  assert.ok(Math.abs(sum("makePlayoffs") - 16) < 0.01, "v4 playoff odds must sum to 16.");
+  const sealedGames = new Set(v4Seals.map((row) => row.gameId));
+  assert.ok(shadow.record.sealed <= sealedGames.size, "The shadow record cannot count more games than v4 sealed.");
+  console.log(`Shadow v4: ${v4Seals.length} seal rows, ${shadow.record.scored} scored games, sums hold.`);
 }
 
 if (process.argv[1]?.endsWith("live-checks.ts")) {

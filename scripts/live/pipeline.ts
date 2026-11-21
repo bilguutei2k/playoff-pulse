@@ -119,6 +119,7 @@ import type { StintDay } from "../../src/lib/score/live-stints";
 import { parseReportPdf } from "./report-pdf";
 import { expectedSiteFiles, publishedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
+import { isV4Row, SHADOW_FILE, shadowV4 } from "./v4/live-v4";
 
 const SEASON = LIVE_SEASON;
 const LABEL = seasonLabel(SEASON);
@@ -526,7 +527,10 @@ async function main(): Promise<void> {
   if (injuryReportProblem) log(`report problem: ${injuryReportProblem}`);
 
   // Ledger: seals, then misses, then results. Rows are only ever appended.
-  const ledger = readLedger();
+  // v4's shadow rows (registration-v4.md, W1) never reach v1's or v2's path: everything
+  // below reads the ledger without them, exactly as before v4.
+  const ledgerAll = readLedger();
+  const ledger = ledgerAll.filter((row) => !isV4Row(row));
   const marketById = new Map<string, MarketReference | null>(
     scoreboardRows.map((row) => [row.game.id, row.market]),
   );
@@ -835,16 +839,58 @@ async function main(): Promise<void> {
     log(`views not published, seals unaffected: ${viewsProblem}`);
   }
 
+  // v4, the shadow model (registration-v4.md, W1 to W3): last, in its own guard. A failure
+  // here writes no v4 row, keeps the previous shadow file and sets `shadowProblem` in
+  // health.json; v1's and v2's rows, the record, the state and the views are already fixed.
+  let v4Rows: LedgerRow[] = [];
+  let shadowContent: string | null = null;
+  let shadowProblem: string | null = null;
+  try {
+    const started = Date.now();
+    const v4 = shadowV4({
+      season: SEASON,
+      seasonLabel: LABEL,
+      slate,
+      nowIso,
+      runId,
+      phase,
+      observed,
+      history,
+      seasonGames,
+      ledger: [...ledgerAll, ...newRows],
+      report: reportInUse,
+      source: live.source,
+      nameOf: live.nameOf,
+      playerDays: playerDays.size > 0 ? playerDays.values() : loadPlayerDays(LABEL).values(),
+      marketFor,
+      priorHomeWinRate,
+    });
+    for (const row of v4.seals) log(`${dryRun ? "dry run, would write " : ""}shadow ${describeSeal(row)}`);
+    const rows: LedgerRow[] = dryRun ? [] : [...v4.seals, ...v4.missed];
+    const v4Problems = ledgerProblems([...ledgerAll, ...newRows, ...(dryRun ? v4.seals : rows)]);
+    if (v4Problems.length > 0) throw new Error(`v4 rows failed validation: ${v4Problems.join("; ")}`);
+    v4Rows = rows;
+    shadowContent = v4.shadow ? `${JSON.stringify(v4.shadow)}\n` : null;
+    if (v4.shadow) log(`shadow v4: ${v4.seals.length} sealed, ${v4.missed.length} missed, in ${((Date.now() - started) / 1000).toFixed(1)}s`);
+  } catch (error) {
+    shadowProblem = error instanceof Error ? error.message : String(error);
+    v4Rows = [];
+    shadowContent = null;
+    log(`shadow v4 not written, v1 and v2 unaffected: ${shadowProblem}`);
+  }
+
   // Everything validated. Only now does anything get written.
   writeText(gamesPath(SEASON), `${JSON.stringify(seasonGames.map(withoutLiveScores))}\n`);
-  if (newRows.length > 0) {
+  const appended = [...newRows, ...v4Rows];
+  if (appended.length > 0) {
     fs.mkdirSync(path.dirname(LEDGER_PATH), { recursive: true });
     fs.appendFileSync(
       LEDGER_PATH,
-      `${newRows.map((row) => JSON.stringify(row)).join("\n")}\n`,
+      `${appended.map((row) => JSON.stringify(row)).join("\n")}\n`,
       "utf-8",
     );
   }
+  if (shadowContent) writeText(path.join(LIVE_DIRECTORY, SHADOW_FILE(LABEL)), shadowContent);
   if (boxRun.added.length > 0) {
     writeText(liveBoxScorePath(SEASON), `${JSON.stringify(liveBox)}\n`);
   }
@@ -895,6 +941,8 @@ async function main(): Promise<void> {
     viewsProblem,
     // Only while the views are published: a views failure already says the index is missing.
     scoreProblem: views ? scoreProblem : null,
+    // Only when v4 failed: the field is absent otherwise, so health.json is unchanged by v4.
+    ...(shadowProblem ? { shadowProblem } : {}),
   };
   const previousHealth = readJson<typeof healthBody & { generatedAt: string }>(HEALTH_PATH);
   if (

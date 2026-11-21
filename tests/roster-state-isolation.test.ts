@@ -13,6 +13,8 @@ const ALLOWED = new Set([
   "dev-data.ts", // refuses every season after 2023-24
   "warm-state.ts", // the pass through the closed seasons; returns a state only
   "build-player-games.ts", // writes the compact files from the raw store (step 1)
+  "build-warm-checkpoint.ts", // runs warm-state.ts and writes the state it returns, nothing else
+  "live-v4.ts", // the live job's v4: reads the committed warm checkpoint (a state) only
   "assemble-fit.ts", // hashes the open seasons' files for the fit's provenance; reads none
 ]);
 
