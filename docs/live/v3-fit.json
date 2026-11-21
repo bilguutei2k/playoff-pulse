@@ -216,12 +216,12 @@
   "ignoredContinuations": 1027,
   "countMismatches": 28,
   "provenance": {
-    "headSha": "92d07ca9f6841a0272ecdb06c308cf074000bb39",
+    "headSha": "187145963827dc88d42c0f1253162223beb48775",
     "workingTreeCleanForCode": true,
     "code": {
       "scripts/live/fit-injury-v3.ts": "ed5f4830200d4d294fe8b9bd0f1de6e5beab4078d4cd519107aeb56d559ccb2b",
       "scripts/live/v3-hazard-data.ts": "9d5a85c726b855c47f7d38a1326a800760b2b837d956588bc14662bad6645c87",
-      "src/lib/season/injury-v3.ts": "78336b8a47e679eb1a637e10e4cdcb820dfa4fdfb6d028363e4b1d43edbcf8a3",
+      "src/lib/season/injury-v3.ts": "c9175827e43c49b05cb6ed21ffc7b708c1745e034f438d82aa182e79e7a8b54a",
       "src/lib/season/injury-model.ts": "cd666605d19bebacce77baf8490bbf30fddedf7260dc25f91e634627533e248e",
       "src/lib/season/availability.ts": "749e93c14c0affa92a1dfbdfdd5410fc0c59bda0b613c1f947a6a33592e9b0b6",
       "src/lib/season/params.ts": "9b10955bfa0bccd856880ceff1a87c5cbad0e018c85da3ab47f28bd77f0c3a39",
