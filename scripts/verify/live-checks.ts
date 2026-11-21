@@ -46,6 +46,7 @@ import {
 } from "../../src/lib/score/params";
 import type { Five, Stint } from "../../src/lib/score/types";
 import { scoresFrom, scoresWithOnCourt } from "../live/model-views";
+import { checkV3Invariants } from "./v3-invariants";
 import { loadCarriedDelta, loadScorePrior } from "../live/score-prior";
 import { loadStintDays } from "../live/stint-collect";
 import {
@@ -1193,6 +1194,7 @@ export function runLiveChecks(): void {
   checkProjectionInvariants();
   checkScoreInvariants();
   checkOnCourtInvariants();
+  checkV3Invariants();
 
   assert.ok(raw.schemaVersion === 1 || raw.schemaVersion === 2, "Unknown live state schema.");
   if (raw.schemaVersion === 2) checkSchemaTwoState(raw);

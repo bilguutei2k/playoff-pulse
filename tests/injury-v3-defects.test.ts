@@ -19,8 +19,8 @@ import {
   runReplay,
   teamLines,
   type ReplayGameSpec,
-} from "./support/replay-fixture";
-import { fixtureInput, fixturePostseasonInput } from "./support/simulation-fixture";
+} from "../scripts/verify/replay-fixture";
+import { fixtureInput, fixturePostseasonInput } from "../scripts/verify/simulation-fixture";
 
 const STARTERS_A = ["a1", "a2", "a3", "a4", "a5"];
 const STARTERS_B = ["b1", "b2", "b3", "b4", "b5"];
@@ -123,7 +123,7 @@ import {
   type V3Model,
 } from "@/lib/season/injury-v3";
 import type { AbsenceSchedule } from "@/lib/season/simulate";
-import { REPLAY_TABLE } from "./support/replay-fixture";
+import { REPLAY_TABLE } from "../scripts/verify/replay-fixture";
 
 const TEST_HAZARDS: HazardTable = {
   long: [0.12, 0.1, 0.08, 0.06, 0.05, 0.04],

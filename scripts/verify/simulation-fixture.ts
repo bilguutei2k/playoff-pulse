@@ -1,4 +1,5 @@
-// Fixed simulator inputs shared by the golden test and the v3 schedule tests. Nothing here
+// Fixed simulator inputs shared by the golden test (tests/season-simulator-golden.test.ts)
+// and the v3 invariants (v3-invariants.ts). Never change what existing builders return. Nothing here
 // is random at load time: every value is a pure function of the index it is built from.
 
 import { addDays } from "@/lib/season/dates";
@@ -193,4 +194,39 @@ export function fixtureV2PostseasonAbsences(): SimulationAbsences {
   postseason[SEASON_TEAMS[5].id] = 1.2;
   postseason[SEASON_TEAMS[20].id] = 2.4;
   return { regular, postseason };
+}
+
+/** A complete schedule with one regular game left per team: no placeholders. */
+export function fixtureOneGameLeftInput(iterations = 400): SimulationInput {
+  const post = fixturePostseasonInput(iterations);
+  let flipped = 0;
+  const games = post.games.map((row) => {
+    if (!row.id.startsWith("p") || Number(row.id.slice(1)) % 2 !== 0) return row;
+    flipped += 1;
+    return {
+      ...row,
+      etDate: "2027-04-12",
+      tipUtc: "2027-04-12T23:30:00.000Z",
+      status: "scheduled" as const,
+      homeScore: null,
+      awayScore: null,
+    };
+  });
+  if (flipped !== TEAM_COUNT / 2) throw new Error("fixtureOneGameLeftInput: expected one game per pair.");
+  return {
+    ...fixtureInput(iterations),
+    games,
+    asOfEtDate: "2027-04-11",
+    lastGameEtDate: Object.fromEntries(SEASON_TEAMS.map((team) => [team.id, "2027-04-10"])),
+  };
+}
+
+/** The postseason fixture with the observed East 1v8 series at a chosen score. */
+export function fixtureSeriesAt(winsA: number, winsB: number, iterations = 400): SimulationInput {
+  const input = fixturePostseasonInput(iterations);
+  const observed = input.observed as ObservedPostseason;
+  return {
+    ...input,
+    observed: { ...observed, series: observed.series.map((row) => ({ ...row, winsA, winsB })) },
+  };
 }

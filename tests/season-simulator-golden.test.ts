@@ -12,7 +12,7 @@ import {
   fixturePostseasonInput,
   fixtureV2Absences,
   fixtureV2PostseasonAbsences,
-} from "./support/simulation-fixture";
+} from "../scripts/verify/simulation-fixture";
 
 const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 

@@ -115,6 +115,17 @@ export type SimulationInput = {
    * Exclusive with `absences`; passing both throws.
    */
   absenceSchedule?: AbsenceSchedule;
+  /** Invariant checks only: called for every charged team game of the v3 schedule. */
+  absenceTrace?: (event: AbsenceTraceEvent) => void;
+};
+
+export type AbsenceTraceEvent = {
+  iteration: number;
+  teamId: string;
+  /** The team's simulated game number from now, from 0. Null for v2's scalar (switch off). */
+  ordinal: number | null;
+  kind: "regular" | "placeholder" | "play-in" | "series";
+  charge: number;
 };
 
 /** One player's absence in v3's schedule. */
@@ -310,6 +321,7 @@ function createScheduleCharges(
   asOfEtDate: string,
   pendingPerTeam: Int32Array,
   placeholders: Int32Array,
+  trace?: (event: AbsenceTraceEvent) => void,
 ) {
   const players = schedule.players.map((player) => {
     const curve = player.survival;
@@ -341,8 +353,10 @@ function createScheduleCharges(
   const ordinal = new Int32Array(TEAM_COUNT);
   const anySampled = players.some((player) => player.sampled);
   let filled = false;
+  let iteration = -1;
 
   const start = () => {
+    iteration += 1;
     ordinal.fill(0);
     if (filled && !anySampled) return;
     for (const row of charges) row.fill(0);
@@ -366,15 +380,29 @@ function createScheduleCharges(
     }
     filled = true;
   };
-  const next: ChargeSource = (team) => {
-    const index = ordinal[team];
-    if (index >= charges[team].length) {
-      throw new Error(`Absence schedule ran past team ${SEASON_TEAMS[team].id}'s game horizon.`);
-    }
-    ordinal[team] = index + 1;
-    return charges[team][index];
+  const nextAs =
+    (kind: AbsenceTraceEvent["kind"]): ChargeSource =>
+    (team) => {
+      if (!scheduleOn && kind !== "regular") {
+        trace?.({ iteration, teamId: SEASON_TEAMS[team].id, ordinal: null, kind, charge: scalar[team] });
+        return scalar[team];
+      }
+      const index = ordinal[team];
+      if (index >= charges[team].length) {
+        throw new Error(`Absence schedule ran past team ${SEASON_TEAMS[team].id}'s game horizon.`);
+      }
+      ordinal[team] = index + 1;
+      trace?.({ iteration, teamId: SEASON_TEAMS[team].id, ordinal: index, kind, charge: charges[team][index] });
+      return charges[team][index];
+    };
+  return {
+    start,
+    regular: nextAs("regular"),
+    placeholder: nextAs("placeholder"),
+    playIn: nextAs("play-in"),
+    series: nextAs("series"),
+    scheduleOn,
   };
-  return { start, next, scalar, scheduleOn };
 }
 
 /** Plays a series to the end from any score, returning the winner. */
@@ -531,14 +559,15 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
     pendingPerTeam[game.away] += 1;
   }
   const schedule = input.absenceSchedule
-    ? createScheduleCharges(input.absenceSchedule, input.season, input.asOfEtDate, pendingPerTeam, placeholders)
+    ? createScheduleCharges(
+        input.absenceSchedule,
+        input.season,
+        input.asOfEtDate,
+        pendingPerTeam,
+        placeholders,
+        input.absenceTrace,
+      )
     : null;
-  // v3 postseason charges: game by game from the schedule, or (size report) one scalar.
-  const postseasonCharge: ChargeSource | undefined = schedule
-    ? schedule.scheduleOn
-      ? schedule.next
-      : (team) => schedule.scalar[team]
-    : undefined;
   const random = createSeededRandom(
     fingerprint(
       JSON.stringify({
@@ -578,7 +607,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
       }
       let offset = game.offset;
       if (schedule) {
-        offset = schedule.next(game.away) - schedule.next(game.home);
+        offset = schedule.regular(game.away) - schedule.regular(game.home);
         if (game.awayOnBackToBack) offset += params.b2b;
         if (game.homeOnBackToBack) offset -= params.b2b;
       }
@@ -603,7 +632,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
     // Unscheduled slots against an average opponent, neutral floor.
     for (let team = 0; team < TEAM_COUNT; team += 1) {
       for (let slot = 0; slot < placeholders[team]; slot += 1) {
-        const charge = schedule?.scheduleOn ? schedule.next(team) : 0;
+        const charge = schedule?.scheduleOn ? schedule.placeholder(team) : 0;
         const margin = strengths[team] - charge + params.sigma * standardNormal(random);
         if (margin > 0) table.wins[team] += 1;
         else table.losses[team] += 1;
@@ -641,7 +670,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
           params,
           random,
           observed,
-          postseasonCharge,
+          schedule?.playIn,
         );
         seeded = [...order.slice(0, 6), seven, eight];
       } else {
@@ -664,7 +693,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
           counters,
           lookup,
           seriesWins,
-          postseasonCharge,
+          schedule?.series,
         ),
       );
     }
@@ -676,7 +705,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
       const other = eastHasCourt ? west : east;
       const homeCourtWins = seen ? (seen.teamA === homeCourt ? seen.winsA : seen.winsB) : 0;
       const otherWins = seen ? (seen.teamA === homeCourt ? seen.winsB : seen.winsA) : 0;
-      const winner = postseasonCharge
+      const winner = schedule
         ? playSeriesCharged(
             homeCourt,
             other,
@@ -685,7 +714,7 @@ export function simulateSeason(input: SimulationInput): SeasonForecast {
             strengths,
             params,
             random,
-            postseasonCharge,
+            schedule.series,
           )
         : playSeries(homeCourt, other, homeCourtWins, otherWins, strengths, params, random);
       if (seen && winner === homeCourt) {
