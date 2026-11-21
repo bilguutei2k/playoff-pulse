@@ -527,6 +527,8 @@ export type V4Forecast = {
   home: SideWeights;
   away: SideWeights;
   uncertain: number;
+  /** A7 only: every uncertain player at his expected presence, no integration. Never published. */
+  plugInProbability: number;
 };
 
 function sideTerms(
@@ -640,14 +642,21 @@ export function forecastGame(
     expectedMargin += configuration.weight * mu;
   }
   const expected = (term: WeightTerm) => (term.pOut === null ? 1 : 1 - term.pOut);
+  const home = sideWeights(state, game.homeId, homeTerms, expected, kappa, params);
+  const away = sideWeights(state, game.awayId, awayTerms, expected, kappa, params);
+  const plain = marginMoments(state, game.homeId, game.awayId, home, away, offsets);
   return {
     homeWinProbability: mixtureProbability(components, state.scale),
     expectedMargin,
     components,
     scale: state.scale,
-    home: sideWeights(state, game.homeId, homeTerms, expected, kappa, params),
-    away: sideWeights(state, game.awayId, awayTerms, expected, kappa, params),
+    home,
+    away,
     uncertain: uncertain.length,
+    plugInProbability: mixtureProbability(
+      [{ weight: 1, mu: plain.mu, sd: Math.sqrt(params.sigma * params.sigma + plain.variance) }],
+      state.scale,
+    ),
   };
 }
 
@@ -809,3 +818,20 @@ export function weightsFromTerms(
 }
 
 export { playerKey, pseudoKey, teamKey };
+
+// ---------------------------------------------------------------------------
+// warmState: the path through the closed seasons (registration-v4.md, section 0)
+// ---------------------------------------------------------------------------
+
+/** The replay's input without any way to observe a forecast. */
+export type WarmStateInput = Omit<ReplayV4Input, "onForecast" | "onDate">;
+
+/**
+ * The filter run to an ET date, returning the state and nothing else: no forecast, error or
+ * score leaves this function. The state carries M5's window (the last 3,000 regular-season
+ * games' standardized margins), which the next forecast's scale needs; it is never output.
+ */
+export function warmState(input: WarmStateInput): RosterState {
+  const { games, linesFor, reportFor, openingRosters, params, statusTable, state, throughEtDate } = input;
+  return replayRosterState({ games, linesFor, reportFor, openingRosters, params, statusTable, state, throughEtDate });
+}

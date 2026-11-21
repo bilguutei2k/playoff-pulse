@@ -6,7 +6,10 @@ import { absenceClass, type AbsenceClass } from "../../../src/lib/season/availab
 import { absenceGroup } from "../../../src/lib/season/availability-v4";
 import { createTracker, replayInjuryModel } from "../../../src/lib/season/injury-model";
 import { INJURY_PARAMS, INJURY_STATUS_TABLE, LIVE_PARAMS } from "../../../src/lib/season/params";
-import { isRatable, replayRatings } from "../../../src/lib/season/ratings";
+import { isRatable, replayRatings, type FilterState } from "../../../src/lib/season/ratings";
+import type { StoredLine } from "../../../src/lib/season/box-scores";
+import type { GameAvailability } from "../../../src/lib/season/injury-model";
+import type { SeasonGame } from "../../../src/lib/season/types";
 import { devAvailability, devGames, devStoredBoxLookup } from "./dev-data";
 
 export const HAZARD_SEASONS = [2022, 2023, 2024] as const;
@@ -24,11 +27,27 @@ export type GroupedObservation = {
 
 export function collectGroupedObservations(): GroupedObservation[] {
   const all = devGames(2005, 2024);
-  const base = replayRatings(all.filter((game) => game.season < WARMUP_SEASON), LIVE_PARAMS).state;
-  const games = all.filter((game) => game.season >= WARMUP_SEASON);
-  const boxScores = devStoredBoxLookup([WARMUP_SEASON, ...HAZARD_SEASONS]);
-  const availability = devAvailability(HAZARD_SEASONS);
-  const seasonSet = new Set<number>(HAZARD_SEASONS);
+  return collectGroupedObservationsFrom({
+    games: all.filter((game) => game.season >= WARMUP_SEASON),
+    base: replayRatings(all.filter((game) => game.season < WARMUP_SEASON), LIVE_PARAMS).state,
+    stateSeason: WARMUP_SEASON - 1,
+    boxScores: devStoredBoxLookup([WARMUP_SEASON, ...HAZARD_SEASONS]),
+    availability: devAvailability(HAZARD_SEASONS),
+    seasons: HAZARD_SEASONS,
+  });
+}
+
+/** The population from given data (pure; the property tests feed it synthetic seasons). */
+export function collectGroupedObservationsFrom(input: {
+  games: readonly SeasonGame[];
+  base: FilterState;
+  stateSeason: number;
+  boxScores: (gameId: string) => Record<string, StoredLine[]> | undefined;
+  availability: (gameId: string) => GameAvailability | null;
+  seasons: readonly number[];
+}): GroupedObservation[] {
+  const { games, base, boxScores, availability } = input;
+  const seasonSet = new Set<number>(input.seasons);
   const nextGame = new Map<string, string | null>();
   const lastByTeam = new Map<string, string>();
   for (const game of games) {
@@ -61,7 +80,7 @@ export function collectGroupedObservations(): GroupedObservation[] {
   replayInjuryModel({
     games,
     state: { mean: Float64Array.from(base.mean), cov: Float64Array.from(base.cov) },
-    stateSeason: WARMUP_SEASON - 1,
+    stateSeason: input.stateSeason,
     params: LIVE_PARAMS,
     injury: INJURY_PARAMS,
     statusTable: INJURY_STATUS_TABLE,
