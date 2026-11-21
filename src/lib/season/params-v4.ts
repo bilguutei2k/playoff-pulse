@@ -9,7 +9,7 @@
 export const V4_MODEL_VERSION = "live-2026.27-v4";
 
 /** First ET date with v4 seals (shadow only). Moved by a commit before merging if the merge slips. */
-export const V4_FIRST_ET_DATE: string | null = "2026-11-23";
+export const V4_FIRST_ET_DATE: string | null = "2026-11-22";
 
 /** sha256 of data/season/v4/warm-2026.bin.gz, the state after 2025-26 the live job starts from. */
 export const V4_WARM_SHA256 = "f593a0ac0405da093813b26915a9f50efe50761ed21b72262405b9c68873c914";

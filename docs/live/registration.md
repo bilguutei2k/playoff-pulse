@@ -532,7 +532,7 @@ of 43 ledger-changing commits found no backfill or rewritten row.
 The roster-state model `live-2026.27-v4` is registered in `docs/live/registration-v4.md`
 (before any gate number, amended once the same day) and passed its Stage A development check
 there (`docs/live/evaluation-v4-stage-a.json`). It seals as a shadow beside v2 and v1 from
-`V4_FIRST_ET_DATE` 2026-11-23 (moved by a commit before merging if the merge slips). It is not
+`V4_FIRST_ET_DATE` 2026-11-22 (moved by a commit before merging if the merge slips). It is not
 published: v2 stays `LIVE_MODEL_VERSION`, and v1's and v2's rows, v2's record and revision
 breakdown, `state.json` and the projections are unchanged by it. Nothing in this entry changes
 v2, its parameters or its record. v4 becomes published only by the owner's separate decision

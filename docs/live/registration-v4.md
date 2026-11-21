@@ -451,4 +451,4 @@ with a stored spread, and that is said wherever these results are shown.
   serving live-data's head: every route check passed in both; the one failure in both, "/api/live/health
   answered 200, not 503" with the data host down, fails identically on `main` with the same-day data
   and no v4 (it depends on how fresh the bundled copy is; CI's frozen copy passes it); (e) v4's part
-  of the run took 5.8 s. `V4_FIRST_ET_DATE` is 2026-11-23.
+  of the run took 5.8 s. `V4_FIRST_ET_DATE` is 2026-11-22.
