@@ -467,8 +467,10 @@ with a stored spread, and that is said wherever these results are shown.
   of one date's games in a window of 3,000. The frozen result stands as run; the gate is not
   re-run. Live season odds in the shadow file use the refreshed scale.
 - **Warm-up through 2024-25 and 2025-26 (ruled acceptable).** `warmState` replays those seasons
-  with `replayRosterState`, which evaluates `forecastGame` for each game, because the filter's
-  update and M5's window are built from each game's predicted components and its outcome. The
-  probabilities are discarded: nothing is printed, stored, summarised, scored or compared per game
-  or in aggregate. This is the filter state Amendment 1, ruling 2, accepted. The prohibition
-  remains on evaluating anything on those seasons.
+  with `replayRosterState`, which calls `forecastGame` for each game. M5's window needs each
+  game's predicted components and outcome, and those are retained in the serialized checkpoint as
+  filter state (Amendment 1, ruling 2). The probability fields the shared function also computes
+  are incidental, not needed by the update, and are discarded: they are never printed, stored,
+  summarised, scored or compared, and no path leads from them into evaluation, model selection or
+  reader-facing copy (confirmed by Astra's re-check of 168e0a34). The prohibition remains on
+  evaluating anything on those seasons.
