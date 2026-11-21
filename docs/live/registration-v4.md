@@ -419,3 +419,32 @@ not an untouched test. Nothing here says v4 beats v2, v1 or the market.
 
 Pass is A1 to A6 together: **passed**. Phase C (the shadow wiring) waits for the lead's
 confirmation.
+
+## Follow-ups (2026-11-21, the lead's ruling on A7)
+
+M5's integration over Questionable and Doubtful players and S1 did not earn their own metrics in
+A7 (log loss 0.61215 with the integration against 0.61213 without; Dec 1 win RMSE 6.027 with S1
+against 6.005 without, Feb 1 3.455 against 3.469). Both stay in v4 as registered: removing a
+component after a gate number would need a new registration, and both effects are tiny. They are
+candidates to simplify in a later version, to be tested there. A2 shows non-inferiority only
+("not worse than v2 on development seasons"); the market stays ahead of v4 and v2 on the games
+with a stored spread, and that is said wherever these results are shown.
+
+## Phase C wiring as built (2026-11-21, before v4's first seal)
+
+- v4 starts from a committed state after 2025-26, `data/season/v4/warm-2026.bin.gz`
+  (`scripts/live/v4/build-warm-checkpoint.ts`, through `warm-state.ts`; sha256 pinned as
+  `V4_WARM_SHA256`), and replays the live season on every run (5.8 s in the proof run). This
+  replaces W2's per-date checkpoints under `data/live/v4/`, which would have added several MB a
+  day to live-data. Nothing is written under `data/live/v4/`.
+- The live season's opening rosters use history's rule (first five games), all of which precede
+  the cutover.
+- The watchdog reports a missing v4 seal under its own `shadow-unsealed-` key with text labelled
+  as the shadow model's; it shares the watchdog's incident issue rather than opening a separate
+  issue kind.
+- Proofs in throwaway clones (live-data at dc191fba, `LIVE_NOW` 2026-11-21T11:00:10.933Z, network
+  replayed from one recording): (a) v4 off: every file under `data/live` byte-identical to
+  `main`'s run; (b) cutover set to 2026-11-21 in the clone only: the ledger minus v4's 5 rows,
+  `state.json`, projections and every site file except the manifest byte-identical to `main`'s,
+  plus `shadow-v4.json`; `verify:ledger` and `verify:live` green; (c) v4 made to throw: identical
+  to `main` except `health.json`'s `shadowProblem`; (e) v4's part of the run took 5.8 s. `V4_FIRST_ET_DATE` is 2026-11-23.

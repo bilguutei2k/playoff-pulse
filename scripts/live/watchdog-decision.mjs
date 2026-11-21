@@ -115,7 +115,7 @@ export const V2 = Object.freeze({ modelVersion: "live-2026.27-v2", firstEtDate: 
  * equal to src/lib/season/params-v4.ts by a test. Null until v4's cutover is set. Its missing
  * seals are reported under their own `shadow-` keys, labelled as the shadow model's.
  */
-export const V4 = Object.freeze({ modelVersion: "live-2026.27-v4", firstEtDate: null });
+export const V4 = Object.freeze({ modelVersion: "live-2026.27-v4", firstEtDate: "2026-11-23" });
 
 const MINUTE = 60_000;
 const FAILED = new Set(["failure", "timed_out", "startup_failure"]);
