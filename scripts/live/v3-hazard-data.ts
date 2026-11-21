@@ -14,8 +14,20 @@ export const LAST_DEVELOPMENT_SEASON = 2024;
 
 export type CensorCause = "season-end" | "no-box-score" | "left-rotation" | "appeared-elsewhere";
 
+/**
+ * One spell: the class at each missed game, and how it ended. Miss i (k = i + 1) gives an
+ * observation unless it is the last miss of a censored spell.
+ */
+export type HazardSpell = {
+  season: number;
+  classes: AbsenceClass[];
+  end: "returned" | CensorCause;
+};
+
 export type HazardFitRun = {
   observations: HazardObservation[];
+  /** The same observations grouped by spell, for the diagnostics. */
+  spells: HazardSpell[];
   censored: Record<CensorCause, number>;
   spellsOpened: number;
   /** Absent entries with v2's count already above zero and no open spell (after a drop): ignored. */
@@ -56,7 +68,20 @@ export function collectHazardObservations(
     }
   }
 
-  type Spell = { teamId: string; athleteId: string; k: number; class: AbsenceClass; lastGameId: string };
+  type Spell = {
+    teamId: string;
+    athleteId: string;
+    k: number;
+    class: AbsenceClass;
+    lastGameId: string;
+    season: number;
+    classes: AbsenceClass[];
+  };
+  const spells: HazardSpell[] = [];
+  const close = (key: string, spell: Spell, end: HazardSpell["end"]) => {
+    spells.push({ season: spell.season, classes: spell.classes, end });
+    open.delete(key);
+  };
   const open = new Map<string, Spell>();
   const observations: HazardObservation[] = [];
   const censored: Record<CensorCause, number> = {
@@ -76,8 +101,9 @@ export function collectHazardObservations(
     const next = nextGame.get(`${spell.teamId}:${spell.lastGameId}`);
     if (next === undefined) throw new Error(`No schedule entry for ${spell.teamId} ${spell.lastGameId}.`);
     if (next === gameId) return false;
-    censored[next === null ? "season-end" : "no-box-score"] += 1;
-    open.delete(key);
+    const cause = next === null ? "season-end" : "no-box-score";
+    censored[cause] += 1;
+    close(key, spell, cause);
     return true;
   };
 
@@ -104,18 +130,20 @@ export function collectHazardObservations(
         const entry = absentNow.get(spell.athleteId);
         if (appeared.has(spell.athleteId)) {
           observations.push({ k: spell.k, class: spell.class, returned: true });
-          open.delete(key);
+          close(key, spell, "returned");
         } else if (entry) {
           observations.push({ k: spell.k, class: spell.class, returned: false });
           if (entry.missedBefore !== spell.k) countMismatches += 1;
           spell.k += 1;
           spell.class = entry.class;
+          spell.classes.push(entry.class);
           spell.lastGameId = game.id;
           continued.add(spell.athleteId);
         } else {
           const elsewhere = tracker.book.get(spell.athleteId)?.lastTeamId !== teamId;
-          censored[elsewhere ? "appeared-elsewhere" : "left-rotation"] += 1;
-          open.delete(key);
+          const cause = elsewhere ? "appeared-elsewhere" : "left-rotation";
+          censored[cause] += 1;
+          close(key, spell, cause);
         }
       }
       for (const entry of absences.absent) {
@@ -131,6 +159,8 @@ export function collectHazardObservations(
           k: 1,
           class: entry.class,
           lastGameId: game.id,
+          season: game.season,
+          classes: [entry.class],
         });
         spellsOpened += 1;
       }
@@ -138,6 +168,9 @@ export function collectHazardObservations(
   });
   for (const [key, spell] of [...open]) censorStale(spell, key, "end-of-replay");
   if (open.size > 0) throw new Error("Spells left open after the replay.");
-  return { observations, censored, spellsOpened, ignoredContinuations, countMismatches };
+  // A returned spell gives one observation per miss; a censored one none after its last miss.
+  const derived = spells.reduce((sum, spell) => sum + spell.classes.length - (spell.end === "returned" ? 0 : 1), 0);
+  if (derived !== observations.length) throw new Error("Spells and observations disagree.");
+  return { observations, spells, censored, spellsOpened, ignoredContinuations, countMismatches };
 }
 
