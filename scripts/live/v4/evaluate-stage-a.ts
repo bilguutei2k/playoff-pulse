@@ -61,11 +61,17 @@ import {
 const root = process.cwd();
 const design = process.argv.includes("--design");
 const withS2 = process.argv.includes("--s2");
-const ITERATIONS = 4000;
-const DESIGN_SEASONS = [2016, 2017, 2018, 2019, 2022];
+/** Code smoke test of design mode only: one season, 200 iterations, output outside docs, never read for a decision. */
+const smoke = process.env.V4_SMOKE === "1";
+const smokeOut = design ? process.env.V4_A8_OUT : process.env.V4_STAGE_A_OUT;
+if (smoke && (!smokeOut || path.resolve(smokeOut).startsWith(path.join(process.cwd(), "docs")))) {
+  throw new Error("V4_SMOKE needs its output (V4_A8_OUT or V4_STAGE_A_OUT) outside docs/.");
+}
+const ITERATIONS = smoke ? 200 : 4000;
+const DESIGN_SEASONS = smoke ? [2016] : [2016, 2017, 2018, 2019, 2022];
 const CONFIRMATION_SEASONS = [2023, 2024];
-const A5_SEASONS = [...DESIGN_SEASONS, ...CONFIRMATION_SEASONS];
-const SCORED_SEASONS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
+const A5_SEASONS = smoke ? [2022] : [...DESIGN_SEASONS, ...CONFIRMATION_SEASONS];
+const SCORED_SEASONS = smoke ? [2022] : [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 const S2_GRID = [200, 400, 800];
 const LIMITS = {
   a1SeasonsNegative: 7,
@@ -94,7 +100,8 @@ type Fit = {
   status: { frozen: StatusWeights; leaveOneOut: Record<string, StatusWeights>; beforeOrigin: Record<string, StatusWeights> };
   hazards: { frozen: GroupHazardTable; leaveOneOut: Record<string, GroupHazardTable>; shrinkage: number };
 };
-const fit = JSON.parse(fs.readFileSync(path.join(root, "docs/live/v4-fit.json"), "utf-8")) as Fit;
+const fitFile = smoke && process.env.V4_FIT_FILE ? path.resolve(process.env.V4_FIT_FILE) : path.join(root, "docs/live/v4-fit.json");
+const fit = JSON.parse(fs.readFileSync(fitFile, "utf-8")) as Fit;
 
 const originFor = (season: number): OriginSet => {
   const set = fit.origins[String(season)];
@@ -339,7 +346,7 @@ if (design) {
     s2,
   };
   writeOnce(target, output);
-  console.log(JSON.stringify(output, null, 1));
+  if (!smoke) console.log(JSON.stringify(output, null, 1));
   process.exit(0);
 }
 
@@ -347,7 +354,7 @@ if (design) {
 // Phase B
 // ---------------------------------------------------------------------------
 
-const target = path.join(root, "docs/live/evaluation-v4-stage-a.json");
+const target = smoke ? path.resolve(smokeOut as string) : path.join(root, "docs/live/evaluation-v4-stage-a.json");
 if (fs.existsSync(target)) throw new Error("docs/live/evaluation-v4-stage-a.json exists: Stage A has run. It is never run again.");
 const s2Days: number | null = (fit as unknown as { s2?: { horizonDays: number } | null }).s2?.horizonDays ?? null;
 const problems: string[] = [];
@@ -381,6 +388,7 @@ for (const season of SCORED_SEASONS) {
   console.log(`[stage-a] game rows ${season} done`);
 }
 const v4ById = new Map(v4Rows.map((row) => [row.id, row]));
+if (smoke) finalIds.splice(0, finalIds.length, ...finalIds.filter((id) => v4ById.has(id)));
 const dateOf = (id: string) => (v4ById.get(id) as V4Row).game.etDate;
 const pairedV1 = (rows: readonly ScoredGame[]) => rows.map((row) => v1.get(row.id) as ScoredGame);
 
@@ -544,5 +552,6 @@ const output = {
   passed,
 };
 writeOnce(target, output);
+if (smoke) process.exit(0);
 console.log(JSON.stringify({ passed, a1: a1.passed, a2: a2.passed, a3: a3.passed, a4: a4.passed, a5: a5.passed }, null, 1));
 if (!passed) process.exit(2);
