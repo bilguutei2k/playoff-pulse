@@ -1,7 +1,7 @@
 // v4 fit, M4: return hazards by group (reason kind and diagnosis family), each cell shrunk
 // toward its v3 class cell: h = (returns + m h_class) / (at-risk + m), the class table fitted
 // by v3's rule (`fitHazards`, imported unchanged) on the same observations. m from
-// {10, 30, 100} by leave-one-season-out log loss over 2021-22 to 2023-24. Stored: the frozen
+// {3, 5, 10, 30, 100} (Amendment 1) by leave-one-season-out log loss over 2021-22 to 2023-24. Stored: the frozen
 // table (all three seasons) and one leave-one-season-out table per season.
 //
 // Run: corepack pnpm exec tsx scripts/live/v4/fit-hazards.ts
@@ -12,7 +12,8 @@ import { countGroupCells, groupHazard, type GroupHazardTable } from "../../../sr
 import { fitHazards } from "../../../src/lib/season/injury-v3";
 import { collectGroupedObservations, HAZARD_SEASONS, type GroupedObservation } from "./hazard-data";
 
-export const SHRINKAGE_GRID = [10, 30, 100] as const;
+/** Amendment 1: widened once from {10, 30, 100}; the result stands even on an edge. */
+export const SHRINKAGE_GRID = [3, 5, 10, 30, 100] as const;
 
 export function tableFor(observations: readonly GroupedObservation[], shrinkage: number): GroupHazardTable {
   const classTable = fitHazards(observations.map((row) => ({ k: row.k, class: row.class, returned: row.returned }))).table;

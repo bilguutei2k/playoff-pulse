@@ -125,16 +125,16 @@ export const V4_FROZEN: {
       ],
       "classUsed": true
     },
-    "shrinkage": 10,
+    "shrinkage": 5,
     "cells": {
       "injury:surgery": {
         "atRisk": [
-          26,
-          61,
-          158,
-          393,
-          622,
-          752
+          24,
+          57,
+          149,
+          375,
+          598,
+          710
         ],
         "returns": [
           4,
@@ -142,7 +142,7 @@ export const V4_FROZEN: {
           1,
           7,
           9,
-          11
+          10
         ]
       },
       "injury:strain": {
@@ -165,12 +165,12 @@ export const V4_FROZEN: {
       },
       "injury:tear": {
         "atRisk": [
-          14,
-          45,
-          77,
-          144,
-          179,
-          252
+          12,
+          41,
+          64,
+          120,
+          145,
+          169
         ],
         "returns": [
           1,
@@ -183,12 +183,12 @@ export const V4_FROZEN: {
       },
       "injury:sprain": {
         "atRisk": [
-          617,
-          759,
-          814,
-          691,
-          337,
-          114
+          615,
+          754,
+          805,
+          675,
+          321,
+          90
         ],
         "returns": [
           190,
@@ -201,7 +201,7 @@ export const V4_FROZEN: {
       },
       "injury:management": {
         "atRisk": [
-          293,
+          269,
           89,
           160,
           230,
@@ -209,7 +209,7 @@ export const V4_FROZEN: {
           256
         ],
         "returns": [
-          239,
+          217,
           9,
           14,
           10,
@@ -255,18 +255,18 @@ export const V4_FROZEN: {
       },
       "injury:soreness": {
         "atRisk": [
-          1102,
-          886,
-          665,
-          474,
-          224,
+          1068,
+          858,
+          645,
+          449,
+          207,
           20
         ],
         "returns": [
-          545,
-          259,
-          105,
-          35,
+          527,
+          250,
+          101,
+          33,
           14,
           1
         ]
@@ -327,7 +327,7 @@ export const V4_FROZEN: {
       },
       "injury:other": {
         "atRisk": [
-          182,
+          181,
           221,
           246,
           302,
@@ -335,11 +335,29 @@ export const V4_FROZEN: {
           24
         ],
         "returns": [
-          63,
+          62,
           50,
           21,
           15,
           7,
+          2
+        ]
+      },
+      "injury:acl": {
+        "atRisk": [
+          17,
+          31,
+          61,
+          112,
+          145,
+          229
+        ],
+        "returns": [
+          5,
+          1,
+          0,
+          0,
+          1,
           2
         ]
       },
@@ -379,24 +397,6 @@ export const V4_FROZEN: {
           0
         ]
       },
-      "injury:acl": {
-        "atRisk": [
-          13,
-          22,
-          38,
-          70,
-          90,
-          122
-        ],
-        "returns": [
-          5,
-          1,
-          0,
-          0,
-          1,
-          2
-        ]
-      },
       "rest": {
         "atRisk": [
           112,
@@ -433,6 +433,24 @@ export const V4_FROZEN: {
           0
         ]
       },
+      "injury:achilles": {
+        "atRisk": [
+          62,
+          32,
+          29,
+          41,
+          36,
+          42
+        ],
+        "returns": [
+          42,
+          9,
+          4,
+          2,
+          0,
+          1
+        ]
+      },
       "injury:stress": {
         "atRisk": [
           8,
@@ -448,24 +466,6 @@ export const V4_FROZEN: {
           1,
           0,
           3,
-          0
-        ]
-      },
-      "injury:achilles": {
-        "atRisk": [
-          1,
-          0,
-          1,
-          0,
-          0,
-          0
-        ],
-        "returns": [
-          1,
-          0,
-          0,
-          0,
-          0,
           0
         ]
       }

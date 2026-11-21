@@ -28,9 +28,9 @@ export const REASON_KINDS = ["injury", "gleague", "protocols", "admin", "rest"] 
 export type ReasonKind = (typeof REASON_KINDS)[number] | "unlisted";
 
 /**
- * Diagnosis families, in order of precedence, each with its frozen keywords. Matched on the
- * lowercased text after the first semicolon of an "Injury/Illness" reason; no semicolon, or
- * no match, is "other".
+ * Diagnosis families, in order of precedence, each with its frozen keywords. ACL and Achilles
+ * match the whole lowercased reason; the others the text after its first semicolon (no
+ * semicolon or no match is "other"). Amendment 1 of the v4 plan.
  */
 export const DIAGNOSIS_FAMILIES: ReadonlyArray<readonly [family: string, keywords: readonly string[]]> = [
   ["acl", ["acl"]],
@@ -48,6 +48,9 @@ export const DIAGNOSIS_FAMILIES: ReadonlyArray<readonly [family: string, keyword
   ["illness", ["illness", "ilness", "covid", "flu", "sick"]],
 ];
 
+/** Families matched on the whole reason string (Amendment 1). */
+export const WHOLE_REASON_FAMILIES: ReadonlySet<string> = new Set(["acl", "achilles"]);
+
 export function reasonKind(reason: string | null | undefined): ReasonKind {
   if (reason === null || reason === undefined) return "unlisted";
   const text = reason.trim().toLowerCase();
@@ -59,11 +62,14 @@ export function reasonKind(reason: string | null | undefined): ReasonKind {
 }
 
 export function diagnosisFamily(reason: string): string {
+  // Amendment 1: ACL and Achilles are matched on the whole reason (the body part carries them);
+  // every other family on the text after the first semicolon.
+  const whole = reason.toLowerCase();
   const cut = reason.indexOf(";");
-  if (cut < 0) return "other";
-  const text = reason.slice(cut + 1).toLowerCase();
+  const after = cut < 0 ? null : whole.slice(cut + 1);
   for (const [family, keywords] of DIAGNOSIS_FAMILIES) {
-    if (keywords.some((keyword) => text.includes(keyword))) return family;
+    const text = WHOLE_REASON_FAMILIES.has(family) ? whole : after;
+    if (text !== null && keywords.some((keyword) => text.includes(keyword))) return family;
   }
   return "other";
 }
