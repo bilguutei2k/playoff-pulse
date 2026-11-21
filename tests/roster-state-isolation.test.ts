@@ -13,6 +13,7 @@ const ALLOWED = new Set([
   "dev-data.ts", // refuses every season after 2023-24
   "warm-state.ts", // the pass through the closed seasons; returns a state only
   "build-player-games.ts", // writes the compact files from the raw store (step 1)
+  "assemble-fit.ts", // hashes the open seasons' files for the fit's provenance; reads none
 ]);
 
 describe("v4 data isolation", () => {

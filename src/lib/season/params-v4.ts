@@ -56,3 +56,420 @@ export const V4_FIXED = {
   enumerateUpTo: 6,
   enumerationDraws: 256,
 } as const;
+
+// ---------------------------------------------------------------------------
+// The frozen fit, copied from docs/live/v4-fit.json (frozen set: origin 2024-25, fitted on
+// 2010-11 to 2023-24). Never refit; tests/roster-state-params.test.ts pins these to the file.
+// ---------------------------------------------------------------------------
+
+import type { GroupHazardTable, BackgroundParams } from "@/lib/season/availability-v4";
+import type { V4RatingParams, StatusWeights } from "@/lib/season/roster-state";
+
+export const V4_FROZEN: {
+  ratings: V4RatingParams;
+  background: BackgroundParams;
+  statusTable: StatusWeights;
+  hazards: GroupHazardTable;
+  /** S2's H in days; null when S2 is not part of v4. */
+  horizonDays: number | null;
+} = {
+  "ratings": {
+    "sigma": 13.31,
+    "sBox": 17.72727273,
+    "qP": 0.003278688525,
+    "qC": 0.015944049,
+    "qH": 0.001382875219,
+    "rhoP": 0.8,
+    "qOff": 0.1526855713,
+    "rhoC": 0.7125,
+    "tauC": 0.4626519474,
+    "muNew": -1,
+    "tauNew": 2.44,
+    "alpha": 0.3896794459,
+    "kappa": 1
+  },
+  "background": {
+    "halfLife": 1,
+    "shrinkage": 320,
+    "tierRates": [
+      0.5666918324681751,
+      0.7453209306922687,
+      0.8249133847892375,
+      0.869325547427574
+    ]
+  },
+  "statusTable": {
+    "O": 0.998950036205648,
+    "D": 0.9834123222748815,
+    "Q": 0.48272195640616694,
+    "P": 0.18594000457980306,
+    "A": 0.18594000457980306
+  },
+  "hazards": {
+    "classTable": {
+      "long": [
+        0.34705882352941175,
+        0.05970149253731343,
+        0.025477707006369428,
+        0.02441860465116279,
+        0.025075225677031094,
+        0.01236603462489695
+      ],
+      "short": [
+        0.4314753396811811,
+        0.29011194029850745,
+        0.18154269972451792,
+        0.09877399953735831,
+        0.0554675118858954,
+        0.02254791431792559
+      ],
+      "classUsed": true
+    },
+    "shrinkage": 10,
+    "cells": {
+      "injury:surgery": {
+        "atRisk": [
+          26,
+          61,
+          158,
+          393,
+          622,
+          752
+        ],
+        "returns": [
+          4,
+          1,
+          1,
+          7,
+          9,
+          11
+        ]
+      },
+      "injury:strain": {
+        "atRisk": [
+          225,
+          369,
+          470,
+          364,
+          125,
+          49
+        ],
+        "returns": [
+          47,
+          61,
+          63,
+          47,
+          12,
+          2
+        ]
+      },
+      "injury:tear": {
+        "atRisk": [
+          14,
+          45,
+          77,
+          144,
+          179,
+          252
+        ],
+        "returns": [
+          1,
+          1,
+          0,
+          0,
+          4,
+          4
+        ]
+      },
+      "injury:sprain": {
+        "atRisk": [
+          617,
+          759,
+          814,
+          691,
+          337,
+          114
+        ],
+        "returns": [
+          190,
+          156,
+          117,
+          60,
+          25,
+          1
+        ]
+      },
+      "injury:management": {
+        "atRisk": [
+          293,
+          89,
+          160,
+          230,
+          297,
+          256
+        ],
+        "returns": [
+          239,
+          9,
+          14,
+          10,
+          7,
+          4
+        ]
+      },
+      "injury:bruise": {
+        "atRisk": [
+          327,
+          248,
+          193,
+          138,
+          64,
+          72
+        ],
+        "returns": [
+          161,
+          74,
+          38,
+          14,
+          5,
+          0
+        ]
+      },
+      "admin": {
+        "atRisk": [
+          310,
+          258,
+          289,
+          212,
+          154,
+          95
+        ],
+        "returns": [
+          130,
+          80,
+          87,
+          23,
+          8,
+          5
+        ]
+      },
+      "injury:soreness": {
+        "atRisk": [
+          1102,
+          886,
+          665,
+          474,
+          224,
+          20
+        ],
+        "returns": [
+          545,
+          259,
+          105,
+          35,
+          14,
+          1
+        ]
+      },
+      "gleague": {
+        "atRisk": [
+          389,
+          880,
+          1229,
+          1028,
+          370,
+          123
+        ],
+        "returns": [
+          64,
+          96,
+          118,
+          93,
+          21,
+          2
+        ]
+      },
+      "injury:fracture": {
+        "atRisk": [
+          64,
+          120,
+          198,
+          270,
+          158,
+          153
+        ],
+        "returns": [
+          12,
+          5,
+          7,
+          12,
+          13,
+          0
+        ]
+      },
+      "protocols": {
+        "atRisk": [
+          269,
+          522,
+          359,
+          36,
+          14,
+          21
+        ],
+        "returns": [
+          20,
+          73,
+          101,
+          6,
+          0,
+          1
+        ]
+      },
+      "injury:other": {
+        "atRisk": [
+          182,
+          221,
+          246,
+          302,
+          184,
+          24
+        ],
+        "returns": [
+          63,
+          50,
+          21,
+          15,
+          7,
+          2
+        ]
+      },
+      "injury:concussion": {
+        "atRisk": [
+          24,
+          27,
+          14,
+          1,
+          0,
+          0
+        ],
+        "returns": [
+          5,
+          11,
+          5,
+          1,
+          0,
+          0
+        ]
+      },
+      "unlisted": {
+        "atRisk": [
+          5206,
+          4082,
+          2713,
+          745,
+          0,
+          0
+        ],
+        "returns": [
+          2323,
+          1509,
+          632,
+          123,
+          0,
+          0
+        ]
+      },
+      "injury:acl": {
+        "atRisk": [
+          13,
+          22,
+          38,
+          70,
+          90,
+          122
+        ],
+        "returns": [
+          5,
+          1,
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      "rest": {
+        "atRisk": [
+          112,
+          3,
+          2,
+          0,
+          0,
+          0
+        ],
+        "returns": [
+          93,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "injury:illness": {
+        "atRisk": [
+          335,
+          240,
+          68,
+          21,
+          2,
+          0
+        ],
+        "returns": [
+          186,
+          117,
+          20,
+          2,
+          1,
+          0
+        ]
+      },
+      "injury:stress": {
+        "atRisk": [
+          8,
+          12,
+          37,
+          64,
+          70,
+          47
+        ],
+        "returns": [
+          3,
+          0,
+          1,
+          0,
+          3,
+          0
+        ]
+      },
+      "injury:achilles": {
+        "atRisk": [
+          1,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "returns": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "horizonDays": null
+};
