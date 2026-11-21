@@ -374,3 +374,48 @@ C). Nothing is backfilled. It is labeled small-sample below 500 scored v4 games.
 - `docs/live/v4-player-games-audit.json`: `ddbb81227cec4b04ca0feadb29f17bd790fce4100b138dd69de01bf38983e501`
 
 The golden hashes (`tests/season-simulator-golden.test.ts`, `tests/v4-goldens.test.ts`) and v3's registered files are unchanged.
+
+## 2026-11-21, Stage A result: passed
+
+Run once, on the lead's go, in a fresh throwaway clone of the registered head
+5a61a09a. The A6 property tests passed there first (38 tests, the six files listed above).
+Then `evaluate-stage-a.ts` ran and exited 0. Its output, `docs/live/evaluation-v4-stage-a.json`, is
+copied here unchanged and frozen. This is a development check on seasons the spike had seen,
+not an untouched test. Nothing here says v4 beats v2, v1 or the market.
+
+- **Reproductions:** exact (v1 0.594511 on 12,059; v1 0.2192 and v2 0.2139 / 0.6168 on 3,690).
+- **A1, passed:** v4 − v1 Brier −0.0040, 95% interval −0.0051 to −0.0029 (10,749 games,
+  1,438 dates); negative in 8 of 9 seasons. It was +0.0003 in 2015-16.
+- **A2, passed:** v4 0.2129, v2 0.2139 on the 3,690 games (limits 0.2159; difference −0.0010,
+  interval upper +0.0013 against +0.004). In words: not worse than v2 on development seasons,
+  which v2 was fitted on.
+- **A3, passed:** slope 0.987 (band 0.93 to 1.07), reliability 0.00013 (limit 0.002), 5,829 games.
+- **A4, passed:** log loss 0.5126 against v3's class table 0.5462 pooled (14,568 listings);
+  lower in each of the three seasons.
+- **A5, passed:**
+
+  | Set | Checkpoint | Make-playoffs Brier v1 / v4 (limit) | Win RMSE v1 / v4 (limit) |
+  |---|---|---|---|
+  | Pooled, 210 | Dec 1 | 0.1338 / 0.1338 (0.1388) | 6.109 / 6.027 (6.359) |
+  | Pooled, 210 | Feb 1 | 0.0812 / 0.0749 (0.0862) | 3.546 / 3.455 (3.796) |
+  | Pooled, 210 | Apr 1 | 0.0330 / 0.0317 (0.0380) | 1.187 / 1.147 (1.437) |
+  | 2022-23 and 2023-24, 60 | Dec 1 | 0.1437 / 0.1427 (0.1517) | 5.852 / 5.662 (6.252) |
+  | 2022-23 and 2023-24, 60 | Feb 1 | 0.0989 / 0.0827 (0.1069) | 3.881 / 3.583 (4.281) |
+  | 2022-23 and 2023-24, 60 | Apr 1 | 0.0444 / 0.0366 (0.0524) | 1.113 / 1.026 (1.513) |
+
+  Opening night: win RMSE 8.347 against v1's 9.033. Reported for 2021-22 to 2023-24, beside v2's
+  registered 0.1429, 0.0958, 0.0410 and 6.50, 3.76, 1.07: v4 0.1576, 0.0897, 0.0441 and 6.50,
+  3.52, 1.01 (not gating).
+- **A7, reported:** the team residual (log loss 0.61215 against 0.61222 without) and the
+  diagnosis families (0.5126 against 0.5462) earn their place. **M5's integration does not:**
+  0.61215 with it against 0.61213 with Questionable and Doubtful players at expected presence.
+  **S1 does not either:** Dec 1 and Feb 1 win RMSE 6.027 and 3.455 with it against 6.005 and 3.469
+  without, so it is not worse at both checkpoints. Both stay in the registered model; removing
+  them is a recommendation to the lead, not an edit.
+- **Reported only:** on 2021-22 to 2023-24, Brier with reports 0.2129, without any report
+  0.2159, and "told who plays" 0.2119 (3,547 games). Games before Dec 1: v4 0.2135 against v1
+  0.2194 (2,467 games). On the 2,460 games with a stored spread: market 0.2123, v4 0.2173,
+  v2 0.2178. The market stays ahead, and no claim is made against it.
+
+Pass is A1 to A6 together: **passed**. Phase C (the shadow wiring) waits for the lead's
+confirmation.
