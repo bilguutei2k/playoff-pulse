@@ -1,0 +1,95 @@
+{
+  "note": "Registered regression check of live-2026.27-v3 on 2024-25 and 2025-26. Abort-only; run once. The second v3-family look at these seasons (see registration-v3.md).",
+  "seasons": [
+    2025,
+    2026
+  ],
+  "smoke": false,
+  "gates": {
+    "c1": {
+      "games": 2460,
+      "v2Brier": 0.200907,
+      "v3Brier": 0.200907,
+      "difference": 0,
+      "maxGameDifference": 0,
+      "tolerance": 0.002,
+      "bugThreshold": 1e-9,
+      "passed": true
+    },
+    "c2": {
+      "passed": false,
+      "checks": [
+        {
+          "checkpoint": "dec1",
+          "makePlayoffsBrier": {
+            "v1": 0.112454,
+            "v2": 0.116216,
+            "v3": 0.11876
+          },
+          "winRmse": {
+            "v1": 7.137,
+            "v2": 7.275,
+            "v3": 7.235
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.117454,
+            "winRmse": 7.387
+          },
+          "passed": false,
+          "teamSeasons": 60
+        },
+        {
+          "checkpoint": "feb1",
+          "makePlayoffsBrier": {
+            "v1": 0.091687,
+            "v2": 0.08685,
+            "v3": 0.084686
+          },
+          "winRmse": {
+            "v1": 4.384,
+            "v2": 4.527,
+            "v3": 4.359
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.096687,
+            "winRmse": 4.634
+          },
+          "passed": true,
+          "teamSeasons": 60
+        },
+        {
+          "checkpoint": "apr1",
+          "makePlayoffsBrier": {
+            "v1": 0.054426,
+            "v2": 0.058696,
+            "v3": 0.056174
+          },
+          "winRmse": {
+            "v1": 1.182,
+            "v2": 1.128,
+            "v3": 1.141
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.059426,
+            "winRmse": 1.432
+          },
+          "passed": true,
+          "teamSeasons": 60
+        }
+      ],
+      "brierTolerance": 0.005,
+      "rmseTolerance": 0.25,
+      "iterations": 4000
+    },
+    "c3": {
+      "games": 745,
+      "v2MorningBrier": 0.209336,
+      "v3MorningBrier": 0.209575,
+      "difference": 0.000239,
+      "tolerance": 0.004,
+      "passed": true
+    }
+  },
+  "reproductionProblems": [],
+  "passed": false
+}

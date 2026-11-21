@@ -295,3 +295,35 @@ M7 as above:
 The v3 record starts at v3's first seal, prospectively, from `V3_FIRST_ET_DATE`. Nothing is
 backfilled. It is labeled small-sample below 500 scored v3 games, and v2 keeps sealing as a
 reference beside v1.
+
+## 2026-11-21, gate result: did not pass
+
+Phase C was run once, on the lead's go, in a fresh throwaway clone of the registered head
+4577de697dbc552b64ec16b9b94606d7399b4c06. The output is
+`docs/live/evaluation-injury-v3.json`, copied unchanged and frozen.
+
+- **C1, v2 reproduces: passed.** `evaluate-injury.ts` rewrote
+  `docs/live/evaluation-injury.json` byte-identically. `evaluate-unfiled.ts` gave 745 games,
+  0.2199 under the old rule and 0.2093 under revision 2.
+- **c1: passed.** 2,460 games; v2 0.200907 and v3 0.200907; difference exactly 0, and the
+  largest per-game difference was 0.
+- **c2 (T4): FAILED at Dec 1.** v1 and v2 reproduced the frozen values exactly.
+
+  | Checkpoint | Make-playoffs Brier v1 / v2 / v3 | Brier limit | Win RMSE v1 / v2 / v3 | RMSE limit | Result |
+  |---|---|---|---|---|---|
+  | Dec 1 | 0.112454 / 0.116216 / **0.118760** | 0.117454 | 7.137 / 7.275 / 7.235 | 7.387 | Fails, Brier by 0.0013 |
+  | Feb 1 | 0.091687 / 0.086850 / 0.084686 | 0.096687 | 4.384 / 4.527 / 4.359 | 4.634 | Passes |
+  | Apr 1 | 0.054426 / 0.058696 / 0.056174 | 0.059426 | 1.182 / 1.128 / 1.141 | 1.432 | Passes |
+
+- **c3: passed.** 745 games; v2 morning 0.209336, v3 0.209575, a difference of +0.000239
+  against the 0.004 tolerance.
+- **C3, byte-identical with v3 off: not run.** The run stopped at the failed gate.
+
+The candidate does not pass. Per the registration, this stops the run for the owner.
+Nothing is refit or changed after this number. v2 remains the published model, unchanged.
+This was the second v3-family look at 2024-25 and 2025-26.
+
+Named limitation (Amendment 2), recorded here as the plan asks: the long class pools
+season-ending repairs with shorter tears. For example, a "Right Oblique Tear" at k=4 reads
+as most of a season. A class refinement, fitted on development seasons and registered
+separately, is a candidate for a future version.
