@@ -86,7 +86,7 @@ import type { LedgerRow, LiveState, SeasonGame, SealRow } from "../../src/lib/se
 import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
-import { expectedSiteFiles, publishedSiteFiles } from "../live/site-files";
+import { expectedSiteFiles, publishedSiteFiles, shadowPath } from "../live/site-files";
 import { ledgerProblems } from "../live/verify-ledger";
 import { upgradeLiveState } from "../../src/lib/season/state-schema";
 import { marginBreakdown } from "../../src/lib/view/margin";
@@ -1077,7 +1077,10 @@ function checkSiteFiles(): void {
   const expected = expectedSiteFiles(liveDirectory, LIVE_SEASON, seasonLabel(LIVE_SEASON));
   const missing = [...expected.keys()].filter((file) => !published.has(file));
   const extra = [...published.keys()].filter(
-    (file) => !expected.has(file) && !isModelViewPath(file, seasonLabel(LIVE_SEASON)),
+    (file) =>
+      !expected.has(file) &&
+      !isModelViewPath(file, seasonLabel(LIVE_SEASON)) &&
+      file !== shadowPath(seasonLabel(LIVE_SEASON)),
   );
   const different = [...expected.keys()].filter(
     (file) => published.has(file) && published.get(file) !== expected.get(file),
