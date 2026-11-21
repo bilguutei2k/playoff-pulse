@@ -25,6 +25,10 @@ const scoresFor = (job: Job, season: number) => path.join(directory, `${keyFor(j
 
 openData();
 process.on("message", (job: Job) => {
+  if (fs.existsSync(fileFor(job, job.lastSeason)) && fs.existsSync(scoresFor(job, job.lastSeason))) {
+    process.send?.({ id: job.id, scores: JSON.parse(fs.readFileSync(scoresFor(job, job.lastSeason), "utf-8")) });
+    return;
+  }
   let resume: number | null = null;
   for (let season = job.lastSeason - 1; season >= 2011; season -= 1) {
     if (fs.existsSync(fileFor(job, season)) && fs.existsSync(scoresFor(job, season))) {

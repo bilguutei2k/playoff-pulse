@@ -11,7 +11,9 @@
 // 0.5 -> 0.25 -> 0.125); after the last level the search stops (at most 25 rounds). The
 // first origin starts at the spike's values; each later origin starts at the previous
 // origin's result, at the finest step level (whose neighbours the previous origin's last
-// round evaluated, so they resume from exact checkpoints and replay one new season).
+// round evaluated, so they resume from exact checkpoints and replay one new season), for at
+// most three rounds. (That cap was added after origin 2016-17's search had run three rounds of
+// gains near 1e-5 each at the finest step, before any gate or season-level number existed.)
 //
 // Run: corepack pnpm exec tsx scripts/live/v4/fit-ratings.ts [workers]
 
@@ -49,6 +51,7 @@ const LEVELS = [
   { factor: 1.1, rho: 0.0125, add: 0.125 },
 ];
 const MAX_ROUNDS = 25;
+const MAX_WARM_ROUNDS = 3;
 const KEYS: Key[] = [...MULTIPLICATIVE, ...RHO, ...ADDITIVE];
 
 const root = process.cwd();
@@ -140,7 +143,8 @@ async function search(origin: number, start: V4RatingParams, firstLevel: number)
   let best = await objective(current, origin);
   const trace: Array<{ round: number; level: number; logLoss: number; moved: string[] }> = [];
   let level = firstLevel;
-  for (let round = 0; round < MAX_ROUNDS && level < LEVELS.length; round += 1) {
+  const rounds = firstLevel === 0 ? MAX_ROUNDS : MAX_WARM_ROUNDS;
+  for (let round = 0; round < rounds && level < LEVELS.length; round += 1) {
     const moves = KEYS.flatMap((key) => ([1, -1] as const).map((direction) => ({ key, direction, params: neighbour(current, key, direction, LEVELS[level]) })))
       .filter((move): move is { key: Key; direction: 1 | -1; params: V4RatingParams } => move.params !== null);
     const values = await Promise.all(moves.map((move) => objective(move.params, origin)));
