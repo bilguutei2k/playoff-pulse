@@ -26,6 +26,13 @@ import { finalPoint, openData } from "./engine-run";
 
 export const HALF_LIVES = [5, 10, 20, 40, 80, 160];
 export const SHRINKAGES = [5, 10, 20, 40, 80];
+/**
+ * The one widening, used only for a grid whose best value sits on an edge (as v2's fit did).
+ * Added after the first run, on fit seasons only: both best values sat on edges (half-life 5,
+ * m 80) at every origin.
+ */
+export const WIDER_HALF_LIVES = [1, 2, 3, ...HALF_LIVES];
+export const WIDER_SHRINKAGES = [...SHRINKAGES, 160, 320, 640];
 const HORIZON = 60;
 const ORIGINS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
@@ -104,6 +111,17 @@ function collect(): Observation[] {
 }
 
 function fitOn(observations: readonly Observation[]) {
+  const first = fitGrid(observations, HALF_LIVES, SHRINKAGES);
+  const onEdge =
+    first.params.halfLife === HALF_LIVES[0] ||
+    first.params.halfLife === HALF_LIVES[HALF_LIVES.length - 1] ||
+    first.params.shrinkage === SHRINKAGES[0] ||
+    first.params.shrinkage === SHRINKAGES[SHRINKAGES.length - 1];
+  if (!onEdge) return { ...first, widened: false };
+  return { ...fitGrid(observations, WIDER_HALF_LIVES, WIDER_SHRINKAGES), widened: true, firstGrid: first.params };
+}
+
+function fitGrid(observations: readonly Observation[], halfLives: readonly number[], shrinkages: readonly number[]) {
   const tierGames = new Array<number>(S1_TIERS.length).fill(0);
   const tierPlayed = new Array<number>(S1_TIERS.length).fill(0);
   for (const row of observations) {
@@ -113,8 +131,8 @@ function fitOn(observations: readonly Observation[]) {
   const tierRates = tierGames.map((games, tier) => (games > 0 ? tierPlayed[tier] / games : 0.9));
   let best: { params: BackgroundParams; mse: number } | null = null;
   const grid: Array<{ halfLife: number; shrinkage: number; mse: number }> = [];
-  for (const halfLife of HALF_LIVES) {
-    for (const shrinkage of SHRINKAGES) {
+  for (const halfLife of halfLives) {
+    for (const shrinkage of shrinkages) {
       const params: BackgroundParams = { halfLife, shrinkage, tierRates };
       let squared = 0;
       let count = 0;
@@ -141,6 +159,6 @@ for (const origin of ORIGINS) {
 }
 fs.writeFileSync(
   path.join(process.cwd(), "docs/live/v4-fit-parts/background.json"),
-  `${JSON.stringify({ halfLives: HALF_LIVES, shrinkages: SHRINKAGES, horizon: HORIZON, origins }, null, 2)}\n`,
+  `${JSON.stringify({ halfLives: HALF_LIVES, shrinkages: SHRINKAGES, widerHalfLives: WIDER_HALF_LIVES, widerShrinkages: WIDER_SHRINKAGES, horizon: HORIZON, origins }, null, 2)}\n`,
   "utf-8",
 );
