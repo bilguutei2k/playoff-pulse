@@ -31,6 +31,7 @@ import {
   advanceTo,
   copyRosterState,
   forecastGame,
+  refreshScale,
   replayRosterState,
   sideListing,
   type RosterState,
@@ -156,6 +157,9 @@ export function shadowV4(input: ShadowInput): ShadowOutput {
     });
     const copy = copyRosterState(state);
     advanceTo(copy, input.season, date, params, () => rosters);
+    // M5's scale for this date, from every earlier regular-season game, exactly as the replay
+    // refreshes it before forecasting a date (registration-v4.md; Astra's review of PR #37).
+    refreshScale(copy);
     states.set(date, copy);
   }
 

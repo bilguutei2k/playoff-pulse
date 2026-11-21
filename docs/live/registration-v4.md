@@ -452,3 +452,23 @@ with a stored spread, and that is said wherever these results are shown.
   answered 200, not 503" with the data host down, fails identically on `main` with the same-day data
   and no v4 (it depends on how fresh the bundled copy is; CI's frozen copy passes it); (e) v4's part
   of the run took 5.8 s. `V4_FIRST_ET_DATE` is 2026-11-22.
+
+## 2026-11-21, Astra's review of PR #37 and the lead's rulings (before v4's first seal)
+
+- **Live M5 scale (fixed).** The live shadow path copied the replayed state and advanced it to the
+  forecast date without refreshing M5's scale, so a date's seals would have used the scale fitted
+  before the previous date's games. `scripts/live/v4/live-v4.ts` now calls `refreshScale` after
+  `advanceTo`, exactly as `replayRosterState` does before forecasting a date; Stage A's game-level
+  gates (A1 to A3) were computed that way. Test: `tests/v4-live-scale.test.ts`. No engine file
+  changed, so the hashes above stand.
+- **Stage A's season checkpoints (disclosed, not re-run).** `scripts/live/v4/evaluate-stage-a.ts`
+  captures each A5 checkpoint state the same way, without the refresh, so A5's simulated game
+  noise used the scale as of the last replayed date rather than the checkpoint date: a difference
+  of one date's games in a window of 3,000. The frozen result stands as run; the gate is not
+  re-run. Live season odds in the shadow file use the refreshed scale.
+- **Warm-up through 2024-25 and 2025-26 (ruled acceptable).** `warmState` replays those seasons
+  with `replayRosterState`, which evaluates `forecastGame` for each game, because the filter's
+  update and M5's window are built from each game's predicted components and its outcome. The
+  probabilities are discarded: nothing is printed, stored, summarised, scored or compared per game
+  or in aggregate. This is the filter state Amendment 1, ruling 2, accepted. The prohibition
+  remains on evaluating anything on those seasons.
