@@ -25,6 +25,7 @@ import {
   SCORE_ON_COURT,
 } from "@/lib/score/params";
 import { IMPACT_LABEL, SCORE_LABEL } from "@/lib/season/player-stats";
+import { V4_MODEL_VERSION } from "@/lib/season/params-v4";
 import { POLICY_REVISIONS } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
@@ -45,6 +46,7 @@ const MARKET_CLAIM_GAMES = 500;
 const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/data/live/ledger";
 const REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration.md";
+const V4_REGISTRATION_URL = "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration-v4.md";
 const SCORE_REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/score/registration.md";
 const SCORE_STAGE2_REGISTRATION_URL =
@@ -95,6 +97,7 @@ const SECTIONS = [
   { id: "market", title: "The market reference" },
   { id: "testing", title: "How it tested" },
   { id: "shortfalls", title: "Where it fell short" },
+  { id: "roster-state", title: "In testing: roster-state model v4" },
   { id: "score", title: "The 548 score" },
   { id: "glossary", title: "Glossary" },
 ] as const;
@@ -814,6 +817,41 @@ export default async function HowItWorksPage() {
                 much.
               </li>
             </ul>
+          </Section>
+          <Section id="roster-state">
+            <p className="font-medium text-ink">
+              Unproven, and not the published forecast: every forecast on this site is still{" "}
+              <Version>{LIVE_MODEL_VERSION}</Version>&apos;s.
+            </p>
+            <p>
+              <strong className="text-ink">What it is.</strong> <Version>{V4_MODEL_VERSION}</Version> rates players
+              rather than teams. One filter keeps a strength for every player, updated from box scores and game
+              margins; a team&apos;s strength for a game is built from the players expected to play. The NBA injury
+              report says who plays, and how long a listed player stays out is estimated from his diagnosis.
+            </p>
+            <p>
+              <strong className="text-ink">How it was checked.</strong> Its first check (Stage A in the{" "}
+              <a href={V4_REGISTRATION_URL} className="pp-link">
+                registration
+              </a>
+              ) was a development check on seasons an earlier exploratory run had already seen, not an untouched
+              test. It passed: on those development seasons it was not worse than v2. On the same games the market
+              stayed ahead of both. That is all the check shows.
+            </p>
+            <p>
+              Two parts did not earn their place in that check: integrating over players listed as Questionable or
+              Doubtful, and a term for absences in the background. Both are kept as registered, because removing a
+              part after seeing a result would need a new registration. They are candidates to simplify in a later
+              version, to be tested there.
+            </p>
+            <p>
+              <strong className="text-ink">Its record.</strong> v4 seals every game beside v2 and keeps its own
+              record, starting at its first seal, on the{" "}
+              <SiteLink href="/record" className="pp-link">
+                record page
+              </SiteLink>
+              . Like every record here it is labeled a small sample until 500 games are scored.
+            </p>
           </Section>
           <Section id="score">
             <p className="font-medium text-ink">{SCORE_LABEL}</p>

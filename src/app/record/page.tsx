@@ -9,7 +9,8 @@ import {
 } from "@/components/live/RecordParts";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { Ticker } from "@/components/live/Ticker";
-import { getLiveState, getSeasonLedger } from "@/lib/live-data/published";
+import { getLiveState, getSeasonLedger, getShadowV4 } from "@/lib/live-data/published";
+import { V4_FIRST_ET_DATE } from "@/lib/season/params-v4";
 import { POLICY_REVISIONS, currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
 import type { RecordSummary } from "@/lib/season/types";
 import { formatShortDay } from "@/lib/utils/dates";
@@ -31,6 +32,7 @@ import {
   sameScoredGames,
   versionShort,
 } from "@/lib/view/record-page";
+import { shadowV4Lines, type ShadowV4Lines } from "@/lib/view/shadow-v4";
 
 export const metadata: Metadata = {
   title: "Track record",
@@ -96,7 +98,10 @@ function Stat({ title, value, note, extra }: { title: string; value: string; not
 }
 
 function SmallSample({ scored }: { scored: number }) {
-  const label = SMALL_SAMPLE_LABEL(scored);
+  return <SmallSampleLine label={SMALL_SAMPLE_LABEL(scored)} />;
+}
+
+function SmallSampleLine({ label }: { label: string }) {
   const split = label.indexOf(":") + 1;
   return (
     <p className="mt-[18px]">
@@ -105,9 +110,82 @@ function SmallSample({ scored }: { scored: number }) {
   );
 }
 
+/** v4 in testing, below the published records: plain numbers, no comparison drawn. */
+function ShadowV4Section({ lines }: { lines: ShadowV4Lines }) {
+  return (
+    <section aria-labelledby="shadow-v4-title" className="mt-16 lg:mt-[72px]">
+      <div className="sh">
+        <h2 id="shadow-v4-title">{lines.heading}</h2>
+        <span>Not the published forecast</span>
+      </div>
+      <p className="max-w-[68ch] text-[15px]">{lines.lead}</p>
+      {lines.scored ? (
+        <>
+          <dl className="mt-6 grid max-w-[560px] grid-cols-3 gap-6">
+            <div>
+              <dt className="text-[13px] text-ink-2">Scored games</dt>
+              <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{lines.scored.games}</dd>
+            </div>
+            <div>
+              <dt className="text-[13px] text-ink-2">Brier score</dt>
+              <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{lines.scored.brier}</dd>
+            </div>
+            <div>
+              <dt className="text-[13px] text-ink-2">Log loss</dt>
+              <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{lines.scored.logLoss}</dd>
+            </div>
+          </dl>
+          {lines.scored.smallSample ? <SmallSampleLine label={lines.scored.smallSample} /> : null}
+          {lines.sameGames ? (
+            <div className="mt-8 max-w-[560px]">
+              <h3 className="text-[16px] font-bold">The same {lines.sameGames.games} games</h3>
+              <div className="table-scroll mt-2">
+                <table className="tb">
+                  <caption className="sr-only">
+                    Brier score and log loss of v4, v2 and v1 on the games all three have scored, each on its own seal.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Version</th>
+                      <th scope="col" className="nm">Brier</th>
+                      <th scope="col" className="nm">Log loss</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lines.sameGames.rows.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row" className="text-left">{row.label}</th>
+                        <td className="nm num">{row.brier}</td>
+                        <td className="nm num">{row.logLoss}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-3 text-[13px] text-ink-2">
+                Each version on its own scored seal; lower is better for both measures. No version is claimed to beat
+                another here.
+              </p>
+            </div>
+          ) : null}
+        </>
+      ) : null}
+      <p className="mt-4 max-w-[68ch] text-[13px] text-ink-2">
+        v4 seals every game beside v2 and keeps its own record from its first seal. It changes no published
+        number.{" "}
+        <SiteLink className="pp-link" href="/how-it-works#roster-state">
+          What v4 is
+        </SiteLink>
+        .
+      </p>
+    </section>
+  );
+}
+
 export default async function RecordPage() {
   // The season's rows from the job's month files (no driver lists; this page needs none).
-  const [liveState, ledger] = await Promise.all([getLiveState(), getSeasonLedger()]);
+  const [liveState, ledger, shadow] = await Promise.all([getLiveState(), getSeasonLedger(), getShadowV4()]);
+  const shadowLines = shadowV4Lines(shadow, V4_FIRST_ET_DATE);
   const versions = [
     liveState.modelVersion,
     ...(liveState.referenceModelVersion !== liveState.modelVersion ? [liveState.referenceModelVersion] : []),
@@ -447,6 +525,7 @@ export default async function RecordPage() {
             </section>
           </aside>
         </div>
+        {shadowLines ? <ShadowV4Section lines={shadowLines} /> : null}
       </main>
     </>
   );
