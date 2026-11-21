@@ -41,7 +41,7 @@ import {
   type InjuryModel,
 } from "../../src/lib/season/live-injury";
 import { latestReport, toReportPoint, type LiveReportDay } from "../../src/lib/season/live-reports";
-import type { LiveState } from "../../src/lib/season/live-state";
+import type { LiveState } from "../../src/lib/season/types";
 import {
   INJURY_PARAMS,
   INJURY_STATUS_TABLE,
