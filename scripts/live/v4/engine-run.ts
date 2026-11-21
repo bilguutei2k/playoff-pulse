@@ -117,6 +117,8 @@ export type RunOptions = {
   /** Seasons whose final-point reports are read (default: all report seasons up to lastSeason). */
   reportSeasons?: readonly number[];
   throughEtDate?: string;
+  /** Resume from this state: only games of later seasons are replayed. */
+  state?: RosterState;
   onForecast?: (row: V4ForecastRow, state: RosterState, listing: { home: SideListing; away: SideListing }) => void;
   onDate?: (etDate: string, state: RosterState) => void;
 };
@@ -126,7 +128,10 @@ export function runV4(options: RunOptions): RosterState {
   const { games, lines } = openData();
   const reportSet = new Set(options.reportSeasons ?? REPORT_SEASONS);
   return replayRosterState({
-    games: games.filter((game) => game.season <= options.lastSeason),
+    games: games.filter(
+      (game) => game.season <= options.lastSeason && (options.state?.season == null || game.season > options.state.season),
+    ),
+    state: options.state,
     linesFor: lines,
     reportFor: (game) => (reportSet.has(game.season) ? finalPoint(game) : null),
     openingRosters: devOpeningRosters,
@@ -139,9 +144,9 @@ export function runV4(options: RunOptions): RosterState {
 }
 
 /** Regular-season log loss and Brier by season, from one run. */
-export function seasonScores(options: Omit<RunOptions, "onForecast">): Record<number, { n: number; logLoss: number; brier: number }> {
+export function seasonScores(options: Omit<RunOptions, "onForecast">, onState?: (state: RosterState) => void): Record<number, { n: number; logLoss: number; brier: number }> {
   const sums: Record<number, { n: number; logLoss: number; brier: number }> = {};
-  runV4({
+  const state = runV4({
     ...options,
     onForecast: ({ game, forecast, y }) => {
       if (game.kind !== "regular" || game.season < FIRST_SCORED_SEASON) return;
@@ -152,5 +157,78 @@ export function seasonScores(options: Omit<RunOptions, "onForecast">): Record<nu
       row.brier += (p - y) ** 2;
     },
   });
+  onState?.(state);
   return sums;
+}
+
+// ---------------------------------------------------------------------------
+// Checkpoints (exact): Float64 arrays in binary, everything else in JSON.
+// ---------------------------------------------------------------------------
+
+export function serializeRosterState(state: RosterState): Buffer {
+  const n = state.n;
+  const mean = Buffer.from(Float64Array.from(state.mean.subarray(0, n)).buffer);
+  const covRows = new Float64Array(n * n);
+  for (let row = 0; row < n; row += 1) covRows.set(state.cov.subarray(row * state.capacity, row * state.capacity + n), row * n);
+  const cov = Buffer.from(covRows.buffer);
+  const meta = Buffer.from(
+    JSON.stringify({
+      season: state.season,
+      lastEtDate: state.lastEtDate,
+      n,
+      capacity: state.capacity,
+      keys: state.keys,
+      lastSeason: [...state.lastSeason],
+      teamLastDate: [...state.teamLastDate],
+      minutes: {
+        players: [...state.minutes.players].map(([id, player]) => [id, { ...player, participation: [...player.participation] }]),
+        members: [...state.minutes.members].map(([team, set]) => [team, [...set]]),
+        filedRows: [...state.minutes.filedRows],
+      },
+      scaleWindow: state.scaleWindow,
+      scale: state.scale,
+    }),
+  );
+  const header = Buffer.alloc(8);
+  header.writeUInt32LE(meta.length, 0);
+  header.writeUInt32LE(n, 4);
+  return Buffer.concat([header, meta, mean, cov]);
+}
+
+export function deserializeRosterState(buffer: Buffer): RosterState {
+  const metaLength = buffer.readUInt32LE(0);
+  const n = buffer.readUInt32LE(4);
+  const meta = JSON.parse(buffer.subarray(8, 8 + metaLength).toString("utf-8"));
+  const capacity = meta.capacity as number;
+  const start = 8 + metaLength;
+  const meanRaw = new Float64Array(buffer.buffer.slice(buffer.byteOffset + start, buffer.byteOffset + start + 8 * n));
+  const covRaw = new Float64Array(buffer.buffer.slice(buffer.byteOffset + start + 8 * n, buffer.byteOffset + start + 8 * n + 8 * n * n));
+  const mean = new Float64Array(capacity);
+  mean.set(meanRaw);
+  const cov = new Float64Array(capacity * capacity);
+  for (let row = 0; row < n; row += 1) cov.set(covRaw.subarray(row * n, row * n + n), row * capacity);
+  return {
+    season: meta.season,
+    lastEtDate: meta.lastEtDate,
+    n,
+    capacity,
+    keys: meta.keys,
+    slots: new Map((meta.keys as string[]).map((key, index) => [key, index])),
+    mean,
+    cov,
+    lastSeason: new Map(meta.lastSeason),
+    teamLastDate: new Map(meta.teamLastDate),
+    minutes: {
+      players: new Map(
+        (meta.minutes.players as Array<[string, Record<string, unknown>]>).map(([id, player]) => [
+          id,
+          { ...(player as object), participation: new Map(player.participation as Array<[number, { games: number; played: number }]>) } as never,
+        ]),
+      ),
+      members: new Map((meta.minutes.members as Array<[string, string[]]>).map(([team, ids]) => [team, new Set(ids)])),
+      filedRows: new Map(meta.minutes.filedRows),
+    },
+    scaleWindow: meta.scaleWindow,
+    scale: meta.scale,
+  };
 }

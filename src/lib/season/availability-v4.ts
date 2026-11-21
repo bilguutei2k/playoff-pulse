@@ -5,6 +5,18 @@
 
 import { absenceClass, type AbsenceClass, type StatusCode } from "@/lib/season/availability";
 import { HAZARD_BUCKETS, hazardBucket, type HazardTable } from "@/lib/season/injury-v3";
+import type { WeightTerm } from "@/lib/season/minutes-v4";
+import { V4_FIXED } from "@/lib/season/params-v4";
+import {
+  fullHealthTerms,
+  strengthDistribution,
+  teamKey,
+  weightsFromTerms,
+  type RosterState,
+  type SideWeights,
+  type V4RatingParams,
+} from "@/lib/season/roster-state";
+import type { V4ScheduledAbsence, V4SimulationInput } from "@/lib/season/simulate";
 
 export { sampledDuration } from "@/lib/season/injury-v3";
 
@@ -158,4 +170,148 @@ export function longRunRate(games: number, played: number, tier: number, params:
 /** A(j) for the j-th next game (j from 1): 1 at j = 1, falling to a-bar with the half-life. */
 export function availabilityAt(j: number, rate: number, params: BackgroundParams): number {
   return rate + (1 - rate) * 0.5 ** ((j - 1) / params.halfLife);
+}
+
+// ---------------------------------------------------------------------------
+// M6: the season simulation's input from a roster state
+// ---------------------------------------------------------------------------
+
+export type V4SeasonOptions = {
+  params: V4RatingParams;
+  statusTable: Readonly<Record<StatusCode, number>>;
+  hazards: GroupHazardTable;
+  background: BackgroundParams;
+  /** S1 on (the registered model) or off (ablation and property tests only). */
+  backgroundOn: boolean;
+  /** S2's H in days, or null (off). */
+  horizonDays: number | null;
+  /** Ordinals to cover per team; at least the simulator's horizon. */
+  horizon?: number;
+};
+
+export type V4SeasonPlayer = {
+  teamId: string;
+  athleteId: string;
+  listed: boolean;
+  status: StatusCode | null;
+  reason: string | null;
+  /** Points of margin lost at regular-season and playoff weights when he does not play. */
+  points: number;
+  playoffPoints: number;
+  longRunRate: number;
+  gamesMissed: number;
+};
+
+const meanStrength = (state: RosterState, teamId: string, weights: SideWeights): number => {
+  let total = state.mean[state.slots.get(teamKey(teamId)) as number] ?? 0;
+  for (const [key, weight] of weights) total += weight * state.mean[state.slots.get(key) as number];
+  return total;
+};
+
+/**
+ * M6 and S1: the 61-value strength distribution at expected full-health minutes, each listed
+ * player's sampled absence (v3 D4 to D6 with v4's hazards), and S1's expected charges for
+ * everyone else, from the state at the simulation's date. Mutates `state` only by creating
+ * prior slots it needs.
+ */
+export function buildV4Season(
+  state: RosterState,
+  season: number,
+  teamIds: readonly string[],
+  options: V4SeasonOptions,
+): { input: V4SimulationInput; players: V4SeasonPlayer[] } {
+  const horizon = options.horizon ?? 200;
+  const { params } = options;
+  const regularWeights: Array<[string, SideWeights]> = [];
+  const playoffWeights: Array<[string, SideWeights]> = [];
+  const backgroundRegular: Float64Array[] = [];
+  const backgroundPlayoff: Float64Array[] = [];
+  const scheduled: V4ScheduledAbsence[] = [];
+  const players: V4SeasonPlayer[] = [];
+  for (const teamId of teamIds) {
+    const terms = fullHealthTerms(state, teamId);
+    const regular = weightsFromTerms(state, teamId, terms, 1, params);
+    const playoff = weightsFromTerms(state, teamId, terms, params.kappa, params);
+    regularWeights.push([teamId, regular]);
+    playoffWeights.push([teamId, playoff]);
+    const fullRegular = meanStrength(state, teamId, regular);
+    const fullPlayoff = meanStrength(state, teamId, playoff);
+    const rows = new Map((state.minutes.filedRows.get(teamId) ?? []).map((row) => [row.athleteId, row]));
+    const bgRegular = new Float64Array(horizon);
+    const bgPlayoff = new Float64Array(horizon);
+    for (const term of terms) {
+      const player = state.minutes.players.get(term.athleteId);
+      if (!player || term.raw <= 0) continue;
+      const without = (other: WeightTerm) => (other.athleteId === term.athleteId ? 0 : 1);
+      const points = fullRegular - meanStrength(state, teamId, weightsFromTerms(state, teamId, terms, 1, params, without));
+      const playoffPoints = fullPlayoff - meanStrength(state, teamId, weightsFromTerms(state, teamId, terms, params.kappa, params, without));
+      const now = player.participation.get(season) ?? { games: 0, played: 0 };
+      const before = player.participation.get(season - 1) ?? { games: 0, played: 0 };
+      const rate = longRunRate(
+        now.games + before.games,
+        now.played + before.played,
+        minutesTier(player.average ?? V4_FIXED.newPlayerMinutes),
+        options.background,
+      );
+      const row = player.listed ? rows.get(term.athleteId) : undefined;
+      const curve = (j: number) => (options.backgroundOn ? 1 - availabilityAt(j, rate, options.background) : 0);
+      players.push({
+        teamId,
+        athleteId: term.athleteId,
+        listed: row !== undefined,
+        status: row?.status ?? null,
+        reason: row?.reason ?? null,
+        points,
+        playoffPoints,
+        longRunRate: rate,
+        gamesMissed: player.missed,
+      });
+      if (row) {
+        scheduled.push({
+          teamId,
+          athleteId: term.athleteId,
+          points,
+          playoffPoints,
+          survival: survivalCurveV4(row.status, row.reason, player.missed, options.statusTable, options.hazards, horizon),
+          background: Array.from({ length: horizon }, (_, index) => curve(index + 1)),
+        });
+      } else {
+        for (let index = 0; index < horizon; index += 1) {
+          const share = curve(index + 1);
+          bgRegular[index] += share * points;
+          bgPlayoff[index] += share * playoffPoints;
+        }
+      }
+    }
+    backgroundRegular.push(bgRegular);
+    backgroundPlayoff.push(bgPlayoff);
+  }
+  const joint = strengthDistribution(state, [...regularWeights, ...playoffWeights], params);
+  // joint is [regular 30, playoff 30, hca]; the simulator reads [regular 30, hca, playoff 30].
+  const count = teamIds.length;
+  const order = [...Array.from({ length: count }, (_, i) => i), 2 * count, ...Array.from({ length: count }, (_, i) => count + i)];
+  const size = order.length;
+  const mean = new Float64Array(size);
+  const cov = new Float64Array(size * size);
+  for (let a = 0; a < size; a += 1) {
+    mean[a] = joint.mean[order[a]];
+    for (let b = 0; b < size; b += 1) cov[a * size + b] = joint.cov[order[a] * size + order[b]];
+  }
+  const dailyVariance = new Float64Array(count);
+  regularWeights.forEach(([, weights], index) => {
+    dailyVariance[index] = params.qC + weights.reduce((sum, [, weight]) => sum + weight * weight * params.qP, 0);
+  });
+  return {
+    input: {
+      mean,
+      cov,
+      dailyVariance,
+      sigma: state.scale * params.sigma,
+      backgroundRegular,
+      backgroundPlayoff,
+      players: scheduled,
+      horizonDays: options.horizonDays,
+    },
+    players,
+  };
 }

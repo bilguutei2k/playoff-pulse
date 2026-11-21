@@ -10,7 +10,8 @@
 // the steps shrink (multiplicative 1.5 -> 1.22 -> 1.1; rho 0.05 -> 0.025 -> 0.0125; muNew
 // 0.5 -> 0.25 -> 0.125); after the last level the search stops (at most 25 rounds). The
 // first origin starts at the spike's values; each later origin starts at the previous
-// origin's result, at the second step level.
+// origin's result, at the finest step level (whose neighbours the previous origin's last
+// round evaluated, so they resume from exact checkpoints and replay one new season).
 //
 // Run: corepack pnpm exec tsx scripts/live/v4/fit-ratings.ts [workers]
 
@@ -193,7 +194,7 @@ async function main() {
     const done = results[String(origin)] as { params: V4RatingParams } | undefined;
     if (done) {
       start = done.params;
-      firstLevel = 1;
+      firstLevel = LEVELS.length - 1;
       continue;
     }
     const started = Date.now();
@@ -202,7 +203,7 @@ async function main() {
     fs.writeFileSync(target, `${JSON.stringify({ start: START, levels: LEVELS, origins: results }, null, 2)}\n`, "utf-8");
     console.log(`[fit-ratings] origin ${origin} done: ${JSON.stringify(result.params)} logLoss ${result.logLoss.toFixed(6)}`);
     start = result.params;
-    firstLevel = 1;
+    firstLevel = LEVELS.length - 1;
   }
   for (const child of pool) child.kill();
 }
