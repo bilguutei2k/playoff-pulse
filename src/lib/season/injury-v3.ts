@@ -48,10 +48,46 @@ export type GapTracker = {
   season: number | null;
   /** By `${teamId}:${athleteId}`. */
   gaps: Map<string, GapEntry>;
+  /**
+   * Amendment 1: each team's last filed report rows of the current season. A report marking
+   * a team NOT YET SUBMITTED carries no information, so D2's expiry test reads these rows
+   * for a team whose latest word is unfiled. Nothing else reads them.
+   */
+  filedRows: Map<string, readonly ListedPlayer[]>;
+  /** Teams whose latest word is a report marking them NOT YET SUBMITTED. */
+  unfiled: Set<string>;
 };
 
 export function createGapTracker(): GapTracker {
-  return { season: null, gaps: new Map() };
+  return { season: null, gaps: new Map(), filedRows: new Map(), unfiled: new Set() };
+}
+
+/**
+ * Records the report that becomes a team's latest word (as v2's replay and
+ * `applyLatestReport` make it): filed rows replace its last filed rows; an unfiled report
+ * leaves them and marks the team unfiled. A null point changes nothing, as in v2.
+ */
+export function recordLatestWord(tracker: GapTracker, point: ReportPoint | null, teamId: string): void {
+  if (!point) return;
+  if (point.notSubmitted.includes(teamId)) {
+    tracker.unfiled.add(teamId);
+    return;
+  }
+  tracker.unfiled.delete(teamId);
+  tracker.filedRows.set(
+    teamId,
+    point.rows.filter((row) => row.teamId === teamId),
+  );
+}
+
+/** The rows D2's expiry test reads for a team: its last filed rows when its latest word is unfiled. */
+export function expiryRows(
+  tracker: AvailabilityTracker,
+  gaps: GapTracker,
+  teamId: string,
+): readonly ListedPlayer[] {
+  if (gaps.unfiled.has(teamId)) return gaps.filedRows.get(teamId) ?? [];
+  return tracker.latestRows.get(teamId) ?? [];
 }
 
 /**
@@ -70,6 +106,8 @@ export function recordGapGame(
 ): void {
   if (tracker.season !== game.season) {
     tracker.gaps.clear();
+    tracker.filedRows.clear();
+    tracker.unfiled.clear();
     tracker.season = game.season;
   }
   const appeared = new Set(lines.map((line) => line[0]));
@@ -90,18 +128,34 @@ export function recordGapGame(
   }
 }
 
-/** An `onAbsences` hook for `replayInjuryModel` that keeps `tracker` up to date. */
+/**
+ * An `onAbsences` hook for `replayInjuryModel` that keeps `tracker` up to date: gaps from
+ * the box score, and the team's latest word from the game's final-point report, the report
+ * the replay itself makes the team's latest rows.
+ */
 export function gapHook(
   tracker: GapTracker,
-  boxScores: (gameId: string) => Record<string, StoredLine[]> | undefined,
+  source: {
+    boxScores: (gameId: string) => Record<string, StoredLine[]> | undefined;
+    availability: (gameId: string) => { final: ReportPoint | null } | null;
+  },
   next?: (game: SeasonGame, teamId: string, absences: TeamAbsences) => void,
 ): (game: SeasonGame, teamId: string, absences: TeamAbsences) => void {
   return (game, teamId, absences) => {
-    const lines = boxScores(game.id)?.[teamId];
+    const lines = source.boxScores(game.id)?.[teamId];
     if (!lines) throw new Error(`gapHook: no box score lines for ${game.id} ${teamId}.`);
     recordGapGame(tracker, game, teamId, lines, absences);
+    recordLatestWord(tracker, source.availability(game.id)?.final ?? null, teamId);
     next?.(game, teamId, absences);
   };
+}
+
+/**
+ * v3's counterpart of v2's `applyLatestReport`, for the gap tracker: call it with the same
+ * point and teams whenever v2's `applyLatestReport` is called on the tracker.
+ */
+export function applyLatestWord(tracker: GapTracker, point: ReportPoint | null, teamIds: Iterable<string>): void {
+  for (const teamId of teamIds) recordLatestWord(tracker, point, teamId);
 }
 
 /** The gap for a player on a team in `season`, or 0. */
@@ -277,7 +331,10 @@ export type NoLongerCounted = {
  * the report as in v2 (Out or Doubtful counts; Probable or Available never; Questionable
  * when his gap is open). An unreported player in the gap map counts while his gap is at
  * most ROTATION_GAMES and his last team is this team; from 11 to 20 he is listed as no
- * longer counted, then dropped. Someone who joined another team is not listed.
+ * longer counted, then dropped. Someone who joined another team is not listed. Amendment 1:
+ * for a team whose latest word marks it NOT YET SUBMITTED, the expiry test (only) reads its
+ * last filed rows of the season, so a listed long-term absentee does not expire; who counts
+ * and his S(1) still read the latest rows as v2 does.
  */
 export function currentAbsencesV3(
   tracker: AvailabilityTracker,
@@ -317,9 +374,11 @@ export function currentAbsencesV3(
         players.add(entry.athleteId);
         continue;
       }
-      // D2: unreported. Someone who has since joined another team is that team's concern.
+      // v2's rule: someone who has since joined another team is that team's concern.
       if (tracker.book.get(entry.athleteId)?.lastTeamId !== team.id) continue;
-      if (entry.gap > ROTATION_GAMES) {
+      // D2, amended: the expiry test reads the team's last filed rows if its latest word is unfiled.
+      const onFiledRows = expiryRows(tracker, gaps, team.id).some((row) => row.athleteId === entry.athleteId);
+      if (entry.gap > ROTATION_GAMES && !onFiledRows) {
         if (entry.gap <= NO_LONGER_COUNTED_UNTIL && lostValue(tracker.book, entry.athleteId, model.injury) > 0) {
           noLongerCounted.push({
             teamId: team.id,
@@ -448,8 +507,10 @@ export function nextGameAbsenceDetailV3(
   model: V3Model,
 ): { absence: number; drivers: AbsenceDriverV3[] } {
   const view: AvailabilityTracker = { ...tracker, latestRows: new Map(tracker.latestRows) };
+  const gapView: GapTracker = { ...gaps, filedRows: new Map(gaps.filedRows), unfiled: new Set(gaps.unfiled) };
   if (point) view.latestRows.set(teamId, point.rows.filter((row) => row.teamId === teamId));
-  const current = currentAbsencesV3(view, gaps, season, model).current.filter((row) => row.teamId === teamId);
+  recordLatestWord(gapView, point, teamId);
+  const current = currentAbsencesV3(view, gapView, season, model).current.filter((row) => row.teamId === teamId);
   let points = 0;
   const drivers: AbsenceDriverV3[] = [];
   for (const absence of current) {

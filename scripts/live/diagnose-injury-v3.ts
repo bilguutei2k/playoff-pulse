@@ -6,8 +6,8 @@
 //    state is a spell after its k-th missed game; it is "still out at j" when at least j
 //    more misses follow. A censored spell's states with fewer than j misses after them have
 //    no outcome at j and are counted apart. S(j) here is the unlisted form, 1 - h(k) first.
-// 2. The (c3) set on development seasons, decomposed: v2's morning rule against v3 and
-//    against v3 with one part changed at a time, to locate a miss.
+// 2. The (c3) set on development seasons, decomposed: v2's morning rule against v3 (with
+//    Amendment 1), v3 as first written, and v3 with one part switched off.
 //
 // Run: V3_DIAG_OUT=<file outside docs> corepack pnpm exec tsx scripts/live/diagnose-injury-v3.ts
 
@@ -23,12 +23,10 @@ import {
 } from "../../src/lib/season/injury-model";
 import {
   createGapTracker,
-  currentAbsencesV3,
   fitHazards,
   gapHook,
   hazard,
   nextGameAbsenceDetailV3,
-  survivalCurve,
   V3_ALL_ON,
   type GapTracker,
   type HazardTable,
@@ -154,16 +152,14 @@ const V3 = model({});
 const V3_NO_EXPIRY = model({ expiry: false });
 const V3_NO_HAZARDS = model({ hazards: false });
 
-/** v3, but the unfiled team keeps its last filed rows as its latest word (D2 reads them). */
-function keepLastRows(teamId: string, tracker: AvailabilityTracker, gaps: GapTracker, season: number): number {
-  const current = currentAbsencesV3(tracker, gaps, season, V3).current.filter((row) => row.teamId === teamId);
-  let points = 0;
-  for (const absence of current) points += absence.points * survivalCurve(absence, V3, 1)[0];
-  return points / INJURY_PARAMS.beta;
+/** v3 as first written (before Amendment 1): an unfiled team's expiry test reads empty rows. */
+function asFirstWritten(point: ReportPoint, teamId: string, tracker: AvailabilityTracker, gaps: GapTracker, season: number): number {
+  const before: GapTracker = { ...gaps, filedRows: new Map([...gaps.filedRows, [teamId, []]]) };
+  return nextGameAbsenceDetailV3(point, teamId, tracker, before, season, V3).absence;
 }
 
-type Variant = "v2" | "v3" | "v3NoExpiry" | "v3NoHazards" | "v3KeepLastRows" | "nobody";
-const VARIANTS: Variant[] = ["v2", "v3", "v3NoExpiry", "v3NoHazards", "v3KeepLastRows", "nobody"];
+type Variant = "v2" | "v3" | "v3NoExpiry" | "v3NoHazards" | "v3AsFirstWritten" | "nobody";
+const VARIANTS: Variant[] = ["v2", "v3", "v3NoExpiry", "v3NoHazards", "v3AsFirstWritten", "nobody"];
 const rows: Array<{ game: SeasonGame; y: number; p: Record<Variant, number>; points: Record<Variant, number> }> = [];
 {
   const state = { mean: Float64Array.from(base.mean), cov: Float64Array.from(base.cov) };
@@ -179,7 +175,7 @@ const rows: Array<{ game: SeasonGame; y: number; p: Record<Variant, number>; poi
     statusTable: INJURY_STATUS_TABLE,
     boxScores: data.boxScores,
     availability: data.availability,
-    onAbsences: gapHook(gaps, data.boxScores),
+    onAbsences: gapHook(gaps, data),
     onForecast: (row: ForecastRow) => {
       const morning = row.availability?.morning ?? null;
       if (!SEASONS.includes(row.game.season) || row.game.kind !== "regular" || !morning || morning.notSubmitted.length === 0) return;
@@ -187,7 +183,7 @@ const rows: Array<{ game: SeasonGame; y: number; p: Record<Variant, number>; poi
       const unfiledSide = (variant: Variant, point: ReportPoint, teamId: string): number => {
         if (variant === "nobody") return 0;
         if (variant === "v2") return nextGameAbsenceDetail(point, teamId, tracker, V2, () => undefined).absence;
-        if (variant === "v3KeepLastRows") return keepLastRows(teamId, tracker, gaps, season);
+        if (variant === "v3AsFirstWritten") return asFirstWritten(point, teamId, tracker, gaps, season);
         const which = variant === "v3" ? V3 : variant === "v3NoExpiry" ? V3_NO_EXPIRY : V3_NO_HAZARDS;
         return nextGameAbsenceDetailV3(point, teamId, tracker, gaps, season, which).absence;
       };

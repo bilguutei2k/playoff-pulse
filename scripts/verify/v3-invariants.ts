@@ -5,10 +5,18 @@
 import assert from "node:assert/strict";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { createTracker, simulationAbsences, type CurrentAbsence } from "../../src/lib/season/injury-model";
 import {
+  createTracker,
+  simulationAbsences,
+  type CurrentAbsence,
+  type ReportPoint,
+} from "../../src/lib/season/injury-model";
+import { applyLatestReport } from "../../src/lib/season/live-injury";
+import {
+  applyLatestWord,
   createGapTracker,
   currentAbsencesV3,
+  nextGameAbsenceDetailV3,
   gapHook,
   hazard,
   hazardBucket,
@@ -346,7 +354,7 @@ function pairing(index: number, home: string, away: string, starWith: string | n
 
 function replayV3(specs: readonly ReplayGameSpec[]) {
   const gaps = createGapTracker();
-  const replay = runReplay(specs, (boxScores) => gapHook(gaps, boxScores));
+  const replay = runReplay(specs, (source) => gapHook(gaps, source));
   return { replay, gaps, ...currentAbsencesV3(replay.tracker, gaps, 2027, model()) };
 }
 
@@ -395,6 +403,53 @@ export function checkExpiryReplays(): void {
   const report = replayV3(listed);
   const star = report.current.find((row) => row.athleteId === "star");
   assert.ok(star && star.gamesMissed === 14 && star.status === "O" && star.class === "long", "A listed player follows the report past ten games.");
+
+  // Amendment 1: a NOT YET SUBMITTED report says nothing, so for the expiry test (only) the
+  // team keeps its last filed rows. The listed long-term absentee still counts on an
+  // unfiled side; his status and S(1) read the latest rows as v2 does (now none).
+  const unfiled: ReportPoint = { at: "2026-12-01T05:30", notSubmitted: [TEAM_A], rows: [] };
+  const v3 = model();
+  const side = nextGameAbsenceDetailV3(unfiled, TEAM_A, report.replay.tracker, report.gaps, 2027, v3);
+  const starPoints = (star as CurrentAbsenceV3).points;
+  assert.equal(side.drivers.length, 1, "Only the listed star is on the unfiled side.");
+  assert.equal(side.drivers[0].athleteId, "star");
+  assert.equal(side.drivers[0].status, null, "On an unfiled side nobody has a status, as in v2.");
+  assert.ok(
+    Math.abs(side.drivers[0].points - starPoints * (1 - hazard(v3.hazards, 14, "short"))) < 1e-12,
+    "S(1) reads the latest rows as v2 does: unlisted now, so 1 - h(k), class short.",
+  );
+  assert.equal(report.gaps.unfiled.size, 0, "The seal's view never changes the tracker.");
+  // As first written (empty rows for the expiry test) he would have expired.
+  const firstWritten = nextGameAbsenceDetailV3(
+    unfiled,
+    TEAM_A,
+    report.replay.tracker,
+    { ...report.gaps, filedRows: new Map([[TEAM_A, []]]) },
+    2027,
+    v3,
+  );
+  assert.equal(firstWritten.drivers.length, 0, "Without the amendment the unfiled side drops him.");
+  // An unreported absentee past ten games still expires on an unfiled side.
+  const unreported = replayV3(tradeSpecs(18, 6, null));
+  assert.equal(
+    nextGameAbsenceDetailV3(unfiled, TEAM_A, unreported.replay.tracker, unreported.gaps, 2027, v3).drivers.length,
+    0,
+    "The amendment keeps filed rows only; an unreported player still expires.",
+  );
+  // The published state's path: applyLatestWord mirrors applyLatestReport.
+  const published = { ...report.gaps, filedRows: new Map(report.gaps.filedRows), unfiled: new Set(report.gaps.unfiled) };
+  const view = { ...report.replay.tracker, latestRows: new Map(report.replay.tracker.latestRows) };
+  applyLatestReport(view, unfiled, [TEAM_A]);
+  applyLatestWord(published, unfiled, [TEAM_A]);
+  const kept = currentAbsencesV3(view, published, 2027, v3).current.find((row) => row.athleteId === "star");
+  assert.ok(kept && kept.status === null && kept.gamesMissed === 14, "The published state keeps him on an unfiled team.");
+  const filedAgain: ReportPoint = { at: "2026-12-01T17:30", notSubmitted: [], rows: [] };
+  applyLatestReport(view, filedAgain, [TEAM_A]);
+  applyLatestWord(published, filedAgain, [TEAM_A]);
+  assert.ok(
+    !currentAbsencesV3(view, published, 2027, v3).current.some((row) => row.athleteId === "star"),
+    "Once the team files without him, he is unreported and expires.",
+  );
 }
 
 /** v2's tracker and ratings are identical with and without the v3 hook. */
@@ -414,7 +469,7 @@ export function checkV2TrackerUntouched(): void {
     const plain = runReplay(specs, undefined, createTracker());
     const gaps = createGapTracker();
     let calls = 0;
-    const hooked = runReplay(specs, (boxScores) => gapHook(gaps, boxScores, () => (calls += 1)), createTracker());
+    const hooked = runReplay(specs, (source) => gapHook(gaps, source, () => (calls += 1)), createTracker());
     assert.deepStrictEqual(hooked.tracker, plain.tracker, "The v3 hook must not change v2's tracker.");
     assert.deepStrictEqual(Array.from(hooked.state.mean), Array.from(plain.state.mean));
     assert.deepStrictEqual(Array.from(hooked.state.cov), Array.from(plain.state.cov));

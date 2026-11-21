@@ -145,7 +145,7 @@ function fixed(teamId: string, points: number, games: number): AbsenceSchedule {
 
 function replayV3(specs: ReplayGameSpec[]) {
   const gaps = createGapTracker();
-  const replay = runReplay(specs, (boxScores) => gapHook(gaps, boxScores));
+  const replay = runReplay(specs, (source) => gapHook(gaps, source));
   return { replay, gaps, ...currentAbsencesV3(replay.tracker, gaps, 2027, MODEL) };
 }
 

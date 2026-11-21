@@ -170,7 +170,7 @@ const morningRows: GameRow[] = [];
     statusTable: INJURY_STATUS_TABLE,
     boxScores: data.boxScores,
     availability: data.availability,
-    onAbsences: gapHook(gaps, data.boxScores),
+    onAbsences: gapHook(gaps, data),
     onForecast: (row: ForecastRow) => {
       if (!seasonSet.has(row.game.season)) return;
       const price = (point: ReportPoint, side: (point: ReportPoint, teamId: string) => number) =>
@@ -268,7 +268,7 @@ function simulateAt(season: number, etDate: string): Forecasts {
       boxScores: data.boxScores,
       availability: data.availability,
       throughEtDate: etDate,
-      onAbsences: gaps ? gapHook(gaps, data.boxScores) : undefined,
+      onAbsences: gaps ? gapHook(gaps, data) : undefined,
     });
   const without = replay(plain);
   const gaps = createGapTracker();
