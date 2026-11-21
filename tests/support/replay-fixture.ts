@@ -72,10 +72,11 @@ export function buildReplayGames(specs: readonly ReplayGameSpec[], start = "2026
 
 export function runReplay(
   specs: readonly ReplayGameSpec[],
-  onAbsences?: ReplayInput["onAbsences"],
+  makeHook?: (boxScores: ReplayInput["boxScores"]) => ReplayInput["onAbsences"],
   tracker: AvailabilityTracker = createTracker(),
 ) {
   const built = buildReplayGames(specs);
+  const onAbsences = makeHook?.(built.boxScores);
   const output = replayInjuryModel({
     games: built.games,
     state: createFilterState(LIVE_PARAMS),

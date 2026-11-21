@@ -51,7 +51,7 @@ describe("H1: postseason absences never expire within a simulation", () => {
   });
 
   it("v2: in the playoffs a two-game absence moves the odds exactly as a hundred-game one does", () => {
-    const team = SEASON_TEAMS[5].id;
+    const team = SEASON_TEAMS[4].id;
     const short = simulationAbsences([absence(team, 4, 2)], { [team]: 0 });
     const long = simulationAbsences([absence(team, 4, 100)], { [team]: 0 });
     const input = fixturePostseasonInput(300);
@@ -105,5 +105,94 @@ describe("H3: an inferred absence can outlive the rotation window", () => {
       (row) => row.athleteId === "star",
     );
     expect(star).toBeDefined();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// v3 counterparts
+// ---------------------------------------------------------------------------
+
+import {
+  buildAbsenceSchedule,
+  createGapTracker,
+  currentAbsencesV3,
+  gapHook,
+  survivalCurve,
+  V3_ALL_ON,
+  type HazardTable,
+  type V3Model,
+} from "@/lib/season/injury-v3";
+import type { AbsenceSchedule } from "@/lib/season/simulate";
+import { REPLAY_TABLE } from "./support/replay-fixture";
+
+const TEST_HAZARDS: HazardTable = {
+  long: [0.12, 0.1, 0.08, 0.06, 0.05, 0.04],
+  short: [0.35, 0.3, 0.22, 0.15, 0.1, 0.06],
+  classUsed: true,
+};
+const MODEL: V3Model = {
+  injury: REPLAY_INJURY,
+  statusTable: REPLAY_TABLE,
+  hazards: TEST_HAZARDS,
+  v2Survival: INJURY_SURVIVAL,
+  switches: V3_ALL_ON,
+};
+
+function fixed(teamId: string, points: number, games: number): AbsenceSchedule {
+  const survival = Array.from({ length: 200 }, (_, index) => (index < games ? 1 : 0));
+  return { players: [{ teamId, athleteId: "x", points, survival, sampled: false }], postseasonSchedule: true };
+}
+
+function replayV3(specs: ReplayGameSpec[]) {
+  const gaps = createGapTracker();
+  const replay = runReplay(specs, (boxScores) => gapHook(gaps, boxScores));
+  return { replay, gaps, ...currentAbsencesV3(replay.tracker, gaps, 2027, MODEL) };
+}
+
+describe("H1 fixed in v3: the absence schedule runs game by game", () => {
+  it("v3: in the playoffs a two-game absence and a hundred-game one give different odds", () => {
+    const team = SEASON_TEAMS[4].id;
+    const input = fixturePostseasonInput(300);
+    const short = simulateSeason({ ...input, absenceSchedule: fixed(team, 4, 2) });
+    const long = simulateSeason({ ...input, absenceSchedule: fixed(team, 4, 100) });
+    expect(short.teams[teamIndex(team)].champion).toBeGreaterThan(long.teams[teamIndex(team)].champion);
+  });
+
+  it("v3: unscheduled placeholders are charged", () => {
+    const team = SEASON_TEAMS[5].id;
+    const forecast = simulateSeason({ ...fixtureInput(600), absenceSchedule: fixed(team, 30, 100) });
+    const row = forecast.teams[teamIndex(team)];
+    expect(row.projectedWins - row.wins).toBeLessThan(0.05);
+  });
+});
+
+describe("H2 fixed in v3: return chances from hazards", () => {
+  it("v3: a player who missed one game, on no report, costs the next game times 1 - h(1)", () => {
+    const { current } = replayV3(starMisses(6, 1));
+    const star = current.find((row) => row.athleteId === "star");
+    expect(star?.gamesMissed).toBe(1);
+    const curve = survivalCurve(star as NonNullable<typeof star>, MODEL);
+    expect(curve[0]).toBeCloseTo(1 - TEST_HAZARDS.short[0], 12);
+    const schedule = buildAbsenceSchedule(current, MODEL);
+    const player = schedule.players.find((row) => row.athleteId === "star");
+    expect(player?.sampled).toBe(true);
+    expect(player?.survival[0]).toBeLessThan(1);
+  });
+});
+
+describe("H3 fixed in v3: gaps count every game and expire past the rotation window", () => {
+  it("v3: after twelve missed games the gap is twelve and he is listed as no longer counted", () => {
+    const { gaps, current, noLongerCounted } = replayV3(starMisses(6, 12));
+    expect(gaps.gaps.get(`${TEAM_A}:star`)?.gap).toBe(12);
+    expect(current.find((row) => row.athleteId === "star")).toBeUndefined();
+    expect(noLongerCounted).toEqual([
+      { teamId: TEAM_A, athleteId: "star", gamesMissed: 12, reason: "out-of-rotation-window" },
+    ]);
+  });
+
+  it("v3: after thirty missed games he is dropped altogether", () => {
+    const { current, noLongerCounted } = replayV3(starMisses(6, 30));
+    expect(current.find((row) => row.athleteId === "star")).toBeUndefined();
+    expect(noLongerCounted).toEqual([]);
   });
 });
