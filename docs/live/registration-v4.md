@@ -1,9 +1,9 @@
 # Registration: roster-state model `live-2026.27-v4`
 
-Registered 2026-11-21, before any Stage A gate number was computed. The binding plan is
+Registered 2026-11-21, before any Stage A gate number was computed; amended the same day (Amendment 1), still before any gate number. The binding plan is
 `/Users/bilguutei/Desktop/548-reviews/2026-11-21-v4-plan.md`; the owner's answers are in
 `2026-11-21-v4-run.md` there, the design in `2026-11-21-model-proposal.md` (sections 3 and 5).
-This commit contains this file alone and precedes `docs/live/evaluation-v4-stage-a.json`.
+The registration and its amendment are each committed alone and precede `docs/live/evaluation-v4-stage-a.json`.
 v4 is a shadow model: v2 stays the published model, and v4 becomes published only by the
 owner's separate decision after Stage B (below). No sentence here or anywhere says v4 beats
 v2, v1 or the market, or is more accurate.
@@ -84,9 +84,11 @@ is read for identity.
 
 **M4, return times.** v3 D3's population (v2's spells, censoring never a return; 36,265 at-risk
 observations), with the group replacing the class: reason kind (injury, G League, protocols,
-administrative, rest; no row is "unlisted") and, for injuries, a diagnosis family matched on the
-lowercased text after the first semicolon, by this frozen table in order of precedence (no
-semicolon or no match is "other"):
+administrative, rest; no row is "unlisted") and, for injuries, a diagnosis family by this
+frozen table in order of precedence. ACL and Achilles are matched on the whole lowercased
+reason; every other family on the text after the first semicolon (no semicolon or no match is
+"other"). (Amendment 1, ruling 1: the plan's semicolon rule was an error for those two, whose
+structure sits in the body-part field.)
 
 | Family | Keywords |
 |---|---|
@@ -118,8 +120,9 @@ availability a of players listed Questionable or Doubtful (exact enumeration up 
 game, else 256 draws seeded by game and date); v(a) = hᵀPh. c_t maximises the win/loss
 likelihood of the last 3,000 regular-season games of earlier ET dates (each with its own forecast
 mixture), 1 until 1,000 exist; Newton's method on 1/c from the previous value, kept in [0.25, 4].
-The state carries this window, so `warmState`'s state contains those games' standardized
-margins; it is never output.
+The state carries this window, so `warmState`'s state contains the standardized margins of
+2024-25 and 2025-26 games. Under Amendment 1 (ruling 2) that is filter state: it is never
+printed, summarised or exposed per game, and no score is computed from it.
 
 **M6, simulator.** Per iteration, the 30 teams' strengths at expected full-health minutes
 (regular-season weights), home court and the 30 at playoff weights (κ) are drawn jointly from
@@ -144,7 +147,7 @@ spent on it; noted for a later version).
 
 ## The frozen fit
 
-`docs/live/v4-fit.json` (sha256 `4140c227614e6aaddbdc80cf7c56e038cf66981870da16df40de995e542416a9`), assembled by `scripts/live/v4/assemble-fit.ts`
+`docs/live/v4-fit.json` (sha256 `c1f1d868841d7b06fc5c216025dbc3e1bffae11db059afe63024363b7256d4a4`, after Amendment 1), assembled by `scripts/live/v4/assemble-fit.ts`
 from `docs/live/v4-fit-parts/`. The rating fit ran from commits 9ecdd40f (origin 2015-16) and 90601e69 (the rest; it only capped later origins' rounds), and the forecasts of the registered code reproduce its checkpoint scores exactly; the provenance
 block holds the sha256 of every code and data file the fits read.
 
@@ -164,9 +167,9 @@ block holds the sha256 of every code and data file the fits read.
 The fit log loss is in-sample on each origin's own training seasons (2012-13 to S − 1).
 
 - **Status weights (frozen):** O 0.9990 (27,620 rows), D 0.9834 (422), Q 0.4827 (3,762), P and A pooled 0.1859 (1,148 and 3,219); v2's were 0.999, 0.9834, 0.4827, 0.1863 with slightly more rows (v2 also resolved names through 2024-25 and 2025-26 box scores).
-- **Hazards:** 36,265 at-risk observations; m = 10 (leave-one-season-out log loss 0.4627, 0.4638, 0.4660 for m = 10, 30, 100). Groups with few observations lean on their class cell; Achilles has 2 (see open questions).
+- **Hazards (after Amendment 1):** 36,265 at-risk observations; ACL 595, Achilles 242, surgery or repair 1,913, tear 551. m = 5 from the widened grid {3, 5, 10, 30, 100} (leave-one-season-out log loss 0.46304, 0.46287, 0.46298, 0.46412, 0.46659). Before the amendment (semicolon rule, grid {10, 30, 100}) m was 10 with Achilles at 2 observations.
 - **S1 (every origin):** half-life 1 game, m = 320; frozen tier rates 0.567, 0.745, 0.825, 0.869 (minutes < 12, 12-20, 20-28, 28+).
-- **κ:** 1 at every origin, the lower edge of the frozen grid, so the playoff weights equal the regular-season weights (v1's 1.1 multiplier is gone and nothing replaces it).
+- **κ:** 1 at every origin, the lower edge of the frozen grid. It stays at 1 (Amendment 1, ruling 3: values below 1 have no mechanism). The playoff weights therefore equal the regular-season weights: v1's 1.1 playoff multiplier is dropped and nothing replaces it.
 
 Fit procedures, all frozen in the scripts named:
 - **Ratings** (`fit-ratings.ts`): compass search on regular-season log loss (scored from
@@ -184,8 +187,9 @@ Fit procedures, all frozen in the scripts named:
   (2012-13 to S − 1) with the origin's rating set.
 - **Status weights** (`fit-status.ts`): frozen on 2021-22 to 2023-24; leave-one-season-out tables
   score a report season; before-origin tables serve the rating fits.
-- **Hazards** (`fit-hazards.ts`): m from {10, 30, 100} by leave-one-season-out one-step log loss;
-  m = 10 was chosen, at the grid's edge; the plan fixed the grid, so it was not widened.
+- **Hazards** (`fit-hazards.ts`): m by leave-one-season-out one-step log loss, from {10, 30, 100}
+  widened once to {3, 5, 10, 30, 100} by Amendment 1 (ruling 3; the result stands even on an
+  edge, with no further widening); m = 5.
 - **S1** (`fit-background.ts`): every Monday from November 1 to April 1, each member who played
   his team's last game and is not listed, outcome whether he plays each of its next 60 games with
   usable lines; halfLife and m by mean squared error (A(1) = 1 rules out log loss) on 2011-12 to
@@ -209,24 +213,41 @@ games update pseudo-players (`docs/live/v4-player-games-audit.json`).
 | Dec 1 | 0.1298 / 0.1302 | 0.1348 | 6.208 / 6.162 | 6.458 | within |
 | Feb 1 | 0.0741 / 0.0715 | 0.0791 | 3.402 / 3.402 | 3.652 | within |
 
-v4 is within both limits at both checkpoints, so S2 was not applied. This is a diagnostic on seen design seasons, not a gate and not a comparison claim.
+First run (hazards before Amendment 1), `docs/live/v4-a8.json`: v4 within both limits at both checkpoints.
+
+**Re-run after Amendment 1's hazard refit** (`V4_A8_OUT=docs/live/v4-a8-amendment1.json`, ruling 4), `docs/live/v4-a8-amendment1.json`:
+
+| Checkpoint | Make-playoffs Brier v1 / v4 | Limit (v1 + 0.005) | Win RMSE v1 / v4 | Limit (v1 + 0.25) | Result |
+|---|---|---:|---|---:|---|
+| Dec 1 | 0.1298 / 0.1302 | 0.1348 | 6.208 / 6.167 | 6.458 | within |
+| Feb 1 | 0.0741 / 0.0718 | 0.0791 | 3.402 / 3.402 | 3.652 | within |
+
+v4 is within both limits at both checkpoints in both runs, so S2 was not applied. The registered model is the amended one. This is a diagnostic on seen design seasons, not a gate and not a comparison claim.
+
+## Amendment 1 (2026-11-21, before any gate number)
+
+The planner's rulings at stop point 1 (appended to the plan as Amendment 1): (1) ACL and
+Achilles match the whole reason; (2) M5's window inside `warmState` is filter state, never
+printed, summarised or exposed per game; (3) κ = 1 stays and the hazard m grid is widened once to
+{3, 5, 10, 30, 100}; (4) A8 is re-run once after the hazard refit and both results are recorded;
+(5) step 4b stays out of v4. Only the hazard tables changed (`docs/live/v4-fit.json` reassembled;
+ratings, κ, S1 and status weights identical). No gate number existed when these were made.
 
 ## Interpretations and departures from the plan, made before any gate number
 
-1. **Diagnosis families are matched after the semicolon, as written.** ESPN-style reasons put the
-   body part before it ("Right Achilles Tendon; Repair"), so the Achilles family holds 2 of 36,265
-   observations and Achilles repairs fall under surgery or repair. Open question for the lead:
-   match ACL and Achilles on the whole description instead (changes only the hazard tables).
+1. **ACL and Achilles match the whole reason** (Amendment 1, ruling 1). As first registered, all
+   families matched after the semicolon, which left Achilles with 2 of 36,265 observations.
 2. **Off-season dynamics keep the cross-covariances** (the linear map on the whole matrix); the
    spike reset them to the diagonal.
 3. **Availability-layer tables are leave-one-season-out when scoring a report season**, and
    before-origin inside the rating fits (the proposal's "three report seasons allow only
    leave-one-season-out"); the frozen tables use all three seasons.
 4. **M5's window is per ET date** (games of earlier dates) and lives in the state, including,
-   live, the standardized margins of 2024-25 and 2025-26 games inside `warmState`'s state. They
-   are never output. Open question: whether that reading of section 0 is acceptable.
+   live, the standardized margins of 2024-25 and 2025-26 games inside `warmState`'s state, ruled
+   acceptable as filter state that is never printed, summarised or exposed (Amendment 1, ruling 2).
 5. **S1 is fitted by mean squared error**, not log loss, because A(1) = 1; its grid was widened
-   once. **κ sits at 1**, the grid's edge; the plan fixed the grid, so it was not widened.
+   once. **κ sits at 1**, the grid's edge, and stays (Amendment 1, ruling 3): the playoff
+   multiplier is dropped with nothing replacing it. The hazard m grid was widened once (ruling 3).
 6. **Listed Probable and Available players** take their status weight as S(1); every v4 absence is
    listed. A player's points can be negative (his minutes go to better teammates).
 7. **The simulator's noise is c_t · σ** with the posterior covariance at scale 1; regular and
@@ -238,7 +259,8 @@ v4 is within both limits at both checkpoints, so S2 was not applied. This is a d
 10. **The live season's box lines** (`data/live/players`) already hold full lines for every final
     game (235 of 235 at live-data 59a46baa), so step 1 needs no new storage; Phase C must make
     those files a v4 input.
-11. **Step 4b (pre-2021 injury history) was not attempted.**
+11. **Step 4b (pre-2021 injury history) was not attempted** and stays out of v4 (Amendment 1,
+    ruling 5); noted for a later version.
 
 ## Wiring (Phase C; not in this commit's scope)
 
@@ -328,7 +350,7 @@ v4's record starts at its first seal, prospectively, from `V4_FIRST_ET_DATE` (nu
 C). Nothing is backfilled. It is labeled small-sample below 500 scored v4 games. The
 500-scored-games rule is per version and is not lowered.
 
-## File hashes at registration (sha256)
+## File hashes at registration, as amended (sha256)
 
 - `scripts/live/v4/evaluate-stage-a.ts`: `5e705c607ecd29f1784162d2477f44479c1e6b016f55819288e3871f0c3d3839`
 - `scripts/live/v4/dev-data.ts`: `70006194c95ccba2bc9aa9710fb4ef12ee8e55267f42bd5bb7d448559b3467f3`
@@ -336,17 +358,19 @@ C). Nothing is backfilled. It is labeled small-sample below 500 scored v4 games.
 - `scripts/live/v4/engine-run.ts`: `7299ac34e135d1dd7a5a7d3f093667bc0054772431f7ebf703f4e36f703ef718`
 - `scripts/live/v4/references.ts`: `1d97d5e26536c93ae5cafe21dffc0e236f558683a47453adf1d84b6105bdf006`
 - `scripts/live/v4/hazard-data.ts`: `21c5310668e365ad48c637056b343d9f8bdc0c646817bcd7bed852e00525cf79`
+- `scripts/live/v4/fit-hazards.ts`: `1b70f7e13b3ba04b481979979a7c358eb8f4e8f1bb2a062eab62668a2b8955d2`
 - `scripts/live/v4/warm-state.ts`: `f2a5dc11abfd9d7ff454ab80a46b1bc32af9ff4b06473895e7d394b21e96d41f`
 - `src/lib/season/roster-state.ts`: `a4464393ce5ea04205399a25e78a7081e77e3efa52c288909aae19a086194d57`
 - `src/lib/season/minutes-v4.ts`: `a9949f4d926e0f050a4df9646a007ed6f3808d37606be23d30685106e817ec79`
 - `src/lib/season/forecast-v4.ts`: `c038c96c0906b703994a485c4f4e7e48378c903ae04ae4d7f8ad240e392c3ac3`
-- `src/lib/season/availability-v4.ts`: `8ab60f69dfab46b654481c98ba6ad5fc81bcf64b1d599dc937f9a5abba4311f7`
-- `src/lib/season/params-v4.ts`: `fe3f12de6a5d421a38ee90ca935d8cca02044c8ce315942d8c3069c3ba16c748`
+- `src/lib/season/availability-v4.ts`: `781bc7ebae085b20c75f7861d22090bf2f22dd862a9c9bb2f3e9a15d14bb5861`
+- `src/lib/season/params-v4.ts`: `3025673ceeeba47737b85195b6948b57c2864ffa7e5eca98f59115616610831b`
 - `src/lib/season/simulate.ts`: `bbd8c1dd5cf383863932cc75febb748873fa52fe9b530164f6c2e60e864916a7`
 - `src/lib/season/injury-v3.ts`: `c9175827e43c49b05cb6ed21ffc7b708c1745e034f438d82aa182e79e7a8b54a`
 - `scripts/live/eval-metrics.ts`: `94cbce742de885e9157bba6d8a546cee596d3927f7eecb30f2ac3fec5602900e`
-- `docs/live/v4-fit.json`: `4140c227614e6aaddbdc80cf7c56e038cf66981870da16df40de995e542416a9`
+- `docs/live/v4-fit.json`: `c1f1d868841d7b06fc5c216025dbc3e1bffae11db059afe63024363b7256d4a4`
 - `docs/live/v4-a8.json`: `1c03d688c6ba19742ffb6c835e66c6cba2f054f7cb4a0fa07fd7bc3a053495e1`
+- `docs/live/v4-a8-amendment1.json`: `f7c2e989c2d2344f1c994c21a3ef235b738617534c98c94dae584174be384f49`
 - `docs/live/v4-player-games-audit.json`: `ddbb81227cec4b04ca0feadb29f17bd790fce4100b138dd69de01bf38983e501`
 
 The golden hashes (`tests/season-simulator-golden.test.ts`, `tests/v4-goldens.test.ts`) and v3's registered files are unchanged.
