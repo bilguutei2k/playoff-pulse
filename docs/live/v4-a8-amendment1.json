@@ -1,0 +1,67 @@
+{
+  "note": "A8, the season-level diagnostic of v4 on the design seasons (2015-16 to 2018-19 and 2021-22). Not a gate; decides S2 only.",
+  "iterations": 4000,
+  "seasons": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2022
+  ],
+  "a8": [
+    {
+      "checkpoint": "dec1",
+      "seasons": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2022
+      ],
+      "teamSeasons": 150,
+      "v1": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.129796,
+        "winRmse": 6.208
+      },
+      "v4": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.130197,
+        "winRmse": 6.167
+      },
+      "limits": {
+        "makePlayoffsBrier": 0.134796,
+        "winRmse": 6.458
+      },
+      "passed": true
+    },
+    {
+      "checkpoint": "feb1",
+      "seasons": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2022
+      ],
+      "teamSeasons": 150,
+      "v1": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.07413,
+        "winRmse": 3.402
+      },
+      "v4": {
+        "teamSeasons": 150,
+        "makePlayoffsBrier": 0.071783,
+        "winRmse": 3.402
+      },
+      "limits": {
+        "makePlayoffsBrier": 0.07913,
+        "winRmse": 3.652
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "s2": null
+}

@@ -290,6 +290,38 @@ rating model. Each version's sealed record is reported separately.
 - Betting value of any kind, official NBA data, or any affiliation with the NBA. The injury report
   PDFs are the NBA's public documents, read unofficially.
 
+## Roster-state model v4 (`live-2026.27-v4`; in testing, not published)
+
+Sources: `docs/live/registration-v4.md` (Stage A result and the lead's follow-ups, 2026-11-21),
+`docs/live/evaluation-v4-stage-a.json`, and v4's shadow file `site/{season}/shadow-v4.json` on
+`live-data`. These claims appear on `/record` (the "In testing" section below the published
+records) and `/how-it-works#roster-state`. v4 seals beside v2 in the ledger; it is not the
+published forecast and changes no published number.
+
+**May be stated:**
+
+- What it is: one filter over player strengths from box scores and margins, the NBA injury report
+  for who plays, and return times estimated by diagnosis.
+- That it is unproven and is not the published forecast.
+- Stage A, always labelled a development check on seasons an earlier exploratory run had already
+  seen (not an untouched test): it passed; on those development seasons it was not worse than v2
+  (non-inferiority only); the market stayed ahead of both v4 and v2 on the games with a stored
+  spread. Say the market part wherever the Stage A result is shown.
+- That integration over Questionable and Doubtful players and the background-absence term did not
+  earn their place in that check, are kept as registered, and are candidates to simplify later.
+- Its own record from its first seal, with scored games, Brier score and log loss, labelled
+  small-sample below 500 scored games; and the same-games Brier and log loss of v4, v2 and v1 as
+  plain numbers, with no difference column, colour or market line.
+
+**Never claim:**
+
+- That v4 is better or more accurate than v2, v1 or the market, or that it beats, matches or
+  narrows a gap to any of them, from Stage A or from its live record. A later claim needs its own
+  ledger entry, made on at least 500 scored games.
+- That Stage A is an untouched or out-of-sample test.
+- That v4 is the published forecast, or feeds any published forecast, seal or injury number.
+- That any single player's v4 strength or points are validated.
+
 ## 548 score (Stage 1, `score-2026.27-s1`; display only)
 
 Since Stage 2 shipped, the published score is Stage 1's box-score value plus Stage 2's on-court

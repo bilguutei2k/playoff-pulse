@@ -1,0 +1,544 @@
+{
+  "note": "Stage A of live-2026.27-v4: a registered development check under rolling origin on seasons seen by the inquiry spike. Not an untouched test. A6 (property tests) is run separately at the same commit.",
+  "firstScoredSeason": 2013,
+  "reproduction": {
+    "v1Dev": {
+      "games": 12059,
+      "logLoss": 0.594511
+    },
+    "v1Final": {
+      "games": 3690,
+      "brier": 0.2192
+    },
+    "v2Final": {
+      "games": 3690,
+      "brier": 0.2139,
+      "logLoss": 0.6168
+    }
+  },
+  "gates": {
+    "a1": {
+      "games": 10749,
+      "interval": {
+        "difference": -0.004001305679832739,
+        "lower": -0.005104908589397306,
+        "upper": -0.0028801595750608216,
+        "draws": 10000,
+        "clusters": 1438
+      },
+      "bySeason": [
+        {
+          "season": 2016,
+          "games": 1230,
+          "v4": 0.199269,
+          "v1": 0.199003,
+          "difference": 0.000265
+        },
+        {
+          "season": 2017,
+          "games": 1230,
+          "v4": 0.216318,
+          "v1": 0.217403,
+          "difference": -0.001085
+        },
+        {
+          "season": 2018,
+          "games": 1230,
+          "v4": 0.210247,
+          "v1": 0.214173,
+          "difference": -0.003926
+        },
+        {
+          "season": 2019,
+          "games": 1230,
+          "v4": 0.20793,
+          "v1": 0.212692,
+          "difference": -0.004762
+        },
+        {
+          "season": 2020,
+          "games": 1059,
+          "v4": 0.215311,
+          "v1": 0.217842,
+          "difference": -0.002531
+        },
+        {
+          "season": 2021,
+          "games": 1080,
+          "v4": 0.222816,
+          "v1": 0.227818,
+          "difference": -0.005003
+        },
+        {
+          "season": 2022,
+          "games": 1230,
+          "v4": 0.212974,
+          "v1": 0.220062,
+          "difference": -0.007088
+        },
+        {
+          "season": 2023,
+          "games": 1230,
+          "v4": 0.221547,
+          "v1": 0.227772,
+          "difference": -0.006224
+        },
+        {
+          "season": 2024,
+          "games": 1230,
+          "v4": 0.204276,
+          "v1": 0.209852,
+          "difference": -0.005576
+        }
+      ],
+      "seasonsNegative": 8,
+      "passed": true
+    },
+    "a2": {
+      "games": 3690,
+      "v4Brier": 0.212932,
+      "v2Brier": 0.213927,
+      "interval": {
+        "difference": -0.0009946056558011462,
+        "lower": -0.0032982810867962674,
+        "upper": 0.0012716601066507381,
+        "draws": 10000,
+        "clusters": 489
+      },
+      "limits": {
+        "brier": 0.2159,
+        "upper": 0.004
+      },
+      "passed": true,
+      "wording": "not worse than v2 on development seasons (v2 was fitted on these games; v4 was not)"
+    },
+    "a3": {
+      "games": 5829,
+      "slope": 0.9867,
+      "reliability": 0.000134,
+      "passed": true
+    },
+    "a4": {
+      "bySeason": [
+        {
+          "season": 2022,
+          "listings": 4836,
+          "v3LogLoss": 0.532709,
+          "v4LogLoss": 0.477331
+        },
+        {
+          "season": 2023,
+          "listings": 4790,
+          "v3LogLoss": 0.573315,
+          "v4LogLoss": 0.557593
+        },
+        {
+          "season": 2024,
+          "listings": 4942,
+          "v3LogLoss": 0.533022,
+          "v4LogLoss": 0.503396
+        }
+      ],
+      "pooled": {
+        "listings": 14568,
+        "v3LogLoss": 0.546167,
+        "v4LogLoss": 0.512563
+      },
+      "passed": true,
+      "note": "m was chosen by leave-one-season-out one-step log loss on these seasons (disclosed)."
+    },
+    "a5": {
+      "iterations": 4000,
+      "pooled": [
+        {
+          "checkpoint": "dec1",
+          "seasons": [
+            2016,
+            2017,
+            2018,
+            2019,
+            2022,
+            2023,
+            2024
+          ],
+          "teamSeasons": 210,
+          "v1": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.13376,
+            "winRmse": 6.109
+          },
+          "v4": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.133765,
+            "winRmse": 6.027
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.13876,
+            "winRmse": 6.359
+          },
+          "passed": true
+        },
+        {
+          "checkpoint": "feb1",
+          "seasons": [
+            2016,
+            2017,
+            2018,
+            2019,
+            2022,
+            2023,
+            2024
+          ],
+          "teamSeasons": 210,
+          "v1": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.081216,
+            "winRmse": 3.546
+          },
+          "v4": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.074897,
+            "winRmse": 3.455
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.086216,
+            "winRmse": 3.796
+          },
+          "passed": true
+        },
+        {
+          "checkpoint": "apr1",
+          "seasons": [
+            2016,
+            2017,
+            2018,
+            2019,
+            2022,
+            2023,
+            2024
+          ],
+          "teamSeasons": 210,
+          "v1": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.032983,
+            "winRmse": 1.187
+          },
+          "v4": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.03168,
+            "winRmse": 1.147
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.037983,
+            "winRmse": 1.437
+          },
+          "passed": true
+        }
+      ],
+      "confirmation": [
+        {
+          "checkpoint": "dec1",
+          "seasons": [
+            2023,
+            2024
+          ],
+          "teamSeasons": 60,
+          "v1": {
+            "teamSeasons": 60,
+            "makePlayoffsBrier": 0.143671,
+            "winRmse": 5.852
+          },
+          "v4": {
+            "teamSeasons": 60,
+            "makePlayoffsBrier": 0.142684,
+            "winRmse": 5.662
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.151671,
+            "winRmse": 6.252
+          },
+          "passed": true
+        },
+        {
+          "checkpoint": "feb1",
+          "seasons": [
+            2023,
+            2024
+          ],
+          "teamSeasons": 60,
+          "v1": {
+            "teamSeasons": 60,
+            "makePlayoffsBrier": 0.098932,
+            "winRmse": 3.881
+          },
+          "v4": {
+            "teamSeasons": 60,
+            "makePlayoffsBrier": 0.082681,
+            "winRmse": 3.583
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.106932,
+            "winRmse": 4.281
+          },
+          "passed": true
+        },
+        {
+          "checkpoint": "apr1",
+          "seasons": [
+            2023,
+            2024
+          ],
+          "teamSeasons": 60,
+          "v1": {
+            "teamSeasons": 60,
+            "makePlayoffsBrier": 0.044354,
+            "winRmse": 1.113
+          },
+          "v4": {
+            "teamSeasons": 60,
+            "makePlayoffsBrier": 0.036569,
+            "winRmse": 1.026
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.052354,
+            "winRmse": 1.513
+          },
+          "passed": true
+        }
+      ],
+      "opening": {
+        "checkpoint": "opening",
+        "seasons": [
+          2016,
+          2017,
+          2018,
+          2019,
+          2022,
+          2023,
+          2024
+        ],
+        "teamSeasons": 210,
+        "v1": {
+          "teamSeasons": 210,
+          "makePlayoffsBrier": 0.17119,
+          "winRmse": 9.033
+        },
+        "v4": {
+          "teamSeasons": 210,
+          "makePlayoffsBrier": 0.159488,
+          "winRmse": 8.347
+        },
+        "limits": {
+          "makePlayoffsBrier": null,
+          "winRmse": 9.033
+        },
+        "passed": true
+      },
+      "reported2022to2024": [
+        {
+          "checkpoint": "dec1",
+          "seasons": [
+            2022,
+            2023,
+            2024
+          ],
+          "teamSeasons": 90,
+          "v1": {
+            "teamSeasons": 90,
+            "makePlayoffsBrier": 0.150399,
+            "winRmse": 6.558
+          },
+          "v4": {
+            "teamSeasons": 90,
+            "makePlayoffsBrier": 0.157596,
+            "winRmse": 6.501
+          },
+          "limits": {
+            "makePlayoffsBrier": null,
+            "winRmse": null
+          },
+          "v2Registered": {
+            "makePlayoffsBrier": 0.1429,
+            "winRmse": 6.5
+          }
+        },
+        {
+          "checkpoint": "feb1",
+          "seasons": [
+            2022,
+            2023,
+            2024
+          ],
+          "teamSeasons": 90,
+          "v1": {
+            "teamSeasons": 90,
+            "makePlayoffsBrier": 0.102105,
+            "winRmse": 3.706
+          },
+          "v4": {
+            "teamSeasons": 90,
+            "makePlayoffsBrier": 0.089674,
+            "winRmse": 3.516
+          },
+          "limits": {
+            "makePlayoffsBrier": null,
+            "winRmse": null
+          },
+          "v2Registered": {
+            "makePlayoffsBrier": 0.0958,
+            "winRmse": 3.76
+          }
+        },
+        {
+          "checkpoint": "apr1",
+          "seasons": [
+            2022,
+            2023,
+            2024
+          ],
+          "teamSeasons": 90,
+          "v1": {
+            "teamSeasons": 90,
+            "makePlayoffsBrier": 0.048195,
+            "winRmse": 1.088
+          },
+          "v4": {
+            "teamSeasons": 90,
+            "makePlayoffsBrier": 0.044087,
+            "winRmse": 1.008
+          },
+          "limits": {
+            "makePlayoffsBrier": null,
+            "winRmse": null
+          },
+          "v2Registered": {
+            "makePlayoffsBrier": 0.041,
+            "winRmse": 1.07
+          }
+        }
+      ],
+      "passed": true
+    }
+  },
+  "a7": {
+    "teamResidual": {
+      "metric": "game log loss",
+      "with": 0.612151,
+      "without": 0.612222,
+      "earns": true
+    },
+    "diagnosisFamilies": {
+      "metric": "A4 log loss",
+      "with": 0.512563,
+      "without": 0.546167,
+      "earns": true
+    },
+    "integration": {
+      "metric": "game log loss",
+      "with": 0.612151,
+      "without": 0.612134,
+      "earns": false
+    },
+    "backgroundS1": {
+      "metric": "Dec 1 and Feb 1 win error",
+      "with": [
+        6.027,
+        3.455
+      ],
+      "without": [
+        6.005,
+        3.469
+      ],
+      "earns": false
+    }
+  },
+  "reported": {
+    "informationSets": {
+      "games": 3690,
+      "report": 0.212932,
+      "none": 0.2159,
+      "told": 0.211873,
+      "toldGames": 3547
+    },
+    "beforeDec1": {
+      "games": 2467,
+      "v4": 0.213504,
+      "v1": 0.219354
+    },
+    "market": {
+      "games": 2460,
+      "scale": 13,
+      "market": 0.212258,
+      "v4": 0.21726,
+      "v2": 0.217809,
+      "note": "Benchmark read only; the scale is chosen on these games."
+    },
+    "perSeason": [
+      {
+        "season": 2016,
+        "games": 1230,
+        "v4": 0.199269,
+        "v1": 0.199003,
+        "difference": 0.000265
+      },
+      {
+        "season": 2017,
+        "games": 1230,
+        "v4": 0.216318,
+        "v1": 0.217403,
+        "difference": -0.001085
+      },
+      {
+        "season": 2018,
+        "games": 1230,
+        "v4": 0.210247,
+        "v1": 0.214173,
+        "difference": -0.003926
+      },
+      {
+        "season": 2019,
+        "games": 1230,
+        "v4": 0.20793,
+        "v1": 0.212692,
+        "difference": -0.004762
+      },
+      {
+        "season": 2020,
+        "games": 1059,
+        "v4": 0.215311,
+        "v1": 0.217842,
+        "difference": -0.002531
+      },
+      {
+        "season": 2021,
+        "games": 1080,
+        "v4": 0.222816,
+        "v1": 0.227818,
+        "difference": -0.005003
+      },
+      {
+        "season": 2022,
+        "games": 1230,
+        "v4": 0.212974,
+        "v1": 0.220062,
+        "difference": -0.007088
+      },
+      {
+        "season": 2023,
+        "games": 1230,
+        "v4": 0.221547,
+        "v1": 0.227772,
+        "difference": -0.006224
+      },
+      {
+        "season": 2024,
+        "games": 1230,
+        "v4": 0.204276,
+        "v1": 0.209852,
+        "difference": -0.005576
+      }
+    ]
+  },
+  "s2HorizonDays": null,
+  "passed": true
+}

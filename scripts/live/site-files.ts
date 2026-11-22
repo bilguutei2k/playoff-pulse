@@ -12,7 +12,11 @@ import {
   siteFileContents,
   type SiteManifest,
 } from "../../src/lib/season/site-files";
+import { V4_MODEL_VERSION } from "../../src/lib/season/params-v4";
 import type { LedgerRow } from "../../src/lib/season/types";
+
+/** v4's shadow file (registration-v4.md, W2), under data/live. */
+export const shadowPath = (seasonLabel: string) => `site/${seasonLabel}/shadow-v4.json`;
 
 export const SITE_DIRECTORY_NAME = "site";
 
@@ -36,7 +40,11 @@ function readLedgerRows(file: string): LedgerRow[] {
  * team injury lists, player files), which the job writes before calling this.
  */
 export function expectedSiteFiles(liveDirectory: string, season: number, seasonLabel: string): Map<string, string> {
-  const ledger = readLedgerRows(path.join(liveDirectory, "ledger", `${seasonLabel}.jsonl`));
+  // v4's shadow rows stay out of the files the site reads (registration-v4.md, W2); the site
+  // sees v4 only through its shadow file.
+  const ledger = readLedgerRows(path.join(liveDirectory, "ledger", `${seasonLabel}.jsonl`)).filter(
+    (row) => row.type === "result" || row.modelVersion !== V4_MODEL_VERSION,
+  );
   const files = siteFileContents(ledger, seasonLabel);
   const hashes: Record<string, string> = {};
   for (const relative of ["state.json", `games/${season}.json`]) {
@@ -45,7 +53,7 @@ export function expectedSiteFiles(liveDirectory: string, season: number, seasonL
   }
   for (const [relative, content] of files) hashes[relative] = sha256(content);
   for (const [relative, content] of publishedSiteFiles(liveDirectory)) {
-    if (isModelViewPath(relative, seasonLabel)) hashes[relative] = sha256(content);
+    if (isModelViewPath(relative, seasonLabel) || relative === shadowPath(seasonLabel)) hashes[relative] = sha256(content);
   }
   const manifest: SiteManifest = {
     version: 1,

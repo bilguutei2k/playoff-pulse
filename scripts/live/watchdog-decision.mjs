@@ -110,6 +110,13 @@ const CACHED = new Set(["PRERENDER", "HIT", "STALE"]);
 /** The v2 model's version and the first ET date it sealed (2026-11-02). */
 export const V2 = Object.freeze({ modelVersion: "live-2026.27-v2", firstEtDate: "2026-11-02" });
 
+/**
+ * The shadow model v4 (docs/live/registration-v4.md, W3): its version and first ET date, kept
+ * equal to src/lib/season/params-v4.ts by a test. Null until v4's cutover is set. Its missing
+ * seals are reported under their own `shadow-` keys, labelled as the shadow model's.
+ */
+export const V4 = Object.freeze({ modelVersion: "live-2026.27-v4", firstEtDate: "2026-11-23" });
+
 const MINUTE = 60_000;
 const FAILED = new Set(["failure", "timed_out", "startup_failure"]);
 const NEUTRAL = new Set(["cancelled", "skipped", "stale", "", null, undefined]);
@@ -224,6 +231,30 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
           key: `unsealed-${game.id}`,
           text: `Game ${game.id} (${game.awayId ?? "?"} at ${game.homeId ?? "?"}, ET ${game.etDate}) tipped at ${game.tipUtc} and has neither a v2 final nor a v2 morning seal.`,
         });
+      }
+    }
+    if (V4.firstEtDate !== null) {
+      const shadowSealed = new Set(
+        ledger
+          .filter((row) => row.type === "seal" && row.modelVersion === V4.modelVersion && (row.sealKind === "final" || row.sealKind === "morning"))
+          .map((row) => row.gameId),
+      );
+      for (const game of games) {
+        const tip = Date.parse(game.tipUtc);
+        if (
+          game.etDate >= V4.firstEtDate &&
+          game.status !== "canceled" &&
+          game.status !== "postponed" &&
+          Number.isFinite(tip) &&
+          tip < time - LIMITS.tipGraceMinutes * MINUTE &&
+          tip >= time - LIMITS.tipLookbackHours * 60 * MINUTE &&
+          !shadowSealed.has(game.id)
+        ) {
+          alerts.push({ kind: "state",
+            key: `shadow-unsealed-${game.id}`,
+            text: `Shadow model v4 (not published): game ${game.id} (${game.awayId ?? "?"} at ${game.homeId ?? "?"}, ET ${game.etDate}) tipped at ${game.tipUtc} and has neither a v4 final nor a v4 morning seal.`,
+          });
+        }
       }
     }
   }

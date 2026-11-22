@@ -57,6 +57,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import bundledStateJson from "../../../data/live/state.json";
 import type { LiveReportDay } from "@/lib/season/live-reports";
+import { V4_MODEL_VERSION } from "@/lib/season/params-v4";
 import { SCORE_LABEL, SCORE_LABEL_BOX, type PlayerIndexFile, type TeamPlayersFile } from "@/lib/season/player-stats";
 import type { ProjectionsFile, TeamInjuriesFile } from "@/lib/season/projections";
 import {
@@ -846,6 +847,106 @@ export const getTeamPlayers = cache(async (teamId: string): Promise<TeamPlayersF
   if (!/^\d+$/.test(teamId)) return null;
   const { value: state } = await loadState();
   return loadView(siteTeamPlayersPath(state.seasonLabel, teamId), (text) => parseTeamPlayers(text, state.seasonLabel, teamId));
+});
+
+// ---------------------------------------------------------------------------------------
+// The shadow model v4 (docs/live/registration-v4.md, W2): sealing beside the published
+// model, never the published forecast.
+
+/** v4's shadow file under data/live (the job's `SHADOW_FILE`, scripts/live/v4/live-v4.ts). */
+export const siteShadowV4Path = (seasonLabel: string) => `site/${seasonLabel}/shadow-v4.json`;
+
+type ScoreLine = { brier: number | null; logLoss: number | null };
+
+/** What the site shows of v4's shadow file: its record and the same-games lines. */
+export type ShadowV4View = {
+  modelVersion: string;
+  /** First ET date with v4 seals. */
+  firstEtDate: string;
+  slate: string;
+  record: { sealed: number; scored: number; pending: number; missed: number; brier: number | null; logLoss: number | null };
+  /** Games scored for v4, v2 and v1 alike, each on its own scored seal; nulls when `games` is 0. */
+  sameGames: { games: number; v4: ScoreLine; v2: ScoreLine; v1: ScoreLine };
+  /** v4's points per listed player (athleteId → points), for a later view. */
+  impact: Record<string, number>;
+};
+
+const isCount = (value: unknown): value is number => typeof value === "number" && Number.isInteger(value) && value >= 0;
+const isOptionalMetric = (value: unknown): value is number | null =>
+  value === null || (typeof value === "number" && Number.isFinite(value) && value >= 0);
+const isEtDate = (value: unknown): value is string => isString(value) && /^\d{4}-\d{2}-\d{2}$/.test(value);
+const isScoreLine = (value: unknown): value is ScoreLine =>
+  isRecord(value) && isOptionalMetric(value.brier) && isOptionalMetric(value.logLoss);
+
+/** Validates the shadow file and keeps only what the site shows. Throws when malformed. */
+export function parseShadowV4(text: string): ShadowV4View {
+  const raw: unknown = JSON.parse(text);
+  const record = isRecord(raw) ? raw.record : null;
+  const same = isRecord(raw) ? raw.sameGames : null;
+  const impact = isRecord(raw) ? raw.impact : null;
+  if (
+    !isRecord(raw) ||
+    raw.version !== 1 ||
+    raw.modelVersion !== V4_MODEL_VERSION ||
+    !isEtDate(raw.firstEtDate) ||
+    !isEtDate(raw.slate) ||
+    !isRecord(record) ||
+    !["sealed", "scored", "pending", "missed"].every((key) => isCount(record[key])) ||
+    !isOptionalMetric(record.brier) ||
+    !isOptionalMetric(record.logLoss) ||
+    !isRecord(same) ||
+    !isCount(same.games) ||
+    !isScoreLine(same.v4) ||
+    !isScoreLine(same.v2) ||
+    !isScoreLine(same.v1) ||
+    (impact !== undefined && !(isRecord(impact) && Object.values(impact).every((value) => typeof value === "number" && Number.isFinite(value))))
+  ) {
+    throw new Error("shadow-v4.json is malformed");
+  }
+  const line = (value: ScoreLine): ScoreLine => ({ brier: value.brier, logLoss: value.logLoss });
+  return {
+    modelVersion: raw.modelVersion,
+    firstEtDate: raw.firstEtDate,
+    slate: raw.slate,
+    record: {
+      sealed: record.sealed as number,
+      scored: record.scored as number,
+      pending: record.pending as number,
+      missed: record.missed as number,
+      brier: record.brier,
+      logLoss: record.logLoss,
+    },
+    sameGames: { games: same.games, v4: line(same.v4), v2: line(same.v2), v1: line(same.v1) },
+    impact: (impact ?? {}) as Record<string, number>,
+  };
+}
+
+/**
+ * v4's shadow file at the render's commit, or null when the manifest does not list it, it
+ * cannot be read, or it does not validate. It is read outside the render's snapshot on
+ * purpose: a shadow file never costs the published pages their snapshot, so it can never
+ * make a render fall back to an older or stored copy. Never throws.
+ */
+export const getShadowV4 = cache(async (): Promise<ShadowV4View | null> => {
+  try {
+    const source = await renderSource();
+    const { value: state } = await loadState();
+    const relative = siteShadowV4Path(state.seasonLabel);
+    if (source.kind !== "network") {
+      return bundled(relative, () => {
+        const text = bundledFile(relative);
+        return text ? parseShadowV4(text) : null;
+      }, null);
+    }
+    if (!source.manifest || !(relative in source.manifest.files)) return null;
+    // Not from the snapshot, which does not hold it: downloaded at the same commit, against
+    // the manifest's hash.
+    const direct: NetworkSource = { kind: "network", ref: source.ref, branch: source.branch, commit: source.commit, manifest: source.manifest };
+    return await fetchPublished(direct, relative, parseShadowV4);
+  } catch (error) {
+    console.error("[live-data] shadow-v4.json unavailable:", describe(error));
+    return null;
+  }
 });
 
 /**

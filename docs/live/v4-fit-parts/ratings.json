@@ -1,0 +1,813 @@
+{
+  "start": {
+    "sigma": 11,
+    "sBox": 13,
+    "qP": 0.004,
+    "qC": 0.006,
+    "qH": 0.0002,
+    "rhoP": 0.9,
+    "qOff": 0.2,
+    "rhoC": 0.75,
+    "tauC": 0.8,
+    "muNew": -1,
+    "tauNew": 2,
+    "alpha": 0.15,
+    "kappa": 1
+  },
+  "levels": [
+    {
+      "factor": 1.5,
+      "rho": 0.05,
+      "add": 0.5
+    },
+    {
+      "factor": 1.22,
+      "rho": 0.025,
+      "add": 0.25
+    },
+    {
+      "factor": 1.1,
+      "rho": 0.0125,
+      "add": 0.125
+    }
+  ],
+  "origins": {
+    "2016": {
+      "params": {
+        "sigma": 11,
+        "sBox": 19.5,
+        "qP": 0.003606557378,
+        "qC": 0.009,
+        "qH": 0.008457539062,
+        "rhoP": 0.8,
+        "qOff": 0.2032244953,
+        "rhoC": 0.7625,
+        "tauC": 1.2,
+        "muNew": -1,
+        "tauNew": 2.44,
+        "alpha": 0.759375,
+        "kappa": 1
+      },
+      "logLoss": 0.5880554960184117,
+      "trace": [
+        {
+          "round": 0,
+          "level": 0,
+          "logLoss": 0.589415545893537,
+          "moved": [
+            "sBox"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 0,
+          "logLoss": 0.589005171508366,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 0,
+          "logLoss": 0.5887632332243269,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 3,
+          "level": 0,
+          "logLoss": 0.5885757252959072,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 4,
+          "level": 0,
+          "logLoss": 0.5884285263582889,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 5,
+          "level": 0,
+          "logLoss": 0.5883526050193965,
+          "moved": [
+            "tauC"
+          ]
+        },
+        {
+          "round": 6,
+          "level": 0,
+          "logLoss": 0.588303638588697,
+          "moved": [
+            "qH"
+          ]
+        },
+        {
+          "round": 7,
+          "level": 0,
+          "logLoss": 0.5882559123617181,
+          "moved": [
+            "qH"
+          ]
+        },
+        {
+          "round": 8,
+          "level": 0,
+          "logLoss": 0.5882139615627513,
+          "moved": [
+            "qH"
+          ]
+        },
+        {
+          "round": 9,
+          "level": 0,
+          "logLoss": 0.5881839809373494,
+          "moved": [
+            "qH"
+          ]
+        },
+        {
+          "round": 10,
+          "level": 0,
+          "logLoss": 0.5881657389742188,
+          "moved": [
+            "qC",
+            "qH",
+            "qOff"
+          ]
+        },
+        {
+          "round": 11,
+          "level": 0,
+          "logLoss": 0.5881623617914268,
+          "moved": [
+            "rhoC"
+          ]
+        },
+        {
+          "round": 12,
+          "level": 0,
+          "logLoss": 0.5881623617914268,
+          "moved": []
+        },
+        {
+          "round": 13,
+          "level": 1,
+          "logLoss": 0.588078979500949,
+          "moved": [
+            "tauNew"
+          ]
+        },
+        {
+          "round": 14,
+          "level": 1,
+          "logLoss": 0.5880669383905324,
+          "moved": [
+            "qP"
+          ]
+        },
+        {
+          "round": 15,
+          "level": 1,
+          "logLoss": 0.5880606427230274,
+          "moved": [
+            "qOff",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 16,
+          "level": 1,
+          "logLoss": 0.5880587982646265,
+          "moved": [
+            "rhoC"
+          ]
+        },
+        {
+          "round": 17,
+          "level": 1,
+          "logLoss": 0.5880587982646265,
+          "moved": []
+        },
+        {
+          "round": 18,
+          "level": 2,
+          "logLoss": 0.5880576273419592,
+          "moved": [
+            "qP"
+          ]
+        },
+        {
+          "round": 19,
+          "level": 2,
+          "logLoss": 0.5880556686143136,
+          "moved": [
+            "qH",
+            "qOff",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 20,
+          "level": 2,
+          "logLoss": 0.5880554960184117,
+          "moved": [
+            "qOff"
+          ]
+        },
+        {
+          "round": 21,
+          "level": 2,
+          "logLoss": 0.5880554960184117,
+          "moved": []
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2015
+      ],
+      "scoredFrom": 2013,
+      "seconds": 3150.058
+    },
+    "2017": {
+      "params": {
+        "sigma": 12.1,
+        "sBox": 21.45,
+        "qP": 0.003606557378,
+        "qC": 0.009,
+        "qH": 0.006989701705,
+        "rhoP": 0.775,
+        "qOff": 0.2032244953,
+        "rhoC": 0.7875,
+        "tauC": 1.2,
+        "muNew": -0.875,
+        "tauNew": 2.218181818,
+        "alpha": 0.6275826446,
+        "kappa": 1
+      },
+      "logLoss": 0.5862523538442621,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.5863386276816985,
+          "moved": [
+            "sigma",
+            "sBox",
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "tauNew",
+            "alpha",
+            "rhoP",
+            "rhoC",
+            "muNew"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.5862733148005492,
+          "moved": [
+            "sigma",
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.5862523538442621,
+          "moved": [
+            "sigma"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2016
+      ],
+      "scoredFrom": 2013,
+      "seconds": 0.029
+    },
+    "2018": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 19.5,
+        "qP": 0.002980625932,
+        "qC": 0.011979,
+        "qH": 0.005251466345,
+        "rhoP": 0.775,
+        "qOff": 0.1526855713,
+        "rhoC": 0.825,
+        "tauC": 1.2,
+        "muNew": -0.875,
+        "tauNew": 2.218181818,
+        "alpha": 0.4715121296,
+        "kappa": 1
+      },
+      "logLoss": 0.5933233591741025,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.5934530827748817,
+          "moved": [
+            "sigma",
+            "sBox",
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "alpha",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.593403868824649,
+          "moved": [
+            "sigma",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "tauNew",
+            "alpha",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.5933233591741025,
+          "moved": [
+            "sigma",
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "tauNew",
+            "alpha",
+            "rhoP",
+            "rhoC"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2017
+      ],
+      "scoredFrom": 2013,
+      "seconds": 495.615
+    },
+    "2019": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 19.5,
+        "qP": 0.002980625932,
+        "qC": 0.01449459,
+        "qH": 0.004340054831,
+        "rhoP": 0.7875,
+        "qOff": 0.1526855713,
+        "rhoC": 0.825,
+        "tauC": 0.9917355373,
+        "muNew": -0.875,
+        "tauNew": 2.44,
+        "alpha": 0.4286473905,
+        "kappa": 1
+      },
+      "logLoss": 0.5956756034825836,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.5957519081023313,
+          "moved": [
+            "sBox",
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "tauNew",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.5956970264049344,
+          "moved": [
+            "sBox",
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.5956756034825836,
+          "moved": [
+            "rhoP"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2018
+      ],
+      "scoredFrom": 2013,
+      "seconds": 759.253
+    },
+    "2020": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 17.72727273,
+        "qP": 0.002709659938,
+        "qC": 0.015944049,
+        "qH": 0.003586822175,
+        "rhoP": 0.8,
+        "qOff": 0.1261864225,
+        "rhoC": 0.8,
+        "tauC": 0.8196161465,
+        "muNew": -0.875,
+        "tauNew": 2.44,
+        "alpha": 0.4286473905,
+        "kappa": 1
+      },
+      "logLoss": 0.5965686726782075,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.5966369363038242,
+          "moved": [
+            "sBox"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.5965977049974104,
+          "moved": [
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.5965686726782075,
+          "moved": [
+            "qP",
+            "qH",
+            "qOff",
+            "tauC",
+            "rhoC"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2019
+      ],
+      "scoredFrom": 2013,
+      "seconds": 890.596
+    },
+    "2021": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 17.72727273,
+        "qP": 0.002463327216,
+        "qC": 0.01929229929,
+        "qH": 0.002694832588,
+        "rhoP": 0.8125,
+        "qOff": 0.1042862995,
+        "rhoC": 0.8,
+        "tauC": 0.6157897419,
+        "muNew": -0.875,
+        "tauNew": 2.44,
+        "alpha": 0.4286473905,
+        "kappa": 1
+      },
+      "logLoss": 0.5990388260839997,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.5990732387730013,
+          "moved": [
+            "qC",
+            "qH",
+            "tauC",
+            "rhoP"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.5990524139861974,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.5990388260839997,
+          "moved": [
+            "qH",
+            "qOff",
+            "tauC"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2020
+      ],
+      "scoredFrom": 2013,
+      "seconds": 1027.694
+    },
+    "2022": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 17.72727273,
+        "qP": 0.002463327216,
+        "qC": 0.01929229929,
+        "qH": 0.00222713437,
+        "rhoP": 0.8125,
+        "qOff": 0.1042862995,
+        "rhoC": 0.7875,
+        "tauC": 0.6157897419,
+        "muNew": -0.875,
+        "tauNew": 2.44,
+        "alpha": 0.4286473905,
+        "kappa": 1
+      },
+      "logLoss": 0.6027586380492167,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.6027858488931955,
+          "moved": [
+            "rhoC"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.6027719633895438,
+          "moved": [
+            "qH"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.6027586380492167,
+          "moved": [
+            "qH"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2021
+      ],
+      "scoredFrom": 2013,
+      "seconds": 1158.361
+    },
+    "2023": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 16.11570248,
+        "qP": 0.002709659938,
+        "qC": 0.01929229929,
+        "qH": 0.001840606917,
+        "rhoP": 0.825,
+        "qOff": 0.1147149295,
+        "rhoC": 0.775,
+        "tauC": 0.5598088563,
+        "muNew": -0.875,
+        "tauNew": 2.44,
+        "alpha": 0.4286473905,
+        "kappa": 1
+      },
+      "logLoss": 0.603876559895881,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.6039164640079465,
+          "moved": [
+            "sBox",
+            "qP",
+            "qH",
+            "qOff",
+            "tauC",
+            "tauNew",
+            "rhoP",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.6038889362938653,
+          "moved": [
+            "tauNew"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.603876559895881,
+          "moved": [
+            "qH"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2022
+      ],
+      "scoredFrom": 2013,
+      "seconds": 1318.937
+    },
+    "2024": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 16.11570248,
+        "qP": 0.002709659938,
+        "qC": 0.01929229929,
+        "qH": 0.001840606917,
+        "rhoP": 0.8125,
+        "qOff": 0.1147149295,
+        "rhoC": 0.75,
+        "tauC": 0.5598088563,
+        "muNew": -0.875,
+        "tauNew": 2.44,
+        "alpha": 0.4286473905,
+        "kappa": 1
+      },
+      "logLoss": 0.6066407557665069,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.6066711817979008,
+          "moved": [
+            "rhoC"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.6066561138538364,
+          "moved": [
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.6066407557665069,
+          "moved": [
+            "rhoP"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2023
+      ],
+      "scoredFrom": 2013,
+      "seconds": 1478.683
+    },
+    "2025": {
+      "params": {
+        "sigma": 13.31,
+        "sBox": 17.72727273,
+        "qP": 0.003278688525,
+        "qC": 0.015944049,
+        "qH": 0.001382875219,
+        "rhoP": 0.8,
+        "qOff": 0.1526855713,
+        "rhoC": 0.7125,
+        "tauC": 0.4626519474,
+        "muNew": -1,
+        "tauNew": 2.44,
+        "alpha": 0.3896794459,
+        "kappa": 1
+      },
+      "logLoss": 0.6053495101616261,
+      "trace": [
+        {
+          "round": 0,
+          "level": 2,
+          "logLoss": 0.6053972263875,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "alpha",
+            "rhoC",
+            "muNew"
+          ]
+        },
+        {
+          "round": 1,
+          "level": 2,
+          "logLoss": 0.605361812436988,
+          "moved": [
+            "qP",
+            "qC",
+            "qH",
+            "qOff",
+            "tauC",
+            "rhoC"
+          ]
+        },
+        {
+          "round": 2,
+          "level": 2,
+          "logLoss": 0.6053495101616261,
+          "moved": [
+            "sBox",
+            "qH",
+            "qOff",
+            "rhoP",
+            "rhoC"
+          ]
+        }
+      ],
+      "fitSeasons": [
+        2011,
+        2024
+      ],
+      "scoredFrom": 2013,
+      "seconds": 1666.06
+    }
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "note": "v3 return hazards, fitted on 2021-22 to 2023-24 regular seasons with 2020-21 as warm-up. No 2024-25 or 2025-26 game, box score or report was read as a result; the name index spans the registered box-score seasons for identity only, as v2's fit.",
+  "modelVersion": "live-2026.27-v3",
+  "seasons": {
+    "warmup": 2021,
+    "fit": [
+      2022,
+      2023,
+      2024
+    ],
+    "boxScores": [
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "reports": [
+      2022,
+      2023,
+      2024
+    ],
+    "nameIndex": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ]
+  },
+  "buckets": [
+    "1",
+    "2-3",
+    "4-7",
+    "8-15",
+    "16-30",
+    "31+"
+  ],
+  "cellMinimum": {
+    "atRisk": 100,
+    "returns": 5
+  },
+  "hazards": {
+    "long": [
+      0.347059,
+      0.059701,
+      0.025478,
+      0.024419,
+      0.025075,
+      0.012366
+    ],
+    "short": [
+      0.431475,
+      0.290112,
+      0.181543,
+      0.098774,
+      0.055468,
+      0.022548
+    ],
+    "classUsed": true
+  },
+  "classRule": {
+    "firstBucket": true,
+    "overall": true,
+    "everyBucket": true
+  },
+  "cells": {
+    "long": {
+      "atRisk": [
+        170,
+        268,
+        471,
+        860,
+        997,
+        1213
+      ],
+      "returns": [
+        59,
+        16,
+        12,
+        21,
+        25,
+        15
+      ],
+      "pooledWith": [
+        [
+          "1"
+        ],
+        [
+          "2-3"
+        ],
+        [
+          "4-7"
+        ],
+        [
+          "8-15"
+        ],
+        [
+          "16-30"
+        ],
+        [
+          "31+"
+        ]
+      ],
+      "hazard": [
+        0.347059,
+        0.059701,
+        0.025478,
+        0.024419,
+        0.025075,
+        0.012366
+      ]
+    },
+    "short": {
+      "atRisk": [
+        9347,
+        8576,
+        7260,
+        4323,
+        1893,
+        887
+      ],
+      "returns": [
+        4033,
+        2488,
+        1318,
+        427,
+        105,
+        20
+      ],
+      "pooledWith": [
+        [
+          "1"
+        ],
+        [
+          "2-3"
+        ],
+        [
+          "4-7"
+        ],
+        [
+          "8-15"
+        ],
+        [
+          "16-30"
+        ],
+        [
+          "31+"
+        ]
+      ],
+      "hazard": [
+        0.431475,
+        0.290112,
+        0.181543,
+        0.098774,
+        0.055468,
+        0.022548
+      ]
+    },
+    "oneTable": {
+      "atRisk": [
+        9517,
+        8844,
+        7731,
+        5183,
+        2890,
+        2100
+      ],
+      "returns": [
+        4092,
+        2504,
+        1330,
+        448,
+        130,
+        35
+      ],
+      "pooledWith": [
+        [
+          "1"
+        ],
+        [
+          "2-3"
+        ],
+        [
+          "4-7"
+        ],
+        [
+          "8-15"
+        ],
+        [
+          "16-30"
+        ],
+        [
+          "31+"
+        ]
+      ],
+      "hazard": [
+        0.429967,
+        0.28313,
+        0.172035,
+        0.086436,
+        0.044983,
+        0.016667
+      ]
+    }
+  },
+  "observations": 36265,
+  "returns": 8539,
+  "spellsOpened": 9752,
+  "censored": {
+    "season-end": 542,
+    "no-box-score": 0,
+    "left-rotation": 415,
+    "appeared-elsewhere": 256
+  },
+  "ignoredContinuations": 1027,
+  "countMismatches": 28,
+  "provenance": {
+    "headSha": "187145963827dc88d42c0f1253162223beb48775",
+    "workingTreeCleanForCode": true,
+    "code": {
+      "scripts/live/fit-injury-v3.ts": "ed5f4830200d4d294fe8b9bd0f1de6e5beab4078d4cd519107aeb56d559ccb2b",
+      "scripts/live/v3-hazard-data.ts": "9d5a85c726b855c47f7d38a1326a800760b2b837d956588bc14662bad6645c87",
+      "src/lib/season/injury-v3.ts": "c9175827e43c49b05cb6ed21ffc7b708c1745e034f438d82aa182e79e7a8b54a",
+      "src/lib/season/injury-model.ts": "cd666605d19bebacce77baf8490bbf30fddedf7260dc25f91e634627533e248e",
+      "src/lib/season/availability.ts": "749e93c14c0affa92a1dfbdfdd5410fc0c59bda0b613c1f947a6a33592e9b0b6",
+      "src/lib/season/params.ts": "9b10955bfa0bccd856880ceff1a87c5cbad0e018c85da3ab47f28bd77f0c3a39",
+      "scripts/live/availability-store.ts": "4d7d1c199821e17e908cae212b36bf4b6f2b0256f873d26105b3b69c921f5f5e"
+    },
+    "data": {
+      "data/season/games/2005.json": "c4500bc2a03675f5ae3b9a417f12440383ce05145b751f5fd0d9b3121bb1e20e",
+      "data/season/games/2006.json": "f6d257427731ffcf1d57e2831357a4b5f83cfa45e92a4263a962f10b92c3d6e8",
+      "data/season/games/2007.json": "d0021e3c428fea63972ab08c7008cc53874ad8ef7118afdceb0561fe07703e76",
+      "data/season/games/2008.json": "5de7e94fc487b1a682c33df5bf457a27042deba1865c5d265c4328191911ced6",
+      "data/season/games/2009.json": "92837ad404d0ac37173db0510e713c0fb222b53735a1c57c08680b2929a9941b",
+      "data/season/games/2010.json": "777054fe16c9c33f1dd1be553839fca7c3b2344d7e15a013fb00511397fe43c4",
+      "data/season/games/2011.json": "bcd63a877b6d45018caac5cd21b3394ab1ce06d232c583c8f9bcd9f506595270",
+      "data/season/games/2012.json": "0166f1cbc86d66cc0bffb7ed6f4de80f19db9f88293149ffac0366569d348564",
+      "data/season/games/2013.json": "827d7c222b7c26162745905c8077c51d350be772b8dc6b00032c445be1fb3547",
+      "data/season/games/2014.json": "f05b4c3f3f8d9370596daaf15ed24332dfaec2232f77beb9a046e2899ae96c4c",
+      "data/season/games/2015.json": "7d37213545ce3f9cc8ad608cca18a6b12a34542f7a3e5c8c44e67a21b4bc0284",
+      "data/season/games/2016.json": "229562c92902746aff1a117b05f78f2a3fec11c743c7fbe20172c8317803f8b8",
+      "data/season/games/2017.json": "3446ce1221a08130f0c1ba1a23932040fa1bc1d3ba4448f1a30bc6b2abd01f40",
+      "data/season/games/2018.json": "fe51a73938e694abe07118925f7cfb86503313e598551dacb409068d3643083f",
+      "data/season/games/2019.json": "eb6cd6aae7169a03b5644a38c4c682bac360a0d183f02933b0ee444aa79c0c79",
+      "data/season/games/2020.json": "473593861919c3642225069f2a5f8cba6ea93101b97b6c2ab0d362bd42c5ece4",
+      "data/season/games/2021.json": "2519f61e4a3bc6357b3324fce87fbec117b3898d9776ff87e8fb168d2929065b",
+      "data/season/games/2022.json": "5aee8a397c5f396ec7a3d0b43c3f40d5128a8963fb2702cc9aa09cda86a23a84",
+      "data/season/games/2023.json": "81297e73bcb457e52e1e8d490056d556f3758676ef606455c9db9282dfd190ac",
+      "data/season/games/2024.json": "ab2997b74743ff2d87e9af30a7f7c013b307cc00e7894ba0cd04545b05318660",
+      "data/season/boxscores/2021.json": "d35fca4c0999a93e9987fc01c98a914a21b1c1929d32d8c902e17d8d8d3d4786",
+      "data/season/boxscores/2022.json": "8dd63dd5ba9f4126e00cdbf3562f6b655941fab52d7072d7d2b16a56c223d5d4",
+      "data/season/boxscores/2023.json": "0486460fffa2c2d2c28e542c4f94364e0e9cd9acfec84fc12039abefeda42b76",
+      "data/season/boxscores/2024.json": "ac17d001a606cd7785bd230eee96f534c635a10fee8cdaac4a119fd5441db968",
+      "data/season/boxscores/2025.json": "fa93f7eef5468c170c944a1edac9e5e6e03b9210f7032a6f827a1f98be543eba",
+      "data/season/boxscores/2026.json": "a5355c1ee8f6464ca860b92e4b02ac9ad0e29f0b706e0d595b19527d5b847f8f",
+      "data/season/reports/2022.json": "b38a4a627a5acd5f323472027520009fb223c7b857dfd0691073f7e3d88761ec",
+      "data/season/reports/2023.json": "17233ea1fce3726f7314d28d66b669e6d9e2dda5df37a4b98675a8f1ecd40189",
+      "data/season/reports/2024.json": "1f145093f0a58392714a375c0743b4f42f6258a7529ad341ef9dd96276ef1f27"
+    },
+    "frozenInputs": {
+      "injury": {
+        "beta": 0.4,
+        "gRep": 0.2,
+        "k": 1000,
+        "lG": 1000,
+        "lM": 3
+      },
+      "statusTable": {
+        "O": 0.999,
+        "D": 0.9834,
+        "Q": 0.4827,
+        "P": 0.1863,
+        "A": 0.1863
+      }
+    }
+  }
+}

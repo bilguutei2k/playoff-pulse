@@ -1,0 +1,198 @@
+{
+  "note": "v4 step 1. Team-games without usable lines (team minutes under 200) take the pseudo-player path. Closed seasons are filter input only: counts and hashes, nothing else.",
+  "usableTeamMinutes": 200,
+  "stats": [
+    "points",
+    "fieldGoalsAttempted",
+    "freeThrowsAttempted",
+    "threePointersMade",
+    "assists",
+    "turnovers",
+    "offensiveRebounds",
+    "defensiveRebounds",
+    "steals",
+    "blocks",
+    "fouls"
+  ],
+  "rawDirectory": "/Users/bilguutei/dev/548-score/data/historical/raw/score/games",
+  "sources": {
+    "raw/2011.json.gz": "ac252c57d8484cfb2101ff58eede85cbae6981271fd0c387447402b9a95340fb",
+    "data/season/games/2011.json": "bcd63a877b6d45018caac5cd21b3394ab1ce06d232c583c8f9bcd9f506595270",
+    "raw/2012.json.gz": "ae2bab8ec3fc4139da49cc3d9e0bea4f2c03bc55d5b941d48d57eabeb356b2a7",
+    "data/season/games/2012.json": "0166f1cbc86d66cc0bffb7ed6f4de80f19db9f88293149ffac0366569d348564",
+    "raw/2013.json.gz": "e03ea4f24c2d0ce5d5fb6221dd7f05af4a9eacef656cd20b071516faccf0911d",
+    "data/season/games/2013.json": "827d7c222b7c26162745905c8077c51d350be772b8dc6b00032c445be1fb3547",
+    "raw/2014.json.gz": "34dffb371ce5cc67e7d3b84349d5a4b199d2cb30bea0caafcf15490233bce21d",
+    "data/season/games/2014.json": "f05b4c3f3f8d9370596daaf15ed24332dfaec2232f77beb9a046e2899ae96c4c",
+    "raw/2015.json.gz": "325a9b63a3ee794921d3cd15a4b274ed4bfde0e77fb25b3ceee0406dc6ec2dc6",
+    "data/season/games/2015.json": "7d37213545ce3f9cc8ad608cca18a6b12a34542f7a3e5c8c44e67a21b4bc0284",
+    "raw/2016.json.gz": "7989bb2598f6681f6348fdf740325acf16ecdf167659597780222fd7d08c669c",
+    "data/season/games/2016.json": "229562c92902746aff1a117b05f78f2a3fec11c743c7fbe20172c8317803f8b8",
+    "raw/2017.json.gz": "c196dfb8e447f7f6f3355797e585ccbce1bdab271a54aa41bd665d5d30513c09",
+    "data/season/games/2017.json": "3446ce1221a08130f0c1ba1a23932040fa1bc1d3ba4448f1a30bc6b2abd01f40",
+    "raw/2018.json.gz": "114699b1d3eb3a7ce16dd13d821b01ac3e987ed339d11ba4bc51e5f11014dc3b",
+    "data/season/games/2018.json": "fe51a73938e694abe07118925f7cfb86503313e598551dacb409068d3643083f",
+    "raw/2019.json.gz": "0aa36775083c8c0eeddf787f35bc187632d4fc835ac2c23a0bb3d52770d0784c",
+    "data/season/games/2019.json": "eb6cd6aae7169a03b5644a38c4c682bac360a0d183f02933b0ee444aa79c0c79",
+    "raw/2020.json.gz": "78ccfe781ad618fc97eddf18bc4636be543e8bd0f85771f619846da80a37a898",
+    "data/season/games/2020.json": "473593861919c3642225069f2a5f8cba6ea93101b97b6c2ab0d362bd42c5ece4",
+    "raw/2021.json.gz": "c574e645e46af8475b42bf1651a0ee4dfed6db765f743b0774dcb2ad9e49e595",
+    "data/season/games/2021.json": "2519f61e4a3bc6357b3324fce87fbec117b3898d9776ff87e8fb168d2929065b",
+    "data/season/boxscores/2021.json": "d35fca4c0999a93e9987fc01c98a914a21b1c1929d32d8c902e17d8d8d3d4786",
+    "raw/2022.json.gz": "879407b8cb7ec91a6e53487c8ed13fea5149b4b86fcba1d6103f6aaa2ede71a2",
+    "data/season/games/2022.json": "5aee8a397c5f396ec7a3d0b43c3f40d5128a8963fb2702cc9aa09cda86a23a84",
+    "data/season/boxscores/2022.json": "8dd63dd5ba9f4126e00cdbf3562f6b655941fab52d7072d7d2b16a56c223d5d4",
+    "raw/2023.json.gz": "a15220711e5565e22545181ffe3a27a5654e19fd82da38a4d196a33bd87cd15a",
+    "data/season/games/2023.json": "81297e73bcb457e52e1e8d490056d556f3758676ef606455c9db9282dfd190ac",
+    "data/season/boxscores/2023.json": "0486460fffa2c2d2c28e542c4f94364e0e9cd9acfec84fc12039abefeda42b76",
+    "raw/2024.json.gz": "3f63413774e0b65614f3e32c0db4deb571a91780402cc0a2c0e7107c198537dc",
+    "data/season/games/2024.json": "ab2997b74743ff2d87e9af30a7f7c013b307cc00e7894ba0cd04545b05318660",
+    "data/season/boxscores/2024.json": "ac17d001a606cd7785bd230eee96f534c635a10fee8cdaac4a119fd5441db968",
+    "raw/2025.json.gz": "7279d54eae3a6bba6c73445d2cbbcdfe0e36857d0cbfeb454f2acf74ca0e4da4",
+    "data/season/games/2025.json": "3395a325dd1effabe2f636e69fd426ce0fa1dbf3750fbaa7cddcd29d3be7dc24",
+    "data/season/boxscores/2025.json": "fa93f7eef5468c170c944a1edac9e5e6e03b9210f7032a6f827a1f98be543eba",
+    "raw/2026.json.gz": "41d7a46e50ac7ba1f154688b06ef43f2efd374d0b7f7bd431fe77182c351588b",
+    "data/season/games/2026.json": "3249baf3ec3e89fc86dc41a9a1dba8e6da55c06aed79aa8640ff16afa3f80e19",
+    "data/season/boxscores/2026.json": "a5355c1ee8f6464ca860b92e4b02ac9ad0e29f0b706e0d595b19527d5b847f8f"
+  },
+  "seasons": {
+    "2011": {
+      "closed": false,
+      "finalGames": 1311,
+      "teamGamesWithoutUsableLines": 162,
+      "sha256Json": "18c3918f9077d4ec6470c8e0a4cbaa02738dcc640c5fac11a1e89f043b5143f6",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1230
+    },
+    "2012": {
+      "closed": false,
+      "finalGames": 1074,
+      "teamGamesWithoutUsableLines": 168,
+      "sha256Json": "30cf14758b9b2473e3f726d30f176b819d93010366ad33589dc432a65d3bc9f2",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 990
+    },
+    "2013": {
+      "closed": false,
+      "finalGames": 1314,
+      "teamGamesWithoutUsableLines": 502,
+      "sha256Json": "50d2962ad43d4a132e4c400f7e0327f9529f055bcfb8b60a8e76c554def7e1f8",
+      "regularTeamGamesWithoutUsableLines": 332,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1063
+    },
+    "2014": {
+      "closed": false,
+      "finalGames": 1319,
+      "teamGamesWithoutUsableLines": 504,
+      "sha256Json": "1cc0be0b0ad70fd9ffd2f53f6f1d24e80c6fee3bb543b0767dee767f67dc82f4",
+      "regularTeamGamesWithoutUsableLines": 326,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1067
+    },
+    "2015": {
+      "closed": false,
+      "finalGames": 1311,
+      "teamGamesWithoutUsableLines": 486,
+      "sha256Json": "c1f45424e1ee47174f9201ee18d732d620a3aa4482b39fdcbbbd88408ab11612",
+      "regularTeamGamesWithoutUsableLines": 324,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1068
+    },
+    "2016": {
+      "closed": false,
+      "finalGames": 1316,
+      "teamGamesWithoutUsableLines": 494,
+      "sha256Json": "612bf80575300791a71f38bf5e9dcb7905569334b1fcda0bcdfece8e1fab56d5",
+      "regularTeamGamesWithoutUsableLines": 322,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1069
+    },
+    "2017": {
+      "closed": false,
+      "finalGames": 1309,
+      "teamGamesWithoutUsableLines": 484,
+      "sha256Json": "363d4657080813d77144c6b15a3669ba62a1fc1e026db39f9f123055a716cd31",
+      "regularTeamGamesWithoutUsableLines": 326,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1067
+    },
+    "2018": {
+      "closed": false,
+      "finalGames": 1312,
+      "teamGamesWithoutUsableLines": 490,
+      "sha256Json": "8ad87ea25fe1457563ed6c4ebf9ca6456176cdfe00ea5f3fb94ec96b44fd334b",
+      "regularTeamGamesWithoutUsableLines": 326,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1067
+    },
+    "2019": {
+      "closed": false,
+      "finalGames": 1312,
+      "teamGamesWithoutUsableLines": 164,
+      "sha256Json": "75321dcac34af7a64c81fefc0775cd26423115a9315f9bde17d2b7187c504ef7",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1230
+    },
+    "2020": {
+      "closed": false,
+      "finalGames": 1143,
+      "teamGamesWithoutUsableLines": 168,
+      "sha256Json": "ca0f5afe43cb4dfea6c3503e414f10ff76c5976e8ba5b4f099c26b3990b386c7",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 0,
+      "regularGamesInRawStore": 1059
+    },
+    "2021": {
+      "closed": false,
+      "finalGames": 1171,
+      "teamGamesWithoutUsableLines": 12,
+      "sha256Json": "8c1de01306b6bd38ad2ed5fcc36bf7e9080c84dcca784ceec55e745afc2a786f",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 170,
+      "regularGamesInRawStore": 1080
+    },
+    "2022": {
+      "closed": false,
+      "finalGames": 1323,
+      "teamGamesWithoutUsableLines": 0,
+      "sha256Json": "b91b03e26416bd06509d520a6eb54e88e7941abe452e43711fd2b2d6eb5f654f",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 186,
+      "regularGamesInRawStore": 1230
+    },
+    "2023": {
+      "closed": false,
+      "finalGames": 1320,
+      "teamGamesWithoutUsableLines": 0,
+      "sha256Json": "6155c5f8cdf2aa841e5786d88cd96d773bdcdadb4cd27dbe0870ad5453a9fc14",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 180,
+      "regularGamesInRawStore": 1230
+    },
+    "2024": {
+      "closed": false,
+      "finalGames": 1319,
+      "teamGamesWithoutUsableLines": 0,
+      "sha256Json": "87cfd6798ab87784dea77ab0627efdf5df9f9ee8d1e83f73d42fe73e8a6a9645",
+      "regularTeamGamesWithoutUsableLines": 0,
+      "minutesOnlyTeamGames": 178,
+      "regularGamesInRawStore": 1230
+    },
+    "2025": {
+      "closed": true,
+      "finalGames": 1321,
+      "teamGamesWithoutUsableLines": 0,
+      "sha256Json": "827adeac0e93d60ab16be143d847dfce5aacfd0e48f76f422c4ef95b1617683e"
+    },
+    "2026": {
+      "closed": true,
+      "finalGames": 1322,
+      "teamGamesWithoutUsableLines": 8,
+      "sha256Json": "cac3e7764f23428c2c96adf11f3b7f0cb9234f8a5f1f688e2eae91b8511ff163"
+    }
+  }
+}

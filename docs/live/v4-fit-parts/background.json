@@ -1,0 +1,3951 @@
+{
+  "halfLives": [
+    5,
+    10,
+    20,
+    40,
+    80,
+    160
+  ],
+  "shrinkages": [
+    5,
+    10,
+    20,
+    40,
+    80
+  ],
+  "widerHalfLives": [
+    1,
+    2,
+    3,
+    5,
+    10,
+    20,
+    40,
+    80,
+    160
+  ],
+  "widerShrinkages": [
+    5,
+    10,
+    20,
+    40,
+    80,
+    160,
+    320,
+    640
+  ],
+  "horizon": 60,
+  "origins": {
+    "2016": {
+      "fitSeasons": [
+        2012,
+        2015
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5960387849391107,
+          0.7569483512928148,
+          0.8434117005678605,
+          0.8938655226024025
+        ]
+      },
+      "mse": 0.17882077398238144,
+      "observations": 22142,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.19146170650491948
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.18932778766971262
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.18658171495723783
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.18347866880549252
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.18076257684517946
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.1792018333321321
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.17882077398238144
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.17903794916682522
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.19096175375372634
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.18894215167095335
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.18636097350343087
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.18346291437125126
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.18094689545927767
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.17952613508629064
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.17920949710924222
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.1794425032132055
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.19079995565989485
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.18889244609189906
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.18647132473826875
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.1837706290353729
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.1814456177959439
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.1801567651458267
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.17989912771714395
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.18014507486687428
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.1911626468194936
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.18946886444766892
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.1873492585894303
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.18501670566389292
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.18304442540118754
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.18199562562413002
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.18184217730001995
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.18210821398656496
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.19424800725904898
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.1930047691547884
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.19150702704296865
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.189920465210207
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.18864981784740734
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.1880652063116598
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.18810136910591274
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.18839361694956094
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.2025417895362057
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.20184397156727651
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.20107437983655777
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.200337824423179
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.19984215178088566
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.19974323600624247
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.19995123199446335
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.20024120477550972
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.21528655957062162
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.214997262367664
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.21474280659492123
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.2145777027936637
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.21457045078726583
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.21473876541053413
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.21499779475105232
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.21523546144795128
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.22802338504109831
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.22793026198256652
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.22789438936074088
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.22794129657996834
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.22808037228986994
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.22828390248025154
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.22849085416987355
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.22865167701563127
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.2374389470976841
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2374144787791519
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.2374338502950564
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.23750878227978664
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.23763380456687092
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.2377807294387988
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.2379124652376045
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.2380075598956715
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5960387849391107,
+          0.7569483512928148,
+          0.8434117005678605,
+          0.8938655226024025
+        ]
+      }
+    },
+    "2017": {
+      "fitSeasons": [
+        2012,
+        2016
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5951883942622506,
+          0.7619910403805503,
+          0.8441822854241795,
+          0.8898158413556805
+        ]
+      },
+      "mse": 0.17602137980349258,
+      "observations": 28368,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.18797479302312975
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.18597166391493752
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.18337257659106707
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.18041710420953097
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.1778262265674554
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.17635205571350943
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.17602137980349258
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.17626538526417768
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.18748347067260424
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.1855918420402974
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.1831542486947405
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.18040034082950793
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.17800706723868007
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.17667194452333096
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.17640584974710216
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.17666615356075463
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.18732204631510627
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.1855394250140584
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.1832582077677844
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.1806979578354971
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.17849295366645068
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.17728858058709743
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.17708149652708988
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.17735512880793092
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.1876686881194883
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.1860929745026111
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.18410515950417597
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.18190475274336845
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.18004595569421772
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.17907821206318933
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.17897438233108584
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.1792682146090849
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.19065783757603846
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.1895152291881821
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.1881289136072003
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.1866536005600486
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.18547909749192404
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.1849647033847514
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.1850453484320253
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.18536333655407622
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.19872948299801746
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.19810630336559687
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.1974188179002364
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.1967640733276704
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.19633978828517193
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.1962942934804332
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.196537188475677
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.19684784365190178
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.2111966632997387
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.21095553208148524
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.2107540031978163
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.2106418643086151
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.21068151927025788
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.2108857886657682
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.21116883869552977
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.21142091231273838
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.223704808801009
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.22363966459334234
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.2236345976642109
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.22371254026544762
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.22387949156687945
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.22410478098737938
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.22432646749910792
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.22449616876369127
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.23297263509585306
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2329633581228449
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.23299949299585732
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.2330914041421559
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.23323182527373745
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.2333909055911949
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.23353093305330203
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.23363103196538848
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5951883942622506,
+          0.7619910403805503,
+          0.8441822854241795,
+          0.8898158413556805
+        ]
+      }
+    },
+    "2018": {
+      "fitSeasons": [
+        2012,
+        2017
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5967015771278912,
+          0.7672759753562076,
+          0.8446457471774637,
+          0.8913303929084652
+        ]
+      },
+      "mse": 0.1754058995072745,
+      "observations": 34296,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.1870164324521372
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.18508280704107985
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.18256613643737138
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.17969731622901683
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.17717426139895182
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.17573225903912457
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.1754058995072745
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.1756439507754926
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.1865495283163353
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.18472630513248772
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.18236956593173637
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.17970016517127776
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.1773724410749055
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.176067757195066
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.17580494006963154
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.1760586998279673
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.1864124004096255
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.1846967382029356
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.18249430080155588
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.18001573037171983
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.1778732400212029
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.1766968914363807
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.17649155007974476
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.176757745493888
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.18680077354268626
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.1852885515658628
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.18337455678944067
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.18124923468903612
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.17944605218150503
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.17850098873382644
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.1783956316417602
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.17868022321003216
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.18983326308774548
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.18874437902326577
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.18741840674439256
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.18600131765909003
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.184866021517048
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.18436275278648387
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.18443572453314405
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.18474163604009355
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.1978515198628031
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.19726623123854978
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.19661844241734913
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.19599798004157953
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.19559170999151082
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.19554444155303669
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.19577449182123768
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.19607177955728858
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.21013760867193546
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.20991862003766115
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.20973786568385464
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.20964016944322783
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.20968255029165608
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.2098780784957938
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.210147715607806
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.21038815508532355
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.22241954821820278
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.22236594404404922
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.22237036572539476
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.22245278084264725
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.2226169201956829
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.22283348836377276
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.22304499803664204
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.2232065795407418
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.23150401983579322
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2315005024729505
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.2315408313811635
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.23163374410636675
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.23177106133208245
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.23192411745135838
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.23205778811163238
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.23215301084379414
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5967015771278912,
+          0.7672759753562076,
+          0.8446457471774637,
+          0.8913303929084652
+        ]
+      }
+    },
+    "2019": {
+      "fitSeasons": [
+        2012,
+        2018
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5957599197822662,
+          0.7678781958070968,
+          0.8442698106790614,
+          0.8919866656886463
+        ]
+      },
+      "mse": 0.1762786006016618,
+      "observations": 40206,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.1873346858636926
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.1854249220973771
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.18296687018373956
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.18020486070872935
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.17782057775212423
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.17650941992675706
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.1762786006016618
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.1765755617431683
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.18692097610786157
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.18512069956223323
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.18282020979151678
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.1802531952646054
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.17805841459177096
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.17687907692949903
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.1767078403670419
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.1770181154177769
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.1868418746276436
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.18514801994009977
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.18299914413469928
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.18061813349033665
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.178602319982062
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.17754541522975076
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.17742738101954117
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.17774748911253363
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.18734645079603884
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.18585346681367726
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.18398728248189392
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.1819494356058759
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.1802599716967747
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.17942218684755043
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.17939532262535532
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.17972844941282462
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.19061616735136802
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.1895403705877561
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.18824882846000376
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.18689608445784575
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.18584511307467513
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.18542176492352838
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.18555351420338118
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.18589597010175524
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.19889219311838777
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.1983117151519028
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.19768072200638545
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.19709456151072144
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.1967350124875242
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.196733138782956
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.19699731816384627
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.19731623612499247
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.2113448345387777
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.21112462176312755
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.21094732698775603
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.21086087289045197
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.2109209964157114
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.21113525002692515
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.21141987622624556
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.21167027882653844
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.22368517735693577
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.22362859915687416
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.22363126151923662
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.22371475769712898
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.22388310512394582
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.22410543002700212
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.2243222757737799
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.22448774564523974
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.23277419132561622
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.23276822266623265
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.23280621848172559
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.23289774610497108
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.23303515958461973
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.23318951573887384
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.23332488761594777
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.23342154994380943
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5957599197822662,
+          0.7678781958070968,
+          0.8442698106790614,
+          0.8919866656886463
+        ]
+      }
+    },
+    "2020": {
+      "fitSeasons": [
+        2012,
+        2019
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5925931782602508,
+          0.7653950399410643,
+          0.8379640753610331,
+          0.8884085679272482
+        ]
+      },
+      "mse": 0.17876631095902829,
+      "observations": 46524,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.19048320483219916
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.18848527542827653
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.18589437080271085
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.1829737820342519
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.1804428742732929
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.17903498462194584
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.17876631095902829
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.1790619449030915
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.1900363604658156
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.1881516583472158
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.18572451799339598
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.18300726186384467
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.1806745625699978
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.17940505576483917
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.17919919635205683
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.17950893359777587
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.18994406488586738
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.18816916286807617
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.1858991827144978
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.18337526909560678
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.1812290341093085
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.18008741283507562
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.17993721925915668
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.18025716035113645
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.1904512382253316
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.18888356151509209
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.1869064908660141
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.1847389156197273
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.18293208668348793
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.18201868533484902
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.18196338513974245
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.18229649420169708
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.19378672163373797
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.1926504160860337
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.1912701119260291
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.18981513625104382
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.18867305474889973
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.18819165498620097
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.1883016207938393
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.1886438134286663
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.2022394153497916
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.20161796765014858
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.20092775361702397
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.20027477377240444
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.19985689254937009
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.19981839596971798
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.2000688088367088
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.20038726722333927
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.21496884194220267
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.21472543182211715
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.21451510779009672
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.21439227358646676
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.2144214867762982
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.2146167332631673
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.21489420958179428
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.21514419215074757
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.22759292544345733
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.22752451941485205
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.22751056259749816
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.22757618714812844
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.22772979606066507
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.22794327869495948
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.2281568002007973
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.228321984558479
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.23689550578757138
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2368837158342241
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.23691361301365557
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.2369966000571926
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.2371271520353603
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.2372774853113275
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.2374113465781739
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.2375078421073693
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5925931782602508,
+          0.7653950399410643,
+          0.8379640753610331,
+          0.8884085679272482
+        ]
+      }
+    },
+    "2021": {
+      "fitSeasons": [
+        2012,
+        2020
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5887481403023271,
+          0.7605737136591579,
+          0.8342868209416185,
+          0.8845974727560619
+        ]
+      },
+      "mse": 0.1798512767368235,
+      "observations": 52219,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.19196609382268262
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.18993551203358
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.1872943665714671
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.18429686344367205
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.1816685130752002
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.18017275286006681
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.1798512767368235
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.18012587958166543
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.19150446352092565
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.18958970968234973
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.18711609549761846
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.1843271200277114
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.1819029827979789
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.1805506426999895
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.18029470659253805
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.18058421342137915
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.19141127896934756
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.18960872693632275
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.18729574541294106
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.1847049149199272
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.18247280335308114
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.18125297738177498
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.18105513664325995
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.1813554768739778
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.19193771847879612
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.19034655834088468
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.1883325028352658
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.1861064041964506
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.1842235017098024
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.18324002872234268
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.1831412408729435
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.183455697897665
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.19536257122881373
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.1942096579385914
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.1928024303813535
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.191303544035475
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.1901031022601539
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.18956658932810563
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.1896407183513572
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.18996595537026978
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.20399230460229453
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.20335972133405839
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.2026510842512389
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.20196793966316903
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.20150986774515373
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.20143259444762965
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.20165626074411072
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.2019605179564498
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.21693959327207268
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.2166884299744126
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.21646542621353687
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.21632265039068882
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.2163260852220358
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.21649640101519296
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.21675589757532274
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.21699548074889055
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.22974748964855984
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.2296739503708914
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.2296517709900179
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.22970502555191386
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.22984320540498224
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.23004189103950584
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.23024448528594507
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.23040303990500985
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.23917132258456802
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2391564608270294
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.23918150748598618
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.23925740302637954
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.2393793241780066
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.23952144868723754
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.23964918133187782
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.23974186874640188
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5887481403023271,
+          0.7605737136591579,
+          0.8342868209416185,
+          0.8845974727560619
+        ]
+      }
+    },
+    "2022": {
+      "fitSeasons": [
+        2012,
+        2021
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5831070112110621,
+          0.758140478414429,
+          0.8329113183713507,
+          0.8828469804667538
+        ]
+      },
+      "mse": 0.18345589332037204,
+      "observations": 56366,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.19551180235879848
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.19347007030655017
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.1908151949297013
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.18781157520496147
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.18519899005529333
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.18373952569675475
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.18345589332037204
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.18375667978698462
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.19507159367112714
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.19314678514104391
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.1906606394982191
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.18786617422951102
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.18545716210838536
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.1841394630442426
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.18391978872937273
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.18423456981880976
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.19500407381214627
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.1931927202716976
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.1908686512750635
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.18827330284600816
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.1860560699339587
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.18486956877606314
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.18470661633690277
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.18503141123035544
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.19558893654673623
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.19399216108787184
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.19197097242369662
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.1897437788739344
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.18787692073567722
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.1869255404003803
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.18685974192225555
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.18719737752392324
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.19918903270586888
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.19803897122028508
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.1966358459218482
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.19514713758078692
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.19396958514352045
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.19346603813856855
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.1935710889508942
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.19391754531204317
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.20818253152544944
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.20756218716192537
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.20687060796428006
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.20621115525601907
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.20578449803417634
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.20574142501943007
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.205993364289679
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.20631609304818066
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.22164989712411565
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.22141404368046333
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.22121246868135186
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.22109720857889786
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.22113207474829238
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.22133217461936786
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.22161422974461212
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.22186794645247504
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.23496405108410726
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.2349028253872288
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.2348979335806424
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.23497288883232764
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.23513457497307516
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.23535421152044905
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.23557196295252628
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.23573978356556757
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.24475797363665527
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2447509790687321
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.24478708874835242
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.2448767528241333
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.24501326339895746
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.24516803562285033
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.24530471509612994
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.24540280281413251
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5831070112110621,
+          0.758140478414429,
+          0.8329113183713507,
+          0.8828469804667538
+        ]
+      }
+    },
+    "2023": {
+      "fitSeasons": [
+        2012,
+        2022
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5777937188407385,
+          0.7532446176635751,
+          0.8283830452037844,
+          0.877630199359852
+        ]
+      },
+      "mse": 0.18722983069890775,
+      "observations": 62546,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.1987206838238077
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.19670988804375708
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.19412814207366835
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.19123826246695083
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.18875998349386447
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.18742340618607442
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.18722983069890775
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.18758670205832928
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.1983533643726382
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.19645847145952594
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.19404311880900185
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.19135857223736244
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.1890791248816366
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.18787987189673905
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.18774701024326693
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.1881158888101869
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.19837350141957594
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.19659091995064262
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.1943351060510047
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.19184561329106714
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.189752982553882
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.18868032571951127
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.18860084342833242
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.1889776951064251
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.19915064946042435
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.19758020581201974
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.19562200716758715
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.19349239118355158
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.19174016356602464
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.1908934740094655
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.19090454385687716
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.19129022627376782
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.20324481627812818
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.20211527836197798
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.20076295446425735
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.19935300172760784
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.1982676705744795
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.1978483575985486
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.1980155244915905
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.1984010414270688
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.21304785229108067
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.2124402187002188
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.2117830316117681
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.21117727418711743
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.2108132400042978
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.21082737378178687
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.21112176728687845
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.21147142649492182
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.22746498783153418
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.22723533517515213
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.2270534613616989
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.22696939946541336
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.22704050079606072
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.2272736894460054
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.22758046052494313
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.22784999754547122
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.24159520519842242
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.24153659423689422
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.24154192720118228
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.24163333953170613
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.24181407519269227
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.24205109591524993
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.2422819013068381
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.2424581392756205
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.2519465829257289
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.25194065385029574
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.25198187717353665
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.2520798816546365
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.2522260241704413
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.2523895811977962
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.2525328811322421
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.25263525936717424
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5777937188407385,
+          0.7532446176635751,
+          0.8283830452037844,
+          0.877630199359852
+        ]
+      }
+    },
+    "2024": {
+      "fitSeasons": [
+        2012,
+        2023
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5728978796002925,
+          0.7481689740508108,
+          0.8252354195526639,
+          0.8715988436587779
+        ]
+      },
+      "mse": 0.18833792463326743,
+      "observations": 68335,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.19993580048686596
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.19793463493332733
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.195348128110684
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.19243537569407157
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.18991966501001492
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.1885480197897699
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.18833792463326743
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.18869509370204984
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.1995699856430615
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.1976835916606946
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.19526232027643856
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.19255397377810413
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.19023664408789664
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.18900208996685988
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.18885216962357843
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.18922049518951756
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.19960287132179508
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.19782764963510602
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.19556478354713278
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.1930505907582026
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.19091960646474118
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.18981133429370828
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.18971415806365283
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.19008953757986996
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.20042190879575808
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.19885673564721787
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.19688956693420334
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.19473390762181783
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.19294283376718932
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.1920602775882277
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.19205270710732011
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.19243536007376283
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.20465176077245906
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.20352401842844298
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.20216050590977255
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.2007243592939305
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.19960229572274168
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.19914958619587558
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.199298493713138
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.19967934720879968
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.21472333468513685
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.21411509839981235
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.21344741580815116
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.21282018408548362
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.2124276924212883
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.21241668389158172
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.21269717849640352
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.21304268643103486
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.22952265803699196
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.22929183188216093
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.22910258375857342
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.2290045157603507
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.229057890688706
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.2292759985630266
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.22957463065278622
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.22984171617238003
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.2440326326053488
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.24397312598522725
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.24397413894858117
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.24405767284075336
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.24422877486067787
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.2444579002411342
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.24468460930418917
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.24485968582623624
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.2546665226758796
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2546600589603568
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.25469896622718047
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.254792839017664
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.2549340444715591
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.2550936716154411
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.2552350074269237
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.25533687146862993
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5728978796002925,
+          0.7481689740508108,
+          0.8252354195526639,
+          0.8715988436587779
+        ]
+      }
+    },
+    "2025": {
+      "fitSeasons": [
+        2012,
+        2024
+      ],
+      "params": {
+        "halfLife": 1,
+        "shrinkage": 320,
+        "tierRates": [
+          0.5666918324681751,
+          0.7453209306922687,
+          0.8249133847892375,
+          0.869325547427574
+        ]
+      },
+      "mse": 0.18954271292172478,
+      "observations": 74473,
+      "grid": [
+        {
+          "halfLife": 1,
+          "shrinkage": 5,
+          "mse": 0.2010141908356961
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 10,
+          "mse": 0.19903292859583294
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 20,
+          "mse": 0.19647338323073738
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 40,
+          "mse": 0.1935898254350158
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 80,
+          "mse": 0.19109801764351939
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 160,
+          "mse": 0.189741868956309
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 320,
+          "mse": 0.18954271292172478
+        },
+        {
+          "halfLife": 1,
+          "shrinkage": 640,
+          "mse": 0.18990916386779164
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 5,
+          "mse": 0.20066963407890662
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 10,
+          "mse": 0.19880160539729205
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 20,
+          "mse": 0.1964052778327706
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 40,
+          "mse": 0.19372395394716602
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 80,
+          "mse": 0.19142869084160255
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 160,
+          "mse": 0.1902083394030659
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 320,
+          "mse": 0.19006840231549033
+        },
+        {
+          "halfLife": 2,
+          "shrinkage": 640,
+          "mse": 0.1904452287887951
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 5,
+          "mse": 0.20072849259238598
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 10,
+          "mse": 0.19897015683742522
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 20,
+          "mse": 0.19673026775116847
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 40,
+          "mse": 0.19424095811998415
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 80,
+          "mse": 0.19213022046652017
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 160,
+          "mse": 0.19103487742414701
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 320,
+          "mse": 0.19094676840092936
+        },
+        {
+          "halfLife": 3,
+          "shrinkage": 640,
+          "mse": 0.1913299183808729
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 5,
+          "mse": 0.2016063636479382
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 10,
+          "mse": 0.20005524498505967
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 20,
+          "mse": 0.19810726801349068
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 40,
+          "mse": 0.1959723478120064
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 80,
+          "mse": 0.19419798647732875
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 160,
+          "mse": 0.19332592719155686
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 320,
+          "mse": 0.1933257535413458
+        },
+        {
+          "halfLife": 5,
+          "shrinkage": 640,
+          "mse": 0.19371489907868547
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 5,
+          "mse": 0.20599982211103726
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 10,
+          "mse": 0.2048807151493897
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 20,
+          "mse": 0.20352912464949804
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 40,
+          "mse": 0.20210574996808037
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 80,
+          "mse": 0.20099370856624163
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 160,
+          "mse": 0.20054711656536167
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 320,
+          "mse": 0.20070060330034845
+        },
+        {
+          "halfLife": 10,
+          "shrinkage": 640,
+          "mse": 0.20108584439763658
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 5,
+          "mse": 0.21637297578807563
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 10,
+          "mse": 0.21576845604316594
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 20,
+          "mse": 0.21510609044192133
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 40,
+          "mse": 0.21448451444779643
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 80,
+          "mse": 0.21409644009375342
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 160,
+          "mse": 0.2140883376649387
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 320,
+          "mse": 0.214371488693373
+        },
+        {
+          "halfLife": 20,
+          "shrinkage": 640,
+          "mse": 0.21471978513880477
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 5,
+          "mse": 0.23157662013718297
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 10,
+          "mse": 0.23134693579197374
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 20,
+          "mse": 0.23115951406377866
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 40,
+          "mse": 0.23106344852717792
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 80,
+          "mse": 0.2311186213127344
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 160,
+          "mse": 0.23133838519260633
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 320,
+          "mse": 0.2316388749053118
+        },
+        {
+          "halfLife": 40,
+          "shrinkage": 640,
+          "mse": 0.23190784209553233
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 5,
+          "mse": 0.2464734964853198
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 10,
+          "mse": 0.24641424410539625
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 20,
+          "mse": 0.24641581385638403
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 40,
+          "mse": 0.2465000325214347
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 80,
+          "mse": 0.24667198233098736
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 160,
+          "mse": 0.2469022147057624
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 320,
+          "mse": 0.24713023911465426
+        },
+        {
+          "halfLife": 80,
+          "shrinkage": 640,
+          "mse": 0.24730654720613976
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 5,
+          "mse": 0.25738994749341637
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 10,
+          "mse": 0.2573835103737975
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 20,
+          "mse": 0.2574225872797414
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 40,
+          "mse": 0.2575167163693839
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 80,
+          "mse": 0.25765836576978574
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 160,
+          "mse": 0.2578186881035259
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 320,
+          "mse": 0.2579608498935505
+        },
+        {
+          "halfLife": 160,
+          "shrinkage": 640,
+          "mse": 0.2580634479869189
+        }
+      ],
+      "widened": true,
+      "firstGrid": {
+        "halfLife": 5,
+        "shrinkage": 80,
+        "tierRates": [
+          0.5666918324681751,
+          0.7453209306922687,
+          0.8249133847892375,
+          0.869325547427574
+        ]
+      }
+    }
+  }
+}
