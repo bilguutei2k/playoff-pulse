@@ -156,11 +156,11 @@ export function OddsTable({
   // box (the effect above moves them there).
   const stickyTop = allColumns ? "lg:sticky lg:top-[var(--mast)]" : "sticky top-[var(--mast)]";
 
-  const setView = (next: View) => setQuery({ view: next, sort }, "replace");
+  const setView = (next: View) => setQuery({ ...query, view: next }, "replace");
   const sortBy = (key: SortKey) =>
     setQuery(
       {
-        view,
+        ...query,
         sort: sort.key === key ? { key, descending: !sort.descending } : { key, descending: defaultDescending(key) },
       },
       "replace",

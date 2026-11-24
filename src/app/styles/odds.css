@@ -124,3 +124,117 @@
     box-shadow: 0 2px 0 var(--color-ink);
   }
 }
+
+@layer components {
+  /* Seeding grid (SeedGrid.tsx): fixed columns so 15 seeds fit a 358px phone column. */
+  .seed-table {
+    min-width: 340px;
+    table-layout: fixed;
+  }
+
+  .seed-table .seed-team-col {
+    width: 64px;
+  }
+
+  /* Beats .tb's cell padding (td + td), which would push the text off its shade. */
+  .tb.seed-table th,
+  .tb.seed-table td {
+    padding: 0;
+  }
+
+  .seed-table thead th {
+    border-bottom: 0;
+    color: var(--color-ink-2);
+    font-size: var(--text-12);
+    text-align: center;
+  }
+
+  .tb.seed-table th.seed-corner {
+    border-bottom: 2px solid var(--color-ink);
+    padding-bottom: 6px;
+    text-align: left;
+    vertical-align: bottom;
+  }
+
+  .tb.seed-table th.seed-band {
+    border-bottom: 1px solid var(--color-line-strong);
+    color: var(--color-ink);
+    font-weight: 700;
+    padding-bottom: 4px;
+  }
+
+  .tb.seed-table th.seed-num {
+    border-bottom: 2px solid var(--color-ink);
+    padding: 4px 0 6px;
+  }
+
+  .tb.seed-table tbody th.seed-team {
+    border-bottom: 1px solid var(--color-panel);
+    padding: 0 6px 0 0;
+    white-space: nowrap;
+  }
+
+  .seed-table td.seed-cell {
+    border-bottom: 1px solid var(--color-panel);
+    border-left: 1px solid var(--color-panel);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    height: 30px;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  /* A wider white rule where the play-in and the out bands begin. */
+  .seed-table .seed-gap {
+    border-left: 4px solid var(--color-panel);
+  }
+
+  .seed-table .seed-s1 {
+    background: var(--color-heat-1);
+  }
+
+  .seed-table .seed-s2 {
+    background: var(--color-heat-3);
+  }
+
+  .seed-table .seed-s3 {
+    background: var(--color-heat-5);
+  }
+
+  .seed-table .seed-s4 {
+    background: var(--color-heat-6);
+    color: #ffffff;
+  }
+
+  .seed-table .seed-s5 {
+    background: var(--color-heat-8);
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .seed-mark {
+    background: var(--color-ink-2);
+    border-radius: 50%;
+    display: inline-block;
+    height: 3px;
+    vertical-align: middle;
+    width: 3px;
+  }
+
+  @media (min-width: 640px) {
+    .seed-table td.seed-cell {
+      font-size: var(--text-13);
+      height: 32px;
+    }
+
+    .seed-table .seed-team-col {
+      width: 84px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .seed-table .seed-team-col {
+      width: 150px;
+    }
+  }
+}

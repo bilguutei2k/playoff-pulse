@@ -4,6 +4,7 @@ import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
 import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
+import { SeedGrid } from "@/components/live/SeedGrid";
 import { Ticker } from "@/components/live/Ticker";
 import { TitleOddsChart } from "@/components/live/TitleOddsChart";
 import { WhoIsOut } from "@/components/live/WhoIsOut";
@@ -11,6 +12,7 @@ import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
 import type { SeasonPhase } from "@/lib/season/types";
 import { formatDateTimePt, formatShortDay } from "@/lib/utils/dates";
 import { oddsRows, teamAbsences } from "@/lib/view/odds";
+import { seedGrids } from "@/lib/view/seed-grid";
 import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
 import { titleChartStyles } from "./chart-colors";
 
@@ -92,6 +94,18 @@ export default async function OddsPage() {
               How the season is simulated
             </SiteLink>
           </p>
+        </section>
+
+        <section aria-labelledby="seeds-title" className="mt-12 sm:mt-14">
+          <div className="sh">
+            <h2 id="seeds-title">Where each team finishes</h2>
+            <span>Seed chances</span>
+          </div>
+          <p className="mb-4 max-w-3xl text-[14px] text-ink-2">
+            Chance of each seed when the regular season ends, from the same{" "}
+            {forecast.iterations.toLocaleString("en-US")} simulations, in percent. Darker is likelier; a dot is under 1%.
+          </p>
+          <SeedGrid grids={seedGrids(rows)} exact={forecast.phase !== "regular-season"} />
         </section>
 
         <div className="mt-14 grid gap-x-20 gap-y-14 sm:mt-[72px] lg:grid-cols-2">
