@@ -11,6 +11,9 @@ export const V5_FIRST_ET_DATE: string | null = "2026-11-25";
  * to null or reverting the code would make the checks reject rows already written. Setting
  * this date is how v5 is stopped after its first seal: no v5 seal or missed row after it,
  * `verify-ledger` rejects a v5 seal after it, and the watchdog expects none after it.
+ * Never set it earlier than an ET date v5 has already sealed: `verify-ledger` would reject
+ * those rows and block every push. Set it to the current slate's date or later, and change
+ * `V5.lastEtDate` in scripts/live/watchdog-decision.mjs in the same commit.
  */
 export const V5_LAST_ET_DATE: string | null = null;
 

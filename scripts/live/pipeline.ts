@@ -122,7 +122,7 @@ import { parseReportPdf } from "./report-pdf";
 import { expectedSiteFiles, publishedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
 import { isV4Row, SHADOW_FILE, shadowV4 } from "./v4/live-v4";
-import { shadowV5FileProblems, v5ParamsProblems } from "./v5-shadow/check";
+import { shadowV5FileOnDiskProblems, shadowV5FileProblems, v5ParamsProblems } from "./v5-shadow/check";
 import { isV5Row, SHADOW_V5_FILE, shadowV5 } from "./v5-shadow/live-v5";
 
 const SEASON = LIVE_SEASON;
@@ -1032,8 +1032,57 @@ async function main(): Promise<void> {
       "utf-8",
     );
   }
-  if (shadowContent) writeText(path.join(LIVE_DIRECTORY, SHADOW_FILE(LABEL)), shadowContent);
-  if (shadowV5Content) writeText(path.join(LIVE_DIRECTORY, SHADOW_V5_FILE(LABEL)), shadowV5Content);
+  // The shadow files are written inside guards of their own (outside review of PR #44): by now
+  // every model's rows are in the ledger, so a shadow file that cannot be written must not stop
+  // the run before health and the site files are written, or the push would lose those seals.
+  if (shadowContent) {
+    const file = path.join(LIVE_DIRECTORY, SHADOW_FILE(LABEL));
+    try {
+      writeText(file, shadowContent);
+    } catch (error) {
+      // What is left there is unknown (nothing, the previous file or part of a new one), and
+      // `verify:live` reads it, so it is removed: v4's check accepts a missing shadow file.
+      const note = `shadow-v4.json could not be written and was withdrawn: ${error instanceof Error ? error.message : String(error)}`;
+      try {
+        fs.rmSync(file, { force: true, recursive: true });
+      } catch {
+        // Nothing more can be done here; `verify:live` decides.
+      }
+      shadowProblem = shadowProblem ? `${shadowProblem}; ${note}` : note;
+      log(`shadow v4: ${note}`);
+    }
+  }
+  let shadowV5Written = false;
+  if (shadowV5Content) {
+    try {
+      writeText(path.join(LIVE_DIRECTORY, SHADOW_V5_FILE(LABEL)), shadowV5Content);
+      shadowV5Written = true;
+    } catch (error) {
+      const note = `shadow-v5.json could not be written: ${error instanceof Error ? error.message : String(error)}`;
+      shadowV5Problem = shadowV5Problem ? `${shadowV5Problem}; ${note}` : note;
+      log(`shadow v5: ${note}`);
+    }
+  }
+  if (!shadowV5Written) {
+    // This run wrote no v5 file (v5 failed, nothing was due, a dry run, or the write failed), so
+    // whatever is on disk goes to the push as it is, and `verify:live` will check it against this
+    // run's ledger and today's constants, which may have changed since it was written (the stop
+    // switch). The job runs that same check now and withdraws a file that would fail it: a
+    // stored shadow file can never block a push that carries seals. The record page then shows
+    // no v5 section until v5 writes a file again.
+    const stored = path.join(LIVE_DIRECTORY, SHADOW_V5_FILE(LABEL));
+    const stale = shadowV5FileOnDiskProblems(stored, [...ledgerAll, ...appended]);
+    if (stale && stale.length > 0) {
+      const note = `stored shadow-v5.json withdrawn: ${stale.join("; ")}`;
+      try {
+        fs.rmSync(stored, { force: true, recursive: true });
+      } catch (error) {
+        log(`shadow v5: the stored file could not be removed: ${error instanceof Error ? error.message : String(error)}`);
+      }
+      shadowV5Problem = shadowV5Problem ? `${shadowV5Problem}; ${note}` : note;
+      log(`shadow v5: ${note}`);
+    }
+  }
   if (boxRun.added.length > 0) {
     writeText(liveBoxScorePath(SEASON), `${JSON.stringify(liveBox)}\n`);
   }

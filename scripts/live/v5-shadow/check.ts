@@ -44,3 +44,19 @@ export function shadowV5FileProblems(shadow: unknown, ledgerRows: readonly Ledge
   else if (!(record.sealed <= sealed.size)) problems.push(`the v5 shadow record counts ${record.sealed} sealed games, more than v5 sealed (${sealed.size})`);
   return problems;
 }
+
+/**
+ * The same check on the v5 shadow file already on disk, for a run that writes no new one (v5
+ * failed, or nothing was due). That file goes to the push as it is, and `verify:live` checks it
+ * against the run's ledger and today's constants, which may have changed since it was written
+ * (the stop switch). Null when there is no file. Never throws: a file that cannot be read or
+ * parsed is a problem.
+ */
+export function shadowV5FileOnDiskProblems(file: string, ledgerRows: readonly LedgerRow[]): string[] | null {
+  try {
+    if (!fs.existsSync(file)) return null;
+    return shadowV5FileProblems(JSON.parse(fs.readFileSync(file, "utf-8")), ledgerRows);
+  } catch (error) {
+    return [`shadow-v5.json could not be checked: ${error instanceof Error ? error.message : String(error)}`];
+  }
+}

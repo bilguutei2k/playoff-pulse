@@ -1,6 +1,9 @@
 // v5's shadow wiring (registration-v5.md, "Wiring as built"): the first date, the stop switch,
 // the ledger rules, the watchdog's constants and incidents, and the job's shared check.
 
+import * as fs from "node:fs";
+import * as os from "node:os";
+import * as path from "node:path";
 import { describe, expect, it } from "vitest";
 import { REFERENCE_MODEL_VERSION } from "@/lib/season/params";
 import { V4_MODEL_VERSION } from "@/lib/season/params-v4";
@@ -11,7 +14,7 @@ import { SEASON_TEAMS } from "@/lib/season/teams";
 import type { LedgerRow, MissedRow, SealRow, SeasonGame } from "@/lib/season/types";
 import { ledgerProblems } from "../scripts/live/verify-ledger";
 import { isV4Row } from "../scripts/live/v4/live-v4";
-import { shadowV5FileProblems, v5ParamsProblems } from "../scripts/live/v5-shadow/check";
+import { shadowV5FileOnDiskProblems, shadowV5FileProblems, v5ParamsProblems } from "../scripts/live/v5-shadow/check";
 import { loadWarmStateV5 } from "../scripts/live/v5-shadow/checkpoint";
 import { isV5Row, livePlusMinus, shadowV5, type ShadowV5Input } from "../scripts/live/v5-shadow/live-v5";
 import { checkedKeys, decideWatchdog, V5 } from "../scripts/live/watchdog-decision.mjs";
@@ -207,6 +210,34 @@ describe("v5's stop switch", () => {
     expect(has(shadowV5FileProblems({ ...file, teams: file.teams.map((t: { champion: number }, i: number) => (i === 0 ? { ...t, champion: t.champion + 0.5 } : t)) }, all), "title odds")).toBe(true);
     expect(has(shadowV5FileProblems(file, ledger.filter((row) => row.gameId !== "in-a")), "more than v5 sealed")).toBe(true);
     expect(has(shadowV5FileProblems({ ...file, modelVersion: V4_MODEL_VERSION }, all), "not v5's")).toBe(true);
+  });
+
+  it("checks the file already on disk the same way, without throwing: what the job runs when it writes no new file", () => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), "v5-shadow-stored-"));
+    try {
+      const stored = path.join(directory, "shadow-v5.json");
+      const ledger = [...baseInput().ledger];
+      expect(shadowV5FileOnDiskProblems(stored, ledger)).toBeNull();
+
+      const out = shadowV5(baseInput({ warmState, firstEtDate: V5_FIRST_ET_DATE, lastEtDate: V5_LAST_ET_DATE }));
+      const all = [...ledger, ...out.seals, ...out.missed];
+      fs.writeFileSync(stored, `${JSON.stringify(out.shadow)}\n`);
+      expect(shadowV5FileOnDiskProblems(stored, all)).toEqual([]);
+
+      // A file written before the stop switch was set: its last date is no longer the constant's.
+      const stopped = shadowV5(baseInput({ warmState, firstEtDate: V5_FIRST_ET_DATE, lastEtDate: "2026-12-01" }));
+      fs.writeFileSync(stored, `${JSON.stringify(stopped.shadow)}\n`);
+      expect(has(shadowV5FileOnDiskProblems(stored, all) ?? [], "last ET date")).toBe(true);
+
+      fs.writeFileSync(stored, "{ not json");
+      expect(has(shadowV5FileOnDiskProblems(stored, all) ?? [], "could not be checked")).toBe(true);
+
+      fs.rmSync(stored);
+      fs.mkdirSync(stored);
+      expect(has(shadowV5FileOnDiskProblems(stored, all) ?? [], "could not be checked")).toBe(true);
+    } finally {
+      fs.rmSync(directory, { recursive: true, force: true });
+    }
   });
 });
 
