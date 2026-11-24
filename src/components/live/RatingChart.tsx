@@ -266,6 +266,8 @@ function Plot({
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft") setIndex((i) => Math.max(0, (i ?? points.length - 1) - 1));
           else if (event.key === "ArrowRight") setIndex((i) => Math.min(points.length - 1, (i ?? 0) + 1));
+          else if (event.key === "Home") setIndex(0);
+          else if (event.key === "End") setIndex(points.length - 1);
           else if (event.key === "Escape") setIndex(null);
           else return;
           event.preventDefault();
