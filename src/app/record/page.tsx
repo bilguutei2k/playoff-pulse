@@ -247,9 +247,9 @@ function ShadowV5Section({ lines }: { lines: ShadowV5Lines }) {
         </>
       ) : null}
       <p className="mt-4 max-w-[68ch] text-[13px] text-ink-2">
-        v5 is v4 with one more reading of each player: how his team did with him on the floor against with him off.
-        It seals every game beside v2 and v4 and keeps its own record from its first seal. It changes no published
-        number.{" "}
+        v5 is v4 with one more reading of each player: how his team did with him on the floor compared with when he
+        sat. It seals every game beside v2 and v4 and keeps its own record from its first seal. It changes no
+        published number.{" "}
         <SiteLink className="pp-link" href="/how-it-works#roster-state">
           What v5 is
         </SiteLink>
