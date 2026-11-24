@@ -1,0 +1,768 @@
+{
+ "note": "Headline numbers from /Users/bilguutei/Desktop/548-reviews/2026-11-23-improve/model-residuals.md; nothing new. Brier/log-loss changes x 1e-4, negative = better than v4; intervals [low, high], 95%, bootstrap over ET dates (2,000 draws). Development seasons 2015-16 to 2023-24 only.",
+ "units": {
+  "changes": "x 1e-4",
+  "coefficients": "points of margin per point of v4's absence charge"
+ },
+ "section3_candidates": {
+  "heldOutGames": 7059,
+  "heldOutSeasons": "2018-19 to 2023-24",
+  "comparison": "recalibrated v4",
+  "candidates": [
+   {
+    "label": "a1 rest days, 3-in-4, 4-in-6 (each side)",
+    "dBrier": 1.21,
+    "ci": [
+     -2.66,
+     5.17
+    ],
+    "dLogLoss": 1.83,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "a2 rest difference (home minus away, 0..3)",
+    "dBrier": -0.21,
+    "ci": [
+     -0.89,
+     0.44
+    ],
+    "dLogLoss": -0.27,
+    "seasonsBetter": 4,
+    "of": 6
+   },
+   {
+    "label": "b1 travel: distance, zones crossed E/W, trip and homestand number",
+    "dBrier": 3.13,
+    "ci": [
+     -0.27,
+     6.59
+    ],
+    "dLogLoss": 7.0,
+    "seasonsBetter": 1,
+    "of": 6
+   },
+   {
+    "label": "b2 altitude (home DEN or UTA)",
+    "dBrier": -1.9,
+    "ci": [
+     -3.94,
+     0.02
+    ],
+    "dLogLoss": -3.76,
+    "seasonsBetter": 5,
+    "of": 6
+   },
+   {
+    "label": "c team-specific home court (past home-minus-road residual)",
+    "dBrier": 1.0,
+    "ci": [
+     0.18,
+     1.81
+    ],
+    "dLogLoss": 2.13,
+    "seasonsBetter": 1,
+    "of": 6
+   },
+   {
+    "label": "d1 recent v4 error, last 5 (home minus away, standardized)",
+    "dBrier": -0.03,
+    "ci": [
+     -0.61,
+     0.51
+    ],
+    "dLogLoss": 0.02,
+    "seasonsBetter": 3,
+    "of": 6
+   },
+   {
+    "label": "d2 recent v4 error, last 10",
+    "dBrier": 0.22,
+    "ci": [
+     -0.55,
+     0.99
+    ],
+    "dLogLoss": 0.52,
+    "seasonsBetter": 3,
+    "of": 6
+   },
+   {
+    "label": "d3 previous meeting's v4 error",
+    "dBrier": -0.39,
+    "ci": [
+     -1.36,
+     0.54
+    ],
+    "dLogLoss": -0.86,
+    "seasonsBetter": 4,
+    "of": 6
+   },
+   {
+    "label": "e1 3PM luck, last 5 (points, net for minus against)",
+    "dBrier": 0.29,
+    "ci": [
+     -0.41,
+     1.02
+    ],
+    "dLogLoss": 0.77,
+    "seasonsBetter": 3,
+    "of": 6
+   },
+   {
+    "label": "e2 3PM luck, last 10",
+    "dBrier": 0.27,
+    "ci": [
+     -0.3,
+     0.83
+    ],
+    "dLogLoss": 0.62,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "e3 3PM luck last 10, for and against separately",
+    "dBrier": -0.94,
+    "ci": [
+     -2.7,
+     0.76
+    ],
+    "dLogLoss": -1.79,
+    "seasonsBetter": 4,
+    "of": 6
+   },
+   {
+    "label": "f1 blowout excess beyond 20, last 10",
+    "dBrier": 1.11,
+    "ci": [
+     -2.02,
+     4.45
+    ],
+    "dLogLoss": 2.92,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "f2 margin beyond v4's 30 cap, last 10",
+    "dBrier": 0.18,
+    "ci": [
+     -1.2,
+     1.63
+    ],
+    "dLogLoss": 0.37,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "g1 contention mismatch after Mar 1",
+    "dBrier": -0.4,
+    "ci": [
+     -2.59,
+     1.92
+    ],
+    "dLogLoss": 0.29,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "g2 contention mismatch, last 14 days",
+    "dBrier": 0.05,
+    "ci": [
+     -0.88,
+     1.05
+    ],
+    "dLogLoss": 0.67,
+    "seasonsBetter": 4,
+    "of": 6
+   },
+   {
+    "label": "g3 last 14 days x v4 logit (confidence change)",
+    "dBrier": 1.39,
+    "ci": [
+     -0.68,
+     3.5
+    ],
+    "dLogLoss": 2.75,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "h blend with v1 (v1 logit)",
+    "dBrier": 1.43,
+    "ci": [
+     -0.19,
+     3.21
+    ],
+    "dLogLoss": 2.8,
+    "seasonsBetter": 1,
+    "of": 6
+   },
+   {
+    "label": "i1 team age at opening (min-weighted, home minus away)",
+    "dBrier": 0.59,
+    "ci": [
+     -0.14,
+     1.36
+    ],
+    "dLogLoss": 1.17,
+    "seasonsBetter": 2,
+    "of": 6
+   },
+   {
+    "label": "i2 age shares: <=23 and >=32 (home minus away)",
+    "dBrier": 1.17,
+    "ci": [
+     0.36,
+     2.01
+    ],
+    "dLogLoss": 2.46,
+    "seasonsBetter": 1,
+    "of": 6
+   },
+   {
+    "label": "i3 age, first 20 games per team only (interaction)",
+    "dBrier": 0.54,
+    "ci": [
+     -0.19,
+     1.35
+    ],
+    "dLogLoss": 1.28,
+    "seasonsBetter": 3,
+    "of": 6
+   }
+  ],
+  "combinedCeiling": {
+   "strictRuleQualifying": [],
+   "lenientPostHoc": {
+    "features": [
+     "b2 altitude (home DEN or UTA)",
+     "d3 previous meeting's v4 error",
+     "e3 3PM luck last 10, for and against separately"
+    ],
+    "dBrier": -3.3,
+    "ci": [
+     -6.17,
+     -0.56
+    ]
+   },
+   "allCandidates": {
+    "dBrier": 10.72,
+    "ci": [
+     1.29,
+     20.33
+    ]
+   }
+  }
+ },
+ "section4_market": {
+  "games": 2460,
+  "market": 0.212258,
+  "v4": 0.21726,
+  "advantage": 0.005,
+  "ci": [
+   0.00229,
+   0.00779
+  ],
+  "note": "advantage = v4 Brier - market Brier (positive: market better), in Brier units",
+  "byDisagreementThird": [
+   {
+    "group": "small",
+    "games": 820,
+    "market": 0.2067,
+    "v4": 0.2071,
+    "advantage": 0.00041,
+    "ci": [
+     -0.00052,
+     0.00135
+    ]
+   },
+   {
+    "group": "middle",
+    "games": 820,
+    "market": 0.2127,
+    "v4": 0.2131,
+    "advantage": 0.00035,
+    "ci": [
+     -0.00247,
+     0.00302
+    ]
+   },
+   {
+    "group": "large",
+    "games": 820,
+    "market": 0.2174,
+    "v4": 0.2317,
+    "advantage": 0.01425,
+    "ci": [
+     0.00722,
+     0.02181
+    ]
+   }
+  ],
+  "byMonth": [
+   {
+    "group": "Oct-Nov",
+    "games": 642,
+    "market": 0.2148,
+    "v4": 0.2174,
+    "advantage": 0.00259,
+    "ci": [
+     -0.00249,
+     0.00804
+    ]
+   },
+   {
+    "group": "Dec",
+    "games": 431,
+    "market": 0.228,
+    "v4": 0.2333,
+    "advantage": 0.00527,
+    "ci": [
+     -7e-05,
+     0.01126
+    ]
+   },
+   {
+    "group": "Jan",
+    "games": 453,
+    "market": 0.2153,
+    "v4": 0.2185,
+    "advantage": 0.00326,
+    "ci": [
+     -0.00298,
+     0.00891
+    ]
+   },
+   {
+    "group": "Feb",
+    "games": 326,
+    "market": 0.2042,
+    "v4": 0.2096,
+    "advantage": 0.0054,
+    "ci": [
+     -0.0014,
+     0.01207
+    ]
+   },
+   {
+    "group": "Mar",
+    "games": 458,
+    "market": 0.2041,
+    "v4": 0.21,
+    "advantage": 0.00595,
+    "ci": [
+     0.00026,
+     0.01177
+    ]
+   },
+   {
+    "group": "Apr+",
+    "games": 150,
+    "market": 0.1895,
+    "v4": 0.2055,
+    "advantage": 0.01608,
+    "ci": [
+     -0.00329,
+     0.03612
+    ]
+   }
+  ]
+ },
+ "section7a": {
+  "set": "clean told participation",
+  "games": 9845,
+  "pooled": {
+   "coef": 0.214,
+   "se": 0.089,
+   "sameSign": 7,
+   "of": 9
+  },
+  "actualMinutesVersion": {
+   "coef": -0.008,
+   "se": 0.078
+  },
+  "tiers": [
+   {
+    "tier": "28+",
+    "coef": 0.58,
+    "se": 0.19,
+    "sameSign": 8,
+    "of": 9
+   },
+   {
+    "tier": "20-28",
+    "coef": 0.289,
+    "se": 0.18,
+    "sameSign": 5,
+    "of": 9
+   },
+   {
+    "tier": "<20",
+    "coef": 0.149,
+    "se": 0.17,
+    "sameSign": 7,
+    "of": 9
+   }
+  ],
+  "star28PerSeason": {
+   "2016": 0.88,
+   "2017": 0.54,
+   "2018": 1.24,
+   "2019": 0.63,
+   "2020": 0.65,
+   "2021": 0.57,
+   "2022": 0.24,
+   "2023": -0.04,
+   "2024": 1.36
+  }
+ },
+ "section7b_cappedMinutes": {
+  "told": {
+   "games": 9845,
+   "dBrier": -0.19,
+   "ci": [
+    -0.51,
+    0.14
+   ],
+   "dLogLoss": -0.41,
+   "seasonsBetter": 7,
+   "of": 9
+  },
+  "report2022to2024": {
+   "games": 3690,
+   "dBrier": 1.0,
+   "ci": [
+    -1.9,
+    4.0
+   ],
+   "dLogLoss": 3.95,
+   "seasonsBetter": 1,
+   "of": 3
+  }
+ },
+ "section7c_toldGain": {
+  "games": 9845,
+  "v4": 0.21248,
+  "toldParticipation": {
+   "brier": 0.21032,
+   "dBrier": -21.65,
+   "ci": [
+    -27.54,
+    -15.65
+   ]
+  },
+  "actualMinutes": {
+   "brier": 0.21043,
+   "dBrier": -20.54,
+   "ci": [
+    -28.31,
+    -12.61
+   ]
+  },
+  "spreadThirds": {
+   "small": {
+    "games": 794,
+    "marketMinusV4": -3.65,
+    "toldGain": -8.98,
+    "ci": [
+     -23.11,
+     5.14
+    ]
+   },
+   "middle": {
+    "games": 794,
+    "marketMinusV4": -2.95,
+    "toldGain": -15.92,
+    "ci": [
+     -30.58,
+     -1.67
+    ]
+   },
+   "large": {
+    "games": 774,
+    "marketMinusV4": -130.93,
+    "toldGain": -23.37,
+    "ci": [
+     -44.19,
+     -2.4
+    ]
+   },
+   "all": {
+    "games": 2362,
+    "marketMinusV4": -45.12,
+    "toldGain": -16.03,
+    "ci": [
+     -25.34,
+     -6.2
+    ]
+   }
+  }
+ },
+ "section8_onOff": {
+  "chosenS3": {
+   "2016": "off",
+   "2017": "off",
+   "2018": "45",
+   "2019": "60",
+   "2020": "35",
+   "2021": "45",
+   "2022": "60",
+   "2023": "35",
+   "2024": "25"
+  },
+  "standard": {
+   "games": 10749,
+   "dBrier": -1.11,
+   "ci": [
+    -1.8,
+    -0.42
+   ],
+   "dLogLoss": -2.47,
+   "ciLogLoss": [
+    -4.05,
+    -0.92
+   ],
+   "seasonsBetter": 5,
+   "of": 9
+  },
+  "reportEra": {
+   "games": 3690,
+   "dBrier": -3.28,
+   "ci": [
+    -4.86,
+    -1.64
+   ],
+   "dLogLoss": -7.19,
+   "ciLogLoss": [
+    -10.77,
+    -3.41
+   ],
+   "seasonsBetter": 3,
+   "of": 3
+  },
+  "told": {
+   "games": 9845,
+   "dBrier": -1.44,
+   "ci": [
+    -2.22,
+    -0.68
+   ],
+   "dLogLoss": -3.16,
+   "ciLogLoss": [
+    -4.94,
+    -1.35
+   ],
+   "seasonsBetter": 5,
+   "of": 9
+  },
+  "sevenA": {
+   "pooled": [
+    0.197,
+    0.088
+   ],
+   "star28": [
+    0.565,
+    0.187
+   ],
+   "star28SameSign": 8
+  },
+  "marketGap": {
+   "v4": 0.005,
+   "spike": 0.00476,
+   "spikeCi": [
+    0.00206,
+    0.00755
+   ],
+   "largestThirdV4": 0.0143,
+   "largestThirdSpike": 0.0139
+  }
+ },
+ "section9_2x2": {
+  "chosenBetaM": {
+   "2016": "0.25",
+   "2017": "0.5",
+   "2018": "0.75",
+   "2019": "0.5",
+   "2020": "0.25",
+   "2021": "0",
+   "2022": "0.25",
+   "2023": "0",
+   "2024": "0"
+  },
+  "cells": {
+   "v4": {
+    "standard": {
+     "dBrier": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "reportEra": {
+     "dBrier": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "told": {
+     "dBrier": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "star28": [
+     0.58,
+     0.19
+    ]
+   },
+   "on/off alone": {
+    "standard": {
+     "dBrier": -1.11,
+     "ci": [
+      -1.8,
+      -0.42
+     ]
+    },
+    "reportEra": {
+     "dBrier": -3.28,
+     "ci": [
+      -4.86,
+      -1.64
+     ]
+    },
+    "told": {
+     "dBrier": -1.44,
+     "ci": [
+      -2.22,
+      -0.68
+     ]
+    },
+    "star28": [
+     0.565,
+     0.187
+    ]
+   },
+   "minutes alone": {
+    "standard": {
+     "dBrier": -0.08,
+     "ci": [
+      -0.59,
+      0.41
+     ]
+    },
+    "reportEra": {
+     "dBrier": -0.29,
+     "ci": [
+      -0.63,
+      0.08
+     ]
+    },
+    "told": {
+     "dBrier": -0.51,
+     "ci": [
+      -0.99,
+      -0.03
+     ]
+    },
+    "star28": [
+     0.562,
+     0.185
+    ]
+   },
+   "both": {
+    "standard": {
+     "dBrier": -1.18,
+     "ci": [
+      -2.02,
+      -0.34
+     ]
+    },
+    "reportEra": {
+     "dBrier": -3.56,
+     "ci": [
+      -5.24,
+      -1.9
+     ]
+    },
+    "told": {
+     "dBrier": -1.92,
+     "ci": [
+      -2.88,
+      -1.0
+     ]
+    },
+    "star28": [
+     0.548,
+     0.183
+    ]
+   }
+  }
+ },
+ "section10a_star28": {
+  "games": 9845,
+  "note": "absences of 2+ games exist in the 28+ tier only in report seasons (2021-22 to 2023-24)",
+  "duration": [
+   {
+    "cell": "first game missed",
+    "coef": 0.534,
+    "se": 0.2,
+    "sameSign": 8,
+    "seasonsWithData": 9,
+    "share": 0.903
+   },
+   {
+    "cell": "2 to 4 games",
+    "coef": 1.0,
+    "se": 0.689,
+    "sameSign": 3,
+    "seasonsWithData": 3,
+    "share": 0.077
+   },
+   {
+    "cell": "5 or more",
+    "coef": -0.191,
+    "se": 1.228,
+    "sameSign": 1,
+    "seasonsWithData": 2,
+    "share": 0.021
+   }
+  ],
+  "backToBack": [
+   {
+    "cell": "second night of a back-to-back",
+    "coef": 0.647,
+    "se": 0.3,
+    "sameSign": 7,
+    "seasonsWithData": 9,
+    "share": 0.29
+   },
+   {
+    "cell": "not",
+    "coef": 0.497,
+    "se": 0.24,
+    "sameSign": 6,
+    "seasonsWithData": 9,
+    "share": 0.71
+   }
+  ],
+  "afterMar1": [
+   {
+    "cell": "after March 1",
+    "coef": 0.388,
+    "se": 0.285,
+    "sameSign": 8,
+    "seasonsWithData": 9,
+    "share": 0.382
+   },
+   {
+    "cell": "before",
+    "coef": 0.721,
+    "se": 0.25,
+    "sameSign": 8,
+    "seasonsWithData": 9,
+    "share": 0.618
+   }
+  ]
+ }
+}
