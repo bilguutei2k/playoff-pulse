@@ -56,7 +56,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!page) return { title: "Player not found" };
   return {
     title: `${page.name}: stats, game log and injuries`,
-    description: `${page.name} of the ${teamDisplay(page.teamId).name}: season averages, shooting, the experimental 548 score, his game log from stored box scores, his NBA injury report listings and what the forecast takes off his team without him.`,
+    // At most 160 characters for the longest name and team (158 today).
+    description: `${page.name}, ${teamDisplay(page.teamId).name}: season stats, experimental 548 score, game log, injury listings and what the forecast takes off without him.`,
     alternates: { canonical: `/players/${athleteId}` },
   };
 }
@@ -295,7 +296,7 @@ export default async function PlayerPage({ params }: Params) {
       <PageStamp generatedAt={generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
-        <SiteLink href="/players" className="text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</SiteLink>
+        <SiteLink href="/players" className="back-link text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</SiteLink>
       </nav>
 
       <header>
