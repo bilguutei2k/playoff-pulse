@@ -89,6 +89,7 @@ import { runSeedingCheck } from "../live/seeding-check";
 import { expectedSiteFiles, publishedSiteFiles, shadowPath } from "../live/site-files";
 import { ledgerProblems } from "../live/verify-ledger";
 import { upgradeLiveState } from "../../src/lib/season/state-schema";
+import { checkOddsHistoryOnDisk } from "../live/odds-history-disk";
 import { marginBreakdown } from "../../src/lib/view/margin";
 import {
   PROJECTION_LABEL,
@@ -1059,6 +1060,35 @@ function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger:
   );
 }
 
+/**
+ * The published odds history (site/{season}/odds-history.json): every invariant the job
+ * checked (dates ascending and unique, the 30 teams in order, probabilities in [0, 1],
+ * rounding, title odds summing to 1, playoff odds at least top-six odds), its last date
+ * the state's slate, the slate's row equal to `state.forecast`, `champion` equal to
+ * `state.history` on shared dates, and the file exactly what the stored snapshots and the
+ * state's forecast produce. Skipped when the view is not published.
+ */
+function checkOddsHistory(state: LiveState): void {
+  const label = seasonLabel(LIVE_SEASON);
+  // The same function, on the same files, that the job ran before it kept the file
+  // (scripts/live/odds-history-disk.ts): a view the job published cannot fail here.
+  const check = checkOddsHistoryOnDisk(path.join(process.cwd(), "data/live"), state, label);
+  if (!check.published) {
+    console.log("Odds history not published; skipped.");
+    return;
+  }
+  assert.deepEqual(
+    check.problems,
+    [],
+    "The odds history must hold its invariants, agree with state.json, and be exactly what the stored snapshots and the state's forecast produce.",
+  );
+  const view = check.view!;
+  console.log(
+    `Odds history holds: ${view.dates.length} dates (${view.dates[0]} to ${view.dates.at(-1)}), ${(check.bytes / 1e3).toFixed(0)} KB, ` +
+      `${check.skipped.length} stored snapshots left out${check.skipped.length > 0 ? ` (${check.skipped.map((skip) => skip.name).join(", ")})` : ""}.`,
+  );
+}
+
 /** The data cache stores items up to 2 MB; warn well before a file the site reads gets there. */
 const SITE_FILE_WARN_BYTES = 1_500_000;
 
@@ -1311,6 +1341,7 @@ export function runLiveChecks(): void {
   if (raw.schemaVersion === 2) checkRecordSplit(raw, publishedRows);
   checkSiteFiles();
   if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, publishedRows);
+  if (raw.schemaVersion === 2) checkOddsHistory(upgradeLiveState(state));
   checkShadowV4(raw as LiveState, ledgerRows);
 }
 

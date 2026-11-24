@@ -6,6 +6,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { createServer, type Server } from "node:http";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { buildOddsHistory } from "@/lib/season/odds-history";
+import { syntheticForecast } from "./support/odds-history-fixtures";
 
 // React memoizes `cache` functions per render. Reproduce that: `render.next()` starts a new
 // render; `render.memoize = false` imitates a route handler, where nothing is memoized.
@@ -36,6 +38,19 @@ const A = "a".repeat(40);
 const B = "b".repeat(40);
 /** A projections view that differs from the default one, so it changes between commits. */
 const NEXT_VIEW = JSON.stringify({ version: 1, seasonLabel: LABEL, fromEtDate: "2026-11-06", games: [] });
+
+const ODDS = `site/${LABEL}/odds-history.json`;
+/** A valid odds history for the bundled state's season, two dates. */
+const oddsHistory = () =>
+  JSON.stringify(
+    buildOddsHistory({
+      season: BUNDLED.season,
+      seasonLabel: LABEL,
+      slate: "2026-11-06",
+      forecast: syntheticForecast(BUNDLED.season, 2),
+      snapshots: [{ name: "2026-11-05.json", text: JSON.stringify(syntheticForecast(BUNDLED.season, 1)) }],
+    }).file,
+  );
 
 /** One published commit: every bundled site file plus a projections view, with markers. */
 function publication(generatedAt: string, probability: number, extra: Record<string, string> = {}) {
@@ -177,6 +192,39 @@ describe("one complete snapshot per render", () => {
     site.faults[`${A}:site/${LABEL}/future-view.json`] = "down";
     expect(await page()).toMatchObject({ via: "network", generatedAt: "2026-11-06T07:50:00Z" });
     expect(fetched(site.requests, A)).not.toContain(`site/${LABEL}/future-view.json`);
+  });
+});
+
+describe("the odds history view", () => {
+  it("is null when the manifest does not list it, as on main's bundled copy", async () => {
+    const { page, p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111) }, A);
+    await page();
+    expect(await p.getOddsHistory()).toBeNull();
+  });
+
+  it("is null from the bundled copy", async () => {
+    const { site, page, p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111, { [ODDS]: oddsHistory() }) }, A);
+    site.faults[`${A}:state.json`] = "down";
+    expect(await page()).toMatchObject({ via: "bundled" });
+    expect(await p.getOddsHistory()).toBeNull();
+  });
+
+  it("is read from the render's one commit, with everything else", async () => {
+    const { site, page, p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111, { [ODDS]: oddsHistory() }) }, A);
+    expect(await page()).toMatchObject({ via: "network", generatedAt: "2026-11-06T07:50:00Z" });
+    const view = await p.getOddsHistory();
+    expect(view).toMatchObject({ seasonLabel: LABEL, dates: ["2026-11-05", "2026-11-06"] });
+    expect(view?.teamIds).toHaveLength(30);
+    expect(fetched(site.requests, A).filter((file) => file === ODDS)).toHaveLength(1);
+  });
+
+  it("costs the snapshot when it matches its hash but breaks an invariant, like every view", async () => {
+    const broken = JSON.parse(oddsHistory());
+    broken.champion[0][0] = 0.9;
+    const { page, p } = await serve({ [A]: publication("2026-11-06T07:50:00Z", 0.111, { [ODDS]: JSON.stringify(broken) }) }, A);
+    expect(await page()).toMatchObject({ via: "bundled", generatedAt: BUNDLED.generatedAt });
+    expect((await p.getDelivery()).delivery).toBe("stored");
+    expect(await p.getOddsHistory()).toBeNull();
   });
 });
 
