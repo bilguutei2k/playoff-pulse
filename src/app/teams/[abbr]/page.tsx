@@ -555,7 +555,10 @@ export default async function TeamPage({ params }: Params) {
   const tileGameId = teamList?.nextGame?.gameId ?? nextGame?.game.id ?? null;
   const tileProjection = projections?.games.find((game) => game.gameId === tileGameId) ?? null;
   const currentAbsences = { points: liveState.absencePoints[team.id] ?? 0, absences };
-  const nextAbsence = nextGameAbsence(tileProjection, team.id, currentAbsences);
+  // A game that is sealed (tonight's, once its morning seal exists, and through the game) takes the seal's own count.
+  const tileRow = schedule.find((game) => game.game.id === tileGameId) ?? null;
+  const tileSeal = tileRow?.forecast?.source === "sealed" ? tileRow.forecast.absence : null;
+  const nextAbsence = nextGameAbsence(tileProjection, team.id, currentAbsences, tileSeal);
   const absenceParts = modeled && teamList ? absenceGap(currentAbsences, nextAbsence) : null;
   const recordStart = liveState.ledgerStartedAt ? formatShortDay(liveState.ledgerStartedAt.slice(0, 10)) : null;
 
@@ -601,12 +604,19 @@ export default async function TeamPage({ params }: Params) {
                   <Hint term="Rating next game" label="Rating next game">
                     The same rating with the points of margin the model counts for absences in the next game taken
                     off: by the NBA report filed for that game, or by current absences until there is one, as its
-                    projection counts them. Who is out can change before tip.
+                    projection counts them. Once the game is sealed, it is what the seal counted. Who is out can
+                    change before tip.
                   </Hint>
                 }
                 value={formatRating(nextAbsence.fromProjection ? row.rating - nextAbsence.points : row.ratingNow!)}
-                note={`${nextAbsence.count > 0 ? `${nextAbsence.count} ${nextAbsence.count === 1 ? "player" : "players"} counted` : "nobody counted"}, ${
-                  nextAbsence.basis === "report" ? "from the NBA report" : "from current absences"
+                note={`${
+                  nextAbsence.count === null
+                    ? "absences counted"
+                    : nextAbsence.count > 0
+                      ? `${nextAbsence.count} ${nextAbsence.count === 1 ? "player" : "players"} counted`
+                      : "nobody counted"
+                }, ${nextAbsence.basis === "report" ? "from the NBA report" : "from current absences"}${
+                  nextAbsence.source === "seal" ? ", as sealed" : ""
                 }`}
               />
             ) : null}

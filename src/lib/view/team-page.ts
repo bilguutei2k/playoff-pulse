@@ -8,6 +8,7 @@ import type { AbsenceDriver, PublishedAbsence } from "@/lib/season/types";
 import { formatShortDay } from "@/lib/utils/dates";
 import { splitPercents } from "@/lib/view/card";
 import type { OddsRow } from "@/lib/view/odds";
+import type { SealAbsence } from "@/lib/view/team";
 import type { TeamGameRow } from "@/lib/view/team";
 import { teamDisplay } from "@/lib/view/teams";
 
@@ -75,17 +76,21 @@ export function teamPercent(probability: number): number {
 
 /**
  * What the model takes off a team for absences in one game, as the team page's summary
- * tile shows it: the game's published projection (its side's `absencePoints`, basis and
- * drivers), or, for a game without one, the season simulation's current absences.
- * No new number: both are published as they are.
+ * tile shows it: what the game's own seal counted once it is sealed (a game that has
+ * tipped has no projection, and its seal is the number its forecast used), else the
+ * game's published projection (its side's `absencePoints`, basis and drivers), or, for a
+ * game with neither, the season simulation's current absences. No new number: all three
+ * are published as they are.
  */
 export type NextGameAbsence = {
   points: number;
   /** "report": the seal rules on the NBA report filed for that game. */
   basis: "report" | "current-absences";
-  /** Players counted with positive points. */
-  count: number;
-  /** Whether the number is the game's projection's (else current absences). */
+  /** Players counted with positive points; null when the seal's list is not complete. */
+  count: number | null;
+  /** Where the number comes from. */
+  source: "seal" | "projection" | "current";
+  /** Whether the number is the game's own (its seal's or its projection's), not current absences. */
   fromProjection: boolean;
   /** The players counted, largest first; null for the fallback (the current-absences list is shown beside it). */
   drivers: readonly AbsenceDriver[] | null;
@@ -95,7 +100,20 @@ export function nextGameAbsence(
   projection: GameProjection | null,
   teamId: string,
   current: { points: number; absences: readonly PublishedAbsence[] },
+  seal: SealAbsence | null = null,
 ): NextGameAbsence {
+  if (seal) {
+    const drivers = seal.drivers ? seal.drivers.filter((driver) => driver.points > 0) : null;
+    return {
+      points: seal.points,
+      // An unfiled side's seal took current absences, as the rule says.
+      basis: seal.unfiled ? "current-absences" : "report",
+      count: drivers ? drivers.length : null,
+      source: "seal",
+      fromProjection: true,
+      drivers,
+    };
+  }
   const side = projection ? (projection.homeId === teamId ? "home" : projection.awayId === teamId ? "away" : null) : null;
   if (projection && side) {
     const unfiled = projection.unfiled[side];
@@ -105,6 +123,7 @@ export function nextGameAbsence(
       // A side the report marks NOT YET SUBMITTED takes current absences, as its seal would.
       basis: projection.basis.kind === "report" && !unfiled ? "report" : "current-absences",
       count: drivers.length,
+      source: "projection",
       fromProjection: true,
       drivers,
     };
@@ -113,6 +132,7 @@ export function nextGameAbsence(
     points: current.points,
     basis: "current-absences",
     count: current.absences.filter((absence) => absence.points > 0).length,
+    source: "current",
     fromProjection: false,
     drivers: null,
   };
