@@ -135,3 +135,12 @@ export function daySummary(games: readonly DayGame[]): DaySummary {
     sentenceParts,
   };
 }
+
+/** The game days before `before`, latest first, at most `limit`: where the home page looks for its last results. */
+export function earlierGameDays(counts: Record<string, number>, before: string, limit: number): string[] {
+  return Object.keys(counts)
+    .filter((day) => day < before && (counts[day] ?? 0) > 0)
+    .sort()
+    .reverse()
+    .slice(0, limit);
+}
