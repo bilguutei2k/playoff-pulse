@@ -1,11 +1,17 @@
-// "Biggest moves": the teams whose published playoff odds rose or fell most between the
-// odds history's last two dates, each beside the final it played in between.
+// "Biggest moves": the teams whose published playoff odds rose or fell most across one
+// slate's games, each beside the final it played.
 //
 // A date's entry is that slate's last published forecast: the job rewrites the date's
 // snapshot on every run of the slate, the season odds count every final so far, and the
-// slate rolls at 6 a.m. ET, after the night's games. So the earlier date's entry already
-// counts that date's games, and the move to the latest entry comes with the games played
-// after it: those dated after the earlier date, up to the latest (today's finals so far).
+// slate rolls at 6 a.m. ET, after the night's games. So an entry already counts its own
+// date's games, and the move from one entry to the next comes with the games dated after
+// the earlier one, up to the later.
+//
+// Which two entries: the last two once the latest slate has a final (the move so far
+// today). Until then the latest entry differs from the one before only by the morning's
+// injury report, so the section would be empty for most of the day, from the roll until
+// the first final. In that stretch it shows the slate before instead: the entry before the
+// latest against the one before that, with that slate's results, and says which day it is.
 // The one computed number is the difference of two published values; the result is
 // placed beside the move and never offered as its cause. Display only. Tests:
 // tests/odds-moves.test.ts.
@@ -22,7 +28,7 @@ export type MoveGame = { opponentId: string; won: boolean; teamScore: number; op
 
 export type OddsMove = {
   teamId: string;
-  /** Published playoff odds on the earlier and the later date. */
+  /** Published playoff odds on the earlier and the later date (`now` is the odds at `to`). */
   before: number;
   now: number;
   /** now − before, in probability (0.042 is 4.2 points), rounded to the published four places. */
@@ -31,7 +37,24 @@ export type OddsMove = {
   game: MoveGame | null;
 };
 
-export type OddsMoves = { from: string; to: string; rises: OddsMove[]; falls: OddsMove[] };
+export type OddsMoves = {
+  from: string;
+  to: string;
+  /**
+   * "since": the latest slate has a final, and `to` is the latest entry (the odds now).
+   * "day": it has none yet, and `to` is the slate before, whose games are all in.
+   */
+  kind: "since" | "day";
+  rises: OddsMove[];
+  falls: OddsMove[];
+};
+
+/** Whether any final is dated after `from` and up to `to`. */
+function anyFinalBetween(games: readonly SeasonGame[], from: string, to: string): boolean {
+  return games.some(
+    (game) => game.etDate > from && game.etDate <= to && game.status === "final" && game.homeScore !== null && game.awayScore !== null,
+  );
+}
 
 /** The team's last final (by tip) dated after `from` and up to `to`, or null. */
 function gameBetween(games: readonly SeasonGame[], teamId: string, from: string, to: string): MoveGame | null {
@@ -55,12 +78,15 @@ function gameBetween(games: readonly SeasonGame[], teamId: string, from: string,
 }
 
 /**
- * The biggest playoff-odds moves between the history's last two dates, or null when the
- * history is absent, has fewer than two dates, or no move reaches MOVE_MIN_POINTS.
+ * The biggest playoff-odds moves across one slate (see the header for which), or null when
+ * the history is absent, has fewer than two dates, or no move reaches MOVE_MIN_POINTS.
  */
 export function oddsMoves(history: OddsHistoryFile | null, games: readonly SeasonGame[]): OddsMoves | null {
   if (!history || history.dates.length < 2) return null;
-  const last = history.dates.length - 1;
+  const latest = history.dates.length - 1;
+  // Before the latest slate's first final, show the slate before it, when the history reaches that far.
+  const waiting = latest >= 2 && !anyFinalBetween(games, history.dates[latest - 1], history.dates[latest]);
+  const last = waiting ? latest - 1 : latest;
   const from = history.dates[last - 1];
   const to = history.dates[last];
   const before = history.makePlayoffs[last - 1];
@@ -83,5 +109,5 @@ export function oddsMoves(history: OddsHistoryFile | null, games: readonly Seaso
   const rises = pick(1);
   const falls = pick(-1);
   if (rises.length === 0 && falls.length === 0) return null;
-  return { from, to, rises, falls };
+  return { from, to, kind: waiting ? "day" : "since", rises, falls };
 }
