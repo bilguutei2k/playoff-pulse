@@ -664,15 +664,19 @@ const loadState = cache(async (): Promise<Loaded<LiveState>> => {
   return withFallback("state.json", source && (() => fetchPublished(source, "state.json", parseState)), () => bundledState);
 });
 
-const loadGames = cache(async (): Promise<Loaded<SeasonGame[]>> => {
+const loadGames = cache(async (): Promise<Loaded<SeasonGame[]> & { key: string | null }> => {
   const source = network(await renderSource());
   const { value: state } = await loadState();
   const relative = `games/${state.season}.json`;
-  return withFallback(
+  const loaded = await withFallback(
     relative,
     source && (() => fetchPublished(source, relative, (text) => parseGames(text, state.season))),
     () => bundledGames(state.season),
   );
+  // What the games were read from: the manifest's content hash, or the bundled copy.
+  const hash = loaded.via === "network" ? (source?.manifest?.files[relative] ?? null) : null;
+  const key = loaded.via === "bundled" ? `bundled:${relative}` : hash ? `sha256:${hash}` : null;
+  return { ...loaded, key };
 });
 
 /** The whole ledger, only while main has no site manifest yet: at the render's commit, else bundled. */
@@ -716,6 +720,13 @@ export const getDelivery = cache(
 
 /** Every game of the live season, in tip order. Empty if no copy can be read. */
 export const getSeasonGames = cache(async (): Promise<SeasonGame[]> => (await loadGames()).value);
+
+/**
+ * A key for the content of this render's games: the manifest's SHA-256 of the games file,
+ * or the bundled copy's name; null when neither is known. Equal keys mean equal games, so
+ * work derived from the games alone can be cached under it across renders.
+ */
+export const getSeasonGamesKey = cache(async (): Promise<string | null> => (await loadGames()).key);
 
 /** Every seal row for games on one ET date, all versions and kinds, in ledger order. */
 export const getDaySeals = cache(async (etDate: string): Promise<SealRow[]> => {
