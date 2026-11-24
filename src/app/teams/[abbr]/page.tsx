@@ -447,22 +447,35 @@ const GAP_TEXT: Record<AbsenceGapPart["kind"], [string, string]> = {
   "only-on-report": ["is listed on it but not counted out now", "are listed on it but not counted out now"],
 };
 
-/** "A, B and C", each a player link. */
+const NAMES_SHOWN = 3;
+
+/** "A, B and C", each a player link; past three, "A, B, C and 3 others". */
 function PlayerList({ players }: { players: AbsenceGapPart["players"] }) {
+  const shown = players.length > NAMES_SHOWN + 1 ? players.slice(0, NAMES_SHOWN) : players;
+  const others = players.length - shown.length;
   return (
     <>
-      {players.map((player, index) => (
+      {shown.map((player, index) => (
         <span key={player.athleteId}>
-          {index === 0 ? "" : index === players.length - 1 ? " and " : ", "}
+          {index === 0 ? "" : index === shown.length - 1 && others === 0 ? " and " : ", "}
           <PlayerLink athleteId={player.athleteId} name={player.name} className="text-ink" />
         </span>
       ))}
+      {others > 0 ? ` and ${others} others` : null}
     </>
   );
 }
 
 /** One sentence: why the season odds' absences and the next game's differ, player by player. */
-function AbsenceGapNote({ parts }: { parts: AbsenceGapPart[] }) {
+function AbsenceGapNote({ parts, notListed, teamName }: { parts: AbsenceGapPart[]; notListed: boolean; teamName: string }) {
+  if (notListed) {
+    return (
+      <p className="mt-3 text-[13px] leading-5 text-ink-2">
+        This total differs from the next game&apos;s because the NBA report filed for that game does not list the{" "}
+        {teamName}, which means nobody listed.
+      </p>
+    );
+  }
   return (
     <p className="mt-3 text-[13px] leading-5 text-ink-2">
       This total differs from the next game&apos;s because that game counts the NBA report filed for it
@@ -676,7 +689,9 @@ export default async function TeamPage({ params }: Params) {
               ) : (
                 <p className="notice-quiet">The model counts no {team.shortName} player as out right now.</p>
               )}
-              {absenceParts ? <AbsenceGapNote parts={absenceParts} /> : null}
+              {absenceParts ? (
+                <AbsenceGapNote parts={absenceParts} notListed={teamList?.filing === "not-listed"} teamName={team.shortName} />
+              ) : null}
             </section>
 
             <section aria-labelledby="results-title" className="mt-16">
