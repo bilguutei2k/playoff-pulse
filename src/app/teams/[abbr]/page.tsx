@@ -11,12 +11,14 @@ import { PlayerLink } from "@/components/live/PlayerLink";
 import { PlayersTable } from "@/components/live/PlayersTable";
 import { RatingChart, type RatingChartPoint } from "@/components/live/RatingChart";
 import { TeamLink } from "@/components/live/TeamLink";
+import { TeamOddsChart } from "@/components/live/TeamOddsChart";
 import { TeamLogo } from "@/components/live/TeamLogo";
 import { NEXT_GAMES_ON_PHONE, TeamNextGames, type NextGameColumn } from "@/components/live/TeamNextGames";
 import { Ticker } from "@/components/live/Ticker";
 import { Tile } from "@/components/live/Tile";
 import {
   getLiveState,
+  getOddsHistory,
   getPlayerIndex,
   getProjections,
   getSeasonGames,
@@ -38,6 +40,7 @@ import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { ratingHistory } from "@/lib/view/rating-history";
 import { gameHref, teamHref } from "@/lib/view/routes";
 import { teamSchedule, type TeamGameRow } from "@/lib/view/team";
+import { teamOddsHistory } from "@/lib/view/team-odds-history";
 import {
   absenceGap,
   gameBlocks,
@@ -504,7 +507,7 @@ export default async function TeamPage({ params }: Params) {
   if (!team) notFound();
   if (team.slug !== abbr) permanentRedirect(`/teams/${team.slug}`);
 
-  const [liveState, games, ledger, history, projections, lists, players, index] = await Promise.all([
+  const [liveState, games, ledger, history, projections, lists, players, index, oddsHistory] = await Promise.all([
     getLiveState(),
     getSeasonGames(),
     getSeasonLedger(),
@@ -513,6 +516,7 @@ export default async function TeamPage({ params }: Params) {
     getTeamInjuryLists(),
     getTeamPlayers(team.id),
     getPlayerIndex(),
+    getOddsHistory(),
   ]);
   const rows = oddsRows(liveState, games);
   const row = rows.find((candidate) => candidate.teamId === team.id);
@@ -543,6 +547,7 @@ export default async function TeamPage({ params }: Params) {
       max: values.at(-1)!,
     };
   });
+  const oddsPoints = teamOddsHistory(oddsHistory, team.id, liveState.slateEtDate);
   const modeled = liveState.injury !== null;
   const absences = liveState.absences.filter((absence) => absence.teamId === team.id).sort((a, b) => b.points - a.points);
   const teamList = lists?.teams.find((candidate) => candidate.teamId === team.id) ?? null;
@@ -643,6 +648,21 @@ export default async function TeamPage({ params }: Params) {
                 Midseason playoff odds are not claimed to be well calibrated, and no skill is claimed for title odds.
               </p>
             </section>
+
+            {oddsPoints ? (
+              <section aria-labelledby="odds-history-title" className="mt-16">
+                <div className="sh">
+                  <h2 id="odds-history-title">Odds over time</h2>
+                  <span>As published each day</span>
+                </div>
+                <TeamOddsChart points={oddsPoints} color={color} name={team.shortName} />
+                <p className="mt-3 text-[13px] leading-5 text-ink-2">
+                  Each day&apos;s published season odds for the {team.shortName}, as the forecast stood that day, from{" "}
+                  {formatShortDay(oddsPoints[0].date)}. Midseason playoff odds are not claimed to be well calibrated,
+                  and no skill is claimed for title odds.
+                </p>
+              </section>
+            ) : null}
 
             <section aria-labelledby="next-title" className="mt-16">
               <div className="sh">
