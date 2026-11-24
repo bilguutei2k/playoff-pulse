@@ -6,7 +6,7 @@ export default function PlayerNotFound() {
   return (
     <main className="pp-container pb-16 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
-        <SiteLink href="/players" className="text-ink-2 hover:text-ink">
+        <SiteLink href="/players" className="back-link text-ink-2 hover:text-ink">
           <span aria-hidden>← </span>All players
         </SiteLink>
       </nav>
