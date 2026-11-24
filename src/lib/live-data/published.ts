@@ -57,6 +57,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import bundledStateJson from "../../../data/live/state.json";
 import type { LiveReportDay } from "@/lib/season/live-reports";
+import { parseOddsHistory, type OddsHistoryFile } from "@/lib/season/odds-history";
 import { V4_MODEL_VERSION } from "@/lib/season/params-v4";
 import { SCORE_LABEL, SCORE_LABEL_BOX, type PlayerIndexFile, type TeamPlayersFile } from "@/lib/season/player-stats";
 import type { ProjectionsFile, TeamInjuriesFile } from "@/lib/season/projections";
@@ -65,6 +66,7 @@ import {
   manifestMonthPaths,
   SITE_MANIFEST_PATH,
   siteDayPath,
+  siteOddsHistoryPath,
   sitePlayerIndexPath,
   siteProjectionsPath,
   siteTeamInjuriesPath,
@@ -332,6 +334,10 @@ const parseTeamInjuries = (text: string, label: string) =>
     raw.teams.every((team) => isRecord(team) && isString(team.teamId) && Array.isArray(team.rows) && typeof team.absencePoints === "number"),
   );
 
+/** The odds history, held to every invariant the job checked before publishing it. */
+const parseOddsHistoryView = (text: string, label: string) =>
+  parseView<OddsHistoryFile>(text, "odds history", label, () => (parseOddsHistory(text, { seasonLabel: label }), true));
+
 const isOptionalScore = (value: unknown) => value === undefined || value === null || (typeof value === "number" && Number.isFinite(value));
 
 /**
@@ -530,6 +536,7 @@ function artifactCheck(relative: string, manifest: SiteManifest): ((text: string
   if (relative === siteProjectionsPath(label)) return (text) => parseProjections(text, label);
   if (relative === siteTeamInjuriesPath(label)) return (text) => parseTeamInjuries(text, label);
   if (relative === sitePlayerIndexPath(label)) return (text) => parsePlayerIndex(text, label);
+  if (relative === siteOddsHistoryPath(label)) return (text) => parseOddsHistoryView(text, label);
   if (relative.startsWith(`site/${label}/players/teams/`)) return (text) => parseTeamPlayers(text, label, name);
   return null;
 }
@@ -793,7 +800,7 @@ export async function getReportDay(etDate: string): Promise<LiveReportDay | null
 }
 
 /**
- * One model view (projections, team injury lists, player files) from the render's
+ * One model view (projections, team injury lists, player files, odds history) from the render's
  * snapshot: null when the manifest does not list it (the job did not publish it). From the
  * bundled source, the bundled copy, which main's frozen data/live does not have, so null.
  * Never throws.
@@ -847,6 +854,19 @@ export const getTeamPlayers = cache(async (teamId: string): Promise<TeamPlayersF
   if (!/^\d+$/.test(teamId)) return null;
   const { value: state } = await loadState();
   return loadView(siteTeamPlayersPath(state.seasonLabel, teamId), (text) => parseTeamPlayers(text, state.seasonLabel, teamId));
+});
+
+/**
+ * Every team's season odds by ET date (`OddsHistoryFile`, src/lib/season/odds-history.ts):
+ * playoff, top-six, play-in and title odds, projected wins and rating per date, ending
+ * with the published slate's date. Derived display data, never a model input, never
+ * scored. Read from the render's snapshot like the other views, so it is from the same
+ * commit as everything else the render shows. Null when not published (main's bundled
+ * copy has none).
+ */
+export const getOddsHistory = cache(async (): Promise<OddsHistoryFile | null> => {
+  const { value: state } = await loadState();
+  return loadView(siteOddsHistoryPath(state.seasonLabel), (text) => parseOddsHistoryView(text, state.seasonLabel));
 });
 
 // ---------------------------------------------------------------------------------------

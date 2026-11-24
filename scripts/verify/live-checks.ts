@@ -46,6 +46,13 @@ import {
 } from "../../src/lib/score/params";
 import type { Five, Stint } from "../../src/lib/score/types";
 import { scoresFrom, scoresWithOnCourt } from "../live/model-views";
+import {
+  buildOddsHistory,
+  ODDS_HISTORY_PROBABILITIES,
+  oddsHistoryProblems,
+  oddsHistoryStateProblems,
+  parseOddsHistory,
+} from "../../src/lib/season/odds-history";
 import { checkV3Invariants } from "./v3-invariants";
 import { loadCarriedDelta, loadScorePrior } from "../live/score-prior";
 import { loadStintDays } from "../live/stint-collect";
@@ -60,6 +67,7 @@ import {
 } from "../../src/lib/season/projections";
 import {
   siteFileContent,
+  siteOddsHistoryPath,
   sitePlayerIndexPath,
   siteProjectionsPath,
   siteTeamInjuriesPath,
@@ -1059,6 +1067,58 @@ function checkModelViews(state: LiveState, games: readonly SeasonGame[], ledger:
   );
 }
 
+/**
+ * The published odds history (site/{season}/odds-history.json): every invariant the job
+ * checked (dates ascending and unique, the 30 teams in order, probabilities in [0, 1],
+ * rounding, title odds summing to 1, playoff odds at least top-six odds), its last date
+ * the state's slate, the slate's row equal to `state.forecast`, `champion` equal to
+ * `state.history` on shared dates, and the file exactly what the stored snapshots and the
+ * state's forecast produce. Skipped when the view is not published.
+ */
+function checkOddsHistory(state: LiveState): void {
+  const label = seasonLabel(LIVE_SEASON);
+  const file = path.join(process.cwd(), "data/live", siteOddsHistoryPath(label));
+  if (!fs.existsSync(file)) {
+    console.log("Odds history not published; skipped.");
+    return;
+  }
+  const text = fs.readFileSync(file, "utf-8");
+  const raw: unknown = JSON.parse(text);
+  assert.deepEqual(oddsHistoryProblems(raw, { season: state.season, seasonLabel: label }), [], "The odds history must satisfy its invariants.");
+  const view = parseOddsHistory(text, { season: state.season, seasonLabel: label });
+  assert.equal(view.dates.at(-1), state.slateEtDate, "The odds history must end at the published slate.");
+  assert.deepEqual(
+    view.teamIds,
+    state.forecast.teams.map((team) => team.teamId),
+    "The odds history must list the forecast's teams in its order.",
+  );
+  for (const metric of ODDS_HISTORY_PROBABILITIES) {
+    for (const row of view[metric]) assert.ok(row.every((value) => value >= 0 && value <= 1), `Odds history ${metric} must be in [0, 1].`);
+  }
+  view.champion.forEach((row, index) => {
+    const sum = row.reduce((total, value) => total + value, 0);
+    assert.ok(Math.abs(sum - 1) < 0.01, `Odds history title odds must sum to 1 on ${view.dates[index]}.`);
+    row.forEach((_, team) => assert.ok(view.makePlayoffs[index][team] >= view.topSix[index][team], "Playoff odds must be at least top-six odds."));
+  });
+  assert.deepEqual(oddsHistoryStateProblems(view, state), [], "The odds history must agree with state.json's forecast and history.");
+  const directory = path.join(process.cwd(), "data/live/snapshots", label);
+  const snapshots = fs.existsSync(directory)
+    ? fs.readdirSync(directory).map((name) => ({ name, text: fs.readFileSync(path.join(directory, name), "utf-8") }))
+    : [];
+  const { file: expected, skipped } = buildOddsHistory({
+    season: state.season,
+    seasonLabel: label,
+    slate: state.slateEtDate,
+    forecast: state.forecast,
+    snapshots,
+  });
+  assert.equal(text, siteFileContent(expected), "The odds history must be exactly what the stored snapshots and the state's forecast produce.");
+  console.log(
+    `Odds history holds: ${view.dates.length} dates (${view.dates[0]} to ${view.dates.at(-1)}), ${(Buffer.byteLength(text) / 1e3).toFixed(0)} KB, ` +
+      `${skipped.length} stored snapshots left out${skipped.length > 0 ? ` (${skipped.map((skip) => skip.name).join(", ")})` : ""}.`,
+  );
+}
+
 /** The data cache stores items up to 2 MB; warn well before a file the site reads gets there. */
 const SITE_FILE_WARN_BYTES = 1_500_000;
 
@@ -1311,6 +1371,7 @@ export function runLiveChecks(): void {
   if (raw.schemaVersion === 2) checkRecordSplit(raw, publishedRows);
   checkSiteFiles();
   if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, publishedRows);
+  if (raw.schemaVersion === 2) checkOddsHistory(upgradeLiveState(state));
   checkShadowV4(raw as LiveState, ledgerRows);
 }
 

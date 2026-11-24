@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { describe, expect, it } from "vitest";
-import { deriveSiteFiles, manifestMonthPaths, siteFileContents, type SiteManifest } from "@/lib/season/site-files";
+import { deriveSiteFiles, isModelViewPath, manifestMonthPaths, siteFileContents, type SiteManifest } from "@/lib/season/site-files";
 import { displayedSeal } from "@/lib/season/slate";
 import { upgradeLiveState } from "@/lib/season/state-schema";
 import { SEASON_TEAMS } from "@/lib/season/teams";
@@ -75,6 +75,32 @@ describe("site files", () => {
       files: Object.fromEntries([...siteFileContents(ledger, "2026-27").keys()].map((file) => [file, "0".repeat(64)])),
     };
     expect(manifestMonthPaths(manifest)).toEqual(["site/2026-27/months/2026-11.json", "site/2026-27/months/2026-12.json"]);
+  });
+});
+
+describe("model view paths", () => {
+  // The paths the job writes from pipeline.ts alone, exempt from "site files equal the ledger".
+  it.each([
+    "site/2026-27/projections.json",
+    "site/2026-27/team-injuries.json",
+    "site/2026-27/players/index.json",
+    "site/2026-27/players/teams/13.json",
+    "site/2026-27/odds-history.json",
+  ])("%s is a model view", (relative) => {
+    expect(isModelViewPath(relative, "2026-27")).toBe(true);
+  });
+
+  it.each([
+    "site/manifest.json",
+    "site/2026-27/days/2026-11-02.json",
+    "site/2026-27/months/2026-11.json",
+    "site/2026-27/shadow-v4.json",
+    "site/2026-27/players/teams/BOS.json",
+    "site/2025-26/odds-history.json",
+    "snapshots/2026-27/2026-11-02.json",
+    "state.json",
+  ])("%s is not a model view", (relative) => {
+    expect(isModelViewPath(relative, "2026-27")).toBe(false);
   });
 });
 

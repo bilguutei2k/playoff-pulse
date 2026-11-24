@@ -3,6 +3,8 @@
 // what the run already computed (the published replay's tracker, current absences, the
 // state's ratings and the reports in use) and the stored player lines, then checked
 // against the same invariants `verify:live` runs. Never a model input, never a seal.
+// The odds history (`buildOddsHistoryView`, every team's season odds by ET date from the
+// stored snapshots) is built and published apart from the others, in its own guard.
 //
 // The player index also carries the experimental 548 score: Stage 1's box value
 // (src/lib/score/live.ts, from the stored player lines and the committed prior) plus
@@ -26,6 +28,14 @@ import {
   SCORE_ON_COURT_REPLACEMENT,
 } from "../../src/lib/score/params";
 import type { InjuryModel } from "../../src/lib/season/live-injury";
+import {
+  buildOddsHistory,
+  oddsHistoryProblems,
+  oddsHistoryStateProblems,
+  type OddsHistoryFile,
+  type OddsHistorySkip,
+  type OddsHistorySnapshot,
+} from "../../src/lib/season/odds-history";
 import type { LiveReportDay } from "../../src/lib/season/live-reports";
 import {
   derivePlayerFiles,
@@ -50,13 +60,14 @@ import {
 } from "../../src/lib/season/projections";
 import {
   siteFileContent,
+  siteOddsHistoryPath,
   sitePlayerIndexPath,
   siteProjectionsPath,
   siteTeamInjuriesPath,
   siteTeamPlayersPath,
 } from "../../src/lib/season/site-files";
 import { SEASON_TEAMS } from "../../src/lib/season/teams";
-import type { LedgerRow, LiveState, SeasonGame } from "../../src/lib/season/types";
+import type { LedgerRow, LiveState, SeasonForecast, SeasonGame, TeamHistoryPoint } from "../../src/lib/season/types";
 
 /** A view the site fetches must stay well under the data cache's 2 MB item limit. */
 export const VIEW_FILE_LIMIT_BYTES = 1_500_000;
@@ -314,4 +325,45 @@ export function buildModelViews(input: {
   }
   if (problems.length > 0) throw new Error(`model views failed validation: ${problems.slice(0, 5).join("; ")}`);
   return { projections, teamInjuries, players, files: content, scoreProblem: score.problem, score };
+}
+
+export type OddsHistoryView = {
+  file: OddsHistoryFile;
+  /** Path under data/live. */
+  relative: string;
+  content: string;
+  /** Stored snapshots left out, with the reason. */
+  skipped: OddsHistorySkip[];
+};
+
+/**
+ * The odds history view (src/lib/season/odds-history.ts): every team's season odds by ET
+ * date from the stored snapshots and the slate's forecast, checked against the same
+ * invariants and the same agreement with the state that `verify:live` checks, and the
+ * view size limit. Built apart from `buildModelViews` and published even when those fail,
+ * so neither can take the other down. Throws when the view is not publishable; a bad
+ * snapshot only leaves its date out (`skipped`). Display data: never a model input.
+ */
+export function buildOddsHistoryView(input: {
+  season: number;
+  seasonLabel: string;
+  slate: string;
+  forecast: SeasonForecast;
+  /** `state.history`, built from the same snapshots by `loadHistoryPoints`. */
+  history: readonly TeamHistoryPoint[];
+  snapshots: readonly OddsHistorySnapshot[];
+  limitBytes?: number;
+}): OddsHistoryView {
+  const { file, skipped } = buildOddsHistory(input);
+  const problems = [
+    ...oddsHistoryProblems(file, { season: input.season, seasonLabel: input.seasonLabel }),
+    ...oddsHistoryStateProblems(file, { slateEtDate: input.slate, forecast: input.forecast, history: input.history }),
+  ];
+  const relative = siteOddsHistoryPath(input.seasonLabel);
+  const content = siteFileContent(file);
+  const limit = input.limitBytes ?? VIEW_FILE_LIMIT_BYTES;
+  const bytes = Buffer.byteLength(content);
+  if (bytes > limit) problems.push(`${relative} is ${bytes} bytes, over ${limit}`);
+  if (problems.length > 0) throw new Error(`odds history failed validation: ${problems.slice(0, 5).join("; ")}`);
+  return { file, relative, content, skipped };
 }
