@@ -14,8 +14,7 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: "About",
   description: DESCRIPTION,
-  // Replaces the layout's openGraph, so the site name and type are repeated here.
-  openGraph: { siteName: "548", type: "website", title: "About 548", description: DESCRIPTION },
+  // No openGraph block: one here would replace the layout's, and the share image with it.
   alternates: { canonical: "/about" },
 };
 

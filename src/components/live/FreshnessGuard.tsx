@@ -134,7 +134,10 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string; delivery:
     });
     const check = checks.check;
 
-    check();
+    // The first check waits one task: a page's <PageStamp> publishes its stamp in the same
+    // commit's effects, after this one. On a page without live data (null) the rerun then
+    // cancels this timer instead of aborting a request the server has already answered.
+    const first = setTimeout(check, 0);
     let hiddenAt: number | null = null;
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
@@ -153,6 +156,7 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string; delivery:
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pageshow", onPageShow);
     return () => {
+      clearTimeout(first);
       checks.stop();
       clearInterval(poll);
       document.removeEventListener("visibilitychange", onVisibility);
