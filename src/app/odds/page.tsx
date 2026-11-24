@@ -2,16 +2,18 @@ import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
+import { OddsMoves } from "@/components/live/OddsMoves";
 import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
 import { SeedGrid } from "@/components/live/SeedGrid";
 import { Ticker } from "@/components/live/Ticker";
 import { TitleOddsChart } from "@/components/live/TitleOddsChart";
 import { WhoIsOut } from "@/components/live/WhoIsOut";
-import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
+import { getLiveState, getOddsHistory, getSeasonGames } from "@/lib/live-data/published";
 import type { SeasonPhase } from "@/lib/season/types";
 import { formatDateTimePt, formatShortDay } from "@/lib/utils/dates";
 import { oddsRows, teamAbsences } from "@/lib/view/odds";
+import { oddsMoves } from "@/lib/view/odds-moves";
 import { seedGrids } from "@/lib/view/seed-grid";
 import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
 import { titleChartStyles } from "./chart-colors";
@@ -33,10 +35,11 @@ const PHASE_LABELS: Record<SeasonPhase, string> = {
 const CHART_TEAMS = 8;
 
 export default async function OddsPage() {
-  const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
+  const [liveState, seasonGames, oddsHistory] = await Promise.all([getLiveState(), getSeasonGames(), getOddsHistory()]);
   const { forecast, history, generatedAt } = liveState;
   const modeled = liveState.injury !== null;
   const rows = oddsRows(liveState, seasonGames);
+  const moves = oddsMoves(oddsHistory, seasonGames);
   const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
   const ranked = [...forecast.teams].sort((a, b) => b.champion - a.champion);
   const top = ranked.slice(0, CHART_TEAMS).map((team) => team.teamId);
@@ -118,6 +121,12 @@ export default async function OddsPage() {
           ) : null}
           <TitleRace state={liveState} />
         </div>
+
+        {moves ? (
+          <div className="mt-14 sm:mt-[72px]">
+            <OddsMoves moves={moves} />
+          </div>
+        ) : null}
 
         <section aria-labelledby="history-title" className="mt-14 sm:mt-[72px]">
           <div className="sh">
