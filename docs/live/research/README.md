@@ -59,3 +59,10 @@ Record: `docs/live/registration-v5.md` (result section) and `docs/live/evaluatio
 against v4 −0.000111 (−0.000182 to −0.000043) on 10,749 games and −0.000328 on the report era (3 of 3 seasons);
 calibration slope 0.988; season-level odds within every non-inferiority limit against v4 (the one part not seen
 before registration). A registered candidate only: not wired, and wiring is the owner's decision.
+
+### 2026-11-23, outside review of v5's registration
+
+gpt-6-astra reviewed the registration, the gate script and the engine block: git order, closed seasons, the
+observation's signs and the disclosure were clean. One change followed, recorded as Amendment 1 in
+`docs/live/registration-v5.md`: a future Stage B pass is worded "not clearly worse", not "not worse", unless
+the interval's upper end is within the margin.

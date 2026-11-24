@@ -275,3 +275,18 @@ Pass is G1 to G4 together: **passed**. v5 is a registered candidate and nothing 
 nothing and changes no published number. Wiring it as a shadow is the owner's decision; its prospective rule is
 Stage B above. `docs/live/research/README.md` gained one appended entry with this result, so its hash listed
 above is the registration commit's.
+
+## Amendment 1 (2026-11-23, after the Stage A′ result; before any wiring and any Stage B number)
+
+From the outside review of this registration (gpt-6-astra, 2026-11-23). It changes wording only, and only for
+a result that does not exist yet.
+
+Stage B's rule B1 (D ≤ +0.004 and the interval's lower end below zero) can pass with, for example, D = +0.003
+and an interval from −0.002 to +0.010. A model that much worse is compatible with such a pass, so the wording
+"not worse than v2 over 500 games" would claim more than the rule shows. The rule itself is unchanged: it is
+v4's screen, and v5 is held to the same one.
+
+What changes for v5: a B1 pass is worded **"passed its registered screen against v2 over 500 games: not
+clearly worse"**, and it is always printed with D and its interval. The words "not worse than v2" or
+"non-inferior" may be used only if the interval's upper end is at or below +0.004. A B1 fail keeps its
+meaning. v4's registration keeps its own wording; changing that is the owner's decision.
