@@ -83,7 +83,7 @@ export default async function OddsPage() {
           <OddsTable rows={rows} exact={forecast.phase !== "regular-season"} />
           <p className="mt-3.5 text-[13px] leading-5 text-ink-2">
             Rating: points per game against an average team{modeled ? ", adjusted for who missed past games to approximate full strength" : ""}.
-            {modeled ? " Now: after the points lost to players currently out, for the next game." : ""} Bars: wins in 8
+            {modeled ? " Now: the rating after the points lost to players the season odds currently count as out." : ""} Bars: wins in 8
             of 10 simulations, black tick at the average. Column headings sort the table.
           </p>
           <p className="mt-1.5 text-[13px] leading-5">

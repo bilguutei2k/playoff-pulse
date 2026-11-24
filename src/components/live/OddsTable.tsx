@@ -274,7 +274,7 @@ export function OddsTable({
               {modeled
                 ? header("ratingNow", "Now", {
                     className: extra,
-                    hint: "The rating minus the points lost to players currently out, for the team's next game.",
+                    hint: "The rating minus the points lost to players the season odds currently count as out. A team's next game can count others once the NBA report for it is filed; its team page shows that game's number.",
                   })
                 : null}
               {header("projectedWins", "Proj.", {
