@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SEED_BANDS, seedGrids, seedShade } from "@/lib/view/seed-grid";
+import { SEED_BANDS, seedCellText, seedGrids, seedShade } from "@/lib/view/seed-grid";
 import type { OddsRow } from "@/lib/view/odds";
 
 const row = (teamId: string, conference: "East" | "West", seeds: number[], projectedWins = 41): OddsRow =>
@@ -32,5 +32,22 @@ describe("seeding grid", () => {
 
   it("shades by probability, nothing under the 1% print threshold", () => {
     expect([0, 0.004, 0.005, 0.049, 0.05, 0.15, 0.3, 0.5, 1].map(seedShade)).toEqual([0, 0, 1, 1, 2, 3, 4, 5, 5]);
+  });
+});
+
+describe("what a seeding cell prints", () => {
+  it("prints nothing under 1%, by the published number and not the rounded one", () => {
+    // The grid's caption says a dot is under 1%: 0.6% must not round up into a printed 1.
+    for (const p of [0, 0.0001, 0.0049, 0.005, 0.006, 0.0099]) expect(seedCellText(p, false)).toBeNull();
+    expect(seedCellText(0.01, false)).toBe("1");
+    expect(seedCellText(0.014, false)).toBe("1");
+    expect(seedCellText(0.33, false)).toBe("33");
+  });
+
+  it("never prints a certainty before the season is over, and prints 100 once it is a fact", () => {
+    expect(seedCellText(0.995, false)).not.toBe("100");
+    expect(seedCellText(1, false)).not.toBe("100");
+    expect(seedCellText(1, true)).toBe("100");
+    expect(seedCellText(0, true)).toBeNull();
   });
 });

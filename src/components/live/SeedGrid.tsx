@@ -4,8 +4,7 @@ import { TableScroll } from "@/components/layout/TableScroll";
 import { TeamLink } from "@/components/live/TeamLink";
 import { useQueryState } from "@/components/live/useQueryState";
 import { ODDS_DEFAULT, parseOddsQuery, serializeOddsQuery } from "@/app/odds/query";
-import { formatChance } from "@/lib/utils/format";
-import { SEED_BANDS, seedShade, type SeedGrid as Grid } from "@/lib/view/seed-grid";
+import { SEED_BANDS, seedCellText, seedShade, type SeedGrid as Grid } from "@/lib/view/seed-grid";
 
 /**
  * Where each team finishes: one table per conference, teams down the side in order of
@@ -32,12 +31,6 @@ export function SeedGrid({
       ))}
     </div>
   );
-}
-
-function cellText(probability: number, exact: boolean): string | null {
-  if (exact && probability === 1) return "100";
-  if (probability <= 0 || (!exact && probability < 0.005)) return null;
-  return formatChance(probability, { exact }).replace("%", "");
 }
 
 function ConferenceGrid({ grid, exact, titled }: { grid: Grid; exact: boolean; titled: boolean }) {
@@ -95,7 +88,7 @@ function ConferenceGrid({ grid, exact, titled }: { grid: Grid; exact: boolean; t
                   <TeamLink teamId={row.teamId} form={{ base: "code", lg: "short" }} logo={16} className="font-bold" />
                 </th>
                 {row.seeds.map((probability, index) => {
-                  const text = cellText(probability, exact);
+                  const text = seedCellText(probability, exact);
                   const gap = bands.some((band) => band.from > 1 && band.from === index + 1);
                   return (
                     <td key={index} className={`seed-cell seed-s${text === null ? 0 : seedShade(probability)} ${gap ? "seed-gap" : ""}`}>

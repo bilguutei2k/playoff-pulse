@@ -4,6 +4,7 @@
 // only orders the rows and is never shown.
 
 import type { Conference } from "@/lib/season/types";
+import { formatChance } from "@/lib/utils/format";
 import type { OddsRow } from "@/lib/view/odds";
 
 export type SeedGridRow = { teamId: string; seeds: number[] };
@@ -54,4 +55,16 @@ export const SEED_SHADES: Array<{ from: number; step: number }> = [
 
 export function seedShade(probability: number): number {
   return SEED_SHADES.find((shade) => probability >= shade.from)?.step ?? 0;
+}
+
+/**
+ * What a cell prints: the whole percent from 1% up, and nothing for anything under 1%
+ * (the grid shows a dot for a chance above zero and leaves a zero empty). The threshold is
+ * the published number's, not the rounded one's: 0.6% is "under 1%" and must not print as
+ * 1. Past the regular season (`exact`) a certain seed prints 100.
+ */
+export function seedCellText(probability: number, exact: boolean): string | null {
+  if (exact && probability === 1) return "100";
+  if (probability < 0.01) return null;
+  return formatChance(probability, { exact }).replace("%", "");
 }
