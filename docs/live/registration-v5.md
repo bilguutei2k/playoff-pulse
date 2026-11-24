@@ -422,3 +422,13 @@ follows was fixed or ruled on in 31067f3d, before any v5 seal. No file whose has
   rows and file are written. A directory placed at v5's file path: v5's 4 rows are written, the file is not, and
   nothing else differs from `main` but `health.json`. The same at v4's path: v4's rows are written and its file
   withdrawn, with v5 unaffected.
+- **Re-check of the fixes (gpt-6-astra, at 1643c00e): no blocking finding.** Both fixed paths are closed, the
+  stored-file check sees the ledger `verify:live` will see, no new defect was found, and the ruling above on the
+  warm state was confirmed accurate about what the code does. Two notes stand. First, the withdrawal itself can
+  fail: a shadow file that fails its check and can be neither rewritten nor removed would still fail
+  `verify:live`; that needs a second filesystem failure, and the wording here and in `AGENTS.md` says so. Second,
+  older than this work and not changed by it: with `LIVE_DRY_RUN=1`, v4 writes no row but still writes its shadow
+  file, whose record can then count a game the ledger does not hold, which `verify:live` would reject. The
+  workflow never sets `LIVE_DRY_RUN` (its own `DRY_RUN` only stops the push), so this is reachable only in a
+  manual run and can cost no seal; v5 writes neither row nor file in that mode. It is left as it is because the
+  recording used for these proofs cannot exercise it.

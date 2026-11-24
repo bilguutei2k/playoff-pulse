@@ -1067,9 +1067,9 @@ async function main(): Promise<void> {
     // This run wrote no v5 file (v5 failed, nothing was due, a dry run, or the write failed), so
     // whatever is on disk goes to the push as it is, and `verify:live` will check it against this
     // run's ledger and today's constants, which may have changed since it was written (the stop
-    // switch). The job runs that same check now and withdraws a file that would fail it: a
-    // stored shadow file can never block a push that carries seals. The record page then shows
-    // no v5 section until v5 writes a file again.
+    // switch). The job runs that same check now and withdraws a file that would fail it, so a
+    // stored shadow file can block a push that carries seals only if it can be neither rewritten
+    // nor removed. The record page then shows no v5 section until v5 writes a file again.
     const stored = path.join(LIVE_DIRECTORY, SHADOW_V5_FILE(LABEL));
     const stale = shadowV5FileOnDiskProblems(stored, [...ledgerAll, ...appended]);
     if (stale && stale.length > 0) {
