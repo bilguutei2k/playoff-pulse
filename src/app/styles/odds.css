@@ -24,7 +24,8 @@
     align-self: center;
   }
 
-  .title-chart-label.is-active .tl-t {
+  .title-chart-label.is-active .tl-t,
+  .title-chart-label.is-picked .tl-t {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;

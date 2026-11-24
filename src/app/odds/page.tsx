@@ -3,20 +3,19 @@ import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
 import { OddsMoves } from "@/components/live/OddsMoves";
+import { OddsOverTime } from "@/components/live/OddsOverTime";
 import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
 import { SeedGrid } from "@/components/live/SeedGrid";
 import { Ticker } from "@/components/live/Ticker";
-import { TitleOddsChart } from "@/components/live/TitleOddsChart";
 import { WhoIsOut } from "@/components/live/WhoIsOut";
 import { getLiveState, getOddsHistory, getSeasonGames } from "@/lib/live-data/published";
 import type { SeasonPhase } from "@/lib/season/types";
-import { formatDateTimePt, formatShortDay } from "@/lib/utils/dates";
+import { formatDateTimePt } from "@/lib/utils/dates";
 import { oddsRows, teamAbsences } from "@/lib/view/odds";
+import { oddsChartData } from "@/lib/view/odds-chart";
 import { oddsMoves } from "@/lib/view/odds-moves";
 import { seedGrids } from "@/lib/view/seed-grid";
-import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
-import { titleChartStyles } from "./chart-colors";
 
 export const metadata: Metadata = {
   title: "NBA playoff and title odds",
@@ -40,18 +39,7 @@ export default async function OddsPage() {
   const modeled = liveState.injury !== null;
   const rows = oddsRows(liveState, seasonGames);
   const moves = oddsMoves(oddsHistory, seasonGames);
-  const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
   const ranked = [...forecast.teams].sort((a, b) => b.champion - a.champion);
-  const top = ranked.slice(0, CHART_TEAMS).map((team) => team.teamId);
-  const styles = titleChartStyles(top, PANEL_COLOR);
-  const highlighted = top.map((teamId) => ({
-    teamId,
-    code: teamDisplay(teamId).code,
-    name: teamDisplay(teamId).shortName,
-    color: styles[teamId].color,
-    dash: styles[teamId].dash,
-  }));
-  const others = ranked.slice(CHART_TEAMS).map((team) => team.teamId);
 
   return (
     <>
@@ -129,20 +117,7 @@ export default async function OddsPage() {
         ) : null}
 
         <section aria-labelledby="history-title" className="mt-14 sm:mt-[72px]">
-          <div className="sh">
-            <h2 id="history-title">Title odds over time</h2>
-            <span>
-              Top {CHART_TEAMS} today in team colors{highlighted.some((team) => team.dash) ? ", dashed where colors are close" : ""}, others grey
-            </span>
-          </div>
-          {points.length < 2 ? (
-            <p className="notice-quiet mb-4">
-              The chart adds a point each day; it starts{" "}
-              {points.length > 0 ? formatShortDay(points[0].date) : "with the first published forecast"}, so there is
-              not much of a line yet.
-            </p>
-          ) : null}
-          <TitleOddsChart points={points} highlighted={highlighted} others={others} />
+          <OddsOverTime data={oddsChartData(history, oddsHistory)} order={ranked.map((team) => team.teamId)} shown={CHART_TEAMS} />
         </section>
       </main>
     </>
