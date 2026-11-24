@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { lostPoints } from "@/components/live/AbsenceList";
@@ -162,7 +163,7 @@ function ProjectedRecord({ row, color }: { row: OddsRow; color: string }) {
 
 function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label="Out in the season odds">
     <table className="tb tt">
       <caption className="sr-only">Players the model counts as out now, the points of margin each costs, and the games each is expected to miss</caption>
       <thead>
@@ -195,7 +196,7 @@ function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
         })}
       </tbody>
     </table>
-    </div>
+    </TableScroll>
   );
 }
 
@@ -268,7 +269,7 @@ function NumberCell({ row, modelVersion }: { row: TeamGameRow; modelVersion: str
 
 function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; modelVersion: string; caption: string }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label={caption}>
     <table className="tb tt">
       <caption className="sr-only">{caption}</caption>
       <thead>
@@ -303,13 +304,13 @@ function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; mo
         ))}
       </tbody>
     </table>
-    </div>
+    </TableScroll>
   );
 }
 
 function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; caption: string; modelVersion: string }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label={caption}>
     <table className="tb tt">
       <caption className="sr-only">{caption}</caption>
       <thead>
@@ -361,7 +362,7 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
         })}
       </tbody>
     </table>
-    </div>
+    </TableScroll>
   );
 }
 
