@@ -290,3 +290,89 @@ What changes for v5: a B1 pass is worded **"passed its registered screen against
 clearly worse"**, and it is always printed with D and its interval. The words "not worse than v2" or
 "non-inferior" may be used only if the interval's upper end is at or below +0.004. A B1 fail keeps its
 meaning. v4's registration keeps its own wording; changing that is the owner's decision.
+
+## Wiring as built (2026-11-24, before v5's first seal)
+
+On the owner's decision of 2026-11-24 ("Should v5 seal as a second shadow beside v4?": yes), v5 is wired the way
+v4 was (`docs/live/registration-v4.md`, "Wiring", "Phase C wiring as built" and "Astra's review of PR #37"). No
+file whose hash is listed above changed (checked at the end of this section).
+
+- **Rows.** From `V5_FIRST_ET_DATE` = 2026-11-25 each game gains v5 morning, reissued and final rows in v4's exact
+  shape: `modelVersion` `live-2026.27-v5`, v1's reference probability, complete drivers, no `policyRevision`.
+  v5 and v2 pair by (game, seal kind). Its record starts at its first seal; nothing is backfilled and no number
+  on a game already played was computed for it.
+- **Where it lives.** The registered files stay as registered, so v5's live constants are in a new file,
+  `src/lib/season/params-v5-live.ts` (`V5_FIRST_ET_DATE`, `V5_LAST_ET_DATE`, `V5_WARM_SHA256`). The live modules
+  are in `scripts/live/v5-shadow/` rather than `scripts/live/v5/`: the registered isolation test
+  (`tests/roster-state-v5-isolation.test.ts`) fails for any file in `scripts/live/v5/` that names a data
+  directory, and its hash is listed above, so the live modules sit beside it and have their own test
+  (`tests/v5-shadow-isolation.test.ts`), which allows the warm-state module, its builder, the checkpoint loader
+  and the check, each with its reason, and fails for any other file there that reads a data file. The
+  development loader (`scripts/live/v5/dev-data-v5.ts`) still refuses 2024-25 and 2025-26.
+- **Engine and inputs.** `scripts/live/v5-shadow/live-v5.ts` (`shadowV5`) is `shadowV4` with v5's engine
+  (`roster-state-v5.ts`) and `V5_FROZEN` (v4's frozen parameters, s3 = 25), refreshing M5's scale after
+  `advanceTo` as v4 does. It shares only `liveLines` with `live-v4.ts`; v4's code is unchanged. The live
+  season's plus/minus comes from the stored player lines (`data/live/players/{season}/{etDate}.json`), players
+  with minutes above zero: ESPN's summary box-score "+/-" column, the same column of the same summary that
+  `build-player-pm.ts` reads for the historical files, so the sign is the same (his team's points minus its
+  opponent's while he was on the floor). On live-data fa62bfd8, 509 of this season's 516 stored team-games pass
+  the five-man check (a count of inputs).
+- **Warm state.** `data/season/v5/warm-2026.bin.gz`: v5's engine replayed from 2010-11 through 2025-26 with
+  observation 3 on (s3 = 25 throughout, plus/minus from `data/season/player-pm/{season}.json.gz`), by
+  `scripts/live/v5-shadow/build-warm-checkpoint.ts` through `warm-state-v5.ts`, which returns a state and nothing
+  else and holds the only reader of the closed seasons' plus/minus. Built twice: the same sha256 both times,
+  `7683554d7b96f6a5fc3ca829df2f3fd1c0ff397a276ba59778593a7bb1290065`, pinned as `V5_WARM_SHA256`.
+- **Guard.** The job runs v5 after v4 in its own guard. A v5 failure of any kind writes no v5 row, keeps the
+  previous `shadow-v5.json` and sets `shadowV5Problem` in `health.json` (present only on failure;
+  `shadowProblem` stays v4's); a v4 failure does not stop v5. Inside the guard the job runs the checks
+  `verify:ledger` and `verify:live` run on v5 (`ledgerProblems`; `shadowV5FileProblems` and `v5ParamsProblems` in
+  `scripts/live/v5-shadow/check.ts`), through the same functions, on exactly the ledger and the bytes it is about
+  to write; on any problem v5 writes nothing that run (the lesson of PR #38). A dry run writes no v5 row and
+  keeps the previous file.
+- **Checks.** `verify-ledger` rejects a v5 seal outside its ET dates, without v1's reference, without a seal kind
+  or with a `policyRevision`, and a v5 missed row outside its ET dates. `verify:live` checks s3 against
+  `docs/live/v5-fit.json`, the shadow file's version, dates, s3 and sums, that its record counts no more games
+  than v5 sealed, that the published state is v2's, and that no v5 key is in `state.json` or the projections.
+  v1's and v2's paths, the site's day and month files and `verify:live`'s published rows exclude v5 rows as they
+  exclude v4's. The watchdog reports a missing v5 seal under `shadow-v5-unsealed-{gameId}`, labelled as the
+  second shadow model's, in its existing incident issue; its constants are kept equal to the params files by
+  `tests/v5-shadow-wiring.test.ts`. While building this, v4's `shadow-unsealed-` key was found to be neither
+  checked nor retired by `checkedKeys`, so an open one would have kept an incident open for good; both shadow
+  keys are now checked and retired as v2's `unsealed-` key is.
+- **Stop switch.** `V5_LAST_ET_DATE` (null now). Once v5 has sealed, its rows are in the append-only ledger, so
+  setting the first date back to null or reverting the code would make the checks reject rows already written
+  and block every push. Setting the last date stops v5: no v5 seal or missed row for a game after it,
+  `verify-ledger` rejects a v5 seal after it, and the watchdog (`V5.lastEtDate`) expects none after it. `/record`
+  then reads "Sealed from {first} to {last}, then stopped. Not the published forecast." with the record frozen at
+  the games through the last date. Before the first seal, a plain revert is enough.
+- **Shadow file.** `data/live/site/{season}/shadow-v5.json`, v4's shape plus `lastEtDate` and `s3`, listed in the
+  manifest, labelled "In testing: model v5 (v4 plus an on-court observation). Not the published forecast."
+  `sameGames` covers games with a scored seal from all four of v5, v4, v2 and v1, each on its own scored seal.
+  `impact` is kept in v4's shape; `src/lib/view/impact-source.ts` is unchanged.
+- **Site.** `getShadowV5` (`published.ts`) fails as `getShadowV4` does, never costing a page its snapshot.
+  `/record` keeps v4's section as it was and adds v5's after it: scored games, Brier and log loss, the
+  small-sample label under 500, and the same-games lines for v5, v4, v2 and v1 as plain numbers in that fixed
+  order, with no difference column, colour, ordering by score or market line. `/how-it-works#roster-state` gains
+  one paragraph. No other page mentions v5.
+- **Proofs** (throwaway clones with no remote, live-data at c0df69ef, `LIVE_NOW` 2026-11-24T02:00:15.741Z, the
+  network replayed from one recording, `main` at 9cde1410; logs kept outside the repository). Only bytes, row
+  counts and exit codes were compared. (a) v5 off (first date null, and as committed): every file under
+  `data/live` byte-identical to `main`'s run. (b) First date moved in the clone to 2026-11-23: the ledger minus
+  v5's rows, `state.json`, the projections, `shadow-v4.json` and every other file byte-identical to `main`'s
+  except the manifest and the new `shadow-v5.json`; 4 v5 rows (2 morning, 2 final, the kinds due);
+  `verify:ledger` and `verify:live` exit 0. (c) v5 made to throw: identical to `main` except `health.json`'s
+  `shadowV5Problem`; v1, v2 and v4 rows written; both verifies exit 0. (d) A title-odds sum corrupted just before
+  the shared check: no v5 row and no v5 file, `shadowV5Problem` set; both verifies exit 0. (e) A second run on top
+  of (b): no new ledger row, and no file differs from (b), as none differs between `main`'s two runs. (f) v4 made
+  to throw: v5's rows and file written, `shadowProblem` set; both verifies exit 0. (g) The stop switch by unit
+  tests (`tests/v5-shadow-wiring.test.ts`), and one replay on (b)'s result with the last date set to 2026-11-23:
+  both verifies exit 0, and against (e) only `shadow-v5.json`'s `lastEtDate` and its manifest line differ.
+  (h) `verify:routes` on a `main` build serving (b)'s data: passed; on this branch's build serving live-data's head
+  fa62bfd8 (no v5 file): the one failure, "/api/live/health answered 200, not 503" with the data host down, is the
+  same failure `main`'s build shows on that same data (it depends on how fresh the bundled copy is), and every
+  other check passed in both; `main` on its own data passes. (i) v5's part of the run 7.9 s beside v4's 5.8 s;
+  the job's wall time 12.0 s on `main` and 20.0 s with v5 sealing (8.9 s and 16.0 s on the second run).
+- **Hash check of the files listed above**, at this section's commit: every listed file matches its listed hash
+  except `docs/live/research/README.md`, the append-only register, which already differed at the base (its
+  result entry) and gained one appended entry here. Nothing under `docs/live/v5-fit-parts/`,
+  `data/season/player-pm/`, `scripts/live/v4/`, `scripts/live/v5/` or the frozen engine files changed.
