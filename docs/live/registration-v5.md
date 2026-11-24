@@ -228,3 +228,50 @@ The gate's blocking reproductions (v4's per-season Brier, its A3 figures and its
 that those edits did not change v4's forecasts or season odds: a difference in any of them stops the gate before G1.
 
 The plus/minus files' hashes are in `docs/live/v5-player-pm-audit.json`.
+
+## 2026-11-23, Stage A′ result: passed
+
+Run once, on the lead's go, in a fresh throwaway clone of the registered head 5b7ec568, with nothing else run
+first. The eight listed test files passed there (34 tests), then `evaluate-stage-a.ts` ran and exited 0. Its
+output, `docs/live/evaluation-v5-stage-a.json` (sha256
+`3c5eff7d63451444659ca76c2a6b315e9dc1ce59fd7d0fd4882c06f5dec2775e`), is copied here unchanged and frozen. The
+executor was cut off by a usage limit after the run and before this section; the session lead copied the output
+from the clone and wrote the section, changing no number.
+
+This is a development check on seasons the residual study had seen. G1 and G2 reproduce, under registered code,
+game forecasts already read before registration; only their 10,000-draw intervals and G3 are new. Nothing here
+says v5 beats v4, v2, v1 or the market.
+
+- **Reproductions, blocking: exact.** v4's per-season Brier, its A3 figures (slope 0.9867, reliability 0.000134)
+  and its A5 pooled season numbers (opening 0.159488 / 8.347, Dec 1 0.133765 / 6.027, Feb 1 0.074897 / 3.455,
+  Apr 1 0.031680 / 1.147).
+- **G1, passed.** Standard information set, 10,749 games: Brier v4 0.212104, v5 0.211993; paired difference
+  −0.000111, 95% interval −0.000182 to −0.000043 (10,000 draws over 1,438 dates); log loss 0.612151 and
+  0.611905. Negative in 5 of 9 seasons, positive in 2 (2019-20 +0.000089, 2020-21 +0.000067), identical in the
+  2 whose origin chose s3 off. Report era, 3,690 games: −0.000328, negative in 3 of 3 seasons (−0.000192,
+  −0.000284, −0.000508).
+- **G2, passed.** 5,829 games: slope 0.9879 (band 0.93 to 1.07), grouped reliability 0.000223 (limit 0.002);
+  v4's are 0.9867 and 0.000134.
+- **G3, passed (season level, not computed for this observation before registration).**
+
+  | Checkpoint | Make-playoffs Brier v4 / v5 (limit) | Win RMSE v4 / v5 (limit) |
+  |---|---|---|
+  | Opening night | 0.1595 / 0.1581 (not gated) | 8.347 / 8.315 (8.497) |
+  | Dec 1 | 0.1338 / 0.1331 (0.1368) | 6.027 / 6.018 (6.177) |
+  | Feb 1 | 0.0749 / 0.0753 (0.0779) | 3.455 / 3.431 (3.605) |
+  | Apr 1 | 0.0317 / 0.0314 (0.0347) | 1.147 / 1.146 (1.297) |
+
+  210 team-seasons, 4,000 iterations. v5 is within every limit. It is a non-inferiority check: the differences
+  are far inside what 210 team-seasons can resolve and no direction is claimed from them.
+- **G4, passed.** The eight test files green at the gate's commit (34 tests).
+- **Reported only.** s3 by origin: off, off, 45, 60, 35, 45, 60, 35, 25. Games before December 1 (2,467):
+  v4 0.213504, v5 0.213292. Told-participation set (9,845): 0.210316 and 0.210172, difference −0.000144
+  (−0.000226 to −0.000066). Section 7a's coefficients, v4 then v5: pooled 0.214 (SE 0.089) and 0.197 (0.088);
+  28+ minutes 0.580 (0.190) and 0.565 (0.188); 20 to 28, 0.289 and 0.274; under 20, 0.149 and 0.105. The absence
+  anomaly of section 7 is not explained by this observation. Spread games (2,460): market 0.212258, v4
+  0.217260, v5 0.217023; the market stays ahead of both, by 0.0050 and 0.0048.
+
+Pass is G1 to G4 together: **passed**. v5 is a registered candidate and nothing more: it is not wired, seals
+nothing and changes no published number. Wiring it as a shadow is the owner's decision; its prospective rule is
+Stage B above. `docs/live/research/README.md` gained one appended entry with this result, so its hash listed
+above is the registration commit's.

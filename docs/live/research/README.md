@@ -52,3 +52,10 @@ absence on his replacements.
 
 Looks at the development seasons to date for the v4 family: the inquiry spike (2026-11-21),
 Stage A (2026-11-21), this study and its two spikes (2026-11-23), v5's Stage A′.
+
+### 2026-11-23, Stage A′ of `live-2026.27-v5` (the on-court observation)
+
+Record: `docs/live/registration-v5.md` (result section) and `docs/live/evaluation-v5-stage-a.json`. Passed: Brier
+against v4 −0.000111 (−0.000182 to −0.000043) on 10,749 games and −0.000328 on the report era (3 of 3 seasons);
+calibration slope 0.988; season-level odds within every non-inferiority limit against v4 (the one part not seen
+before registration). A registered candidate only: not wired, and wiring is the owner's decision.
