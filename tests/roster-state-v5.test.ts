@@ -77,7 +77,7 @@ function world(seed = "v5-world", starBonus = 0) {
       }
     }
   }
-  const rosters = (season: number) => new Map(TEAMS.map((teamId) => [teamId, Array.from({ length: 8 }, (_, index) => `${teamId}-${index}`)]));
+  const rosters = () => new Map(TEAMS.map((teamId) => [teamId, Array.from({ length: 8 }, (_, index) => `${teamId}-${index}`)]));
   return { games, lines, plusMinus, rosters, season: 2012 };
 }
 

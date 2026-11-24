@@ -52,7 +52,7 @@ function job(origin: number, s3: number | null): FitPart {
   const fit = v4Fit();
   const lastTraining = origin - 1;
   const table = statusFor(fit, origin);
-  const reportSeasons = new Set(REPORT_SEASONS.filter((season) => season <= lastTraining && table !== null));
+  const reportSeasons = new Set<number>(REPORT_SEASONS.filter((season) => season <= lastTraining && table !== null));
   const fallback: StatusWeights = { O: 1, D: 1, Q: 1, P: 1, A: 1 };
   const { games, lines } = openData();
   const plusMinus = devPlusMinusLookup(2011, lastTraining);
