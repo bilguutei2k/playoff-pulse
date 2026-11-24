@@ -65,8 +65,50 @@ describe("nextGameAbsence", () => {
   });
 
   it("falls back to current absences without a projection for the game", () => {
-    expect(nextGameAbsence(null, "25", current)).toEqual({ points: 10.6, basis: "current-absences", count: 4, fromProjection: false, drivers: null });
+    expect(nextGameAbsence(null, "25", current)).toEqual({ points: 10.6, basis: "current-absences", count: 4, source: "current", fromProjection: false, drivers: null });
     expect(nextGameAbsence(projection(), "99", current).fromProjection).toBe(false);
+  });
+});
+
+describe("nextGameAbsence with a sealed game", () => {
+  const sealDrivers = [
+    { athleteId: "b", name: "Chet Holmgren", status: "O" as const, points: 2.1 },
+    { athleteId: "c", name: "Jalen Williams", status: "O" as const, points: 1.8 },
+    { athleteId: "z", name: "Bench Player", status: "O" as const, points: 0 },
+  ];
+
+  it("takes what the seal counted over a projection and over current absences", () => {
+    const next = nextGameAbsence(
+      projection({ absencePoints: { home: 9.9, away: 0 } }),
+      "25",
+      { points: 10.6, absences: [absence("a", "Shai Gilgeous-Alexander", 4.1)] },
+      { points: 6.4, unfiled: false, drivers: sealDrivers },
+    );
+    expect(next.points).toBe(6.4);
+    expect(next.source).toBe("seal");
+    expect(next.basis).toBe("report");
+    expect(next.count).toBe(2);
+    expect(next.fromProjection).toBe(true);
+  });
+
+  it("takes the seal when the game has tipped and has no projection", () => {
+    const next = nextGameAbsence(null, "25", { points: 10.6, absences: [] }, { points: 6.4, unfiled: false, drivers: sealDrivers });
+    expect(next.points).toBe(6.4);
+    expect(next.source).toBe("seal");
+  });
+
+  it("names current absences for a seal's unfiled side, and has no count when the seal's list is not complete", () => {
+    const next = nextGameAbsence(null, "25", { points: 3, absences: [] }, { points: 3, unfiled: true, drivers: null });
+    expect(next.basis).toBe("current-absences");
+    expect(next.count).toBeNull();
+    expect(next.drivers).toBeNull();
+  });
+
+  it("explains the gap from the seal's own list", () => {
+    const current = { points: 8, absences: [absence("a", "Shai Gilgeous-Alexander", 4.1), absence("b", "Chet Holmgren", 2.1), absence("c", "Jalen Williams", 1.8)] };
+    const next = nextGameAbsence(null, "25", current, { points: 3.9, unfiled: false, drivers: sealDrivers });
+    const parts = absenceGap(current, next);
+    expect(parts?.find((part) => part.kind === "not-on-report")?.players.map((player) => player.name)).toEqual(["Shai Gilgeous-Alexander"]);
   });
 });
 

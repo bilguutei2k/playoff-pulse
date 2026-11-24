@@ -6,10 +6,23 @@
 
 import { sealKindOf } from "@/lib/season/live-state";
 import { displayedSeal } from "@/lib/season/slate";
-import type { LedgerRow, LiveState, SealKind, SealRow, SeasonGame } from "@/lib/season/types";
+import type { AbsenceDriver, LedgerRow, LiveState, SealKind, SealRow, SeasonGame } from "@/lib/season/types";
 import type { ProjectionsFile } from "@/lib/season/projections";
 import { isProjectable, projectGame, publishedProjection, scheduleDates } from "@/lib/view/projection";
 import { mergeSealRows } from "@/lib/view/seals";
+
+/** One side's absence term on a seal: its points, whether its team had not filed, and its players when complete. */
+export type SealAbsence = { points: number; unfiled: boolean; drivers: readonly AbsenceDriver[] | null };
+
+function sealAbsence(seal: SealRow, home: boolean): SealAbsence | null {
+  if (!seal.absencePoints) return null;
+  const side = home ? "home" : "away";
+  return {
+    points: seal.absencePoints[side],
+    unfiled: seal.unfiled?.[side] ?? false,
+    drivers: seal.driversComplete && seal.drivers ? seal.drivers[side] : null,
+  };
+}
 
 export type TeamGameRow = {
   game: SeasonGame;
@@ -24,6 +37,11 @@ export type TeamGameRow = {
     sealKind: SealKind | null;
     /** Projections only: true for the published one with the injury term, false for ratings alone. */
     withInjuries: boolean;
+    /**
+     * Sealed numbers only: what the seal itself counted for this team's absences, as the
+     * ledger row has it. Null on a row without the injury term (the reference model's).
+     */
+    absence: SealAbsence | null;
   } | null;
   missed: boolean;
 };
@@ -70,6 +88,7 @@ export function teamSchedule(input: {
           modelVersion: seal.modelVersion,
           sealKind: sealKindOf(seal),
           withInjuries: false,
+          absence: sealAbsence(seal, home),
         };
       } else if (published) {
         forecast = {
@@ -78,6 +97,7 @@ export function teamSchedule(input: {
           modelVersion: null,
           sealKind: null,
           withInjuries: true,
+          absence: null,
         };
       } else if (isProjectable(game, state.slateEtDate)) {
         const projection = projectGame(state, game, dates);
@@ -87,6 +107,7 @@ export function teamSchedule(input: {
           modelVersion: null,
           sealKind: null,
           withInjuries: false,
+          absence: null,
         };
       }
       return {
