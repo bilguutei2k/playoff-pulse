@@ -376,3 +376,49 @@ file whose hash is listed above changed (checked at the end of this section).
   except `docs/live/research/README.md`, the append-only register, which already differed at the base (its
   result entry) and gained one appended entry here. Nothing under `docs/live/v5-fit-parts/`,
   `data/season/player-pm/`, `scripts/live/v4/`, `scripts/live/v5/` or the frozen engine files changed.
+
+## 2026-11-24, review of PR #44 and the lead's rulings (before v5's first seal)
+
+Two reviews of the wiring as first built (a7795b67): the session lead's, and an outside one (gpt-6-astra). What
+follows was fixed or ruled on in 31067f3d, before any v5 seal. No file whose hash is listed above changed.
+
+- **A stored shadow file could block a push (fixed; found by both reviews).** If the stop switch is set while v5
+  is failing, the run keeps the previous `shadow-v5.json`, whose `lastEtDate` no longer equals the constant, and
+  `verify:live` rejects it, which would stop the push that carries v1's, v2's and v4's seals. Reproduced on
+  a7795b67 in a clone: `verify:live` exits 1. A dry run keeps the file the same way. Now, whenever a run writes no
+  v5 file, the job runs the same check on the stored one (`shadowV5FileOnDiskProblems` in
+  `scripts/live/v5-shadow/check.ts`) against the ledger as the run leaves it, and removes a file that would fail;
+  the note goes to `shadowV5Problem`. The record page then shows no v5 section until v5 writes a file again. So
+  the "Guard" paragraph above reads: a v5 failure keeps the previous file unless that file would fail the check.
+- **The shadow files were written outside any guard (fixed; outside review).** Both files were written after
+  every model's rows had been appended, with nothing catching a failed write, so a shadow file that could not be
+  written would have ended the run before health and the site files, and the push would have lost the seals. Both
+  writes are now guarded. A failed v5 write falls through to the stored-file check above. A failed v4 write
+  removes whatever is left at its path, which v4's check accepts (it was the same on `main` before this work).
+- **The warm state forms closed-season predictions as filter state (ruled acceptable, as for v4; outside
+  review).** `warmStateV5Through` calls the frozen engine's `warmState`, which replays 2024-25 and 2025-26 with
+  `replayRosterState`, and that calls `forecastGame` for each game. This is the path ruled on for v4
+  (`docs/live/registration-v4.md`, Amendment 1 ruling 2, and "Astra's review of PR #37"): M5's window needs each
+  game's predicted components and outcome, which are kept in the checkpoint as filter state; the probability
+  fields the shared function also computes are incidental and discarded. For v5 as for v4 they are never
+  printed, stored, summarised, scored or compared, and no path leads from them into evaluation, model selection
+  or reader-facing copy. The engine is frozen and is not edited. The prohibition stands on evaluating anything on
+  those seasons; where this document or the builder's brief says no code "computes" a forecast for them, it is
+  read with this exception, which v4's warm state has had since its first seal.
+- **Clean in the outside review.** v4 is unchanged, and treating both shadow keys in the watchdog as v2's key is
+  treated is correct and alters no other incident. The live path is the registered model: the engine, s3 = 25,
+  the plus/minus column and sign, the scale refresh and the opening rosters. The stop switch's sealing range and
+  the watchdog's filter agree. The reader-facing copy makes no superiority claim and discloses that the
+  development check reused seasons already studied.
+- **Disclosed.** In the proofs that moved the first date to 2026-11-23 inside a clone, the job's own log printed
+  the probabilities v5 would have sealed for two games of that date, which had been played. Nothing was scored
+  or compared, those rows exist only in throwaway clones, and v5's record starts with its first real seal.
+- **Proofs after the fixes** (same method and recording; clones of 31067f3d, `main` at 9cde1410; logs and scripts
+  kept outside the repository). In all ten runs the job, `verify:ledger` and `verify:live` exit 0. v5 off as
+  committed: every file under `data/live` byte-identical to `main`'s. v5 on: the ledger minus v5's 4 rows and
+  every other file identical to `main`'s except the manifest and `shadow-v5.json`; a second run changes nothing.
+  The stop switch set while v5 throws, on top of that: the stored file is withdrawn and both verifies exit 0
+  (exit 1 before the fix). v5 throws with no stored file: only `health.json` differs from `main`. v4 throws: v5's
+  rows and file are written. A directory placed at v5's file path: v5's 4 rows are written, the file is not, and
+  nothing else differs from `main` but `health.json`. The same at v4's path: v4's rows are written and its file
+  withdrawn, with v5 unaffected.
