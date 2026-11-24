@@ -474,3 +474,31 @@ with a stored spread, and that is said wherever these results are shown.
   summarised, scored or compared, and no path leads from them into evaluation, model selection or
   reader-facing copy (confirmed by Astra's re-check of 168e0a34). The prohibition remains on
   evaluating anything on those seasons.
+
+## Amendment 2 (2026-11-24, on the owner's decision; before Stage B is read)
+
+It changes wording only, and only for a result that does not exist yet. Stage B's rule is unchanged.
+
+Where it comes from: the outside review of v5's registration (gpt-6-astra, 2026-11-23) found that the wording
+v5 had taken from this document claims more than the rule shows. v5's wording was changed that day
+(`docs/live/registration-v5.md`, Amendment 1). This document's wording was left for the owner, who decided on
+2026-11-24 to change it the same way.
+
+The weakness: B1 (D ≤ +0.004 and the interval's lower end below zero) can pass with, for example, D = +0.003
+and an interval from −0.002 to +0.010. A model that much worse is compatible with such a pass, so "not worse
+than v2 over 500 games" would say more than a pass establishes.
+
+What changes for v4: a B1 pass is worded **"passed its registered screen against v2 over 500 games: not
+clearly worse"**, and it is always printed with D and its interval. The words "not worse than v2" or
+"non-inferior" may be used for Stage B only if the interval's upper end is at or below +0.004. A B1 fail
+keeps its meaning. The change narrows what a pass may claim. It cannot make a pass easier or any claim
+stronger.
+
+What does not change: the rule B1, the 500-game read, what is reported with it, and that publishing v4 is the
+owner's decision. Stage A's wording stands: A2's interval ended at +0.0013, inside its limit of +0.004, which
+is what "not worse than v2 on development seasons" was registered to mean.
+
+State of the record at this amendment: v4 has sealed 13 games and 10 are scored, of the 500 the read needs.
+Stage B's D, its interval and its rule have not been computed on any part of them. The record page has shown
+v4's, v2's and v1's Brier score and log loss on the games scored so far, as plain numbers, since v4's first
+seal (W4); that display is not a Stage B read and is not changed by this amendment.
