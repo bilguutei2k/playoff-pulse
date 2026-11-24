@@ -16,7 +16,10 @@
 //   - projections.json: `ProjectionsFile` (src/lib/season/projections.ts);
 //   - team-injuries.json: `TeamInjuriesFile` (src/lib/season/projections.ts);
 //   - players/index.json: `PlayerIndexFile` (src/lib/season/player-stats.ts);
-//   - players/teams/{teamId}.json: `TeamPlayersFile` (src/lib/season/player-stats.ts).
+//   - players/teams/{teamId}.json: `TeamPlayersFile` (src/lib/season/player-stats.ts);
+//   - odds-history.json: `OddsHistoryFile` (src/lib/season/odds-history.ts), every team's
+//     season odds by ET date from the stored snapshots, derived display data: never a
+//     model input, never scored.
 // `verify:live` checks them against their invariants. Pure: no fetch, no file access.
 
 import { etDateOf } from "@/lib/season/dates";
@@ -61,12 +64,17 @@ export function siteTeamPlayersPath(seasonLabel: string, teamId: string): string
   return `site/${seasonLabel}/players/teams/${teamId}.json`;
 }
 
+export function siteOddsHistoryPath(seasonLabel: string): string {
+  return `site/${seasonLabel}/odds-history.json`;
+}
+
 /** Whether a path under data/live is one of the season's model views (not ledger-derived). */
 export function isModelViewPath(relative: string, seasonLabel: string): boolean {
   return (
     relative === siteProjectionsPath(seasonLabel) ||
     relative === siteTeamInjuriesPath(seasonLabel) ||
     relative === sitePlayerIndexPath(seasonLabel) ||
+    relative === siteOddsHistoryPath(seasonLabel) ||
     new RegExp(`^site/${seasonLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/players/teams/\\d+\\.json$`).test(relative)
   );
 }

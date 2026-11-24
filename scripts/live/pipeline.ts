@@ -75,6 +75,7 @@ import {
 import { ratingsHash, toRatingState } from "../../src/lib/season/ratings";
 import { simulateSeason } from "../../src/lib/season/simulate";
 import { isModelViewPath } from "../../src/lib/season/site-files";
+import type { OddsHistorySnapshot } from "../../src/lib/season/odds-history";
 import type { PlayerGamesDay } from "../../src/lib/season/player-stats";
 import { SEASON_TEAMS, teamById } from "../../src/lib/season/teams";
 import type {
@@ -105,7 +106,7 @@ import {
   reportDayPath,
   timedFetchJson,
 } from "./live-availability";
-import { buildModelViews, type ModelViews } from "./model-views";
+import { buildModelViews, buildOddsHistoryView, type ModelViews, type OddsHistoryView } from "./model-views";
 import { loadCarriedDelta, loadScorePrior } from "./score-prior";
 import {
   STINT_BACKFILL_PER_RUN,
@@ -266,11 +267,13 @@ function publishSiteFiles(): void {
 
 /**
  * Writes the model views that changed and removes any view file the run did not produce,
- * so the site never reads a view computed from older inputs than the rest. With no views
- * (they failed), every view file is removed.
+ * so the site never reads a view computed from older inputs than the rest. Without the
+ * views (they failed), every view file but the odds history is removed; without the odds
+ * history (it failed), only it is.
  */
-function publishModelViews(views: ModelViews | null): void {
-  const files = views?.files ?? new Map<string, string>();
+function publishModelViews(views: ModelViews | null, oddsHistory: OddsHistoryView | null): void {
+  const files = new Map(views?.files ?? []);
+  if (oddsHistory) files.set(oddsHistory.relative, oddsHistory.content);
   for (const relative of publishedSiteFiles(LIVE_DIRECTORY).keys()) {
     if (isModelViewPath(relative, LABEL) && !files.has(relative)) fs.rmSync(path.join(LIVE_DIRECTORY, relative));
   }
@@ -320,6 +323,22 @@ function describeSeal(row: SealRow): string {
   return `${row.modelVersion} ${row.sealKind ?? "morning"} seal ${row.gameId} ${away}@${home}: home ${percent(
     row.homeWinProbability,
   )}${reference}${absence}${report}${row.inputsIncomplete ? ", inputs incomplete" : ""}`;
+}
+
+/**
+ * The stored season snapshots, as the odds history view reads them: every file in the
+ * directory `loadHistoryPoints` reads, with its text, or null and the error when it cannot
+ * be read. Never throws.
+ */
+function readSnapshotFiles(): OddsHistorySnapshot[] {
+  if (!fs.existsSync(SNAPSHOT_DIRECTORY)) return [];
+  return fs.readdirSync(SNAPSHOT_DIRECTORY).map((name) => {
+    try {
+      return { name, text: fs.readFileSync(path.join(SNAPSHOT_DIRECTORY, name), "utf-8") };
+    } catch (error) {
+      return { name, text: null, error: error instanceof Error ? error.message : String(error) };
+    }
+  });
 }
 
 function loadHistoryPoints(forecast: SeasonForecast, slate: string): TeamHistoryPoint[] {
@@ -839,6 +858,36 @@ async function main(): Promise<void> {
     log(`views not published, seals unaffected: ${viewsProblem}`);
   }
 
+  // The odds history (display only, never a model input, never scored): every team's season
+  // odds by ET date, from the stored snapshots and this run's forecast. In its own guard
+  // after the other views, so it never stops them, never costs a seal and never fails the
+  // job: a failure publishes no odds history this run and says why in `viewsProblem`, and
+  // a snapshot it cannot use leaves that date out and is reported there too.
+  let oddsHistory: OddsHistoryView | null = null;
+  let oddsHistoryProblem: string | null = null;
+  try {
+    oddsHistory = buildOddsHistoryView({
+      season: SEASON,
+      seasonLabel: LABEL,
+      slate,
+      forecast,
+      history: state.history,
+      snapshots: readSnapshotFiles(),
+    });
+    if (oddsHistory.skipped.length > 0) {
+      oddsHistoryProblem = `odds history published without ${oddsHistory.skipped.length} stored snapshot(s): ${oddsHistory.skipped
+        .slice(0, 5)
+        .map((skip) => `${skip.name} (${skip.reason})`)
+        .join("; ")}`;
+      log(oddsHistoryProblem);
+    }
+    log(`odds history: ${oddsHistory.file.dates.length} dates, ${Buffer.byteLength(oddsHistory.content)} bytes`);
+  } catch (error) {
+    oddsHistory = null;
+    oddsHistoryProblem = `odds history not published: ${error instanceof Error ? error.message : String(error)}`;
+    log(`${oddsHistoryProblem}; seals and the other views unaffected`);
+  }
+
   // v4, the shadow model (registration-v4.md, W1 to W3): last, in its own guard. A failure
   // here writes no v4 row, keeps the previous shadow file and sets `shadowProblem` in
   // health.json; v1's and v2's rows, the record, the state and the views are already fixed.
@@ -931,14 +980,15 @@ async function main(): Promise<void> {
   writeText(path.join(SNAPSHOT_DIRECTORY, `${slate}.json`), `${JSON.stringify(forecast)}\n`);
   const changed = publishState(state);
   log(changed ? "state published" : "state unchanged");
-  publishModelViews(views);
+  publishModelViews(views, oddsHistory);
   publishSiteFiles();
 
   const healthBody = {
     stuckGames: stuck.map((game) => ({ id: game.id, etDate: game.etDate })),
     standingsLag: crossCheck.lagNotes,
     reportProblem: injuryReportProblem,
-    viewsProblem,
+    // The other views' failure and the odds history's, each independent of the other.
+    viewsProblem: [viewsProblem, oddsHistoryProblem].filter((problem) => problem !== null).join("; ") || null,
     // Only while the views are published: a views failure already says the index is missing.
     scoreProblem: views ? scoreProblem : null,
     // Only when v4 failed: the field is absent otherwise, so health.json is unchanged by v4.
