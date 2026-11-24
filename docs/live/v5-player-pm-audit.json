@@ -1,0 +1,178 @@
+{
+  "note": "v5 step 1. Regular season only. Source per game: box score +/- when both sides' sums equal 5 x the final margin; else the built game's stints under the same check; else dropped. playerGames: players with minutes and a readable +/- in the box score; playerGamesWritten: player-games in the output (from the box or the stints). Closed seasons are filter input only: counts and hashes, nothing else.",
+  "rawDirectory": "/Users/bilguutei/dev/548-score/data/historical/raw/score",
+  "seasons": {
+    "2011": {
+      "games": 1230,
+      "box": 1158,
+      "stints": 49,
+      "dropped": 23,
+      "noScore": 0,
+      "playerGames": 25027,
+      "playerGamesWritten": 24615,
+      "usableShare": 0.983538,
+      "sha256": "601521503cef869f32d1120eab70a93b6aafbac75563eb393f07dfbfd027db24"
+    },
+    "2012": {
+      "games": 990,
+      "box": 931,
+      "stints": 42,
+      "dropped": 17,
+      "noScore": 0,
+      "playerGames": 20669,
+      "playerGamesWritten": 20358,
+      "usableShare": 0.984953,
+      "sha256": "4760748be3b72c59fa974389c876d437857ab25e0b711f890174bae33d7472f6"
+    },
+    "2013": {
+      "games": 1229,
+      "box": 978,
+      "stints": 38,
+      "dropped": 213,
+      "noScore": 0,
+      "playerGames": 22203,
+      "playerGamesWritten": 21283,
+      "usableShare": 0.958564,
+      "sha256": "26022deaf9ecb490897ad0976545b68576eaf06ef6d7a5f13c109a4ead096189"
+    },
+    "2014": {
+      "games": 1230,
+      "box": 998,
+      "stints": 60,
+      "dropped": 172,
+      "noScore": 0,
+      "playerGames": 22128,
+      "playerGamesWritten": 22007,
+      "usableShare": 0.994532,
+      "sha256": "70965efb50b488c648ad20278e5bf318953d7b4848dc2015ca6fd29271e66116"
+    },
+    "2015": {
+      "games": 1230,
+      "box": 1013,
+      "stints": 45,
+      "dropped": 172,
+      "noScore": 0,
+      "playerGames": 22552,
+      "playerGamesWritten": 22372,
+      "usableShare": 0.992018,
+      "sha256": "62465ad860bee7826ff08cc966341753936340a3090f5ac67ee22b79ccf680e9"
+    },
+    "2016": {
+      "games": 1230,
+      "box": 966,
+      "stints": 33,
+      "dropped": 231,
+      "noScore": 0,
+      "playerGames": 22663,
+      "playerGamesWritten": 21217,
+      "usableShare": 0.936196,
+      "sha256": "40139c4534f87af3e1cbbece318dacb01263600297f90a7be35dd3fa6e789614"
+    },
+    "2017": {
+      "games": 1230,
+      "box": 1005,
+      "stints": 44,
+      "dropped": 181,
+      "noScore": 0,
+      "playerGames": 22657,
+      "playerGamesWritten": 22303,
+      "usableShare": 0.984376,
+      "sha256": "9b0a4936f5f52770f1ad8dc62e3cc21af9fe9413fb4ee5bec1dc3d9e990c623e"
+    },
+    "2018": {
+      "games": 1230,
+      "box": 1035,
+      "stints": 26,
+      "dropped": 169,
+      "noScore": 0,
+      "playerGames": 22605,
+      "playerGamesWritten": 22518,
+      "usableShare": 0.996151,
+      "sha256": "9c1bd929b1cce4be092392e8725f76752de552d77aa439d2a519ba56be7e8bc4"
+    },
+    "2019": {
+      "games": 1230,
+      "box": 1168,
+      "stints": 28,
+      "dropped": 34,
+      "noScore": 0,
+      "playerGames": 26035,
+      "playerGamesWritten": 25301,
+      "usableShare": 0.971807,
+      "sha256": "66129cb3d8a984614ca966a979ab556312fbcce2f6ae263b2e8dcb1ed5405aee"
+    },
+    "2020": {
+      "games": 1059,
+      "box": 1031,
+      "stints": 25,
+      "dropped": 3,
+      "noScore": 0,
+      "playerGames": 22317,
+      "playerGamesWritten": 22275,
+      "usableShare": 0.998118,
+      "sha256": "b2741b32a1339b137ee104a9d67b7df56f4a205c47e1201f4347930ca61f4c00"
+    },
+    "2021": {
+      "games": 1080,
+      "box": 1041,
+      "stints": 36,
+      "dropped": 3,
+      "noScore": 0,
+      "playerGames": 22969,
+      "playerGamesWritten": 22956,
+      "usableShare": 0.999434,
+      "sha256": "e7e8422bdd9e0e41619b7fc7d2aeb0e411b9907022fffd2d19a52df5a043a74e"
+    },
+    "2022": {
+      "games": 1230,
+      "box": 1203,
+      "stints": 27,
+      "dropped": 0,
+      "noScore": 0,
+      "playerGames": 25955,
+      "playerGamesWritten": 25986,
+      "usableShare": 1.001194,
+      "sha256": "2f03397e35aeab5a74f9c5749291e3fe5b705fe0996ffeb8e369c862c6a05267"
+    },
+    "2023": {
+      "games": 1230,
+      "box": 1202,
+      "stints": 25,
+      "dropped": 3,
+      "noScore": 0,
+      "playerGames": 25818,
+      "playerGamesWritten": 25788,
+      "usableShare": 0.998838,
+      "sha256": "474e0e45257ee087f201618b65350020c1722f564b4fab1b327e8c777bf4ca9a"
+    },
+    "2024": {
+      "games": 1230,
+      "box": 1192,
+      "stints": 36,
+      "dropped": 2,
+      "noScore": 0,
+      "playerGames": 26283,
+      "playerGamesWritten": 26298,
+      "usableShare": 1.000571,
+      "sha256": "3c3eb2e40a3e2478c453e773f8cbd18d010d1d77cfdecfe579cac3c71ad59b0a"
+    },
+    "2025": {
+      "closed": true,
+      "games": 1230,
+      "box": 1199,
+      "stints": 28,
+      "dropped": 3,
+      "playerGamesWritten": 26188,
+      "sha256": "7bce824d500bcc7989126f585c04ce8c387d1e638a2b7933ba97efdce92222fe"
+    },
+    "2026": {
+      "closed": true,
+      "games": 1230,
+      "box": 1183,
+      "stints": 25,
+      "dropped": 22,
+      "playerGamesWritten": 26103,
+      "sha256": "6c14fc82ef49577f4ad436f9da61ced0982d7241c6da612ef75d34ff49730e53"
+    }
+  }
+}

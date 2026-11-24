@@ -1,0 +1,343 @@
+{
+  "note": "Stage A' of live-2026.27-v5: a registered reproduction on development seasons (the on-court result on these seasons was seen before registration) plus unseen season-level checks (G3). Not an untouched test. G4 (the v5 tests) is run separately at the same commit.",
+  "reproduction": {
+    "v4PerSeason": "exact",
+    "v4A3": {
+      "slope": 0.9867,
+      "reliability": 0.000134
+    },
+    "v4A5": {
+      "opening": {
+        "teamSeasons": 210,
+        "makePlayoffsBrier": 0.159488,
+        "winRmse": 8.347
+      },
+      "dec1": {
+        "teamSeasons": 210,
+        "makePlayoffsBrier": 0.133765,
+        "winRmse": 6.027
+      },
+      "feb1": {
+        "teamSeasons": 210,
+        "makePlayoffsBrier": 0.074897,
+        "winRmse": 3.455
+      },
+      "apr1": {
+        "teamSeasons": 210,
+        "makePlayoffsBrier": 0.03168,
+        "winRmse": 1.147
+      }
+    }
+  },
+  "s3ByOrigin": {
+    "2016": "off",
+    "2017": "off",
+    "2018": "45",
+    "2019": "60",
+    "2020": "35",
+    "2021": "45",
+    "2022": "60",
+    "2023": "35",
+    "2024": "25"
+  },
+  "gates": {
+    "g1": {
+      "games": 10749,
+      "v4": 0.212104,
+      "v5": 0.211993,
+      "logLoss": {
+        "v4": 0.612151,
+        "v5": 0.611905
+      },
+      "interval": {
+        "difference": -0.00011108076946620656,
+        "lower": -0.00018217127587744048,
+        "upper": -0.000042893489506319,
+        "draws": 10000,
+        "clusters": 1438
+      },
+      "seasonsNegative": 5,
+      "reportEra": {
+        "games": 3690,
+        "difference": -0.000328,
+        "bySeason": [
+          {
+            "season": 2022,
+            "games": 1230,
+            "v4": 0.212974,
+            "v5": 0.212782,
+            "difference": -0.000192
+          },
+          {
+            "season": 2023,
+            "games": 1230,
+            "v4": 0.221547,
+            "v5": 0.221263,
+            "difference": -0.000284
+          },
+          {
+            "season": 2024,
+            "games": 1230,
+            "v4": 0.204276,
+            "v5": 0.203768,
+            "difference": -0.000508
+          }
+        ],
+        "seasonsNegative": 3
+      },
+      "passed": true
+    },
+    "g2": {
+      "games": 5829,
+      "slope": 0.9879,
+      "reliability": 0.000223,
+      "v4": {
+        "slope": 0.9867,
+        "reliability": 0.000134
+      },
+      "passed": true
+    },
+    "g3": {
+      "iterations": 4000,
+      "seasons": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2022,
+        2023,
+        2024
+      ],
+      "checks": [
+        {
+          "checkpoint": "dec1",
+          "v4": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.133765,
+            "winRmse": 6.027
+          },
+          "v5": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.133086,
+            "winRmse": 6.018
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.136765,
+            "winRmse": 6.177
+          },
+          "passed": true
+        },
+        {
+          "checkpoint": "feb1",
+          "v4": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.074897,
+            "winRmse": 3.455
+          },
+          "v5": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.075285,
+            "winRmse": 3.431
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.077897,
+            "winRmse": 3.605
+          },
+          "passed": true
+        },
+        {
+          "checkpoint": "apr1",
+          "v4": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.03168,
+            "winRmse": 1.147
+          },
+          "v5": {
+            "teamSeasons": 210,
+            "makePlayoffsBrier": 0.031359,
+            "winRmse": 1.146
+          },
+          "limits": {
+            "makePlayoffsBrier": 0.03468,
+            "winRmse": 1.297
+          },
+          "passed": true
+        }
+      ],
+      "opening": {
+        "v4": {
+          "teamSeasons": 210,
+          "makePlayoffsBrier": 0.159488,
+          "winRmse": 8.347
+        },
+        "v5": {
+          "teamSeasons": 210,
+          "makePlayoffsBrier": 0.158107,
+          "winRmse": 8.315
+        },
+        "limit": 8.497,
+        "passed": true
+      },
+      "passed": true
+    }
+  },
+  "reported": {
+    "perSeason": [
+      {
+        "season": 2016,
+        "games": 1230,
+        "v4": 0.199269,
+        "v5": 0.199269,
+        "difference": 0,
+        "v4LogLoss": 0.582223,
+        "v5LogLoss": 0.582223
+      },
+      {
+        "season": 2017,
+        "games": 1230,
+        "v4": 0.216318,
+        "v5": 0.216318,
+        "difference": 0,
+        "v4LogLoss": 0.622813,
+        "v5LogLoss": 0.622813
+      },
+      {
+        "season": 2018,
+        "games": 1230,
+        "v4": 0.210247,
+        "v5": 0.210214,
+        "difference": -0.000033,
+        "v4LogLoss": 0.608385,
+        "v5LogLoss": 0.608317
+      },
+      {
+        "season": 2019,
+        "games": 1230,
+        "v4": 0.20793,
+        "v5": 0.20784,
+        "difference": -0.000089,
+        "v4LogLoss": 0.6026,
+        "v5LogLoss": 0.602384
+      },
+      {
+        "season": 2020,
+        "games": 1059,
+        "v4": 0.215311,
+        "v5": 0.2154,
+        "difference": 0.000089,
+        "v4LogLoss": 0.619668,
+        "v5LogLoss": 0.619826
+      },
+      {
+        "season": 2021,
+        "games": 1080,
+        "v4": 0.222816,
+        "v5": 0.222883,
+        "difference": 0.000067,
+        "v4LogLoss": 0.636473,
+        "v5LogLoss": 0.636645
+      },
+      {
+        "season": 2022,
+        "games": 1230,
+        "v4": 0.212974,
+        "v5": 0.212782,
+        "difference": -0.000192,
+        "v4LogLoss": 0.61429,
+        "v5LogLoss": 0.613866
+      },
+      {
+        "season": 2023,
+        "games": 1230,
+        "v4": 0.221547,
+        "v5": 0.221263,
+        "difference": -0.000284,
+        "v4LogLoss": 0.634074,
+        "v5LogLoss": 0.633493
+      },
+      {
+        "season": 2024,
+        "games": 1230,
+        "v4": 0.204276,
+        "v5": 0.203768,
+        "difference": -0.000508,
+        "v4LogLoss": 0.592847,
+        "v5LogLoss": 0.591693
+      }
+    ],
+    "beforeDec1": {
+      "games": 2467,
+      "v4": 0.213504,
+      "v5": 0.213292
+    },
+    "told": {
+      "games": 9845,
+      "v4": 0.210316,
+      "v5": 0.210172,
+      "interval": {
+        "difference": -0.0001435571067355724,
+        "lower": -0.0002256825978736484,
+        "upper": -0.0000658075300835483,
+        "draws": 10000,
+        "clusters": 1437
+      }
+    },
+    "sevenA": {
+      "v4": {
+        "games": 9845,
+        "pooled": {
+          "coef": 0.214,
+          "se": 0.0893
+        },
+        "tiers": {
+          "28+": {
+            "coef": 0.5801,
+            "se": 0.1897
+          },
+          "20-28": {
+            "coef": 0.2894,
+            "se": 0.1798
+          },
+          "under 20": {
+            "coef": 0.1494,
+            "se": 0.1703
+          }
+        },
+        "note": "Told residual (final margin minus told-participation expected margin) on A_away - A_home, OLS with HC1 SE; tiers jointly, as the residual study's section 7a."
+      },
+      "v5": {
+        "games": 9845,
+        "pooled": {
+          "coef": 0.1972,
+          "se": 0.0883
+        },
+        "tiers": {
+          "28+": {
+            "coef": 0.5653,
+            "se": 0.1875
+          },
+          "20-28": {
+            "coef": 0.2739,
+            "se": 0.1766
+          },
+          "under 20": {
+            "coef": 0.1053,
+            "se": 0.168
+          }
+        },
+        "note": "Told residual (final margin minus told-participation expected margin) on A_away - A_home, OLS with HC1 SE; tiers jointly, as the residual study's section 7a."
+      }
+    },
+    "market": {
+      "games": 2460,
+      "scale": 13,
+      "market": 0.212258,
+      "v4": 0.21726,
+      "v5": 0.217023,
+      "gapV4": 0.005002,
+      "gapV5": 0.004764,
+      "note": "Benchmark read only; the scale is chosen on these games, as in v4's Stage A."
+    }
+  },
+  "passed": true
+}

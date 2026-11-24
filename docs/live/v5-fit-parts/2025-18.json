@@ -1,0 +1,111 @@
+{
+  "origin": 2025,
+  "s3": "18",
+  "trainSeasons": [
+    2013,
+    2024
+  ],
+  "trainGames": 14438,
+  "trainLogLoss": 0.6051262039856838,
+  "bySeason": {
+    "2013": {
+      "games": 1229,
+      "logLoss": 0.5887679767330043
+    },
+    "2014": {
+      "games": 1230,
+      "logLoss": 0.5976802402468202
+    },
+    "2015": {
+      "games": 1230,
+      "logLoss": 0.5839843824766238
+    },
+    "2016": {
+      "games": 1230,
+      "logLoss": 0.5799675001947185
+    },
+    "2017": {
+      "games": 1230,
+      "logLoss": 0.619426006549259
+    },
+    "2018": {
+      "games": 1230,
+      "logLoss": 0.6074451583713947
+    },
+    "2019": {
+      "games": 1230,
+      "logLoss": 0.6005315259452272
+    },
+    "2020": {
+      "games": 1059,
+      "logLoss": 0.6214319914202059
+    },
+    "2021": {
+      "games": 1080,
+      "logLoss": 0.636244648095919
+    },
+    "2022": {
+      "games": 1230,
+      "logLoss": 0.6098383860250526
+    },
+    "2023": {
+      "games": 1230,
+      "logLoss": 0.6316752387451026
+    },
+    "2024": {
+      "games": 1230,
+      "logLoss": 0.590569928017226
+    }
+  },
+  "filesRead": [
+    "data/season/boxscores/2021.json",
+    "data/season/boxscores/2022.json",
+    "data/season/boxscores/2023.json",
+    "data/season/boxscores/2024.json",
+    "data/season/games/2011.json",
+    "data/season/games/2012.json",
+    "data/season/games/2013.json",
+    "data/season/games/2014.json",
+    "data/season/games/2015.json",
+    "data/season/games/2016.json",
+    "data/season/games/2017.json",
+    "data/season/games/2018.json",
+    "data/season/games/2019.json",
+    "data/season/games/2020.json",
+    "data/season/games/2021.json",
+    "data/season/games/2022.json",
+    "data/season/games/2023.json",
+    "data/season/games/2024.json",
+    "data/season/player-games/2011.json.gz",
+    "data/season/player-games/2012.json.gz",
+    "data/season/player-games/2013.json.gz",
+    "data/season/player-games/2014.json.gz",
+    "data/season/player-games/2015.json.gz",
+    "data/season/player-games/2016.json.gz",
+    "data/season/player-games/2017.json.gz",
+    "data/season/player-games/2018.json.gz",
+    "data/season/player-games/2019.json.gz",
+    "data/season/player-games/2020.json.gz",
+    "data/season/player-games/2021.json.gz",
+    "data/season/player-games/2022.json.gz",
+    "data/season/player-games/2023.json.gz",
+    "data/season/player-games/2024.json.gz",
+    "data/season/reports/2022.json",
+    "data/season/reports/2023.json",
+    "data/season/reports/2024.json",
+    "data/season/player-pm/2011.json.gz",
+    "data/season/player-pm/2012.json.gz",
+    "data/season/player-pm/2013.json.gz",
+    "data/season/player-pm/2014.json.gz",
+    "data/season/player-pm/2015.json.gz",
+    "data/season/player-pm/2016.json.gz",
+    "data/season/player-pm/2017.json.gz",
+    "data/season/player-pm/2018.json.gz",
+    "data/season/player-pm/2019.json.gz",
+    "data/season/player-pm/2020.json.gz",
+    "data/season/player-pm/2021.json.gz",
+    "data/season/player-pm/2022.json.gz",
+    "data/season/player-pm/2023.json.gz",
+    "data/season/player-pm/2024.json.gz"
+  ]
+}

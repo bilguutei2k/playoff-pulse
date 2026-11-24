@@ -1,0 +1,273 @@
+{
+  "version": "live-2026.27-v5",
+  "note": "s3 per origin by regular-season log loss on 2012-13 to S - 1 (training only; no held-out season is scored here). Every v4 parameter at its frozen per-origin value from docs/live/v4-fit.json; origin 2025 is the frozen set (2010-11 to 2023-24).",
+  "grid": [
+    "off",
+    "80",
+    "60",
+    "45",
+    "35",
+    "25",
+    "18",
+    "13"
+  ],
+  "gridNote": "The spike's grid {off, 80, 60, 45, 35, 25} extended downward by 18 and 13 before any frozen-set number existed, because the spike's last origin chose 25. A choice on the new lower edge stands; no further extension.",
+  "origins": {
+    "2016": {
+      "trainSeasons": [
+        2013,
+        2015
+      ],
+      "trainGames": 3689,
+      "losses": {
+        "13": 0.5915736466777511,
+        "18": 0.5894109395422181,
+        "25": 0.5885699724773465,
+        "35": 0.5882561686274923,
+        "45": 0.5881598882810948,
+        "60": 0.5881074851580043,
+        "80": 0.5880825426863088,
+        "off": 0.5880554960184117
+      },
+      "chosen": "off",
+      "s3": null
+    },
+    "2017": {
+      "trainSeasons": [
+        2013,
+        2016
+      ],
+      "trainGames": 4919,
+      "losses": {
+        "13": 0.5890134365906334,
+        "18": 0.5871974607689263,
+        "25": 0.5865444075293217,
+        "35": 0.5863355291550723,
+        "45": 0.5862844361616586,
+        "60": 0.5862631549849943,
+        "80": 0.5862560589920218,
+        "off": 0.5862523538442621
+      },
+      "chosen": "off",
+      "s3": null
+    },
+    "2018": {
+      "trainSeasons": [
+        2013,
+        2017
+      ],
+      "trainGames": 6149,
+      "losses": {
+        "13": 0.595206746565081,
+        "18": 0.5938384427850719,
+        "25": 0.5934116231919991,
+        "35": 0.593310383240691,
+        "45": 0.5932996460241449,
+        "60": 0.5933037575013057,
+        "80": 0.5933102924682641,
+        "off": 0.5933233591741025
+      },
+      "chosen": "45",
+      "s3": 45
+    },
+    "2019": {
+      "trainSeasons": [
+        2013,
+        2018
+      ],
+      "trainGames": 7379,
+      "losses": {
+        "13": 0.5978295702743439,
+        "18": 0.5963052825602575,
+        "25": 0.5958100355409988,
+        "35": 0.5956813057435674,
+        "45": 0.5956617730990739,
+        "60": 0.595660985213318,
+        "80": 0.5956651488164999,
+        "off": 0.5956756034825836
+      },
+      "chosen": "60",
+      "s3": 60
+    },
+    "2020": {
+      "trainSeasons": [
+        2013,
+        2019
+      ],
+      "trainGames": 8609,
+      "losses": {
+        "13": 0.5981846365458962,
+        "18": 0.5969373706725688,
+        "25": 0.5965809505510159,
+        "35": 0.5965173978398767,
+        "45": 0.5965219926387847,
+        "60": 0.5965362466204043,
+        "80": 0.5965484260167037,
+        "off": 0.5965686726782075
+      },
+      "chosen": "35",
+      "s3": 35
+    },
+    "2021": {
+      "trainSeasons": [
+        2013,
+        2020
+      ],
+      "trainGames": 9668,
+      "losses": {
+        "13": 0.6007410792069188,
+        "18": 0.5994811862831646,
+        "25": 0.5990985819490692,
+        "35": 0.5990144878012665,
+        "45": 0.5990091411167979,
+        "60": 0.5990162280456489,
+        "80": 0.5990241935151838,
+        "off": 0.5990388260839997
+      },
+      "chosen": "45",
+      "s3": 45
+    },
+    "2022": {
+      "trainSeasons": [
+        2013,
+        2021
+      ],
+      "trainGames": 10748,
+      "losses": {
+        "13": 0.6045731005973313,
+        "18": 0.6032884094125265,
+        "25": 0.6028739803114386,
+        "35": 0.6027658639021997,
+        "45": 0.6027489062339784,
+        "60": 0.6027475992353301,
+        "80": 0.602750616175366,
+        "off": 0.6027586380492167
+      },
+      "chosen": "60",
+      "s3": 60
+    },
+    "2023": {
+      "trainSeasons": [
+        2013,
+        2022
+      ],
+      "trainGames": 11978,
+      "losses": {
+        "13": 0.6050000977664763,
+        "18": 0.6040332614818552,
+        "25": 0.6037996463952845,
+        "35": 0.6037871451097725,
+        "45": 0.6038089114494914,
+        "60": 0.6038331875858178,
+        "80": 0.6038504362089042,
+        "off": 0.603876559895881
+      },
+      "chosen": "35",
+      "s3": 35
+    },
+    "2024": {
+      "trainSeasons": [
+        2013,
+        2023
+      ],
+      "trainGames": 13208,
+      "losses": {
+        "13": 0.6074500399662278,
+        "18": 0.6066272558531359,
+        "25": 0.6064743515111174,
+        "35": 0.6065054670059429,
+        "45": 0.6065453233074947,
+        "60": 0.6065817468386225,
+        "80": 0.6066058348630371,
+        "off": 0.6066407557665069
+      },
+      "chosen": "25",
+      "s3": 25
+    },
+    "2025": {
+      "trainSeasons": [
+        2013,
+        2024
+      ],
+      "trainGames": 14438,
+      "losses": {
+        "13": 0.6059674832960451,
+        "18": 0.6051262039856838,
+        "25": 0.6050294617407556,
+        "35": 0.605120739010151,
+        "45": 0.6051933260677084,
+        "60": 0.6052546556197776,
+        "80": 0.6052938780328428,
+        "off": 0.6053495101616261
+      },
+      "chosen": "25",
+      "s3": 25
+    }
+  },
+  "frozen": {
+    "s3": 25,
+    "chosen": "25"
+  },
+  "provenance": {
+    "code": {
+      "src/lib/season/roster-state-v5.ts": "ac81f2f0fe315c6a6acd26640debbf3ff368ea12324eaf0ac2a68db6eeec4d3d",
+      "src/lib/season/params-v5.ts": "c34ecf116b962193f13cc4678b319496a7b9955f1d6d0be624d8d91e732e3c8c",
+      "scripts/live/v5/fit-s3.ts": "01a2140bf02bdc14a650338b10b75d1742c54688e924c08c8b2fe5caa55dc381",
+      "scripts/live/v5/dev-data-v5.ts": "2ff9c240f64ff83e00ab9f7ec528c28d8d379a34838f96b5b54c106e94f8d07b",
+      "scripts/live/v4/dev-data.ts": "70006194c95ccba2bc9aa9710fb4ef12ee8e55267f42bd5bb7d448559b3467f3",
+      "scripts/live/v4/engine-run.ts": "7299ac34e135d1dd7a5a7d3f093667bc0054772431f7ebf703f4e36f703ef718",
+      "docs/live/v4-fit.json": "c1f1d868841d7b06fc5c216025dbc3e1bffae11db059afe63024363b7256d4a4"
+    },
+    "data": {
+      "data/season/player-pm/2011.json.gz": "601521503cef869f32d1120eab70a93b6aafbac75563eb393f07dfbfd027db24",
+      "data/season/player-pm/2012.json.gz": "4760748be3b72c59fa974389c876d437857ab25e0b711f890174bae33d7472f6",
+      "data/season/player-pm/2013.json.gz": "26022deaf9ecb490897ad0976545b68576eaf06ef6d7a5f13c109a4ead096189",
+      "data/season/player-pm/2014.json.gz": "70965efb50b488c648ad20278e5bf318953d7b4848dc2015ca6fd29271e66116",
+      "data/season/player-pm/2015.json.gz": "62465ad860bee7826ff08cc966341753936340a3090f5ac67ee22b79ccf680e9",
+      "data/season/player-pm/2016.json.gz": "40139c4534f87af3e1cbbece318dacb01263600297f90a7be35dd3fa6e789614",
+      "data/season/player-pm/2017.json.gz": "9b0a4936f5f52770f1ad8dc62e3cc21af9fe9413fb4ee5bec1dc3d9e990c623e",
+      "data/season/player-pm/2018.json.gz": "9c1bd929b1cce4be092392e8725f76752de552d77aa439d2a519ba56be7e8bc4",
+      "data/season/player-pm/2019.json.gz": "66129cb3d8a984614ca966a979ab556312fbcce2f6ae263b2e8dcb1ed5405aee",
+      "data/season/player-pm/2020.json.gz": "b2741b32a1339b137ee104a9d67b7df56f4a205c47e1201f4347930ca61f4c00",
+      "data/season/player-pm/2021.json.gz": "e7e8422bdd9e0e41619b7fc7d2aeb0e411b9907022fffd2d19a52df5a043a74e",
+      "data/season/player-pm/2022.json.gz": "2f03397e35aeab5a74f9c5749291e3fe5b705fe0996ffeb8e369c862c6a05267",
+      "data/season/player-pm/2023.json.gz": "474e0e45257ee087f201618b65350020c1722f564b4fab1b327e8c777bf4ca9a",
+      "data/season/player-pm/2024.json.gz": "3c3eb2e40a3e2478c453e773f8cbd18d010d1d77cfdecfe579cac3c71ad59b0a",
+      "data/season/player-games/2011.json.gz": "dd8682c98bec4ec9a860a699578f92b09cf2e14f58feb17634ec46be8e22dccc",
+      "data/season/player-games/2012.json.gz": "060c174691198ac8bdc843217013319e840075547c4933a9fc197437932abdde",
+      "data/season/player-games/2013.json.gz": "c49e477e7c13bea3f8c66d6e98b7fd5925b2bbf3e77ec82cd27ec54a2cde3bab",
+      "data/season/player-games/2014.json.gz": "471b806900aa06941a0ac11ac821a3c0afbd6bc06439f276125f13b1705efa51",
+      "data/season/player-games/2015.json.gz": "7a1dc8358596f2d6a1da1f0174ef91cf029540f4870a99affed1ee45b3ac44bf",
+      "data/season/player-games/2016.json.gz": "3b956ba7e3bc2b7ad2fd44804ea6d36a9c34cc524739c36f73d65ffd76267bd8",
+      "data/season/player-games/2017.json.gz": "a53ea2d2db5b476825e578416ad537a8f5423d8b4ec895dfd54e9ff2328f6845",
+      "data/season/player-games/2018.json.gz": "c6123daaa7284f5108f039d00ef6875c17c6a7b710c76ae65416bbcf9edcfa1c",
+      "data/season/player-games/2019.json.gz": "7f92381dd37681e0a22a9b54bfca38ca8fcff42caadf381a34d6c595ca3620f4",
+      "data/season/player-games/2020.json.gz": "92f0a09cf6c3b727294a08e1192c57263e9fe5ac07a2dc7970c0c5446eae42d8",
+      "data/season/player-games/2021.json.gz": "3c031764ec98dcf8b7826d02f0bfa1a94b8eb23b1760f2a41d8268693857ebc2",
+      "data/season/player-games/2022.json.gz": "96b2a6e275a2c67a74a13f61f76817fc7ccfcc64d288ce577f7c881c49ea0df2",
+      "data/season/player-games/2023.json.gz": "4d9c97c8a6a44e211a42d1bac9146e29d0776160c8cfe77554b15912cb99ad64",
+      "data/season/player-games/2024.json.gz": "151d7646e51f2868038ccdc2ff405652c2a049ed6379701ce0312be21d4ecb21",
+      "data/season/games/2011.json": "bcd63a877b6d45018caac5cd21b3394ab1ce06d232c583c8f9bcd9f506595270",
+      "data/season/games/2012.json": "0166f1cbc86d66cc0bffb7ed6f4de80f19db9f88293149ffac0366569d348564",
+      "data/season/games/2013.json": "827d7c222b7c26162745905c8077c51d350be772b8dc6b00032c445be1fb3547",
+      "data/season/games/2014.json": "f05b4c3f3f8d9370596daaf15ed24332dfaec2232f77beb9a046e2899ae96c4c",
+      "data/season/games/2015.json": "7d37213545ce3f9cc8ad608cca18a6b12a34542f7a3e5c8c44e67a21b4bc0284",
+      "data/season/games/2016.json": "229562c92902746aff1a117b05f78f2a3fec11c743c7fbe20172c8317803f8b8",
+      "data/season/games/2017.json": "3446ce1221a08130f0c1ba1a23932040fa1bc1d3ba4448f1a30bc6b2abd01f40",
+      "data/season/games/2018.json": "fe51a73938e694abe07118925f7cfb86503313e598551dacb409068d3643083f",
+      "data/season/games/2019.json": "eb6cd6aae7169a03b5644a38c4c682bac360a0d183f02933b0ee444aa79c0c79",
+      "data/season/games/2020.json": "473593861919c3642225069f2a5f8cba6ea93101b97b6c2ab0d362bd42c5ece4",
+      "data/season/games/2021.json": "2519f61e4a3bc6357b3324fce87fbec117b3898d9776ff87e8fb168d2929065b",
+      "data/season/games/2022.json": "5aee8a397c5f396ec7a3d0b43c3f40d5128a8963fb2702cc9aa09cda86a23a84",
+      "data/season/games/2023.json": "81297e73bcb457e52e1e8d490056d556f3758676ef606455c9db9282dfd190ac",
+      "data/season/games/2024.json": "ab2997b74743ff2d87e9af30a7f7c013b307cc00e7894ba0cd04545b05318660",
+      "data/season/reports/2022.json": "b38a4a627a5acd5f323472027520009fb223c7b857dfd0691073f7e3d88761ec",
+      "data/season/reports/2023.json": "17233ea1fce3726f7314d28d66b669e6d9e2dda5df37a4b98675a8f1ecd40189",
+      "data/season/reports/2024.json": "1f145093f0a58392714a375c0743b4f42f6258a7529ad341ef9dd96276ef1f27",
+      "data/season/boxscores/2022.json": "8dd63dd5ba9f4126e00cdbf3562f6b655941fab52d7072d7d2b16a56c223d5d4",
+      "data/season/boxscores/2023.json": "0486460fffa2c2d2c28e542c4f94364e0e9cd9acfec84fc12039abefeda42b76",
+      "data/season/boxscores/2024.json": "ac17d001a606cd7785bd230eee96f534c635a10fee8cdaac4a119fd5441db968",
+      "data/season/boxscores/2021.json": "d35fca4c0999a93e9987fc01c98a914a21b1c1929d32d8c902e17d8d8d3d4786"
+    }
+  }
+}
