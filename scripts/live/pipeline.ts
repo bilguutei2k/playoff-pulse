@@ -364,18 +364,28 @@ function describeSeal(row: SealRow): string {
   )}${reference}${absence}${report}${row.inputsIncomplete ? ", inputs incomplete" : ""}`;
 }
 
+/**
+ * The title-odds history for state.json: every stored snapshot but the slate's, then the
+ * run's forecast. A snapshot that cannot be read or is not a forecast (a damaged file, a
+ * directory) leaves its date out and is logged: one bad display file must not stop a run
+ * that carries seals. The odds history view leaves the same entries out.
+ */
 function loadHistoryPoints(forecast: SeasonForecast, slate: string): TeamHistoryPoint[] {
   const points: TeamHistoryPoint[] = [];
   if (fs.existsSync(SNAPSHOT_DIRECTORY)) {
     for (const file of fs.readdirSync(SNAPSHOT_DIRECTORY).sort()) {
       const date = file.replace(".json", "");
       if (date === slate) continue;
-      const snapshot = readJson<SeasonForecast>(path.join(SNAPSHOT_DIRECTORY, file));
-      if (!snapshot) continue;
-      points.push({
-        date,
-        champion: Object.fromEntries(snapshot.teams.map((team) => [team.teamId, team.champion])),
-      });
+      try {
+        const snapshot = readJson<SeasonForecast>(path.join(SNAPSHOT_DIRECTORY, file));
+        if (!snapshot) continue;
+        points.push({
+          date,
+          champion: Object.fromEntries(snapshot.teams.map((team) => [team.teamId, team.champion])),
+        });
+      } catch (error) {
+        log(`snapshot ${file} left out of the title-odds history: ${error instanceof Error ? error.message : String(error)}`);
+      }
     }
   }
   points.push({
