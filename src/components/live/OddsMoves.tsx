@@ -47,12 +47,16 @@ function MoveList({ title, moves }: { title: string; moves: OddsMove[] }) {
   );
 }
 
-/** The biggest playoff-odds moves between the two latest daily forecasts. */
+/**
+ * The biggest playoff-odds moves across one slate: the latest once it has a final ("since"),
+ * the one before it until then ("day"), so a morning reader sees what last night did.
+ */
 export function OddsMoves({ moves }: { moves: Moves }) {
+  const day = moves.kind === "day";
   return (
     <section aria-labelledby="moves-title">
       <div className="sh">
-        <h2 id="moves-title">Biggest moves since {formatShortDay(moves.from)}</h2>
+        <h2 id="moves-title">{day ? `Biggest moves on ${formatShortDay(moves.to)}` : `Biggest moves since ${formatShortDay(moves.from)}`}</h2>
         <span>Playoff odds</span>
       </div>
       <div className="grid gap-x-14 gap-y-8 sm:grid-cols-2">
@@ -60,9 +64,20 @@ export function OddsMoves({ moves }: { moves: Moves }) {
         <MoveList title="Down" moves={moves.falls} />
       </div>
       <p className="mt-3 text-[13px] leading-5 text-ink-2">
-        Playoff odds now and the change in percentage points from the last forecast of {formatShortDay(moves.from)},
-        which counted that day&apos;s games; moves under one point are left out. A result is the team&apos;s game since
-        then, set beside the move, not named as its cause.
+        {day ? (
+          <>
+            Playoff odds at the last forecast of {formatShortDay(moves.to)} and the change in percentage points from the
+            last forecast of {formatShortDay(moves.from)}; moves under one point are left out. Today&apos;s games have
+            not finished, so these are the latest full day&apos;s moves, and the table above has today&apos;s odds. A
+            result is the team&apos;s game that day, set beside the move, not named as its cause.
+          </>
+        ) : (
+          <>
+            Playoff odds now and the change in percentage points from the last forecast of {formatShortDay(moves.from)},
+            which counted that day&apos;s games; moves under one point are left out. A result is the team&apos;s game
+            since then, set beside the move, not named as its cause.
+          </>
+        )}
       </p>
     </section>
   );
