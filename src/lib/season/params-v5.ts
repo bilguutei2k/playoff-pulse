@@ -28,5 +28,5 @@ export function withOnCourt(ratings: V4RatingParams, onCourt: V5OnCourt): V5Rati
 /** The frozen set: v4's frozen parameters and s3 fitted on 2010-11 to 2023-24 (scored 2012-13 on). */
 export const V5_FROZEN: { v4: typeof V4_FROZEN; s3: number | null } = {
   v4: V4_FROZEN,
-  s3: null, // set from docs/live/v5-fit.json after the fit (step 3)
+  s3: 25,
 };
