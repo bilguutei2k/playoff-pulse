@@ -33,6 +33,7 @@ import {
   sameScoredGames,
   versionShort,
 } from "@/lib/view/record-page";
+import { RECORD_CSV_COLUMNS } from "@/lib/view/record-csv";
 import { shadowV4Lines, type ShadowV4Lines } from "@/lib/view/shadow-v4";
 
 export const metadata: Metadata = {
@@ -522,6 +523,17 @@ export default async function RecordPage() {
                 Every seal is written before tip and never edited. Morning, reissued and final seals are separate rows,
                 each with its true time and, since Nov 6, its policy revision. The times are the job&apos;s own clock and
                 the git history; there is no independent receipt that a seal existed before tip.
+              </p>
+              <p className="mt-4">
+                <SiteLink href="/record.csv" download className="font-semibold hover:underline hover:underline-offset-4">
+                  Download the record (CSV)
+                </SiteLink>
+              </p>
+              <p className="mt-2 text-[13px] text-ink-2">
+                The games on this page, one row per game and version ({versions.map(versionShort).join(" and ")}), from the
+                same files, so the totals match. Columns: {RECORD_CSV_COLUMNS.join(", ")}. et_date is the Eastern date, the
+                other times are UTC; the seal is the scored one (final, else reissued, else morning); home_won is 1 or 0; status is scored, no final seal,
+                pending or missed.
               </p>
             </section>
           </aside>
