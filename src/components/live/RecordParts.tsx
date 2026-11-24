@@ -1,4 +1,5 @@
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
 import type { MissedRow } from "@/lib/season/types";
@@ -118,7 +119,7 @@ function Tags({ game }: { game: ScoredGame }) {
 export function ScoredSeals({ games, caption }: { games: ScoredGame[]; caption: string }) {
   const groups = scoredByDate(games);
   return (
-    <div className="table-scroll">
+    <TableScroll label="Scored seals">
       <table className="tb">
         <caption className="sr-only">{caption}</caption>
         <thead>
@@ -184,7 +185,7 @@ export function ScoredSeals({ games, caption }: { games: ScoredGame[]; caption: 
           </tbody>
         ))}
       </table>
-    </div>
+    </TableScroll>
   );
 }
 

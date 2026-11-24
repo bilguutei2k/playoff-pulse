@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Fragment } from "react";
 import "./globals.css";
 import { figures, schibsted } from "@/app/fonts";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { Header } from "@/components/layout/Header";
 import { HydrationGate } from "@/components/layout/HydrationGate";
 import { NavProgress } from "@/components/layout/NavProgress";
@@ -82,6 +83,7 @@ export default async function RootLayout({
             </Fragment>
           </div>
           <SiteFooter />
+          <BackToTop />
         </HydrationGate>
       </body>
     </html>

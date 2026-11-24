@@ -1,4 +1,5 @@
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { Hint } from "@/components/live/Hint";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
@@ -231,7 +232,7 @@ const teamClass = (won: boolean) => `h-6 ${won ? "font-bold" : "text-ink-2"}`;
 export function FinalsTable({ rows, home = false }: { rows: FinalRow[]; home?: boolean }) {
   const brierCell = `hidden md:table-cell ${home ? "lg:hidden xl:table-cell" : ""}`;
   return (
-    <div className="table-scroll">
+    <TableScroll label="Final scores">
       <table className="tb min-w-0">
         <caption className="sr-only">
           Final scores with 548&apos;s sealed chance for each side, its favorite and the Brier score of each game. Lower Brier is better.
@@ -317,6 +318,6 @@ export function FinalsTable({ rows, home = false }: { rows: FinalRow[]; home?: b
           })}
         </tbody>
       </table>
-    </div>
+    </TableScroll>
   );
 }

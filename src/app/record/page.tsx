@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import {
   CalibrationChart,
   CalibrationPlaceholder,
@@ -139,7 +140,7 @@ function ShadowV4Section({ lines }: { lines: ShadowV4Lines }) {
           {lines.sameGames ? (
             <div className="mt-8 max-w-[560px]">
               <h3 className="text-[16px] font-bold">The same {lines.sameGames.games} games</h3>
-              <div className="table-scroll mt-2">
+              <TableScroll label="The same games, by version" className="mt-2">
                 <table className="tb">
                   <caption className="sr-only">
                     Brier score and log loss of v4, v2 and v1 on the games all three have scored, each on its own seal.
@@ -161,7 +162,7 @@ function ShadowV4Section({ lines }: { lines: ShadowV4Lines }) {
                     ))}
                   </tbody>
                 </table>
-              </div>
+              </TableScroll>
               <p className="mt-3 text-[13px] text-ink-2">
                 Each version on its own scored seal; lower is better for both measures. No version is claimed to beat
                 another here.
@@ -320,7 +321,7 @@ export default async function RecordPage() {
                   </span>
                 ) : null}
               </div>
-              <div className="table-scroll">
+              <TableScroll label="Both models">
                 <table className="tb">
                   <caption className="sr-only">Each version&apos;s record: counts, Brier score, log loss and accuracy.</caption>
                   <thead>
@@ -352,7 +353,7 @@ export default async function RecordPage() {
                     ))}
                   </tbody>
                 </table>
-              </div>
+              </TableScroll>
               <p className="mt-3 text-[13px] text-ink-2">
                 {records.map((entry, index) => (
                   <span key={entry.version}>
@@ -405,7 +406,7 @@ export default async function RecordPage() {
                   <h2 id="revisions-title">Policy revisions</h2>
                   <span>One {headline.short} record · descriptive, not a comparison</span>
                 </div>
-                <div className="table-scroll">
+                <TableScroll label="Policy revisions">
                   <table className="tb">
                     <caption className="sr-only">
                       {headline.version}&apos;s record by policy revision: when each took effect, its seal rows, the games
@@ -440,7 +441,7 @@ export default async function RecordPage() {
                       })}
                     </tbody>
                   </table>
-                </div>
+                </TableScroll>
                 <p className="mt-3 text-[13px] text-ink-2">
                   {headline.short} keeps one version and one record; changes made after its registered test are labeled as
                   revisions, each in force from its pull request&apos;s merge. Seals counts every morning, reissued and final

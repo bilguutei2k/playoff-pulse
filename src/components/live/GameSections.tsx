@@ -1,4 +1,5 @@
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
 import { Hint } from "@/components/live/Hint";
 import { PlayerLink } from "@/components/live/PlayerLink";
@@ -792,7 +793,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
       ) : (
         <>
           <SealChart game={game} detail={detail} />
-          <div className="table-scroll mt-5">
+          <TableScroll label="Every seal for this game" className="mt-5">
             <table className="tb">
               <caption className="sr-only">
                 Every seal for this game, by model version, as the {possessive(teamDisplay(sideId).name)} chance
@@ -841,7 +842,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                 ))}
               </tbody>
             </table>
-          </div>
+          </TableScroll>
         </>
       )}
       <Notes>
