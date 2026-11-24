@@ -5,7 +5,7 @@
 //     footer, a day page) answers 200 as HTML and as RSC (`RSC: 1`), carries the state
 //     stamp and `delivery`, and is `Cache-Control: private` (rendered at request time,
 //     never a CDN copy); sample dynamic routes answer 200; the permanent redirects 308;
-//     unknown ids and paths 404. No response is a 500, and the server never logs
+//     unknown ids and paths 404; /record.csv answers 200 as private text/csv. No response is a 500, and the server never logs
 //     DYNAMIC_SERVER_USAGE (the trap in src/app/layout.tsx).
 // (b) The data host failing (LIVE_DATA_REFS_URL and LIVE_DATA_BASE_URL at
 //     http://127.0.0.1:9, a port that refuses): a cold server shows the bundled copy, the
@@ -29,6 +29,7 @@ const SAMPLE_DAY = "/games/2026-11-02";
 const SAMPLE_GAME = "/game/401909088";
 const SAMPLE_TEAM = "/teams/bos";
 const SAMPLE_PLAYER = "/players/3112335";
+const RECORD_CSV = "/record.csv";
 
 const REDIRECTS = [
   ["/teams/BOS", "/teams/bos"],
@@ -143,6 +144,16 @@ async function runA(failures) {
     for (const route of [SAMPLE_DAY, SAMPLE_GAME, SAMPLE_TEAM, SAMPLE_PLAYER]) {
       const { status } = await get(server.base, route);
       if (status !== 200) fail(`${route} answered ${status}, not 200`);
+    }
+    {
+      // The record as a file (/record.csv): a request-time download, never a CDN copy.
+      const csv = await get(server.base, RECORD_CSV);
+      const type = csv.headers.get("content-type") ?? "";
+      const cache = csv.headers.get("cache-control") ?? "";
+      if (csv.status !== 200) fail(`${RECORD_CSV} answered ${csv.status}, not 200`);
+      if (!type.startsWith("text/csv")) fail(`${RECORD_CSV} Content-Type is "${type}", not text/csv`);
+      if (!cache.includes("private")) fail(`${RECORD_CSV} Cache-Control is "${cache}", not private`);
+      if (!csv.text.startsWith("game_id,")) fail(`${RECORD_CSV} does not start with its header row`);
     }
     for (const [from, to] of REDIRECTS) {
       const { status, headers } = await get(server.base, from);

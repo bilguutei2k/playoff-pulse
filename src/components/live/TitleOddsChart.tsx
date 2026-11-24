@@ -4,10 +4,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { TeamLink } from "@/components/live/TeamLink";
 import { formatShortDay } from "@/lib/utils/dates";
 import { formatChance } from "@/lib/utils/format";
+import type { ChartPoint } from "@/lib/view/odds-chart";
 
 /** One highlighted team: its line color and, when that color is shared, a dash pattern. */
 export type ChartTeam = { teamId: string; code: string; name: string; color: string; dash: string | null };
-export type ChartPoint = { date: string; champion: Record<string, number> };
+
+/** What the chart draws: "Title odds" and probabilities by default, or projected wins. */
+export type ChartMeasureInfo = { label: string; kind: "probability" | "wins" };
+
+const TITLE_ODDS: ChartMeasureInfo = { label: "Title odds", kind: "probability" };
 
 /**
  * End labels are HTML (team links) placed beside the plot. Each takes one row of this
@@ -21,9 +26,15 @@ const LEADER = 12;
 function niceMax(value: number): { max: number; step: number } {
   const target = Math.max(value * 1.08, 0.05);
   for (const step of [0.01, 0.02, 0.05, 0.1, 0.2, 0.25]) {
-    if (target / step <= 5) return { max: Math.ceil(target / step) * step, step };
+    // A probability axis never runs past 100%.
+    if (target / step <= 5) return { max: Math.min(1, Math.ceil(target / step) * step), step };
   }
   return { max: 1, step: 0.25 };
+}
+
+/** Projected wins: ten-win steps from zero. */
+function niceWins(value: number): { max: number; step: number } {
+  return { max: Math.max(10, Math.ceil((value * 1.05) / 10) * 10), step: 10 };
 }
 
 /**
@@ -66,6 +77,8 @@ export function TitleOddsChart({
   points,
   highlighted,
   others,
+  measure = TITLE_ODDS,
+  picked = null,
 }: {
   /** Daily snapshots, oldest first. */
   points: ChartPoint[];
@@ -73,7 +86,12 @@ export function TitleOddsChart({
   highlighted: ChartTeam[];
   /** Every other team, drawn in gray for context. */
   others: string[];
+  /** The measure drawn; title odds by default. */
+  measure?: ChartMeasureInfo;
+  /** A team the reader picked: its line is drawn heavier. */
+  picked?: string | null;
 }) {
+  const format = (value: number) => (measure.kind === "wins" ? value.toFixed(1) : formatChance(value));
   const block = useRef<HTMLDivElement>(null);
   const plot = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(760);
@@ -110,19 +128,19 @@ export function TitleOddsChart({
 
   const { max, step } = useMemo(() => {
     let top = 0;
-    for (const point of points) for (const value of Object.values(point.champion)) top = Math.max(top, value);
-    return niceMax(top);
-  }, [points]);
+    for (const point of points) for (const value of Object.values(point.values)) top = Math.max(top, value);
+    return measure.kind === "wins" ? niceWins(top) : niceMax(top);
+  }, [points, measure.kind]);
 
   const x = (i: number) => margin.left + (points.length <= 1 ? plotWidth / 2 : (i / (points.length - 1)) * plotWidth);
   const y = (value: number) => margin.top + plotHeight - (Math.min(value, max) / max) * plotHeight;
   const path = (teamId: string) =>
-    points.map((point, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(point.champion[teamId] ?? 0).toFixed(1)}`).join("");
+    points.map((point, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(point.values[teamId] ?? 0).toFixed(1)}`).join("");
 
   const last = points.at(-1);
   const labels = last
     ? spreadLabels(
-        highlighted.map((team) => ({ id: team.teamId, y: y(last.champion[team.teamId] ?? 0) })),
+        highlighted.map((team) => ({ id: team.teamId, y: y(last.values[team.teamId] ?? 0) })),
         margin.top + row / 2 - 4,
         margin.top + plotHeight,
         row,
@@ -149,10 +167,10 @@ export function TitleOddsChart({
   };
 
   const summary = last
-    ? `Title odds over ${points.length} ${points.length === 1 ? "day" : "days"}. Latest: ${highlighted
-        .map((team) => `${team.name} ${formatChance(last.champion[team.teamId] ?? 0)}`)
+    ? `${measure.label} over ${points.length} ${points.length === 1 ? "day" : "days"}. Latest: ${highlighted
+        .map((team) => `${team.name} ${format(last.values[team.teamId] ?? 0)}`)
         .join(", ")}.`
-    : "No title odds history yet.";
+    : `No ${measure.label.toLowerCase()} history yet.`;
 
   const lineStroke = (team: ChartTeam) => (active && active !== team.teamId ? "var(--chart-track)" : team.color);
   const dashArray = (team: ChartTeam) => team.dash ?? undefined;
@@ -188,7 +206,7 @@ export function TitleOddsChart({
                 stroke={tick === 0 ? "var(--chart-axis)" : "var(--chart-grid)"}
               />
               <text x={margin.left - 8} y={y(tick)} dy="0.32em" textAnchor="end" fontSize={11} fill="var(--chart-text)">
-                {Math.round(tick * 100)}%
+                {measure.kind === "wins" ? Math.round(tick) : `${Math.round(tick * 100)}%`}
               </text>
             </g>
           ))}
@@ -221,7 +239,7 @@ export function TitleOddsChart({
               d={path(team.teamId)}
               fill="none"
               stroke={lineStroke(team)}
-              strokeWidth={active === team.teamId ? 3 : 2}
+              strokeWidth={active === team.teamId || (active === null && picked === team.teamId) ? 3 : 2}
               strokeDasharray={dashArray(team)}
               strokeLinejoin="round"
               strokeLinecap={team.dash ? "butt" : "round"}
@@ -229,7 +247,7 @@ export function TitleOddsChart({
           ))}
           {last
             ? highlighted.map((team) => {
-                const endY = y(last.champion[team.teamId] ?? 0);
+                const endY = y(last.values[team.teamId] ?? 0);
                 const labelY = labels.get(team.teamId) ?? endY;
                 return (
                   <g key={team.teamId}>
@@ -266,7 +284,7 @@ export function TitleOddsChart({
                 <circle
                   key={team.teamId}
                   cx={x(index)}
-                  cy={y(hovered.champion[team.teamId] ?? 0)}
+                  cy={y(hovered.values[team.teamId] ?? 0)}
                   r={4}
                   fill={lineStroke(team)}
                   stroke="var(--chart-surface)"
@@ -296,7 +314,7 @@ export function TitleOddsChart({
             fill="transparent"
             tabIndex={0}
             role="slider"
-            aria-label="Title odds by date. Use the arrow keys to move between dates."
+            aria-label={`${measure.label} by date. Use the arrow keys to move between dates.`}
             aria-valuemin={0}
             aria-valuemax={Math.max(0, points.length - 1)}
             aria-valuenow={index ?? Math.max(0, points.length - 1)}
@@ -333,19 +351,19 @@ export function TitleOddsChart({
           />
         </svg>
         {last ? (
-          <ul aria-label="Latest title odds" className="contents">
+          <ul aria-label={`Latest ${measure.label.toLowerCase()}`} className="contents">
             {highlighted.map((team) => {
-              const labelY = labels.get(team.teamId) ?? y(last.champion[team.teamId] ?? 0);
+              const labelY = labels.get(team.teamId) ?? y(last.values[team.teamId] ?? 0);
               return (
                 <li
                   key={team.teamId}
-                  className={`title-chart-label ${active === team.teamId ? "is-active" : ""}`}
+                  className={`title-chart-label ${active === team.teamId ? "is-active" : ""}${picked === team.teamId ? " is-picked" : ""}`}
                   style={{ left: endX + LEADER, top: labelY - row / 2, height: row }}
                   {...highlight(team.teamId)}
                 >
                   <Swatch team={team} />
                   <TeamLink teamId={team.teamId} form="code" logo={16} className="self-stretch" />
-                  <span className="tabular">{formatChance(last.champion[team.teamId] ?? 0)}</span>
+                  <span className="tabular">{format(last.values[team.teamId] ?? 0)}</span>
                 </li>
               );
             })}
@@ -359,12 +377,12 @@ export function TitleOddsChart({
             <b className="title-chart-date">{formatShortDay(hovered.date)}</b>
             <ul className="title-chart-values">
               {[...highlighted]
-                .sort((a, b) => (hovered.champion[b.teamId] ?? 0) - (hovered.champion[a.teamId] ?? 0))
+                .sort((a, b) => (hovered.values[b.teamId] ?? 0) - (hovered.values[a.teamId] ?? 0))
                 .map((team) => (
                   <li key={team.teamId} {...highlight(team.teamId)}>
                     <Swatch team={team} width={14} />
                     <TeamLink teamId={team.teamId} form="code" />
-                    <b className="tabular">{formatChance(hovered.champion[team.teamId] ?? 0)}</b>
+                    <b className="tabular">{format(hovered.values[team.teamId] ?? 0)}</b>
                   </li>
                 ))}
             </ul>
@@ -377,7 +395,7 @@ export function TitleOddsChart({
       </div>
       <div className="sr-only">
         <table>
-          <caption>Title odds by date</caption>
+          <caption>{measure.label} by date</caption>
           <thead>
             <tr>
               <th scope="col">Date</th>
@@ -393,7 +411,7 @@ export function TitleOddsChart({
               <tr key={point.date}>
                 <th scope="row">{formatShortDay(point.date)}</th>
                 {highlighted.map((team) => (
-                  <td key={team.teamId}>{formatChance(point.champion[team.teamId] ?? 0)}</td>
+                  <td key={team.teamId}>{format(point.values[team.teamId] ?? 0)}</td>
                 ))}
               </tr>
             ))}

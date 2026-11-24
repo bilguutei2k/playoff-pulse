@@ -156,11 +156,11 @@ export function OddsTable({
   // box (the effect above moves them there).
   const stickyTop = allColumns ? "lg:sticky lg:top-[var(--mast)]" : "sticky top-[var(--mast)]";
 
-  const setView = (next: View) => setQuery({ view: next, sort }, "replace");
+  const setView = (next: View) => setQuery({ ...query, view: next }, "replace");
   const sortBy = (key: SortKey) =>
     setQuery(
       {
-        view,
+        ...query,
         sort: sort.key === key ? { key, descending: !sort.descending } : { key, descending: defaultDescending(key) },
       },
       "replace",
@@ -274,7 +274,7 @@ export function OddsTable({
               {modeled
                 ? header("ratingNow", "Now", {
                     className: extra,
-                    hint: "The rating minus the points lost to players currently out, for the team's next game.",
+                    hint: "The rating minus the points lost to players the season odds currently count as out. A team's next game can count others once the NBA report for it is filed; its team page shows that game's number.",
                   })
                 : null}
               {header("projectedWins", "Proj.", {

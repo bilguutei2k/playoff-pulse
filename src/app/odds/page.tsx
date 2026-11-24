@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { TitleRace } from "@/components/live/HomePanels";
+import { OddsMoves } from "@/components/live/OddsMoves";
+import { OddsOverTime } from "@/components/live/OddsOverTime";
 import { OddsTable } from "@/components/live/OddsTable";
 import { PlayoffSeries } from "@/components/live/PlayoffSeries";
+import { SeedGrid } from "@/components/live/SeedGrid";
 import { Ticker } from "@/components/live/Ticker";
-import { TitleOddsChart } from "@/components/live/TitleOddsChart";
 import { WhoIsOut } from "@/components/live/WhoIsOut";
-import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
+import { getLiveState, getOddsHistory, getSeasonGames } from "@/lib/live-data/published";
 import type { SeasonPhase } from "@/lib/season/types";
-import { formatDateTimePt, formatShortDay } from "@/lib/utils/dates";
+import { formatDateTimePt } from "@/lib/utils/dates";
 import { oddsRows, teamAbsences } from "@/lib/view/odds";
-import { PANEL_COLOR, teamDisplay } from "@/lib/view/teams";
-import { titleChartStyles } from "./chart-colors";
+import { oddsChartData } from "@/lib/view/odds-chart";
+import { oddsMoves } from "@/lib/view/odds-moves";
+import { seedGrids } from "@/lib/view/seed-grid";
 
 export const metadata: Metadata = {
   title: "NBA playoff and title odds",
@@ -31,22 +34,12 @@ const PHASE_LABELS: Record<SeasonPhase, string> = {
 const CHART_TEAMS = 8;
 
 export default async function OddsPage() {
-  const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
+  const [liveState, seasonGames, oddsHistory] = await Promise.all([getLiveState(), getSeasonGames(), getOddsHistory()]);
   const { forecast, history, generatedAt } = liveState;
   const modeled = liveState.injury !== null;
   const rows = oddsRows(liveState, seasonGames);
-  const points = [...history].sort((a, b) => a.date.localeCompare(b.date));
+  const moves = oddsMoves(oddsHistory, seasonGames);
   const ranked = [...forecast.teams].sort((a, b) => b.champion - a.champion);
-  const top = ranked.slice(0, CHART_TEAMS).map((team) => team.teamId);
-  const styles = titleChartStyles(top, PANEL_COLOR);
-  const highlighted = top.map((teamId) => ({
-    teamId,
-    code: teamDisplay(teamId).code,
-    name: teamDisplay(teamId).shortName,
-    color: styles[teamId].color,
-    dash: styles[teamId].dash,
-  }));
-  const others = ranked.slice(CHART_TEAMS).map((team) => team.teamId);
 
   return (
     <>
@@ -78,7 +71,7 @@ export default async function OddsPage() {
           <OddsTable rows={rows} exact={forecast.phase !== "regular-season"} />
           <p className="mt-3.5 text-[13px] leading-5 text-ink-2">
             Rating: points per game against an average team{modeled ? ", adjusted for who missed past games to approximate full strength" : ""}.
-            {modeled ? " Now: after the points lost to players currently out, for the next game." : ""} Bars: wins in 8
+            {modeled ? " Now: the rating after the points lost to players the season odds currently count as out." : ""} Bars: wins in 8
             of 10 simulations, black tick at the average. Column headings sort the table.
           </p>
           <p className="mt-1.5 text-[13px] leading-5">
@@ -94,6 +87,18 @@ export default async function OddsPage() {
           </p>
         </section>
 
+        <section aria-labelledby="seeds-title" className="mt-12 sm:mt-14">
+          <div className="sh">
+            <h2 id="seeds-title">Where each team finishes</h2>
+            <span>Seed chances</span>
+          </div>
+          <p className="mb-4 max-w-3xl text-[14px] text-ink-2">
+            Chance of each seed when the regular season ends, from the same{" "}
+            {forecast.iterations.toLocaleString("en-US")} simulations, in percent. Darker is likelier; a dot is under 1%.
+          </p>
+          <SeedGrid grids={seedGrids(rows)} exact={forecast.phase !== "regular-season"} />
+        </section>
+
         <div className="mt-14 grid gap-x-20 gap-y-14 sm:mt-[72px] lg:grid-cols-2">
           {modeled ? (
             <WhoIsOut
@@ -105,21 +110,14 @@ export default async function OddsPage() {
           <TitleRace state={liveState} />
         </div>
 
-        <section aria-labelledby="history-title" className="mt-14 sm:mt-[72px]">
-          <div className="sh">
-            <h2 id="history-title">Title odds over time</h2>
-            <span>
-              Top {CHART_TEAMS} today in team colors{highlighted.some((team) => team.dash) ? ", dashed where colors are close" : ""}, others grey
-            </span>
+        {moves ? (
+          <div className="mt-14 sm:mt-[72px]">
+            <OddsMoves moves={moves} />
           </div>
-          {points.length < 2 ? (
-            <p className="notice-quiet mb-4">
-              The chart adds a point each day; it starts{" "}
-              {points.length > 0 ? formatShortDay(points[0].date) : "with the first published forecast"}, so there is
-              not much of a line yet.
-            </p>
-          ) : null}
-          <TitleOddsChart points={points} highlighted={highlighted} others={others} />
+        ) : null}
+
+        <section aria-labelledby="history-title" className="mt-14 sm:mt-[72px]">
+          <OddsOverTime data={oddsChartData(history, oddsHistory)} order={ranked.map((team) => team.teamId)} shown={CHART_TEAMS} />
         </section>
       </main>
     </>
