@@ -61,7 +61,6 @@ export function RatingChart({
     ? `${name} rating by game day, latest ${signed(last.team)}${showPublished ? `; today's published rating ${signed(published)}` : ""}; league from ${signed(last.min)} to ${signed(last.max)}.`
     : `${name} rating history is not available.`;
   const hovered = index !== null ? points[index] : null;
-  const label = (p: RatingChartPoint) => (p.preseason ? "Season start" : `After ${formatShortDay(p.date)}`);
 
   return (
     <div className="min-w-0">
@@ -84,7 +83,7 @@ export function RatingChart({
       <p className="rc-readout num" role="status">
         {hovered ? (
           <>
-            <b className="text-ink">{label(hovered)}:</b> {signed(hovered.team)} · league {signed(hovered.min)} to{" "}
+            <b className="text-ink">{pointLabel(hovered)}:</b> {signed(hovered.team)} · league {signed(hovered.min)} to{" "}
             {signed(hovered.max)}
           </>
         ) : null}
@@ -109,6 +108,9 @@ export function RatingChart({
     </div>
   );
 }
+
+/** "Season start" or "After Nov 3": a point's date as the readout and the slider name it. */
+const pointLabel = (p: RatingChartPoint) => (p.preseason ? "Season start" : `After ${formatShortDay(p.date)}`);
 
 function Plot({
   points,
@@ -179,7 +181,9 @@ function Plot({
   };
 
   return (
-    <svg width={width} height={HEIGHT} role="img" aria-label={summary} className="block select-none">
+    // A labelled group: the drawing is hidden from assistive tech, the date slider is not.
+    <svg width={width} height={HEIGHT} role="group" aria-label={summary} className="block select-none">
+      <g aria-hidden="true">
       {ticks.map((tick) => (
         <g key={tick}>
           <line
@@ -240,6 +244,7 @@ function Plot({
           <circle cx={x(index)} cy={y(points[index].team)} r={4} fill={color} stroke="var(--chart-surface)" strokeWidth={2} />
         </g>
       ) : null}
+      </g>
       <rect
         x={margin.left}
         y={margin.top}
@@ -247,7 +252,12 @@ function Plot({
         height={plotHeight}
         fill="transparent"
         tabIndex={0}
+        role="slider"
         aria-label="Rating by game day. Use the arrow keys to move between dates."
+        aria-valuemin={0}
+        aria-valuemax={Math.max(0, points.length - 1)}
+        aria-valuenow={index ?? Math.max(0, points.length - 1)}
+        aria-valuetext={points.length > 0 ? pointLabel(points[index ?? points.length - 1]) : undefined}
         onPointerMove={(event) => locate(event.clientX)}
         onPointerDown={(event) => locate(event.clientX)}
         onPointerLeave={() => setIndex(null)}
@@ -256,6 +266,8 @@ function Plot({
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft") setIndex((i) => Math.max(0, (i ?? points.length - 1) - 1));
           else if (event.key === "ArrowRight") setIndex((i) => Math.min(points.length - 1, (i ?? 0) + 1));
+          else if (event.key === "Home") setIndex(0);
+          else if (event.key === "End") setIndex(points.length - 1);
           else if (event.key === "Escape") setIndex(null);
           else return;
           event.preventDefault();

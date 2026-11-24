@@ -28,3 +28,15 @@ export function tileHelp(kind: TileKind): string {
   const sentence = text.charAt(0).toUpperCase() + text.slice(1);
   return kind === "sealed" ? `${sentence} ${SEALS_SENTENCE}` : sentence;
 }
+
+/**
+ * The "Out" entry of the key above the cards: the first sentence of `OUT_DEFINITION`,
+ * shortened, and how a card names the players (as /how-it-works describes it).
+ */
+export const OUT_KEY = {
+  word: "Out",
+  text: "points of margin each side gives up to players on the injury report, the largest named first, then how many more.",
+};
+
+/** The status letters a card's named players carry. */
+export const OUT_STATUS_WORDS: Record<"Q" | "D", string> = { Q: "questionable", D: "doubtful" };

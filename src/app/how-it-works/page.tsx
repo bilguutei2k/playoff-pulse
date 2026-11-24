@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import gameEvaluation from "../../../docs/live/evaluation-games.json";
 import injuryEvaluation from "../../../docs/live/evaluation-injury.json";
 import seasonEvaluation from "../../../docs/live/evaluation-season.json";
@@ -31,6 +32,7 @@ import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { getLiveState } from "@/lib/live-data/published";
 import { PageStamp } from "@/components/live/FreshnessGuard";
+import { ContentsBar } from "./ContentsBar";
 import { OnThisPage } from "./OnThisPage";
 
 export const metadata: Metadata = {
@@ -230,7 +232,7 @@ export default async function HowItWorksPage() {
               <Version>{REFERENCE_MODEL_VERSION}</Version>, without them, keeps sealing beside it and keeps its own
               record.
             </p>
-            <nav aria-label="On this page" className="mt-5 lg:hidden">
+            <nav id="hiw-sections" aria-label="On this page" className="mt-5 lg:hidden">
               <ul className="flex flex-wrap gap-2 text-[13px]">
                 {SECTIONS.map((section) => (
                   <li key={section.id}>
@@ -242,6 +244,8 @@ export default async function HowItWorksPage() {
               </ul>
             </nav>
           </header>
+          {/* Phones and tablets: the same list, reachable from any depth once this one scrolls away. */}
+          <ContentsBar sections={SECTIONS} listId="hiw-sections" />
 
           <Section id="limits">
             <ul className="grid list-disc gap-2 pl-5">
@@ -393,7 +397,7 @@ export default async function HowItWorksPage() {
               regular-season games in 2024-25 and 2025-26, against <Version>{REFERENCE_MODEL_VERSION}</Version> on the
               same games.
             </p>
-            <div className="table-scroll rounded-lg border border-line bg-panel">
+            <TableScroll label="Registered injury test" className="rounded-lg border border-line bg-panel">
               <table className="pp-table">
                 <caption className="sr-only">Registered injury test, 2024-25 and 2025-26</caption>
                 <thead>
@@ -439,7 +443,7 @@ export default async function HowItWorksPage() {
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </TableScroll>
             <p className="text-[14px] leading-6 text-ink-3">
               The Brier difference is {difference(injury.T1.difference)}, with a 95% interval of{" "}
               {difference(injury.T1.lower)} to {difference(injury.T1.upper)} from a bootstrap of{" "}
@@ -544,7 +548,7 @@ export default async function HowItWorksPage() {
               moment its pull request was merged. A seal&apos;s revision is the one in force when it was issued: seals
               since November 6, 2026 store it, and older seals are labeled by their issue time, never rewritten.
             </p>
-            <div className="table-scroll rounded-lg border border-line bg-panel">
+            <TableScroll label="Policy revisions" className="rounded-lg border border-line bg-panel">
               <table className="pp-table">
                 <caption className="sr-only">Policy revisions of {LIVE_MODEL_VERSION}</caption>
                 <thead>
@@ -568,7 +572,7 @@ export default async function HowItWorksPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </TableScroll>
             <p>
               The registered test covers revision 0 only, and only its seal an hour before tip. It says nothing
               about the later morning, reissue and unfiled-team rules: the unfiled rule was checked against the
@@ -667,7 +671,7 @@ export default async function HowItWorksPage() {
               </a>
               ). Every number below is walk-forward: each forecast uses only earlier games.
             </p>
-            <div className="table-scroll rounded-lg border border-line bg-panel">
+            <TableScroll label="Game forecasts by model" className="rounded-lg border border-line bg-panel">
               <table className="pp-table">
                 <caption className="sr-only">Regular-season game forecasts by model</caption>
                 <thead>
@@ -709,7 +713,7 @@ export default async function HowItWorksPage() {
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </TableScroll>
             <p className="text-[14px] leading-6 text-ink-3">
               Lower Brier is better. Against Elo, the difference on the first window is{" "}
               {fixed(gate.againstElo.difference, 4)} (95% interval{" "}
@@ -718,7 +722,7 @@ export default async function HowItWorksPage() {
               separately. Only forecasts sealed from 2026-27 on are fully untouched.
             </p>
 
-            <div className="table-scroll rounded-lg border border-line bg-panel">
+            <TableScroll label="Season simulator checks" className="rounded-lg border border-line bg-panel">
               <table className="pp-table method-wrap-head">
                 <caption className="sr-only">Season simulator checks by date</caption>
                 <thead>
@@ -754,7 +758,7 @@ export default async function HowItWorksPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </TableScroll>
             <p className="text-[14px] leading-6 text-ink-3">
               Seasons 2015-16 to 2018-19 and 2021-22; the two irregular pandemic seasons are
               excluded. Win total error is the root-mean-square miss on final wins, in games;
@@ -874,7 +878,7 @@ export default async function HowItWorksPage() {
               {difference(SCORE_BOOK.replacement, 0)} with the weight of {SCORE_BOOK.pseudoPossessions} possessions, so
               the pull fades as he plays. The player page says how much of it comes from this season.
             </p>
-            <div className="table-scroll rounded-lg border border-line bg-panel">
+            <TableScroll label="548 score weights" className="rounded-lg border border-line bg-panel">
               <table className="pp-table">
                 <caption className="sr-only">The 548 score&apos;s box-score weights, the same for every position</caption>
                 <thead>
@@ -894,7 +898,7 @@ export default async function HowItWorksPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </TableScroll>
             <p className="text-[14px] leading-6 text-ink-3">
               The same weights apply to every position. They were fitted to how lineups actually scored, over
               2010-11 to 2019-20. A weight is the points per 100 possessions added for each extra one of that stat per

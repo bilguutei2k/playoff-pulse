@@ -1,7 +1,8 @@
 /*
  * shared.css: classes used by more than one area: figures and labels, the page
  * container, links, section headings (.sh), notices, tiles, tables (.tb), bars,
- * legends, heat figures, buttons and selects, horizontal table scroll, the live dot.
+ * legends, heat figures, buttons and selects, horizontal table scroll (with its edge
+ * fades), Back to top, the /how-it-works contents bar, the live dot.
  * Frozen after the foundation stage; ask the lead for changes.
  */
 @layer components {
@@ -680,11 +681,230 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /*
+   * The frame around a .table-scroll (src/components/layout/TableScroll.tsx): while the
+   * table overflows, an edge with more columns beyond it fades to white behind a thin
+   * shadow, and the fade goes when that end is reached. Nothing shows by default (server
+   * render, no script, a table that fits). The fades sit over the box, not in it, so
+   * they stay at the edges while it scrolls, and never take a click.
+   */
+  .table-scroll-frame {
+    /* As a grid or flex item it may shrink below the table's width, as the box alone did. */
+    min-width: 0;
+    position: relative;
+  }
+
+  .table-scroll-frame::before,
+  .table-scroll-frame::after {
+    bottom: 0;
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: opacity 120ms ease;
+    width: 24px;
+    z-index: 3;
+  }
+
+  .table-scroll-frame::before {
+    background:
+      linear-gradient(to right, rgb(17 17 17 / 0.16), rgb(17 17 17 / 0) 4px),
+      linear-gradient(to right, var(--color-panel), rgb(255 255 255 / 0));
+    left: 0;
+  }
+
+  .table-scroll-frame::after {
+    background:
+      linear-gradient(to left, rgb(17 17 17 / 0.16), rgb(17 17 17 / 0) 4px),
+      linear-gradient(to left, var(--color-panel), rgb(255 255 255 / 0));
+    right: 0;
+  }
+
+  .table-scroll-frame[data-more-start]::before,
+  .table-scroll-frame[data-more-end]::after {
+    opacity: 1;
+  }
+
+  /* A focused scroller: the ring sits just inside it, where the box does not clip it. */
+  .table-scroll[tabindex]:focus-visible {
+    outline-offset: -2px;
+  }
+
+  /*
+   * A table that tightens on phones (the player's game log): narrower gaps between
+   * columns, so the first screen holds the figures a reader came for.
+   */
+  @media (max-width: 639px) {
+    .tb.tb-tight td + td,
+    .tb.tb-tight th + th,
+    .tb.tb-tight th + td,
+    .tb.tb-tight td + th {
+      padding-left: 8px;
+    }
+  }
+
   .sticky-col {
     background: var(--color-panel);
     left: 0;
     position: sticky;
     z-index: 1;
+  }
+
+  /*
+   * Back to top (src/components/layout/BackToTop.tsx): a 44 px ink square at the bottom
+   * right, clear of the masthead and its freshness chip. Hidden (no tab stop, no click)
+   * until the component marks it shown. At 1280 px and wider it sits in the page gutter.
+   */
+  .to-top {
+    align-items: center;
+    background: var(--color-ink);
+    border: 1px solid var(--color-panel);
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 2px 10px rgb(17 17 17 / 0.22);
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    height: 44px;
+    justify-content: center;
+    opacity: 0;
+    position: fixed;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    transform: translateY(8px);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      visibility 0s linear 150ms;
+    visibility: hidden;
+    width: 44px;
+    z-index: 30;
+  }
+
+  .to-top[data-shown] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
+    visibility: visible;
+  }
+
+  .to-top:hover {
+    background: #333333;
+  }
+
+  .to-top:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  /* Where Back to top moved focus: the whole <main>, so no ring around the page. */
+  [data-focus-target]:focus {
+    outline: none;
+  }
+
+  /* Below 1280 px it floats over the column: room at the end, so the footer's last line clears it. */
+  @media (max-width: 1279px) {
+    body:has(.to-top[data-shown]) {
+      padding-bottom: 64px;
+    }
+  }
+
+  @media print {
+    .to-top {
+      display: none;
+    }
+  }
+
+  /*
+   * /how-it-works below 1024 px (src/app/how-it-works/ContentsBar.tsx): a slim white
+   * "Contents" bar fixed under the masthead, shown once the section list at the top has
+   * scrolled away; it opens the same list. Hidden (no tab stop) until then.
+   */
+  .hiw-contents {
+    background: var(--color-panel);
+    border-bottom: 1px solid var(--color-line);
+    box-shadow: 0 2px 8px rgb(17 17 17 / 0.08);
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: var(--mast);
+    transition:
+      opacity 120ms ease,
+      visibility 0s linear 120ms;
+    visibility: hidden;
+    z-index: 35;
+  }
+
+  .hiw-contents[data-shown] {
+    opacity: 1;
+    transition: opacity 120ms ease;
+    visibility: visible;
+  }
+
+  .hiw-contents > summary {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: var(--text-14);
+    gap: 10px;
+    list-style: none;
+    min-height: 44px;
+  }
+
+  .hiw-contents > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .hiw-contents > summary:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .hiw-contents[open] .hiw-contents-chevron {
+    rotate: 180deg;
+  }
+
+  .hiw-contents-panel {
+    border-top: 1px solid var(--color-line);
+    max-height: calc(100dvh - var(--mast) - 60px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .hiw-contents-panel a {
+    align-items: center;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-ink-2);
+    display: flex;
+    font-size: var(--text-15);
+    min-height: 44px;
+  }
+
+  .hiw-contents-panel li:last-child a {
+    border-bottom: 0;
+  }
+
+  .hiw-contents-panel a:hover,
+  .hiw-contents-panel a[aria-current] {
+    color: var(--color-ink);
+  }
+
+  .hiw-contents-panel a[aria-current] {
+    font-weight: 600;
+  }
+
+  @media (min-width: 1024px) {
+    .hiw-contents {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    /* Anchors and focused elements land below the bar as well as the masthead. */
+    :root:has(.hiw-contents) {
+      scroll-padding-top: calc(var(--mast) + 52px);
+    }
   }
 
   .no-scrollbar {
@@ -721,5 +941,11 @@ input[type="range"] {
 
   .pp-live-dot {
     animation: none !important;
+  }
+
+  .to-top,
+  .to-top[data-shown] {
+    transform: none;
+    transition: none;
   }
 }

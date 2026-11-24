@@ -95,41 +95,37 @@ export function formatReportTime(at: string, sameDayAs?: string): string {
   return sameDayAs && PT_DATE.format(new Date(iso)) !== sameDayAs ? formatDateTimePt(iso) : formatTimePt(iso);
 }
 
+// Calendar-date formats for ET dates, built once: an Intl.DateTimeFormat costs far more to
+// construct than to use, and the team page formats a few hundred dates per render.
+const DAY_SHORT = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+const DAY_LONG = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" });
+const DAY_WEEKDAY = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: "UTC" });
+const DAY_FULL = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
 /** "Nov 1" for an ET calendar date such as "2026-11-01". */
 export function formatShortDay(etDate: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${etDate}T12:00:00Z`));
+  return DAY_SHORT.format(new Date(`${etDate}T12:00:00Z`));
 }
 
 /** "Sunday, November 1" for an ET calendar date. */
 export function formatLongDay(etDate: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${etDate}T12:00:00Z`));
+  return DAY_LONG.format(new Date(`${etDate}T12:00:00Z`));
 }
 
 /** "Mon" for an ET calendar date. */
 export function formatWeekday(etDate: string): string {
-  return new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: "UTC" }).format(
-    new Date(`${etDate}T12:00:00Z`),
-  );
+  return DAY_WEEKDAY.format(new Date(`${etDate}T12:00:00Z`));
 }
 
 /** "Monday, November 2, 2026" for an ET calendar date. */
 export function formatFullDay(etDate: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${etDate}T12:00:00Z`));
+  return DAY_FULL.format(new Date(`${etDate}T12:00:00Z`));
 }
 
 /** True for a real calendar date written as YYYY-MM-DD. */

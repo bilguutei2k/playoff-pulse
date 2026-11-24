@@ -1,4 +1,5 @@
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { Bracket, BracketContext } from "@/components/live/GameCard";
 import { Hint } from "@/components/live/Hint";
 import { PlayerLink } from "@/components/live/PlayerLink";
@@ -168,22 +169,30 @@ export function NoNumber({ game }: { game: DayGame }) {
 
 /**
  * A mark's label, centred over it unless a neighbouring stem (548's or the market's)
- * would run through it; then it opens away from that stem.
+ * would run through it; then it opens away from that stem, or, with stems close on both
+ * sides, toward the farther one. The label sits on the chart's surface above the stems,
+ * so a stem it cannot avoid on a narrow phone passes behind the text, never across it.
  */
 function MarkLabel({ mark, at, top, stems = [] }: { mark: MarginMark; at: number; top: number; stems?: number[] }) {
-  const near = stems.filter((stem) => Math.abs(stem - at) < 12 && stem !== at).sort((a, b) => Math.abs(a - at) - Math.abs(b - at))[0];
+  const close = stems.filter((stem) => Math.abs(stem - at) < 12 && stem !== at);
+  const nearest = (side: number[]) => side.sort((a, b) => Math.abs(a - at) - Math.abs(b - at))[0];
+  const left = nearest(close.filter((stem) => stem < at));
+  const right = nearest(close.filter((stem) => stem > at));
+  // The stem to open away from: the only close one, or the nearer of two.
+  const near =
+    left !== undefined && right !== undefined ? (at - left <= right - at ? left : right) : (left ?? right);
   let align: string;
-  let left = `${at}%`;
+  let position = `${at}%`;
   if (near !== undefined) {
     align = near < at ? "translate-x-0" : "-translate-x-full";
-    left = `calc(${at}% ${near < at ? "+ 6px" : "- 6px"})`;
+    position = `calc(${at}% ${near < at ? "+ 6px" : "- 6px"})`;
   } else {
     align = at < 7 ? "translate-x-0" : at > 93 ? "-translate-x-full" : "-translate-x-1/2";
   }
   return (
     <span
-      className={`absolute whitespace-nowrap text-[13px] leading-none ${align} ${mark.key === "market" ? "text-ink-2" : "text-ink"}`}
-      style={{ left, top }}
+      className={`absolute z-[1] whitespace-nowrap bg-[var(--chart-surface)] py-px text-[13px] leading-none ${align} ${mark.key === "market" ? "text-ink-2" : "text-ink"}`}
+      style={{ left: position, top }}
     >
       <b className={mark.key === "model" ? "font-extrabold" : "font-bold"}>{signedPoints(mark.value)}</b> {mark.label}
     </span>
@@ -784,7 +793,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
       ) : (
         <>
           <SealChart game={game} detail={detail} />
-          <div className="table-scroll mt-5">
+          <TableScroll label="Every seal for this game" className="mt-5">
             <table className="tb">
               <caption className="sr-only">
                 Every seal for this game, by model version, as the {possessive(teamDisplay(sideId).name)} chance
@@ -833,7 +842,7 @@ export function Seals({ game, detail }: { game: DayGame; detail: GameDetail }) {
                 ))}
               </tbody>
             </table>
-          </div>
+          </TableScroll>
         </>
       )}
       <Notes>

@@ -175,7 +175,9 @@ export function TitleOddsChart({
       }}
     >
       <div ref={plot} className="relative min-w-0 overflow-x-clip">
-        <svg width={width} height={height} role="img" aria-label={summary} className="block select-none">
+        {/* A labelled group: the drawing is hidden from assistive tech, the date slider is not. */}
+        <svg width={width} height={height} role="group" aria-label={summary} className="block select-none">
+          <g aria-hidden="true">
           {ticks.map((tick) => (
             <g key={tick}>
               <line
@@ -285,6 +287,7 @@ export function TitleOddsChart({
               pointerEvents="none"
             />
           ) : null}
+          </g>
           <rect
             x={margin.left - 8}
             y={margin.top}
@@ -292,7 +295,12 @@ export function TitleOddsChart({
             height={plotHeight}
             fill="transparent"
             tabIndex={0}
+            role="slider"
             aria-label="Title odds by date. Use the arrow keys to move between dates."
+            aria-valuemin={0}
+            aria-valuemax={Math.max(0, points.length - 1)}
+            aria-valuenow={index ?? Math.max(0, points.length - 1)}
+            aria-valuetext={points.length > 0 ? formatShortDay(points[index ?? points.length - 1].date) : undefined}
             onPointerMove={(event) => locate(event.clientX)}
             onPointerDown={(event) => locate(event.clientX)}
             onBlur={() => {

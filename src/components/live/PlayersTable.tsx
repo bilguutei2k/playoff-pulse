@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { StatusTag } from "@/components/live/Badge";
 import { PlayerLink } from "@/components/live/PlayerLink";
 import { SortHeader } from "@/components/live/SortHeader";
@@ -101,6 +101,15 @@ const scoreColumn = (label: string): Column => ({
 });
 
 const MINUTE_FILTERS = [0, 10, 20, 30];
+/**
+ * With controls (the /players page), the view without a search or filter renders its
+ * first PAGE_ROWS rows of the current sort, with a button for the rest: the full list is
+ * over 350 rows, about 17,000 elements. Any search or filter shows every match.
+ */
+const PAGE_ROWS = 50;
+/** Every stat cell (a td after the row's th): grey, unwrapped, washed on row hover, hidden on phones. */
+const STAT_CELLS =
+  "[&>tr>th~td]:whitespace-nowrap [&>tr>th~td]:text-ink-2 [&>tr:hover>th~td]:bg-wash max-sm:[&>tr>th~td]:hidden";
 /** Every column a link may sort by; a `sort` outside this list falls back to the default. */
 const SORT_KEYS = [
   "name",
@@ -203,6 +212,10 @@ export function PlayersTable({
     () => (controls ? { key: state.sort as SortKey, descending: state.desc } : localSort),
     [controls, state.sort, state.desc, localSort],
   );
+  const [showAll, setShowAll] = useState(false);
+  const tbody = useRef<HTMLTableSectionElement>(null);
+  /** The row to focus after "Show all": the first one it revealed. */
+  const focusRow = useRef<number | null>(null);
   const query = state.q;
   const minutes = state.min;
   const team = state.team;
@@ -263,6 +276,19 @@ export function PlayersTable({
     setSort(sort.key === key ? { key, descending: !sort.descending } : { key, descending: defaultDescending(key) });
 
   const filtered = query.trim() !== "" || minutes !== defaults.min || team !== "all";
+  const paged = controls && !filtered && !showAll && shown.length > PAGE_ROWS;
+  const visible = paged ? shown.slice(0, PAGE_ROWS) : shown;
+  const revealAll = () => {
+    focusRow.current = PAGE_ROWS;
+    setShowAll(true);
+  };
+
+  useEffect(() => {
+    if (focusRow.current === null) return;
+    const row = tbody.current?.rows[focusRow.current];
+    focusRow.current = null;
+    row?.querySelector<HTMLElement>('a[href^="/players/"]')?.focus();
+  }, [showAll]);
   const isText = sort.key === "name" || sort.key === "team" || sort.key === "status";
   const summaryColumns = statColumns.filter((column) => SUMMARY_KEYS.includes(column.key) || column.key === sort.key);
   // Sticky under the masthead where the table is not in its own scroll box (xl up).
@@ -339,6 +365,7 @@ export function PlayersTable({
       {controls ? (
         <p className="num mb-2 text-13 text-ink-2" role="status">
           {shown.length} of {rows.length} players
+          {paged ? `, the first ${PAGE_ROWS} shown` : ""}
           {filtered ? (
             <>
               {" · "}
@@ -382,7 +409,8 @@ export function PlayersTable({
               ))}
             </tr>
           </thead>
-          <tbody>
+          {/* The stat cells' shared classes, set once here rather than on each of thousands of cells. */}
+          <tbody ref={tbody} className={STAT_CELLS}>
             {shown.length === 0 ? (
               <tr>
                 <td colSpan={columns.length + 1} className="!py-6 text-center text-14 !text-ink-2">
@@ -390,7 +418,7 @@ export function PlayersTable({
                 </td>
               </tr>
             ) : (
-              shown.map((row) => (
+              visible.map((row) => (
                 <tr key={`${row.teamId}-${row.athleteId}`} className="group">
                   <th scope="row" className="bg-panel text-left group-hover:bg-wash max-sm:whitespace-normal sm:sticky sm:left-0 sm:z-[1]">
                     <div className="flex items-center gap-3">
@@ -434,9 +462,7 @@ export function PlayersTable({
                   {columns.map((column) => (
                     <td
                       key={column.key}
-                      className={`whitespace-nowrap group-hover:bg-wash max-sm:hidden ${
-                        column.key === "team" || column.key === "status" ? "" : "nm"
-                      } ${column.key === sort.key ? "font-semibold" : "!text-ink-2"}`}
+                      className={`${column.key === "team" || column.key === "status" ? "" : "nm"} ${column.key === sort.key ? "font-semibold !text-ink" : ""}`}
                     >
                       {column.cell(row)}
                     </td>
@@ -447,6 +473,13 @@ export function PlayersTable({
           </tbody>
         </table>
       </div>
+      {paged ? (
+        <p className="mt-4">
+          <button type="button" className="pp-button min-h-11 px-4 text-14" onClick={revealAll}>
+            Show all {shown.length} players
+          </button>
+        </p>
+      ) : null}
     </div>
   );
 }

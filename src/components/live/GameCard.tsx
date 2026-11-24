@@ -1,7 +1,9 @@
 import { SiteLink } from "@/components/layout/SiteLink";
+import { PlayerLink } from "@/components/live/PlayerLink";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
 import { bracketView, outPoints, type BracketSide, type BracketView } from "@/lib/view/bracket";
+import { cardOutNames, cardOutStatusWord, type CardOutSide } from "@/lib/view/card-out";
 import type { DayGame } from "@/lib/view/day";
 import { OUT_DEFINITION, tileHelp } from "@/lib/view/how-to-read";
 import { gameHref } from "@/lib/view/routes";
@@ -140,29 +142,122 @@ function Code({ view, code, link }: { view: BracketView; code: string; link: boo
   return <TeamLink teamId={teamId} form="code" />;
 }
 
+/**
+ * One side of a card's "Out" row: the figure, then the largest absences as player links
+ * (raised over the card's game link), a status letter for doubtful or questionable, and
+ * how many more are listed. Each name stays whole; the line wraps between names.
+ */
+function OutLine({ code, points, named }: { code: string; points: number; named: CardOutSide | null }) {
+  return (
+    <span className="gc-out-s">
+      <span className="gc-out-f">
+        <b>
+          {code} {outPoints(points)}
+        </b>{" "}
+        pts
+      </span>
+      {named ? (
+        <span className="gc-out-n">
+          {named.names.map((player, index) => (
+            <span key={`${player.athleteId ?? player.name}-${index}`} className="gc-out-p">
+              <PlayerLink athleteId={player.athleteId} name={player.name} fullName={player.fullName} className="gc-pl" />
+              {player.status ? (
+                <>
+                  {" "}
+                  <abbr title={cardOutStatusWord(player.status)}>{player.status}</abbr>
+                </>
+              ) : null}
+              {index < named.names.length - 1 ? "," : null}
+            </span>
+          ))}
+          {named.more > 0 ? <span className="gc-out-p">+{named.more}</span> : null}
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
 export function BracketContext({
   view,
   marketLabel = "Market",
   linkTeams = false,
+  names,
 }: {
   view: BracketView;
   marketLabel?: string;
   /** Team codes as team links (the game page; never on a card). */
   linkTeams?: boolean;
+  /** A card's named absences by team code (`cardOutNames`); the game page lists them in full instead. */
+  names?: Record<string, CardOutSide>;
 }) {
-  const parts: React.ReactNode[] = [];
+  // Each label and value is its own unbroken unit (gc-u, b): on a card, the items beside
+  // the "Out" block may wrap between the two to stay beside it.
+  const before: React.ReactNode[] = [];
+  const after: React.ReactNode[] = [];
   if (view.pregame) {
-    parts.push(
-      <span key="pregame">
-        <span aria-hidden className="gc-key" />
-        Pregame seal{" "}
+    before.push(
+      <span key="pregame" className="gc-i">
+        <span className="gc-u">
+          <span aria-hidden className="gc-key" />
+          Pregame seal
+        </span>{" "}
         <b>
           <Code view={view} code={view.pregame.code} link={linkTeams} /> {view.pregame.percent}%
         </b>
       </span>,
     );
   }
-  for (const note of view.notes) parts.push(<span key={note}>{note}</span>);
+  const notes = view.notes.map((note) => <span key={note}>{note}</span>);
+  if (view.market === "none") {
+    after.push(
+      <span key="market" className="gc-i">
+        <span className="gc-u">{marketLabel}</span> <b>no line yet</b>
+      </span>,
+    );
+  } else if (view.market) {
+    after.push(
+      <span key="market" className="gc-i">
+        <span className="gc-u">
+          <span aria-hidden className="gc-key mk" />
+          {marketLabel}
+        </span>{" "}
+        <b>
+          <Code view={view} code={view.market.code} link={linkTeams} /> {view.market.percent}%
+        </b>
+      </span>,
+    );
+  }
+
+  if (view.out.length > 0 && names) {
+    // A card: one line a side under one "Out" label, "MEM −3.1 pts Morant, Clarke +2",
+    // the names from the shown number's own drivers (lib/view/card-out.ts). Notes come
+    // first, as on the game page; the pregame seal and market share what is left of the
+    // block's two lines.
+    return (
+      <div className="gc-cx">
+        {notes}
+        <span className="gc-out" title={OUT_DEFINITION}>
+          <span className="gc-out-l">Out</span>
+          {view.out.map((side) => (
+            <OutLine key={side.code} code={side.code} points={side.points} named={names[side.code] ?? null} />
+          ))}
+          {view.unfiled.map((code) => (
+            <span key={code} className="gc-out-u">
+              <b>{code}</b> not filed
+            </span>
+          ))}
+        </span>
+        {before.length + after.length > 0 ? (
+          <span className="gc-cx-r">
+            {before}
+            {after}
+          </span>
+        ) : null}
+      </div>
+    );
+  }
+
+  const parts: React.ReactNode[] = [...before, ...notes];
   if (view.out.length > 0 || view.unfiled.length > 0) {
     // "Out DET −5.4 pts": points of margin, so the figure is not read as a count of players.
     parts.push(
@@ -186,23 +281,7 @@ export function BracketContext({
       </span>,
     );
   }
-  if (view.market === "none") {
-    parts.push(
-      <span key="market">
-        {marketLabel} <b>no line yet</b>
-      </span>,
-    );
-  } else if (view.market) {
-    parts.push(
-      <span key="market">
-        <span aria-hidden className="gc-key mk" />
-        {marketLabel}{" "}
-        <b>
-          <Code view={view} code={view.market.code} link={linkTeams} /> {view.market.percent}%
-        </b>
-      </span>,
-    );
-  }
+  parts.push(...after);
   if (parts.length === 0) return null;
   return <div className="gc-cx">{parts}</div>;
 }
@@ -256,7 +335,7 @@ export function GameCard({
         ) : null}
       </div>
       <Bracket view={view} />
-      <BracketContext view={view} />
+      <BracketContext view={view} names={cardOutNames(game.absences)} />
       {/* The whole card opens the game; the team links above sit over this cover. */}
       <SiteLink
         href={gameHref(game.id)}

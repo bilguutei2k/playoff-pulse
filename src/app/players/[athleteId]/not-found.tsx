@@ -1,12 +1,15 @@
 import { SiteLink } from "@/components/layout/SiteLink";
 import { SectionHeading } from "@/components/live/SectionHeading";
 
-/** A player ID that no published file knows (VB-13). The title comes from the page's generateMetadata. */
+// A 404 takes its title from here, not from the page's generateMetadata.
+export const metadata = { title: "Player not found", robots: { index: false } };
+
+/** A player ID that no published file knows (VB-13). */
 export default function PlayerNotFound() {
   return (
     <main className="pp-container pb-16 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
-        <SiteLink href="/players" className="text-ink-2 hover:text-ink">
+        <SiteLink href="/players" className="back-link text-ink-2 hover:text-ink">
           <span aria-hidden>← </span>All players
         </SiteLink>
       </nav>

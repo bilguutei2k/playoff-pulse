@@ -1,4 +1,5 @@
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { Hint } from "@/components/live/Hint";
 import { TeamLink } from "@/components/live/TeamLink";
 import { Tile } from "@/components/live/Tile";
@@ -150,7 +151,9 @@ export function FinalsChart({ summary, title }: { summary: DaySummary; title: st
           <p className="text-[13px] text-ink-2">No favorite: {summary.even === 1 ? "an even seal" : "even seals"}</p>
         )}
       </div>
-      <div role="img" aria-label={`548's sealed chance for each favorite: ${description}.`}>
+      {/* The drawing and its pointer links are hidden; this sentence is the figure's reading. */}
+      <p className="sr-only">{`548's sealed chance for each favorite: ${description}.`}</p>
+      <div>
         <div className="sm:hidden">
           <FinalsBars rows={scored} width={360} />
         </div>
@@ -229,7 +232,7 @@ const teamClass = (won: boolean) => `h-6 ${won ? "font-bold" : "text-ink-2"}`;
 export function FinalsTable({ rows, home = false }: { rows: FinalRow[]; home?: boolean }) {
   const brierCell = `hidden md:table-cell ${home ? "lg:hidden xl:table-cell" : ""}`;
   return (
-    <div className="table-scroll">
+    <TableScroll label="Final scores">
       <table className="tb min-w-0">
         <caption className="sr-only">
           Final scores with 548&apos;s sealed chance for each side, its favorite and the Brier score of each game. Lower Brier is better.
@@ -315,6 +318,6 @@ export function FinalsTable({ rows, home = false }: { rows: FinalRow[]; home?: b
           })}
         </tbody>
       </table>
-    </div>
+    </TableScroll>
   );
 }

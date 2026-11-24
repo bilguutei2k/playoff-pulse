@@ -1,0 +1,35 @@
+/*
+ * touch.css: touch-target sizes for small controls (WCAG 2.5.8, 24 by 24 px at least).
+ * Each rule grows the control's own box and takes the growth back with a negative
+ * margin, so rows, headings and line boxes keep their height and the desktop look is
+ * unchanged.
+ */
+
+@layer components {
+  /* "← All teams", "← All players", the game page's day link. */
+  .back-link {
+    display: inline-block;
+    margin-block: -4px;
+    padding-block: 4px;
+  }
+
+  @media (max-width: 639px) {
+    /* SortHeader's button: 19px of text in a heading row that stays 19px. */
+    .sort-btn {
+      margin-block: -3px;
+      min-height: 25px;
+      min-width: 24px;
+    }
+
+    th.nm .sort-btn {
+      justify-content: flex-end;
+    }
+
+    /* The team page's next-games opponent codes ("@IND"), inside their 44px slot. */
+    .tng-opp .tl {
+      justify-content: center;
+      min-height: 24px;
+      min-width: 24px;
+    }
+  }
+}

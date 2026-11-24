@@ -277,6 +277,90 @@
     font-weight: 600;
   }
 
+  /*
+   * A card's "Out" row: one line a side under one label, the figure then the largest
+   * absences by name. The columns line the two sides' names up; the market sits
+   * beside the block when it fits and drops under it otherwise. A name never breaks
+   * or ellipsizes: the names wrap between whole names.
+   */
+  .gc-out {
+    align-items: baseline;
+    column-gap: 6px;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, auto);
+    row-gap: 2px;
+  }
+
+  .gc-out-l {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .gc-out-s {
+    display: contents;
+  }
+
+  .gc-out-f {
+    grid-column: 2;
+    white-space: nowrap;
+  }
+
+  .gc-out-n {
+    column-gap: 0.3em;
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 3;
+    min-width: 0;
+  }
+
+  .gc-out-u {
+    grid-column: 2 / -1;
+  }
+
+  .gc-out-p {
+    white-space: nowrap;
+  }
+
+  /* Names sit above the card's game link (the cover), so each opens the player. */
+  .gc-pl {
+    color: var(--color-ink);
+    font-weight: 500;
+    padding-block: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /*
+   * Beside the "Out" block: the pregame seal, notes and market take the rest of the
+   * row, down to their longest unbroken unit ("Pregame seal"), wrapping between label
+   * and value rather than dropping under the block.
+   */
+  .gc-cx-r {
+    column-gap: 18px;
+    display: flex;
+    flex: 1 1 0;
+    flex-wrap: wrap;
+    min-width: min-content;
+    row-gap: 2px;
+  }
+
+  .gc-cx-r > .gc-i {
+    column-gap: 0.3em;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .gc-cx-r :is(.gc-u, b) {
+    white-space: nowrap;
+  }
+
+  .gc-out abbr {
+    cursor: help;
+    position: relative;
+    text-decoration: none;
+    z-index: 1;
+  }
+
   .gc-key {
     background: var(--color-ink);
     display: inline-block;

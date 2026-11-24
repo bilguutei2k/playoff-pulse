@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { lostPoints } from "@/components/live/AbsenceList";
@@ -37,7 +38,16 @@ import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { ratingHistory } from "@/lib/view/rating-history";
 import { gameHref, teamHref } from "@/lib/view/routes";
 import { teamSchedule, type TeamGameRow } from "@/lib/view/team";
-import { gameBlocks, nextGameBars, possessive, recordBand, teamPercent } from "@/lib/view/team-page";
+import {
+  absenceGap,
+  gameBlocks,
+  nextGameAbsence,
+  nextGameBars,
+  possessive,
+  recordBand,
+  teamPercent,
+  type AbsenceGapPart,
+} from "@/lib/view/team-page";
 import { conferenceOrder, formatRecord, ordinal, teamBySlug, teamColor } from "@/lib/view/teams";
 
 type Params = { params: Promise<{ abbr: string }> };
@@ -153,7 +163,7 @@ function ProjectedRecord({ row, color }: { row: OddsRow; color: string }) {
 
 function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label="Out in the season odds">
     <table className="tb tt">
       <caption className="sr-only">Players the model counts as out now, the points of margin each costs, and the games each is expected to miss</caption>
       <thead>
@@ -186,7 +196,7 @@ function OutNow({ rows, color }: { rows: PublishedAbsence[]; color: string }) {
         })}
       </tbody>
     </table>
-    </div>
+    </TableScroll>
   );
 }
 
@@ -259,7 +269,7 @@ function NumberCell({ row, modelVersion }: { row: TeamGameRow; modelVersion: str
 
 function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; modelVersion: string; caption: string }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label={caption}>
     <table className="tb tt">
       <caption className="sr-only">{caption}</caption>
       <thead>
@@ -294,13 +304,13 @@ function ResultsTable({ rows, modelVersion, caption }: { rows: TeamGameRow[]; mo
         ))}
       </tbody>
     </table>
-    </div>
+    </TableScroll>
   );
 }
 
 function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; caption: string; modelVersion: string }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label={caption}>
     <table className="tb tt">
       <caption className="sr-only">{caption}</caption>
       <thead>
@@ -352,7 +362,7 @@ function ScheduleTable({ rows, caption, modelVersion }: { rows: TeamGameRow[]; c
         })}
       </tbody>
     </table>
-    </div>
+    </TableScroll>
   );
 }
 
@@ -432,6 +442,62 @@ function GamesCount({ count }: { count: number }) {
   );
 }
 
+const GAP_TEXT: Record<AbsenceGapPart["kind"], [string, string]> = {
+  "not-on-report": ["is counted out now but not listed on it", "are counted out now but not listed on it"],
+  weighted: ["is weighted by his status on it", "are weighted by their status on it"],
+  "only-on-report": ["is listed on it but not counted out now", "are listed on it but not counted out now"],
+};
+
+const NAMES_SHOWN = 3;
+
+/** "A, B and C", each a player link; past three, "A, B, C and 3 others". */
+function PlayerList({ players }: { players: AbsenceGapPart["players"] }) {
+  const shown = players.length > NAMES_SHOWN + 1 ? players.slice(0, NAMES_SHOWN) : players;
+  const others = players.length - shown.length;
+  return (
+    <>
+      {shown.map((player, index) => (
+        <span key={player.athleteId}>
+          {index === 0 ? "" : index === shown.length - 1 && others === 0 ? " and " : ", "}
+          <PlayerLink athleteId={player.athleteId} name={player.name} className="text-ink" />
+        </span>
+      ))}
+      {others > 0 ? ` and ${others} others` : null}
+    </>
+  );
+}
+
+/** One sentence: why the season odds' absences and the next game's differ, player by player. */
+function AbsenceGapNote({ parts, notListed, teamName }: { parts: AbsenceGapPart[]; notListed: boolean; teamName: string }) {
+  if (notListed) {
+    return (
+      <p className="mt-3 text-[13px] leading-5 text-ink-2">
+        This total differs from the next game&apos;s because the NBA report filed for that game does not list the{" "}
+        {teamName}, which means nobody listed.
+      </p>
+    );
+  }
+  return (
+    <p className="mt-3 text-[13px] leading-5 text-ink-2">
+      This total differs from the next game&apos;s because that game counts the NBA report filed for it
+      {parts.length === 0 ? (
+        "."
+      ) : (
+        <>
+          :{" "}
+          {parts.map((part, index) => (
+            <span key={part.kind}>
+              {index > 0 ? "; " : ""}
+              <PlayerList players={part.players} /> {GAP_TEXT[part.kind][part.players.length === 1 ? 0 : 1]}
+            </span>
+          ))}
+          .
+        </>
+      )}
+    </p>
+  );
+}
+
 export default async function TeamPage({ params }: Params) {
   const { abbr } = await params;
   const team = teamBySlug(abbr);
@@ -485,6 +551,15 @@ export default async function TeamPage({ params }: Params) {
   const projectedWithInjuries = upcoming.some((game) => game.forecast?.source === "projection" && game.forecast.withInjuries);
   const projectedWithout = upcoming.some((game) => game.forecast?.source === "projection" && !game.forecast.withInjuries);
   const showNow = modeled && row.ratingNow !== null;
+  // The summary tile's next game: the one the injury list covers, else the schedule's next.
+  const tileGameId = teamList?.nextGame?.gameId ?? nextGame?.game.id ?? null;
+  const tileProjection = projections?.games.find((game) => game.gameId === tileGameId) ?? null;
+  const currentAbsences = { points: liveState.absencePoints[team.id] ?? 0, absences };
+  // A game that is sealed (tonight's, once its morning seal exists, and through the game) takes the seal's own count.
+  const tileRow = schedule.find((game) => game.game.id === tileGameId) ?? null;
+  const tileSeal = tileRow?.forecast?.source === "sealed" ? tileRow.forecast.absence : null;
+  const nextAbsence = nextGameAbsence(tileProjection, team.id, currentAbsences, tileSeal);
+  const absenceParts = modeled && teamList ? absenceGap(currentAbsences, nextAbsence) : null;
   const recordStart = liveState.ledgerStartedAt ? formatShortDay(liveState.ledgerStartedAt.slice(0, 10)) : null;
 
   return (
@@ -493,7 +568,7 @@ export default async function TeamPage({ params }: Params) {
       <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
-          <SiteLink href="/teams" className="text-ink-2 hover:text-ink">
+          <SiteLink href="/teams" className="back-link text-ink-2 hover:text-ink">
             <span aria-hidden>← </span>All teams
           </SiteLink>
         </nav>
@@ -527,12 +602,22 @@ export default async function TeamPage({ params }: Params) {
               <BigFigure
                 label={
                   <Hint term="Rating next game" label="Rating next game">
-                    The same rating with the players the model counts out now taken off: the points of margin they
-                    cost, listed under Out now. Who is out can change before tip.
+                    The same rating with the points of margin the model counts for absences in the next game taken
+                    off: by the NBA report filed for that game, or by current absences until there is one, as its
+                    projection counts them. Once the game is sealed, it is what the seal counted. Who is out can
+                    change before tip.
                   </Hint>
                 }
-                value={formatRating(row.ratingNow!)}
-                note={absences.length > 0 ? `with ${absences.length} ${absences.length === 1 ? "player" : "players"} out` : "nobody counted out"}
+                value={formatRating(nextAbsence.fromProjection ? row.rating - nextAbsence.points : row.ratingNow!)}
+                note={`${
+                  nextAbsence.count === null
+                    ? "absences counted"
+                    : nextAbsence.count > 0
+                      ? `${nextAbsence.count} ${nextAbsence.count === 1 ? "player" : "players"} counted`
+                      : "nobody counted"
+                }, ${nextAbsence.basis === "report" ? "from the NBA report" : "from current absences"}${
+                  nextAbsence.source === "seal" ? ", as sealed" : ""
+                }`}
               />
             ) : null}
           </dl>
@@ -586,13 +671,13 @@ export default async function TeamPage({ params }: Params) {
           <div className="min-w-0">
             <section aria-labelledby="out-title">
               <div className="sh">
-                <h2 id="out-title">Out now</h2>
+                <h2 id="out-title">Out in the season odds</h2>
                 {modeled ? (
                   <span>
                     <b className="num text-ink">
                       {absences.length > 0 ? pointsOut(liveState.absencePoints[team.id] ?? 0) : "0.0"}
                     </b>{" "}
-                    pts next game
+                    pts in total
                   </span>
                 ) : null}
               </div>
@@ -605,16 +690,19 @@ export default async function TeamPage({ params }: Params) {
                 <>
                   <OutNow rows={absences} color={color} />
                   <p className="mt-3 text-[13px] leading-5 text-ink-2">
-                    Pts lost: the points of margin per game the model counts for each absence. Each block is one
-                    expected game out. Who the season simulation counts as out: listed out or doubtful on the NBA report, or missed the last
-                    game and not listed. Expected games come from a return table fitted on past seasons, never reported
-                    return dates. A game&apos;s seal counts the report in use at its seal instead, or these absences if
-                    the team has not filed its report yet.
+                    Who the season simulation counts as out, and for how many games: listed out or doubtful on the NBA
+                    report, or missed the last game and not listed. Pts lost: the points of margin per game the model
+                    counts for each absence. Each block is one expected game out; expected games come from a return
+                    table fitted on past seasons, never reported return dates. A game&apos;s seal counts the report in
+                    use at its seal instead, or these absences if the team has not filed its report yet.
                   </p>
                 </>
               ) : (
                 <p className="notice-quiet">The model counts no {team.shortName} player as out right now.</p>
               )}
+              {absenceParts ? (
+                <AbsenceGapNote parts={absenceParts} notListed={teamList?.filing === "not-listed"} teamName={team.shortName} />
+              ) : null}
             </section>
 
             <section aria-labelledby="results-title" className="mt-16">

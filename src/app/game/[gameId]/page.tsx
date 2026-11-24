@@ -73,7 +73,7 @@ export default async function GamePage({ params }: Params) {
       <PageStamp generatedAt={liveState.generatedAt} />
       <main className="pp-container pb-4 pt-7 sm:pt-11">
         <nav aria-label="Breadcrumb" className="mb-[22px] text-[13px]">
-          <SiteLink href={dayHref(game.etDate, day.todayEtDate)} className="text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">
+          <SiteLink href={dayHref(game.etDate, day.todayEtDate)} className="back-link text-ink-2 hover:text-ink hover:underline hover:underline-offset-4">
             <span aria-hidden>← </span>
             {weekday}, {formatShortDay(game.etDate)}
           </SiteLink>

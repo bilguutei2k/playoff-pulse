@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteLink } from "@/components/layout/SiteLink";
+import { TableScroll } from "@/components/layout/TableScroll";
 import { notFound } from "next/navigation";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { StatusTag } from "@/components/live/Badge";
@@ -55,7 +56,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!page) return { title: "Player not found" };
   return {
     title: `${page.name}: stats, game log and injuries`,
-    description: `${page.name} of the ${teamDisplay(page.teamId).name}: season averages, shooting, the experimental 548 score, his game log from stored box scores, his NBA injury report listings and what the forecast takes off his team without him.`,
+    // At most 160 characters for the longest name and team (158 today).
+    description: `${page.name}, ${teamDisplay(page.teamId).name}: season stats, experimental 548 score, game log, injury listings and what the forecast takes off without him.`,
     alternates: { canonical: `/players/${athleteId}` },
   };
 }
@@ -123,13 +125,17 @@ function ResultCell({ row }: { row: GameLogRow }) {
 
 const LOG_COLUMNS = ["Min", "Pts", "Reb", "Ast", "Stl", "Blk", "TO", "FG", "3P", "FT", "+/−"];
 
-/** The game a row is for: its date, linked to the game page, then "at" and the opponent, linked to his team. */
+/**
+ * The game a row is for: its date, linked to the game page, then "at" and the opponent,
+ * linked to his team. Phones drop the weekday so the figures after it fit the screen.
+ */
 function GameCells({ gameId, etDate, opponentId, home, teamId }: { gameId: string; etDate: string; opponentId: string | null; home: boolean | null; teamId?: string }) {
   return (
     <>
       <th scope="row" className="whitespace-nowrap bg-panel text-left font-normal group-hover:bg-wash">
         <SiteLink href={`/game/${gameId}`} className="players-name num text-ink">
-          {formatWeekday(etDate)} {formatShortDay(etDate)}
+          <span className="max-sm:hidden">{formatWeekday(etDate)} </span>
+          {formatShortDay(etDate)}
         </SiteLink>
       </th>
       <td className="whitespace-nowrap group-hover:bg-wash">
@@ -149,9 +155,12 @@ function GameCells({ gameId, etDate, opponentId, home, teamId }: { gameId: strin
 
 function GameLog({ page }: { page: PlayerPageView }) {
   const traded = page.teamIds.length > 1;
+  // Phones (under 640 px): no minimum width and tighter gaps, so Date, Game, Result, Min,
+  // Pts, Reb and Ast fit the first screen; the Role column moves to the end, after the
+  // figures, and the rest scrolls sideways.
   return (
-    <div className="table-scroll">
-      <table className="tb players-tb min-w-[46rem]">
+    <TableScroll label="Game log">
+      <table className="tb players-tb tb-tight sm:min-w-[46rem]">
         <caption className="sr-only">
           {page.name}&apos;s game log, most recent first: every stored box score that lists him, played or not. Games
           whose box score does not list him are not included.
@@ -161,7 +170,7 @@ function GameLog({ page }: { page: PlayerPageView }) {
             <th scope="col">Date</th>
             <th scope="col">Game</th>
             <th scope="col">Result</th>
-            <th scope="col">Role</th>
+            <th scope="col" className="max-sm:hidden">Role</th>
             {LOG_COLUMNS.map((label) => (
               <th key={label} scope="col" className="nm">
                 {label === "TO" ? (
@@ -171,6 +180,7 @@ function GameLog({ page }: { page: PlayerPageView }) {
                 )}
               </th>
             ))}
+            <th scope="col" className="sm:hidden">Role</th>
           </tr>
         </thead>
         <tbody>
@@ -182,7 +192,7 @@ function GameLog({ page }: { page: PlayerPageView }) {
                 <td className="num whitespace-nowrap group-hover:bg-wash"><ResultCell row={row} /></td>
                 {entry.played ? (
                   <>
-                    <td className="whitespace-nowrap text-13 text-ink-2 group-hover:bg-wash">{entry.starter ? "Starter" : "Bench"}</td>
+                    <td className="whitespace-nowrap text-13 text-ink-2 group-hover:bg-wash max-sm:hidden">{entry.starter ? "Starter" : "Bench"}</td>
                     {[
                       formatMinutes(entry.minutes),
                       entry.points,
@@ -200,8 +210,10 @@ function GameLog({ page }: { page: PlayerPageView }) {
                         {value}
                       </td>
                     ))}
+                    <td className="whitespace-nowrap text-13 text-ink-2 group-hover:bg-wash sm:hidden">{entry.starter ? "Starter" : "Bench"}</td>
                   </>
                 ) : (
+                  // Role, the figures and the phone's Role at the end: one of the two Role columns is always hidden.
                   <td colSpan={LOG_COLUMNS.length + 1} className="text-13 text-ink-2 group-hover:bg-wash">
                     <span className="font-medium text-ink">Did not play</span>
                     <span> · ESPN: {espnReason(entry.reason)}</span>
@@ -212,13 +224,13 @@ function GameLog({ page }: { page: PlayerPageView }) {
           })}
         </tbody>
       </table>
-    </div>
+    </TableScroll>
   );
 }
 
 function InjuryHistory({ page }: { page: PlayerPageView }) {
   return (
-    <div className="table-scroll">
+    <TableScroll label="Injury history">
       <table className="tb players-tb min-w-[36rem]">
         <caption className="sr-only">{page.name}&apos;s listings on the NBA injury report before each finished game, and whether he then played.</caption>
         <thead>
@@ -248,7 +260,7 @@ function InjuryHistory({ page }: { page: PlayerPageView }) {
           })}
         </tbody>
       </table>
-    </div>
+    </TableScroll>
   );
 }
 
@@ -284,7 +296,7 @@ export default async function PlayerPage({ params }: Params) {
       <PageStamp generatedAt={generatedAt} />
     <main className="pp-container pb-4 pt-7 sm:pt-11">
       <nav aria-label="Breadcrumb" className="mb-[22px] text-13">
-        <SiteLink href="/players" className="text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</SiteLink>
+        <SiteLink href="/players" className="back-link text-ink-2 hover:text-ink"><span aria-hidden>← </span>All players</SiteLink>
       </nav>
 
       <header>

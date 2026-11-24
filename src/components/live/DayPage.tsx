@@ -6,14 +6,15 @@ import { PageStamp } from "@/components/live/FreshnessGuard";
 import { GameCard } from "@/components/live/GameCard";
 import { RecordGlance, Standfirst, TitleRace, TitleStrip } from "@/components/live/HomePanels";
 import { Tile } from "@/components/live/Tile";
-import { loadDayView } from "@/lib/live-data/day-loader";
+import { loadDayView, loadLastResults } from "@/lib/live-data/day-loader";
 import { getGameCountsByDate, getLiveState, getSeasonGames, getSeasonLedger } from "@/lib/live-data/published";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { formatLongDay, formatShortDay, formatWeekday, pacificZoneOfDay } from "@/lib/utils/dates";
 import type { TileKind } from "@/lib/view/bracket";
+import { cardOutKey } from "@/lib/view/card-out";
 import type { DayGame, DayView } from "@/lib/view/day";
 import { daySummary, type SentencePart } from "@/lib/view/day-summary";
-import { OUT_DEFINITION, TILE_DEFINITION, TILE_GLYPHS } from "@/lib/view/how-to-read";
+import { OUT_DEFINITION, OUT_KEY, OUT_STATUS_WORDS, TILE_DEFINITION, TILE_GLYPHS } from "@/lib/view/how-to-read";
 import { basisSummary } from "@/lib/view/injury-report";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
 import { versionLedger } from "@/lib/view/record";
@@ -89,8 +90,8 @@ function tileKinds(games: readonly DayGame[]): TileKind[] {
  * words as "How to read a card" below, so a first visit learns which number is scored
  * and which can change before scrolling past the games.
  */
-function TileKey({ kinds }: { kinds: TileKind[] }) {
-  if (kinds.length === 0) return null;
+function TileKey({ kinds, out }: { kinds: TileKind[]; out: ReturnType<typeof cardOutKey> }) {
+  if (kinds.length === 0 && !out.any) return null;
   return (
     <p className="mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] leading-5 text-ink-2">
       {kinds.map((kind) => (
@@ -105,6 +106,19 @@ function TileKey({ kinds }: { kinds: TileKind[] }) {
           </span>
         </span>
       ))}
+      {out.any ? (
+        // The cards' "Out" row, so its names and letters need no trip to "How to read a card".
+        <span>
+          <b className="font-semibold text-ink">{OUT_KEY.word}:</b> {OUT_KEY.text}
+          {out.statuses.map((status) => (
+            <span key={status}>
+              {" "}
+              <b className="font-semibold text-ink">{status}</b> {OUT_STATUS_WORDS[status]}
+              {status === out.statuses.at(-1) ? "." : ","}
+            </span>
+          ))}
+        </span>
+      ) : null}
       <SiteLink href="#how-to-read" className="pp-link py-3">
         How to read a card
       </SiteLink>
@@ -180,6 +194,33 @@ function DaySentence({ parts }: { parts: SentencePart[] }) {
   );
 }
 
+/**
+ * The home page's line for the last game day: that date, linked to its day page, then
+ * the day page's own sentence ("Favorites won 3 of 7. The biggest miss was …").
+ */
+function LastResults({ etDate, today, parts }: { etDate: string; today: string; parts: SentencePart[] }) {
+  return (
+    <p data-last-day className="mb-6 border-b border-line pb-5 text-[15px] leading-[1.45] text-ink">
+      <SiteLink
+        href={dayHref(etDate, today)}
+        className="font-bold underline decoration-line-strong decoration-1 underline-offset-[0.18em] hover:decoration-ink"
+      >
+        {shortLongDay(etDate)}
+      </SiteLink>
+      <b className="font-bold">.</b>{" "}
+      {parts.map((part, index) =>
+        part.href ? (
+          <SiteLink key={index} href={part.href} className="underline decoration-line-strong decoration-1 underline-offset-[0.18em] hover:decoration-ink">
+            {part.text}
+          </SiteLink>
+        ) : (
+          <span key={index}>{part.text}</span>
+        ),
+      )}
+    </p>
+  );
+}
+
 /** "Wed, Nov 25": a neighbouring day on the empty day's buttons. */
 function buttonDay(etDate: string): string {
   return `${formatWeekday(etDate)}, ${formatShortDay(etDate)}`;
@@ -225,7 +266,11 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
     view.kind === "today" ? `Tonight's ${sums.scored.length} ${sums.scored.length === 1 ? "final" : "finals"}` : `${formatLongDay(view.etDate).split(",")[0]}'s ${sums.scored.length} ${sums.scored.length === 1 ? "final" : "finals"}`;
 
   // The home page previews the next game day, as projections or its seals.
-  const next = home && nextDay ? await loadDayView(nextDay) : null;
+  // And the last game day's sentence, from that date's stored seals (one day file).
+  const [next, lastResults] = await Promise.all([
+    home && nextDay ? loadDayView(nextDay) : Promise.resolve(null),
+    home ? loadLastResults(counts, today) : Promise.resolve(null),
+  ]);
   const nextGames = next ? next.games.filter((game) => game.status === "scheduled").slice(0, NEXT_DAY_CARDS) : [];
 
   const upcomingNote =
@@ -316,7 +361,13 @@ export async function DayPage({ view, home }: { view: DayView; home: boolean }) 
 
         <div className={`grid items-start gap-x-[72px] gap-y-4 ${home ? "lg:grid-cols-[minmax(0,1fr)_340px]" : ""}`}>
           <div className="min-w-0">
-            <TileKey kinds={tileKinds([...view.games, ...nextGames])} />
+            {lastResults?.summary.sentenceParts ? (
+              <LastResults etDate={lastResults.etDate} today={today} parts={lastResults.summary.sentenceParts} />
+            ) : null}
+            <TileKey
+              kinds={tileKinds([...view.games, ...nextGames])}
+              out={cardOutKey([...liveGames, ...upcoming, ...stopped, ...nextGames])}
+            />
             {view.games.length === 0 ? (
               <section aria-labelledby="empty-day" className="mb-14">
                 <div className="sh">

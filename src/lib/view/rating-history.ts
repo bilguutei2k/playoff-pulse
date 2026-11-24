@@ -4,12 +4,14 @@
 // adjustment, so it reproduces v1's published ratings exactly; v2 publishes
 // full-strength ratings that can differ by a point or so, and the team page says so.
 // The live season's games are read at render time, so the replay is cached per server
-// process for each copy of the games and parameters, and reruns only when they change.
+// process under the games' content key (the manifest's hash, from `getSeasonGamesKey`)
+// and the parameters, and reruns only when they change. Each render parses its own copy
+// of the games, so the array's identity alone would miss on every render.
 
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { FIRST_SEASON } from "@/lib/season/formats";
-import { getLiveState, getSeasonGames } from "@/lib/live-data/published";
+import { getLiveState, getSeasonGames, getSeasonGamesKey } from "@/lib/live-data/published";
 import { replayRatings } from "@/lib/season/ratings";
 import { SEASON_TEAMS, teamIndex } from "@/lib/season/teams";
 import type { LiveState, SeasonGame } from "@/lib/season/types";
@@ -22,7 +24,7 @@ export type RatingPoint = {
 };
 
 let earlier: { season: number; games: SeasonGame[] } | null = null;
-let cache: { games: readonly SeasonGame[]; params: string; points: RatingPoint[] } | null = null;
+let cache: { games: readonly SeasonGame[]; key: string | null; params: string; points: RatingPoint[] } | null = null;
 
 function storedSeason(season: number): SeasonGame[] {
   const file = path.join(process.cwd(), "data", "season", "games", `${season}.json`);
@@ -44,11 +46,12 @@ function earlierSeasons(season: number): SeasonGame[] {
 }
 
 export async function ratingHistory(): Promise<RatingPoint[]> {
-  const [liveState, seasonGames] = await Promise.all([getLiveState(), getSeasonGames()]);
+  const [liveState, seasonGames, key] = await Promise.all([getLiveState(), getSeasonGames(), getSeasonGamesKey()]);
   const params = JSON.stringify([liveState.season, liveState.params]);
-  if (cache && cache.games === seasonGames && cache.params === params) return cache.points;
+  const sameGames = cache !== null && (cache.games === seasonGames || (key !== null && cache.key === key));
+  if (cache && sameGames && cache.params === params) return cache.points;
   const points = replayHistory(liveState, seasonGames);
-  cache = { games: seasonGames, params, points };
+  cache = { games: seasonGames, key, params, points };
   return points;
 }
 

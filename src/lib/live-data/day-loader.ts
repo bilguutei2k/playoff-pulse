@@ -9,6 +9,7 @@ import { slateDateAt } from "@/lib/season/live-state";
 import type { InjuryRow, ScoreboardRow } from "@/lib/season/types";
 import { getDaySeals, getLiveState, getProjections, getReportDay, getSeasonGames } from "@/lib/live-data/published";
 import { buildDayView, type DayView } from "@/lib/view/day";
+import { daySummary, earlierGameDays, type DaySummary } from "@/lib/view/day-summary";
 
 const SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
 const TODAY_CACHE_SECONDS = 30;
@@ -69,4 +70,38 @@ export async function loadDayView(etDate: string): Promise<DayView> {
     reports,
     projections,
   });
+}
+
+/** How many earlier game days the home page tries for its last-results line. */
+const LAST_DAY_TRIES = 3;
+
+/**
+ * The most recent game day before `before` whose sealed finals give the day sentence,
+ * with that sentence (`daySummary`), or null. Stored data only: the published state,
+ * the games store and the date's seal file, without ESPN, the reports or the season
+ * ledger, so the home page pays one day file read for it (rarely more, when that day
+ * had no scored final).
+ */
+export async function loadLastResults(
+  counts: Record<string, number>,
+  before: string,
+): Promise<{ etDate: string; summary: DaySummary } | null> {
+  const nowIso = new Date().toISOString();
+  for (const etDate of earlierGameDays(counts, before, LAST_DAY_TRIES)) {
+    const [state, storeGames, daySeals] = await Promise.all([getLiveState(), getSeasonGames(), getDaySeals(etDate)]);
+    const view = buildDayView({
+      state,
+      etDate,
+      todayEtDate: todayEtDate(nowIso),
+      nowIso,
+      espnRows: null,
+      storeGames,
+      ledger: daySeals,
+      injuries: null,
+      extras: {},
+    });
+    const summary = daySummary(view.games);
+    if (summary.sentenceParts) return { etDate, summary };
+  }
+  return null;
 }

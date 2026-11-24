@@ -91,9 +91,10 @@ async function readServer(signal: AbortSignal): Promise<HealthReading> {
 /**
  * Mounted once in the layout on every page. Pages render at request time, so a fresh load
  * matches the server; the guard remains for a tab left open, a back-forward restore and the
- * client router cache, where the copy shown can lag it. On arrival, on return to the tab
- * after a minute away, after a back-forward restore and every five minutes while visible,
- * this asks /api/live/health what the server has and applies the rule in
+ * client router cache, where the copy shown can lag it. On arrival (a load, or a navigation
+ * that shows a copy with a different stamp), on return to the tab after a minute away, after
+ * a back-forward restore and every five minutes while visible, this asks /api/live/health
+ * what the server has and applies the rule in
  * src/lib/view/freshness.ts: a newer copy is loaded silently (twice at most, six seconds
  * apart, then a reload notice); a pipeline that is behind gets a notice at once, and so does
  * a server showing an older or stored copy, with its own words; a healthy server that
@@ -134,7 +135,10 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string; delivery:
     });
     const check = checks.check;
 
-    check();
+    // The first check waits one task: a page's <PageStamp> publishes its stamp in the same
+    // commit's effects, after this one. On a page without live data (null) the rerun then
+    // cancels this timer instead of aborting a request the server has already answered.
+    const first = setTimeout(check, 0);
     let hiddenAt: number | null = null;
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
@@ -153,13 +157,18 @@ export function FreshnessGuard({ generatedAt }: { generatedAt: string; delivery:
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pageshow", onPageShow);
     return () => {
+      clearTimeout(first);
       checks.stop();
       clearInterval(poll);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pageshow", onPageShow);
     };
     // A new copy (a refresh, or navigation to a page with its own stamp) re-runs this with
-    // its stamp; the helper resets the counts for it.
+    // its stamp; the helper resets the counts for it. A navigation to a page whose copy
+    // carries the same stamp does not start a check, on purpose: the poll above bounds how
+    // long such a copy can lag (five minutes, and the masthead shows the copy's age), and a
+    // check on every click would be a function call per navigation and one more chance of
+    // an "unverified" notice from a slow answer. Reviewed 2026-11-23 (gpt-6-astra raised it).
   }, [watched, router]);
 
   if (watched === null || notice === null || now === null) return null;
