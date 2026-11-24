@@ -76,6 +76,8 @@ import {
 } from "../../src/lib/season/params";
 import { sealKindOf, summarizeRecord } from "../../src/lib/season/live-state";
 import { V4_FIRST_ET_DATE, V4_FROZEN, V4_MODEL_VERSION } from "../../src/lib/season/params-v4";
+import { V5_MODEL_VERSION } from "../../src/lib/season/params-v5";
+import { V5_FIRST_ET_DATE } from "../../src/lib/season/params-v5-live";
 import { clampProbability } from "../../src/lib/season/math";
 import { impliedHomeProbability } from "../../src/lib/season/market";
 import { POLICY_MODEL_VERSION, POLICY_REVISIONS, policyRevisionAt } from "../../src/lib/season/policy-revisions";
@@ -86,7 +88,8 @@ import type { LedgerRow, LiveState, SeasonGame, SealRow } from "../../src/lib/se
 import { seasonLabel } from "../../src/lib/season/formats";
 import { LIVE_SEASON } from "../live/game-store";
 import { runSeedingCheck } from "../live/seeding-check";
-import { expectedSiteFiles, publishedSiteFiles, shadowPath } from "../live/site-files";
+import { expectedSiteFiles, isShadowPath, publishedSiteFiles } from "../live/site-files";
+import { shadowV5FileProblems, v5ParamsProblems } from "../live/v5-shadow/check";
 import { ledgerProblems } from "../live/verify-ledger";
 import { upgradeLiveState } from "../../src/lib/season/state-schema";
 import { checkOddsHistoryOnDisk } from "../live/odds-history-disk";
@@ -1110,7 +1113,7 @@ function checkSiteFiles(): void {
     (file) =>
       !expected.has(file) &&
       !isModelViewPath(file, seasonLabel(LIVE_SEASON)) &&
-      file !== shadowPath(seasonLabel(LIVE_SEASON)),
+      !isShadowPath(file, seasonLabel(LIVE_SEASON)),
   );
   const different = [...expected.keys()].filter(
     (file) => published.has(file) && published.get(file) !== expected.get(file),
@@ -1336,13 +1339,46 @@ export function runLiveChecks(): void {
         .map((line) => JSON.parse(line) as LedgerRow)
     : [];
   assert.deepEqual(ledgerProblems(ledgerRows), [], "Ledger rows must be valid.");
-  // v4's shadow rows are not part of v1's or v2's record or views (registration-v4.md, W2).
-  const publishedRows = ledgerRows.filter((row) => row.type === "result" || row.modelVersion !== V4_MODEL_VERSION);
+  // v4's and v5's shadow rows are not part of v1's or v2's record or views (registration-v4.md,
+  // W2; registration-v5.md, "Wiring as built").
+  const publishedRows = ledgerRows.filter(
+    (row) => row.type === "result" || (row.modelVersion !== V4_MODEL_VERSION && row.modelVersion !== V5_MODEL_VERSION),
+  );
   if (raw.schemaVersion === 2) checkRecordSplit(raw, publishedRows);
   checkSiteFiles();
   if (raw.schemaVersion === 2) checkModelViews(upgradeLiveState(state), storedGames, publishedRows);
   if (raw.schemaVersion === 2) checkOddsHistory(upgradeLiveState(state));
   checkShadowV4(raw as LiveState, ledgerRows);
+  checkShadowV5(raw as LiveState, ledgerRows);
+}
+
+/**
+ * v5, the second shadow model (registration-v5.md, "Wiring as built"): s3 equals the frozen fit,
+ * the published state is v2's, no v5 key reaches state.json or the projections, and the shadow
+ * file passes the same check the job runs before writing it (scripts/live/v5-shadow/check.ts).
+ */
+function checkShadowV5(state: LiveState, ledgerRows: readonly LedgerRow[]): void {
+  assert.deepEqual(v5ParamsProblems(), [], "v5's s3 must equal docs/live/v5-fit.json.");
+  assert.equal(state.modelVersion, LIVE_MODEL_VERSION, "The published state must stay v2's.");
+  const stateText = fs.readFileSync(path.join(process.cwd(), "data/live/state.json"), "utf-8");
+  assert.ok(!stateText.includes(V5_MODEL_VERSION), "No v5 key may appear in state.json.");
+  const projections = path.join(process.cwd(), "data/live", siteProjectionsPath(seasonLabel(LIVE_SEASON)));
+  if (fs.existsSync(projections)) {
+    assert.ok(!fs.readFileSync(projections, "utf-8").includes(V5_MODEL_VERSION), "No v5 key may appear in the projections.");
+  }
+  const v5Seals = ledgerRows.filter((row) => row.type === "seal" && row.modelVersion === V5_MODEL_VERSION);
+  if (V5_FIRST_ET_DATE === null) {
+    assert.equal(v5Seals.length, 0, "No v5 seal may exist before v5's first ET date is set.");
+  }
+  const shadowFile = path.join(process.cwd(), "data/live", `site/${seasonLabel(LIVE_SEASON)}/shadow-v5.json`);
+  if (!fs.existsSync(shadowFile)) {
+    console.log(`Shadow v5: ${v5Seals.length} seal rows, no shadow file yet.`);
+    return;
+  }
+  const shadow: unknown = JSON.parse(fs.readFileSync(shadowFile, "utf-8"));
+  assert.deepEqual(shadowV5FileProblems(shadow, ledgerRows), [], "The v5 shadow file must pass its check.");
+  const scored = (shadow as { record: { scored: number } }).record.scored;
+  console.log(`Shadow v5: ${v5Seals.length} seal rows, ${scored} scored games, sums hold.`);
 }
 
 /**

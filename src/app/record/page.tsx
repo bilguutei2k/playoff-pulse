@@ -10,8 +10,9 @@ import {
 } from "@/components/live/RecordParts";
 import { PageStamp } from "@/components/live/FreshnessGuard";
 import { Ticker } from "@/components/live/Ticker";
-import { getLiveState, getSeasonLedger, getShadowV4 } from "@/lib/live-data/published";
+import { getLiveState, getSeasonLedger, getShadowV4, getShadowV5 } from "@/lib/live-data/published";
 import { V4_FIRST_ET_DATE } from "@/lib/season/params-v4";
+import { V5_FIRST_ET_DATE } from "@/lib/season/params-v5-live";
 import { POLICY_REVISIONS, currentPolicyRevision, modelPolicyLabel } from "@/lib/season/policy-revisions";
 import type { RecordSummary } from "@/lib/season/types";
 import { formatShortDay } from "@/lib/utils/dates";
@@ -35,6 +36,7 @@ import {
 } from "@/lib/view/record-page";
 import { RECORD_CSV_COLUMNS } from "@/lib/view/record-csv";
 import { shadowV4Lines, type ShadowV4Lines } from "@/lib/view/shadow-v4";
+import { shadowV5Lines, type ShadowV5Lines } from "@/lib/view/shadow-v5";
 
 export const metadata: Metadata = {
   title: "Track record",
@@ -184,10 +186,83 @@ function ShadowV4Section({ lines }: { lines: ShadowV4Lines }) {
   );
 }
 
+/** v5 in testing, after v4's section: plain numbers, no comparison drawn. */
+function ShadowV5Section({ lines }: { lines: ShadowV5Lines }) {
+  return (
+    <section aria-labelledby="shadow-v5-title" className="mt-16 lg:mt-[72px]">
+      <div className="sh">
+        <h2 id="shadow-v5-title">{lines.heading}</h2>
+        <span>Not the published forecast</span>
+      </div>
+      <p className="max-w-[68ch] text-[15px]">{lines.lead}</p>
+      {lines.scored ? (
+        <>
+          <dl className="mt-6 grid max-w-[560px] grid-cols-3 gap-6">
+            <div>
+              <dt className="text-[13px] text-ink-2">Scored games</dt>
+              <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{lines.scored.games}</dd>
+            </div>
+            <div>
+              <dt className="text-[13px] text-ink-2">Brier score</dt>
+              <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{lines.scored.brier}</dd>
+            </div>
+            <div>
+              <dt className="text-[13px] text-ink-2">Log loss</dt>
+              <dd className="figure mt-1 text-[28px] [font-variant-numeric:normal]">{lines.scored.logLoss}</dd>
+            </div>
+          </dl>
+          {lines.scored.smallSample ? <SmallSampleLine label={lines.scored.smallSample} /> : null}
+          {lines.sameGames ? (
+            <div className="mt-8 max-w-[560px]">
+              <h3 className="text-[16px] font-bold">The same {lines.sameGames.games} games</h3>
+              <TableScroll label="The same games for v5, by version" className="mt-2">
+                <table className="tb">
+                  <caption className="sr-only">
+                    Brier score and log loss of v5, v4, v2 and v1 on the games all four have scored, each on its own seal.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Version</th>
+                      <th scope="col" className="nm">Brier</th>
+                      <th scope="col" className="nm">Log loss</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lines.sameGames.rows.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row" className="text-left">{row.label}</th>
+                        <td className="nm num">{row.brier}</td>
+                        <td className="nm num">{row.logLoss}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </TableScroll>
+              <p className="mt-3 text-[13px] text-ink-2">
+                Each version on its own scored seal; lower is better for both measures. No version is claimed to beat
+                another here.
+              </p>
+            </div>
+          ) : null}
+        </>
+      ) : null}
+      <p className="mt-4 max-w-[68ch] text-[13px] text-ink-2">
+        v5 is v4 with one more reading of each player: how his team did with him on the floor. It seals every game
+        beside v2 and v4 and keeps its own record from its first seal. It changes no published number.{" "}
+        <SiteLink className="pp-link" href="/how-it-works#roster-state">
+          What v5 is
+        </SiteLink>
+        .
+      </p>
+    </section>
+  );
+}
+
 export default async function RecordPage() {
   // The season's rows from the job's month files (no driver lists; this page needs none).
-  const [liveState, ledger, shadow] = await Promise.all([getLiveState(), getSeasonLedger(), getShadowV4()]);
+  const [liveState, ledger, shadow, shadowV5] = await Promise.all([getLiveState(), getSeasonLedger(), getShadowV4(), getShadowV5()]);
   const shadowLines = shadowV4Lines(shadow, V4_FIRST_ET_DATE);
+  const shadowV5LinesShown = shadowV5Lines(shadowV5, V5_FIRST_ET_DATE);
   const versions = [
     liveState.modelVersion,
     ...(liveState.referenceModelVersion !== liveState.modelVersion ? [liveState.referenceModelVersion] : []),
@@ -539,6 +614,7 @@ export default async function RecordPage() {
           </aside>
         </div>
         {shadowLines ? <ShadowV4Section lines={shadowLines} /> : null}
+        {shadowV5LinesShown ? <ShadowV5Section lines={shadowV5LinesShown} /> : null}
       </main>
     </>
   );

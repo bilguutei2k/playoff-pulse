@@ -322,6 +322,48 @@ published forecast and changes no published number.
 - That v4 is the published forecast, or feeds any published forecast, seal or injury number.
 - That any single player's v4 strength or points are validated.
 
+## On-court model v5 (`live-2026.27-v5`; the second model in testing, not published)
+
+Sources: `docs/live/registration-v5.md` (Stage A′ result, Amendment 1 and "Wiring as built"),
+`docs/live/evaluation-v5-stage-a.json`, and v5's shadow file `site/{season}/shadow-v5.json` on
+`live-data`. These claims appear on `/record` (the second "In testing" section, after v4's) and in
+one paragraph of `/how-it-works#roster-state`. v5 seals beside v2, v1 and v4 in the ledger from
+`V5_FIRST_ET_DATE` (`src/lib/season/params-v5-live.ts`); it is not the published forecast and
+changes no published number. No other page mentions it.
+
+**May be stated:**
+
+- What it is: v4 with one more reading of each player in each game, how his team did with him on
+  the floor against how it did with him off (on-court plus/minus), taken as one more noisy reading
+  of his strength.
+- That it is unproven and is not the published forecast.
+- Stage A′, always labelled a development check on seasons already studied, which reproduced a
+  result seen before the model was registered (not an untouched test): it passed. Wherever its
+  numbers are shown, say that the market stayed ahead of v5 and v4 on the games with a stored
+  spread.
+- Its own record from its first seal, with scored games, Brier score and log loss, labelled
+  small-sample below 500 scored games; and the same-games Brier and log loss of v5, v4, v2 and v1
+  as plain numbers in that fixed order, with no difference column, colour, ordering by score or
+  market line.
+- After the stop switch is set (`V5_LAST_ET_DATE`), that it sealed from its first to its last ET
+  date and then stopped.
+- A Stage B result only in Amendment 1's wording: a B1 pass is "passed its registered screen
+  against v2 over 500 games: not clearly worse", always printed with D and its interval; "not
+  worse than v2" or "non-inferior" only if the interval's upper end is at or below +0.004.
+
+**Never claim:**
+
+- That v5 is better or more accurate than v4, v2, v1 or the market, or that it beats, matches or
+  narrows a gap to any of them, from Stage A′ or from its live record. In particular, never that
+  v5 beats or is more accurate than v4. A later claim needs its own ledger entry, made on at least
+  500 scored games.
+- That Stage A′ is an untouched or out-of-sample test, or that its game-level result was unseen.
+- That v5 explains or fixes the under-priced star absences (registration-v5.md: the anomaly did
+  not move).
+- That v5 is the published forecast, or feeds any published forecast, seal, injury number or
+  "548 impact".
+- That any single player's v5 strength, plus/minus reading or points are validated.
+
 ## 548 score (Stage 1, `score-2026.27-s1`; display only)
 
 Since Stage 2 shipped, the published score is Stage 1's box-score value plus Stage 2's on-court

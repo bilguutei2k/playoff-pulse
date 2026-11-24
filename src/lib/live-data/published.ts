@@ -59,6 +59,7 @@ import bundledStateJson from "../../../data/live/state.json";
 import type { LiveReportDay } from "@/lib/season/live-reports";
 import { parseOddsHistory, type OddsHistoryFile } from "@/lib/season/odds-history";
 import { V4_MODEL_VERSION } from "@/lib/season/params-v4";
+import { V5_MODEL_VERSION } from "@/lib/season/params-v5";
 import { SCORE_LABEL, SCORE_LABEL_BOX, type PlayerIndexFile, type TeamPlayersFile } from "@/lib/season/player-stats";
 import type { ProjectionsFile, TeamInjuriesFile } from "@/lib/season/projections";
 import {
@@ -976,6 +977,94 @@ export const getShadowV4 = cache(async (): Promise<ShadowV4View | null> => {
     return await fetchPublished(direct, relative, parseShadowV4);
   } catch (error) {
     console.error("[live-data] shadow-v4.json unavailable:", describe(error));
+    return null;
+  }
+});
+
+// ---------------------------------------------------------------------------------------
+// The second shadow model v5 (docs/live/registration-v5.md, "Wiring as built"): v4 plus an
+// on-court observation, sealing beside the published model, never the published forecast.
+
+/** v5's shadow file under data/live (the job's `SHADOW_V5_FILE`, scripts/live/v5-shadow/live-v5.ts). */
+export const siteShadowV5Path = (seasonLabel: string) => `site/${seasonLabel}/shadow-v5.json`;
+
+/** What the site shows of v5's shadow file: its record and the same-games lines. */
+export type ShadowV5View = {
+  modelVersion: string;
+  /** First ET date with v5 seals. */
+  firstEtDate: string;
+  /** The stop switch's last ET date, or null while v5 keeps sealing. */
+  lastEtDate: string | null;
+  slate: string;
+  record: { sealed: number; scored: number; pending: number; missed: number; brier: number | null; logLoss: number | null };
+  /** Games scored for v5, v4, v2 and v1 alike, each on its own scored seal; nulls when `games` is 0. */
+  sameGames: { games: number; v5: ScoreLine; v4: ScoreLine; v2: ScoreLine; v1: ScoreLine };
+};
+
+/** Validates v5's shadow file and keeps only what the site shows. Throws when malformed. */
+export function parseShadowV5(text: string): ShadowV5View {
+  const raw: unknown = JSON.parse(text);
+  const record = isRecord(raw) ? raw.record : null;
+  const same = isRecord(raw) ? raw.sameGames : null;
+  if (
+    !isRecord(raw) ||
+    raw.version !== 1 ||
+    raw.modelVersion !== V5_MODEL_VERSION ||
+    !isEtDate(raw.firstEtDate) ||
+    !(raw.lastEtDate === null || isEtDate(raw.lastEtDate)) ||
+    !isEtDate(raw.slate) ||
+    !isRecord(record) ||
+    !["sealed", "scored", "pending", "missed"].every((key) => isCount(record[key])) ||
+    !isOptionalMetric(record.brier) ||
+    !isOptionalMetric(record.logLoss) ||
+    !isRecord(same) ||
+    !isCount(same.games) ||
+    !isScoreLine(same.v5) ||
+    !isScoreLine(same.v4) ||
+    !isScoreLine(same.v2) ||
+    !isScoreLine(same.v1)
+  ) {
+    throw new Error("shadow-v5.json is malformed");
+  }
+  const line = (value: ScoreLine): ScoreLine => ({ brier: value.brier, logLoss: value.logLoss });
+  return {
+    modelVersion: raw.modelVersion,
+    firstEtDate: raw.firstEtDate,
+    lastEtDate: raw.lastEtDate,
+    slate: raw.slate,
+    record: {
+      sealed: record.sealed as number,
+      scored: record.scored as number,
+      pending: record.pending as number,
+      missed: record.missed as number,
+      brier: record.brier,
+      logLoss: record.logLoss,
+    },
+    sameGames: { games: same.games, v5: line(same.v5), v4: line(same.v4), v2: line(same.v2), v1: line(same.v1) },
+  };
+}
+
+/**
+ * v5's shadow file at the render's commit, or null when the manifest does not list it, it
+ * cannot be read, or it does not validate. Read outside the render's snapshot exactly as
+ * `getShadowV4` is, so it never costs the published pages their snapshot. Never throws.
+ */
+export const getShadowV5 = cache(async (): Promise<ShadowV5View | null> => {
+  try {
+    const source = await renderSource();
+    const { value: state } = await loadState();
+    const relative = siteShadowV5Path(state.seasonLabel);
+    if (source.kind !== "network") {
+      return bundled(relative, () => {
+        const text = bundledFile(relative);
+        return text ? parseShadowV5(text) : null;
+      }, null);
+    }
+    if (!source.manifest || !(relative in source.manifest.files)) return null;
+    const direct: NetworkSource = { kind: "network", ref: source.ref, branch: source.branch, commit: source.commit, manifest: source.manifest };
+    return await fetchPublished(direct, relative, parseShadowV5);
+  } catch (error) {
+    console.error("[live-data] shadow-v5.json unavailable:", describe(error));
     return null;
   }
 });

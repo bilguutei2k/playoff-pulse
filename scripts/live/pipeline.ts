@@ -122,6 +122,8 @@ import { parseReportPdf } from "./report-pdf";
 import { expectedSiteFiles, publishedSiteFiles } from "./site-files";
 import { ledgerProblems } from "./verify-ledger";
 import { isV4Row, SHADOW_FILE, shadowV4 } from "./v4/live-v4";
+import { shadowV5FileProblems, v5ParamsProblems } from "./v5-shadow/check";
+import { isV5Row, SHADOW_V5_FILE, shadowV5 } from "./v5-shadow/live-v5";
 
 const SEASON = LIVE_SEASON;
 const LABEL = seasonLabel(SEASON);
@@ -579,10 +581,11 @@ async function main(): Promise<void> {
   if (injuryReportProblem) log(`report problem: ${injuryReportProblem}`);
 
   // Ledger: seals, then misses, then results. Rows are only ever appended.
-  // v4's shadow rows (registration-v4.md, W1) never reach v1's or v2's path: everything
-  // below reads the ledger without them, exactly as before v4.
+  // v4's and v5's shadow rows (registration-v4.md, W1; registration-v5.md, "Wiring as built")
+  // never reach v1's or v2's path: everything below reads the ledger without them, exactly as
+  // before v4.
   const ledgerAll = readLedger();
-  const ledger = ledgerAll.filter((row) => !isV4Row(row));
+  const ledger = ledgerAll.filter((row) => !isV4Row(row) && !isV5Row(row));
   const marketById = new Map<string, MarketReference | null>(
     scoreboardRows.map((row) => [row.game.id, row.market]),
   );
@@ -965,9 +968,62 @@ async function main(): Promise<void> {
     log(`shadow v4 not written, v1 and v2 unaffected: ${shadowProblem}`);
   }
 
+  // v5, the second shadow model (registration-v5.md, "Wiring as built"): after v4, in its own
+  // guard. A failure of any kind writes no v5 row, keeps the previous shadow-v5.json and sets
+  // `shadowV5Problem` in health.json; v1's, v2's and v4's rows and everything published are
+  // already fixed, and a v4 failure does not stop it. Before anything is kept, the rows go
+  // through the ledger rules and the file through `verify:live`'s own v5 check
+  // (scripts/live/v5-shadow/check.ts), on exactly the ledger and the bytes this run writes.
+  let v5Rows: LedgerRow[] = [];
+  let shadowV5Content: string | null = null;
+  let shadowV5Problem: string | null = null;
+  try {
+    const started = Date.now();
+    const before = [...ledgerAll, ...newRows, ...v4Rows];
+    const v5 = shadowV5({
+      season: SEASON,
+      seasonLabel: LABEL,
+      slate,
+      nowIso,
+      runId,
+      phase,
+      observed,
+      history,
+      seasonGames,
+      ledger: before,
+      report: reportInUse,
+      source: live.source,
+      nameOf: live.nameOf,
+      playerDays: playerDays.size > 0 ? playerDays.values() : loadPlayerDays(LABEL).values(),
+      marketFor,
+      priorHomeWinRate,
+    });
+    for (const row of v5.seals) log(`${dryRun ? "dry run, would write " : ""}shadow v5 ${describeSeal(row)}`);
+    const rows: LedgerRow[] = [...v5.seals, ...v5.missed];
+    // The ledger as this run leaves it (in a dry run, as it would): the rules apply to it.
+    const after = [...before, ...rows];
+    const v5Problems = [...ledgerProblems(after), ...v5ParamsProblems()];
+    if (v5Problems.length > 0) throw new Error(`v5 rows failed validation: ${v5Problems.join("; ")}`);
+    const content = v5.shadow ? `${JSON.stringify(v5.shadow)}\n` : null;
+    if (content) {
+      const fileProblems = shadowV5FileProblems(JSON.parse(content), after);
+      if (fileProblems.length > 0) throw new Error(`shadow-v5.json failed its check: ${fileProblems.join("; ")}`);
+    }
+    // A dry run writes no row, so it keeps the previous file too: the file on disk always
+    // matches the ledger on disk.
+    v5Rows = dryRun ? [] : rows;
+    shadowV5Content = dryRun ? null : content;
+    if (v5.shadow) log(`shadow v5: ${v5.seals.length} sealed, ${v5.missed.length} missed, in ${((Date.now() - started) / 1000).toFixed(1)}s`);
+  } catch (error) {
+    shadowV5Problem = error instanceof Error ? error.message : String(error);
+    v5Rows = [];
+    shadowV5Content = null;
+    log(`shadow v5 not written, v1, v2 and v4 unaffected: ${shadowV5Problem}`);
+  }
+
   // Everything validated. Only now does anything get written.
   writeText(gamesPath(SEASON), `${JSON.stringify(seasonGames.map(withoutLiveScores))}\n`);
-  const appended = [...newRows, ...v4Rows];
+  const appended = [...newRows, ...v4Rows, ...v5Rows];
   if (appended.length > 0) {
     fs.mkdirSync(path.dirname(LEDGER_PATH), { recursive: true });
     fs.appendFileSync(
@@ -977,6 +1033,7 @@ async function main(): Promise<void> {
     );
   }
   if (shadowContent) writeText(path.join(LIVE_DIRECTORY, SHADOW_FILE(LABEL)), shadowContent);
+  if (shadowV5Content) writeText(path.join(LIVE_DIRECTORY, SHADOW_V5_FILE(LABEL)), shadowV5Content);
   if (boxRun.added.length > 0) {
     writeText(liveBoxScorePath(SEASON), `${JSON.stringify(liveBox)}\n`);
   }
@@ -1039,6 +1096,8 @@ async function main(): Promise<void> {
     scoreProblem: views ? scoreProblem : null,
     // Only when v4 failed: the field is absent otherwise, so health.json is unchanged by v4.
     ...(shadowProblem ? { shadowProblem } : {}),
+    // Only when v5 failed, independent of v4's: absent otherwise, so health.json is unchanged by v5.
+    ...(shadowV5Problem ? { shadowV5Problem } : {}),
     // Only when the published odds history left stored snapshots out: absent otherwise. Not an alert.
     ...(oddsHistorySkipped.length > 0 ? { oddsHistorySkipped } : {}),
   };
