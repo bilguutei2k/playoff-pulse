@@ -66,3 +66,18 @@ gpt-6-astra reviewed the registration, the gate script and the engine block: git
 observation's signs and the disclosure were clean. One change followed, recorded as Amendment 1 in
 `docs/live/registration-v5.md`: a future Stage B pass is worded "not clearly worse", not "not worse", unless
 the interval's upper end is within the margin.
+
+### 2026-11-24, `live-2026.27-v5` wired as a second shadow model
+
+On the owner's decision of 2026-11-24, v5 seals morning, reissued and final rows beside v1, v2 and v4 from its first
+ET date (`V5_FIRST_ET_DATE` in `src/lib/season/params-v5-live.ts`), in its own guard after v4, and keeps its own
+prospective record from its first seal (`docs/live/registration-v5.md`, "Wiring as built"). It is not published.
+No number on any game already played was computed for it.
+
+### 2026-11-24, reviews of v5's shadow wiring and of v4's Stage B wording
+
+No experiment and no number. The wiring of v5 as a second shadow was reviewed by the session lead and by
+gpt-6-astra before v5's first seal: two ways its shadow file could have blocked a push were fixed, and the warm
+state's pass through 2024-25 and 2025-26 was ruled filter state, as v4's is (`docs/live/registration-v5.md`,
+"review of PR #44"). On the owner's decision the same day, v4's Stage B wording was amended as v5's had been
+(`docs/live/registration-v4.md`, Amendment 2).

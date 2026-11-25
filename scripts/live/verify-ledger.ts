@@ -22,6 +22,8 @@ import {
 import { POLICY_MODEL_VERSION, policyRevisionAt } from "../../src/lib/season/policy-revisions";
 import { REFERENCE_MODEL_VERSION } from "../../src/lib/season/params";
 import { V4_FIRST_ET_DATE, V4_MODEL_VERSION } from "../../src/lib/season/params-v4";
+import { V5_MODEL_VERSION } from "../../src/lib/season/params-v5";
+import { inV5Range, V5_FIRST_ET_DATE, V5_LAST_ET_DATE } from "../../src/lib/season/params-v5-live";
 import type { LedgerRow, SealRow } from "../../src/lib/season/types";
 import { LIVE_SEASON } from "./game-store";
 
@@ -96,6 +98,9 @@ function driverProblems(row: SealRow): string[] {
  * the morning seal had no report. A miss belongs to one version, and a version cannot both
  * seal and miss the same game.
  */
+const v5RangeText = () =>
+  V5_FIRST_ET_DATE === null ? "first ET date not set" : `${V5_FIRST_ET_DATE} to ${V5_LAST_ET_DATE ?? "open"}`;
+
 export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
   const problems: string[] = [];
   const games = new Set<string>();
@@ -126,6 +131,10 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
         problems.push(`missed row for sealed game ${row.gameId} (${missedVersionOf(row)})`);
       }
       missedByVersion.add(key);
+      // v5 is never missed outside its range: it never sealed there (the stop switch).
+      if (missedVersionOf(row) === V5_MODEL_VERSION && !inV5Range(row.etDate, V5_FIRST_ET_DATE, V5_LAST_ET_DATE)) {
+        problems.push(`v5 missed row for ${row.gameId} on ${row.etDate}, outside v5's ET dates (${v5RangeText()})`);
+      }
       continue;
     }
     const kind = sealKindOf(row);
@@ -174,6 +183,19 @@ export function ledgerProblems(rows: readonly LedgerRow[]): string[] {
         problems.push(`v4 seal for ${row.gameId} does not carry v1's reference`);
       }
       if (row.policyRevision !== undefined) problems.push(`v4 seal for ${row.gameId} stores a policy revision`);
+    }
+    if (row.modelVersion === V5_MODEL_VERSION) {
+      // v5, the second shadow model (registration-v5.md, "Wiring as built"): only from its first
+      // to its last ET date (the stop switch), in v2's row shape with v1's reference, never with
+      // a policy revision.
+      if (!inV5Range(row.etDate, V5_FIRST_ET_DATE, V5_LAST_ET_DATE)) {
+        problems.push(`v5 seal for ${row.gameId} on ${row.etDate}, outside v5's ET dates (${v5RangeText()})`);
+      }
+      if (row.sealKind === undefined) problems.push(`v5 seal for ${row.gameId} has no seal kind`);
+      if (row.referenceModelVersion !== REFERENCE_MODEL_VERSION) {
+        problems.push(`v5 seal for ${row.gameId} does not carry v1's reference`);
+      }
+      if (row.policyRevision !== undefined) problems.push(`v5 seal for ${row.gameId} stores a policy revision`);
     }
     if (!(row.homeWinProbability >= 0 && row.homeWinProbability <= 1)) {
       problems.push(`seal for ${row.gameId} has probability ${row.homeWinProbability}`);

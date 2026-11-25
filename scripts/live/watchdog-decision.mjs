@@ -117,6 +117,22 @@ export const V2 = Object.freeze({ modelVersion: "live-2026.27-v2", firstEtDate: 
  */
 export const V4 = Object.freeze({ modelVersion: "live-2026.27-v4", firstEtDate: "2026-11-23" });
 
+/**
+ * The second shadow model v5 (docs/live/registration-v5.md, "Wiring as built"): its version, first
+ * ET date and the stop switch's last ET date, kept equal to src/lib/season/params-v5.ts and
+ * params-v5-live.ts by a test. Its seals are expected only from the first to the last ET date,
+ * inclusive; a missing one is reported under its own `shadow-v5-unsealed-` key, labelled as the
+ * second shadow model's.
+ */
+export const V5 = Object.freeze({ modelVersion: "live-2026.27-v5", firstEtDate: "2026-11-25", lastEtDate: null });
+
+/** Keys of the missing-seal conditions (v2's, v4's and v5's), each followed by a game ID. */
+const UNSEALED_PREFIXES = ["unsealed-", "shadow-unsealed-", "shadow-v5-unsealed-"];
+const unsealedGameOf = (key) => {
+  const prefix = UNSEALED_PREFIXES.find((candidate) => key.startsWith(candidate));
+  return prefix === undefined ? null : key.slice(prefix.length);
+};
+
 const MINUTE = 60_000;
 const FAILED = new Set(["failure", "timed_out", "startup_failure"]);
 const NEUTRAL = new Set(["cancelled", "skipped", "stale", "", null, undefined]);
@@ -153,10 +169,12 @@ export function failureStreak(runs) {
  * @param {{generatedAt?: string} | null} input.state live-data's state.json, or null.
  * @param {Array<object> | null} input.games live-data's games file for the season, or null.
  * @param {Array<object> | null} input.ledger live-data's ledger rows for the season, or null.
+ * @param {{modelVersion: string, firstEtDate: string | null, lastEtDate: string | null}} [input.v5]
+ *   v5's constants (tests only; `V5` otherwise).
  * @returns {{paused: boolean, dispatch: boolean, active: boolean | null, recent: boolean | null,
  *   streak: number | null, alerts: Array<{key: string, text: string}>}}
  */
-export function decideWatchdog({ now, workflowState, runs, state, games, ledger }) {
+export function decideWatchdog({ now, workflowState, runs, state, games, ledger, v5 = V5 }) {
   const time = Date.parse(now);
   if (!Number.isFinite(time)) throw new Error(`Invalid watchdog clock: ${now}`);
   if (workflowState === "disabled_manually") {
@@ -253,6 +271,31 @@ export function decideWatchdog({ now, workflowState, runs, state, games, ledger 
           alerts.push({ kind: "state",
             key: `shadow-unsealed-${game.id}`,
             text: `Shadow model v4 (not published): game ${game.id} (${game.awayId ?? "?"} at ${game.homeId ?? "?"}, ET ${game.etDate}) tipped at ${game.tipUtc} and has neither a v4 final nor a v4 morning seal.`,
+          });
+        }
+      }
+    }
+    if (v5.firstEtDate !== null) {
+      const v5Sealed = new Set(
+        ledger
+          .filter((row) => row.type === "seal" && row.modelVersion === v5.modelVersion && (row.sealKind === "final" || row.sealKind === "morning"))
+          .map((row) => row.gameId),
+      );
+      for (const game of games) {
+        const tip = Date.parse(game.tipUtc);
+        if (
+          game.etDate >= v5.firstEtDate &&
+          (v5.lastEtDate === null || game.etDate <= v5.lastEtDate) &&
+          game.status !== "canceled" &&
+          game.status !== "postponed" &&
+          Number.isFinite(tip) &&
+          tip < time - LIMITS.tipGraceMinutes * MINUTE &&
+          tip >= time - LIMITS.tipLookbackHours * 60 * MINUTE &&
+          !v5Sealed.has(game.id)
+        ) {
+          alerts.push({ kind: "state",
+            key: `shadow-v5-unsealed-${game.id}`,
+            text: `Second shadow model v5 (not published): game ${game.id} (${game.awayId ?? "?"} at ${game.homeId ?? "?"}, ET ${game.etDate}) tipped at ${game.tipUtc} and has neither a v5 final nor a v5 morning seal.`,
           });
         }
       }
@@ -547,7 +590,7 @@ export function checkedKeys({ now, workflowState, runs, state, games, ledger, at
     if (key.startsWith("workflow-")) return workflowState !== null;
     if (key.startsWith("failing-since-")) return runs !== null;
     if (key.startsWith("stale-")) return state !== null;
-    if (key.startsWith("unsealed-")) return games !== null && ledger !== null && watchedGame(key.slice("unsealed-".length));
+    if (unsealedGameOf(key) !== null) return games !== null && ledger !== null && watchedGame(unsealedGameOf(key));
     if (key === "health-unknown") return site.enabled;
     if (key === "site-stored-copy") return healthRead;
     if (key === "site-behind-publication") return healthRead && publicationRead;
@@ -562,7 +605,7 @@ export function checkedKeys({ now, workflowState, runs, state, games, ledger, at
     return page.status === 200 && pageStampOf(page) !== null && healthRead;
   };
   const retired = (key) => {
-    if (key.startsWith("unsealed-")) return games !== null && ledger !== null && !watchedGame(key.slice("unsealed-".length));
+    if (unsealedGameOf(key) !== null) return games !== null && ledger !== null && !watchedGame(unsealedGameOf(key));
     const match = PAGE_KEY.exec(key);
     return Boolean(match) && !routes.includes(match[2]);
   };

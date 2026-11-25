@@ -27,6 +27,7 @@ import {
 } from "@/lib/score/params";
 import { IMPACT_LABEL, SCORE_LABEL } from "@/lib/season/player-stats";
 import { V4_MODEL_VERSION } from "@/lib/season/params-v4";
+import { V5_MODEL_VERSION } from "@/lib/season/params-v5";
 import { POLICY_REVISIONS } from "@/lib/season/policy-revisions";
 import { PROJECTION_WITH_INJURIES_LABEL } from "@/lib/season/projections";
 import { PROJECTION_LABEL } from "@/lib/view/projection";
@@ -49,6 +50,7 @@ const LEDGER_URL = "https://github.com/bilguutei2k/playoff-pulse/tree/live-data/
 const REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration.md";
 const V4_REGISTRATION_URL = "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration-v4.md";
+const V5_REGISTRATION_URL = "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/live/registration-v5.md";
 const SCORE_REGISTRATION_URL =
   "https://github.com/bilguutei2k/playoff-pulse/blob/main/docs/score/registration.md";
 const SCORE_STAGE2_REGISTRATION_URL =
@@ -99,7 +101,7 @@ const SECTIONS = [
   { id: "market", title: "The market reference" },
   { id: "testing", title: "How it tested" },
   { id: "shortfalls", title: "Where it fell short" },
-  { id: "roster-state", title: "In testing: roster-state model v4" },
+  { id: "roster-state", title: "In testing: roster-state models v4 and v5" },
   { id: "score", title: "The 548 score" },
   { id: "glossary", title: "Glossary" },
 ] as const;
@@ -855,6 +857,18 @@ export default async function HowItWorksPage() {
                 record page
               </SiteLink>
               . Like every record here it is labeled a small sample until 500 games are scored.
+            </p>
+            <p>
+              <strong className="text-ink">A second model in testing, v5.</strong>{" "}
+              <Version>{V5_MODEL_VERSION}</Version> is v4 with one more reading of each player: in every game, how his
+              team did with him on the floor against how it did with him off, taken as one more noisy reading of his
+              strength. Its check (in its{" "}
+              <a href={V5_REGISTRATION_URL} className="pp-link">
+                registration
+              </a>
+              ) was a development check on seasons already studied, and it reproduced a result that had been seen
+              before the model was registered. It passed. v5 seals beside v4 and keeps its own record on the record
+              page; it changes no published number.
             </p>
           </Section>
           <Section id="score">

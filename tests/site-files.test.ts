@@ -95,6 +95,7 @@ describe("model view paths", () => {
     "site/2026-27/days/2026-11-02.json",
     "site/2026-27/months/2026-11.json",
     "site/2026-27/shadow-v4.json",
+    "site/2026-27/shadow-v5.json",
     "site/2026-27/players/teams/BOS.json",
     "site/2025-26/odds-history.json",
     "snapshots/2026-27/2026-11-02.json",
